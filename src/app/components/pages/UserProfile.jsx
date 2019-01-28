@@ -18,7 +18,6 @@ import AuthorRewards from 'app/components/modules/AuthorRewards';
 import UserList from 'app/components/elements/UserList';
 import Follow from 'app/components/elements/Follow';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import { repLog10 } from 'app/utils/ParsersAndFormatters.js';
 import Tooltip from 'app/components/elements/Tooltip';
@@ -257,130 +256,11 @@ export default class UserProfile extends React.Component {
         } else if (section === 'settings') {
             tab_content = <Settings routeParams={this.props.routeParams} />;
         } else if (section === 'comments') {
-            if (account.comments) {
-                let posts = accountImm.get('comments');
-                if (!fetching && (posts && !posts.size)) {
-                    tab_content = (
-                        <Callout>
-                            {tt('user_profile.user_hasnt_made_any_posts_yet', {
-                                name: accountname,
-                            })}
-                        </Callout>
-                    );
-                } else {
-                    tab_content = (
-                        <PostsList
-                            posts={posts}
-                            loading={fetching}
-                            category="comments"
-                            loadMore={this.loadMore}
-                            showPinned={false}
-                            showSpam
-                        />
-                    );
-                }
-            } else {
-                tab_content = (
-                    <center>
-                        <LoadingIndicator type="circle" />
-                    </center>
-                );
-            }
+            tab_content = <div />;
         } else if (!section || section === 'blog') {
-            if (account.blog) {
-                let posts = accountImm.get('blog');
-                const emptyText = isMyAccount ? (
-                    <div>
-                        {tt(
-                            'user_profile.looks_like_you_havent_posted_anything_yet'
-                        )}
-                        <br />
-                        <br />
-                        <Link to="/submit.html">
-                            {tt('user_profile.create_a_post')}
-                        </Link>
-                        <br />
-                        <Link to="/trending">
-                            {tt('user_profile.explore_trending_articles')}
-                        </Link>
-                        <br />
-                        <Link to="/welcome">
-                            {tt('user_profile.read_the_quick_start_guide')}
-                        </Link>
-                        <br />
-                        <Link to="/faq.html">
-                            {tt('user_profile.browse_the_faq')}
-                        </Link>
-                        <br />
-                    </div>
-                ) : (
-                    tt('user_profile.user_hasnt_started_bloggin_yet', {
-                        name: accountname,
-                    })
-                );
-
-                if (!fetching && (posts && !posts.size)) {
-                    tab_content = <Callout>{emptyText}</Callout>;
-                } else {
-                    tab_content = (
-                        <div>
-                            <a href="#" onClick={this.toggleShowResteem}>
-                                {showResteem
-                                    ? tt('user_profile.hide_resteems')
-                                    : tt('user_profile.show_all')}
-                            </a>
-                            <PostsList
-                                account={account.name}
-                                posts={posts}
-                                loading={fetching}
-                                category="blog"
-                                loadMore={this.loadMore}
-                                showPinned={false}
-                                showResteem={showResteem}
-                                showSpam
-                            />
-                        </div>
-                    );
-                }
-            } else {
-                tab_content = (
-                    <center>
-                        <LoadingIndicator type="circle" />
-                    </center>
-                );
-            }
+            tab_content = <div />;
         } else if (section === 'recent-replies') {
-            if (account.recent_replies) {
-                let posts = accountImm.get('recent_replies');
-                if (!fetching && (posts && !posts.size)) {
-                    tab_content = (
-                        <Callout>
-                            {tt('user_profile.user_hasnt_had_any_replies_yet', {
-                                name: accountname,
-                            }) + '.'}
-                        </Callout>
-                    );
-                } else {
-                    tab_content = (
-                        <div>
-                            <PostsList
-                                posts={posts}
-                                loading={fetching}
-                                category="recent_replies"
-                                loadMore={this.loadMore}
-                                showPinned={false}
-                                showSpam={false}
-                            />
-                        </div>
-                    );
-                }
-            } else {
-                tab_content = (
-                    <center>
-                        <LoadingIndicator type="circle" />
-                    </center>
-                );
-            }
+            tab_content = <div />;
         } else if (section === 'permissions' && isMyAccount) {
             walletClass = 'active';
             tab_content = (

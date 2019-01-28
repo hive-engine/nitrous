@@ -41,7 +41,6 @@ describe('resolveRoute', () => {
         ['/waiting_list.html', { page: 'WaitingList' }],
         ['/market', { page: 'Market' }],
         ['/~witnesses', { page: 'Witnesses' }],
-        ['/submit.html', { page: 'SubmitPost' }],
         [
             '/@maitland/feed',
             { page: 'PostsIndex', params: ['home', '@maitland'] },

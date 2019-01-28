@@ -67,9 +67,6 @@ export default function resolveRoute(path) {
     if (path === '/~witnesses') {
         return { page: 'Witnesses' };
     }
-    if (path === '/submit.html') {
-        return { page: 'SubmitPost' };
-    }
     let match = path.match(routeRegex.PostsIndex);
     if (match) {
         if (GDPRUserList.includes(match[1].substring(1))) {

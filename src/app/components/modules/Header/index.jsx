@@ -104,8 +104,6 @@ class Header extends React.Component {
         } else if (route.page === 'Post') {
             sort_order = '';
             topic = route.params[0];
-        } else if (route.page == 'SubmitPost') {
-            page_title = tt('header_jsx.create_a_post');
         } else if (route.page == 'Privacy') {
             page_title = tt('navigation.privacy_policy');
         } else if (route.page == 'Tos') {
