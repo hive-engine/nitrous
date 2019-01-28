@@ -16,7 +16,6 @@ describe('routeRegex', () => {
                 /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/gi,
             ],
             ['PostNoCategory', /^\/(@[\w\.\d-]+)\/([\w\d-]+)/],
-            ['Post', /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)\/?($|\?)/],
         ];
 
         test_cases.forEach(r => {
@@ -59,10 +58,6 @@ describe('resolveRoute', () => {
             { page: 'PostNoCategory', params: ['@cool', 'nice345'] },
         ],
         ['/@gdpr/nice345', { page: 'NotFound' }],
-        [
-            '/ceasar/@salad/circa90',
-            { page: 'Post', params: ['ceasar', '@salad', 'circa90', ''] },
-        ],
         ['/taggy/@gdpr/nice345', { page: 'NotFound' }],
     ];
     test_cases.forEach(r => {
