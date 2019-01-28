@@ -7,7 +7,6 @@ export const routeRegex = {
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
     UserEndPoints: /^(blog|posts|comments|recommended|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)$/,
     CategoryFilters: /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/gi,
-    PostNoCategory: /^\/(@[\w\.\d-]+)\/([\w\d-]+)/,
 };
 
 export default function resolveRoute(path) {
@@ -87,13 +86,6 @@ export default function resolveRoute(path) {
             return { page: 'NotFound' };
         }
         return { page: 'UserProfile', params: match.slice(1) };
-    }
-    match = path.match(routeRegex.PostNoCategory);
-    if (match) {
-        if (GDPRUserList.includes(match[1].substring(1))) {
-            return { page: 'NotFound' };
-        }
-        return { page: 'PostNoCategory', params: match.slice(1) };
     }
     match =
         path.match(

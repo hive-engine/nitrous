@@ -171,12 +171,6 @@ class Header extends React.Component {
                 page_title.charAt(0).toUpperCase() + page_title.slice(1);
         }
 
-        if (
-            process.env.BROWSER &&
-            (route.page !== 'Post' && route.page !== 'PostNoCategory')
-        )
-            document.title = page_title + ' — ' + APP_NAME;
-
         const logo_link =
             resolveRoute(pathname).params &&
             resolveRoute(pathname).params.length > 1 &&

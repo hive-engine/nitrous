@@ -288,33 +288,6 @@ export async function serverRender(
             }
         }
 
-        // Are we loading an un-category-aliased post?
-        if (
-            !url.match(routeRegex.PostsIndex) &&
-            !url.match(routeRegex.UserProfile1) &&
-            !url.match(routeRegex.UserProfile2) &&
-            url.match(routeRegex.PostNoCategory)
-        ) {
-            const params = url.substr(2, url.length - 1).split('/');
-            let content;
-            if (process.env.OFFLINE_SSR_TEST) {
-                content = get_content_perf;
-            } else {
-                content = await api.getContentAsync(params[0], params[1]);
-            }
-            if (content.author && content.permlink) {
-                // valid short post url
-                onchain.content[url.substr(2, url.length - 1)] = content;
-            } else {
-                // protect on invalid user pages (i.e /user/transferss)
-                return {
-                    title: 'Page Not Found - Steemit',
-                    statusCode: 404,
-                    body: renderToString(<NotFound />),
-                };
-            }
-        }
-
         // Insert the pinned posts into the list of posts, so there is no
         // jumping of content.
         offchain.pinned_posts.pinned_posts.forEach(pinnedPost => {
