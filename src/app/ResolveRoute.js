@@ -9,9 +9,6 @@ export const routeRegex = {
     CategoryFilters: /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/gi,
     PostNoCategory: /^\/(@[\w\.\d-]+)\/([\w\d-]+)/,
     Post: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)\/?($|\?)/,
-    PostJson: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)(\.json)$/,
-    UserJson: /^\/(@[\w\.\d-]+)(\.json)$/,
-    UserNameJson: /^.*(?=(\.json))/,
 };
 
 export default function resolveRoute(path) {
