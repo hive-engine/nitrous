@@ -278,10 +278,6 @@
             "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
         "jobs": "Jobs at Steemit"
     },
-    "main_menu": {
-        "hot": "Hot",
-        "trending": "Trending"
-    },
     "reply_editor": {
         "shorten_title": "Shorten title",
         "exceeds_maximum_length": "Exceeds maximum length (%(maxKb)sKB)",
@@ -411,15 +407,6 @@
     },
     "user_profile": {
         "unknown_account": "Unknown Account",
-        "user_hasnt_made_any_posts_yet":
-            "Looks like %(name)s hasn't made any posts yet!",
-        "user_hasnt_started_bloggin_yet":
-            "Looks like %(name)s hasn't started blogging yet!",
-        "user_hasnt_followed_anything_yet":
-            "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -615,16 +602,6 @@
         "create_an_account": "create an account",
         "to_save_your_preferences": "to save your preferences"
     },
-    "posts_index": {
-        "empty_feed_1": "Looks like you haven't followed anything yet",
-        "empty_feed_2":
-            "If you recently added new users to follow, your personalized feed will populate once new content is available",
-        "empty_feed_3": "Explore Trending Articles",
-        "empty_feed_4": "Read The Quick Start Guide",
-        "empty_feed_5": "Browse The FAQ",
-        "my_feed": "My Feed",
-        "accountnames_feed": "%(account_name)s's Feed"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
         "from_savings": "from savings",
@@ -708,7 +685,6 @@
     },
     "header_jsx": {
         "home": "home",
-        "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",
         "stolen_account_recovery": "Stolen Account Recovery",

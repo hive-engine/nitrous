@@ -257,10 +257,6 @@
         "intro_paragraph":
             "Twój głos ma wartość. Dołącz do społeczności, która płaci za publikowanie i głosowanie na wysokiej jakości treści."
     },
-    "main_menu": {
-        "hot": "gorące",
-        "trending": "aktywne"
-    },
     "reply_editor": {
         "shorten_title": "Tytuł skrócony",
         "exceeds_maximum_length": "Przekracza maksymalną długość (%(maxKb)sKB)",
@@ -387,14 +383,6 @@
     },
     "user_profile": {
         "unknown_account": "Konto nieznane",
-        "user_hasnt_made_any_posts_yet":
-            "Wygląda na to, że %(name)s nie opublikował jeszcze żadnych wpisów!",
-        "user_hasnt_started_bloggin_yet":
-            "Wygląda na to, że %(name)s nie zaczął jeszcze blogowania!",
-        "user_hasnt_followed_anything_yet":
-            "Wygląda na to, że użytkownik %(name)s jeszcze nikogo nie obserwuje. Jeśli %(name)s zaczął(ęła) obserwować nowych użytkowników jego(jej) osobisty strumień zacznie się zapełniać, gdy powstaną nowe treści.  ",
-        "user_hasnt_had_any_replies_yet":
-            "%(name)s nie ma jeszcze żadnych odpowiedzi",
         "followers": "Obserwujący",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "To są punkty reputacji użytkownika %(name)s.\n\nSystem punktów reputacji bazuje na historii otrzymanych przez użytkownika głosów i jest używany do ukrywania wpisów o niskiej jakości.",
@@ -577,14 +565,6 @@
         "create_an_account": "utwórz konto",
         "to_save_your_preferences": "by zapisać twoje preferencje"
     },
-    "posts_index": {
-        "empty_feed_1": "Wygląda na to, że jeszcze nikogo nie obserwujesz",
-        "empty_feed_2":
-            "Jeżeli dopiero zacząłeś kogoś obserwować, twój strumień zaktualizuje się, gdy pojawią się nowe treści",
-        "empty_feed_3": "Przeglądaj aktywne posty",
-        "empty_feed_4": "Przeczytaj Quick Start Guide",
-        "empty_feed_5": "Przeglądaj FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "na konto oszczędnościowe",
         "from_savings": "z konta oszczędnościowego",
@@ -608,7 +588,6 @@
     },
     "header_jsx": {
         "home": "początek",
-        "create_a_post": "Napisz post",
         "change_account_password": "Zmiana hasła konta",
         "create_account": "Zakładanie konta",
         "stolen_account_recovery": "Odzyskiwanie skradzionego konta",

@@ -270,10 +270,6 @@
         "intro_paragraph":
             "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità."
     },
-    "main_menu": {
-        "hot": "hot",
-        "trending": "trending"
-    },
     "reply_editor": {
         "shorten_title": "Titolo breve",
         "exceeds_maximum_length": "Supera la grandezza massima (%(maxKb)sKB)",
@@ -401,15 +397,6 @@
     },
     "user_profile": {
         "unknown_account": "Account sconosciuto",
-        "user_hasnt_made_any_posts_yet":
-            "Sembra che %(name)snon abbia ancora pubblicato nessun post! ",
-        "user_hasnt_started_bloggin_yet":
-            "Sembra che %(name)s non abbia ancora iniziato a scrivere!",
-        "user_hasnt_followed_anything_yet":
-            "Sembra che %(name)snon stia seguendo ancora nessuno! Se %(name)sha aggiunto di recente nuovi utenti da seguire, il feed personalizzato si riempirà di contenuti non appena ce ne saranno di nuovi. ",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -594,14 +581,6 @@
         "create_an_account": "creare un accout",
         "to_save_your_preferences": "per salvare le tue preferenze"
     },
-    "posts_index": {
-        "empty_feed_1": "Sembra che tu non stia ancora seguendo nessuno. ",
-        "empty_feed_2":
-            "Se hai da poco aggiunto nuovi utenti da seguire, quando ci saranno nuovi contenuti disponibili li vedrai nel tuo feed personalizzato.",
-        "empty_feed_3": "Esplora gli Articoli in Trending",
-        "empty_feed_4": "Leggi la Guida di Avvio Rapido",
-        "empty_feed_5": "Leggi le FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "ai risparmi",
         "from_savings": "dai risparmi",
@@ -626,7 +605,6 @@
     },
     "header_jsx": {
         "home": "Home",
-        "create_a_post": "Crea un post",
         "change_account_password": "Cambia la password dell'account",
         "create_account": "Crea un account",
         "stolen_account_recovery": "Recupero account rubato",

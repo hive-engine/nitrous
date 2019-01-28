@@ -6,7 +6,6 @@ import Icon from 'app/components/elements/Icon';
 import resolveRoute from 'app/ResolveRoute';
 import tt from 'counterpart';
 import { APP_NAME } from 'app/client_config';
-import SortOrder from 'app/components/elements/SortOrder';
 import SearchInput from 'app/components/elements/SearchInput';
 import IconButton from 'app/components/elements/IconButton';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
@@ -33,26 +32,6 @@ class Header extends React.Component {
         super();
     }
 
-    // Conside refactor.
-    // I think 'last sort order' is something available through react-router-redux history.
-    // Therefore no need to store it in the window global like this.
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.pathname !== this.props.pathname) {
-            const route = resolveRoute(nextProps.pathname);
-            if (
-                route &&
-                route.page === 'PostsIndex' &&
-                route.params &&
-                route.params.length > 0
-            ) {
-                const sort_order =
-                    route.params[0] !== 'home' ? route.params[0] : null;
-                if (sort_order)
-                    window.last_sort_order = this.last_sort_order = sort_order;
-            }
-        }
-    }
-
     render() {
         const {
             category,
@@ -77,33 +56,9 @@ class Header extends React.Component {
         let home_account = false;
         let page_title = route.page;
 
-        let sort_order = '';
         let topic = '';
         let page_name = null;
         if (route.page === 'PostsIndex') {
-            sort_order = route.params[0];
-            if (sort_order === 'home') {
-                page_title = tt('header_jsx.home');
-                const account_name = route.params[1];
-                if (
-                    current_account_name &&
-                    account_name.indexOf(current_account_name) === 1
-                )
-                    home_account = true;
-            } else {
-                topic = route.params.length > 1 ? route.params[1] : '';
-                const type =
-                    route.params[0] == 'payout_comments' ? 'comments' : 'posts';
-                let prefix = route.params[0];
-                if (prefix == 'created') prefix = 'New';
-                if (prefix == 'payout') prefix = 'Pending payout';
-                if (prefix == 'payout_comments') prefix = 'Pending payout';
-                if (topic !== '') prefix += ` ${topic}`;
-                page_title = `${prefix} ${type}`;
-            }
-        } else if (route.page === 'Post') {
-            sort_order = '';
-            topic = route.params[0];
         } else if (route.page == 'Privacy') {
             page_title = tt('navigation.privacy_policy');
         } else if (route.page == 'Tos') {
@@ -171,10 +126,7 @@ class Header extends React.Component {
 
         const logo_link =
             resolveRoute(pathname).params &&
-            resolveRoute(pathname).params.length > 1 &&
-            this.last_sort_order
-                ? '/' + this.last_sort_order
-                : current_account_name ? `/@${current_account_name}/feed` : '/';
+            resolveRoute(pathname).params.length > 1;
 
         //TopRightHeader Stuff
         const defaultNavigate = e => {
@@ -259,23 +211,14 @@ class Header extends React.Component {
                     />
                 ) : null}
                 <nav className="row Header__nav">
-                    <div className="small-5 large-4 columns Header__logotype">
+                    <div className="small-5 large-6 columns Header__logotype">
                         {/*LOGO*/}
                         <Link to={logo_link}>
                             <SteemLogo />
                         </Link>
                     </div>
 
-                    <div className="large-4 columns show-for-large large-centered Header__sort">
-                        {/*SORT*/}
-                        <SortOrder
-                            sortOrder={order}
-                            topic={category === 'feed' ? '' : category}
-                            horizontal={true}
-                            pathname={pathname}
-                        />
-                    </div>
-                    <div className="small-7 large-4 columns Header__buttons">
+                    <div className="small-7 large-6 columns Header__buttons">
                         {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                         {!loggedIn && (
                             <span className="Header__user-signup show-for-medium">

@@ -267,10 +267,6 @@
         "intro_paragraph":
             "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요."
     },
-    "main_menu": {
-        "hot": "인기글",
-        "trending": "대세글"
-    },
     "reply_editor": {
         "shorten_title": "짧은 제목",
         "exceeds_maximum_length": "최대 용량 초과 (%(maxKb)sKB)",
@@ -396,15 +392,6 @@
     },
     "user_profile": {
         "unknown_account": "Unknown Account",
-        "user_hasnt_made_any_posts_yet":
-            "%(name)s님은 아직 남긴 글이 없습니다.",
-        "user_hasnt_started_bloggin_yet":
-            "%(name)s님은 아직 블로깅을 시작하지 않았습니다.",
-        "user_hasnt_followed_anything_yet":
-            "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "아직 포스팅을 하지 않았습니다.",
         "create_a_post": "글쓰기",
         "explore_trending_articles": "대세글 읽어보기",
         "read_the_quick_start_guide": "빠른 시작 가이드",
@@ -587,14 +574,6 @@
         "create_an_account": "create an account",
         "to_save_your_preferences": "to save your preferences"
     },
-    "posts_index": {
-        "empty_feed_1": "Looks like you haven't followed anything yet",
-        "empty_feed_2":
-            "If you recently added new users to follow, your personalized feed will populate once new content is available",
-        "empty_feed_3": "Explore Trending Articles",
-        "empty_feed_4": "Read The Quick Start Guide",
-        "empty_feed_5": "Browse The FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
         "from_savings": "from savings",
@@ -617,7 +596,6 @@
     },
     "header_jsx": {
         "home": "home",
-        "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",
         "stolen_account_recovery": "Stolen Account Recovery",

@@ -247,10 +247,6 @@
         "intro_paragraph":
             "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。"
     },
-    "main_menu": {
-        "hot": "热门",
-        "trending": "流行"
-    },
     "reply_editor": {
         "shorten_title": "缩短标题",
         "exceeds_maximum_length": "超过最大长度(%(maxKb)sKB)",
@@ -369,11 +365,6 @@
     },
     "user_profile": {
         "unknown_account": "未知的账户",
-        "user_hasnt_made_any_posts_yet": "看起来%(name)s还没有发过任何帖子!",
-        "user_hasnt_started_bloggin_yet": "看起来%(name)s还没有开始写博客!",
-        "user_hasnt_followed_anything_yet":
-            "看起来%(name)s还没有关注任何人!如果%(name)s最近添加关注了新的用户，他们的个性化主页上将会有显示。",
-        "user_hasnt_had_any_replies_yet": "%(name)s目前还没有回复",
         "followers": "关注者",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "这是%(name)s的声誉分数。声誉分数取决于账户收到的历史投票记录, 用于隐藏低质量的内容。",
@@ -543,14 +534,6 @@
         "create_an_account": "创建帐户",
         "to_save_your_preferences": "保存你的偏好"
     },
-    "posts_index": {
-        "empty_feed_1": "看起来你还没有关注任何人",
-        "empty_feed_2":
-            "如果你最近关注了新的用户，更新内容将会显示在你的个性化主页",
-        "empty_feed_3": "浏览流行文章",
-        "empty_feed_4": "阅读快速入门指南",
-        "empty_feed_5": "浏览常见问题解答"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "到储蓄账户",
         "from_savings": "从储蓄账户",
@@ -573,7 +556,6 @@
     },
     "header_jsx": {
         "home": "主页",
-        "create_a_post": "发表帖子",
         "change_account_password": "修改账户密码",
         "create_account": "创建账户",
         "stolen_account_recovery": "被盗账户恢复",

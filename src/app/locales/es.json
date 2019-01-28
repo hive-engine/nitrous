@@ -269,10 +269,6 @@
         "intro_paragraph":
             "Tu voz tiene valor. Únete a la comunidad que te paga por publicar y votar contenido de alta calidad"
     },
-    "main_menu": {
-        "hot": "en alza",
-        "trending": "tendencia"
-    },
     "reply_editor": {
         "shorten_title": "Abreviar el título",
         "exceeds_maximum_length": "Excede la capacidad máxima (%(maxKb)sKB)",
@@ -393,16 +389,6 @@
     },
     "user_profile": {
         "unknown_account": "Cuenta desconocida",
-        "user_hasnt_made_any_posts_yet":
-            "Parece que %(name)s aún no ha comenzado a postear",
-        "user_hasnt_started_bloggin_yet":
-            "Parece que %(name)s aún no ha comenzado su blog",
-        "user_hasnt_followed_anything_yet":
-            "Parece que %(name)s aún no está siguiendo a nadie. Si %(name)s acaba de añadir nuevas cuentas para seguir, el feed personalizado aparecerá cuando el nuevo contenido esté disponible.",
-        "user_hasnt_had_any_replies_yet":
-            "%(name)s todavía no ha tenido ninguna respuesta",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -588,14 +574,6 @@
         "create_an_account": "crea una cuenta",
         "to_save_your_preferences": "para guardar tus preferencias"
     },
-    "posts_index": {
-        "empty_feed_1": "Parece que no has seguido nada todavía",
-        "empty_feed_2":
-            "Si recientemente has añadido a gente para seguir, tu feed personalizado aparecerá una vez que el contenido esté disponible",
-        "empty_feed_3": "Explorar artículos en tendencia",
-        "empty_feed_4": "leer la guía básica para comenzar",
-        "empty_feed_5": "Explorar la FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "a ahorros",
         "from_savings": "desde ahorros",
@@ -618,7 +596,6 @@
     },
     "header_jsx": {
         "home": "inicio",
-        "create_a_post": "Crear una publicación",
         "change_account_password": "Cambiar Contraseña de la Cuenta",
         "create_account": "Crear cuenta",
         "stolen_account_recovery": "Recuperación de cuentas robadas",

@@ -267,10 +267,6 @@
         "intro_paragraph":
             "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。"
     },
-    "main_menu": {
-        "hot": "ホット",
-        "trending": "トレンド"
-    },
     "reply_editor": {
         "shorten_title": "タイトルが長すぎます",
         "exceeds_maximum_length": "最大長を超えています (%(maxKb)sKB)",
@@ -398,15 +394,6 @@
     },
     "user_profile": {
         "unknown_account": "不明なアカウント",
-        "user_hasnt_made_any_posts_yet":
-            "%(name)sはまだ1つも投稿していないようです！",
-        "user_hasnt_started_bloggin_yet":
-            "%(name)sはまだブログを開始していないようです！",
-        "user_hasnt_followed_anything_yet":
-            "%(name)sはまだ誰もフォローしていません！%(name)sが最近新しいユーザーをフォローした場合、新しいコンテンツが有効になると個々のフィードに追加されます。",
-        "user_hasnt_had_any_replies_yet": "%(name)sへの返信はまだありません。",
-        "looks_like_you_havent_posted_anything_yet":
-            "あなたはまだ1つも投稿していないようです！",
         "create_a_post": "投稿を作成する",
         "explore_trending_articles": "トレンド記事を検索する",
         "read_the_quick_start_guide": "クイックスタートガイドを読む",
@@ -590,14 +577,6 @@
         "create_an_account": "アカウントを作成して",
         "to_save_your_preferences": "表示設定を行ってください。"
     },
-    "posts_index": {
-        "empty_feed_1": "あなたはまだ誰もフォローしていないようです。",
-        "empty_feed_2":
-            "最近新しいユーザーをフォローした場合、新しいコンテンツが有効になると個々のフィードに追加されます。",
-        "empty_feed_3": "トレンド記事を検索する",
-        "empty_feed_4": "クイックスタートガイドを読む",
-        "empty_feed_5": "FAQを参照する"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "貯蓄に",
         "from_savings": "貯蓄から",
@@ -621,7 +600,6 @@
     },
     "header_jsx": {
         "home": "ホーム",
-        "create_a_post": "投稿を作成",
         "change_account_password": "アカウントパスワードを変更",
         "create_account": "アカウント作成",
         "stolen_account_recovery": "盗難アカウントの回復",

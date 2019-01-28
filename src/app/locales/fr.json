@@ -278,10 +278,6 @@
         "intro_paragraph":
             "Votre voix vaut quelque chose. Rejoignez la communauté qui vous rémunère pour vos articles et participez à la curation du contenu de qualité."
     },
-    "main_menu": {
-        "hot": "chaud",
-        "trending": "en vogue"
-    },
     "reply_editor": {
         "shorten_title": "Raccourcir le titre",
         "exceeds_maximum_length":
@@ -411,16 +407,6 @@
     },
     "user_profile": {
         "unknown_account": "Compte inconnu",
-        "user_hasnt_made_any_posts_yet":
-            "Il semblerait que %(name)s n'ait pas encore publié d'article.",
-        "user_hasnt_started_bloggin_yet":
-            "Il semblerait que %(name)s n'ait pas encore commencer à blogger.",
-        "user_hasnt_followed_anything_yet":
-            "Il semblerait que %(name)s ne soit fan de personne. Dans le cas où %(name)s s'abonnerait au fil d'autres utilisateurs, son flux sera automatiquement rempli avec du nouveau contenu.",
-        "user_hasnt_had_any_replies_yet":
-            "%(name)s n'a pas encore reçu de réponse",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -605,16 +591,6 @@
         "create_an_account": "créer un compte",
         "to_save_your_preferences": "Pour enregistrer vos préférences"
     },
-    "posts_index": {
-        "empty_feed_1":
-            "Il semblerait que vous ne vous êtes abonné(e) à aucun fil pour le moment",
-        "empty_feed_2":
-            "Si vous vous êtes récemment abonné(e) au fil de nouveaux utilisateurs, votre flux personnel sera automatiquement rempli lorsque du nouveau contenu apparaîtra",
-        "empty_feed_3": "Explorer les articles en vogue",
-        "empty_feed_4": "Lire le guide de prise en main rapide",
-        "empty_feed_5": "Parcourir la FAQ",
-        "my_feed": "Mon Flux"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "vers l'épargne",
         "from_savings": "depuis l'épargne",
@@ -640,7 +616,6 @@
     },
     "header_jsx": {
         "home": "répertoire personnel",
-        "create_a_post": "Créer un article",
         "change_account_password": "Changer le mot de passe du compte",
         "create_account": "Créer un compte",
         "stolen_account_recovery": "Récupération des comptes dérobés",
