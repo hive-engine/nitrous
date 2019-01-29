@@ -39,15 +39,8 @@ class App extends React.Component {
         this.state = {
             showCallout: true,
             showBanner: true,
-            gptBannerHeight: 0,
         };
         this.listenerActive = null;
-        this.gptadshownListener = this.gptadshown.bind(this);
-    }
-
-    gptadshown(e) {
-        const height = document.querySelector('header .gpt-ad').offsetHeight;
-        this.setState({ gptBannerHeight: height });
     }
 
     componentWillMount() {
@@ -56,15 +49,9 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('gptadshown', this.gptadshownListener);
-
         if (pageRequiresEntropy(this.props.pathname)) {
             this._addEntropyCollector();
         }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('gptadshown', this.gptadshownListener);
     }
 
     componentWillReceiveProps(np) {
@@ -114,7 +101,6 @@ class App extends React.Component {
             new_visitor !== n.new_visitor ||
             this.state.showBanner !== nextState.showBanner ||
             this.state.showCallout !== nextState.showCallout ||
-            this.state.gptBannerHeight !== nextState.gptBannerHeight ||
             nightmodeEnabled !== n.nightmodeEnabled ||
             showAnnouncement !== n.showAnnouncement
         );
@@ -255,10 +241,7 @@ class App extends React.Component {
                     />
                 )}
 
-                <div
-                    className="App__content"
-                    style={{ paddingTop: `${this.state.gptBannerHeight}px` }}
-                >
+                <div className="App__content">
                     {process.env.BROWSER &&
                     ip &&
                     new_visitor &&

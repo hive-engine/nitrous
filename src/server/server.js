@@ -118,25 +118,6 @@ session(app, {
 });
 csrf(app);
 
-// If a user is logged in, we need to make sure that they receive the correct
-// headers.
-app.use(function*(next) {
-    if (this.request.url.startsWith('/api')) {
-        yield next;
-        return;
-    }
-
-    const auth = this.request.query.auth;
-    if (auth) {
-        this.request.url = this.request.url.replace(/[?&]{1}auth=true/, '');
-        this.session['auth'] = true;
-        this.session.save();
-        this.request.query.auth = null;
-    }
-
-    yield next;
-});
-
 koaLocale(app);
 
 function convertEntriesToArrays(obj) {
@@ -259,14 +240,6 @@ useEnterAndConfirmMobilePages(app);
 useAccountRecoveryApi(app);
 useGeneralApi(app);
 
-app.use(function*(next) {
-    this.adsEnabled =
-        !(this.session.auth || this.session.a) && config.google_ad_enabled;
-    this.gptEnabled =
-        !(this.session.auth || this.session.a) && config.gpt_enabled;
-    yield next;
-});
-
 // helmet wants some things as bools and some as lists, makes config difficult.
 // our config uses strings, this splits them to lists on whitespace.
 if (env === 'production') {
@@ -280,44 +253,7 @@ if (env === 'production') {
         delete helmetConfig.directives.reportUri;
     }
 
-    if (!helmetConfig.directives.frameSrc) {
-        helmetConfig.directives.frameSrc = [
-            `'self'`,
-            'googleads.g.doubleclick.net',
-            'https:',
-        ];
-    }
-
     app.use(helmet.contentSecurityPolicy(helmetConfig));
-    app.use(function*(next) {
-        if (this.adsEnabled) {
-            // If user is signed out, enable ads.
-            [
-                'content-security-policy',
-                'x-content-security-policy',
-                'x-webkit-csp',
-            ].forEach(header => {
-                let policy = this.response.header[header]
-                    .split(/;\s+/)
-                    .map(el => {
-                        if (el.startsWith('script-src')) {
-                            const oldScriptSrc = el.replace(/^script-src/, '');
-                            return `script-src 'unsafe-inline' 'unsafe-eval' data: https: ${
-                                oldScriptSrc
-                            }`;
-                        } else {
-                            return el;
-                        }
-                    })
-                    .join('; ');
-                this.response.set(header, policy);
-            });
-            yield next;
-        } else {
-            // If user is logged in, do not modify CSP headers further.
-            yield next;
-        }
-    });
 }
 
 if (env !== 'test') {
