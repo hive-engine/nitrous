@@ -39,7 +39,6 @@ export default class UserProfile extends React.Component {
         this.onPrint = () => {
             window.print();
         };
-        this.loadMore = this.loadMore.bind(this);
     }
 
     shouldComponentUpdate(np, ns) {
@@ -81,7 +80,6 @@ export default class UserProfile extends React.Component {
             np.loading !== this.props.loading ||
             np.location.pathname !== this.props.location.pathname ||
             np.follow_count !== this.props.follow_count ||
-            np.blogmode !== this.props.blogmode ||
             ns.showResteem !== this.state.showResteem
         );
     }
@@ -90,59 +88,6 @@ export default class UserProfile extends React.Component {
         this.props.clearTransferDefaults();
         this.props.clearPowerdownDefaults();
     }
-
-    loadMore(last_post, category, showResteem) {
-        const { accountname } = this.props;
-
-        if (!last_post) return;
-
-        let order;
-        switch (category) {
-            case 'feed':
-                order = 'by_feed';
-                break;
-            case 'blog':
-                order = 'by_author';
-                break;
-            case 'comments':
-                order = 'by_comments';
-                break;
-            case 'recent_replies':
-                order = 'by_replies';
-                break;
-            default:
-                console.log('unhandled category:', category);
-        }
-
-        if (
-            isFetchingOrRecentlyUpdated(
-                this.props.global_status,
-                order,
-                category
-            )
-        ) {
-            return;
-        }
-
-        const postFilter = showResteem
-            ? null
-            : value => value.author === accountname;
-        const [author, permlink] = last_post.split('/');
-        this.props.requestData({
-            author,
-            permlink,
-            order,
-            category,
-            accountname,
-            postFilter,
-        });
-    }
-
-    toggleShowResteem = e => {
-        e.preventDefault();
-        const newShowResteem = !this.state.showResteem;
-        this.setState({ showResteem: newShowResteem });
-    };
 
     render() {
         const {
@@ -312,9 +257,7 @@ export default class UserProfile extends React.Component {
             }
         }
 
-        const layoutClass = this.props.blogmode
-            ? 'layout-block'
-            : 'layout-list';
+        const layoutClass = 'layout-list';
 
         const blog_header = (
             <div>
@@ -532,7 +475,6 @@ module.exports = {
                 account: state.global.getIn(['accounts', accountname]),
                 follow: state.global.get('follow'),
                 follow_count: state.global.get('follow_count'),
-                blogmode: state.app.getIn(['user_preferences', 'blogmode']),
             };
         },
         dispatch => ({

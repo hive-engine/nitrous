@@ -122,10 +122,6 @@ class Header extends React.Component {
                 page_title.charAt(0).toUpperCase() + page_title.slice(1);
         }
 
-        const logo_link =
-            resolveRoute(pathname).params &&
-            resolveRoute(pathname).params.length > 1;
-
         //TopRightHeader Stuff
         const defaultNavigate = e => {
             if (e.metaKey || e.ctrlKey) {
@@ -143,34 +139,12 @@ class Header extends React.Component {
         // Since navigate isn't set, defaultNavigate will always be used.
         const nav = navigate || defaultNavigate;
 
-        const submit_story = $STM_Config.read_only_mode ? null : (
-            <Link to="/submit.html">
-                <IconButton />
-            </Link>
-        );
-
-        const feed_link = `/@${username}/feed`;
-        const replies_link = `/@${username}/recent-replies`;
         const wallet_link = `/@${username}/transfers`;
         const account_link = `/@${username}`;
-        const comments_link = `/@${username}/comments`;
         const reset_password_link = `/@${username}/password`;
         const settings_link = `/@${username}/settings`;
-        const pathCheck = userPath === '/submit.html' ? true : null;
 
         const user_menu = [
-            {
-                link: feed_link,
-                icon: 'home',
-                value: tt('g.feed'),
-            },
-            { link: account_link, icon: 'profile', value: tt('g.blog') },
-            { link: comments_link, icon: 'replies', value: tt('g.comments') },
-            {
-                link: replies_link,
-                icon: 'reply',
-                value: tt('g.replies'),
-            },
             {
                 link: wallet_link,
                 icon: 'wallet',
@@ -205,7 +179,7 @@ class Header extends React.Component {
                 <nav className="row Header__nav">
                     <div className="small-5 large-6 columns Header__logotype">
                         {/*LOGO*/}
-                        <Link to={logo_link}>
+                        <Link to="/">
                             <SteemLogo />
                         </Link>
                     </div>
@@ -240,8 +214,6 @@ class Header extends React.Component {
                             </a>
                         </span>
 
-                        {/*SUBMIT STORY*/}
-                        {submit_story}
                         {/*USER AVATAR */}
                         {loggedIn && (
                             <DropdownMenu

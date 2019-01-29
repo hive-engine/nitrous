@@ -1,17 +1,17 @@
 import GDPRUserList from './utils/GDPRUserList';
 
 export const routeRegex = {
-    PostsIndex: /^\/(@[\w\.\d-]+)\/feed\/?$/,
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
-    UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|feed|password|followed|followers|settings)\/?$/,
+    UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|password|followed|followers|settings)\/?$/,
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    UserEndPoints: /^(transfers|permissions|created|feed|password|followed|followers|settings)$/,
+    UserEndPoints: /^(transfers|permissions|created|password|followed|followers|settings)$/,
     CategoryFilters: /^\/(cashout|payout|payout_comments|created|active)\/?$/gi,
 };
 
 export default function resolveRoute(path) {
+    let match;
     if (path === '/') {
-        return { page: 'PostsIndex', params: ['trending'] };
+        return { page: 'PostsIndex' };
     }
     if (path === '/about.html') {
         return { page: 'About' };
@@ -63,13 +63,6 @@ export default function resolveRoute(path) {
     }
     if (path === '/~witnesses') {
         return { page: 'Witnesses' };
-    }
-    let match = path.match(routeRegex.PostsIndex);
-    if (match) {
-        if (GDPRUserList.includes(match[1].substring(1))) {
-            return { page: 'NotFound' };
-        }
-        return { page: 'PostsIndex', params: ['home', match[1]] };
     }
     match =
         path.match(routeRegex.UserProfile1) ||

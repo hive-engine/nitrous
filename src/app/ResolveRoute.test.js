@@ -4,11 +4,10 @@ import resolveRoute, { routeRegex } from './ResolveRoute';
 describe('routeRegex', () => {
     it('should produce the desired regex patterns', () => {
         const test_cases = [
-            ['PostsIndex', /^\/(@[\w\.\d-]+)\/feed\/?$/],
             ['UserProfile1', /^\/(@[\w\.\d-]+)\/?$/],
             [
                 'UserProfile2',
-                /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|feed|password|followed|followers|settings)\/?$/,
+                /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|password|followed|followers|settings)\/?$/,
             ],
             ['UserProfile3', /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/],
             [
@@ -41,11 +40,6 @@ describe('resolveRoute', () => {
         ['/waiting_list.html', { page: 'WaitingList' }],
         ['/market', { page: 'Market' }],
         ['/~witnesses', { page: 'Witnesses' }],
-        [
-            '/@maitland/feed',
-            { page: 'PostsIndex', params: ['home', '@maitland'] },
-        ],
-        ['/@gdpr/feed', { page: 'NotFound' }],
         ['/@gdpr/nice345', { page: 'NotFound' }],
         ['/taggy/@gdpr/nice345', { page: 'NotFound' }],
     ];

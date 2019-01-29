@@ -474,7 +474,6 @@ class Market extends React.Component {
                                     ).toFixed(3)}%
                                 </li>
                             )}
-                            {/*<li><b>Feed price</b> ${ticker.feed_price.toFixed(3)}</li>*/}
                         </ul>
                     </div>
                 </div>

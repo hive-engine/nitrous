@@ -153,7 +153,6 @@ function* usernamePasswordLogin2({
     );
 
     // login, using saved password
-    let feedURL = false;
     let autopost, memoWif, login_owner_pubkey, login_wif_owner_pubkey;
     if (!username && !password) {
         const data = localStorage.getItem('autopost2');
@@ -340,7 +339,6 @@ function* usernamePasswordLogin2({
 
     // If user is signing operation by operaion and has no saved login, don't save to RAM
     if (!operationType || saveLogin) {
-        if (username) feedURL = '/@' + username + '/feed';
         // Keep the posting key in RAM but only when not signing an operation.
         // No operation or the user has checked: Keep me logged in...
         yield put(
@@ -356,7 +354,6 @@ function* usernamePasswordLogin2({
             })
         );
     } else {
-        if (username) feedURL = '/@' + username + '/feed';
         yield put(
             userActions.setUser({
                 username,
@@ -417,9 +414,6 @@ function* usernamePasswordLogin2({
     if (afterLoginRedirectToWelcome) {
         console.log('Redirecting to welcome page');
         browserHistory.push('/welcome');
-    } else if (feedURL && document.location.pathname === '/') {
-        console.log('Redirecting to feed page', feedURL);
-        browserHistory.push(feedURL);
     }
 }
 
