@@ -3,10 +3,10 @@ import GDPRUserList from './utils/GDPRUserList';
 export const routeRegex = {
     PostsIndex: /^\/(@[\w\.\d-]+)\/feed\/?$/,
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
-    UserProfile2: /^\/(@[\w\.\d-]+)\/(blog|posts|comments|recommended|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)\/?$/,
+    UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|feed|password|followed|followers|settings)\/?$/,
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    UserEndPoints: /^(blog|posts|comments|recommended|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)$/,
-    CategoryFilters: /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/gi,
+    UserEndPoints: /^(transfers|permissions|created|feed|password|followed|followers|settings)$/,
+    CategoryFilters: /^\/(cashout|payout|payout_comments|created|active)\/?$/gi,
 };
 
 export default function resolveRoute(path) {
@@ -36,9 +36,6 @@ export default function resolveRoute(path) {
     }
     if (path === '/benchmark' && process.env.OFFLINE_SSR_TEST) {
         return { page: 'Benchmark' };
-    }
-    if (path.match(/^\/tags\/?/)) {
-        return { page: 'Tags' };
     }
     if (path === '/tos.html') {
         return { page: 'Tos' };
@@ -85,11 +82,9 @@ export default function resolveRoute(path) {
         return { page: 'UserProfile', params: match.slice(1) };
     }
     match =
+        path.match(/^\/(cashout|payout|payout_comments|created|active)\/?$/) ||
         path.match(
-            /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/
-        ) ||
-        path.match(
-            /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/([\w\d-]+)\/?$/
+            /^\/(cashout|payout|payout_comments|created|active)\/([\w\d-]+)\/?$/
         );
     if (match) {
         return { page: 'PostsIndex', params: match.slice(1) };

@@ -30,8 +30,6 @@ export default {
             cb(null, [require('app/components/pages/XSS')]);
         } else if (route.page === 'Benchmark') {
             cb(null, [require('app/components/pages/Benchmark')]);
-        } else if (route.page === 'Tags') {
-            cb(null, [require('app/components/pages/TagsIndex')]);
         } else if (route.page === 'Tos') {
             cb(null, [require('app/components/pages/Tos')]);
         } else if (route.page === 'ChangePassword') {

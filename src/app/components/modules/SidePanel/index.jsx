@@ -53,11 +53,6 @@ const SidePanel = ({ alignment, visible, hideSidePanel, username }) => {
                 link: `/faq.html`,
             },
             {
-                value: 'tags',
-                label: tt('navigation.explore'),
-                link: `/tags`,
-            },
-            {
                 value: 'market',
                 label: tt('navigation.currency_market'),
                 link: `/market`,

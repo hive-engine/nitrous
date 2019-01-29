@@ -8,12 +8,12 @@ describe('routeRegex', () => {
             ['UserProfile1', /^\/(@[\w\.\d-]+)\/?$/],
             [
                 'UserProfile2',
-                /^\/(@[\w\.\d-]+)\/(blog|posts|comments|recommended|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)\/?$/,
+                /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|feed|password|followed|followers|settings)\/?$/,
             ],
             ['UserProfile3', /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/],
             [
                 'CategoryFilters',
-                /^\/(hot|votes|responses|trending|trending30|promoted|cashout|payout|payout_comments|created|active)\/?$/gi,
+                /^\/(cashout|payout|payout_comments|created|active)\/?$/gi,
             ],
         ];
 
@@ -46,11 +46,6 @@ describe('resolveRoute', () => {
             { page: 'PostsIndex', params: ['home', '@maitland'] },
         ],
         ['/@gdpr/feed', { page: 'NotFound' }],
-        [
-            '/@maitland/blog',
-            { page: 'UserProfile', params: ['@maitland', 'blog'] },
-        ],
-        ['/@gdpr/blog', { page: 'NotFound' }],
         ['/@gdpr/nice345', { page: 'NotFound' }],
         ['/taggy/@gdpr/nice345', { page: 'NotFound' }],
     ];
