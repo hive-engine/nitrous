@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
-// import Icon from 'app/components/elements/Icon';
 import Memo from 'app/components/elements/Memo';
 import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
@@ -24,7 +23,7 @@ class TransferHistoryRow extends React.Component {
         const type = op[1].op[0];
         const data = op[1].op[1];
 
-        /*  all transfers involve up to 2 accounts, context and 1 other. */
+        /* All transfers involve up to 2 accounts, context and 1 other. */
         let message = '';
 
         let description_start = '';
@@ -160,8 +159,6 @@ class TransferHistoryRow extends React.Component {
                     </span>
                 );
                 // tt('g.transfer') + `${fromWhere} ${data.amount}` + tt('g.from');
-                //other_account = data.from;
-                //description_end += tt('g.to') + data.to;
             }
         } else if (type === 'cancel_transfer_from_savings') {
             message = tt(
@@ -285,7 +282,6 @@ class TransferHistoryRow extends React.Component {
         } else {
             message = JSON.stringify({ type, ...data }, null, 2);
         }
-        // <Icon name="clock" className="space-right" />
         return (
             <tr key={op[0]} className="Trans">
                 <td>
