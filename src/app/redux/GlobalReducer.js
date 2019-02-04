@@ -14,7 +14,6 @@ const SET_COLLAPSED = 'global/SET_COLLAPSED';
 const RECEIVE_STATE = 'global/RECEIVE_STATE';
 const RECEIVE_ACCOUNT = 'global/RECEIVE_ACCOUNT';
 const RECEIVE_ACCOUNTS = 'global/RECEIVE_ACCOUNTS';
-const SYNC_PINNED_POSTS = 'global/SYNC_PINNED_POSTS';
 const RECEIVE_COMMENT = 'global/RECEIVE_COMMENT';
 const RECEIVE_CONTENT = 'global/RECEIVE_CONTENT';
 const LINK_REPLY = 'global/LINK_REPLY';
@@ -459,11 +458,6 @@ export const receiveAccount = payload => ({
 
 export const receiveAccounts = payload => ({
     type: RECEIVE_ACCOUNTS,
-    payload,
-});
-
-export const syncPinnedPosts = payload => ({
-    type: SYNC_PINNED_POSTS,
     payload,
 });
 
