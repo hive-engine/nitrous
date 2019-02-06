@@ -262,10 +262,7 @@
         "api_docs": "스팀잇 API 문서",
         "bluepaper": "스팀 블루페이퍼",
         "smt_whitepaper": "SMT 화이트페이퍼",
-        "whitepaper": "스팀 화이트페이퍼",
-        "intro_tagline": "생각의 가치",
-        "intro_paragraph":
-            "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요."
+        "whitepaper": "스팀 화이트페이퍼"
     },
     "reply_editor": {
         "shorten_title": "짧은 제목",

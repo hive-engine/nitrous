@@ -242,10 +242,7 @@
         "app_center": "Steemit应用中心",
         "business_center": "Businesses Accepting Steem",
         "api_docs": "Steemit API文档",
-        "whitepaper": "Steem白皮书",
-        "intro_tagline": "妙笔生金",
-        "intro_paragraph":
-            "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。"
+        "whitepaper": "Steem白皮书"
     },
     "reply_editor": {
         "shorten_title": "缩短标题",

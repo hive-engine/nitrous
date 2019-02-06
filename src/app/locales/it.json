@@ -265,10 +265,7 @@
         "api_docs": "Steemit API Docs",
         "bluepaper": "Steem Bluepaper",
         "smt_whitepaper": "SMT Whitepaper",
-        "whitepaper": "Steem Whitepaper",
-        "intro_tagline": "Il denaro parla",
-        "intro_paragraph":
-            "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità."
+        "whitepaper": "Steem Whitepaper"
     },
     "reply_editor": {
         "shorten_title": "Titolo breve",

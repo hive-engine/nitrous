@@ -262,10 +262,7 @@
         "business_center": "Businesses Accepting Steem",
         "api_docs": "Steemit API資料",
         "bluepaper": "Steemブルーペーパー",
-        "whitepaper": "Steemホワイトペーパー",
-        "intro_tagline": "金がものを言う",
-        "intro_paragraph":
-            "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。"
+        "whitepaper": "Steemホワイトペーパー"
     },
     "reply_editor": {
         "shorten_title": "タイトルが長すぎます",

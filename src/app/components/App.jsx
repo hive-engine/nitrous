@@ -9,7 +9,6 @@ import ConnectedSidePanel from 'app/components/modules/ConnectedSidePanel';
 import CloseButton from 'app/components/elements/CloseButton';
 import Dialogs from 'app/components/modules/Dialogs';
 import Modals from 'app/components/modules/Modals';
-import WelcomePanel from 'app/components/elements/WelcomePanel';
 import MiniHeader from 'app/components/modules/MiniHeader';
 import tt from 'counterpart';
 import PageViewsCounter from 'app/components/elements/PageViewsCounter';
@@ -38,7 +37,6 @@ class App extends React.Component {
         // TODO: put both of these and associated toggles into Redux Store.
         this.state = {
             showCallout: true,
-            showBanner: true,
         };
         this.listenerActive = null;
     }
@@ -99,16 +97,11 @@ class App extends React.Component {
         return (
             pathname !== n.pathname ||
             new_visitor !== n.new_visitor ||
-            this.state.showBanner !== nextState.showBanner ||
             this.state.showCallout !== nextState.showCallout ||
             nightmodeEnabled !== n.nightmodeEnabled ||
             showAnnouncement !== n.showAnnouncement
         );
     }
-
-    setShowBannerFalse = () => {
-        this.setState({ showBanner: false });
-    };
 
     onEntropyEvent = e => {
         if (e.type === 'mousemove')
@@ -242,14 +235,6 @@ class App extends React.Component {
                 )}
 
                 <div className="App__content">
-                    {process.env.BROWSER &&
-                    ip &&
-                    new_visitor &&
-                    this.state.showBanner ? (
-                        <WelcomePanel
-                            setShowBannerFalse={this.setShowBannerFalse}
-                        />
-                    ) : null}
                     {callout}
                     {children}
                 </div>
