@@ -20,6 +20,7 @@ const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
 const CLEAR_POWERDOWN_DEFAULTS = 'user/CLEAR_POWERDOWN_DEFAULTS';
 export const USERNAME_LOGIN = 'user/USERNAME_LOGIN';
 export const USERNAME_PASSWORD_LOGIN = 'user/USERNAME_PASSWORD_LOGIN';
+export const SET_USERNAME = 'user/SET_USERNAME';
 export const SET_USER = 'user/SET_USER';
 const CLOSE_LOGIN = 'user/CLOSE_LOGIN';
 export const LOGIN_ERROR = 'user/LOGIN_ERROR';
@@ -163,6 +164,11 @@ export default function reducer(state = defaultState, action) {
         case USERNAME_PASSWORD_LOGIN:
         case LOAD_SAVINGS_WITHDRAW:
             return state; // saga
+
+        case SET_USERNAME:
+            return state.merge({
+                username: payload.username,
+            });
 
         case SET_USER:
             if (payload.vesting_shares)
@@ -346,6 +352,11 @@ export const usernameLogin = payload => ({
 
 export const usernamePasswordLogin = payload => ({
     type: USERNAME_PASSWORD_LOGIN,
+    payload,
+});
+
+export const setUsername = payload => ({
+    type: SET_USERNAME,
     payload,
 });
 

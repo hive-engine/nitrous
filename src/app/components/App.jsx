@@ -282,6 +282,6 @@ export default connect(
         };
     },
     dispatch => ({
-        loginUser: () => dispatch(userActions.usernamePasswordLogin({})),
+        loginUser: () => dispatch(userActions.usernameLogin({})),
     })
 )(App);

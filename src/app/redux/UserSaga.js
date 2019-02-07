@@ -100,9 +100,21 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     @arg {object} action.username - The user's username.
 */
 function* usernameLogin(action) {
-    console.log('usernameLogin', action);
-    localStorage.setItem('username', action.payload.username);
-    serverApiRecordEvent('SignIn', 'Login');
+    if (action.payload.username && action.payload.username.length > 0) {
+        const username = action.payload.username;
+        sessionStorage.setItem('username', username);
+        serverApiRecordEvent('SignIn', 'Login');
+        userActions.setUsername({ username });
+        console.log('SIGN IN: Signed in', action);
+    } else {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            userActions.setUsername({ username });
+            console.log('SIGN IN: Already signed in', action, username);
+        } else {
+            console.log('SIGN IN: Not signed in', action);
+        }
+    }
 }
 
 /**
