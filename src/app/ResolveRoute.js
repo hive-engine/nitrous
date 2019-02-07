@@ -11,7 +11,7 @@ export const routeRegex = {
 export default function resolveRoute(path) {
     let match;
     if (path === '/') {
-        return { page: 'PostsIndex' };
+        return { page: 'WalletIndex' };
     }
     if (path === '/about.html') {
         return { page: 'About' };
@@ -80,7 +80,7 @@ export default function resolveRoute(path) {
             /^\/(cashout|payout|payout_comments|created|active)\/([\w\d-]+)\/?$/
         );
     if (match) {
-        return { page: 'PostsIndex', params: match.slice(1) };
+        return { page: 'WalletIndex', params: match.slice(1) };
     }
     return { page: 'NotFound' };
 }

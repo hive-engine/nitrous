@@ -56,7 +56,7 @@ class Header extends React.Component {
 
         let topic = '';
         let page_name = null;
-        if (route.page === 'PostsIndex') {
+        if (route.page === 'WalletIndex') {
         } else if (route.page == 'Privacy') {
             page_title = tt('navigation.privacy_policy');
         } else if (route.page == 'Tos') {

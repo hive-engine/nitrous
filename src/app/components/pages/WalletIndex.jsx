@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class PostsIndex extends React.Component {
+class WalletIndex extends React.Component {
     render() {
         return <div />;
     }
@@ -17,5 +17,5 @@ module.exports = {
         dispatch => {
             return {};
         }
-    )(PostsIndex),
+    )(WalletIndex),
 };

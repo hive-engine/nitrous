@@ -1,6 +1,6 @@
 import App from 'app/components/App';
 import Benchmark from 'app/components/pages/Benchmark';
-import PostsIndex from 'app/components/pages/PostsIndex';
+import WalletIndex from 'app/components/pages/WalletIndex';
 import resolveRoute from './ResolveRoute';
 
 // polyfill webpack require.ensure
@@ -54,8 +54,8 @@ export default {
             require.ensure([], require => {
                 cb(null, [require('app/components/pages/Market')]);
             });
-        } else if (route.page === 'PostsIndex') {
-            cb(null, [PostsIndex]);
+        } else if (route.page === 'WalletIndex') {
+            cb(null, [WalletIndex]);
         } else {
             cb(process.env.BROWSER ? null : Error(404), [
                 require('app/components/pages/NotFound'),
@@ -63,6 +63,6 @@ export default {
         }
     },
     indexRoute: {
-        component: PostsIndex.component,
+        component: WalletIndex.component,
     },
 };
