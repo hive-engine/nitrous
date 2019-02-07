@@ -18,6 +18,7 @@ const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
 const CLEAR_TRANSFER_DEFAULTS = 'user/CLEAR_TRANSFER_DEFAULTS';
 const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
 const CLEAR_POWERDOWN_DEFAULTS = 'user/CLEAR_POWERDOWN_DEFAULTS';
+export const USERNAME_LOGIN = 'user/USERNAME_LOGIN';
 export const USERNAME_PASSWORD_LOGIN = 'user/USERNAME_PASSWORD_LOGIN';
 export const SET_USER = 'user/SET_USER';
 const CLOSE_LOGIN = 'user/CLOSE_LOGIN';
@@ -335,6 +336,11 @@ export const setPowerdownDefaults = payload => ({
 
 export const clearPowerdownDefaults = payload => ({
     type: CLEAR_POWERDOWN_DEFAULTS,
+    payload,
+});
+
+export const usernameLogin = payload => ({
+    type: USERNAME_LOGIN,
     payload,
 });
 

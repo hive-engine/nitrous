@@ -25,6 +25,7 @@ export const userWatches = [
         'user/lookupPreviousOwnerAuthority',
         lookupPreviousOwnerAuthority
     ),
+    takeLatest(userActions.USERNAME_LOGIN, usernameLogin),
     takeLatest(userActions.USERNAME_PASSWORD_LOGIN, usernamePasswordLogin),
     takeLatest(userActions.SAVE_LOGIN, saveLogin_localStorage),
     takeLatest(userActions.LOGOUT, logout),
@@ -93,6 +94,15 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     // from getting logged out when they click on Permissions (which is really bad because that tab
     // disappears again).
     if (!highSecurityPage) yield put(userActions.removeHighSecurityKeys());
+}
+
+/**
+    @arg {object} action.username - The user's username.
+*/
+function* usernameLogin(action) {
+    console.log('usernameLogin', action);
+    localStorage.setItem('username', action.payload.username);
+    serverApiRecordEvent('SignIn', 'Login');
 }
 
 /**
