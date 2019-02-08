@@ -104,14 +104,13 @@ function* usernameLogin(action) {
         const username = action.payload.username;
         sessionStorage.setItem('username', username);
         serverApiRecordEvent('SignIn', 'Login');
-        userActions.setUsername({ username });
-        console.log('SIGN IN: Signed in', action);
+        yield put(userActions.setUsername({ username }));
     } else {
         const username = sessionStorage.getItem('username');
         if (username) {
-            userActions.setUsername({ username });
-            console.log('SIGN IN: Already signed in', action, username);
+            yield put(userActions.setUsername({ username }));
         } else {
+            // TODO: Finish this
             console.log('SIGN IN: Not signed in', action);
         }
     }

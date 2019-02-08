@@ -166,8 +166,13 @@ export default function reducer(state = defaultState, action) {
             return state; // saga
 
         case SET_USERNAME:
-            return state.merge({
-                username: payload.username,
+            // TODO: Clean this up
+            return state.mergeDeep({
+                current: payload,
+                show_login_modal: false,
+                loginBroadcastOperation: undefined,
+                loginDefault: undefined,
+                logged_out: undefined,
             });
 
         case SET_USER:

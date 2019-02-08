@@ -265,6 +265,7 @@ const mapStateToProps = (state, ownProps) => {
         ]);
     }
 
+    // TODO: Cleanup
     const userPath = state.routing.locationBeforeTransitions.pathname;
     const username = state.user.getIn(['current', 'username']);
     const loggedIn = !!username;
