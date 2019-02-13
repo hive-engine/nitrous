@@ -75,25 +75,6 @@ function* showTransactionErrorNotification() {
     }
 }
 
-export function* getContent({ author, permlink, resolve, reject }) {
-    let content;
-    while (!content) {
-        content = yield call([api, api.getContentAsync], author, permlink);
-        if (content['author'] == '') {
-            // retry if content not found. #1870
-            content = null;
-            yield call(wait, 3000);
-        }
-    }
-
-    yield put(globalActions.receiveContent({ content }));
-    if (resolve && content) {
-        resolve(content);
-    } else if (reject && !content) {
-        reject();
-    }
-}
-
 /**
  * Save this user's preferences, either directly from the submitted payload or from whatever's saved in the store currently.
  *

@@ -6,14 +6,12 @@ import { cloneableGenerator } from 'redux-saga/utils';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import {
     preBroadcast_comment,
-    createPermlink,
     createPatch,
     recoverAccount,
     preBroadcast_transfer,
     transactionWatches,
     broadcastOperation,
     updateAuthorities,
-    updateMeta,
 } from './TransactionSaga';
 import { DEBT_TICKER } from 'app/client_config';
 
@@ -57,7 +55,6 @@ describe('TransactionSaga', () => {
                     transactionActions.UPDATE_AUTHORITIES,
                     updateAuthorities
                 ),
-                takeEvery(transactionActions.UPDATE_META, updateMeta),
                 takeEvery(transactionActions.RECOVER_ACCOUNT, recoverAccount),
             ]);
         });
@@ -209,122 +206,6 @@ describe('TransactionSaga', () => {
             let gen = preBroadcast_transfer(arg);
             const actual = gen.next().value;
             expect(actual).toEqual(operationSansMemo);
-        });
-    });
-
-    describe('createPermlink', () => {
-        const gen = createPermlink(
-            operation.title,
-            operation.author,
-            operation.parent_author,
-            operation.parent_permlink
-        );
-        it('should call the api to get a permlink if the title is valid', () => {
-            const actual = gen.next().value;
-            const mockCall = call(
-                [api, api.getContentAsync],
-                operation.author,
-                operation.title
-            );
-            expect(actual).toEqual(mockCall);
-        });
-        it('should return a string containing the transformed data from the api', () => {
-            const permlink = gen.next({ body: 'test' }).value;
-            expect(permlink.indexOf('test') > -1).toEqual(true); // TODO: cannot deep equal due to date stamp at runtime.
-        });
-        it('should generate own permlink, independent of api if title is empty', () => {
-            const gen2 = createPermlink(
-                '',
-                operation.author,
-                operation.parent_author,
-                operation.parent_permlink
-            );
-            const actual = gen2.next().value;
-            expect(
-                actual.indexOf(
-                    `re-${operation.parent_author}-${
-                        operation.parent_permlink
-                    }-`
-                ) > -1
-            ).toEqual(true); // TODO: cannot deep equal due to random hash at runtime.
-        });
-    });
-
-    describe('preBroadcast_comment', () => {
-        let gen = preBroadcast_comment({ operation, username });
-
-        it('should call createPermlink', () => {
-            const permlink = gen.next(
-                operation.title,
-                operation.author,
-                operation.parent_author,
-                operation.parent_permlink
-            ).value;
-            const actual = permlink.next().value;
-            const expected = call(
-                [api, api.getContentAsync],
-                operation.author,
-                operation.title
-            );
-            expect(expected).toEqual(actual);
-        });
-        it('should return the comment options array.', () => {
-            let actual = gen.next('mock-permlink-123').value;
-            const expected = [
-                [
-                    'comment',
-                    {
-                        author: operation.author,
-                        category: operation.category,
-                        errorCallback: operation.errorCallback,
-                        successCallback: operation.successCallback,
-                        parent_author: operation.parent_author,
-                        parent_permlink: operation.parent_permlink,
-                        type: operation.type,
-                        __config: operation.__config,
-                        memo: operation.memo,
-                        permlink: 'mock-permlink-123',
-                        json_metadata: JSON.stringify(operation.json_metadata),
-                        title: new Buffer(
-                            (operation.title || '').trim(),
-                            'utf-8'
-                        ),
-                        body: new Buffer(operation.body, 'utf-8'), // TODO: new Buffer is deprecated, prefer Buffer.from()
-                    },
-                ],
-            ];
-            expect(actual).toEqual(expected);
-        });
-        it('should return a patch as body value if patch is smaller than body.', () => {
-            const originalBod = operation.body + 'minor difference';
-            operation.__config.originalBody = originalBod;
-            gen = preBroadcast_comment({ operation, username });
-            gen.next(
-                operation.title,
-                operation.author,
-                operation.parent_author,
-                operation.parent_permlink
-            );
-            const actual = gen.next('mock-permlink-123').value;
-            const expected = Buffer.from(
-                createPatch(originalBod, operation.body),
-                'utf-8'
-            );
-            expect(actual[0][1].body).toEqual(expected);
-        });
-        it('should return body as body value if patch is larger than body.', () => {
-            const originalBod = 'major difference';
-            operation.__config.originalBody = originalBod;
-            gen = preBroadcast_comment({ operation, username });
-            gen.next(
-                operation.title,
-                operation.author,
-                operation.parent_author,
-                operation.parent_permlink
-            );
-            const actual = gen.next('mock-permlink-123').value;
-            const expected = Buffer.from(operation.body, 'utf-8');
-            expect(actual[0][1].body).toEqual(expected, 'utf-8');
         });
     });
 });

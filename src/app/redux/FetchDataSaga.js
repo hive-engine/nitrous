@@ -8,7 +8,6 @@ import {
 } from 'redux-saga/effects';
 import { api } from '@steemit/steem-js';
 import { loadFollows, fetchFollowCount } from 'app/redux/FollowSaga';
-import { getContent } from 'app/redux/SagaShared';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import constants from './constants';
@@ -21,15 +20,10 @@ const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
-    takeEvery(GET_CONTENT, getContentCaller),
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
 ];
-
-export function* getContentCaller(action) {
-    yield getContent(action.payload);
-}
 
 let is_initial_state = true;
 export function* fetchState(location_change_action) {
@@ -425,11 +419,6 @@ function* fetchJson({
 export const actions = {
     requestData: payload => ({
         type: REQUEST_DATA,
-        payload,
-    }),
-
-    getContent: payload => ({
-        type: GET_CONTENT,
         payload,
     }),
 

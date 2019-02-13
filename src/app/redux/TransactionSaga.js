@@ -7,7 +7,7 @@ import secureRandom from 'secure-random';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
 import { api, broadcast, auth, memo } from '@steemit/steem-js';
 
-import { getAccount, getContent } from 'app/redux/SagaShared';
+import { getAccount } from 'app/redux/SagaShared';
 import { findSigningKey } from 'app/redux/AuthSaga';
 import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -19,24 +19,17 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
     takeEvery(transactionActions.UPDATE_AUTHORITIES, updateAuthorities),
-    takeEvery(transactionActions.UPDATE_META, updateMeta),
     takeEvery(transactionActions.RECOVER_ACCOUNT, recoverAccount),
 ];
 
 const hook = {
-    preBroadcast_comment,
     preBroadcast_transfer,
-    preBroadcast_vote,
     preBroadcast_account_witness_vote,
-    error_vote,
     error_custom_json,
     // error_account_update,
     error_account_witness_vote,
-    accepted_comment,
     accepted_custom_json,
-    accepted_delete_comment,
     accepted_account_witness_vote,
-    accepted_vote,
     accepted_account_update,
     accepted_withdraw_vesting,
 };
@@ -66,21 +59,6 @@ export function* preBroadcast_transfer({ operation }) {
 const toStringUtf8 = o =>
     o ? (Buffer.isBuffer(o) ? o.toString('utf-8') : o.toString()) : o;
 
-function* preBroadcast_vote({ operation, username }) {
-    if (!operation.voter) operation.voter = username;
-    const { voter, author, permlink, weight } = operation;
-    // give immediate feedback
-    yield put(
-        globalActions.set({
-            key: `transaction_vote_active_${author}_${permlink}`,
-            value: true,
-        })
-    );
-    yield put(
-        globalActions.voted({ username: voter, author, permlink, weight })
-    );
-    return operation;
-}
 function* preBroadcast_account_witness_vote({ operation, username }) {
     if (!operation.account) operation.account = username;
     const { account, witness, approve } = operation;
@@ -353,16 +331,6 @@ function* broadcastPayload({
     }
 }
 
-function* accepted_comment({ operation }) {
-    const { author, permlink } = operation;
-    // update again with new $$ amount from the steemd node
-    yield call(getContent, { author, permlink });
-    // receiveComment did the linking already (but that is commented out)
-    yield put(globalActions.linkReply(operation));
-    // mark the time (can only post 1 per min)
-    // yield put(user.actions.acceptedComment())
-}
-
 function updateFollowState(action, following, state) {
     if (action == null) {
         state = state.update('blog_result', Set(), r => r.delete(following));
@@ -402,27 +370,6 @@ function* accepted_custom_json({ operation }) {
         }
     }
     return operation;
-}
-
-function* accepted_delete_comment({ operation }) {
-    yield put(globalActions.deleteContent(operation));
-}
-
-function* accepted_vote({ operation: { author, permlink, weight } }) {
-    console.log(
-        'Vote accepted, weight',
-        weight,
-        'on',
-        author + '/' + permlink,
-        'weight'
-    );
-    // update again with new $$ amount from the steemd node
-    yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
-        })
-    );
-    yield call(getContent, { author, permlink });
 }
 
 function* accepted_account_witness_vote({
@@ -469,127 +416,6 @@ function* accepted_account_update({ operation }) {
     // }
 }
 
-// TODO remove soon, this was replaced by the UserKeys edit running usernamePasswordLogin (on dialog close)
-// function* error_account_update({operation}) {
-//     const {account} = operation
-//     const stateUser = yield select(state => state.user)
-//     const username = stateUser.getIn(['current', 'username'])
-//     if (username === account) {
-//         const pending_private_key = stateUser.getIn(['current', 'pending_private_key'])
-//         if (pending_private_key) {
-//             // remove pending key
-//             const update = { pending_private_key: undefined }
-//             yield put(user.actions.setUser(update))
-//         }
-//     }
-// }
-
-// function* preBroadcast_account_witness_vote({operation, username}) {
-// }
-export function* preBroadcast_comment({ operation, username }) {
-    if (!operation.author) operation.author = username;
-    let permlink = operation.permlink;
-    const { author, __config: { originalBody, comment_options } } = operation;
-    const {
-        parent_author = '',
-        parent_permlink = operation.category,
-    } = operation;
-    const { title } = operation;
-    let { body } = operation;
-
-    body = body.trim();
-
-    // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
-
-    let body2;
-    if (originalBody) {
-        const patch = createPatch(originalBody, body);
-        // Putting body into buffer will expand Unicode characters into their true length
-        if (patch && patch.length < new Buffer(body, 'utf-8').length)
-            body2 = patch;
-    }
-    if (!body2) body2 = body;
-    if (!permlink)
-        permlink = yield createPermlink(
-            title,
-            author,
-            parent_author,
-            parent_permlink
-        );
-
-    const md = operation.json_metadata;
-    const json_metadata = typeof md === 'string' ? md : JSON.stringify(md);
-    const op = {
-        ...operation,
-        permlink: permlink.toLowerCase(),
-        parent_author,
-        parent_permlink,
-        json_metadata,
-        title: new Buffer((operation.title || '').trim(), 'utf-8'),
-        body: new Buffer(body2, 'utf-8'),
-    };
-
-    const comment_op = [['comment', op]];
-
-    // comment_options must come directly after comment
-    if (comment_options) {
-        const {
-            max_accepted_payout = ['1000000.000', DEBT_TICKER].join(' '),
-            percent_steem_dollars = 10000, // 10000 === 100%
-            allow_votes = true,
-            allow_curation_rewards = true,
-        } = comment_options;
-        comment_op.push([
-            'comment_options',
-            {
-                author,
-                permlink,
-                max_accepted_payout,
-                percent_steem_dollars,
-                allow_votes,
-                allow_curation_rewards,
-                extensions: comment_options.extensions
-                    ? comment_options.extensions
-                    : [],
-            },
-        ]);
-    }
-
-    return comment_op;
-}
-
-export function* createPermlink(title, author, parent_author, parent_permlink) {
-    let permlink;
-    if (title && title.trim() !== '') {
-        let s = slug(title);
-        if (s === '') {
-            s = base58.encode(secureRandom.randomBuffer(4));
-        }
-        // ensure the permlink(slug) is unique
-        const slugState = yield call([api, api.getContentAsync], author, s);
-        let prefix;
-        if (slugState.body !== '') {
-            // make sure slug is unique
-            prefix = base58.encode(secureRandom.randomBuffer(4)) + '-';
-        } else {
-            prefix = '';
-        }
-        permlink = prefix + s;
-    } else {
-        // comments: re-parentauthor-parentpermlink-time
-        const timeStr = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '');
-        parent_permlink = parent_permlink.replace(/(-\d{8}t\d{9}z)/g, '');
-        permlink = `re-${parent_author}-${parent_permlink}-${timeStr}`;
-    }
-    if (permlink.length > 255) {
-        // STEEMIT_MAX_PERMLINK_LENGTH
-        permlink = permlink.substring(permlink.length - 255, permlink.length);
-    }
-    // only letters numbers and dashes shall survive
-    permlink = permlink.toLowerCase().replace(/[^a-z0-9-]+/g, '');
-    return permlink;
-}
-
 import diff_match_patch from 'diff-match-patch';
 const dmp = new diff_match_patch();
 
@@ -612,55 +438,8 @@ function* error_custom_json({ operation: { id, required_posting_auths } }) {
     }
 }
 
-function* error_vote({ operation: { author, permlink } }) {
-    yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
-        })
-    );
-    yield call(getContent, { author, permlink }); // unvote
-}
-
-// function* error_comment({operation}) {
-//     // Rollback an immediate UI update (the transaction had an error)
-//     yield put(g.actions.deleteContent(operation))
-//     const {author, permlink, parent_author, parent_permlink} = operation
-//     yield call(getContent, {author, permlink})
-//     if (parent_author !== '' && parent_permlink !== '') {
-//         yield call(getContent, {parent_author, parent_permlink})
-//     }
-// }
-
 function slug(text) {
     return getSlug(text.replace(/[<>]/g, ''), { truncate: 128 });
-    //const shorten = txt => {
-    //    let t = ''
-    //    let words = 0
-    //    const txt2 = txt.replace(/ +/g, ' ') // only 1 space in a row
-    //    for (let i = 0; i < txt2.length; i++) {
-    //        const ch = txt2.charAt(i)
-    //        if (ch === '.' && i !== 0) {
-    //            if(i === txt2.length - 1)
-    //                break
-    //            // If it looks like the end of a sentence
-    //            if(txt2.charAt(i + 1) === ' ')
-    //                break
-    //        }
-    //        if (ch === ' ' || ch === '\n') {
-    //            words++
-    //            if (words === 15) break
-    //            if (i > 100) break
-    //        }
-    //        t += ch
-    //    }
-    //    return t
-    //}
-    //return shorten(text)
-    //    .replace(/\n/g, ' ')
-    //    .replace(/[ \.]/g, '-')
-    //    .replace(/[^a-zA-Z0-9-_]+/g, '') // only letters and numbers _ and -
-    //    .replace(/--/g, '-')
-    //    .toLowerCase()
 }
 
 const pwPubkey = (name, pw, role) =>
@@ -938,47 +717,4 @@ export function* updateAuthorities({
     // console.log('sign key.toPublicKey().toString()', key.toPublicKey().toString())
     // console.log('payload', payload)
     yield call(broadcastOperation, { payload });
-}
-
-/** auths must start with most powerful key: owner for example */
-// const twofaAccount = 'steem'
-export function* updateMeta(params) {
-    // console.log('params', params)
-    const {
-        meta,
-        account_name,
-        signingKey,
-        onSuccess,
-        onError,
-    } = params.payload.operation;
-    console.log('meta', meta);
-    console.log('account_name', account_name);
-    // Be sure this account is up-to-date (other required fields are sent in the update)
-    const [account] = yield call([api, api.getAccountsAsync], [account_name]);
-    if (!account) {
-        onError('Account not found');
-        return;
-    }
-    if (!signingKey) {
-        onError(`Incorrect Password`);
-        throw new Error('Have to pass owner key in order to change meta');
-    }
-
-    try {
-        console.log('account.name', account.name);
-        const operations = [
-            'update_account_meta',
-            {
-                account_name: account.name,
-                json_meta: JSON.stringify(meta),
-            },
-        ];
-        yield broadcast.sendAsync({ extensions: [], operations }, [signingKey]);
-        if (onSuccess) onSuccess();
-        // console.log('sign key.toPublicKey().toString()', key.toPublicKey().toString())
-        // console.log('payload', payload)
-    } catch (e) {
-        console.error('Update meta', e);
-        if (onError) onError(e);
-    }
 }

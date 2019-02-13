@@ -13,12 +13,8 @@ export const defaultState = Map({
 const RECEIVE_STATE = 'global/RECEIVE_STATE';
 const RECEIVE_ACCOUNT = 'global/RECEIVE_ACCOUNT';
 const RECEIVE_ACCOUNTS = 'global/RECEIVE_ACCOUNTS';
-const RECEIVE_CONTENT = 'global/RECEIVE_CONTENT';
-const LINK_REPLY = 'global/LINK_REPLY';
 const UPDATE_ACCOUNT_WITNESS_VOTE = 'global/UPDATE_ACCOUNT_WITNESS_VOTE';
 const UPDATE_ACCOUNT_WITNESS_PROXY = 'global/UPDATE_ACCOUNT_WITNESS_PROXY';
-const DELETE_CONTENT = 'global/DELETE_CONTENT';
-const VOTED = 'global/VOTED';
 const FETCHING_DATA = 'global/FETCHING_DATA';
 const RECEIVE_DATA = 'global/RECEIVE_DATA';
 const RECEIVE_RECENT_POSTS = 'global/RECEIVE_RECENT_POSTS';
@@ -97,46 +93,6 @@ export default function reducer(state = defaultState, action = {}) {
             }, state);
         }
 
-        case RECEIVE_CONTENT: {
-            const content = fromJS(payload.content);
-            const key = content.get('author') + '/' + content.get('permlink');
-            return state.updateIn(['content', key], Map(), c => {
-                c = emptyContentMap.mergeDeep(c);
-                c = c.delete('active_votes');
-                c = c.mergeDeep(content);
-                c = c.set('stats', fromJS(contentStats(c)));
-                return c;
-            });
-        }
-
-        case LINK_REPLY: {
-            const {
-                author,
-                permlink,
-                parent_author = '',
-                parent_permlink = '',
-            } = payload;
-            if (parent_author === '' || parent_permlink === '') return state;
-            const key = author + '/' + permlink;
-            const parent_key = parent_author + '/' + parent_permlink;
-            // Add key if not exist
-            let updatedState = state.updateIn(
-                ['content', parent_key, 'replies'],
-                List(),
-                l => (l.findIndex(i => i === key) === -1 ? l.push(key) : l)
-            );
-            const children = updatedState.getIn(
-                ['content', parent_key, 'replies'],
-                List()
-            ).size;
-            updatedState = updatedState.updateIn(
-                ['content', parent_key, 'children'],
-                0,
-                () => children
-            );
-            return updatedState;
-        }
-
         case UPDATE_ACCOUNT_WITNESS_VOTE: {
             const { account, witness, approve } = payload;
             return state.updateIn(
@@ -152,46 +108,6 @@ export default function reducer(state = defaultState, action = {}) {
         case UPDATE_ACCOUNT_WITNESS_PROXY: {
             const { account, proxy } = payload;
             return state.setIn(['accounts', account, 'proxy'], proxy);
-        }
-
-        case DELETE_CONTENT: {
-            const { author, permlink } = payload;
-            const key = author + '/' + permlink;
-            const content = state.getIn(['content', key]);
-            const parent_author = content.get('parent_author') || '';
-            const parent_permlink = content.get('parent_permlink') || '';
-            let updatedState = state.deleteIn(['content', key]);
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'replies'],
-                    List(),
-                    r => r.filter(i => i !== key)
-                );
-            }
-            return updatedState;
-        }
-
-        case VOTED: {
-            const { username, author, permlink, weight } = payload;
-            const key = ['content', author + '/' + permlink, 'active_votes'];
-            let active_votes = state.getIn(key, List());
-            const idx = active_votes.findIndex(
-                v => v.get('voter') === username
-            );
-            // steemd flips weight into percent
-            if (idx === -1) {
-                active_votes = active_votes.push(
-                    Map({ voter: username, percent: weight })
-                );
-            } else {
-                active_votes = active_votes.set(
-                    idx,
-                    Map({ voter: username, percent: weight })
-                );
-            }
-            state.setIn(key, active_votes);
-            return state;
         }
 
         case FETCHING_DATA: {
@@ -403,16 +319,6 @@ export const receiveAccounts = payload => ({
     payload,
 });
 
-export const receiveContent = payload => ({
-    type: RECEIVE_CONTENT,
-    payload,
-});
-
-export const linkReply = payload => ({
-    type: LINK_REPLY,
-    payload,
-});
-
 export const updateAccountWitnessVote = payload => ({
     type: UPDATE_ACCOUNT_WITNESS_VOTE,
     payload,
@@ -420,16 +326,6 @@ export const updateAccountWitnessVote = payload => ({
 
 export const updateAccountWitnessProxy = payload => ({
     type: UPDATE_ACCOUNT_WITNESS_PROXY,
-    payload,
-});
-
-export const deleteContent = payload => ({
-    type: DELETE_CONTENT,
-    payload,
-});
-
-export const voted = payload => ({
-    type: VOTED,
     payload,
 });
 
