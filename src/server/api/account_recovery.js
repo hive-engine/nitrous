@@ -121,7 +121,7 @@ export default function useAccountRecoveryApi(app) {
             }
 
             const recovery_account = config.get(
-                'requestAccountRecovery.account'
+                'requestAccountRecovery.recovery_account'
             );
             const signing_key = config.get(
                 'requestAccountRecovery.signing_key'
