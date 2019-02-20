@@ -120,8 +120,12 @@ export default function useAccountRecoveryApi(app) {
                 return;
             }
 
-            const recovery_account = config.get('registrar.account');
-            const signing_key = config.get('registrar.signing_key');
+            const recovery_account = config.get(
+                'requestAccountRecovery.account'
+            );
+            const signing_key = config.get(
+                'requestAccountRecovery.signing_key'
+            );
             const {
                 new_owner_authority,
                 old_owner_key,
