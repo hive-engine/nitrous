@@ -26,10 +26,6 @@ class Keys extends Component {
             this.state !== nextState
         );
     }
-    showChangePassword = pubkey => {
-        const { account, authType } = this.props;
-        this.props.showChangePassword(account.get('name'), authType, pubkey);
-    };
     render() {
         const { props: { account, authType, privateKeys, onKey } } = this;
         let pubkeys;
@@ -73,9 +69,7 @@ class Keys extends Component {
                                 authType={authType}
                                 accountName={account.get('name')}
                                 onKey={onKey}
-                            >
-                                {/*<span onClick={() => this.showChangePassword(pubkey)}>&nbsp;{edit}</span>*/}
-                            </ShowKey>
+                            />
                         </span>
                     </div>
                 </div>
@@ -96,34 +90,20 @@ class Keys extends Component {
 
 const emptyMap = Map();
 
-export default connect(
-    (state, ownProps) => {
-        const { account } = ownProps;
-        const accountName = account.get('name');
-        const current = state.user.get('current');
-        const username = current && current.get('username');
-        const isMyAccount = username === accountName;
-        const authLogin = isMyAccount
-            ? { username, password: current.get('password') }
-            : null;
-        let privateKeys;
-        if (current) privateKeys = current.get('private_keys'); // not bound to one account
+export default connect((state, ownProps) => {
+    const { account } = ownProps;
+    const accountName = account.get('name');
+    const current = state.user.get('current');
+    const username = current && current.get('username');
+    const isMyAccount = username === accountName;
+    const authLogin = isMyAccount
+        ? { username, password: current.get('password') }
+        : null;
+    let privateKeys;
+    if (current) privateKeys = current.get('private_keys'); // not bound to one account
 
-        if (!privateKeys) privateKeys = emptyMap;
+    if (!privateKeys) privateKeys = emptyMap;
 
-        const auth = state.user.getIn(['authority', accountName]);
-        return { ...ownProps, auth, authLogin, privateKeys };
-    },
-    dispatch => ({
-        showChangePassword: (username, authType, priorAuthKey) => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(
-                globalActions.showDialog({
-                    name,
-                    params: { username, authType, priorAuthKey },
-                })
-            );
-        },
-    })
-)(Keys);
+    const auth = state.user.getIn(['authority', accountName]);
+    return { ...ownProps, auth, authLogin, privateKeys };
+})(Keys);

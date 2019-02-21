@@ -18,7 +18,6 @@ class UserKeys extends Component {
         wifShown: PropTypes.bool,
         setWifShown: PropTypes.func.isRequired,
         accountName: PropTypes.string.isRequired,
-        showChangePassword: PropTypes.func.isRequired,
     };
     constructor() {
         super();
@@ -40,9 +39,6 @@ class UserKeys extends Component {
         });
         if (wifShown !== hasWif) setWifShown(hasWif);
     }
-    showChangePassword = () => {
-        this.props.showChangePassword(this.props.accountName);
-    };
     render() {
         const { props: { account, isMyAccount } } = this;
         const { onKey } = this;
@@ -106,6 +102,7 @@ class UserKeys extends Component {
                       </span>
                   );
               });
+
         return (
             <div className="UserKeys row">
                 <div style={{ paddingBottom: 10 }} className="column small-12">
@@ -120,6 +117,7 @@ class UserKeys extends Component {
                         )}
                     </span>
                 </div>
+
                 <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
@@ -132,6 +130,7 @@ class UserKeys extends Component {
                         )}
                     </span>
                 </div>
+
                 <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
@@ -148,6 +147,7 @@ class UserKeys extends Component {
                         )}
                     </span>
                 </div>
+
                 <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
@@ -160,22 +160,20 @@ class UserKeys extends Component {
                         )}
                     </span>
                 </div>
-                {/*
-            <div className="column small-12">
-                {wifQrs && <span>
-                    {wifQrs}
-                </span>}
-            </div>*/}
+                <hr />
+                <div className="column small-12">
+                    {wifQrs && <span>{wifQrs}</span>}
+                </div>
             </div>
         );
     }
 }
+
 export default connect(
     (state, ownProps) => {
         const { account } = ownProps;
         const accountName = account.get('name');
-        const current = state.user.get('current');
-        const username = current && current.get('username');
+        const username = state.user.getIn(['current', 'username'], false);
         const isMyAccount = username === accountName;
         const wifShown = state.global.get('UserKeys_wifShown');
         return { ...ownProps, isMyAccount, wifShown, accountName };
@@ -183,11 +181,6 @@ export default connect(
     dispatch => ({
         setWifShown: shown => {
             dispatch(globalActions.receiveState({ UserKeys_wifShown: shown }));
-        },
-        showChangePassword: username => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(globalActions.showDialog({ name, params: { username } }));
         },
     })
 )(UserKeys);

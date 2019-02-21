@@ -804,10 +804,5 @@ export default connect(
             const name = 'convertToSteem';
             dispatch(globalActions.showDialog({ name }));
         },
-        showChangePassword: username => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(globalActions.showDialog({ name, params: { username } }));
-        },
     })
 )(UserWallet);
