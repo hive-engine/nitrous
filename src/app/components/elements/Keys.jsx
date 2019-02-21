@@ -28,6 +28,13 @@ class Keys extends Component {
                 ? List([account.get('memo_key')])
                 : account.getIn([authType, 'key_auths']).map(a => a.get(0));
 
+        const tt_auth_type = {
+            owner: tt('g.owner'),
+            active: tt('g.active'),
+            posting: tt('g.posting'),
+            memo: tt('g.memo'),
+        }[authType.toLowerCase()];
+
         let idx = 0;
         const auths = pubkeys.map(pubkey => (
             <div key={idx++} className="row">
@@ -36,6 +43,7 @@ class Keys extends Component {
                         pubkey={pubkey}
                         privateKey={privateKeys.get(authType + '_private')}
                         authType={authType}
+                        authTypeName={tt_auth_type}
                         accountName={account.get('name')}
                         onKey={onKey}
                     />
@@ -43,20 +51,10 @@ class Keys extends Component {
             </div>
         ));
 
-        const tt_auth_type = {
-            owner: tt('g.owner'),
-            active: tt('g.active'),
-            posting: tt('g.posting'),
-            memo: tt('g.memo'),
-        }[authType.toLowerCase()];
-
         return (
             <span>
                 <div className="row">
-                    <div className="column small-12">
-                        <label>{tt_auth_type}</label>
-                        {auths}
-                    </div>
+                    <div className="column small-12">{auths}</div>
                 </div>
             </span>
         );

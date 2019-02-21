@@ -101,37 +101,37 @@ class UserKeys extends Component {
         return (
             <div className="UserKeys row">
                 <div style={{ paddingBottom: 10 }} className="column small-12">
-                    <Keys
-                        account={account}
-                        authType="posting"
-                        onKey={onKey.Posting}
-                    />
+                    <h3>Posting Key</h3>
                     <span className="secondary">
                         {tt(
                             'userkeys_jsx.posting_key_is_required_it_should_be_different'
                         )}
                     </span>
-                </div>
-
-                <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
-                        authType="active"
-                        onKey={onKey.Active}
+                        authType="posting"
+                        onKey={onKey.Posting}
                     />
+                </div>
+
+                <hr />
+                <div style={{ paddingBottom: 10 }} className="column small-12">
+                    <h3>Active Key</h3>
                     <span className="secondary">
                         {tt(
                             'userkeys_jsx.the_active_key_is_used_to_make_transfers_and_place_orders'
                         )}
                     </span>
-                </div>
-
-                <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
-                        authType="owner"
-                        onKey={onKey.Owner}
+                        authType="active"
+                        onKey={onKey.Active}
                     />
+                </div>
+
+                <hr />
+                <div style={{ paddingBottom: 10 }} className="column small-12">
+                    <h3>Owner Key</h3>
                     <span className="secondary">
                         {tt(
                             'userkeys_jsx.the_owner_key_is_required_to_change_other_keys'
@@ -141,22 +141,30 @@ class UserKeys extends Component {
                             'userkeys_jsx.the_private_key_or_password_should_be_kept_offline'
                         )}
                     </span>
-                </div>
-
-                <div style={{ paddingBottom: 10 }} className="column small-12">
                     <Keys
                         account={account}
-                        authType="memo"
-                        onKey={onKey.Memo}
+                        authType="owner"
+                        onKey={onKey.Owner}
                     />
+                </div>
+
+                <hr />
+                <div style={{ paddingBottom: 10 }} className="column small-12">
+                    <h3>Memo Key</h3>
                     <span className="secondary">
                         {tt(
                             'userkeys_jsx.the_memo_key_is_used_to_create_and_read_memos'
                         )}
                     </span>
+                    <Keys
+                        account={account}
+                        authType="memo"
+                        onKey={onKey.Memo}
+                    />
                 </div>
 
-                <hr />
+                <hr style={{ 'margin-top': '4em' }} />
+                <h3>Legacy wif display for reference</h3>
                 <div className="column small-12">
                     {wifQrs && <span>{wifQrs}</span>}
                 </div>
