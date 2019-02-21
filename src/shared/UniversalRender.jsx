@@ -435,6 +435,10 @@ function getUrlFromLocation(location) {
         url = url.replace(/\/curation-rewards$/, '/transfers');
     if (url.indexOf('/author-rewards') !== -1)
         url = url.replace(/\/author-rewards$/, '/transfers');
+    if (url.indexOf('/permissions') !== -1)
+        url = url.replace(/\/permissions$/, '/transfers');
+    if (url.indexOf('/password') !== -1)
+        url = url.replace(/\/password$/, '/transfers');
 
     return url;
 }
