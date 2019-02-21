@@ -129,9 +129,7 @@ class App extends React.Component {
             order,
         } = this.props;
 
-        const miniHeader =
-            pathname === '/create_account' || pathname === '/pick_account';
-
+        const miniHeader = false;
         const whistleView = viewMode === VIEW_MODE_WHISTLE;
         const headerHidden = whistleView;
         const params_keys = Object.keys(params);

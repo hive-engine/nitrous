@@ -34,8 +34,6 @@ export default {
             cb(null, [require('app/components/pages/Tos')]);
         } else if (route.page === 'ChangePassword') {
             cb(null, [require('app/components/pages/ChangePasswordPage')]);
-        } else if (route.page === 'PickAccount') {
-            cb(null, [require('app/components/pages/PickAccount')]);
         } else if (route.page === 'CreateAccount') {
             cb(null, [require('app/components/pages/CreateAccount')]);
         } else if (route.page === 'Approval') {
@@ -44,8 +42,6 @@ export default {
             cb(null, [require('app/components/pages/RecoverAccountStep1')]);
         } else if (route.page === 'RecoverAccountStep2') {
             cb(null, [require('app/components/pages/RecoverAccountStep2')]);
-        } else if (route.page === 'WaitingList') {
-            cb(null, [require('app/components/pages/WaitingList')]);
         } else if (route.page === 'Witnesses') {
             cb(null, [require('app/components/pages/Witnesses')]);
         } else if (route.page === 'UserProfile') {
