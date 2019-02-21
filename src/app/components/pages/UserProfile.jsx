@@ -197,7 +197,7 @@ export default class UserProfile extends React.Component {
             tab_content = <div />;
         } else if (section === 'recent-replies') {
             tab_content = <div />;
-        } else if (section === 'permissions' && isMyAccount) {
+        } else if (section === 'permissions') {
             walletClass = 'active';
             tab_content = (
                 <div>
