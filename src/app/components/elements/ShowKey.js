@@ -15,10 +15,9 @@ class ShowKey extends Component {
         accountName: PropTypes.string.isRequired,
         showLogin: PropTypes.func.isRequired,
         privateKey: PropTypes.object,
-        cmpProps: PropTypes.object,
-        children: PropTypes.object,
         onKey: PropTypes.func,
     };
+
     constructor() {
         super();
         this.state = {};
@@ -31,10 +30,11 @@ class ShowKey extends Component {
         };
         this.showLogin = () => {
             const { showLogin, accountName, authType } = this.props;
-            showLogin({ username: accountName, authType });
+            showLogin({ username: accountName });
         };
         this.showLogin = this.showLogin.bind(this);
     }
+
     componentWillMount() {
         this.setWif(this.props, this.state);
         this.setOnKey(this.props, this.state);
@@ -45,6 +45,7 @@ class ShowKey extends Component {
     componentWillUpdate(nextProps, nextState) {
         this.setOnKey(nextProps, nextState);
     }
+
     setWif(props) {
         const { privateKey, pubkey } = props;
         if (privateKey && pubkey === privateKey.toPublicKey().toString()) {
@@ -54,6 +55,7 @@ class ShowKey extends Component {
             this.setState({ wif: undefined });
         }
     }
+
     setOnKey(nextProps, nextState) {
         const { show, wif } = nextState;
         const { onKey, pubkey } = nextProps;
@@ -67,12 +69,9 @@ class ShowKey extends Component {
             isPrivate: show,
         });
     };
+
     render() {
-        const {
-            onShow,
-            showLogin,
-            props: { pubkey, cmpProps, children, authType },
-        } = this;
+        const { onShow, showLogin, props: { pubkey, authType } } = this;
         const { show, wif } = this.state;
 
         const keyIcon = (
@@ -120,13 +119,11 @@ class ShowKey extends Component {
                 <div className="column small-12 medium-2 noPrint">
                     {keyLink}
                 </div>
-                {/*<div className="column small-1">
-                {children}
-            </div>*/}
             </div>
         );
     }
 }
+
 export default connect(
     (state, ownProps) => ownProps,
     dispatch => ({

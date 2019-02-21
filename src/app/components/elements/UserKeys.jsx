@@ -17,7 +17,6 @@ class UserKeys extends Component {
         isMyAccount: PropTypes.bool.isRequired,
         wifShown: PropTypes.bool,
         setWifShown: PropTypes.func.isRequired,
-        accountName: PropTypes.string.isRequired,
     };
     constructor() {
         super();
@@ -50,58 +49,54 @@ class UserKeys extends Component {
         // do not render if state appears to contain only lite account info
         if (!account.has('vesting_shares')) return null;
 
-        const wifQrs = !isMyAccount
-            ? null
-            : keyTypes.map(key => {
-                  const keyObj = this.state[key];
-                  if (!keyObj) return null;
-                  return (
-                      <span key={idx++}>
-                          <hr />
-                          <div className="row">
-                              <div className="column small-2">
-                                  <label>{tt('userkeys_jsx.public')}</label>
-                                  <QRCode text={keyObj.pubkey} />
-                              </div>
-                              <div className="column small-8">
-                                  <label>
-                                      {tt('userkeys_jsx.public_something_key', {
-                                          key,
-                                      })}
-                                  </label>
-                                  <div className="overflow-ellipsis">
-                                      <code>
-                                          <small>{keyObj.pubkey}</small>
-                                      </code>
-                                  </div>
-                                  {keyObj.wif && (
-                                      <div>
-                                          <label>
-                                              {tt(
-                                                  'userkeys_jsx.private_something_key',
-                                                  { key }
-                                              )}
-                                          </label>
-                                          <div className="overflow-ellipsis">
-                                              <code>
-                                                  <small>{keyObj.wif}</small>
-                                              </code>
-                                          </div>
-                                      </div>
-                                  )}
-                              </div>
-                              {keyObj.wif && (
-                                  <div className="column small-2">
-                                      <label>
-                                          {tt('userkeys_jsx.private')}
-                                      </label>
-                                      <QRCode text={keyObj.wif} />
-                                  </div>
-                              )}
-                          </div>
-                      </span>
-                  );
-              });
+        const wifQrs = keyTypes.map(key => {
+            const keyObj = this.state[key];
+            if (!keyObj) return null;
+            return (
+                <span key={idx++}>
+                    <hr />
+                    <div className="row">
+                        <div className="column small-2">
+                            <label>{tt('userkeys_jsx.public')}</label>
+                            <QRCode text={keyObj.pubkey} />
+                        </div>
+                        <div className="column small-8">
+                            <label>
+                                {tt('userkeys_jsx.public_something_key', {
+                                    key,
+                                })}
+                            </label>
+                            <div className="overflow-ellipsis">
+                                <code>
+                                    <small>{keyObj.pubkey}</small>
+                                </code>
+                            </div>
+                            {keyObj.wif && (
+                                <div>
+                                    <label>
+                                        {tt(
+                                            'userkeys_jsx.private_something_key',
+                                            { key }
+                                        )}
+                                    </label>
+                                    <div className="overflow-ellipsis">
+                                        <code>
+                                            <small>{keyObj.wif}</small>
+                                        </code>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {keyObj.wif && (
+                            <div className="column small-2">
+                                <label>{tt('userkeys_jsx.private')}</label>
+                                <QRCode text={keyObj.wif} />
+                            </div>
+                        )}
+                    </div>
+                </span>
+            );
+        });
 
         return (
             <div className="UserKeys row">
@@ -160,6 +155,7 @@ class UserKeys extends Component {
                         )}
                     </span>
                 </div>
+
                 <hr />
                 <div className="column small-12">
                     {wifQrs && <span>{wifQrs}</span>}
@@ -172,11 +168,12 @@ class UserKeys extends Component {
 export default connect(
     (state, ownProps) => {
         const { account } = ownProps;
-        const accountName = account.get('name');
-        const username = state.user.getIn(['current', 'username'], false);
-        const isMyAccount = username === accountName;
-        const wifShown = state.global.get('UserKeys_wifShown');
-        return { ...ownProps, isMyAccount, wifShown, accountName };
+        const isMyAccount =
+            state.user.getIn(['current', 'username'], false) ===
+            account.get('name');
+        const wifShown = true || state.global.get('UserKeys_wifShown');
+
+        return { ...ownProps, isMyAccount, wifShown };
     },
     dispatch => ({
         setWifShown: shown => {
