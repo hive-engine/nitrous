@@ -509,7 +509,7 @@ class UserWallet extends React.Component {
                 {claimbox}
                 <div className="row">
                     <div className="columns small-10 medium-12 medium-expand">
-                        {isMyAccount ? (
+                        {isMyAccount || true ? (
                             <WalletSubMenu account_name={account.get('name')} />
                         ) : (
                             <div>

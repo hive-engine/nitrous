@@ -47,6 +47,13 @@ class UserKeys extends Component {
         const { props: { account, isMyAccount } } = this;
         const { onKey } = this;
         let idx = 0;
+
+        // do not render if account is not loaded or available
+        if (!account) return null;
+
+        // do not render if state appears to contain only lite account info
+        if (!account.has('vesting_shares')) return null;
+
         const wifQrs = !isMyAccount
             ? null
             : keyTypes.map(key => {
