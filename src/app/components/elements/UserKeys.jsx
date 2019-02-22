@@ -101,29 +101,40 @@ class UserKeys extends Component {
         return (
             <div className="UserKeys">
                 <div className="UserKeys__intro">
-                    <p className="UserKeys__p">
-                        Any password or key is more likely to get compromised
-                        the more it is used. That's why Steem uses a
-                        hierarchical key system to keep you safe. You are issued
-                        with four keys which have different permissions. For
-                        example, the Posting Key (which is intended to be used
-                        frequently) has a limited set of permissions for social
-                        actions that require less security. You'll need to be
-                        more careful with your Active Key since it has
-                        permissions to perform wallet related actions.
-                    </p>
-                    <p className="UserKeys__p">
-                        Please take note of your Steem Keys listed below.
-                        Ideally, use a Password Manager (like 1Password or
-                        LastPass) or store an offline copy safely (on a piece of
-                        paper or on a file on a USB drive).
-                    </p>
-                    <a
-                        className="UserKeys__link"
-                        href="https://steemit.com/steem/@steemitblog/steem-basics-understanding-private-keys-part-1"
-                    >
-                        Learn more about Steem keys
-                    </a>
+                    <div className="UserKeys__intro-col">
+                        <h1>Keys & Permissions</h1>
+                        <p className="UserKeys__p">
+                            Any password or key is more likely to get
+                            compromised the more it is used. That's why Steem
+                            uses a hierarchical key system to keep you safe. You
+                            are issued with four keys which have different
+                            permissions. For example, the Posting Key (which is
+                            intended to be used frequently) has a limited set of
+                            permissions for social actions that require less
+                            security. You'll need to be more careful with your
+                            Active Key since it has permissions to perform
+                            wallet related actions.
+                        </p>
+                        <p className="UserKeys__p">
+                            Please take note of your Steem Keys listed below.
+                            Ideally, use a Password Manager (like 1Password or
+                            LastPass) or store an offline copy safely (on a
+                            piece of paper or on a file on a USB drive).
+                        </p>
+                        <h5>Learn more</h5>
+                        <a
+                            className="UserKeys__link"
+                            href="https://steemit.com/steem/@steemitblog/steem-basics-understanding-private-keys-part-1"
+                        >
+                            Understanding Private Keys Part 1
+                        </a>
+                    </div>
+                    <div className="UserKeys__intro-col">
+                        <img
+                            className="UserKeys__diagram"
+                            src={require('app/assets/images/key-permissions.png')}
+                        />
+                    </div>
                 </div>
                 <div className="key">
                     <div className="key__title-container">
@@ -250,7 +261,7 @@ class UserKeys extends Component {
                     </div>
                     <div className="key__content-container">
                         <div className="key__col">
-                            <p>
+                            <p className="key__description">
                                 {tt(
                                     'userkeys_jsx.the_owner_key_is_required_to_change_other_keys'
                                 )}
@@ -293,10 +304,17 @@ class UserKeys extends Component {
                     </div>
                     <div className="key__content-container">
                         <div className="key__col">
-                            <p>
-                                {tt(
-                                    'userkeys_jsx.the_memo_key_is_used_to_create_and_read_memos'
-                                )}
+                            <p className="key__description">
+                                The Memo key because it is a bit of an outlier.
+                                The only thing the Memo Key can do is encrypt
+                                and decrypt private messages that are sent
+                                through the blockchain. While this could one day
+                                be a powerful feature, today it is not commonly
+                                used. If you have received a private message
+                                that you would like to decrypt, as always you
+                                should use the key with the minimum necessary
+                                authorities, which in this case would be the
+                                Memo Key.
                             </p>
                             <Keys
                                 account={account}

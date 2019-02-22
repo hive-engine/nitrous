@@ -7,8 +7,12 @@
 	@include MQ(M) {
 		padding: 0 24px;
 	}
-	h3, h5 {
+	h1, h3, h5 {
 		font-weight: bold;
+	}
+	h1 {
+		@include font-size(28px);
+		margin-bottom: 16px;	
 	}
 	h3 {
 		@include font-size(24px);
@@ -20,15 +24,43 @@
 
 	}
 	&__intro {
-		margin-bottom: 2em;
+		margin-bottom: 3em;
 		padding: 16px;
-		max-width: 780px;
+		
 		@include MQ(M) {
 			padding: 0;
+			display: flex;
+			justify-content: space-between;
 		}
+	}
+	&__intro-col {
+		max-width: 780px;
+		
+		&:nth-child(1) {
+			@include MQ(M) {
+				padding-right: 1em;		
+			}			
+		}
+		&:nth-child(2) {	
+			padding-right: 1em;	
+			@include MQ(M) {
+				padding-left: 1em;	
+				padding-right: 0;	
+			}
+		}
+
 	}	
+	&__diagram {
+		margin-top: 2.5em;
+		width: 100%;
+		max-width: 400px;
+		@include MQ(M) {
+			max-width: 360px;
+		}
+	}
 	&__p {
 		@include font-size(16px);
+		max-width: 660px;
 	}
 	&__link {
 		@include font-size(16px);
