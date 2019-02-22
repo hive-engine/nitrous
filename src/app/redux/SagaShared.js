@@ -15,10 +15,7 @@ const wait = ms =>
 
 export const sharedWatches = [
     takeEvery(globalActions.GET_STATE, getState),
-    takeLatest(
-        [appActions.TOGGLE_NIGHTMODE, appActions.TOGGLE_BLOGMODE],
-        saveUserPreferences
-    ),
+    takeLatest([appActions.TOGGLE_NIGHTMODE], saveUserPreferences),
     takeEvery('transaction/ERROR', showTransactionErrorNotification),
 ];
 
@@ -77,11 +74,13 @@ function* showTransactionErrorNotification() {
  * @param {Object?} params.payload
  */
 function* saveUserPreferences({ payload }) {
+    console.log('saveUserPreferences', payload);
     if (payload) {
         yield setUserPreferences(payload);
         return;
     }
 
     const prefs = yield select(state => state.app.get('user_preferences'));
+    console.log('saveUserPreferences prefs', prefs);
     yield setUserPreferences(prefs.toJS());
 }
