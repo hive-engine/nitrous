@@ -354,7 +354,7 @@ export default connect(
         const isMyAccount =
             state.user.getIn(['current', 'username'], false) ===
             account.get('name');
-        const wifShown = true || state.global.get('UserKeys_wifShown');
+        const wifShown = state.global.get('UserKeys_wifShown');
 
         return { ...ownProps, isMyAccount, wifShown };
     },

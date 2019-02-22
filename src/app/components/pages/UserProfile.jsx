@@ -150,7 +150,6 @@ export default class UserProfile extends React.Component {
 
         const rep = repLog10(account.reputation);
 
-        const isMyAccount = username === account.name;
         let tab_content = null;
 
         let walletClass = '';
@@ -230,27 +229,6 @@ export default class UserProfile extends React.Component {
             tab_content = <div>Unavailable For Legal Reasons.</div>;
         }
 
-        var page_title = '';
-        // Page title
-
-        if (isMyAccount) {
-            if (section === 'comments') {
-                page_title = tt('g.my_comments');
-            } else if (section === 'recent-replies') {
-                page_title = tt('g.my_replies');
-            } else if (section === 'settings') {
-                page_title = tt('g.settings');
-            }
-        } else {
-            if (section === 'comments') {
-                page_title = tt('g.comments');
-            } else if (section === 'recent-replies') {
-                page_title = tt('g.replies');
-            } else if (section === 'settings') {
-                page_title = tt('g.settings');
-            }
-        }
-
         const layoutClass = 'layout-list';
 
         if (
@@ -278,7 +256,7 @@ export default class UserProfile extends React.Component {
 
         let printLink = null;
         if (section === 'permissions') {
-            if (isMyAccount && wifShown) {
+            if (wifShown) {
                 printLink = (
                     <div>
                         <a className="float-right noPrint" onClick={onPrint}>
@@ -306,16 +284,14 @@ export default class UserProfile extends React.Component {
                                 {tt('g.wallet')}
                             </a>
                         </li>
-                        {isMyAccount && (
-                            <li>
-                                <Link
-                                    to={`/@${accountname}/settings`}
-                                    activeClassName="active"
-                                >
-                                    {tt('g.settings')}
-                                </Link>
-                            </li>
-                        )}
+                        <li>
+                            <Link
+                                to={`/@${accountname}/settings`}
+                                activeClassName="active"
+                            >
+                                {tt('g.settings')}
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
