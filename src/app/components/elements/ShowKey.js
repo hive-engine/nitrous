@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as userActions from 'app/redux/UserReducer';
 import tt from 'counterpart';
 import * as globalActions from 'app/redux/GlobalReducer';
+import QRCode from 'react-qr';
 
 /** Display a public key.  Offer to show a private key, but only if it matches the provided public key */
 class ShowKey extends Component {
@@ -90,25 +91,34 @@ class ShowKey extends Component {
 
         return (
             <div className="ShowKey">
-                <div className="column">
-                    <div className="row key__public">
-                        <div className="column">
-                            <br />
-                            <h5>Public {this.props.authTypeName} Key</h5>
-                            {qrIcon}
-                            <span>{pubkey}</span>
+                <div className="row key__public">
+                    <div className="column">
+                        <br />
+                        <h5>Public {this.props.authTypeName} Key</h5>
+                        {qrIcon}
+                        <span>{pubkey}</span>
+                    </div>
+                </div>
+                <br />
+                <div className="row key__private">
+                    <div className="column small-12 medium-10">
+                        <div className="row">
+                            <h5>Your Private {this.props.authTypeName} Key</h5>
+                            <input
+                                className="key__input"
+                                type="text"
+                                value={wif ? wif : '•'.repeat(44)}
+                            />
                         </div>
                     </div>
-                    <div className="row key__private">
-                        <br />
-                        <h5>Your Private {this.props.authTypeName} Key</h5>
-                        <input
-                            className="key__input"
-                            type="text"
-                            value={wif ? wif : '•'.repeat(44)}
-                        />
-                        {wif ? null : (
-                            <a onClick={showLogin} className="hollow button">
+                    <div className="column small-12 medium-2">
+                        {wif ? (
+                            <QRCode text={wif} />
+                        ) : (
+                            <a
+                                onClick={showLogin}
+                                className="hollow button large"
+                            >
                                 Reveal
                             </a>
                         )}

@@ -32,9 +32,11 @@ class UserKeys extends Component {
     componentWillUpdate(nextProps, nextState) {
         const { wifShown, setWifShown } = nextProps;
         let hasWif = false;
+        let hasAllWifs = true;
         keyTypes.forEach(key => {
             const keyObj = nextState[key];
             if (keyObj && keyObj.wif) hasWif = true;
+            else hasAllWifs = false;
         });
         if (wifShown !== hasWif) setWifShown(hasWif);
     }
