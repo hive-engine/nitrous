@@ -104,7 +104,7 @@ export default class UserProfile extends React.Component {
         const username = current_user ? current_user.get('username') : null;
 
         let { section } = this.props.routeParams;
-        if (!section) section = 'blog';
+        if (!section) section = 'transfers';
 
         // Loading status
         const status = global_status
@@ -193,8 +193,6 @@ export default class UserProfile extends React.Component {
             tab_content = <Settings routeParams={this.props.routeParams} />;
         } else if (section === 'comments') {
             tab_content = <div />;
-        } else if (!section || section === 'blog') {
-            tab_content = <div />;
         } else if (section === 'recent-replies') {
             tab_content = <div />;
         } else if (section === 'permissions' && isMyAccount) {
@@ -236,9 +234,7 @@ export default class UserProfile extends React.Component {
         // Page title
 
         if (isMyAccount) {
-            if (section === 'blog') {
-                page_title = tt('g.my_blog');
-            } else if (section === 'comments') {
+            if (section === 'comments') {
                 page_title = tt('g.my_comments');
             } else if (section === 'recent-replies') {
                 page_title = tt('g.my_replies');
@@ -246,9 +242,7 @@ export default class UserProfile extends React.Component {
                 page_title = tt('g.settings');
             }
         } else {
-            if (section === 'blog') {
-                page_title = tt('g.blog');
-            } else if (section === 'comments') {
+            if (section === 'comments') {
                 page_title = tt('g.comments');
             } else if (section === 'recent-replies') {
                 page_title = tt('g.replies');
@@ -258,20 +252,6 @@ export default class UserProfile extends React.Component {
         }
 
         const layoutClass = 'layout-list';
-
-        const blog_header = (
-            <div>
-                <div className="articles__header">
-                    <div className="articles__header-col">
-                        <h1 className="articles__h1">{page_title}</h1>
-                    </div>
-                    <div className="articles__header-col articles__header-col--right">
-                        <ArticleLayoutSelector />
-                    </div>
-                </div>
-                <hr className="articles__hr" />
-            </div>
-        );
 
         if (
             !(
@@ -290,12 +270,7 @@ export default class UserProfile extends React.Component {
                             section
                         )}
                     >
-                        <article className="articles">
-                            {section === 'blog' || 'comments'
-                                ? blog_header
-                                : null}
-                            {tab_content}
-                        </article>
+                        <article className="articles">{tab_content}</article>
                     </div>
                 </div>
             );

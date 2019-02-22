@@ -105,6 +105,7 @@ function* usernameLogin(action) {
         sessionStorage.setItem('username', username);
         serverApiRecordEvent('SignIn', 'Login');
         yield put(userActions.setUsername({ username }));
+        browserHistory.push(`/@${action.payload.username}/transfers`);
     } else {
         const username = sessionStorage.getItem('username');
         if (username) {
