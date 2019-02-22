@@ -225,6 +225,7 @@ function* usernamePasswordLogin2({
         private_keys = fromJS({
             posting_private: isRole('posting', () => private_key),
             active_private: isRole('active', () => private_key),
+            owner_private: isRole('owner', () => private_key),
             memo_private: private_key,
         });
     } catch (e) {
@@ -238,6 +239,9 @@ function* usernamePasswordLogin2({
             ),
             active_private: isRole('active', () =>
                 PrivateKey.fromSeed(username + 'active' + password)
+            ),
+            owner_private: isRole('owner', () =>
+                PrivateKey.fromSeed(username + 'owner' + password)
             ),
             memo_private: PrivateKey.fromSeed(username + 'memo' + password),
         });
@@ -302,6 +306,8 @@ function* usernamePasswordLogin2({
 
     if (!highSecurityLogin || authority.get('active') !== 'full')
         private_keys = private_keys.remove('active_private');
+    if (!highSecurityLogin || authority.get('owner') !== 'full')
+        private_keys = private_keys.remove('owner_private');
 
     const owner_pubkey = account.getIn(['owner', 'key_auths', 0, 0]);
     const active_pubkey = account.getIn(['active', 'key_auths', 0, 0]);
