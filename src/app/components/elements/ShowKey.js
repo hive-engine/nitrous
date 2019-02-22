@@ -89,26 +89,24 @@ class ShowKey extends Component {
         );
 
         return (
-            <div>
-                <div className="row">
-                    <div className="column">
+            <div className="ShowKey">
+                <div className="column">
+                    <div className="row key__public">
+                        <div className="column">
+                            <br />
+                            <h5>Public {this.props.authTypeName} Key</h5>
+                            {qrIcon}
+                            <span>{pubkey}</span>
+                        </div>
+                    </div>
+                    <div className="row key__private">
                         <br />
-                        <h5>Public {this.props.authTypeName} Key</h5>
-                        {qrIcon}
-                        <span>{pubkey}</span>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column">
-                        <br />
-                        <h5>Private {this.props.authTypeName} Key</h5>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column small-10">
-                        <input type="text" value={wif ? wif : '·'.repeat(44)} />
-                    </div>
-                    <div className="column small-2">
+                        <h5>Your Private {this.props.authTypeName} Key</h5>
+                        <input
+                            className="key__input"
+                            type="text"
+                            value={wif ? wif : '•'.repeat(44)}
+                        />
                         {wif ? null : (
                             <a onClick={showLogin} className="hollow button">
                                 Reveal
@@ -116,7 +114,6 @@ class ShowKey extends Component {
                         )}
                     </div>
                 </div>
-                <hr />
             </div>
         );
     }

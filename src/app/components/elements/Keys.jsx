@@ -54,7 +54,7 @@ class Keys extends Component {
         return (
             <span>
                 <div className="row">
-                    <div className="column small-12">{auths}</div>
+                    <div>{auths}</div>
                 </div>
             </span>
         );
