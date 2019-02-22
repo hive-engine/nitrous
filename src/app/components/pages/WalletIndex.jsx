@@ -31,35 +31,103 @@ class WalletIndex extends React.Component {
         const { username } = this.state;
         const { submitting, valid, handleSubmit } = this.state.login;
         return (
-            <div
-                className="LoginForm row"
-                onSubmit={handleSubmit(({ data }) => {
-                    dispatchSubmit(data);
-                })}
-            >
-                <form method="post">
-                    <div className="input-group">
-                        <span className="input-group-label">@</span>
-                        <input
-                            type="text"
-                            className="input-group-field"
-                            required
-                            placeholder={tt(
-                                'loginform_jsx.enter_your_username'
-                            )}
-                            ref="username"
-                            name="username"
-                            autoComplete="on"
-                            {...username.props}
-                        />
+            <div className="WalletIndex">
+                <div className="row">
+                    <div className="column login">
+                        <h3 style={{ fontWeight: 'bold' }}>
+                            {tt('wallet_index.title')}
+                        </h3>
+                        <p>{tt('wallet_index.description')}</p>
+                        <form
+                            method="post"
+                            onSubmit={handleSubmit(({ data }) => {
+                                dispatchSubmit(data);
+                            })}
+                        >
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="input-group-field"
+                                    required
+                                    placeholder={tt(
+                                        'loginform_jsx.enter_your_username'
+                                    )}
+                                    ref="username"
+                                    name="username"
+                                    autoComplete="on"
+                                    {...username.props}
+                                />
+                            </div>
+                            <div className="modal-buttons">
+                                <button
+                                    type="submit"
+                                    disabled=""
+                                    className="button"
+                                >
+                                    {tt('wallet_index.login')}
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="login-modal-buttons">
-                        <br />
-                        <button type="submit" disabled="" className="button">
-                            Login
-                        </button>
+                    <div className="column tokens">
+                        <div className="sheet-container">
+                            <div className="sheet">
+                                <div className="sheet">
+                                    <div className="sheet">
+                                        <h3>
+                                            {tt('wallet_index.steem_tokens')}
+                                        </h3>
+                                        <div className="token-container">
+                                            <div className="token token-steem" />
+                                            <span>
+                                                <h4>
+                                                    {tt(
+                                                        'wallet_index.steem_symbol'
+                                                    )}
+                                                </h4>
+                                                <span className="text">
+                                                    {tt(
+                                                        'wallet_index.steem_description'
+                                                    )}
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div className="token-container">
+                                            <div className="token token-steem-power" />
+                                            <span>
+                                                <h4>
+                                                    {tt(
+                                                        'wallet_index.steem_power_symbol'
+                                                    )}
+                                                </h4>
+                                                <span className="text">
+                                                    {tt(
+                                                        'wallet_index.steem_power_description'
+                                                    )}
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div className="token-container">
+                                            <div className="token token-sbd" />
+                                            <span>
+                                                <h4>
+                                                    {tt(
+                                                        'wallet_index.sbd_symbol'
+                                                    )}
+                                                </h4>
+                                                <span className="text">
+                                                    {tt(
+                                                        'wallet_index.sbd_description'
+                                                    )}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         );
     }

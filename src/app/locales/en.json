@@ -893,5 +893,18 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "wallet_index": {
+        "title": "Steem wallet login",
+        "description":
+            "Welcome to Steemit's official Steem blockchain wallet. Use it to transfer Steem tokens, Power up, vote for Steem Witnesses and change your Steem profile details.",
+        "login": "Login",
+        "steem_tokens": "Steem tokens",
+        "steem_symbol": "STEEM",
+        "steem_description": "Liquid platform token",
+        "steem_power_symbol": "STEEM Power",
+        "steem_power_description": "Vesting influence token",
+        "sbd_symbol": "SBD",
+        "sbd_description": "Vesting influence token"
     }
 }

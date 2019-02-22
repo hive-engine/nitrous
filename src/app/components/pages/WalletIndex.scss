@@ -1,0 +1,141 @@
+.WalletIndex {
+  /* TODO: Fix flex by making parent element take 100% of height */
+  /* display: flex; */
+  /* vertical-align: middle; */
+  padding-top: 5em;
+
+  h1, h2, h3, h4, h5, h6, p {
+    font-family: helvetica, sans-serif;
+  }
+
+  h3, h4 {
+    font-weight: bold;
+  }
+
+  .login, .tokens {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .tokens {
+    margin-right: 10%;
+
+    h3 {
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-size: 100%;
+      height: 1.3em;
+      padding-top: 6px;
+      margin-bottom: 0;
+    }
+
+    .text {
+      color: #777;
+      font-size: 0.9em;
+    }
+
+    .token-container {
+      clear: both;
+      margin-bottom: 20px;
+    }
+
+    .token-container:last-child {
+      margin-bottom: 10px;
+    }
+
+    .token {
+      display: inline-block;
+      float: left;
+      margin-right: 10px;
+    }
+
+    .sheet-container {
+      position: relative;
+      left: -18px;
+      top: 23px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sheet {
+      background-color: white;
+      border: 1px solid #ddd;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      left: 9px;
+      top: -11px;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .sheet > .sheet > .sheet {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .token-steem {
+      background: url('/images/token-steem.svg');
+      width: 46px;
+      height: 46px;
+    }
+
+    .token-steem-power {
+      display: inline-block;
+      background: url('/images/token-steem-power.svg');
+      width: 46px;
+      height: 46px;
+    }
+
+    .token-sbd {
+      display: inline-block;
+      background: url('/images/token-sbd.svg');
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  button[type=submit] {
+    background-color: black;
+    border-radius: 0;
+    padding-left: 2.0em;
+    padding-right: 2.0em;
+  }
+
+  @media screen and (max-width: 63.9375em) {
+    .login, .tokens {
+      margin-left: initial;
+      margin-right: initial;
+    }
+  }
+
+  @media screen and (max-width: 39.9375em) {
+    .row {
+      flex-flow: column;
+    }
+
+    .login, .tokens {
+      margin-bottom: 5em;
+    }
+
+    .tokens {
+      h3 {
+        font-size: 1.1875rem;
+      }
+
+      h4 {
+        height: 1.4em;
+        padding-top: 8px;
+      }
+
+      .sheet-container {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+}
