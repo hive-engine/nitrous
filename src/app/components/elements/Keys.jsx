@@ -36,10 +36,11 @@ class Keys extends Component {
         }[authType.toLowerCase()];
 
         let idx = 0;
-        const auths = pubkeys.map(pubkey => (
-            <div key={idx++} className="row">
-                <div className="column small-12">
+        return (
+            <span>
+                {pubkeys.map(pubkey => (
                     <ShowKey
+                        key={idx++}
                         pubkey={pubkey}
                         privateKey={privateKeys.get(authType + '_private')}
                         authType={authType}
@@ -47,15 +48,7 @@ class Keys extends Component {
                         accountName={account.get('name')}
                         onKey={onKey}
                     />
-                </div>
-            </div>
-        ));
-
-        return (
-            <span>
-                <div className="row">
-                    <div>{auths}</div>
-                </div>
+                ))}
             </span>
         );
     }
