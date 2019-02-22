@@ -16,7 +16,6 @@ import Settings from 'app/components/modules/Settings';
 import UserList from 'app/components/elements/UserList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
-import { repLog10 } from 'app/utils/ParsersAndFormatters.js';
 import Tooltip from 'app/components/elements/Tooltip';
 import DateJoinWrapper from 'app/components/elements/DateJoinWrapper';
 import tt from 'counterpart';
@@ -92,8 +91,6 @@ export default class UserProfile extends React.Component {
             );
         }
 
-        const rep = repLog10(account.reputation);
-
         const isMyAccount = username === account.name;
         let tab_content = null;
 
@@ -155,22 +152,8 @@ export default class UserProfile extends React.Component {
         var page_title = '';
         // Page title
 
-        if (isMyAccount) {
-            if (section === 'comments') {
-                page_title = tt('g.my_comments');
-            } else if (section === 'recent-replies') {
-                page_title = tt('g.my_replies');
-            } else if (section === 'settings') {
-                page_title = tt('g.settings');
-            }
-        } else {
-            if (section === 'comments') {
-                page_title = tt('g.comments');
-            } else if (section === 'recent-replies') {
-                page_title = tt('g.replies');
-            } else if (section === 'settings') {
-                page_title = tt('g.settings');
-            }
+        if (section === 'settings') {
+            page_title = tt('g.settings');
         }
 
         const layoutClass = 'layout-list';
@@ -268,17 +251,7 @@ export default class UserProfile extends React.Component {
                     <div className="column" style={cover_image_style}>
                         <h1>
                             <Userpic account={account.name} hideIfDefault />
-                            {name || account.name}{' '}
-                            <Tooltip
-                                t={tt(
-                                    'user_profile.this_is_users_reputations_score_it_is_based_on_history_of_votes',
-                                    { name: accountname }
-                                )}
-                            >
-                                <span className="UserProfile__rep">
-                                    ({rep})
-                                </span>
-                            </Tooltip>
+                            {name || account.name}
                         </h1>
 
                         <div>
