@@ -179,8 +179,6 @@
             "głos oddany, użytkownik musi wskazać powód odrzucenia delegata",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Dozwolone jest tylko jedno konto Steem dla danego adresu IP w ciągu 10 minut",
-        "resteem_this_post": "Resteemuj ten post",
-        "reblog": "Resteem",
         "write_your_story": "Napisz swoją historię",
         "remember_voting_and_posting_key":
             "Zapamiętaj klucze do głosowania i tworzenia wpisów",
@@ -383,22 +381,6 @@
         "followers": "Obserwujący",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "To są punkty reputacji użytkownika %(name)s.\n\nSystem punktów reputacji bazuje na historii otrzymanych przez użytkownika głosów i jest używany do ukrywania wpisów o niskiej jakości.",
-        "follower_count": {
-            "zero": "Brak obserwujących",
-            "one": "1 obserwujący",
-            "other": "%(count)s obserwujących"
-        },
-        "followed_count": {
-            "zero": "Brak obserwowanych",
-            "one": "1 obserwowany",
-            "other": "%(count)s obserwowanych"
-        },
-        "post_count": {
-            "zero": "Brak wpisów",
-            "one": "1 wpis",
-            "other": "%(count)s wpisów"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -550,17 +532,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Obrazki zostały ukryte z powodu niskich ocen."
-    },
-    "postsummary_jsx": {
-        "resteemed": "Resteemowane",
-        "resteemed_by": "Resteemowane przez",
-        "this_post_is": "Ten post jest",
-        "you_can": "Możesz",
-        "reveal_it": "pokaż to",
-        "adjust_your": "dostosuj twój",
-        "display_preferences": "wyświetl ustawienia",
-        "create_an_account": "utwórz konto",
-        "to_save_your_preferences": "by zapisać twoje preferencje"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "na konto oszczędnościowe",

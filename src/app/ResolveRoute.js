@@ -2,10 +2,9 @@ import GDPRUserList from './utils/GDPRUserList';
 
 export const routeRegex = {
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
-    UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|password|followed|followers|settings)\/?$/,
+    UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    UserEndPoints: /^(transfers|permissions|created|password|followed|followers|settings)$/,
-    CategoryFilters: /^\/(cashout|payout|payout_comments|created|active)\/?$/gi,
+    UserEndPoints: /^(transfers|permissions|password|settings)$/,
 };
 
 export default function resolveRoute(path) {
@@ -70,14 +69,6 @@ export default function resolveRoute(path) {
             return { page: 'NotFound' };
         }
         return { page: 'UserProfile', params: match.slice(1) };
-    }
-    match =
-        path.match(/^\/(cashout|payout|payout_comments|created|active)\/?$/) ||
-        path.match(
-            /^\/(cashout|payout|payout_comments|created|active)\/([\w\d-]+)\/?$/
-        );
-    if (match) {
-        return { page: 'WalletIndex', params: match.slice(1) };
     }
     return { page: 'NotFound' };
 }

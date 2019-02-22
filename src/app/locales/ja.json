@@ -182,8 +182,6 @@
             "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "10分毎に各IPアドレスにつき1つのSteemアカウントのみ許可されています",
-        "resteem_this_post": "この投稿をResteemする",
-        "reblog": "Resteem",
         "write_your_story": "投稿内容を書いてください",
         "remember_voting_and_posting_key": "投稿キーを記憶する",
         "auto_login_question_mark": "自動ログインしますか？",
@@ -398,22 +396,6 @@
         "followers": "フォロワー",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "これは%(name)sの評価スコアです。\n\n評価スコアはアカウントが貰ったvoteの履歴に基いており、低品質のコンテンツを非表示にするのに使われます。",
-        "follower_count": {
-            "zero": "フォロワーがいません",
-            "one": "1人のフォロワー",
-            "other": "%(count)s人のフォロワー"
-        },
-        "followed_count": {
-            "zero": "誰もフォローしていません",
-            "one": "1人をフォロー中",
-            "other": "%(count)s人をフォロー中"
-        },
-        "post_count": {
-            "zero": "投稿がありません",
-            "one": "投稿1件",
-            "other": "投稿%(count)s 件"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -562,17 +544,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "評価が低いため画像は非表示になりました。"
-    },
-    "postsummary_jsx": {
-        "resteemed": "Resteemしました",
-        "resteemed_by": "Resteemed by",
-        "this_post_is": "この投稿は",
-        "you_can": "You can",
-        "reveal_it": "この投稿を表示する、",
-        "adjust_your": "を変更してください。",
-        "display_preferences": "表示設定",
-        "create_an_account": "アカウントを作成して",
-        "to_save_your_preferences": "表示設定を行ってください。"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "貯蓄に",

@@ -237,11 +237,7 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        const { follow, account, isOwnAccount, user_preferences } = this.props;
-        const following =
-            follow && follow.getIn(['getFollowingAsync', account.name]);
-        const ignores =
-            isOwnAccount && following && following.get('ignore_result');
+        const { account, isOwnAccount, user_preferences } = this.props;
 
         return (
             <div className="Settings">
@@ -530,20 +526,6 @@ class Settings extends React.Component {
                         </div>
                     </div>
                 )}
-                {ignores &&
-                    ignores.size > 0 && (
-                        <div className="row">
-                            <div className="small-12 medium-6 large-4 columns">
-                                <br />
-                                <br />
-                                <UserList
-                                    title={tt('settings_jsx.muted_users')}
-                                    account={account}
-                                    users={ignores}
-                                />
-                            </div>
-                        </div>
-                    )}
             </div>
         );
     }
@@ -570,7 +552,6 @@ export default connect(
             accountname,
             isOwnAccount: username == accountname,
             profile,
-            follow: state.global.get('follow'),
             user_preferences,
             ...ownProps,
         };

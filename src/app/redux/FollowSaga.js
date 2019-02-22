@@ -8,63 +8,56 @@ import * as globalActions from 'app/redux/GlobalReducer';
     This loadFollows both 'blog' and 'ignore'
 */
 
-//fetch for follow/following count
-export function* fetchFollowCount(account) {
-    const counts = yield call([api, api.getFollowCountAsync], account);
-    yield put(
-        globalActions.update({
-            key: ['follow_count', account],
-            updater: m =>
-                m.mergeDeep({
-                    follower_count: counts.follower_count,
-                    following_count: counts.following_count,
-                }),
-        })
-    );
-}
-
 // Test limit with 2 (not 1, infinate looping)
-export function* loadFollows(method, account, type, force = false) {
+export function* loadFollows(account, type, force = false) {
     if (
         yield select(state =>
-            state.global.getIn(['follow', method, account, type + '_loading'])
+            state.global.getIn([
+                'follow',
+                'getFollowingAsync',
+                account,
+                type + '_loading',
+            ])
         )
     ) {
-        // console.log('Already loading', method, account, type)
         return;
     }
 
     if (!force) {
         const hasResult = yield select(state =>
-            state.global.hasIn(['follow', method, account, type + '_result'])
+            state.global.hasIn([
+                'follow',
+                'getFollowingAsync',
+                account,
+                type + '_result',
+            ])
         );
         if (hasResult) {
-            // console.log('Already loaded', method, account, type)
             return;
         }
     }
 
     yield put(
         globalActions.update({
-            key: ['follow', method, account],
+            key: ['follow', 'getFollowingAsync', account],
             notSet: Map(),
             updater: m => m.set(type + '_loading', true),
         })
     );
 
-    yield loadFollowsLoop(method, account, type);
+    yield loadFollowsLoop(account, type);
 }
 
-function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
-    const res = fromJS(yield api[method](account, start, type, limit));
-    // console.log('res.toJS()', res.toJS())
-
+function* loadFollowsLoop(account, type, start = '', limit = 1000) {
+    const res = fromJS(
+        yield api.getFollowingAsync(account, start, type, limit)
+    );
     let cnt = 0;
     let lastAccountName = null;
 
     yield put(
         globalActions.update({
-            key: ['follow_inprogress', method, account],
+            key: ['follow_inprogress', 'getFollowingAsync', account],
             notSet: Map(),
             updater: m => {
                 m = m.asMutable();
@@ -72,12 +65,9 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                     cnt += 1;
 
                     const whatList = value.get('what');
-                    const accountNameKey =
-                        method === 'getFollowingAsync'
-                            ? 'following'
-                            : 'follower';
+                    const accountNameKey = 'following';
                     const accountName = (lastAccountName = value.get(
-                        accountNameKey
+                        'following'
                     ));
                     whatList.forEach(what => {
                         //currently this is always true: what === type
@@ -91,7 +81,7 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
 
     if (cnt === limit) {
         // This is paging each block of up to limit results
-        yield call(loadFollowsLoop, method, account, type, lastAccountName);
+        yield call(loadFollowsLoop, account, type, lastAccountName);
     } else {
         // This condition happens only once at the very end of the list.
         // Every account has a different followers and following list for: blog, ignore
@@ -102,17 +92,30 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                     m = m.asMutable();
 
                     const result = m.getIn(
-                        ['follow_inprogress', method, account, type],
+                        [
+                            'follow_inprogress',
+                            'getFollowingAsync',
+                            account,
+                            type,
+                        ],
                         OrderedSet()
                     );
-                    m.deleteIn(['follow_inprogress', method, account, type]);
-                    m.updateIn(['follow', method, account], Map(), mm =>
-                        mm.merge({
-                            // Count may be set separately without loading the full xxx_result set
-                            [type + '_count']: result.size,
-                            [type + '_result']: result.reverse(),
-                            [type + '_loading']: false,
-                        })
+                    m.deleteIn([
+                        'follow_inprogress',
+                        'getFollowingAsync',
+                        account,
+                        type,
+                    ]);
+                    m.updateIn(
+                        ['follow', 'getFollowingAsync', account],
+                        Map(),
+                        mm =>
+                            mm.merge({
+                                // Count may be set separately without loading the full xxx_result set
+                                [type + '_count']: result.size,
+                                [type + '_result']: result.reverse(),
+                                [type + '_loading']: false,
+                            })
                     );
                     return m.asImmutable();
                 },

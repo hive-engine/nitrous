@@ -35,8 +35,6 @@ const HIDE_CONNECTION_ERROR_MODAL = 'user/HIDE_CONNECTION_ERROR_MODAL';
 const SET = 'user/SET';
 const SHOW_SIDE_PANEL = 'user/SHOW_SIDE_PANEL';
 const HIDE_SIDE_PANEL = 'user/HIDE_SIDE_PANEL';
-const SHOW_POST_ADVANCED_SETTINGS = 'user/SHOW_POST_ADVANCED_SETTINGS';
-const HIDE_POST_ADVANCED_SETTINGS = 'user/HIDE_POST_ADVANCED_SETTINGS';
 
 // Saga-related
 export const LOAD_SAVINGS_WITHDRAW = 'user/LOAD_SAVINGS_WITHDRAW';
@@ -46,7 +44,6 @@ const defaultState = fromJS({
     current: null,
     show_login_modal: false,
     show_transfer_modal: false,
-    show_promote_post_modal: false,
     show_signup_modal: false,
     show_post_advanced_settings_modal: '', // formId
     pub_keys_used: null,
@@ -245,15 +242,6 @@ export default function reducer(state = defaultState, action) {
         case HIDE_SIDE_PANEL:
             return state.set('show_side_panel', false);
 
-        case SHOW_POST_ADVANCED_SETTINGS:
-            return state.set(
-                'show_post_advanced_settings_modal',
-                payload.formId
-            );
-
-        case HIDE_POST_ADVANCED_SETTINGS:
-            return state.set('show_post_advanced_settings_modal', '');
-
         default:
             return state;
     }
@@ -431,12 +419,3 @@ export const hideSidePanel = () => {
         type: HIDE_SIDE_PANEL,
     };
 };
-
-export const showPostAdvancedSettings = payload => ({
-    type: SHOW_POST_ADVANCED_SETTINGS,
-    payload,
-});
-
-export const hidePostAdvancedSettings = () => ({
-    type: HIDE_POST_ADVANCED_SETTINGS,
-});

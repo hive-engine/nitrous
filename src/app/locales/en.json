@@ -190,8 +190,6 @@
             "vote currently exists, user must be indicate a desire to reject witness",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Only one Steem account allowed per IP address every 10 minutes",
-        "resteem_this_post": "Resteem This Post",
-        "reblog": "Resteem",
         "write_your_story": "Write your story...",
         "remember_voting_and_posting_key": "Remember voting & posting key",
         "auto_login_question_mark": "Auto login?",
@@ -411,22 +409,6 @@
         "followers": "Followers",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "This is %(name)s's reputation score.\n\nThe reputation score is based on the history of votes received by the account, and is used to hide low quality content.",
-        "follower_count": {
-            "zero": "No followers",
-            "one": "1 follower",
-            "other": "%(count)s followers"
-        },
-        "followed_count": {
-            "zero": "Not following anybody",
-            "one": "1 following",
-            "other": "%(count)s following"
-        },
-        "post_count": {
-            "zero": "No posts",
-            "one": "1 post",
-            "other": "%(count)s posts"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -589,15 +571,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Images were hidden due to low ratings."
-    },
-    "postsummary_jsx": {
-        "resteemed": "resteemed",
-        "resteemed_by": "Resteemed by",
-        "reveal_it": "Reveal this post",
-        "adjust_your": "adjust your",
-        "display_preferences": "display preferences",
-        "create_an_account": "create an account",
-        "to_save_your_preferences": "to save your preferences"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",

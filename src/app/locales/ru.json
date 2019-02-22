@@ -179,8 +179,6 @@
             "голос уже существует, пользователь должен обозначить желание убрать делегата",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Только один Steem аккаунт разрешен с одного IP адреса каждые десять минут",
-        "resteem_this_post": "Поделиться этим постом",
-        "reblog": "Поделиться",
         "write_your_story": "Написать свою историю",
         "remember_voting_and_posting_key": "Запомнить голос и постинг ключ",
         "auto_login_question_mark": "Заходить автоматически?",
@@ -403,28 +401,6 @@
         "followers": "Подписчики",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "Это репутация %(name)s.\n\nРепутация рассчитывается на основе истории полученных голосов и используется для сокрытия низкокачественного контента.",
-        "follower_count": {
-            "zero": "Нет подписчиков",
-            "one": "1 подписчик",
-            "few": "%(count)s подписчика",
-            "many": "%(count)s подписчиков",
-            "other": "%(count)s подписчиков"
-        },
-        "followed_count": {
-            "zero": "Ни на кого не подписан",
-            "one": "1 подписок",
-            "few": "%(count)s подписки",
-            "many": "%(count)s подписок",
-            "other": "%(count)s подписок"
-        },
-        "post_count": {
-            "zero": "Постов нет",
-            "one": "1 пост",
-            "few": "%(count)s поста",
-            "many": "%(count)s постов",
-            "other": "%(count)s постов"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -585,15 +561,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Изображения были скрыты из-за низкого рейтинга."
-    },
-    "postsummary_jsx": {
-        "resteemed": "Поделиться",
-        "resteemed_by": "Репостнуто",
-        "reveal_it": "посмотреть пост",
-        "adjust_your": "откорректируйте свои",
-        "display_preferences": "настройки отображения",
-        "create_an_account": "зарегистрироваться",
-        "to_save_your_preferences": "сохранить ваши настройки"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "в сейф",
