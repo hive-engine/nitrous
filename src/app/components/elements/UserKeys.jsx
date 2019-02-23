@@ -367,7 +367,7 @@ class UserKeys extends Component {
                                     }
                                 >
                                     steemd.com/@{account.get('name')}
-                                </a>.
+                                </a>
                             </p>
                         </div>
                         {/*   <div>{wifQrs && <span>{wifQrs}</span>}</div> */}
