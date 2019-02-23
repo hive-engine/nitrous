@@ -130,15 +130,57 @@
 	&__public {
 		display: none;
 	}
-	.button {
+	.button.hollow {
 		margin: 12px 0 0 0;
 		text-transform: capitalize;
 		font-weight: bold;
+		border-radius: 5px;
+		color: #fff;
+		height: 40px;
+		line-height: 1.2;
+
+		@include MQ(M) {
+			position: relative;
+			left: -2px;
+			border-radius: 0 5px 5px 0;
+			margin: 0;
+		}
+		@include themify($themes) {
+		   	background-color: themed('buttonBackground');
+		   	border: themed('borderTransparent');
+		   	color: themed('buttonText');
+		}
+		&:hover, &:focus {
+			@include themify($themes) {
+			   	background-color: themed('buttonBackgroundHover');
+			   	border: themed('borderTransparent');
+			}			
+		}
 	}
 	&__input {
+		height: 40px;
 		@include MQ(FL) {
 			min-width: 540px;
 			max-width: 680px;
+		}
+	}
+	&__private-container {
+		width: 100%;
+		@include MQ(M) {
+			display: flex;
+			justify-content: space-between;
+
+		}
+	}
+	&__private-input {
+		width: 100%;
+	}
+	&__private-title {
+		width: 100%;
+	}
+	&__reveal {
+		@include MQ(M) {
+			flex: 0 0 75px;
 		}
 	}
 }
@@ -191,7 +233,11 @@
 	}
 	&__description {
 		@include font-size(16px);
-		margin-bottom: 0;
 		max-width: 780px;
+	}
+	&__link {
+		font-weight: bold;
+		display: block;
+		margin-top: 0px;
 	}
 }

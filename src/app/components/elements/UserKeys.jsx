@@ -104,7 +104,7 @@ class UserKeys extends Component {
             <div className="UserKeys">
                 <div className="UserKeys__intro">
                     <div className="UserKeys__intro-col">
-                        <h1>Keys & Permissions</h1>
+                        <h1>Keys & Permissions </h1>
                         <p className="UserKeys__p">
                             Any password or key is more likely to get
                             compromised the more it is used. That's why Steem
@@ -349,18 +349,28 @@ class UserKeys extends Component {
                             <h3 className="public-keys__h3">Public Keys</h3>
                             <p className="public-keys__description">
                                 Each Steem Key has a public and private key to
-                                encrypt and decrypt data. Below are your public
-                                keys. They are publicly associated with your
-                                username and can be used to look up your
-                                transactions on the blockchain with a block
-                                explorer like{' '}
-                                <a href="https://steemd.com">steemd.com</a>.
-                                Your public keys are not required for login on
-                                Steemit.com and you don't need to store these
-                                safely.
+                                encrypt and decrypt data. Public keys are
+                                associated with usernames and can be used to
+                                look up associated transactions on the
+                                blockchain. Your public keys are not required
+                                for login on Steemit.com and you don't need to
+                                store these safely.
+                            </p>
+                            <p className="public-keys__description">
+                                View public key information for this account (in
+                                the 'Authorities' module):{' '}
+                                <a
+                                    className="public-keys__link"
+                                    href={
+                                        'https://steemd.com/@' +
+                                        account.get('name')
+                                    }
+                                >
+                                    steemd.com/@{account.get('name')}
+                                </a>.
                             </p>
                         </div>
-                        <div>{wifQrs && <span>{wifQrs}</span>}</div>
+                        {/*   <div>{wifQrs && <span>{wifQrs}</span>}</div> */}
                     </div>
                 </div>
             </div>

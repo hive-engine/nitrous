@@ -101,27 +101,30 @@ class ShowKey extends Component {
                 </div>
                 <br />
                 <div className="row key__private">
-                    <div className="column small-12 medium-10">
-                        <div className="row">
-                            <h5>Your Private {this.props.authTypeName} Key</h5>
+                    <div className="key__private-title">
+                        <h5>Your Private {this.props.authTypeName} Key</h5>
+                    </div>
+
+                    <div className="key__private-container">
+                        <div className="key__private-input">
                             <input
                                 className="key__input"
                                 type="text"
                                 value={wif ? wif : '•'.repeat(44)}
                             />
                         </div>
-                    </div>
-                    <div className="column small-12 medium-2">
-                        {wif ? (
-                            <QRCode text={wif} />
-                        ) : (
-                            <a
-                                onClick={showLogin}
-                                className="hollow button large"
-                            >
-                                Reveal
-                            </a>
-                        )}
+                        <div className="key__reveal">
+                            {wif ? (
+                                <QRCode text={wif} />
+                            ) : (
+                                <a
+                                    onClick={showLogin}
+                                    className="hollow button"
+                                >
+                                    Reveal
+                                </a>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
