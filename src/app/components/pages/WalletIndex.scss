@@ -139,3 +139,24 @@
     }
   }
 }
+
+.theme-dark {
+  .WalletIndex {
+    .sheet {
+      background-color: #1C252B;
+      box-shadow: 0px 2px 2px rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+    }
+
+    button[type=submit] {
+      background-color: white;
+      color: black;
+    }
+
+    .tokens {
+      .text {
+        color: #999;
+      }
+    }
+  }
+}

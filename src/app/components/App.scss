@@ -194,27 +194,6 @@
         }
     }
 }
-.downvoted {
-    opacity: 0.5;
-    -webkit-filter: grayscale(1); // image
-    filter: gray; // image grayscale
-    transition: 0.2s all ease-in-out;
-    color: #848282;
-    @include themify($themes) {
-        color: themed('textColorPrimary');
-    }
-    .Comment__header-user {
-      color: #848282;
-      @include themify($themes) {
-          color: themed('textColorPrimary');
-      }
-    }
-}
-.downvoted:hover {
-    opacity: 1;
-    filter: none;
-    -webkit-filter: none;
-}
 
 .App__announcement {
   padding-right: 40px;
@@ -223,5 +202,3 @@
     right: 0;
   }
 }
-
-

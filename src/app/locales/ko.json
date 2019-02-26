@@ -181,8 +181,6 @@
             "vote currently exists, user must be indicate a desire to reject witness",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "매 10 분마다 IP 주소 당 단 하나의 Steem 계정만 허용됩니다.",
-        "resteem_this_post": "Resteem This Post",
-        "reblog": "리스팀",
         "write_your_story": "내용을 입력하세요",
         "remember_voting_and_posting_key": "Remember voting & posting key",
         "auto_login_question_mark": "자동 로그인",
@@ -396,22 +394,6 @@
         "followers": "팔로워",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "이것은 %(name)s님의 평판 점수입니다.\n\n평판 점수는 %(name)s님이 받은 보팅 기록에 기반합니다. 이 평판 점수는 질이 나쁜 콘텐츠를 가려내기 위해 사용됩니다.",
-        "follower_count": {
-            "zero": "팔로워 없음",
-            "one": "한명의 팔로워",
-            "other": "%(count)s명의 팔로워"
-        },
-        "followed_count": {
-            "zero": "팔로우 없음",
-            "one": "한명 팔로우",
-            "other": "%(count)s명 팔로우"
-        },
-        "post_count": {
-            "zero": "게시글 없음",
-            "one": "하나의 게시글",
-            "other": "%(count)s 게시글"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -561,15 +543,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Images were hidden due to low ratings."
-    },
-    "postsummary_jsx": {
-        "resteemed": "리스팀",
-        "resteemed_by": "리스팀 by",
-        "reveal_it": "Reveal this post",
-        "adjust_your": "adjust your",
-        "display_preferences": "display preferences",
-        "create_an_account": "create an account",
-        "to_save_your_preferences": "to save your preferences"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",

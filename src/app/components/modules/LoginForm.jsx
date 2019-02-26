@@ -184,11 +184,6 @@ class LoginForm extends Component {
         let postType = '';
         if (opType === 'vote') {
             postType = tt('loginform_jsx.login_to_vote');
-        } else if (
-            opType === 'custom_json' &&
-            loginBroadcastOperation.getIn(['operation', 'id']) === 'follow'
-        ) {
-            postType = 'Login to Follow Users';
         } else if (loginBroadcastOperation) {
             // check for post or comment in operation
             postType = loginBroadcastOperation.getIn(['operation', 'title'])

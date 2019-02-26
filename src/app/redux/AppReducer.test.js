@@ -11,7 +11,6 @@ import reducer, {
     receiveFeatureFlags,
     selectors,
     toggleNightmode,
-    toggleBlogmode,
 } from './AppReducer';
 
 const mockPayloads = {
@@ -116,13 +115,6 @@ describe('App reducer', () => {
         const before = initial.getIn(['user_preferences', 'nightmode']);
         let actual = reducer(initial, toggleNightmode());
         const after = actual.getIn(['user_preferences', 'nightmode']);
-        expect(after).toEqual(!before);
-    });
-    it('should return correct state for a TOGGLE_BLOGMODE action', () => {
-        const initial = reducer();
-        const before = initial.getIn(['user_preferences', 'blogmode']);
-        let actual = reducer(initial, toggleBlogmode());
-        const after = actual.getIn(['user_preferences', 'blogmode']);
         expect(after).toEqual(!before);
     });
     test('should merge in received feature flags', () => {

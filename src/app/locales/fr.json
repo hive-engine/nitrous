@@ -190,8 +190,6 @@
             "un vote existe actuellement; l'utilisateur doit indiquer une raison pour rejeter le témoin",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Un seul compte Steem est permis par adresse IP toutes les 10 minutes",
-        "resteem_this_post": "Resteemer cet article",
-        "reblog": "Resteem",
         "write_your_story": "Ecris ton histoire",
         "remember_voting_and_posting_key":
             "Se souvenir de la clé de publication et de vote",
@@ -411,22 +409,6 @@
         "followers": "Followers",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "Ceci est le score de réputation de %(name)s. \n\nLe score de réputation est basé sur l'historique des votes reçus par l'utilisateur, et est utilisé pour masquer le contenu de basse qualité.",
-        "follower_count": {
-            "zero": "Pas de fans",
-            "one": "1 fan",
-            "other": "%(count)s fans"
-        },
-        "followed_count": {
-            "zero": "N'est fan d'aucun utilisateur",
-            "one": "fan d'1 personne",
-            "other": "%(count)s fans"
-        },
-        "post_count": {
-            "zero": "Pas d'article",
-            "one": "1 article",
-            "other": "%(count)s articles"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -578,15 +560,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Les images sont masqués en raison d'une faible évaluation."
-    },
-    "postsummary_jsx": {
-        "resteemed": "resteemé",
-        "resteemed_by": "Resteemé par",
-        "reveal_it": "Révélez-le",
-        "adjust_your": "Ajustez vos",
-        "display_preferences": "préférences visuelles",
-        "create_an_account": "créer un compte",
-        "to_save_your_preferences": "Pour enregistrer vos préférences"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "vers l'épargne",

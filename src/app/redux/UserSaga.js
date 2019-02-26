@@ -17,7 +17,6 @@ import {
 } from 'app/utils/ServerApiClient';
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
-import DMCAUserList from 'app/utils/DMCAUserList';
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
@@ -82,10 +81,6 @@ function* loadSavingsWithdraw() {
 
 const strCmp = (a, b) => (a > b ? 1 : a < b ? -1 : 0);
 
-// function* getCurrentAccountWatch() {
-//     // yield* takeLatest('user/SHOW_TRANSFER', getCurrentAccount);
-// }
-
 function* removeHighSecurityKeys({ payload: { pathname } }) {
     const highSecurityPage =
         highSecurityPages.find(p => p.test(pathname)) != null;
@@ -105,6 +100,19 @@ function* usernameLogin(action) {
         sessionStorage.setItem('username', username);
         serverApiRecordEvent('SignIn', 'Login');
         yield put(userActions.setUsername({ username }));
+
+        const account = yield call(getAccount, username);
+        if (!account) {
+            console.log('No account');
+            yield put(
+                userActions.loginError({ error: 'Username does not exist' })
+            );
+            return;
+        }
+        yield put(userActions.saveLogin());
+        const response = yield serverApiLogin(username, {});
+        const body = yield response.json();
+        localStorage.setItem('username', username);
         browserHistory.push(`/@${action.payload.username}/transfers`);
     } else {
         const username = sessionStorage.getItem('username');
@@ -117,37 +125,30 @@ function* usernameLogin(action) {
     }
 }
 
-/**
-    @arg {object} action.username - Unless a WIF is provided, this is hashed with the password and key_type to create private keys.
-    @arg {object} action.password - Password or WIF private key.  A WIF becomes the posting key, a password can create all three
-        key_types: active, owner, posting keys.
-*/
-function* usernamePasswordLogin(action) {
-    // Sets 'loading' while the login is taking place.  The key generation can take a while on slow computers.
-    yield call(usernamePasswordLogin2, action.payload);
-    const current = yield select(state => state.user.get('current'));
-    if (current) {
-        const username = current.get('username');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'ignore');
-    }
-}
-
-// const isHighSecurityOperations = ['transfer', 'transfer_to_vesting', 'withdraw_vesting',
-//     'limit_order_create', 'limit_order_cancel', 'account_update', 'account_witness_vote']
-
 const clean = value =>
     value == null || value === '' || /null|undefined/.test(value)
         ? undefined
         : value;
 
-function* usernamePasswordLogin2({
+/**
+    @arg {object} action.username - Unless a WIF is provided, this is hashed with the password and key_type to create private keys.
+    @arg {object} action.password - Password or WIF private key.  A WIF becomes the posting key, a password can create all three
+        key_types: active, owner, posting keys.
+*/
+function* usernamePasswordLogin({
     username,
     password,
     saveLogin,
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
 }) {
+    const current = yield select(state => state.user.get('current'));
+    if (current) {
+        const username = current.get('username');
+        yield fork(loadFollows, username, 'blog');
+        yield fork(loadFollows, username, 'ignore');
+    }
+
     const user = yield select(state => state.user);
     const loginType = user.get('login_type');
     const justLoggedIn = loginType === 'basic';
@@ -207,14 +208,6 @@ function* usernamePasswordLogin2({
     if (!account) {
         console.log('No account');
         yield put(userActions.loginError({ error: 'Username does not exist' }));
-        return;
-    }
-    //dmca user block
-    if (username && DMCAUserList.includes(username)) {
-        console.log('DMCA list');
-        yield put(
-            userActions.loginError({ error: translate('terms_violation') })
-        );
         return;
     }
 
@@ -468,6 +461,10 @@ function* saveLogin_localStorage() {
         state.user.getIn(['current', 'private_keys']),
         state.user.getIn(['current', 'login_owner_pubkey']),
     ]);
+    if (!private_keys) {
+        console.info('No private keys. May be a username login.');
+        return;
+    }
     if (!username) {
         console.error('Not logged in');
         return;
@@ -670,10 +667,3 @@ function* uploadImage({
     };
     xhr.send(formData);
 }
-
-// function* getCurrentAccount() {
-//     const current = yield select(state => state.user.get('current'))
-//     if (!current) return
-//     const [account] = yield call([api, api.getAccountsAsync], [current.get('username')])
-//     yield put(g.actions.receiveAccount({ account }))
-// }

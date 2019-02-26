@@ -182,8 +182,6 @@
             "Este voto ya existe, el usuario tiene que quitar el voto al witness",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Sólo una cuenta Steem permitida por dirección IP cada 10 minutos",
-        "resteem_this_post": "Reesteemea esta Publicación",
-        "reblog": "Reesteemear",
         "write_your_story": "Escribe tu historia",
         "remember_voting_and_posting_key":
             "Recuerda la clave de voto y de publicación",
@@ -393,22 +391,6 @@
         "followers": "Seguidores",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "Esto es la reputación de %(name)s's. La reputación está basada en la historia de votos recibidos por la cuenta y se usa para esconder contenido de baja calidad.",
-        "follower_count": {
-            "zero": "Sin seguidores",
-            "one": "1 seguidor",
-            "other": "%(count)s seguidores"
-        },
-        "followed_count": {
-            "zero": "No sigue a nadie",
-            "one": "1 siguiendo",
-            "other": "%(count)s siguiendo"
-        },
-        "post_count": {
-            "zero": "Sin publicaciones",
-            "one": "1 publicación",
-            "other": "%(count)s posts"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -561,15 +543,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Las imágenes fueron ocultadas por bajas calificaciones."
-    },
-    "postsummary_jsx": {
-        "resteemed": "reesteemeado",
-        "resteemed_by": "Resteemeado por",
-        "reveal_it": "revelarlo",
-        "adjust_your": "ajustar tu",
-        "display_preferences": "Visualizar preferencias",
-        "create_an_account": "crea una cuenta",
-        "to_save_your_preferences": "para guardar tus preferencias"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "a ahorros",

@@ -7,13 +7,9 @@ describe('routeRegex', () => {
             ['UserProfile1', /^\/(@[\w\.\d-]+)\/?$/],
             [
                 'UserProfile2',
-                /^\/(@[\w\.\d-]+)\/(transfers|permissions|created|password|followed|followers|settings)\/?$/,
+                /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
             ],
             ['UserProfile3', /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/],
-            [
-                'CategoryFilters',
-                /^\/(cashout|payout|payout_comments|created|active)\/?$/gi,
-            ],
         ];
 
         test_cases.forEach(r => {

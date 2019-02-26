@@ -14,10 +14,8 @@ import PasswordReset from 'app/components/elements/PasswordReset';
 import UserWallet from 'app/components/modules/UserWallet';
 import Settings from 'app/components/modules/Settings';
 import UserList from 'app/components/elements/UserList';
-import Follow from 'app/components/elements/Follow';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
-import { repLog10 } from 'app/utils/ParsersAndFormatters.js';
 import Tooltip from 'app/components/elements/Tooltip';
 import DateJoinWrapper from 'app/components/elements/DateJoinWrapper';
 import tt from 'counterpart';
@@ -28,7 +26,6 @@ import Callout from 'app/components/elements/Callout';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
-import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import SanitizedLink from 'app/components/elements/SanitizedLink';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 
@@ -42,44 +39,13 @@ export default class UserProfile extends React.Component {
     }
 
     shouldComponentUpdate(np, ns) {
-        const { follow, follow_count, account, accountname } = this.props;
-
-        let followersLoading = false,
-            npFollowersLoading = false;
-        let followingLoading = false,
-            npFollowingLoading = false;
-
-        if (follow) {
-            followersLoading = follow.getIn(
-                ['getFollowersAsync', accountname, 'blog_loading'],
-                false
-            );
-            followingLoading = follow.getIn(
-                ['getFollowingAsync', accountname, 'blog_loading'],
-                false
-            );
-        }
-        if (np.follow) {
-            npFollowersLoading = np.follow.getIn(
-                ['getFollowersAsync', accountname, 'blog_loading'],
-                false
-            );
-            npFollowingLoading = np.follow.getIn(
-                ['getFollowingAsync', accountname, 'blog_loading'],
-                false
-            );
-        }
-
         return (
             np.current_user !== this.props.current_user ||
             np.account !== this.props.account ||
             np.wifShown !== this.props.wifShown ||
             np.global_status !== this.props.global_status ||
-            (npFollowersLoading !== followersLoading && !npFollowersLoading) ||
-            (npFollowingLoading !== followingLoading && !npFollowingLoading) ||
             np.loading !== this.props.loading ||
             np.location.pathname !== this.props.location.pathname ||
-            np.follow_count !== this.props.follow_count ||
             ns.showResteem !== this.state.showResteem
         );
     }
@@ -92,13 +58,7 @@ export default class UserProfile extends React.Component {
     render() {
         const {
             state: { showResteem },
-            props: {
-                current_user,
-                wifShown,
-                global_status,
-                follow,
-                accountname,
-            },
+            props: { current_user, wifShown, global_status, accountname },
             onPrint,
         } = this;
         const username = current_user ? current_user.get('username') : null;
@@ -129,26 +89,6 @@ export default class UserProfile extends React.Component {
                 </div>
             );
         }
-        const followers =
-            follow && follow.getIn(['getFollowersAsync', accountname]);
-        const following =
-            follow && follow.getIn(['getFollowingAsync', accountname]);
-
-        // instantiate following items
-        let totalCounts = this.props.follow_count;
-        let followerCount = 0;
-        let followingCount = 0;
-
-        if (totalCounts && accountname) {
-            totalCounts = totalCounts.get(accountname);
-            if (totalCounts) {
-                totalCounts = totalCounts.toJS();
-                followerCount = totalCounts.follower_count;
-                followingCount = totalCounts.following_count;
-            }
-        }
-
-        const rep = repLog10(account.reputation);
 
         let tab_content = null;
 
@@ -166,28 +106,6 @@ export default class UserProfile extends React.Component {
                     />
                 </div>
             );
-        } else if (section === 'followers') {
-            if (followers && followers.has('blog_result')) {
-                tab_content = (
-                    <div>
-                        <UserList
-                            title={tt('user_profile.followers')}
-                            account={account}
-                            users={followers.get('blog_result')}
-                        />
-                    </div>
-                );
-            }
-        } else if (section === 'followed') {
-            if (following && following.has('blog_result')) {
-                tab_content = (
-                    <UserList
-                        title="Followed"
-                        account={account}
-                        users={following.get('blog_result')}
-                    />
-                );
-            }
         } else if (section === 'settings') {
             tab_content = <Settings routeParams={this.props.routeParams} />;
         } else if (section === 'comments') {
@@ -320,56 +238,15 @@ export default class UserProfile extends React.Component {
             <div className="UserProfile">
                 <div className="UserProfile__banner row expanded">
                     <div className="column" style={cover_image_style}>
-                        <div style={{ position: 'relative' }}>
-                            <div className="UserProfile__buttons hide-for-small-only">
-                                <Follow
-                                    follower={username}
-                                    following={accountname}
-                                />
-                            </div>
-                        </div>
                         <h1>
                             <Userpic account={account.name} hideIfDefault />
-                            {name || account.name}{' '}
-                            <Tooltip
-                                t={tt(
-                                    'user_profile.this_is_users_reputations_score_it_is_based_on_history_of_votes',
-                                    { name: accountname }
-                                )}
-                            >
-                                <span className="UserProfile__rep">
-                                    ({rep})
-                                </span>
-                            </Tooltip>
+                            {name || account.name}
                         </h1>
 
                         <div>
                             {about && (
                                 <p className="UserProfile__bio">{about}</p>
                             )}
-                            <div className="UserProfile__stats">
-                                <span>
-                                    <Link to={`/@${accountname}/followers`}>
-                                        {tt('user_profile.follower_count', {
-                                            count: followerCount,
-                                        })}
-                                    </Link>
-                                </span>
-                                <span>
-                                    <Link to={`/@${accountname}`}>
-                                        {tt('user_profile.post_count', {
-                                            count: account.post_count || 0,
-                                        })}
-                                    </Link>
-                                </span>
-                                <span>
-                                    <Link to={`/@${accountname}/followed`}>
-                                        {tt('user_profile.followed_count', {
-                                            count: followingCount,
-                                        })}
-                                    </Link>
-                                </span>
-                            </div>
                             <p className="UserProfile__info">
                                 {location && (
                                     <span>
@@ -388,13 +265,6 @@ export default class UserProfile extends React.Component {
                                 <Icon name="calendar" />{' '}
                                 <DateJoinWrapper date={account.created} />
                             </p>
-                        </div>
-                        <div className="UserProfile__buttons_mobile show-for-small-only">
-                            <Follow
-                                follower={username}
-                                following={accountname}
-                                what="blog"
-                            />
                         </div>
                     </div>
                 </div>
@@ -424,8 +294,6 @@ module.exports = {
                 global_status: state.global.get('status'),
                 accountname: accountname,
                 account: state.global.getIn(['accounts', accountname]),
-                follow: state.global.get('follow'),
-                follow_count: state.global.get('follow_count'),
             };
         },
         dispatch => ({

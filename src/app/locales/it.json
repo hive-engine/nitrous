@@ -182,8 +182,6 @@
             "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness ",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "è possibile utilizzare un solo Steem account per indirizzo IP ogni 10 minuti",
-        "resteem_this_post": "Fai il resteem di questo post",
-        "reblog": "Resteem",
         "write_your_story": "Scrivi la tua storia",
         "remember_voting_and_posting_key":
             "Ricorda la chiave di voto e di pubblicazione",
@@ -401,22 +399,6 @@
         "followers": "Followers",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "Questo è il livello di reputazione di %(name)s. \n\nIl livello di reputazione si basa sulla storia dei voti ricevuti dall'account e viene utilizzato per nascondere contenuti di scarsa qualità. ",
-        "follower_count": {
-            "zero": "Nessun follower",
-            "one": "1 follower",
-            "other": "%(count)s follower"
-        },
-        "followed_count": {
-            "zero": "Non segue nessuno",
-            "one": "1 following",
-            "other": "%(count)s following"
-        },
-        "post_count": {
-            "zero": "Nessun post",
-            "one": "1 post",
-            "other": "%(count)s post"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -568,15 +550,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Le immagini sono state nascoste a causa della bassa reputazione."
-    },
-    "postsummary_jsx": {
-        "resteemed": "condiviso",
-        "resteemed_by": "Condiviso da",
-        "reveal_it": "mostra",
-        "adjust_your": "sistema il tuo",
-        "display_preferences": "mostrare le tue preferenze",
-        "create_an_account": "creare un accout",
-        "to_save_your_preferences": "per salvare le tue preferenze"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "ai risparmi",

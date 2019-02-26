@@ -78,16 +78,6 @@ class Header extends React.Component {
                 : null;
             const user_title = name ? `${name} (@${user_name})` : user_name;
             page_title = user_title;
-            if (route.params[1] === 'followers') {
-                page_title = tt('header_jsx.people_following', {
-                    username: user_title,
-                });
-            }
-            if (route.params[1] === 'followed') {
-                page_title = tt('header_jsx.people_followed_by', {
-                    username: user_title,
-                });
-            }
             if (route.params[1] === 'curation-rewards') {
                 page_title = tt('header_jsx.curation_rewards_by', {
                     username: user_title,

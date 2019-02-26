@@ -25,10 +25,7 @@ export const transactionWatches = [
 const hook = {
     preBroadcast_transfer,
     preBroadcast_account_witness_vote,
-    error_custom_json,
-    // error_account_update,
     error_account_witness_vote,
-    accepted_custom_json,
     accepted_account_witness_vote,
     accepted_account_update,
     accepted_withdraw_vesting,
@@ -331,47 +328,6 @@ function* broadcastPayload({
     }
 }
 
-function updateFollowState(action, following, state) {
-    if (action == null) {
-        state = state.update('blog_result', Set(), r => r.delete(following));
-        state = state.update('ignore_result', Set(), r => r.delete(following));
-    } else if (action === 'blog') {
-        state = state.update('blog_result', Set(), r => r.add(following));
-        state = state.update('ignore_result', Set(), r => r.delete(following));
-    } else if (action === 'ignore') {
-        state = state.update('ignore_result', Set(), r => r.add(following));
-        state = state.update('blog_result', Set(), r => r.delete(following));
-    }
-    state = state.set('blog_count', state.get('blog_result', Set()).size);
-    state = state.set('ignore_count', state.get('ignore_result', Set()).size);
-    return state;
-}
-
-function* accepted_custom_json({ operation }) {
-    const json = JSON.parse(operation.json);
-    if (operation.id === 'follow') {
-        console.log(operation);
-        try {
-            if (json[0] === 'follow') {
-                const { follower, following, what: [action] } = json[1];
-                yield put(
-                    globalActions.update({
-                        key: ['follow', 'getFollowingAsync', follower],
-                        notSet: Map(),
-                        updater: m => updateFollowState(action, following, m),
-                    })
-                );
-            }
-        } catch (e) {
-            console.error(
-                'TransactionSaga unrecognized follow custom_json format',
-                operation.json
-            );
-        }
-    }
-    return operation;
-}
-
 function* accepted_account_witness_vote({
     operation: { account, witness, approve },
 }) {
@@ -403,17 +359,6 @@ function* accepted_account_update({ operation }) {
     );
     account = fromJS(account);
     yield put(globalActions.receiveAccount({ account }));
-
-    // bug, fork, etc.. the folowing would be mis-leading
-    // const {account} = operation
-    // const {owner, active, posting, memo_key, json_metadata} = operation
-    // {
-    //     const update = { accounts: { [account]: {memo_key, json_metadata} } }
-    //     if (posting) update.accounts[account].posting = posting
-    //     if (active) update.accounts[account].active = active
-    //     if (owner) update.accounts[account].owner = owner
-    //     yield put(g.actions.receiveState(update))
-    // }
 }
 
 import diff_match_patch from 'diff-match-patch';
@@ -424,18 +369,6 @@ export function createPatch(text1, text2) {
     const patches = dmp.patch_make(text1, text2);
     const patch = dmp.patch_toText(patches);
     return patch;
-}
-
-function* error_custom_json({ operation: { id, required_posting_auths } }) {
-    if (id === 'follow') {
-        const follower = required_posting_auths[0];
-        yield put(
-            globalActions.update({
-                key: ['follow', 'getFollowingAsync', follower, 'loading'],
-                updater: () => null,
-            })
-        );
-    }
 }
 
 function slug(text) {
@@ -580,7 +513,6 @@ export function* recoverAccount({
 }
 
 /** auths must start with most powerful key: owner for example */
-// const twofaAccount = 'steem'
 export function* updateAuthorities({
     payload: { accountName, signingKey, auths, twofa, onSuccess, onError },
 }) {
@@ -590,7 +522,6 @@ export function* updateAuthorities({
         onError('Account not found');
         return;
     }
-    // const signingPubkey = signingKey ? signingKey.toPublicKey() : null
     const ops2 = {};
     let oldPrivate;
     const addAuth = (authType, oldAuth, newAuth) => {
@@ -630,10 +561,7 @@ export function* updateAuthorities({
             newPrivate = PrivateKey.fromSeed(accountName + authType + newAuth);
             newAuthPubkey = newPrivate.toPublicKey().toString();
         }
-        // if (oldAuthPubkey === newAuthPubkey) {
-        //     onError('This is the same key')
-        //     return false
-        // }
+
         let authority;
         if (authType === 'memo') {
             account.memo_key = newAuthPubkey;
@@ -644,28 +572,6 @@ export function* updateAuthorities({
                 newAuthPubkey,
                 authority.weight_threshold,
             ]);
-            // const key_auths = authority.key_auths
-            // let found
-            // for (let i = 0; i < key_auths.length; i++) {
-            //     if (key_auths[i][0] === oldAuthPubkey) {
-            //         key_auths[i][0] = newAuthPubkey
-            //         found = true
-            //         break
-            //     }
-            // }
-            // if (!found) {
-            // key_auths.push([newAuthPubkey, authority.weight_threshold])
-            //     console.log(`Could not find an ${authType} key to update, adding instead`)
-            // }
-
-            // Add twofaAccount with full authority
-            // if(twofa && authType === 'owner') {
-            //     let account_auths = fromJS(authority.account_auths)
-            //     if(!account_auths.find(v => v.get(0) === twofaAccount)) {
-            //         account_auths = account_auths.push(fromJS([twofaAccount, authority.weight_threshold]))
-            //     }
-            //     authority.account_auths = account_auths.toJS()
-            // }
         }
         ops2[authType] = authority ? authority : account[authType];
         return true;
@@ -714,7 +620,5 @@ export function* updateAuthorities({
         successCallback: onSuccess,
         errorCallback: onError,
     };
-    // console.log('sign key.toPublicKey().toString()', key.toPublicKey().toString())
-    // console.log('payload', payload)
     yield call(broadcastOperation, { payload });
 }

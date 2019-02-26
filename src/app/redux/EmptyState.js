@@ -21,7 +21,6 @@ export const emptyContent = {
     children_rshares2: '0',
     net_rshares: 0,
     abs_rshares: 0,
-    cashout_time: new Date().toISOString(),
     total_vote_weight: '0',
     total_payout_value: ['0.000', DEBT_TICKER].join(' '),
     pending_payout_value: ['0.000', LIQUID_TICKER].join(' '),
