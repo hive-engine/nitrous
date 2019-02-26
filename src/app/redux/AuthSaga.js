@@ -22,7 +22,6 @@ export function* accountAuthLookup({
 }) {
     account = fromJS(account);
     private_keys = fromJS(private_keys);
-    // console.log('accountAuthLookup', account.name)
     const stateUser = yield select(state => state.user);
     let keys;
     if (private_keys) keys = private_keys;

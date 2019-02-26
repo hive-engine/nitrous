@@ -156,6 +156,8 @@ export default function reducer(state = defaultState, action) {
             return state.remove('powerdown_defaults');
 
         case USERNAME_PASSWORD_LOGIN:
+            return state; // saga
+
         case LOAD_SAVINGS_WITHDRAW:
             return state; // saga
 

@@ -136,17 +136,19 @@ const clean = value =>
         key_types: active, owner, posting keys.
 */
 function* usernamePasswordLogin({
-    username,
-    password,
-    saveLogin,
-    operationType /*high security*/,
-    afterLoginRedirectToWelcome,
+    payload: {
+        username,
+        password,
+        saveLogin,
+        operationType /*high security*/,
+        afterLoginRedirectToWelcome,
+    },
 }) {
     const current = yield select(state => state.user.get('current'));
     if (current) {
-        const username = current.get('username');
-        yield fork(loadFollows, username, 'blog');
-        yield fork(loadFollows, username, 'ignore');
+        const currentUsername = current.get('username');
+        yield fork(loadFollows, currentUsername, 'blog');
+        yield fork(loadFollows, currentUsername, 'ignore');
     }
 
     const user = yield select(state => state.user);
