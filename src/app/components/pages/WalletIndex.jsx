@@ -145,7 +145,10 @@ module.exports = {
         dispatch => {
             return {
                 dispatchSubmit: data => {
-                    dispatch(userActions.usernameLogin(data));
+                    const payload = Object.assign({}, data, {
+                        operationType: 'username',
+                    });
+                    dispatch(userActions.usernamePasswordLogin(payload));
                 },
             };
         }

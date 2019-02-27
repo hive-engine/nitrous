@@ -54,10 +54,10 @@ function runApp(initial_state) {
     const locale = store.get('language');
     if (locale) initial_state.user.locale = locale;
     initial_state.user.maybeLoggedIn =
-        store.get('autopost2') || store.get('username');
+        store.get('autopost2') || sessionStorage.getItem('username');
     if (initial_state.user.maybeLoggedIn) {
         const username =
-            store.get('username') ||
+            sessionStorage.getItem('username') ||
             new Buffer(store.get('autopost2'), 'hex').toString().split('\t')[0];
         initial_state.user.current = {
             username,
