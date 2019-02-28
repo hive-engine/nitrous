@@ -18,7 +18,6 @@ const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
 const CLEAR_TRANSFER_DEFAULTS = 'user/CLEAR_TRANSFER_DEFAULTS';
 const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
 const CLEAR_POWERDOWN_DEFAULTS = 'user/CLEAR_POWERDOWN_DEFAULTS';
-export const USERNAME_LOGIN = 'user/USERNAME_LOGIN';
 export const USERNAME_PASSWORD_LOGIN = 'user/USERNAME_PASSWORD_LOGIN';
 export const SET_USERNAME = 'user/SET_USERNAME';
 export const SET_USER = 'user/SET_USER';
@@ -160,6 +159,8 @@ export default function reducer(state = defaultState, action) {
             return state.remove('powerdown_defaults');
 
         case USERNAME_PASSWORD_LOGIN:
+            return state; // saga
+
         case LOAD_SAVINGS_WITHDRAW:
             return state; // saga
 
@@ -326,11 +327,6 @@ export const setPowerdownDefaults = payload => ({
 
 export const clearPowerdownDefaults = payload => ({
     type: CLEAR_POWERDOWN_DEFAULTS,
-    payload,
-});
-
-export const usernameLogin = payload => ({
-    type: USERNAME_LOGIN,
     payload,
 });
 

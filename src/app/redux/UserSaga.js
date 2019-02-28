@@ -24,7 +24,6 @@ export const userWatches = [
         'user/lookupPreviousOwnerAuthority',
         lookupPreviousOwnerAuthority
     ),
-    takeLatest(userActions.USERNAME_LOGIN, usernameLogin),
     takeLatest(userActions.USERNAME_PASSWORD_LOGIN, usernamePasswordLogin),
     takeLatest(userActions.SAVE_LOGIN, saveLogin_localStorage),
     takeLatest(userActions.LOGOUT, logout),
@@ -91,40 +90,6 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     if (!highSecurityPage) yield put(userActions.removeHighSecurityKeys());
 }
 
-/**
-    @arg {object} action.username - The user's username.
-*/
-function* usernameLogin(action) {
-    if (action.payload.username && action.payload.username.length > 0) {
-        const username = action.payload.username;
-        sessionStorage.setItem('username', username);
-        serverApiRecordEvent('SignIn', 'Login');
-        yield put(userActions.setUsername({ username }));
-
-        const account = yield call(getAccount, username);
-        if (!account) {
-            console.log('No account');
-            yield put(
-                userActions.loginError({ error: 'Username does not exist' })
-            );
-            return;
-        }
-        yield put(userActions.saveLogin());
-        const response = yield serverApiLogin(username, {});
-        const body = yield response.json();
-        localStorage.setItem('username', username);
-        browserHistory.push(`/@${action.payload.username}/transfers`);
-    } else {
-        const username = sessionStorage.getItem('username');
-        if (username) {
-            yield put(userActions.setUsername({ username }));
-        } else {
-            // TODO: Finish this
-            console.log('SIGN IN: Not signed in', action);
-        }
-    }
-}
-
 const clean = value =>
     value == null || value === '' || /null|undefined/.test(value)
         ? undefined
@@ -136,17 +101,19 @@ const clean = value =>
         key_types: active, owner, posting keys.
 */
 function* usernamePasswordLogin({
-    username,
-    password,
-    saveLogin,
-    operationType /*high security*/,
-    afterLoginRedirectToWelcome,
+    payload: {
+        username,
+        password,
+        saveLogin,
+        operationType /*high security*/,
+        afterLoginRedirectToWelcome,
+    },
 }) {
     const current = yield select(state => state.user.get('current'));
     if (current) {
-        const username = current.get('username');
-        yield fork(loadFollows, username, 'blog');
-        yield fork(loadFollows, username, 'ignore');
+        const currentUsername = current.get('username');
+        yield fork(loadFollows, currentUsername, 'blog');
+        yield fork(loadFollows, currentUsername, 'ignore');
     }
 
     const user = yield select(state => state.user);
@@ -155,11 +122,28 @@ function* usernamePasswordLogin({
     console.log(
         'Login type:',
         loginType,
+        'Operation type:',
+        operationType,
         'Just logged in?',
         justLoggedIn,
         'username:',
         username
     );
+
+    // Username login flow - user logged in
+    const storedUsername = sessionStorage.getItem('username');
+    if (storedUsername) {
+        console.log('storedUsername');
+        yield put(userActions.setUsername({ storedUsername }));
+    }
+
+    // Username login flow - user logging in
+    if (operationType === 'username') {
+        console.log('operationType username');
+        sessionStorage.setItem('username', username);
+        yield put(userActions.setUsername({ username }));
+        browserHistory.push(`/@${action.payload.username}/transfers`);
+    }
 
     // login, using saved password
     let autopost, memoWif, login_owner_pubkey, login_wif_owner_pubkey;
