@@ -133,16 +133,14 @@ function* usernamePasswordLogin({
     // Username login flow - user logged in
     const storedUsername = sessionStorage.getItem('username');
     if (storedUsername) {
-        console.log('storedUsername');
         yield put(userActions.setUsername({ storedUsername }));
     }
 
     // Username login flow - user logging in
     if (operationType === 'username') {
-        console.log('operationType username');
         sessionStorage.setItem('username', username);
         yield put(userActions.setUsername({ username }));
-        browserHistory.push(`/@${action.payload.username}/transfers`);
+        browserHistory.push(`/@${username}/transfers`);
     }
 
     // login, using saved password
@@ -494,6 +492,7 @@ function* logout(action) {
     yield put(userActions.saveLoginConfirm(false));
 
     if (process.env.BROWSER) {
+        sessionStorage.removeItem('username');
         localStorage.removeItem('autopost2');
     }
 

@@ -62,7 +62,6 @@ export default function resolveRoute(path) {
     }
     match =
         path.match(routeRegex.UserProfile1) ||
-        // @user/"posts" is deprecated in favor of "comments" as of oct-2016 (#443)
         path.match(routeRegex.UserProfile2);
     if (match) {
         if (GDPRUserList.includes(match[1].substring(1))) {
