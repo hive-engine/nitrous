@@ -15,7 +15,8 @@ class Keys extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return (
             this.props.authType !== nextProps.authType ||
-            this.props.account !== nextProps.account
+            this.props.account !== nextProps.account ||
+            this.props.privateKeys !== nextProps.privateKeys
         );
     }
 
