@@ -63,8 +63,12 @@ export default class UserProfile extends React.Component {
         } = this;
         const username = current_user ? current_user.get('username') : null;
 
+        // Redirect user homepage to transfers page
         let { section } = this.props.routeParams;
-        if (!section) section = 'transfers';
+        if (!section) {
+            browserHistory.push(`/@${accountname}/transfers`);
+            return null;
+        }
 
         // Loading status
         const status = global_status
