@@ -159,17 +159,24 @@
 	}
 	&__input {
 		height: 40px;
-		@include MQ(FL) {
-			min-width: 540px;
-			max-width: 680px;
+		@include font-size(10px);
+		overflow-x: scroll;
+		@media only screen and (min-width: 400px) {
+			@include font-size(11px);
 		}
+		@media only screen and (min-width: 520px) {
+			min-width: 500px;
+			@include font-size(14px);
+		}
+		@media only screen and (min-width: 620px) {
+			@include font-size(15px);
+		}		
 	}
 	&__private-container {
 		width: 100%;
 		@include MQ(M) {
 			display: flex;
 			justify-content: space-between;
-
 		}
 	}
 	&__private-input {
@@ -197,10 +204,6 @@
 		padding: 2px;
 		@include font-size(15px);
 	}
-}
-
-.ShowKey {
-
 }
 
 
@@ -239,5 +242,15 @@
 		font-weight: bold;
 		display: block;
 		margin-top: 0px;
+	}
+}
+
+.react-qr {
+	position: relative;
+	margin-top: 16px;
+	@include MQ(M) {
+		margin-left: 12px;
+		margin-top: -24px;
+		padding-right: 10px;
 	}
 }
