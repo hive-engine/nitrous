@@ -62,7 +62,7 @@
         "order_placed": "Order placed: %(order)s",
         "password": "Password",
         "payouts": "Payouts",
-        "permissions": "Permissions",
+        "permissions": "Keys & Permissions",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
         "post": "Post",
@@ -518,7 +518,7 @@
         "the_private_key_or_password_should_be_kept_offline":
             "The private key or password for the owner key should be kept offline as much as possible.",
         "the_memo_key_is_used_to_create_and_read_memos":
-            "The memo key is used to create and read memos."
+            "This key can be used to send and view encrypted memos on the Steem blockchain."
     },
     "suggestpassword_jsx": {
         "APP_NAME_cannot_recover_passwords_keep_this_page_in_a_secure_location":

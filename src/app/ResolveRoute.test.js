@@ -9,7 +9,6 @@ describe('routeRegex', () => {
                 'UserProfile2',
                 /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
             ],
-            ['UserProfile3', /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/],
         ];
 
         test_cases.forEach(r => {

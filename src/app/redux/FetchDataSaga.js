@@ -55,9 +55,13 @@ export function* fetchState(location_change_action) {
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
-        url = url.replace('/curation-rewards', '/transfers');
+        url = url.replace(/\/curation-rewards$/, '/transfers');
     if (url.indexOf('/author-rewards') !== -1)
-        url = url.replace('/author-rewards', '/transfers');
+        url = url.replace(/\/author-rewards$/, '/transfers');
+    if (url.indexOf('/permissions') !== -1)
+        url = url.replace(/\/permissions$/, '/transfers');
+    if (url.indexOf('/password') !== -1)
+        url = url.replace(/\/password$/, '/transfers');
 
     yield put(appActions.fetchDataBegin());
     try {

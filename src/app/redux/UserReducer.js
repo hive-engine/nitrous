@@ -110,9 +110,13 @@ export default function reducer(state = defaultState, action) {
                 ['current', 'private_keys'],
                 private_keys => {
                     if (!private_keys) return null;
-                    if (private_keys.has('active_private'))
+                    if (
+                        private_keys.has('active_private') ||
+                        private_keys.has('owner_private')
+                    )
                         console.log('removeHighSecurityKeys');
                     private_keys = private_keys.delete('active_private');
+                    private_keys = private_keys.delete('owner_private');
                     empty = private_keys.size === 0;
                     return private_keys;
                 }

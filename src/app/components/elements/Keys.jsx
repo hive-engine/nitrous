@@ -3,127 +3,61 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { connect } from 'react-redux';
-import * as globalActions from 'app/redux/GlobalReducer';
 import ShowKey from 'app/components/elements/ShowKey';
 import tt from 'counterpart';
 
 class Keys extends Component {
     static propTypes = {
-        // HTML
         account: PropTypes.object.isRequired, // immutable Map
         authType: PropTypes.oneOf(['posting', 'active', 'owner', 'memo']),
     };
-    constructor() {
-        super();
-        this.state = {};
-    }
+
     shouldComponentUpdate(nextProps, nextState) {
         return (
-            this.props.auth !== nextProps.auth ||
             this.props.authType !== nextProps.authType ||
-            this.props.authLogin !== nextProps.authLogin ||
             this.props.account !== nextProps.account ||
-            this.state !== nextState
+            this.props.privateKeys !== nextProps.privateKeys
         );
     }
-    showChangePassword = pubkey => {
-        const { account, authType } = this.props;
-        this.props.showChangePassword(account.get('name'), authType, pubkey);
-    };
+
     render() {
         const { props: { account, authType, privateKeys, onKey } } = this;
-        let pubkeys;
-        if (authType === 'memo') {
-            pubkeys = List([account.get('memo_key')]);
-        } else {
-            const authority = account.get(authType);
-            const authorities = authority.get('key_auths');
-            pubkeys = authorities.map(a => a.get(0));
-        }
-        const rowClass = 'hoverBackground';
+
+        // normalize public auths as simple lists of keys
+        const pubkeys =
+            authType === 'memo'
+                ? List([account.get('memo_key')])
+                : account.getIn([authType, 'key_auths']).map(a => a.get(0));
+
+        const tt_auth_type = {
+            owner: tt('g.owner'),
+            active: tt('g.active'),
+            posting: tt('g.posting'),
+            memo: tt('g.memo'),
+        }[authType.toLowerCase()];
+
         let idx = 0;
-        let tt_auth_type;
-        switch (authType.toLowerCase()) {
-            case 'owner':
-                tt_auth_type = tt('g.owner');
-                break;
-            case 'active':
-                tt_auth_type = tt('g.active');
-                break;
-            case 'posting':
-                tt_auth_type = tt('g.posting');
-                break;
-            case 'memo':
-                tt_auth_type = tt('g.memo');
-                break;
-            default:
-                tt_auth_type = authType;
-        }
-        const auths = pubkeys.map(pubkey => (
-            <div key={idx++}>
-                <div className="row">
-                    <div className="column small-12">
-                        <span className={rowClass}>
-                            <ShowKey
-                                pubkey={pubkey}
-                                privateKey={privateKeys.get(
-                                    authType + '_private'
-                                )}
-                                cmpProps={{ className: rowClass }}
-                                authType={authType}
-                                accountName={account.get('name')}
-                                onKey={onKey}
-                            >
-                                {/*<span onClick={() => this.showChangePassword(pubkey)}>&nbsp;{edit}</span>*/}
-                            </ShowKey>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        ));
         return (
             <span>
-                <div className="row">
-                    <div className="column small-12">
-                        <label>{tt_auth_type}</label>
-                        {auths}
-                    </div>
-                </div>
+                {pubkeys.map(pubkey => (
+                    <ShowKey
+                        key={idx++}
+                        pubkey={pubkey}
+                        privateKey={privateKeys.get(authType + '_private')}
+                        authType={authType}
+                        authTypeName={tt_auth_type}
+                        accountName={account.get('name')}
+                        onKey={onKey}
+                    />
+                ))}
             </span>
         );
     }
 }
 
-const emptyMap = Map();
-
-export default connect(
-    (state, ownProps) => {
-        const { account } = ownProps;
-        const accountName = account.get('name');
-        const current = state.user.get('current');
-        const username = current && current.get('username');
-        const isMyAccount = username === accountName;
-        const authLogin = isMyAccount
-            ? { username, password: current.get('password') }
-            : null;
-        let privateKeys;
-        if (current) privateKeys = current.get('private_keys'); // not bound to one account
-
-        if (!privateKeys) privateKeys = emptyMap;
-
-        const auth = state.user.getIn(['authority', accountName]);
-        return { ...ownProps, auth, authLogin, privateKeys };
-    },
-    dispatch => ({
-        showChangePassword: (username, authType, priorAuthKey) => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(
-                globalActions.showDialog({
-                    name,
-                    params: { username, authType, priorAuthKey },
-                })
-            );
-        },
-    })
-)(Keys);
+export default connect((state, ownProps) => {
+    return {
+        ...ownProps,
+        privateKeys: state.user.getIn(['current', 'private_keys'], Map()),
+    };
+})(Keys);
