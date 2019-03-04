@@ -3,8 +3,6 @@ import GDPRUserList from './utils/GDPRUserList';
 export const routeRegex = {
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
     UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
-    UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    UserEndPoints: /^(transfers|permissions|password|settings)$/,
 };
 
 export default function resolveRoute(path) {
@@ -62,7 +60,6 @@ export default function resolveRoute(path) {
     }
     match =
         path.match(routeRegex.UserProfile1) ||
-        // @user/"posts" is deprecated in favor of "comments" as of oct-2016 (#443)
         path.match(routeRegex.UserProfile2);
     if (match) {
         if (GDPRUserList.includes(match[1].substring(1))) {
