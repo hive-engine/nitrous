@@ -3,8 +3,6 @@ import GDPRUserList from './utils/GDPRUserList';
 export const routeRegex = {
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
     UserProfile2: /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
-    UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    UserEndPoints: /^(transfers|permissions|password|settings)$/,
 };
 
 export default function resolveRoute(path) {

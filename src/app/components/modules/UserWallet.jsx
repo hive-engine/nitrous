@@ -509,15 +509,7 @@ class UserWallet extends React.Component {
                 {claimbox}
                 <div className="row">
                     <div className="columns small-10 medium-12 medium-expand">
-                        {isMyAccount ? (
-                            <WalletSubMenu account_name={account.get('name')} />
-                        ) : (
-                            <div>
-                                <br />
-                                <h4>{tt('g.balances')}</h4>
-                                <br />
-                            </div>
-                        )}
+                        <WalletSubMenu account_name={account.get('name')} />
                     </div>
                     {
                         <div className="columns shrink">
@@ -803,11 +795,6 @@ export default connect(
             e.preventDefault();
             const name = 'convertToSteem';
             dispatch(globalActions.showDialog({ name }));
-        },
-        showChangePassword: username => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(globalActions.showDialog({ name, params: { username } }));
         },
     })
 )(UserWallet);

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as userActions from 'app/redux/UserReducer';
 import tt from 'counterpart';
 import * as globalActions from 'app/redux/GlobalReducer';
+import QRCode from 'react-qr';
 
 /** Display a public key.  Offer to show a private key, but only if it matches the provided public key */
 class ShowKey extends Component {
@@ -15,26 +16,20 @@ class ShowKey extends Component {
         accountName: PropTypes.string.isRequired,
         showLogin: PropTypes.func.isRequired,
         privateKey: PropTypes.object,
-        cmpProps: PropTypes.object,
-        children: PropTypes.object,
         onKey: PropTypes.func,
     };
+
     constructor() {
         super();
         this.state = {};
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'ShowKey');
-        this.onShow = () => {
-            const { state: { show, wif } } = this;
-            const { onKey, pubkey } = this.props;
-            this.setState({ show: !show });
-            if (onKey) onKey(!show ? wif : null, pubkey);
-        };
         this.showLogin = () => {
             const { showLogin, accountName, authType } = this.props;
-            showLogin({ username: accountName, authType });
+            showLogin({ username: accountName });
         };
         this.showLogin = this.showLogin.bind(this);
     }
+
     componentWillMount() {
         this.setWif(this.props, this.state);
         this.setOnKey(this.props, this.state);
@@ -45,88 +40,98 @@ class ShowKey extends Component {
     componentWillUpdate(nextProps, nextState) {
         this.setOnKey(nextProps, nextState);
     }
+
     setWif(props) {
         const { privateKey, pubkey } = props;
         if (privateKey && pubkey === privateKey.toPublicKey().toString()) {
             const wif = privateKey.toWif();
             this.setState({ wif });
+
+            const { onKey, pubkey } = this.props;
+            if (onKey) onKey(wif, pubkey);
         } else {
             this.setState({ wif: undefined });
         }
     }
+
     setOnKey(nextProps, nextState) {
-        const { show, wif } = nextState;
+        const { wif } = nextState;
         const { onKey, pubkey } = nextProps;
-        if (onKey) onKey(show ? wif : null, pubkey);
+        if (onKey) onKey(wif, pubkey);
     }
     showQr = () => {
-        const { show, wif } = this.state;
+        const { wif } = this.state;
         this.props.showQRKey({
             type: this.props.authType,
-            text: show ? wif : this.props.pubkey,
-            isPrivate: show,
+            text: wif ? wif : this.props.pubkey,
+            isPrivate: !!wif,
         });
     };
+
     render() {
-        const {
-            onShow,
-            showLogin,
-            props: { pubkey, cmpProps, children, authType },
-        } = this;
-        const { show, wif } = this.state;
+        const { showLogin, props: { pubkey, authType } } = this;
+        const { wif } = this.state;
 
-        const keyIcon = (
-            <span style={{ fontSize: '100%' }}>{tt('g.hide_private_key')}</span>
-        );
-        // Tooltip is trigggering a setState on unmounted component exception
-        const showTip = tt('g.show_private_key'); //<Tooltip t="Show private key (WIF)">show</Tooltip>
-
-        const keyLink = wif ? (
+        const qrIcon = (
             <div
-                style={{ marginBottom: 0 }}
-                className="hollow tiny button slim"
+                style={{
+                    display: 'inline-block',
+                    paddingRight: 10,
+                    cursor: 'pointer',
+                }}
+                onClick={this.showQr}
             >
-                <a onClick={onShow}>{show ? keyIcon : showTip}</a>
-            </div>
-        ) : authType === 'memo' ? null : authType === 'owner' ? null : (
-            <div
-                style={{ marginBottom: 0 }}
-                className="hollow tiny button slim"
-            >
-                <a onClick={showLogin}>{tt('g.login_to_show')}</a>
+                <img
+                    src={require('app/assets/images/qrcode.png')}
+                    height="32"
+                    width="32"
+                />
             </div>
         );
 
         return (
-            <div className="row">
-                <div className="column small-12 medium-10">
-                    <div
-                        style={{
-                            display: 'inline-block',
-                            paddingRight: 10,
-                            cursor: 'pointer',
-                        }}
-                        onClick={this.showQr}
-                    >
-                        <img
-                            src={require('app/assets/images/qrcode.png')}
-                            height="40"
-                            width="40"
-                        />
+            <div className="ShowKey">
+                <div className="row key__public">
+                    <div className="column">
+                        <br />
+                        <h5>Public {this.props.authTypeName} Key</h5>
+                        {qrIcon}
+                        <span>{pubkey}</span>
                     </div>
-                    {/* Keep this as wide as possible, check print preview makes sure WIF it not cut off */}
-                    <span {...cmpProps}>{show ? wif : pubkey}</span>
                 </div>
-                <div className="column small-12 medium-2 noPrint">
-                    {keyLink}
+                <br />
+                <div className="row key__private">
+                    <div className="key__private-title">
+                        <h5>Your Private {this.props.authTypeName} Key</h5>
+                    </div>
+
+                    <div className="key__private-container">
+                        <div className="key__private-input">
+                            <input
+                                className="key__input"
+                                type="text"
+                                value={wif ? wif : '•'.repeat(44)}
+                            />
+                        </div>
+                        <div className="key__reveal">
+                            {wif ? (
+                                <QRCode text={wif} />
+                            ) : (
+                                <a
+                                    onClick={showLogin}
+                                    className="hollow button"
+                                >
+                                    Reveal
+                                </a>
+                            )}
+                        </div>
+                    </div>
                 </div>
-                {/*<div className="column small-1">
-                {children}
-            </div>*/}
             </div>
         );
     }
 }
+
 export default connect(
     (state, ownProps) => ownProps,
     dispatch => ({
