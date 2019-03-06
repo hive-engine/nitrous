@@ -118,10 +118,6 @@ export default class UserProfile extends React.Component {
             );
         } else if (section === 'settings') {
             tab_content = <Settings routeParams={this.props.routeParams} />;
-        } else if (section === 'comments') {
-            tab_content = <div />;
-        } else if (section === 'recent-replies') {
-            tab_content = <div />;
         } else if (section === 'permissions') {
             walletClass = 'active';
             tab_content = (
@@ -149,37 +145,13 @@ export default class UserProfile extends React.Component {
                 </div>
             );
         } else {
-            //    console.log( "no matches" );
+            console.log('no matches. section:', section);
+            tab_content = <div>Invalid Page</div>;
         }
 
         // detect illegal users
         if (userIllegalContent.includes(accountname)) {
             tab_content = <div>Unavailable For Legal Reasons.</div>;
-        }
-
-        const layoutClass = 'layout-list';
-
-        if (
-            !(
-                section === 'transfers' ||
-                section === 'permissions' ||
-                section === 'password'
-            )
-        ) {
-            tab_content = (
-                <div className="row">
-                    <div
-                        className={classnames(
-                            'UserProfile__tab_content',
-                            'column',
-                            layoutClass,
-                            section
-                        )}
-                    >
-                        <article className="articles">{tab_content}</article>
-                    </div>
-                </div>
-            );
         }
 
         let printLink = null;
