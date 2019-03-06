@@ -40,10 +40,10 @@ export default class UserProfile extends React.Component {
 
     shouldComponentUpdate(np, ns) {
         return (
-            np.current_user !== this.props.current_user ||
+            np.currentUser !== this.props.currentUser ||
             np.account !== this.props.account ||
             np.wifShown !== this.props.wifShown ||
-            np.global_status !== this.props.global_status ||
+            np.globalStatus !== this.props.globalStatus ||
             np.loading !== this.props.loading ||
             np.location.pathname !== this.props.location.pathname ||
             ns.showResteem !== this.state.showResteem
@@ -58,10 +58,16 @@ export default class UserProfile extends React.Component {
     render() {
         const {
             state: { showResteem },
-            props: { current_user, wifShown, global_status, accountname },
+            props: {
+                currentUser,
+                wifShown,
+                globalStatus,
+                accountname,
+                isMyAccount,
+            },
             onPrint,
         } = this;
-        const username = current_user ? current_user.get('username') : null;
+        const username = currentUser ? currentUser.get('username') : null;
 
         // Redirect user homepage to transfers page
         let { section } = this.props.routeParams;
@@ -71,8 +77,8 @@ export default class UserProfile extends React.Component {
         }
 
         // Loading status
-        const status = global_status
-            ? global_status.getIn([section, 'by_author'])
+        const status = globalStatus
+            ? globalStatus.getIn([section, 'by_author'])
             : null;
         const fetching = (status && status.fetching) || this.props.loading;
 
@@ -105,7 +111,7 @@ export default class UserProfile extends React.Component {
                         account={accountImm}
                         showTransfer={this.props.showTransfer}
                         showPowerdown={this.props.showPowerdown}
-                        current_user={current_user}
+                        currentUser={currentUser}
                         withdrawVesting={this.props.withdrawVesting}
                     />
                 </div>
@@ -206,14 +212,16 @@ export default class UserProfile extends React.Component {
                                 {tt('g.wallet')}
                             </a>
                         </li>
-                        <li>
-                            <Link
-                                to={`/@${accountname}/settings`}
-                                activeClassName="active"
-                            >
-                                {tt('g.settings')}
-                            </Link>
-                        </li>
+                        {isMyAccount ? (
+                            <li>
+                                <Link
+                                    to={`/@${accountname}/settings`}
+                                    activeClassName="active"
+                                >
+                                    {tt('g.settings')}
+                                </Link>
+                            </li>
+                        ) : null}
                     </ul>
                 </div>
             </div>
@@ -287,17 +295,20 @@ module.exports = {
     component: connect(
         (state, ownProps) => {
             const wifShown = state.global.get('UserKeys_wifShown');
-            const current_user = state.user.get('current');
+            const currentUser = state.user.get('current');
             const accountname = ownProps.routeParams.accountname.toLowerCase();
+            let isMyAccount =
+                currentUser && currentUser.get('username') === accountname;
 
             return {
-                discussions: state.global.get('discussion_idx'),
-                current_user,
-                wifShown,
                 loading: state.app.get('loading'),
-                global_status: state.global.get('status'),
-                accountname: accountname,
+                globalStatus: state.global.get('status'),
                 account: state.global.getIn(['accounts', accountname]),
+                discussions: state.global.get('discussion_idx'),
+                wifShown,
+                currentUser,
+                accountname: accountname,
+                isMyAccount,
             };
         },
         dispatch => ({
