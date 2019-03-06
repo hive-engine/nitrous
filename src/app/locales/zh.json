@@ -560,7 +560,7 @@
             "你可以在其他更安全的页面上使用这个Active Key，比如钱包或市场页面。",
         "you_account_has_been_successfully_created": "您的帐号已经成功创建!",
         "you_account_has_been_successfully_recovered": "您的帐号已经成功恢复!",
-        "password_update_succes": "%(accountName)s的密码成功修改",
+        "password_update_success": "%(accountName)s的密码成功修改",
         "password_info":
             "密码或私钥输入不正确。有可能是输入错误。提示：Steemit创建的密码或私钥中永远不包含 0(零)， O(大写O)， I(大写i)和l (小写L)。",
         "enter_your_username": "输入您的用户名",
@@ -568,12 +568,9 @@
         "this_operation_requires_your_key_or_master_password":
             "此操作需要您的%(authType)s密钥或主密码。",
         "keep_me_logged_in": "保持登录状态",
-        "amazing_community": "神奇的社区",
-        "to_comment_and_reward_others": "评论和奖励他人。",
         "sign_up_now_to_earn": "现在就来注册赚取",
         "free_money": "免费的钱！",
-        "returning_users": "返回用户:",
-        "join_our": "加入我们"
+        "returning_users": "返回用户:"
     },
     "chainvalidation_js": {
         "account_name_should": "帐户名称应该",

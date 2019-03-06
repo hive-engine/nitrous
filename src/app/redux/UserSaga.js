@@ -106,7 +106,7 @@ function* usernamePasswordLogin({
         password,
         saveLogin,
         operationType /*high security*/,
-        afterLoginRedirectToWelcome,
+        afterLoginRedirectToTransfers,
     },
 }) {
     const current = yield select(state => state.user.get('current'));
@@ -129,19 +129,6 @@ function* usernamePasswordLogin({
         'username:',
         username
     );
-
-    // Username login flow - user logged in
-    const storedUsername = sessionStorage.getItem('username');
-    if (storedUsername) {
-        yield put(userActions.setUsername({ storedUsername }));
-    }
-
-    // Username login flow - user logging in
-    if (operationType === 'username') {
-        sessionStorage.setItem('username', username);
-        yield put(userActions.setUsername({ username }));
-        browserHistory.push(`/@${username}/transfers`);
-    }
 
     // login, using saved password
     let autopost, memoWif, login_owner_pubkey, login_wif_owner_pubkey;
@@ -399,10 +386,13 @@ function* usernamePasswordLogin({
     // TOS acceptance
     yield fork(promptTosAcceptance, username);
 
-    // Redirect user to the appropriate page after login.
-    if (afterLoginRedirectToWelcome) {
-        console.log('Redirecting to welcome page');
-        browserHistory.push('/welcome');
+    console.log('afterLogin', afterLoginRedirectToTransfers);
+
+    // Redirect user to transfers page after login, if relevant.
+    if (afterLoginRedirectToTransfers) {
+        console.log('Redirecting to transfers page');
+        browserHistory.push(`/@${username}/transfers`);
+        return;
     }
 }
 

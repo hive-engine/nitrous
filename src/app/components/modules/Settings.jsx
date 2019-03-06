@@ -209,12 +209,7 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        const {
-            account,
-            isOwnAccount,
-            user_preferences,
-            toggleNightmode,
-        } = this.props;
+        const { account, isOwnAccount, user_preferences } = this.props;
 
         return (
             <div className="Settings">
@@ -223,13 +218,6 @@ class Settings extends React.Component {
                         onSubmit={this.handleSubmitForm}
                         className="small-12 medium-6 large-4 columns"
                     >
-                        <button
-                            className="toggle-nightmode button hollow"
-                            onClick={toggleNightmode}
-                        >
-                            {tt('g.toggle_nightmode')}
-                        </button>
-                        <hr />
                         <h4>{tt('settings_jsx.public_profile_settings')}</h4>
                         {progress.message && (
                             <div className="info">{progress.message}</div>
@@ -407,10 +395,6 @@ export default connect(
                 errorCallback,
             };
             dispatch(transactionActions.broadcastOperation(options));
-        },
-        toggleNightmode: e => {
-            if (e) e.preventDefault();
-            dispatch(appActions.toggleNightmode());
         },
     })
 )(Settings);

@@ -626,7 +626,7 @@
             "Votre compte a été créé avec succès!",
         "you_account_has_been_successfully_recovered":
             "Votre compte a été récupéré avec succès!",
-        "password_update_succes":
+        "password_update_success":
             "Le mot de passe pour%(accountName)sa été mis à jour avec succès.",
         "password_info":
             "Ce mot de passe ou clé privée est incorrect. Il y a probablement une erreur d'écriture ou d'entrée des données. Indication : un mot de passe ou une clé privée générée par Steemit ne contiendra jamais aucun 0 (zéro), O (o majuscule), I (i majuscule) ou l (l minuscule).",
@@ -635,14 +635,10 @@
         "this_operation_requires_your_key_or_master_password":
             "Cette opération nécessite votre clé %(authType)s ou votre mot de passe principal.",
         "keep_me_logged_in": "Gardez-moi connecté",
-        "amazing_community": "communauté extraordinaire",
-        "to_comment_and_reward_others":
-            " pour commenter et récompenser les autres.",
         "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "returning_users": "Utilisateurs de retour: ",
-        "join_our": "Rejoignez notre"
+        "returning_users": "Utilisateurs de retour: "
     },
     "chainvalidation_js": {
         "account_name_should": "Le nom du compte doit ",

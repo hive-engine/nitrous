@@ -109,6 +109,39 @@ class Header extends React.Component {
                 page_title.charAt(0).toUpperCase() + page_title.slice(1);
         }
 
+        const wallet_link = `/@${username}/transfers`;
+        const reset_password_link = `/@${username}/password`;
+        const settings_link = `/@${username}/settings`;
+        const pathCheck = userPath === '/submit.html' ? true : null;
+
+        const user_menu = [
+            {
+                link: wallet_link,
+                icon: 'wallet',
+                value: tt('g.wallet'),
+            },
+            {
+                link: '#',
+                icon: 'eye',
+                onClick: toggleNightmode,
+                value: tt('g.toggle_nightmode'),
+            },
+            {
+                link: reset_password_link,
+                icon: 'key',
+                value: tt('g.change_password'),
+            },
+            { link: settings_link, icon: 'cog', value: tt('g.settings') },
+            loggedIn
+                ? {
+                      link: '#',
+                      icon: 'enter',
+                      onClick: logout,
+                      value: tt('g.logout'),
+                  }
+                : { link: '#', onClick: showLogin, value: tt('g.login') },
+        ];
+
         return (
             <header className="Header">
                 <nav className="row Header__nav">
@@ -124,6 +157,13 @@ class Header extends React.Component {
                         {!loggedIn && (
                             <span className="Header__user-signup show-for-medium">
                                 <a
+                                    className="Header__login-link"
+                                    href="/login.html"
+                                    onClick={showLogin}
+                                >
+                                    {tt('g.login')}
+                                </a>
+                                <a
                                     className="Header__signup-link"
                                     href={SIGNUP_URL}
                                 >
@@ -131,7 +171,23 @@ class Header extends React.Component {
                                 </a>
                             </span>
                         )}
-
+                        {/*USER AVATAR */}
+                        {loggedIn && (
+                            <DropdownMenu
+                                className={'Header__usermenu'}
+                                items={user_menu}
+                                title={username}
+                                el="span"
+                                selected={tt('g.rewards')}
+                                position="left"
+                            >
+                                <li className={'Header__userpic '}>
+                                    <span title={username}>
+                                        <Userpic account={username} />
+                                    </span>
+                                </li>
+                            </DropdownMenu>
+                        )}
                         {/*HAMBURGER*/}
                         <span
                             onClick={showSidePanel}

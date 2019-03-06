@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
-import reactForm from 'app/utils/ReactForm';
 import tt from 'counterpart';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
@@ -9,27 +8,10 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 class WalletIndex extends React.Component {
     constructor(props) {
         super();
-        this.initForm(props);
-    }
-
-    initForm(props) {
-        reactForm({
-            name: 'login',
-            instance: this,
-            fields: ['username'],
-            initialValues: props.initialValues,
-            validation: values => ({
-                username: !values.username
-                    ? tt('g.required')
-                    : validate_account_name(values.username.split('/')[0]),
-            }),
-        });
     }
 
     render() {
-        const { dispatchSubmit } = this.props;
-        const { username } = this.state;
-        const { submitting, valid, handleSubmit } = this.state.login;
+        const { showLogin, loggedIn } = this.props;
         return (
             <div className="WalletIndex">
                 <div className="row">
@@ -38,36 +20,17 @@ class WalletIndex extends React.Component {
                             {tt('wallet_index.title')}
                         </h3>
                         <p>{tt('wallet_index.description')}</p>
-                        <form
-                            method="post"
-                            onSubmit={handleSubmit(({ data }) => {
-                                dispatchSubmit(data);
-                            })}
-                        >
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="input-group-field"
-                                    required
-                                    placeholder={tt(
-                                        'loginform_jsx.enter_your_username'
-                                    )}
-                                    ref="username"
-                                    name="username"
-                                    autoComplete="on"
-                                    {...username.props}
-                                />
-                            </div>
+                        {loggedIn ? null : (
                             <div className="modal-buttons">
                                 <button
                                     type="submit"
-                                    disabled=""
                                     className="button"
+                                    onClick={showLogin}
                                 >
                                     {tt('wallet_index.login')}
                                 </button>
                             </div>
-                        </form>
+                        )}
                     </div>
                     <div className="column tokens">
                         <div className="sheet-container">
@@ -137,18 +100,19 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const username = state.user.getIn(['current', 'username']);
+            const loggedIn = !!username;
             const initialValues = {};
             return {
                 initialValues,
+                loggedIn,
             };
         },
         dispatch => {
             return {
-                dispatchSubmit: data => {
-                    const payload = Object.assign({}, data, {
-                        operationType: 'username',
-                    });
-                    dispatch(userActions.usernamePasswordLogin(payload));
+                showLogin: e => {
+                    if (e) e.preventDefault();
+                    dispatch(userActions.showLogin({ type: 'basic' }));
                 },
             };
         }

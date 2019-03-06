@@ -607,7 +607,7 @@
             "あなたのアカウントは作成済みです！",
         "you_account_has_been_successfully_recovered":
             "あなたのアカウントは正常に回復されました！",
-        "password_update_succes":
+        "password_update_success":
             "%(accountName)sのパスワードは正常に更新されました。",
         "password_info":
             "入力したパスワードまたは秘密キーが間違っています。手入力したか、またはデータエラーがある可能性があります。ヒント：Steemitで生成したパスワードまたは秘密キーは0 (ゼロ)、O (大文字のo)、I (大文字のi)、l (小文字のL)を含みません。",
@@ -616,14 +616,10 @@
         "this_operation_requires_your_key_or_master_password":
             "この操作には%(authType)sキーまたはマスターパスワードが必要です。",
         "keep_me_logged_in": "ログイン状態を維持する",
-        "amazing_community": "素晴らしいコミュニティ",
-        "to_comment_and_reward_others":
-            "に参加して、他の人にコメントして報酬を与えましょう。",
         "signup_button": "サインアップして",
         "signup_button_emphasis": "STEEMを手に入れよう！",
         "sign_up_get_steem": "登録してSTEEMを手に入れよう！",
-        "returning_users": "再",
-        "join_our": ""
+        "returning_users": "再"
     },
     "chainvalidation_js": {
         "account_name_should": "アカウント名",

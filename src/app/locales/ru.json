@@ -625,7 +625,7 @@
             "Ваш аккаунт был успешно создан!",
         "you_account_has_been_successfully_recovered":
             "Ваш аккаунт был успешно восстановлен!",
-        "password_update_succes":
+        "password_update_success":
             "Пароль для %(accountName)s был успешно обновлен",
         "password_info":
             "Этот пароль или закрытый ключ был введен неправильно. Вероятно, есть ошибка почерка или ввода данных. Подсказка: пароль или закрытый ключ, сгенерированный Steemit, никогда не будет содержать символы 0 (ноль), O (прописная o), I (прописная i) и l (нижний регистр L).",
@@ -634,14 +634,10 @@
         "this_operation_requires_your_key_or_master_password":
             "Для осуществления данной операции нужен ваш %(authType)s ключ или Основной пароль.",
         "keep_me_logged_in": "Оставить меня залогиненным",
-        "amazing_community": "удивительное сообщество",
-        "to_comment_and_reward_others":
-            " комментировать и вознаграждать других.",
         "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Зарегистрируйтесь",
         "signup_button_emphasis": " сейчас!",
-        "returning_users": "Вернувшиеся пользователи: ",
-        "join_our": "Присоединяйтесь к нашему"
+        "returning_users": "Вернувшиеся пользователи: "
     },
     "chainvalidation_js": {
         "account_name_should": "Имя аккаунта должно быть ",
