@@ -1,5 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import * as userActions from 'app/redux/UserReducer';
@@ -8,6 +9,14 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 class WalletIndex extends React.Component {
     constructor(props) {
         super();
+    }
+
+    componentDidMount() {
+        const { username, loggedIn } = this.props;
+        if (loggedIn) {
+            browserHistory.push(`/@${username}/transfers`);
+            return null;
+        }
     }
 
     render() {
@@ -104,6 +113,7 @@ module.exports = {
             const loggedIn = !!username;
             const initialValues = {};
             return {
+                username,
                 initialValues,
                 loggedIn,
             };
