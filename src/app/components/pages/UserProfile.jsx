@@ -72,7 +72,9 @@ export default class UserProfile extends React.Component {
         // Redirect user homepage to transfers page
         let { section } = this.props.routeParams;
         if (!section) {
-            browserHistory.push(`/@${accountname}/transfers`);
+            if (process.env.BROWSER) {
+                browserHistory.push(`/@${accountname}/transfers`);
+            }
             return null;
         }
 

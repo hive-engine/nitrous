@@ -14,8 +14,9 @@ class WalletIndex extends React.Component {
     componentDidMount() {
         const { username, loggedIn } = this.props;
         if (loggedIn) {
-            browserHistory.push(`/@${username}/transfers`);
-            return null;
+            if (process.env.BROWSER) {
+                browserHistory.push(`/@${username}/transfers`);
+            }
         }
     }
 
