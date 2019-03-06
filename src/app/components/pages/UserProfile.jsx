@@ -124,7 +124,10 @@ export default class UserProfile extends React.Component {
                 <div>
                     <div className="row">
                         <div className="column">
-                            <WalletSubMenu account_name={account.name} />
+                            <WalletSubMenu
+                                accountname={account.name}
+                                isMyAccount={isMyAccount}
+                            />
                         </div>
                     </div>
                     <br />
@@ -137,7 +140,10 @@ export default class UserProfile extends React.Component {
                 <div>
                     <div className="row">
                         <div className="column">
-                            <WalletSubMenu account_name={account.name} />
+                            <WalletSubMenu
+                                accountname={account.name}
+                                isMyAccount={isMyAccount}
+                            />
                         </div>
                     </div>
                     <br />

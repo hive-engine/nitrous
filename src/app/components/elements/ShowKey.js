@@ -111,6 +111,7 @@ class ShowKey extends Component {
                                 className="key__input"
                                 type="text"
                                 value={wif ? wif : '•'.repeat(44)}
+                                readOnly
                             />
                         </div>
                         <div className="key__reveal">
