@@ -9,7 +9,6 @@ import ConnectedSidePanel from 'app/components/modules/ConnectedSidePanel';
 import CloseButton from 'app/components/elements/CloseButton';
 import Dialogs from 'app/components/modules/Dialogs';
 import Modals from 'app/components/modules/Modals';
-import WelcomePanel from 'app/components/elements/WelcomePanel';
 import MiniHeader from 'app/components/modules/MiniHeader';
 import tt from 'counterpart';
 import PageViewsCounter from 'app/components/elements/PageViewsCounter';
@@ -38,16 +37,8 @@ class App extends React.Component {
         // TODO: put both of these and associated toggles into Redux Store.
         this.state = {
             showCallout: true,
-            showBanner: true,
-            gptBannerHeight: 0,
         };
         this.listenerActive = null;
-        this.gptadshownListener = this.gptadshown.bind(this);
-    }
-
-    gptadshown(e) {
-        const height = document.querySelector('header .gpt-ad').offsetHeight;
-        this.setState({ gptBannerHeight: height });
     }
 
     componentWillMount() {
@@ -56,15 +47,9 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('gptadshown', this.gptadshownListener);
-
         if (pageRequiresEntropy(this.props.pathname)) {
             this._addEntropyCollector();
         }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('gptadshown', this.gptadshownListener);
     }
 
     componentWillReceiveProps(np) {
@@ -102,27 +87,15 @@ class App extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        const {
-            pathname,
-            new_visitor,
-            nightmodeEnabled,
-            showAnnouncement,
-        } = this.props;
+        const { pathname, new_visitor, nightmodeEnabled } = this.props;
         const n = nextProps;
         return (
             pathname !== n.pathname ||
             new_visitor !== n.new_visitor ||
-            this.state.showBanner !== nextState.showBanner ||
             this.state.showCallout !== nextState.showCallout ||
-            this.state.gptBannerHeight !== nextState.gptBannerHeight ||
-            nightmodeEnabled !== n.nightmodeEnabled ||
-            showAnnouncement !== n.showAnnouncement
+            nightmodeEnabled !== n.nightmodeEnabled
         );
     }
-
-    setShowBannerFalse = () => {
-        this.setState({ showBanner: false });
-    };
 
     onEntropyEvent = e => {
         if (e.type === 'mousemove')
@@ -150,9 +123,7 @@ class App extends React.Component {
             order,
         } = this.props;
 
-        const miniHeader =
-            pathname === '/create_account' || pathname === '/pick_account';
-
+        const miniHeader = false;
         const whistleView = viewMode === VIEW_MODE_WHISTLE;
         const headerHidden = whistleView;
         const params_keys = Object.keys(params);
@@ -239,7 +210,6 @@ class App extends React.Component {
                     'index-page': ip,
                     'mini-header': miniHeader,
                     'whistle-view': whistleView,
-                    withAnnouncement: this.props.showAnnouncement,
                 })}
                 ref="App_root"
             >
@@ -255,18 +225,7 @@ class App extends React.Component {
                     />
                 )}
 
-                <div
-                    className="App__content"
-                    style={{ paddingTop: `${this.state.gptBannerHeight}px` }}
-                >
-                    {process.env.BROWSER &&
-                    ip &&
-                    new_visitor &&
-                    this.state.showBanner ? (
-                        <WelcomePanel
-                            setShowBannerFalse={this.setShowBannerFalse}
-                        />
-                    ) : null}
+                <div className="App__content">
                     {callout}
                     {children}
                 </div>
@@ -310,7 +269,6 @@ export default connect(
             pathname: ownProps.location.pathname,
             order: ownProps.params.order,
             category: ownProps.params.category,
-            showAnnouncement: state.user.get('showAnnouncement'),
         };
     },
     dispatch => ({

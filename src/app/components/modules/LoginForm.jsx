@@ -18,12 +18,8 @@ import { SIGNUP_URL } from 'shared/constants';
 class LoginForm extends Component {
     static propTypes = {
         // Steemit.
-        login_error: PropTypes.string,
+        loginError: PropTypes.string,
         onCancel: PropTypes.func,
-    };
-
-    static defaultProps = {
-        afterLoginRedirectToWelcome: false,
     };
 
     constructor(props) {
@@ -91,15 +87,15 @@ class LoginForm extends Component {
     }
 
     SignUp() {
-        const onType = document.getElementsByClassName('OpAction')[0]
-            .textContent;
+        const opAction = document.getElementsByClassName('OpAction')[0];
+        const onType = opAction ? opAction.textContent : 'Login';
         serverApiRecordEvent('FreeMoneySignUp', onType);
         window.location.href = SIGNUP_URL;
     }
 
     SignIn() {
-        const onType = document.getElementsByClassName('OpAction')[0]
-            .textContent;
+        const opAction = document.getElementsByClassName('OpAction')[0];
+        const onType = opAction ? opAction.textContent : 'Login';
         serverApiRecordEvent('SignIn', onType);
     }
 
@@ -116,6 +112,8 @@ class LoginForm extends Component {
     };
 
     render() {
+        const loginType = this.props.loginType;
+
         if (!process.env.BROWSER) {
             return (
                 <div className="row">
@@ -168,12 +166,7 @@ class LoginForm extends Component {
             );
         }
 
-        const {
-            loginBroadcastOperation,
-            dispatchSubmit,
-            afterLoginRedirectToWelcome,
-            msg,
-        } = this.props;
+        const { loginBroadcastOperation, dispatchSubmit, msg } = this.props;
         const { username, password, saveLogin } = this.state;
         const { submitting, valid, handleSubmit } = this.state.login;
         const { usernameOnChange, onCancel /*qrReader*/ } = this;
@@ -184,11 +177,6 @@ class LoginForm extends Component {
         let postType = '';
         if (opType === 'vote') {
             postType = tt('loginform_jsx.login_to_vote');
-        } else if (
-            opType === 'custom_json' &&
-            loginBroadcastOperation.getIn(['operation', 'id']) === 'follow'
-        ) {
-            postType = 'Login to Follow Users';
         } else if (loginBroadcastOperation) {
             // check for post or comment in operation
             postType = loginBroadcastOperation.getIn(['operation', 'title'])
@@ -205,7 +193,7 @@ class LoginForm extends Component {
         let error =
             password.touched && password.error
                 ? password.error
-                : this.props.login_error;
+                : this.props.loginError;
         if (error === 'owner_login_blocked') {
             error = (
                 <span>
@@ -257,7 +245,7 @@ class LoginForm extends Component {
                 message = (
                     <div className="callout primary">
                         <p>
-                            {tt('loginform_jsx.password_update_succes', {
+                            {tt('loginform_jsx.password_update_success', {
                                 accountName: username.value,
                             })}
                         </p>
@@ -278,27 +266,30 @@ class LoginForm extends Component {
                 .toLowerCase()
                 .indexOf('transfer') >= 0;
 
-        const titleText = !isTransfer ? (
-            <h3>
-                {tt('loginform_jsx.returning_users')}
-                <span className="OpAction">{title}</span>
-            </h3>
-        ) : (
-            <h3>
-                <span className="OpAction">
-                    {tt('loginform_jsx.sign_transfer')}
-                </span>
-            </h3>
-        );
+        let titleText;
+        if (isTransfer) {
+            titleText = (
+                <h3>
+                    <span className="OpAction">
+                        {tt('loginform_jsx.sign_transfer')}
+                    </span>
+                </h3>
+            );
+        } else if (loginType === 'basic') {
+            titleText = <h3>{tt('loginform_jsx.login_to_wallet')}</h3>;
+        } else {
+            titleText = (
+                <h3>
+                    {tt('loginform_jsx.returning_users')}
+                    <span className="OpAction">{title}</span>
+                </h3>
+            );
+        }
 
         const signupLink = (
             <div className="sign-up">
                 <hr />
-                <p>
-                    {tt('loginform_jsx.join_our')}{' '}
-                    <em>{tt('loginform_jsx.amazing_community')}</em>
-                    {tt('loginform_jsx.to_comment_and_reward_others')}
-                </p>
+                <p>{tt('loginform_jsx.dont_have_an_account')}</p>
                 <button
                     type="button"
                     className="button hollow"
@@ -314,11 +305,7 @@ class LoginForm extends Component {
                 onSubmit={handleSubmit(({ data }) => {
                     // bind redux-form to react-redux
                     console.log('Login\tdispatchSubmit');
-                    return dispatchSubmit(
-                        data,
-                        loginBroadcastOperation,
-                        afterLoginRedirectToWelcome
-                    );
+                    return dispatchSubmit(data, loginBroadcastOperation);
                 })}
                 onChange={this.props.clearError}
                 method="post"
@@ -346,7 +333,11 @@ class LoginForm extends Component {
                         type="password"
                         required
                         ref="pw"
-                        placeholder={tt('loginform_jsx.password_or_wif')}
+                        placeholder={
+                            loginType === 'basic'
+                                ? tt('loginform_jsx.enter_steem_key')
+                                : tt('loginform_jsx.password_or_wif')
+                        }
                         {...password.props}
                         autoComplete="on"
                         disabled={submitting}
@@ -452,12 +443,12 @@ import { connect } from 'react-redux';
 export default connect(
     // mapStateToProps
     state => {
-        const login_error = state.user.get('login_error');
+        const loginType = state.user.get('login_type');
+        const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
         const loginBroadcastOperation = state.user.get(
             'loginBroadcastOperation'
         );
-        const shouldSeeAds = state.app.getIn(['googleAds', 'shouldSeeAds']);
         const initialValues = {
             saveLogin: saveLoginDefault,
         };
@@ -482,11 +473,11 @@ export default connect(
         let msg = '';
         const msg_match = window.location.hash.match(/msg\=([\w]+)/);
         if (msg_match && msg_match.length > 1) msg = msg_match[1];
-        hasError = !!login_error;
+        hasError = !!loginError;
         return {
-            login_error,
+            loginType,
+            loginError,
             loginBroadcastOperation,
-            shouldSeeAds,
             initialValues,
             initialUsername,
             msg,
@@ -496,11 +487,7 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
-        dispatchSubmit: (
-            data,
-            loginBroadcastOperation,
-            afterLoginRedirectToWelcome
-        ) => {
+        dispatchSubmit: (data, loginBroadcastOperation) => {
             const { password, saveLogin } = data;
             const username = data.username.trim().toLowerCase();
             if (loginBroadcastOperation) {
@@ -525,7 +512,6 @@ export default connect(
                         username,
                         password,
                         saveLogin,
-                        afterLoginRedirectToWelcome,
                         operationType: type,
                     })
                 );
@@ -537,7 +523,6 @@ export default connect(
                         username,
                         password,
                         saveLogin,
-                        afterLoginRedirectToWelcome,
                     })
                 );
             }

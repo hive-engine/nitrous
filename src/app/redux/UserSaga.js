@@ -17,7 +17,6 @@ import {
 } from 'app/utils/ServerApiClient';
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
-import DMCAUserList from 'app/utils/DMCAUserList';
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
@@ -81,10 +80,6 @@ function* loadSavingsWithdraw() {
 
 const strCmp = (a, b) => (a > b ? 1 : a < b ? -1 : 0);
 
-// function* getCurrentAccountWatch() {
-//     // yield* takeLatest('user/SHOW_TRANSFER', getCurrentAccount);
-// }
-
 function* removeHighSecurityKeys({ payload: { pathname } }) {
     const highSecurityPage =
         highSecurityPages.find(p => p.test(pathname)) != null;
@@ -95,57 +90,34 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     if (!highSecurityPage) yield put(userActions.removeHighSecurityKeys());
 }
 
-/**
-    @arg {object} action.username - Unless a WIF is provided, this is hashed with the password and key_type to create private keys.
-    @arg {object} action.password - Password or WIF private key.  A WIF becomes the posting key, a password can create all three
-        key_types: active, owner, posting keys.
-*/
-function* usernamePasswordLogin(action) {
-    // This is a great place to mess with session-related user state (:
-    // If the user hasn't previously hidden the announcement in this session,
-    // or if the user's browser does not support session storage,
-    // show the announcement.
-    if (
-        typeof sessionStorage === 'undefined' ||
-        (typeof sessionStorage !== 'undefined' &&
-            sessionStorage.getItem('hideAnnouncement') !== 'true')
-    ) {
-        // Uncomment to re-enable announcment
-        // TODO: use config to enable/disable
-        // yield put(userActions.showAnnouncement());
-    }
-
-    // Sets 'loading' while the login is taking place.  The key generation can take a while on slow computers.
-    yield call(usernamePasswordLogin2, action.payload);
-    const current = yield select(state => state.user.get('current'));
-    if (current) {
-        const username = current.get('username');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'ignore');
-    }
-}
-
-// const isHighSecurityOperations = ['transfer', 'transfer_to_vesting', 'withdraw_vesting',
-//     'limit_order_create', 'limit_order_cancel', 'account_update', 'account_witness_vote']
-
 const clean = value =>
     value == null || value === '' || /null|undefined/.test(value)
         ? undefined
         : value;
 
-function* usernamePasswordLogin2({
-    username,
-    password,
-    saveLogin,
-    operationType /*high security*/,
-    afterLoginRedirectToWelcome,
+/**
+    @arg {object} action.username - Unless a WIF is provided, this is hashed with the password and key_type to create private keys.
+    @arg {object} action.password - Password or WIF private key.  A WIF becomes the posting key, a password can create all three
+        key_types: active, owner, posting keys.
+*/
+function* usernamePasswordLogin({
+    payload: { username, password, saveLogin, operationType /*high security*/ },
 }) {
+    const current = yield select(state => state.user.get('current'));
+    if (current) {
+        const currentUsername = current.get('username');
+        yield fork(loadFollows, currentUsername, 'blog');
+        yield fork(loadFollows, currentUsername, 'ignore');
+    }
+
     const user = yield select(state => state.user);
     const loginType = user.get('login_type');
     const justLoggedIn = loginType === 'basic';
     console.log(
         'Login type:',
         loginType,
+        'Operation type:',
+        operationType,
         'Just logged in?',
         justLoggedIn,
         'username:',
@@ -153,7 +125,6 @@ function* usernamePasswordLogin2({
     );
 
     // login, using saved password
-    let feedURL = false;
     let autopost, memoWif, login_owner_pubkey, login_wif_owner_pubkey;
     if (!username && !password) {
         const data = localStorage.getItem('autopost2');
@@ -202,14 +173,6 @@ function* usernamePasswordLogin2({
         yield put(userActions.loginError({ error: 'Username does not exist' }));
         return;
     }
-    //dmca user block
-    if (username && DMCAUserList.includes(username)) {
-        console.log('DMCA list');
-        yield put(
-            userActions.loginError({ error: translate('terms_violation') })
-        );
-        return;
-    }
 
     let private_keys;
     try {
@@ -218,6 +181,7 @@ function* usernamePasswordLogin2({
         private_keys = fromJS({
             posting_private: isRole('posting', () => private_key),
             active_private: isRole('active', () => private_key),
+            owner_private: isRole('owner', () => private_key),
             memo_private: private_key,
         });
     } catch (e) {
@@ -231,6 +195,9 @@ function* usernamePasswordLogin2({
             ),
             active_private: isRole('active', () =>
                 PrivateKey.fromSeed(username + 'active' + password)
+            ),
+            owner_private: isRole('owner', () =>
+                PrivateKey.fromSeed(username + 'owner' + password)
             ),
             memo_private: PrivateKey.fromSeed(username + 'memo' + password),
         });
@@ -295,6 +262,8 @@ function* usernamePasswordLogin2({
 
     if (!highSecurityLogin || authority.get('active') !== 'full')
         private_keys = private_keys.remove('active_private');
+    if (!highSecurityLogin || authority.get('owner') !== 'full')
+        private_keys = private_keys.remove('owner_private');
 
     const owner_pubkey = account.getIn(['owner', 'key_auths', 0, 0]);
     const active_pubkey = account.getIn(['active', 'key_auths', 0, 0]);
@@ -340,7 +309,6 @@ function* usernamePasswordLogin2({
 
     // If user is signing operation by operaion and has no saved login, don't save to RAM
     if (!operationType || saveLogin) {
-        if (username) feedURL = '/@' + username + '/feed';
         // Keep the posting key in RAM but only when not signing an operation.
         // No operation or the user has checked: Keep me logged in...
         yield put(
@@ -356,7 +324,6 @@ function* usernamePasswordLogin2({
             })
         );
     } else {
-        if (username) feedURL = '/@' + username + '/feed';
         yield put(
             userActions.setUser({
                 username,
@@ -396,21 +363,6 @@ function* usernamePasswordLogin2({
             console.log('Logging in as', username);
             const response = yield serverApiLogin(username, signatures);
             const body = yield response.json();
-
-            if (justLoggedIn) {
-                // If ads are enabled, reload the page instead of changing the browser
-                // history when they log in, so headers will get re-requested.
-                const adsEnabled = yield select(state =>
-                    state.app.getIn(['googleAds', 'enabled'])
-                );
-                if (adsEnabled) {
-                    var url = new URL(window.location.href);
-                    url.searchParams.set('auth', 'true');
-                    console.log('New post-login URL', url.toString());
-                    window.location.replace(url.toString());
-                    return;
-                }
-            }
         }
     } catch (error) {
         // Does not need to be fatal
@@ -427,15 +379,6 @@ function* usernamePasswordLogin2({
     }
     // TOS acceptance
     yield fork(promptTosAcceptance, username);
-
-    // Redirect user to the appropriate page after login.
-    if (afterLoginRedirectToWelcome) {
-        console.log('Redirecting to welcome page');
-        browserHistory.push('/welcome');
-    } else if (feedURL && document.location.pathname === '/') {
-        console.log('Redirecting to feed page', feedURL);
-        browserHistory.push(feedURL);
-    }
 }
 
 function* promptTosAcceptance(username) {
@@ -475,6 +418,10 @@ function* saveLogin_localStorage() {
         state.user.getIn(['current', 'private_keys']),
         state.user.getIn(['current', 'login_owner_pubkey']),
     ]);
+    if (!private_keys) {
+        console.info('No private keys. May be a username login.');
+        return;
+    }
     if (!username) {
         console.error('Not logged in');
         return;
@@ -526,19 +473,11 @@ function* logout(action) {
     yield put(userActions.saveLoginConfirm(false));
 
     if (process.env.BROWSER) {
+        sessionStorage.removeItem('username');
         localStorage.removeItem('autopost2');
     }
 
     yield serverApiLogout();
-
-    // If ads are enabled, reload the page instead of changing the browser
-    // history when they log out, so headers will get re-requested.
-    const adsEnabled = yield select(state =>
-        state.app.getIn(['googleAds', 'enabled'])
-    );
-    if (logoutType == 'default' && adsEnabled) {
-        window.location.reload();
-    }
 }
 
 function* loginError({
@@ -686,10 +625,3 @@ function* uploadImage({
     };
     xhr.send(formData);
 }
-
-// function* getCurrentAccount() {
-//     const current = yield select(state => state.user.get('current'))
-//     if (!current) return
-//     const [account] = yield call([api, api.getAccountsAsync], [current.get('username')])
-//     yield put(g.actions.receiveAccount({ account }))
-// }

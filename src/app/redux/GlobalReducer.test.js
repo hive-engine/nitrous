@@ -20,25 +20,7 @@ describe('Global reducer', () => {
         const initial = reducer();
         expect(initial).toEqual(defaultState);
     });
-    it('should return correct state for a SET_COLLAPSED action', () => {
-        // Arrange
-        const payload = {
-            post: 'the city',
-            collapsed: 'is now collapsed',
-        };
-        const initial = reducer().set(
-            'content',
-            Map({
-                [payload.post]: Map({}),
-            })
-        );
-        // Act
-        const actual = reducer(initial, globalActions.setCollapsed(payload));
-        // Assert
-        expect(actual.getIn(['content', payload.post, 'collapsed'])).toEqual(
-            payload.collapsed
-        );
-    });
+
     it('should return correct state for a RECEIVE_STATE action', () => {
         // Arrange
         const payload = {
@@ -155,111 +137,6 @@ describe('Global reducer', () => {
         expect(actual.get('accounts')).toEqual(expected.get('accounts'));
     });
 
-    it('should return correct state for a RECEIVE_COMMENT action', () => {
-        // Arrange
-        const payload = {
-            op: {
-                author: 'critic',
-                permlink: 'critical-comment',
-                parent_author: 'Yerofeyev',
-                parent_permlink: 'moscow-stations',
-                title: 'moscow to the end of the line',
-                body: 'corpus of the text',
-            },
-        };
-        const {
-            author,
-            permlink,
-            parent_author,
-            parent_permlink,
-            title,
-            body,
-        } = payload.op;
-        //Act
-        const actual = reducer(
-            reducer(),
-            globalActions.receiveComment(payload)
-        );
-        //  Assert
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'author'])
-        ).toEqual(author);
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'title'])
-        ).toEqual(title);
-        expect(
-            actual.getIn(['content', `${parent_author}/${parent_permlink}`])
-        ).toEqual(
-            Map({ replies: List(['critic/critical-comment']), children: 1 })
-        );
-        // Arrange
-        payload.op.parent_author = '';
-        // Act
-        const actual2 = reducer(
-            reducer(),
-            globalActions.receiveComment(payload)
-        );
-        // Assert
-        expect(
-            actual2.getIn(['content', `${parent_author}/${parent_permlink}`])
-        ).toEqual(undefined);
-    });
-    it('should return correct state for a RECEIVE_CONTENT action', () => {
-        // Arrange
-        const payload = {
-            content: {
-                author: 'sebald',
-                permlink: 'rings-of-saturn',
-                active_votes: { one: { percent: 30 }, two: { percent: 70 } },
-            },
-        };
-        const { author, permlink, active_votes } = payload.content;
-        // Act
-        const actual = reducer(
-            reducer(),
-            globalActions.receiveContent(payload)
-        );
-        // Assert
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'author'])
-        ).toEqual(payload.content.author);
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'permlink'])
-        ).toEqual(payload.content.permlink);
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'active_votes'])
-        ).toEqual(fromJS(active_votes));
-    });
-
-    it('should return correct state for a LINK_REPLY action', () => {
-        // Arrange
-        let payload = {
-            author: 'critic',
-            permlink: 'critical-comment',
-            parent_author: 'Yerofeyev',
-            parent_permlink: 'moscow-stations',
-            title: 'moscow to the end of the line',
-            body: 'corpus of the text',
-        };
-        const initial = reducer();
-        const expected = Map({
-            [payload.parent_author + '/' + payload.parent_permlink]: Map({
-                replies: List([`${payload.author}/${payload.permlink}`]),
-                children: 1,
-            }),
-        });
-        // Act
-        let actual = reducer(initial, globalActions.linkReply(payload));
-        // Assert
-        expect(actual.get('content')).toEqual(expected);
-        // Arrange
-        // Remove parent
-        payload.parent_author = '';
-        // Act
-        actual = reducer(initial, globalActions.linkReply(payload));
-        // Assert
-        expect(actual).toEqual(initial);
-    });
     it('should return correct state for a UPDATE_ACCOUNT_WITNESS_VOTE action', () => {
         // Arrange
         let payload = {
@@ -287,6 +164,7 @@ describe('Global reducer', () => {
         // Assert
         expect(actual).toEqual(initial);
     });
+
     it('should return correct state for a UPDATE_ACCOUNT_WITNESS_PROXY action', () => {
         // Arrange
         let payload = {
@@ -303,71 +181,7 @@ describe('Global reducer', () => {
         // Assert
         expect(actual.getIn(['accounts', payload.account])).toEqual(expected);
     });
-    it('should return correct state for a DELETE_CONTENT action', () => {
-        // Arrange
-        let payload = {
-            author: 'sebald',
-            permlink: 'rings-of-saturn',
-        };
-        let initial = reducer();
-        // Act
-        // add content
-        const initWithContent = initial.setIn(
-            ['content', `${payload.author}/${payload.permlink}`],
-            Map({
-                author: 'sebald',
-                permlink: 'rings-of-saturn',
-                parent_author: '',
-                active_votes: { one: { percent: 30 }, two: { percent: 70 } },
-                replies: List(['cool', 'mule']),
-            })
-        );
-        let expected = Map({});
-        // Act
-        let actual = reducer(
-            initWithContent,
-            globalActions.deleteContent(payload)
-        );
-        // Assert
-        expect(actual.get('content')).toEqual(expected);
-        // Arrange
-        const initWithContentAndParent = initial.setIn(
-            ['content', `${payload.author}/${payload.permlink}`],
-            Map({
-                author: 'sebald',
-                permlink: 'rings-of-saturn',
-                parent_author: 'alice',
-                parent_permlink: 'bob',
-                active_votes: { one: { percent: 30 }, two: { percent: 70 } },
-            })
-        );
-        const initWithParentKeyContent = initWithContentAndParent.setIn(
-            ['content', 'alice/bob'],
-            Map({
-                replies: [
-                    `${payload.author}/${payload.permlink}`,
-                    'dorothy-hughes/in-a-lonely-place',
-                    'artichoke/hearts',
-                ],
-            })
-        );
-        expected = Map({
-            replies: ['dorothy-hughes/in-a-lonely-place', 'artichoke/hearts'],
-        });
-        // Act
-        actual = reducer(
-            initWithParentKeyContent,
-            globalActions.deleteContent(payload)
-        );
-        // Assert
-        expect(actual.getIn(['content', 'alice/bob', 'replies'])).toHaveLength(
-            2
-        );
-        expect(actual.getIn(['content', 'alice/bob', 'replies'])).toEqual([
-            'dorothy-hughes/in-a-lonely-place',
-            'artichoke/hearts',
-        ]);
-    });
+
     it('should return correct state for a FETCHING_DATA action', () => {
         // Arrange
         const payload = {
@@ -392,6 +206,7 @@ describe('Global reducer', () => {
             actual.getIn(['status', payload.category, payload.order])
         ).toEqual({ fetching: true });
     });
+
     it('should return correct state for a RECEIVE_DATA action', () => {
         //Arrange
         const postData = {
@@ -498,6 +313,7 @@ describe('Global reducer', () => {
             List(['smudge/klop'])
         );
     });
+
     it('should handle fetch status for a RECEIVE_DATA action', () => {
         //Arrange
         let payload = {
@@ -594,6 +410,7 @@ describe('Global reducer', () => {
                 .last_fetch
         ).toBeTruthy();
     });
+
     it('should return correct state for a RECEIVE_RECENT_POSTS action', () => {
         // Arrange
         const payload = {
@@ -674,6 +491,7 @@ describe('Global reducer', () => {
             List(['ding/bat', 'pidge/wolf'])
         );
     });
+
     it('should return correct state for a REQUEST_META action', () => {
         // Arrange
         const payload = {
@@ -687,6 +505,7 @@ describe('Global reducer', () => {
             Map({ link: 'World' })
         );
     });
+
     it('should return correct state for a RECEIVE_META action', () => {
         // Arrange
         const payload = {
@@ -730,6 +549,7 @@ describe('Global reducer', () => {
         const actual2 = reducer(initial, globalActions.set(payload));
         expect(actual2.getIn([payload.key])).toEqual(payload.value);
     });
+
     it('should return correct state for a REMOVE action', () => {
         // Arrange
         const payload = {

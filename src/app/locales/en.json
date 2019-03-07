@@ -62,7 +62,7 @@
         "order_placed": "Order placed: %(order)s",
         "password": "Password",
         "payouts": "Payouts",
-        "permissions": "Permissions",
+        "permissions": "Keys & Permissions",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
         "post": "Post",
@@ -190,8 +190,6 @@
             "vote currently exists, user must be indicate a desire to reject witness",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "Only one Steem account allowed per IP address every 10 minutes",
-        "resteem_this_post": "Resteem This Post",
-        "reblog": "Resteem",
         "write_your_story": "Write your story...",
         "remember_voting_and_posting_key": "Remember voting & posting key",
         "auto_login_question_mark": "Auto login?",
@@ -273,14 +271,7 @@
         "bluepaper": "Steem Bluepaper",
         "smt_whitepaper": "SMT Whitepaper",
         "whitepaper": "Steem Whitepaper",
-        "intro_tagline": "Your voice is worth something",
-        "intro_paragraph":
-            "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
         "jobs": "Jobs at Steemit"
-    },
-    "main_menu": {
-        "hot": "Hot",
-        "trending": "Trending"
     },
     "reply_editor": {
         "shorten_title": "Shorten title",
@@ -411,15 +402,6 @@
     },
     "user_profile": {
         "unknown_account": "Unknown Account",
-        "user_hasnt_made_any_posts_yet":
-            "Looks like %(name)s hasn't made any posts yet!",
-        "user_hasnt_started_bloggin_yet":
-            "Looks like %(name)s hasn't started blogging yet!",
-        "user_hasnt_followed_anything_yet":
-            "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -427,22 +409,6 @@
         "followers": "Followers",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "This is %(name)s's reputation score.\n\nThe reputation score is based on the history of votes received by the account, and is used to hide low quality content.",
-        "follower_count": {
-            "zero": "No followers",
-            "one": "1 follower",
-            "other": "%(count)s followers"
-        },
-        "followed_count": {
-            "zero": "Not following anybody",
-            "one": "1 following",
-            "other": "%(count)s following"
-        },
-        "post_count": {
-            "zero": "No posts",
-            "one": "1 post",
-            "other": "%(count)s posts"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -552,7 +518,7 @@
         "the_private_key_or_password_should_be_kept_offline":
             "The private key or password for the owner key should be kept offline as much as possible.",
         "the_memo_key_is_used_to_create_and_read_memos":
-            "The memo key is used to create and read memos."
+            "This key can be used to send and view encrypted memos on the Steem blockchain."
     },
     "suggestpassword_jsx": {
         "APP_NAME_cannot_recover_passwords_keep_this_page_in_a_secure_location":
@@ -605,25 +571,6 @@
     "markdownviewer_jsx": {
         "images_were_hidden_due_to_low_ratings":
             "Images were hidden due to low ratings."
-    },
-    "postsummary_jsx": {
-        "resteemed": "resteemed",
-        "resteemed_by": "Resteemed by",
-        "reveal_it": "Reveal this post",
-        "adjust_your": "adjust your",
-        "display_preferences": "display preferences",
-        "create_an_account": "create an account",
-        "to_save_your_preferences": "to save your preferences"
-    },
-    "posts_index": {
-        "empty_feed_1": "Looks like you haven't followed anything yet",
-        "empty_feed_2":
-            "If you recently added new users to follow, your personalized feed will populate once new content is available",
-        "empty_feed_3": "Explore Trending Articles",
-        "empty_feed_4": "Read The Quick Start Guide",
-        "empty_feed_5": "Browse The FAQ",
-        "my_feed": "My Feed",
-        "accountnames_feed": "%(account_name)s's Feed"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
@@ -708,7 +655,6 @@
     },
     "header_jsx": {
         "home": "home",
-        "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",
         "stolen_account_recovery": "Stolen Account Recovery",
@@ -749,23 +695,23 @@
             "You account has been successfully created!",
         "you_account_has_been_successfully_recovered":
             "You account has been successfully recovered!",
-        "password_update_succes":
+        "password_update_success":
             "The password for %(accountName)s was successfully updated",
         "password_info":
             "This password or private key was entered incorrectly.  There is probably a handwriting or data-entry error.  Hint: A password or private key generated by Steemit will never contain 0 (zero), O (capital o), I (capital i) and l (lower case L) characters.",
         "enter_your_username": "Enter your username",
+        "enter_steem_key": "Enter a Steem key (ideally your Posting Key)",
         "password_or_wif": "Password or WIF",
         "this_operation_requires_your_key_or_master_password":
             "This operation requires your %(authType)s key or Master password.",
         "keep_me_logged_in": "Keep me logged in",
-        "amazing_community": "amazing community",
-        "to_comment_and_reward_others": " to comment and reward others.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "sign_up_get_steem": "Sign up. Get STEEM!",
+        "sign_up_get_steem": "Sign up",
         "returning_users": "Returning Users: ",
-        "join_our": "Join our",
-        "sign_transfer": "Sign to complete transfer"
+        "login_to_wallet": "Login to Wallet",
+        "sign_transfer": "Sign to complete transfer",
+        "dont_have_an_account": "Don't have a Steem account?"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -920,5 +866,18 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "wallet_index": {
+        "title": "Steem wallet login",
+        "description":
+            "Welcome to Steemit's official Steem blockchain wallet. Use it to transfer Steem tokens, Power up, vote for Steem Witnesses and change your Steem profile details.",
+        "login": "Login",
+        "steem_tokens": "Steem tokens",
+        "steem_symbol": "STEEM",
+        "steem_description": "Liquid platform token",
+        "steem_power_symbol": "STEEM Power",
+        "steem_power_description": "Vesting influence token",
+        "sbd_symbol": "SBD",
+        "sbd_description": "Seeks price stability with USD"
     }
 }

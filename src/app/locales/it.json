@@ -182,8 +182,6 @@
             "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness ",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "è possibile utilizzare un solo Steem account per indirizzo IP ogni 10 minuti",
-        "resteem_this_post": "Fai il resteem di questo post",
-        "reblog": "Resteem",
         "write_your_story": "Scrivi la tua storia",
         "remember_voting_and_posting_key":
             "Ricorda la chiave di voto e di pubblicazione",
@@ -265,14 +263,7 @@
         "api_docs": "Steemit API Docs",
         "bluepaper": "Steem Bluepaper",
         "smt_whitepaper": "SMT Whitepaper",
-        "whitepaper": "Steem Whitepaper",
-        "intro_tagline": "Il denaro parla",
-        "intro_paragraph":
-            "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità."
-    },
-    "main_menu": {
-        "hot": "hot",
-        "trending": "trending"
+        "whitepaper": "Steem Whitepaper"
     },
     "reply_editor": {
         "shorten_title": "Titolo breve",
@@ -401,15 +392,6 @@
     },
     "user_profile": {
         "unknown_account": "Account sconosciuto",
-        "user_hasnt_made_any_posts_yet":
-            "Sembra che %(name)snon abbia ancora pubblicato nessun post! ",
-        "user_hasnt_started_bloggin_yet":
-            "Sembra che %(name)s non abbia ancora iniziato a scrivere!",
-        "user_hasnt_followed_anything_yet":
-            "Sembra che %(name)snon stia seguendo ancora nessuno! Se %(name)sha aggiunto di recente nuovi utenti da seguire, il feed personalizzato si riempirà di contenuti non appena ce ne saranno di nuovi. ",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
         "explore_trending_articles": "Explore Trending Articles",
         "read_the_quick_start_guide": "Read The Quick Start Guide",
@@ -417,22 +399,6 @@
         "followers": "Followers",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "Questo è il livello di reputazione di %(name)s. \n\nIl livello di reputazione si basa sulla storia dei voti ricevuti dall'account e viene utilizzato per nascondere contenuti di scarsa qualità. ",
-        "follower_count": {
-            "zero": "Nessun follower",
-            "one": "1 follower",
-            "other": "%(count)s follower"
-        },
-        "followed_count": {
-            "zero": "Non segue nessuno",
-            "one": "1 following",
-            "other": "%(count)s following"
-        },
-        "post_count": {
-            "zero": "Nessun post",
-            "one": "1 post",
-            "other": "%(count)s post"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -585,23 +551,6 @@
         "images_were_hidden_due_to_low_ratings":
             "Le immagini sono state nascoste a causa della bassa reputazione."
     },
-    "postsummary_jsx": {
-        "resteemed": "condiviso",
-        "resteemed_by": "Condiviso da",
-        "reveal_it": "mostra",
-        "adjust_your": "sistema il tuo",
-        "display_preferences": "mostrare le tue preferenze",
-        "create_an_account": "creare un accout",
-        "to_save_your_preferences": "per salvare le tue preferenze"
-    },
-    "posts_index": {
-        "empty_feed_1": "Sembra che tu non stia ancora seguendo nessuno. ",
-        "empty_feed_2":
-            "Se hai da poco aggiunto nuovi utenti da seguire, quando ci saranno nuovi contenuti disponibili li vedrai nel tuo feed personalizzato.",
-        "empty_feed_3": "Esplora gli Articoli in Trending",
-        "empty_feed_4": "Leggi la Guida di Avvio Rapido",
-        "empty_feed_5": "Leggi le FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "ai risparmi",
         "from_savings": "dai risparmi",
@@ -626,7 +575,6 @@
     },
     "header_jsx": {
         "home": "Home",
-        "create_a_post": "Crea un post",
         "change_account_password": "Cambia la password dell'account",
         "create_account": "Crea un account",
         "stolen_account_recovery": "Recupero account rubato",
@@ -667,7 +615,7 @@
             "Il tuo account è stato creato con successo! ",
         "you_account_has_been_successfully_recovered":
             "Il tuo account è stato ripristinato con successo!",
-        "password_update_succes":
+        "password_update_success":
             "La password dell'account %(accountName)s è stata aggiornata con successo",
         "password_info":
             "La password o la chiave privata è stata inserita erroneamente. C'è probabilmente un errore di battitura o un inserimento di dati errato. Suggerimento: Una password o una chiave privata generata da Steemit non conterrà mai i caratteri 0 (zero), O (o maiuscola), I (i maiuscola) e l (l minuscola).",
@@ -676,13 +624,10 @@
         "this_operation_requires_your_key_or_master_password":
             "Per eseguire l'operazione è necessaria la propria chiave %(authType)so Master password. ",
         "keep_me_logged_in": "Voglio restare connesso",
-        "amazing_community": "una comunità incredibile",
-        "to_comment_and_reward_others": "per commentare e premiare gli altri. ",
         "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "returning_users": "Utenti di ritorno:",
-        "join_our": "Unisciti al nostro"
+        "returning_users": "Utenti di ritorno:"
     },
     "chainvalidation_js": {
         "account_name_should": "Il nome account",

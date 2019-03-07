@@ -38,7 +38,7 @@ class UserWallet extends React.Component {
         };
         this.onShowDepositSteem = e => {
             if (e && e.preventDefault) e.preventDefault();
-            const name = this.props.current_user.get('username');
+            const name = this.props.currentUser.get('username');
             const new_window = window.open();
             new_window.opener = null;
             new_window.location =
@@ -52,21 +52,21 @@ class UserWallet extends React.Component {
             new_window.location =
                 'https://blocktrades.us/unregistered_trade/steem/eth';
         };
-        this.onShowDepositPower = (current_user_name, e) => {
+        this.onShowDepositPower = (currentUserName, e) => {
             e.preventDefault();
             const new_window = window.open();
             new_window.opener = null;
             new_window.location =
                 'https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem_power&receive_address=' +
-                current_user_name;
+                currentUserName;
         };
-        this.onShowDepositSBD = (current_user_name, e) => {
+        this.onShowDepositSBD = (currentUserName, e) => {
             e.preventDefault();
             const new_window = window.open();
             new_window.opener = null;
             new_window.location =
                 'https://blocktrades.us/?input_coin_type=eth&output_coin_type=sbd&receive_address=' +
-                current_user_name;
+                currentUserName;
         };
         this.onShowWithdrawSBD = e => {
             e.preventDefault();
@@ -96,7 +96,7 @@ class UserWallet extends React.Component {
             price_per_steem,
             savings_withdraws,
             account,
-            current_user,
+            currentUser,
             open_orders,
         } = this.props;
         const gprops = this.props.gprops.toJS();
@@ -111,8 +111,7 @@ class UserWallet extends React.Component {
         let delegated_steem = delegatedSteem(account.toJS(), gprops);
 
         let isMyAccount =
-            current_user &&
-            current_user.get('username') === account.get('name');
+            currentUser && currentUser.get('username') === account.get('name');
 
         const disabledWarning = false;
         // isMyAccount = false; // false to hide wallet transactions
@@ -360,7 +359,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: onShowDepositSteem.bind(
                     this,
-                    current_user.get('username')
+                    currentUser.get('username')
                 ),
             });
             steem_menu.push({
@@ -377,7 +376,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: onShowDepositPower.bind(
                     this,
-                    current_user.get('username')
+                    currentUser.get('username')
                 ),
             });
             dollar_menu.push({
@@ -385,7 +384,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: onShowDepositSBD.bind(
                     this,
-                    current_user.get('username')
+                    currentUser.get('username')
                 ),
             });
             dollar_menu.push({
@@ -481,7 +480,7 @@ class UserWallet extends React.Component {
         }
 
         let claimbox;
-        if (current_user && rewards_str && isMyAccount) {
+        if (currentUser && rewards_str && isMyAccount) {
             claimbox = (
                 <div className="row">
                     <div className="columns small-12">
@@ -509,15 +508,10 @@ class UserWallet extends React.Component {
                 {claimbox}
                 <div className="row">
                     <div className="columns small-10 medium-12 medium-expand">
-                        {isMyAccount ? (
-                            <WalletSubMenu account_name={account.get('name')} />
-                        ) : (
-                            <div>
-                                <br />
-                                <h4>{tt('g.balances')}</h4>
-                                <br />
-                            </div>
-                        )}
+                        <WalletSubMenu
+                            accountname={account.get('name')}
+                            isMyAccount={isMyAccount}
+                        />
                     </div>
                     {
                         <div className="columns shrink">
@@ -803,11 +797,6 @@ export default connect(
             e.preventDefault();
             const name = 'convertToSteem';
             dispatch(globalActions.showDialog({ name }));
-        },
-        showChangePassword: username => {
-            const name = 'changePassword';
-            dispatch(globalActions.remove({ key: name }));
-            dispatch(globalActions.showDialog({ name, params: { username } }));
         },
     })
 )(UserWallet);

@@ -5,7 +5,6 @@ const CONFIRM_OPERATION = 'transaction/CONFIRM_OPERATION';
 const HIDE_CONFIRM = 'transaction/HIDE_CONFIRM';
 export const BROADCAST_OPERATION = 'transaction/BROADCAST_OPERATION';
 export const UPDATE_AUTHORITIES = 'transaction/UPDATE_AUTHORITIES';
-export const UPDATE_META = 'transaction/UPDATE_META';
 const ERROR = 'transaction/ERROR'; // Has a watcher in SagaShared
 const DELETE_ERROR = 'transaction/DELETE_ERROR';
 const DISMISS_ERROR = 'transaction/DISMISS_ERROR';
@@ -52,9 +51,6 @@ export default function reducer(state = defaultState, action) {
         case UPDATE_AUTHORITIES:
             return state;
 
-        case UPDATE_META:
-            return state;
-
         case ERROR: {
             const { operations, error, errorCallback } = payload;
 
@@ -62,25 +58,6 @@ export default function reducer(state = defaultState, action) {
             let errorKey = 'Transaction broadcast error.';
             for (const [type /*, operation*/] of operations) {
                 switch (type) {
-                    case 'vote':
-                        if (/uniqueness constraint/.test(errorStr)) {
-                            errorKey = 'You already voted for this post';
-                            console.error('You already voted for this post.');
-                        }
-                        if (/Voting weight is too small/.test(errorStr)) {
-                            errorKey = 'Voting weight is too small';
-                            errorStr =
-                                'Voting weight is too small, please accumulate more voting power or steem power.';
-                        }
-                        break;
-                    case 'comment':
-                        if (
-                            /You may only post once per minute/.test(errorStr)
-                        ) {
-                            errorKey = 'You may only post once per minute.';
-                        } else if (errorStr === 'Testing, fake error')
-                            errorKey = 'Testing, fake error';
-                        break;
                     case 'transfer':
                         if (/get_balance/.test(errorStr)) {
                             errorKey = 'Insufficient balance.';
@@ -207,11 +184,6 @@ export const broadcastOperation = payload => ({
 
 export const updateAuthorities = payload => ({
     type: UPDATE_AUTHORITIES,
-    payload,
-});
-
-export const updateMeta = payload => ({
-    type: UPDATE_META,
     payload,
 });
 

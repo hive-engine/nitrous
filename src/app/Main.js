@@ -31,63 +31,6 @@ try {
 function runApp(initial_state) {
     console.log('Initial state', initial_state);
 
-    // Remove "auth=true" query string.
-    if (
-        typeof window !== undefined &&
-        window.location.search.match(/[?&]{1}auth=true/)
-    ) {
-        console.log('Removing temporary query string');
-        window.history.replaceState('feed', 'Feed', window.location.pathname);
-    }
-
-    const konami = {
-        code: 'xyzzy',
-        enabled: false,
-    };
-    const buff = konami.code.split('');
-    const cmd = command => {
-        console.log('got command:' + command);
-        switch (command) {
-            case CMD_LOG_O:
-                konami.enabled = false;
-            case CMD_LOG_TOGGLE:
-            case CMD_LOG_T:
-                konami.enabled = !konami.enabled;
-                if (konami.enabled) {
-                    steem.api.setOptions({ logger: console });
-                } else {
-                    steem.api.setOptions({ logger: false });
-                }
-                return 'api logging ' + konami.enabled;
-            default:
-                return 'That command is not supported.';
-        }
-        //return 'done';
-    };
-
-    const enableKonami = () => {
-        if (!window.s) {
-            console.log('The cupie doll is yours.');
-            window.s = command => {
-                return cmd.call(this, command);
-            };
-        }
-    };
-
-    window.document.body.onkeypress = e => {
-        buff.shift();
-        buff.push(e.key);
-        if (buff.join('') === konami.code) {
-            enableKonami();
-            cmd(CMD_LOG_T);
-        }
-    };
-
-    if (window.location.hash.indexOf('#' + konami.code) === 0) {
-        enableKonami();
-        cmd(CMD_LOG_O);
-    }
-
     const config = initial_state.offchain.config;
     steem.api.setOptions({
         url: config.steemd_connection_client,
@@ -110,7 +53,8 @@ function runApp(initial_state) {
 
     const locale = store.get('language');
     if (locale) initial_state.user.locale = locale;
-    initial_state.user.maybeLoggedIn = !!store.get('autopost2');
+    initial_state.user.maybeLoggedIn =
+        store.get('autopost2') || sessionStorage.getItem('username');
     if (initial_state.user.maybeLoggedIn) {
         const username = new Buffer(store.get('autopost2'), 'hex')
             .toString()

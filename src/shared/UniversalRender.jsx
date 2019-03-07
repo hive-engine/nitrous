@@ -265,7 +265,7 @@ export async function serverRender(
         // included in the API response, return User Not Found.
         if (
             (url.match(routeRegex.UserProfile1) ||
-                url.match(routeRegex.UserProfile3)) &&
+                url.match(routeRegex.UserProfile2)) &&
             Object.getOwnPropertyNames(onchain.accounts).length === 0
         ) {
             // protect for invalid account
@@ -275,53 +275,6 @@ export async function serverRender(
                 body: renderToString(<NotFound />),
             };
         }
-
-        // If we are not loading a post, truncate state data to bring response size down.
-        if (!url.match(routeRegex.Post)) {
-            for (var key in onchain.content) {
-                //onchain.content[key]['body'] = onchain.content[key]['body'].substring(0, 1024) // TODO: can be removed. will be handled by steemd
-                // Count some stats then remove voting data. But keep current user's votes. (#1040)
-                onchain.content[key]['stats'] = contentStats(
-                    onchain.content[key]
-                );
-                onchain.content[key]['active_votes'] = null;
-            }
-        }
-
-        // Are we loading an un-category-aliased post?
-        if (
-            !url.match(routeRegex.PostsIndex) &&
-            !url.match(routeRegex.UserProfile1) &&
-            !url.match(routeRegex.UserProfile2) &&
-            url.match(routeRegex.PostNoCategory)
-        ) {
-            const params = url.substr(2, url.length - 1).split('/');
-            let content;
-            if (process.env.OFFLINE_SSR_TEST) {
-                content = get_content_perf;
-            } else {
-                content = await api.getContentAsync(params[0], params[1]);
-            }
-            if (content.author && content.permlink) {
-                // valid short post url
-                onchain.content[url.substr(2, url.length - 1)] = content;
-            } else {
-                // protect on invalid user pages (i.e /user/transferss)
-                return {
-                    title: 'Page Not Found - Steemit',
-                    statusCode: 404,
-                    body: renderToString(<NotFound />),
-                };
-            }
-        }
-
-        // Insert the pinned posts into the list of posts, so there is no
-        // jumping of content.
-        offchain.pinned_posts.pinned_posts.forEach(pinnedPost => {
-            onchain.content[
-                `${pinnedPost.author}/${pinnedPost.permlink}`
-            ] = pinnedPost;
-        });
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
@@ -470,6 +423,10 @@ function getUrlFromLocation(location) {
         url = url.replace(/\/curation-rewards$/, '/transfers');
     if (url.indexOf('/author-rewards') !== -1)
         url = url.replace(/\/author-rewards$/, '/transfers');
+    if (url.indexOf('/permissions') !== -1)
+        url = url.replace(/\/permissions$/, '/transfers');
+    if (url.indexOf('/password') !== -1)
+        url = url.replace(/\/password$/, '/transfers');
 
     return url;
 }

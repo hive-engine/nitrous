@@ -6,7 +6,6 @@ import Icon from 'app/components/elements/Icon';
 import ReactDOMServer from 'react-dom/server';
 
 import { getCollapsedClientRect } from 'app/utils/SlateEditor/Helpers';
-import demoState from 'app/utils/SlateEditor/DemoState';
 import {
     HtmlRules,
     schema,
@@ -20,7 +19,6 @@ export const serializeHtml = state =>
         .map(el => ReactDOMServer.renderToStaticMarkup(el))
         .join('\n');
 export const deserializeHtml = html => serializer.deserialize(html);
-export const getDemoState = () => Raw.deserialize(demoState, { terse: true });
 
 const DEFAULT_NODE = 'paragraph';
 

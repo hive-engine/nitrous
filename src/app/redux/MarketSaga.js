@@ -74,7 +74,7 @@ export function* fetchOpenOrders(set_user_action) {
     try {
         const state = yield call([api, api.getOpenOrdersAsync], username);
         yield put(marketActions.receiveOpenOrders(state));
-        yield call(getAccount, username, true);
+        yield call(getAccount, username);
     } catch (error) {
         console.error('~~ Saga fetchOpenOrders error ~~>', error);
         yield put(appActions.steemApiError(error.message));

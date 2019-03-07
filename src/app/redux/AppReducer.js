@@ -8,7 +8,6 @@ const ADD_NOTIFICATION = 'app/ADD_NOTIFICATION';
 const REMOVE_NOTIFICATION = 'app/REMOVE_NOTIFICATION';
 export const SET_USER_PREFERENCES = 'app/SET_USER_PREFERENCES';
 export const TOGGLE_NIGHTMODE = 'app/TOGGLE_NIGHTMODE';
-export const TOGGLE_BLOGMODE = 'app/TOGGLE_BLOGMODE';
 export const RECEIVE_FEATURE_FLAGS = 'app/RECEIVE_FEATURE_FLAGS';
 
 export const defaultState = Map({
@@ -18,12 +17,7 @@ export const defaultState = Map({
     notifications: null,
     user_preferences: Map({
         locale: null,
-        nsfwPref: 'warn',
         nightmode: false,
-        blogmode: false,
-        currency: 'USD',
-        defaultBlogPayout: '50%',
-        defaultCommentPayout: '50%',
     }),
     featureFlags: Map({}),
 });
@@ -66,11 +60,6 @@ export default function reducer(state = defaultState, action = {}) {
                 ['user_preferences', 'nightmode'],
                 !state.getIn(['user_preferences', 'nightmode'])
             );
-        case TOGGLE_BLOGMODE:
-            return state.setIn(
-                ['user_preferences', 'blogmode'],
-                !state.getIn(['user_preferences', 'blogmode'])
-            );
         case RECEIVE_FEATURE_FLAGS:
             const newFlags = state.get('featureFlags')
                 ? state.get('featureFlags').merge(action.flags)
@@ -111,10 +100,6 @@ export const setUserPreferences = payload => ({
 
 export const toggleNightmode = () => ({
     type: TOGGLE_NIGHTMODE,
-});
-
-export const toggleBlogmode = () => ({
-    type: TOGGLE_BLOGMODE,
 });
 
 export const receiveFeatureFlags = flags => ({

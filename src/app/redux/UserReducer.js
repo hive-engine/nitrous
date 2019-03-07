@@ -14,13 +14,12 @@ const SHOW_TRANSFER = 'user/SHOW_TRANSFER';
 const HIDE_TRANSFER = 'user/HIDE_TRANSFER';
 const SHOW_POWERDOWN = 'user/SHOW_POWERDOWN';
 const HIDE_POWERDOWN = 'user/HIDE_POWERDOWN';
-const SHOW_PROMOTE_POST = 'user/SHOW_PROMOTE_POST';
-const HIDE_PROMOTE_POST = 'user/HIDE_PROMOTE_POST';
 const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
 const CLEAR_TRANSFER_DEFAULTS = 'user/CLEAR_TRANSFER_DEFAULTS';
 const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
 const CLEAR_POWERDOWN_DEFAULTS = 'user/CLEAR_POWERDOWN_DEFAULTS';
 export const USERNAME_PASSWORD_LOGIN = 'user/USERNAME_PASSWORD_LOGIN';
+export const SET_USERNAME = 'user/SET_USERNAME';
 export const SET_USER = 'user/SET_USER';
 const CLOSE_LOGIN = 'user/CLOSE_LOGIN';
 export const LOGIN_ERROR = 'user/LOGIN_ERROR';
@@ -35,10 +34,6 @@ const HIDE_CONNECTION_ERROR_MODAL = 'user/HIDE_CONNECTION_ERROR_MODAL';
 const SET = 'user/SET';
 const SHOW_SIDE_PANEL = 'user/SHOW_SIDE_PANEL';
 const HIDE_SIDE_PANEL = 'user/HIDE_SIDE_PANEL';
-const SHOW_POST_ADVANCED_SETTINGS = 'user/SHOW_POST_ADVANCED_SETTINGS';
-const HIDE_POST_ADVANCED_SETTINGS = 'user/HIDE_POST_ADVANCED_SETTINGS';
-const HIDE_ANNOUNCEMENT = 'user/HIDE_ANNOUNCEMENT';
-const SHOW_ANNOUNCEMENT = 'user/SHOW_ANNOUNCEMENT';
 
 // Saga-related
 export const LOAD_SAVINGS_WITHDRAW = 'user/LOAD_SAVINGS_WITHDRAW';
@@ -48,14 +43,12 @@ const defaultState = fromJS({
     current: null,
     show_login_modal: false,
     show_transfer_modal: false,
-    show_promote_post_modal: false,
     show_signup_modal: false,
     show_post_advanced_settings_modal: '', // formId
     pub_keys_used: null,
     locale: DEFAULT_LANGUAGE,
     show_side_panel: false,
     maybeLoggedIn: false,
-    showAnnouncement: false,
 });
 
 export default function reducer(state = defaultState, action) {
@@ -117,9 +110,13 @@ export default function reducer(state = defaultState, action) {
                 ['current', 'private_keys'],
                 private_keys => {
                     if (!private_keys) return null;
-                    if (private_keys.has('active_private'))
+                    if (
+                        private_keys.has('active_private') ||
+                        private_keys.has('owner_private')
+                    )
                         console.log('removeHighSecurityKeys');
                     private_keys = private_keys.delete('active_private');
+                    private_keys = private_keys.delete('owner_private');
                     empty = private_keys.size === 0;
                     return private_keys;
                 }
@@ -149,12 +146,6 @@ export default function reducer(state = defaultState, action) {
         case HIDE_POWERDOWN:
             return state.set('show_powerdown_modal', false);
 
-        case SHOW_PROMOTE_POST:
-            return state.set('show_promote_post_modal', true);
-
-        case HIDE_PROMOTE_POST:
-            return state.set('show_promote_post_modal', false);
-
         case SET_TRANSFER_DEFAULTS:
             return state.set('transfer_defaults', fromJS(payload));
 
@@ -168,8 +159,20 @@ export default function reducer(state = defaultState, action) {
             return state.remove('powerdown_defaults');
 
         case USERNAME_PASSWORD_LOGIN:
+            return state; // saga
+
         case LOAD_SAVINGS_WITHDRAW:
             return state; // saga
+
+        case SET_USERNAME:
+            // TODO: Clean this up
+            return state.mergeDeep({
+                current: payload,
+                show_login_modal: false,
+                loginBroadcastOperation: undefined,
+                loginDefault: undefined,
+                logged_out: undefined,
+            });
 
         case SET_USER:
             if (payload.vesting_shares)
@@ -244,25 +247,6 @@ export default function reducer(state = defaultState, action) {
         case HIDE_SIDE_PANEL:
             return state.set('show_side_panel', false);
 
-        case SHOW_POST_ADVANCED_SETTINGS:
-            return state.set(
-                'show_post_advanced_settings_modal',
-                payload.formId
-            );
-
-        case HIDE_POST_ADVANCED_SETTINGS:
-            return state.set('show_post_advanced_settings_modal', '');
-
-        case SHOW_ANNOUNCEMENT:
-            typeof sessionStorage !== 'undefined' &&
-                sessionStorage.setItem('hideAnnouncement', 'false');
-            return state.set('showAnnouncement', true);
-
-        case HIDE_ANNOUNCEMENT:
-            typeof sessionStorage !== 'undefined' &&
-                sessionStorage.setItem('hideAnnouncement', 'true');
-            return state.set('showAnnouncement', false);
-
         default:
             return state;
     }
@@ -326,16 +310,6 @@ export const hidePowerdown = payload => ({
     payload,
 });
 
-export const showPromotePost = payload => ({
-    type: SHOW_PROMOTE_POST,
-    payload,
-});
-
-export const hidePromotePost = payload => ({
-    type: HIDE_PROMOTE_POST,
-    payload,
-});
-
 export const setTransferDefaults = payload => ({
     type: SET_TRANSFER_DEFAULTS,
     payload,
@@ -358,6 +332,11 @@ export const clearPowerdownDefaults = payload => ({
 
 export const usernamePasswordLogin = payload => ({
     type: USERNAME_PASSWORD_LOGIN,
+    payload,
+});
+
+export const setUsername = payload => ({
+    type: SET_USERNAME,
     payload,
 });
 
@@ -440,20 +419,3 @@ export const hideSidePanel = () => {
         type: HIDE_SIDE_PANEL,
     };
 };
-
-export const showPostAdvancedSettings = payload => ({
-    type: SHOW_POST_ADVANCED_SETTINGS,
-    payload,
-});
-
-export const hidePostAdvancedSettings = () => ({
-    type: HIDE_POST_ADVANCED_SETTINGS,
-});
-
-export const hideAnnouncement = () => ({
-    type: HIDE_ANNOUNCEMENT,
-});
-
-export const showAnnouncement = () => ({
-    type: SHOW_ANNOUNCEMENT,
-});

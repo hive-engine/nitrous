@@ -22,7 +22,6 @@ export function* accountAuthLookup({
 }) {
     account = fromJS(account);
     private_keys = fromJS(private_keys);
-    // console.log('accountAuthLookup', account.name)
     const stateUser = yield select(state => state.user);
     let keys;
     if (private_keys) keys = private_keys;
@@ -32,6 +31,7 @@ export function* accountAuthLookup({
     const toPub = k => (k ? k.toPublicKey().toString() : '-');
     const posting = keys.get('posting_private');
     const active = keys.get('active_private');
+    const owner = keys.get('owner_private');
     const memo = keys.get('memo_private');
     const auth = {
         posting: posting
@@ -48,7 +48,13 @@ export function* accountAuthLookup({
                   authType: 'active',
               })
             : 'none',
-        owner: 'none',
+        owner: owner
+            ? yield authorityLookup({
+                  pubkeys: Set([toPub(owner)]),
+                  authority: account.get('owner'),
+                  authType: 'owner',
+              })
+            : 'none',
         memo: account.get('memo_key') === toPub(memo) ? 'full' : 'none',
     };
     const accountName = account.get('name');
@@ -168,23 +174,3 @@ export function* findSigningKey({ opType, username, password }) {
     }
     return null;
 }
-
-// function isPostingOnlyKey(pubkey, account) {
-//     // TODO Support account auths
-//     // yield put(g.actions.authLookup({account, pubkeys: pubkey})
-//     // authorityLookup({pubkeys, authority: Map(account.posting), authType: 'posting'})
-//     for (const p of account.posting.key_auths) {
-//         if (pubkey === p[0]) {
-//             if (account.active.account_auths.length || account.owner.account_auths.length) {
-//                 console.log('UserSaga, skipping save password, account_auths are not yet supported.')
-//                 return false
-//             }
-//             for (const a of account.active.key_auths)
-//                 if (pubkey === a[0]) return false
-//             for (const a of account.owner.key_auths)
-//                 if (pubkey === a[0]) return false
-//             return true
-//         }
-//     }
-//     return false
-// }

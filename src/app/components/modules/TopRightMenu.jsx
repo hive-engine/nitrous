@@ -55,29 +55,15 @@ function TopRightMenu({
             </Link>
         </li>
     );
-    const feed_link = `/@${username}/feed`;
-    const replies_link = `/@${username}/recent-replies`;
     const wallet_link = `/@${username}/transfers`;
     const account_link = `/@${username}`;
-    const comments_link = `/@${username}/comments`;
     const reset_password_link = `/@${username}/password`;
     const settings_link = `/@${username}/settings`;
     const pathCheck = userPath === '/submit.html' ? true : null;
     if (loggedIn) {
         // change back to if(username) after bug fix:  Clicking on Login does not cause drop-down to close #TEMP!
         const user_menu = [
-            {
-                link: feed_link,
-                icon: 'home',
-                value: tt('g.feed'),
-            },
             { link: account_link, icon: 'profile', value: tt('g.blog') },
-            { link: comments_link, icon: 'replies', value: tt('g.comments') },
-            {
-                link: replies_link,
-                icon: 'reply',
-                value: tt('g.replies'),
-            },
             {
                 link: wallet_link,
                 icon: 'wallet',

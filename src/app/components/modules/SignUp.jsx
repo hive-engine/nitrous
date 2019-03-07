@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SvgImage from 'app/components/elements/SvgImage';
-import AddToWaitingList from 'app/components/modules/AddToWaitingList';
 
 class SignUp extends React.Component {
     constructor() {
         super();
-        this.state = { waiting_list: false };
     }
     render() {
         if ($STM_Config.read_only_mode) {
@@ -36,7 +34,6 @@ class SignUp extends React.Component {
                             only because of unexpectedly high sign up rate.
                             Submit your email to get on the waiting list.
                         </p>
-                        <AddToWaitingList />
                     </div>
                 </div>
             );
@@ -88,28 +85,6 @@ class SignUp extends React.Component {
                         <span className="secondary">
                             (requires 5 or more Reddit comment karma)
                         </span>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column">
-                        <br />
-                        Don't have a Facebook or Reddit account? <br />
-                        {this.state.waiting_list ? (
-                            <AddToWaitingList />
-                        ) : (
-                            <a
-                                href="#"
-                                onClick={() =>
-                                    this.setState({ waiting_list: true })
-                                }
-                            >
-                                <strong>
-                                    {' '}
-                                    Subscribe to get a notification when SMS
-                                    confirmation is available.
-                                </strong>
-                            </a>
-                        )}
                     </div>
                 </div>
                 <div className="row">

@@ -13,7 +13,6 @@ import TransactionError from 'app/components/elements/TransactionError';
 import DepthChart from 'app/components/elements/DepthChart';
 import Orderbook from 'app/components/elements/Orderbook';
 import OrderHistory from 'app/components/elements/OrderHistory';
-import GoogleAd from 'app/components/elements/GoogleAd';
 import { Order, TradeHistory } from 'app/utils/MarketClasses';
 import { roundUp, roundDown } from 'app/utils/MarketUtils';
 import tt from 'counterpart';
@@ -475,7 +474,6 @@ class Market extends React.Component {
                                     ).toFixed(3)}%
                                 </li>
                             )}
-                            {/*<li><b>Feed price</b> ${ticker.feed_price.toFixed(3)}</li>*/}
                         </ul>
                     </div>
                 </div>
@@ -926,17 +924,6 @@ class Market extends React.Component {
                         <h4>{tt('market_jsx.trade_history')}</h4>
                         {trade_history_table(this.props.history)}
                     </div>
-
-                    {this.props.shouldSeeAds && (
-                        <div className="small-12 large-12 column">
-                            <GoogleAd
-                                name="market-1"
-                                slot={this.props.adSlots['market_1'].slot_id}
-                                fullWidthResponsive="true"
-                                style={{ display: 'block' }}
-                            />
-                        </div>
-                    )}
                 </div>
 
                 {account && (
@@ -959,8 +946,6 @@ module.exports = {
             const username = state.user.get('current')
                 ? state.user.get('current').get('username')
                 : null;
-            const shouldSeeAds = state.app.getIn(['googleAds', 'shouldSeeAds']);
-            const adSlots = state.app.getIn(['googleAds', 'adSlots']).toJS();
             return {
                 orderbook: state.market.get('orderbook'),
                 open_orders: process.env.BROWSER
@@ -972,8 +957,6 @@ module.exports = {
                 user: username,
                 feed: state.global.get('feed_price'),
                 open_orders_sort: state.market.get('open_orders_sort'),
-                shouldSeeAds,
-                adSlots,
             };
         },
         dispatch => ({

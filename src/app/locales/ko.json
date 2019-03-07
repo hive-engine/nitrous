@@ -181,8 +181,6 @@
             "vote currently exists, user must be indicate a desire to reject witness",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "매 10 분마다 IP 주소 당 단 하나의 Steem 계정만 허용됩니다.",
-        "resteem_this_post": "Resteem This Post",
-        "reblog": "리스팀",
         "write_your_story": "내용을 입력하세요",
         "remember_voting_and_posting_key": "Remember voting & posting key",
         "auto_login_question_mark": "자동 로그인",
@@ -262,14 +260,7 @@
         "api_docs": "스팀잇 API 문서",
         "bluepaper": "스팀 블루페이퍼",
         "smt_whitepaper": "SMT 화이트페이퍼",
-        "whitepaper": "스팀 화이트페이퍼",
-        "intro_tagline": "생각의 가치",
-        "intro_paragraph":
-            "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요."
-    },
-    "main_menu": {
-        "hot": "인기글",
-        "trending": "대세글"
+        "whitepaper": "스팀 화이트페이퍼"
     },
     "reply_editor": {
         "shorten_title": "짧은 제목",
@@ -396,15 +387,6 @@
     },
     "user_profile": {
         "unknown_account": "Unknown Account",
-        "user_hasnt_made_any_posts_yet":
-            "%(name)s님은 아직 남긴 글이 없습니다.",
-        "user_hasnt_started_bloggin_yet":
-            "%(name)s님은 아직 블로깅을 시작하지 않았습니다.",
-        "user_hasnt_followed_anything_yet":
-            "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
-        "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
-        "looks_like_you_havent_posted_anything_yet":
-            "아직 포스팅을 하지 않았습니다.",
         "create_a_post": "글쓰기",
         "explore_trending_articles": "대세글 읽어보기",
         "read_the_quick_start_guide": "빠른 시작 가이드",
@@ -412,22 +394,6 @@
         "followers": "팔로워",
         "this_is_users_reputations_score_it_is_based_on_history_of_votes":
             "이것은 %(name)s님의 평판 점수입니다.\n\n평판 점수는 %(name)s님이 받은 보팅 기록에 기반합니다. 이 평판 점수는 질이 나쁜 콘텐츠를 가려내기 위해 사용됩니다.",
-        "follower_count": {
-            "zero": "팔로워 없음",
-            "one": "한명의 팔로워",
-            "other": "%(count)s명의 팔로워"
-        },
-        "followed_count": {
-            "zero": "팔로우 없음",
-            "one": "한명 팔로우",
-            "other": "%(count)s명 팔로우"
-        },
-        "post_count": {
-            "zero": "게시글 없음",
-            "one": "하나의 게시글",
-            "other": "%(count)s 게시글"
-        },
-        "hide_resteems": "Hide Resteems",
         "show_all": "Show All"
     },
     "authorrewards_jsx": {
@@ -578,23 +544,6 @@
         "images_were_hidden_due_to_low_ratings":
             "Images were hidden due to low ratings."
     },
-    "postsummary_jsx": {
-        "resteemed": "리스팀",
-        "resteemed_by": "리스팀 by",
-        "reveal_it": "Reveal this post",
-        "adjust_your": "adjust your",
-        "display_preferences": "display preferences",
-        "create_an_account": "create an account",
-        "to_save_your_preferences": "to save your preferences"
-    },
-    "posts_index": {
-        "empty_feed_1": "Looks like you haven't followed anything yet",
-        "empty_feed_2":
-            "If you recently added new users to follow, your personalized feed will populate once new content is available",
-        "empty_feed_3": "Explore Trending Articles",
-        "empty_feed_4": "Read The Quick Start Guide",
-        "empty_feed_5": "Browse The FAQ"
-    },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
         "from_savings": "from savings",
@@ -617,7 +566,6 @@
     },
     "header_jsx": {
         "home": "home",
-        "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",
         "stolen_account_recovery": "Stolen Account Recovery",
@@ -658,7 +606,7 @@
             "You account has been successfully created!",
         "you_account_has_been_successfully_recovered":
             "You account has been successfully recovered!",
-        "password_update_succes":
+        "password_update_success":
             "The password for %(accountName)s was successfully updated",
         "password_info":
             "암호 또는 개인키가 잘못 입력되었습니다. 타자입력의 실수 또는 데이터 입력의 오류일 수 있습니다. 힌트: steemit 에서 생성된 암호 또는 개인키에는 0(숫자 0), O(영문자O), I(대문자I), l(소문자 L)을 절대로 포함하지 않습니다.",
@@ -667,14 +615,11 @@
         "this_operation_requires_your_key_or_master_password":
             "이 작업은 %(authType)s 키 또는 마스터 비밀번호가 필요합니다.",
         "keep_me_logged_in": "로그인 유지",
-        "amazing_community": "amazing community",
-        "to_comment_and_reward_others": " to comment and reward others.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
         "sign_up_get_steem":
             "계정을 만들고 가상화폐 STEEM 을 보상으로 받으세요.",
-        "returning_users": "Returning Users: ",
-        "join_our": "Join our"
+        "returning_users": "Returning Users: "
     },
     "chainvalidation_js": {
         "account_name_should": "Account name should ",
