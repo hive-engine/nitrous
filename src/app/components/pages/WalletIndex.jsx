@@ -11,17 +11,14 @@ class WalletIndex extends React.Component {
         super();
     }
 
-    componentDidMount() {
-        const { username, loggedIn } = this.props;
+    render() {
+        const { username, showLogin, loggedIn } = this.props;
         if (loggedIn) {
             if (process.env.BROWSER) {
                 browserHistory.push(`/@${username}/transfers`);
+                return null;
             }
         }
-    }
-
-    render() {
-        const { showLogin, loggedIn } = this.props;
         return (
             <div className="WalletIndex">
                 <div className="row">

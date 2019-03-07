@@ -523,7 +523,6 @@ export default connect(
                         username,
                         password,
                         saveLogin,
-                        afterLoginRedirectToTransfers: true,
                     })
                 );
             }

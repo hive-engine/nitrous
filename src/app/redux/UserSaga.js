@@ -101,13 +101,7 @@ const clean = value =>
         key_types: active, owner, posting keys.
 */
 function* usernamePasswordLogin({
-    payload: {
-        username,
-        password,
-        saveLogin,
-        operationType /*high security*/,
-        afterLoginRedirectToTransfers,
-    },
+    payload: { username, password, saveLogin, operationType /*high security*/ },
 }) {
     const current = yield select(state => state.user.get('current'));
     if (current) {
@@ -385,15 +379,6 @@ function* usernamePasswordLogin({
     }
     // TOS acceptance
     yield fork(promptTosAcceptance, username);
-
-    console.log('afterLogin', afterLoginRedirectToTransfers);
-
-    // Redirect user to transfers page after login, if relevant.
-    if (afterLoginRedirectToTransfers) {
-        console.log('Redirecting to transfers page');
-        browserHistory.push(`/@${username}/transfers`);
-        return;
-    }
 }
 
 function* promptTosAcceptance(username) {
