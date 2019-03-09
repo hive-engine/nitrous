@@ -514,7 +514,7 @@
         "the_active_key_is_used_to_make_transfers_and_place_orders":
             "The active key is used to make transfers and place orders in the internal market.",
         "the_owner_key_is_required_to_change_other_keys":
-            "The owner key is the master key for the account and is required to change the other keys.",
+            "The owner key is required to change the other keys.",
         "the_private_key_or_password_should_be_kept_offline":
             "The private key or password for the owner key should be kept offline as much as possible.",
         "the_memo_key_is_used_to_create_and_read_memos":
