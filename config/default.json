@@ -5,15 +5,15 @@
   "google_analytics_id": false,
   "helmet": {
     "directives": {
-      "childSrc": "'self' player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
+      "childSrc": "'self'",
       "connectSrc": "'self' steemit.com https://api.steemit.com api.blocktrades.us",
-      "defaultSrc": "'self' www.youtube.com staticxx.facebook.com player.vimeo.com",
+      "defaultSrc": "'self'",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
       "imgSrc": "* data:",
       "objectSrc": "'none'",
       "pluginTypes": "application/pdf",
-      "scriptSrc": "'self' www.google-analytics.com connect.facebook.net",
+      "scriptSrc": "'self' www.google-analytics.com",
       "styleSrc": "'self' 'unsafe-inline' fonts.googleapis.com",
       "reportUri": "/api/v1/csp_violation"
     },
