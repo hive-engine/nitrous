@@ -158,12 +158,6 @@ function* usernamePasswordLogin({
         [username, userProvidedRole] = username.split('/');
     }
 
-    const pathname = yield select(state => state.global.get('pathname'));
-    const highSecurityLogin =
-        // /owner|active/.test(userProvidedRole) ||
-        // isHighSecurityOperations.indexOf(operationType) !== -1 ||
-        highSecurityPages.find(p => p.test(pathname)) != null;
-
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
@@ -212,19 +206,13 @@ function* usernamePasswordLogin({
         payload: {
             account,
             private_keys,
-            highSecurityLogin,
             login_owner_pubkey,
         },
     });
     let authority = yield select(state =>
         state.user.getIn(['authority', username])
     );
-    const hasActiveAuth = authority.get('active') === 'full';
-    if (!highSecurityLogin) {
-        const accountName = account.get('name');
-        authority = authority.set('active', 'none');
-        yield put(userActions.setAuthority({ accountName, auth: authority }));
-    }
+
     const fullAuths = authority.reduce(
         (r, auth, type) => (auth === 'full' ? r.add(type) : r),
         Set()
@@ -232,79 +220,28 @@ function* usernamePasswordLogin({
     if (!fullAuths.size) {
         console.log('No full auths');
         localStorage.removeItem('autopost2');
+        const generated_type = password[0] === 'P' && password.length > 40;
         const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
-        if (
-            login_owner_pubkey === owner_pub_key ||
-            login_wif_owner_pubkey === owner_pub_key
-        ) {
-            yield put(userActions.loginError({ error: 'owner_login_blocked' }));
-        } else if (!highSecurityLogin && hasActiveAuth) {
-            yield put(
-                userActions.loginError({ error: 'active_login_blocked' })
-            );
-        } else {
-            const generated_type = password[0] === 'P' && password.length > 40;
-            serverApiRecordEvent(
-                'login_attempt',
-                JSON.stringify({
-                    name: username,
-                    login_owner_pubkey,
-                    owner_pub_key,
-                    generated_type,
-                })
-            );
-            yield put(userActions.loginError({ error: 'Incorrect Password' }));
-        }
+        serverApiRecordEvent(
+            'login_attempt',
+            JSON.stringify({
+                name: username,
+                login_owner_pubkey,
+                owner_pub_key,
+                generated_type,
+            })
+        );
+        yield put(userActions.loginError({ error: 'Incorrect Password' }));
         return;
     }
+
     if (authority.get('posting') !== 'full')
         private_keys = private_keys.remove('posting_private');
-
-    if (!highSecurityLogin || authority.get('active') !== 'full')
+    if (authority.get('active') !== 'full')
         private_keys = private_keys.remove('active_private');
-    if (!highSecurityLogin || authority.get('owner') !== 'full')
+    if (authority.get('owner') !== 'full')
         private_keys = private_keys.remove('owner_private');
-
-    const owner_pubkey = account.getIn(['owner', 'key_auths', 0, 0]);
-    const active_pubkey = account.getIn(['active', 'key_auths', 0, 0]);
-    const posting_pubkey = account.getIn(['posting', 'key_auths', 0, 0]);
-
-    if (
-        private_keys.get('memo_private') &&
-        account.get('memo_key') !==
-            private_keys
-                .get('memo_private')
-                .toPublicKey()
-                .toString()
-    )
-        // provided password did not yield memo key
-        private_keys = private_keys.remove('memo_private');
-
-    if (!highSecurityLogin) {
-        console.log('Not high security login');
-        if (
-            posting_pubkey === owner_pubkey ||
-            posting_pubkey === active_pubkey
-        ) {
-            yield put(
-                userActions.loginError({
-                    error:
-                        'This login gives owner or active permissions and should not be used here.  Please provide a posting only login.',
-                })
-            );
-            localStorage.removeItem('autopost2');
-            return;
-        }
-    }
-    const memo_pubkey = private_keys.has('memo_private')
-        ? private_keys
-              .get('memo_private')
-              .toPublicKey()
-              .toString()
-        : null;
-
-    if (memo_pubkey === owner_pubkey || memo_pubkey === active_pubkey)
-        // Memo key could be saved in local storage.. In RAM it is not purged upon LOCATION_CHANGE
+    if (authority.get('memo') !== 'full')
         private_keys = private_keys.remove('memo_private');
 
     // If user is signing operation by operaion and has no saved login, don't save to RAM

@@ -287,7 +287,7 @@ class UserKeys extends Component {
                             </p>
                             <ul className="permissions__list">
                                 <li className="permissions__li">
-                                    Set Owner and Active keys
+                                    Reset Owner, Active, and Posting keys
                                 </li>
                                 <li className="permissions__li">
                                     Recover your account
