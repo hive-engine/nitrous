@@ -115,6 +115,12 @@ export default {
             //cb(null, [require('app/components/pages/PostsIndex')]);
             cb(null, [PostsIndex]);
             //});
+        } else if (route.page === 'WorkerProposalSystem') {
+            require.ensure([], require => {
+                cb(null, [
+                    require('app/components/pages/WorkerProposalSystem'),
+                ]);
+            });
         } else {
             //require.ensure([], (require) => {
             cb(process.env.BROWSER ? null : Error(404), [

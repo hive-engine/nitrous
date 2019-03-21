@@ -277,7 +277,8 @@
         "intro_tagline": "Your voice is worth something",
         "intro_paragraph":
             "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
-        "jobs": "Jobs at Steemit"
+        "jobs": "Jobs at Steemit",
+        "worker_proposal_system": "Worker Proposal System"
     },
     "main_menu": {
         "hot": "Hot",
@@ -718,7 +719,8 @@
         "curation_rewards_by": "Curation rewards by %(username)s",
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
-        "comments_by": "Comments by %(username)s"
+        "comments_by": "Comments by %(username)s",
+        "worker_proposal_system": "Worker Proposal System"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":

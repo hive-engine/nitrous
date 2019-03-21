@@ -74,6 +74,9 @@ export default function resolveRoute(path) {
     if (path === '/submit.html') {
         return { page: 'SubmitPost' };
     }
+    if (path === '/worker_proposal_system') {
+        return { page: 'WorkerProposalSystem' };
+    }
     let match = path.match(routeRegex.PostsIndex);
     if (match) {
         if (GDPRUserList.includes(match[1].substring(1))) {
@@ -106,8 +109,12 @@ export default function resolveRoute(path) {
         return { page: 'Post', params: match.slice(1) };
     }
     match =
-        path.match(/^\/(hot|trending|promoted|payout|payout_comments|created)\/?$/) ||
-        path.match(/^\/(hot|trending|promoted|payout|payout_comments|created)\/([\w\d-]+)\/?$/);
+        path.match(
+            /^\/(hot|trending|promoted|payout|payout_comments|created)\/?$/
+        ) ||
+        path.match(
+            /^\/(hot|trending|promoted|payout|payout_comments|created)\/([\w\d-]+)\/?$/
+        );
     if (match) {
         return { page: 'PostsIndex', params: match.slice(1) };
     }
