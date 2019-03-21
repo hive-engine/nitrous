@@ -10,6 +10,30 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@blocktradesdev/steem-js@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@blocktradesdev/steem-js/-/steem-js-0.7.4.tgz#7af83cf7e3ce25180073ddb12a1e075f85334bb3"
+  integrity sha512-jIS7W6r3ynZLLj9u56bp6X8vd6+3I+OV7OQjAbjTcCJU4UJmrc8YFhYJyYxLhhGcm/1uO7rzmpLDWY74oh+FtQ==
+  dependencies:
+    "@steemit/rpc-auth" "^1.1.1"
+    bigi "^1.4.2"
+    bluebird "^3.4.6"
+    browserify-aes "^1.0.6"
+    bs58 "^4.0.0"
+    buffer "^5.0.6"
+    bytebuffer "^5.0.1"
+    create-hash "^1.1.2"
+    create-hmac "^1.1.4"
+    cross-env "^5.0.0"
+    cross-fetch "^1.1.1"
+    debug "^2.6.8"
+    detect-node "^2.0.3"
+    ecurve "^1.0.5"
+    lodash "^4.16.4"
+    retry "^0.12.0"
+    secure-random "^1.1.1"
+    ws "^3.3.2"
+
 "@steem/crypto-session@git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb":
   version "1.0.3"
   resolved "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb"

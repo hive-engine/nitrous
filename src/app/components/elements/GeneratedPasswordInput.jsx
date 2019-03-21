@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
 import { APP_NAME } from 'app/client_config';
-import { key_utils } from '@steemit/steem-js/lib/auth/ecc';
+import { key_utils } from '@blocktradesdev/steem-js/lib/auth/ecc';
 
 function allChecked(confirmCheckboxes) {
     return confirmCheckboxes.box1 && confirmCheckboxes.box2;

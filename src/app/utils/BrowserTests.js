@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { config } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
+import { config } from '@blocktradesdev/steem-js';
 
 export const browserTests = {};
 

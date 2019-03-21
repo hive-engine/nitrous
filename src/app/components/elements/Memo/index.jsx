@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import tt from 'counterpart';
 import classnames from 'classnames';
-import { memo } from '@steemit/steem-js';
+import { memo } from '@blocktradesdev/steem-js';
 import BadActorList from 'app/utils/BadActorList';
 import { repLog10 } from 'app/utils/ParsersAndFormatters';
 

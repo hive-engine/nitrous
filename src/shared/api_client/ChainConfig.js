@@ -1,4 +1,4 @@
-import * as steem from '@steemit/steem-js';
+import * as steem from '@blocktradesdev/steem-js';
 
 steem.config.set('address_prefix', 'STM');
 

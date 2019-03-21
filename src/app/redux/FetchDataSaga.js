@@ -6,7 +6,7 @@ import {
     takeLatest,
     takeEvery,
 } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 import { loadFollows, fetchFollowCount } from 'app/redux/FollowSaga';
 import { getContent } from 'app/redux/SagaShared';
 import * as globalActions from './GlobalReducer';
@@ -247,9 +247,9 @@ export function* fetchData(action) {
         ];
     } else {
         // this should never happen. undefined behavior
-        console.log("unexpected `order`", order)
+        console.log('unexpected `order`', order);
         call_name = 'getDiscussionsByTrendingAsync';
-        args = [{limit: constants.FETCH_DATA_BATCH_SIZE}]
+        args = [{ limit: constants.FETCH_DATA_BATCH_SIZE }];
     }
     yield put(appActions.fetchDataBegin());
     try {

@@ -1,6 +1,6 @@
 import * as config from 'config';
 import * as https from 'https';
-import * as steem from '@steemit/steem-js';
+import * as steem from '@blocktradesdev/steem-js';
 
 function loadPinnedPosts() {
     return new Promise((resolve, reject) => {

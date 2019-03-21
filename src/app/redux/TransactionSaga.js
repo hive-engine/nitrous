@@ -4,8 +4,8 @@ import tt from 'counterpart';
 import getSlug from 'speakingurl';
 import base58 from 'bs58';
 import secureRandom from 'secure-random';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast, auth, memo } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
+import { api, broadcast, auth, memo } from '@blocktradesdev/steem-js';
 
 import { getAccount, getContent } from 'app/redux/SagaShared';
 import { findSigningKey } from 'app/redux/AuthSaga';

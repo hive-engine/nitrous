@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 import * as appActions from './AppReducer';
 import * as globalActions from './GlobalReducer';
 import constants from './constants';

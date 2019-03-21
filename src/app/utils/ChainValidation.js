@@ -1,7 +1,7 @@
 import tt from 'counterpart';
 import BadActorList from 'app/utils/BadActorList';
 import VerifiedExchangeList from 'app/utils/VerifiedExchangeList';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey, PublicKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
 
 export function validate_account_name(value) {
     let i, label, len, length, ref;

@@ -4,7 +4,7 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { reduxForm } from 'redux-form'; // @deprecated, instead use: app/utils/ReactForm.js
 import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey, PublicKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
 
 class KeyEdit extends Component {
     static propTypes = {
