@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as workerProposalSystemActions from 'app/redux/WorkerProposalSystemReducer';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 
 class WorkerProposalSystem extends React.Component {
     render() {
@@ -9,27 +11,16 @@ class WorkerProposalSystem extends React.Component {
 
 module.exports = {
     path: '/worker_proposal_system',
-    component: connect(dispatch => {
-        return {
-            updateProposalVote: (voter, proposal_ids, approve) => {
+    component: connect(dispatch => ({
+        listProposals: payload =>
+            new Promise((resolve, reject) => {
                 dispatch(
-                    workerProposalSystemActions.updateOperation({
-                        type: 'updat_proposal_operation',
-                        operation: { voter: voter, proposal_ids, approve },
+                    fetchDataSagaActions.listProposals({
+                        ...payload,
+                        resolve,
+                        reject,
                     })
                 );
-            },
-            removeProposal: (proposal_owner, proposal_ids) => {
-                dispatch(
-                    workerProposalSystemActions.updateOperation({
-                        type: 'remove_proposal',
-                        operation: {
-                            proposal_owner: proposal_owner,
-                            proposal_ids,
-                        },
-                    })
-                );
-            },
-        };
-    })(WorkerProposalSystem),
+            }),
+    }))(WorkerProposalSystem),
 };

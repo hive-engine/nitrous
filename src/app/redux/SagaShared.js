@@ -94,6 +94,35 @@ export function* getContent({ author, permlink, resolve, reject }) {
     }
 }
 
+export function* listProposals({
+    start,
+    order_by,
+    order_direction,
+    limit,
+    status,
+    resolve,
+    reject,
+}) {
+    let proposals;
+    while (!proposals) {
+        proposals = yield call(
+            [api, api.listProposalsAsync],
+            start,
+            order_by,
+            order_direction,
+            limit,
+            status
+        );
+    }
+
+    yield put(globalActions.receiveListProposals({ proposals }));
+    if (resolve && proposals) {
+        resolve(proposals);
+    } else if (reject && !proposals) {
+        reject();
+    }
+}
+
 /**
  * Save this user's preferences, either directly from the submitted payload or from whatever's saved in the store currently.
  *
