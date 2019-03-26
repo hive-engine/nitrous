@@ -1,0 +1,12 @@
+.WorkerProposalSystem {
+    table {
+        tr:nth-child(4n),
+        tr:nth-child(4n-1) {
+          background-color: #f4f4f4;
+        }
+        tr:nth-child(4n -2),
+        tr:nth-child(4n-3) {
+          background-color: white;
+        } 
+    }
+}

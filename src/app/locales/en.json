@@ -928,5 +928,18 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "worker_proposal_system_jsx": {
+        "top_wps": "Worker Proposal System",
+        "table": {
+            "id": "Id",
+            "creator": "Creator",
+            "receiver": "Receiver",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "daily_pay": "Daily Pay",
+            "total_votes": "Total Votes",
+            "permlink": ""
+        }
     }
 }
