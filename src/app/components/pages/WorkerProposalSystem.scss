@@ -2,11 +2,39 @@
     table {
         tr:nth-child(4n),
         tr:nth-child(4n-1) {
-          background-color: #f4f4f4;
+            background-color: #f4f4f4;
         }
         tr:nth-child(4n -2),
         tr:nth-child(4n-3) {
-          background-color: white;
-        } 
+            background-color: white;
+        }
+
+        td.id-column {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media only screen and (min-width: 768px) {
+            td.start_date-column,
+            td.end_date-column {
+                width: 22ch;
+            }
+            td.total_votes-column {
+                width: 12ch;
+            }
+            td.id-column,
+            td.id-table-header {
+                width: 12ch;
+            }
+            td.daily_pay-column {
+                width: 15ch;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+        }
+    }
+
+    .proposal-extlink {
     }
 }

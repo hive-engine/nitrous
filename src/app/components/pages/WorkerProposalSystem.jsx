@@ -5,8 +5,8 @@ import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import tt from 'counterpart';
+import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
-import FormattedAsset from 'app/components/elements/FormattedAsset';
 
 class WorkerProposalSystem extends React.Component {
     orderedProposalKeys = [
@@ -24,9 +24,6 @@ class WorkerProposalSystem extends React.Component {
     };
     constructor() {
         super();
-        this.state = {
-            loading: false,
-        };
     }
 
     componentDidMount() {
@@ -41,31 +38,57 @@ class WorkerProposalSystem extends React.Component {
         });
     }
 
+    formatAsset(amount, precision) {
+        return (
+            parseFloat(amount) / Math.pow(10, parseFloat(precision))
+        ).toFixed(parseInt(precision));
+    }
+
+    formatTableDiv(key, value) {
+        switch (key) {
+            case 'id':
+                return [
+                    <Icon
+                        name={'chevron-up-circle'}
+                        className="upvote"
+                        key={`vote-icon-${value}`}
+                    />,
+                    value,
+                ];
+            case 'start_date':
+            case 'end_date':
+                return [
+                    <FormattedDate value={value} />,
+                    <span>&nbsp;</span>,
+                    <FormattedTime value={value} />,
+                ];
+            case 'daily_pay':
+                const amount = this.formatAsset(
+                    value.get('amount'),
+                    value.get('precision')
+                );
+                return `${amount} SBD`;
+            case 'permlink':
+                return (
+                    <a href={value} target="__blank">
+                        <Icon name={'extlink'} className="proposal-extlink" />
+                    </a>
+                );
+            default:
+                return value;
+        }
+    }
+
     // TODO: FormattedAsset not enough to calculate precision
     renderTableRow(proposal) {
         console.log(proposal);
         const id = proposal.get('id');
-        const votingActive = false;
+
         return [
             <tr key={`proposal-${id}`}>
                 {this.orderedProposalKeys.map(k => (
-                    <td key={`${k}-${id}`}>
-                        {k === 'daily_pay' ? (
-                            <FormattedAsset
-                                amount={proposal.get(k).get('amount')}
-                                asset="SBD"
-                            />
-                        ) : (
-                            proposal.get(k)
-                        )}
-                        {k === 'id' && (
-                            <Icon
-                                name={
-                                    votingActive ? 'empty' : 'chevron-up-circle'
-                                }
-                                className="upvote"
-                            />
-                        )}
+                    <td key={`${k}-${id}`} className={`${k}-column`}>
+                        {this.formatTableDiv(k, proposal.get(k))}
                     </td>
                 ))}
             </tr>,
@@ -85,7 +108,7 @@ class WorkerProposalSystem extends React.Component {
                 <thead>
                     <tr>
                         {this.orderedProposalKeys.map(key => (
-                            <td key={key}>
+                            <td key={key} className={`${key}-table-header`}>
                                 {tt(`worker_proposal_system_jsx.table.${key}`)}
                             </td>
                         ))}
@@ -102,7 +125,6 @@ class WorkerProposalSystem extends React.Component {
 
     render() {
         const { proposals } = this.props;
-        const { loading } = this.state;
 
         // TODO: implement loading indicator
         // if (loading) return <span>Loading...</span>;
