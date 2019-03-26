@@ -7,6 +7,7 @@ import { List } from 'immutable';
 import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
+import * as transactionActions from 'app/redux/TransactionReducer';
 
 class WorkerProposalSystem extends React.Component {
     orderedProposalKeys = [
@@ -21,6 +22,8 @@ class WorkerProposalSystem extends React.Component {
     ];
     static propTypes = {
         listProposals: PropTypes.func,
+        removeProposal: PropTypes.func,
+        updateProposalVotes: PropTypes.func,
     };
     constructor() {
         super();
@@ -155,6 +158,22 @@ module.exports = {
             };
         },
         dispatch => ({
+            updateProposalVotes: (voter, proposal_ids, approve) => {
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'update_proposal_votes',
+                        operation: { voter, proposal_ids, approve },
+                    })
+                );
+            },
+            removeProposal: (proposal_owner, proposal_ids) => {
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'remove_proposal',
+                        operation: { proposal_owner, proposal_ids },
+                    })
+                );
+            },
             listProposals: payload =>
                 new Promise((resolve, reject) => {
                     dispatch(
