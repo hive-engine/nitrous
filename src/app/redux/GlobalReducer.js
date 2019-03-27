@@ -462,7 +462,7 @@ export default function reducer(state = defaultState, action = {}) {
 
         case RECEIVE_LIST_PROPOSALS: {
             const new_state = fromJS(payload);
-            return state.mergeDeep(new_state);
+            return state.merge(new_state);
         }
 
         default:

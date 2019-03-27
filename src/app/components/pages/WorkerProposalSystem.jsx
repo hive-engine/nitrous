@@ -23,6 +23,7 @@ class WorkerProposalSystem extends React.Component {
     ];
     static propTypes = {
         listProposals: PropTypes.func,
+        listVoterProposals: PropTypes.func,
         removeProposal: PropTypes.func,
         updateProposalVotes: PropTypes.func,
     };
@@ -37,7 +38,7 @@ class WorkerProposalSystem extends React.Component {
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
-            limit: 5,
+            limit: 100,
             active: 'all',
         });
     }
@@ -81,6 +82,17 @@ class WorkerProposalSystem extends React.Component {
             default:
                 return value;
         }
+    }
+
+    onFilterListProposals(active) {
+        const { listProposals } = this.props;
+        listProposals({
+            start: '',
+            order_by: 'by_creator',
+            order_direction: 'direction_ascending',
+            limit: 100,
+            active,
+        });
     }
 
     // TODO: FormattedAsset not enough to calculate precision
@@ -147,6 +159,26 @@ class WorkerProposalSystem extends React.Component {
                 <div className="row">
                     <div className="column">
                         <h2>{tt('worker_proposal_system_jsx.top_wps')}</h2>
+                        <button
+                            onClick={() => this.onFilterListProposals('active')}
+                            className="button"
+                        >
+                            Active
+                        </button>
+                        <button
+                            onClick={() =>
+                                this.onFilterListProposals('inactive')
+                            }
+                            className="button"
+                        >
+                            Inactive
+                        </button>
+                        <button
+                            onClick={() => this.onFilterListProposals('all')}
+                            className="button"
+                        >
+                            All
+                        </button>
                         {proposals.size ? (
                             this.renderProposalTable(proposals)
                         ) : (
@@ -188,6 +220,16 @@ module.exports = {
                 new Promise((resolve, reject) => {
                     dispatch(
                         fetchDataSagaActions.listProposals({
+                            ...payload,
+                            resolve,
+                            reject,
+                        })
+                    );
+                }),
+            listVoterProposals: payload =>
+                new Promise((resolve, reject) => {
+                    dispatch(
+                        fetchDataSagaActions.listVoterProposals({
                             ...payload,
                             resolve,
                             reject,
