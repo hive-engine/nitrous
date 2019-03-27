@@ -49,7 +49,7 @@ describe('resolveRoute', () => {
         ['/waiting_list.html', { page: 'WaitingList' }],
         ['/market', { page: 'Market' }],
         ['/~witnesses', { page: 'Witnesses' }],
-        ['/worker_proposal_system', { page: 'WorkerProposalSystem' }],
+        ['/steem_proposal_system', { page: 'SteemProposalSystem' }],
         ['/submit.html', { page: 'SubmitPost' }],
         [
             '/@maitland/feed',

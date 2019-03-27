@@ -1,4 +1,4 @@
-.WorkerProposalSystem {
+.SteemProposalSystem {
     table {
         tr:nth-child(4n),
         tr:nth-child(4n-1) {
@@ -9,7 +9,8 @@
             background-color: white;
         }
 
-        td.id-column {
+        td.id-column,
+        td.permlink-column {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -23,7 +24,9 @@
             td.total_votes-column {
                 width: 12ch;
             }
-            td.id-column,
+            td.id-column {
+                width: 6ch;
+            }
             td.id-table-header {
                 width: 12ch;
             }

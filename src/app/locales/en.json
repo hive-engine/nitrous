@@ -278,7 +278,7 @@
         "intro_paragraph":
             "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
         "jobs": "Jobs at Steemit",
-        "worker_proposal_system": "Worker Proposal System"
+        "steem_proposal_system": "Steem Proposal System"
     },
     "main_menu": {
         "hot": "Hot",
@@ -720,7 +720,7 @@
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
         "comments_by": "Comments by %(username)s",
-        "worker_proposal_system": "Worker Proposal System"
+        "steem_proposal_system": "Steem Proposal System"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
@@ -929,8 +929,8 @@
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
     },
-    "worker_proposal_system_jsx": {
-        "top_wps": "Worker Proposal System",
+    "steem_proposal_system_jsx": {
+        "top_sps": "Steem Proposal System",
         "table": {
             "id": "Id",
             "creator": "Creator",

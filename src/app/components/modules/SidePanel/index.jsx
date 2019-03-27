@@ -80,9 +80,9 @@ const SidePanel = ({ alignment, visible, hideSidePanel, username }) => {
                 link: `/~witnesses`,
             },
             {
-                value: 'worker_proposal_system',
-                label: tt('navigation.worker_proposal_system'),
-                link: `/worker_proposal_system`,
+                value: 'steem_proposal_system',
+                label: tt('navigation.steem_proposal_system'),
+                link: `/steem_proposal_system`,
             },
             {
                 value: 'advertise',

@@ -9,7 +9,7 @@ import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import Pagination from 'app/components/elements/Pagination';
 
-class WorkerProposalSystem extends React.Component {
+class SteemProposalSystem extends React.Component {
     orderedProposalKeys = [
         'id',
         'creator',
@@ -42,7 +42,7 @@ class WorkerProposalSystem extends React.Component {
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
-            limit: 100,
+            limit: 5,
             active: 'all',
         });
     }
@@ -57,17 +57,8 @@ class WorkerProposalSystem extends React.Component {
         ).toFixed(parseInt(precision));
     }
 
-    formatTableDiv(key, value) {
+    formatTableDiv(key, value, isOwner = false) {
         switch (key) {
-            case 'id':
-                return [
-                    <Icon
-                        name={'chevron-up-circle'}
-                        className="upvote"
-                        key={`vote-icon-${value}`}
-                    />,
-                    value,
-                ];
             case 'start_date':
             case 'end_date':
                 return [
@@ -82,11 +73,26 @@ class WorkerProposalSystem extends React.Component {
                 );
                 return `${amount} SBD`;
             case 'permlink':
-                return (
-                    <a href={value} target="__blank">
+                return [
+                    <a
+                        href={value}
+                        target="__blank"
+                        key={`proposal-extlink-${value}`}
+                        title="Perm link"
+                    >
                         <Icon name="extlink" className="proposal-extlink" />
-                    </a>
-                );
+                    </a>,
+                    <Icon
+                        name="chevron-up-circle"
+                        className="upvote"
+                        key={`vote-icon-${value}`}
+                    />,
+                    isOwner && (
+                        <span key="remove-icon" title="Remove">
+                            &#x2716;
+                        </span>
+                    ),
+                ];
             default:
                 return value;
         }
@@ -98,20 +104,20 @@ class WorkerProposalSystem extends React.Component {
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
-            limit: 100,
+            limit: 5,
             active,
         });
     }
 
-    // TODO: FormattedAsset not enough to calculate precision
     renderTableRow(proposal) {
         const id = proposal.get('id');
+        const isOwner = proposal.get('creator') === this.props.currentUser;
 
         return [
             <tr key={`proposal-${id}`}>
                 {this.orderedProposalKeys.map(k => (
                     <td key={`${k}-${id}`} className={`${k}-column`}>
-                        {this.formatTableDiv(k, proposal.get(k))}
+                        {this.formatTableDiv(k, proposal.get(k), isOwner)}
                     </td>
                 ))}
             </tr>,
@@ -136,7 +142,7 @@ class WorkerProposalSystem extends React.Component {
                     <tr>
                         {this.orderedProposalKeys.map(key => (
                             <td key={key} className={`${key}-table-header`}>
-                                {tt(`worker_proposal_system_jsx.table.${key}`)}
+                                {tt(`steem_proposal_system_jsx.table.${key}`)}
                             </td>
                         ))}
                     </tr>
@@ -169,10 +175,10 @@ class WorkerProposalSystem extends React.Component {
         // if (loading) return <span>Loading...</span>;
 
         return (
-            <div className="WorkerProposalSystem">
+            <div className="SteemProposalSystem">
                 <div className="row">
                     <div className="column">
-                        <h2>{tt('worker_proposal_system_jsx.top_wps')}</h2>
+                        <h2>{tt('steem_proposal_system_jsx.top_sps')}</h2>
                         <button
                             onClick={() => this.onFilterListProposals('active')}
                             className="button"
@@ -206,10 +212,12 @@ class WorkerProposalSystem extends React.Component {
 }
 
 module.exports = {
-    path: '/worker_proposal_system',
+    path: '/steem_proposal_system',
     component: connect(
         state => {
+            const user = state.user.get('current');
             return {
+                currentUser: user ? user.get('username') : null,
                 proposals: state.global.get('proposals', List()),
             };
         },
@@ -251,5 +259,5 @@ module.exports = {
                     );
                 }),
         })
-    )(WorkerProposalSystem),
+    )(SteemProposalSystem),
 };

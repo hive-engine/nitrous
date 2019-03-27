@@ -24,7 +24,7 @@ module.exports = {
             '/market',
             '/~witnesses',
             '/submit.html',
-            '/worker_proposal_system'
+            '/steem_proposal_system'
         ].forEach(path => testHttpGet('localhost', 8080, path, browser));
     },
 };

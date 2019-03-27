@@ -115,11 +115,9 @@ export default {
             //cb(null, [require('app/components/pages/PostsIndex')]);
             cb(null, [PostsIndex]);
             //});
-        } else if (route.page === 'WorkerProposalSystem') {
+        } else if (route.page === 'SteemProposalSystem') {
             require.ensure([], require => {
-                cb(null, [
-                    require('app/components/pages/WorkerProposalSystem'),
-                ]);
+                cb(null, [require('app/components/pages/SteemProposalSystem')]);
             });
         } else {
             //require.ensure([], (require) => {

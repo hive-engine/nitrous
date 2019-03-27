@@ -1,0 +1,36 @@
+.SteemProposalSystem {
+    table {
+        tr:nth-child(4n),
+        tr:nth-child(4n-1) {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(4n -2),
+        tr:nth-child(4n-3) {
+            background-color: white;
+        }
+
+        td.permlink-column {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+
+        @media only screen and (min-width: 768px) {
+            td.start_date-column,
+            td.end_date-column {
+                width: 22ch;
+            }
+            td.total_votes-column {
+                width: 12ch;
+            }
+            td.daily_pay-column {
+                width: 18ch;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+        }
+    }
+
+    .proposal-extlink {
+    }
+}

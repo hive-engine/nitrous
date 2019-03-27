@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 
-export const REMOVE_OPERATION = 'workerProposalSystem/REMOVE_OPERATION';
-export const UPDATE_OPERATION = 'workerProposalSystem/UPDATE_OPERATION';
+export const REMOVE_OPERATION = 'SteemProposalSystem/REMOVE_OPERATION';
+export const UPDATE_OPERATION = 'SteemProposalSystem/UPDATE_OPERATION';
 
 const defaultState = fromJS({
     operations: [],
@@ -24,7 +24,7 @@ export default function reducer(state = defaultState, action) {
     }
 }
 
-// Actions worker proposal system
+// Actions Steem Proposal System
 export const updateOperation = payload => ({
     type: UPDATE_OPERATION,
     payload,

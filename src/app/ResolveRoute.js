@@ -74,8 +74,8 @@ export default function resolveRoute(path) {
     if (path === '/submit.html') {
         return { page: 'SubmitPost' };
     }
-    if (path === '/worker_proposal_system') {
-        return { page: 'WorkerProposalSystem' };
+    if (path === '/steem_proposal_system') {
+        return { page: 'SteemProposalSystem' };
     }
     let match = path.match(routeRegex.PostsIndex);
     if (match) {
