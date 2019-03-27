@@ -8,6 +8,7 @@ import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
+import Pagination from 'app/components/elements/Pagination';
 
 class WorkerProposalSystem extends React.Component {
     orderedProposalKeys = [
@@ -33,7 +34,7 @@ class WorkerProposalSystem extends React.Component {
         const { listProposals } = this.props;
 
         listProposals({
-            start: 'mario3',
+            start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
             limit: 5,
@@ -84,7 +85,6 @@ class WorkerProposalSystem extends React.Component {
 
     // TODO: FormattedAsset not enough to calculate precision
     renderTableRow(proposal) {
-        console.log(proposal);
         const id = proposal.get('id');
 
         return [
@@ -110,6 +110,9 @@ class WorkerProposalSystem extends React.Component {
             <table>
                 <thead>
                     <tr>
+                        <td colSpan="8">Filter, Sorter</td>
+                    </tr>
+                    <tr>
                         {this.orderedProposalKeys.map(key => (
                             <td key={key} className={`${key}-table-header`}>
                                 {tt(`worker_proposal_system_jsx.table.${key}`)}
@@ -122,6 +125,13 @@ class WorkerProposalSystem extends React.Component {
                         this.renderTableRow(proposal)
                     )}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colSpan="8">
+                            <Pagination />
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         );
     }
