@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as workerProposalSystemActions from 'app/redux/WorkerProposalSystemReducer';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
@@ -21,6 +20,7 @@ class WorkerProposalSystem extends React.Component {
         'total_votes',
         'permlink',
     ];
+
     static propTypes = {
         listProposals: PropTypes.func,
         listVoterProposals: PropTypes.func,
@@ -29,6 +29,10 @@ class WorkerProposalSystem extends React.Component {
     };
     constructor() {
         super();
+        this.state = {
+            currentPage: 1,
+        };
+        this.onPageSelect = this.onPageSelect.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +45,10 @@ class WorkerProposalSystem extends React.Component {
             limit: 100,
             active: 'all',
         });
+    }
+
+    onPageSelect(newPage) {
+        this.setState({ currentPage: newPage });
     }
 
     formatAsset(amount, precision) {
@@ -63,9 +71,9 @@ class WorkerProposalSystem extends React.Component {
             case 'start_date':
             case 'end_date':
                 return [
-                    <FormattedDate value={value} />,
-                    <span>&nbsp;</span>,
-                    <FormattedTime value={value} />,
+                    <FormattedDate value={value} key={`date-${value}`} />,
+                    <span key={`space-${value}`}>&nbsp;</span>,
+                    <FormattedTime value={value} key={`time-${value}`} />,
                 ];
             case 'daily_pay':
                 const amount = this.formatAsset(
@@ -76,7 +84,7 @@ class WorkerProposalSystem extends React.Component {
             case 'permlink':
                 return (
                     <a href={value} target="__blank">
-                        <Icon name={'extlink'} className="proposal-extlink" />
+                        <Icon name="extlink" className="proposal-extlink" />
                     </a>
                 );
             default:
@@ -116,6 +124,7 @@ class WorkerProposalSystem extends React.Component {
     }
 
     renderProposalTable(proposals) {
+        const { currentPage } = this.state;
         const proposalsArr = proposals.toArray();
 
         return (
@@ -140,7 +149,12 @@ class WorkerProposalSystem extends React.Component {
                 <tfoot>
                     <tr>
                         <td colSpan="8">
-                            <Pagination />
+                            <Pagination
+                                onSelect={this.onPageSelect}
+                                perPage={5}
+                                length={13}
+                                currentPage={currentPage}
+                            />
                         </td>
                     </tr>
                 </tfoot>

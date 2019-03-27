@@ -1,1 +1,31 @@
-.Pagination {}
+.Pagination {
+    display: flex;
+
+    ul.pagination-list {
+        margin-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        display: inline-flex;
+
+        li {
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+
+            &.active {
+                color: $color-teal !important;
+            }
+        }
+    }
+
+    button {
+        cursor: pointer;
+        margin-right: 0 !important;
+    }
+    .button-next {
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+}
