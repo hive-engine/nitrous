@@ -28,6 +28,8 @@ const hook = {
     preBroadcast_transfer,
     preBroadcast_vote,
     preBroadcast_account_witness_vote,
+    preBroadcast_update_proposal_votes,
+    preBroadcast_remove_proposal,
     error_vote,
     error_custom_json,
     // error_account_update,
@@ -93,6 +95,16 @@ function* preBroadcast_account_witness_vote({ operation, username }) {
             witness,
         })
     );
+    return operation;
+}
+
+function preBroadcast_update_proposal_votes({ operation, username }) {
+    if (!operation.voter) operation.voter = username;
+    return operation;
+}
+
+function preBroadcast_remove_proposal({ operation, username }) {
+    if (!operation.proposal_owner) operation.proposal_owner = username;
     return operation;
 }
 

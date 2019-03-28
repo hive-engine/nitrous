@@ -63,6 +63,7 @@ class SteemProposalSystem extends React.Component {
             limit: 5,
             selectedFilter: 'all',
             selectedSorter: 'ascending',
+            userVotedProposals: null,
         };
         this.onPageSelect = this.onPageSelect.bind(this);
     }
@@ -77,6 +78,18 @@ class SteemProposalSystem extends React.Component {
             status: 'all',
             last_id: null,
         });
+        api
+            .listProposalsAsync(
+                '',
+                'by_creator',
+                'direction_ascending',
+                100,
+                'all',
+                null
+            )
+            .then(result => {
+                this.setState({ userVotedProposals: result });
+            });
     }
 
     onFilterChange(selectedFilter) {
@@ -99,7 +112,7 @@ class SteemProposalSystem extends React.Component {
         ).toFixed(parseInt(precision));
     }
 
-    formatTableDiv(key, value, isOwner = false) {
+    formatTableDiv(key, value, proposal, isOwner = false) {
         switch (key) {
             case 'start_date':
             case 'end_date':
@@ -124,15 +137,25 @@ class SteemProposalSystem extends React.Component {
                     >
                         <Icon name="extlink" className="proposal-extlink" />
                     </a>,
-                    <Icon
-                        name="chevron-up-circle"
-                        className="upvote"
-                        key={`vote-icon-${value}`}
-                    />,
+                    <a
+                        href="#"
+                        onClick={() => this.onUpdateProposalVotes(proposal)}
+                    >
+                        <Icon
+                            name="chevron-up-circle"
+                            className="upvote"
+                            key={`vote-icon-${value}`}
+                        />
+                    </a>,
                     isOwner && (
-                        <span key="remove-icon" title="Remove">
-                            &#x2716;
-                        </span>
+                        <a
+                            href="#"
+                            onClick={() => this.onRemoveProposal(proposal)}
+                        >
+                            <span key={`remove-icon-${value}`} title="Remove">
+                                &#x2716;
+                            </span>
+                        </a>
                     ),
                 ];
             default:
@@ -153,6 +176,16 @@ class SteemProposalSystem extends React.Component {
         });
     }
 
+    onUpdateProposalVotes(proposal) {
+        const { updateProposalVotes } = this.props;
+        updateProposalVotes(this.props.currentUser, [proposal.get('id')], true);
+    }
+
+    onRemoveProposal(proposal) {
+        const { removeProposal } = this.props;
+        removeProposal(this.props.currentUser, [proposal.get('id')]);
+    }
+
     renderTableRow(proposal) {
         const id = proposal.get('id');
         const isOwner = proposal.get('creator') === this.props.currentUser;
@@ -161,7 +194,12 @@ class SteemProposalSystem extends React.Component {
             <tr key={`proposal-${id}`}>
                 {this.orderedProposalKeys.map(k => (
                     <td key={`${k}-${id}`} className={`${k}-column`}>
-                        {this.formatTableDiv(k, proposal.get(k), isOwner)}
+                        {this.formatTableDiv(
+                            k,
+                            proposal.get(k),
+                            proposal,
+                            isOwner
+                        )}
                     </td>
                 ))}
             </tr>,
@@ -281,16 +319,6 @@ module.exports = {
                 new Promise((resolve, reject) => {
                     dispatch(
                         fetchDataSagaActions.listProposals({
-                            ...payload,
-                            resolve,
-                            reject,
-                        })
-                    );
-                }),
-            listVoterProposals: payload =>
-                new Promise((resolve, reject) => {
-                    dispatch(
-                        fetchDataSagaActions.listVoterProposals({
                             ...payload,
                             resolve,
                             reject,
