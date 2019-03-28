@@ -22,6 +22,7 @@ class Pagination extends React.Component {
             this.onPageSelect(currentPage + 1);
         }
     }
+
     onPreviousPage() {
         const { currentPage } = this.props;
         if (currentPage > 1) {
@@ -31,14 +32,18 @@ class Pagination extends React.Component {
 
     render() {
         const { currentPage } = this.props;
+
+        const isPreviousDisabled = currentPage === 1;
+        const isNextDisabled = currentPage === this.getPageCount();
+
         return (
             <div className="Pagination">
                 <button
+                    disabled={isPreviousDisabled}
                     className="button-previous"
-                    disabled={this.currentPage === 1}
                     onClick={this.onPreviousPage}
                 >
-                    <Icon name="chevron-left" />
+                    <Icon name="chevron-left" size="1_5x" />
                 </button>
 
                 <ul className="pagination-list">
@@ -57,11 +62,11 @@ class Pagination extends React.Component {
                     })}
                 </ul>
                 <button
+                    disabled={isNextDisabled}
                     className="button-next"
                     onClick={this.onNextPage}
-                    disabled={this.currentPage === this.getPageCount()}
                 >
-                    <Icon name="chevron-left" />
+                    <Icon name="chevron-left" size="1_5x" />
                 </button>
             </div>
         );

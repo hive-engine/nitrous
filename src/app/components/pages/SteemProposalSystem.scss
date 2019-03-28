@@ -15,6 +15,29 @@
             align-items: center;
         }
 
+        .proposals-filter-header {
+            .proposals-filter-wrapper {
+                display: flex;
+
+                .dropdowns {
+                    flex: 1;
+                    li {
+                        span {
+                            padding: 0.4rem;
+                            font-weight: bold;
+                            text-align: left;
+                            padding-left: 16px;
+
+                            &:hover {
+                                cursor: pointer;
+                                color: $color-teal;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         @media only screen and (min-width: 768px) {
             td.start_date-column,
             td.end_date-column {
@@ -29,8 +52,5 @@
         }
         @media only screen and (max-width: 768px) {
         }
-    }
-
-    .proposal-extlink {
     }
 }

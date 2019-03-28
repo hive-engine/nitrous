@@ -40,7 +40,7 @@ export default class VerticalMenu extends React.Component {
                                     {i.addon}
                                 </Link>
                             ) : (
-                                <span>
+                                <span onClick={i.onClick}>
                                     {i.icon && <Icon name={i.icon} />}
                                     {i.label ? i.label : i.value}
                                 </span>

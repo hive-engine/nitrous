@@ -7,9 +7,37 @@ import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
-import Pagination from 'app/components/elements/Pagination';
+// import Pagination from 'app/components/elements/Pagination';
+import DropdownMenu from 'app/components/elements/DropdownMenu';
 
 class SteemProposalSystem extends React.Component {
+    filterDropdownItems = [
+        {
+            value: 'all',
+            onClick: () => {
+                this.onFilterChange('all');
+            },
+        },
+        {
+            value: 'active',
+            onClick: () => {
+                this.onFilterChange('active');
+            },
+        },
+        {
+            value: 'inactive',
+            onClick: () => {
+                this.onFilterChange('inactive');
+            },
+        },
+        {
+            value: 'expired',
+            onClick: () => {
+                this.onFilterChange('expired');
+            },
+        },
+    ];
+
     orderedProposalKeys = [
         'id',
         'creator',
@@ -31,6 +59,9 @@ class SteemProposalSystem extends React.Component {
         super();
         this.state = {
             currentPage: 1,
+            limit: 5,
+            selectedFilter: 'all',
+            selectedSorter: 'ascending',
         };
         this.onPageSelect = this.onPageSelect.bind(this);
     }
@@ -42,9 +73,19 @@ class SteemProposalSystem extends React.Component {
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
-            limit: 5,
+            limit: this.state.limit,
             active: 'all',
         });
+    }
+
+    onFilterChange(selectedFilter) {
+        this.setState({ selectedFilter });
+        this.onFilterListProposals(selectedFilter);
+    }
+
+    onSortChange(selectedSorter) {
+        this.setState({ selectedSorter });
+        // apply sorter
     }
 
     onPageSelect(newPage) {
@@ -100,11 +141,12 @@ class SteemProposalSystem extends React.Component {
 
     onFilterListProposals(active) {
         const { listProposals } = this.props;
+        const { limit } = this.state;
         listProposals({
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
-            limit: 5,
+            limit,
             active,
         });
     }
@@ -130,14 +172,33 @@ class SteemProposalSystem extends React.Component {
     }
 
     renderProposalTable(proposals) {
-        const { currentPage } = this.state;
+        const { currentPage, selectedFilter } = this.state;
         const proposalsArr = proposals.toArray();
 
         return (
             <table>
                 <thead>
                     <tr>
-                        <td colSpan="8">Filter, Sorter</td>
+                        <td colSpan="8" className="proposals-filter-header">
+                            <div className="proposals-filter-wrapper">
+                                <div className="dropdowns">
+                                    <DropdownMenu
+                                        items={this.filterDropdownItems}
+                                        el="div"
+                                        key="proposals-filter"
+                                        selected={selectedFilter}
+                                    >
+                                        <span>Status: {selectedFilter}</span>
+                                    </DropdownMenu>
+                                </div>
+                                {/* <Pagination
+                                    onSelect={this.onPageSelect}
+                                    perPage={5}
+                                    length={7}
+                                    currentPage={currentPage}
+                                /> */}
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         {this.orderedProposalKeys.map(key => (
@@ -155,12 +216,12 @@ class SteemProposalSystem extends React.Component {
                 <tfoot>
                     <tr>
                         <td colSpan="8">
-                            <Pagination
+                            {/* <Pagination
                                 onSelect={this.onPageSelect}
                                 perPage={5}
                                 length={13}
                                 currentPage={currentPage}
-                            />
+                            /> */}
                         </td>
                     </tr>
                 </tfoot>
@@ -179,31 +240,7 @@ class SteemProposalSystem extends React.Component {
                 <div className="row">
                     <div className="column">
                         <h2>{tt('steem_proposal_system_jsx.top_sps')}</h2>
-                        <button
-                            onClick={() => this.onFilterListProposals('active')}
-                            className="button"
-                        >
-                            Active
-                        </button>
-                        <button
-                            onClick={() =>
-                                this.onFilterListProposals('inactive')
-                            }
-                            className="button"
-                        >
-                            Inactive
-                        </button>
-                        <button
-                            onClick={() => this.onFilterListProposals('all')}
-                            className="button"
-                        >
-                            All
-                        </button>
-                        {proposals.size ? (
-                            this.renderProposalTable(proposals)
-                        ) : (
-                            <span>There is no proposal to show</span>
-                        )}
+                        {this.renderProposalTable(proposals)}
                     </div>
                 </div>
             </div>
