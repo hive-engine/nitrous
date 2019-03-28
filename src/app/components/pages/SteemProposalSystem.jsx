@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
+import { api } from '@blocktradesdev/steem-js';
 import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
@@ -68,13 +69,13 @@ class SteemProposalSystem extends React.Component {
 
     componentDidMount() {
         const { listProposals } = this.props;
-
         listProposals({
             start: '',
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
             limit: this.state.limit,
-            active: 'all',
+            status: 'all',
+            last_id: null,
         });
     }
 
@@ -139,7 +140,7 @@ class SteemProposalSystem extends React.Component {
         }
     }
 
-    onFilterListProposals(active) {
+    onFilterListProposals(status) {
         const { listProposals } = this.props;
         const { limit } = this.state;
         listProposals({
@@ -147,7 +148,8 @@ class SteemProposalSystem extends React.Component {
             order_by: 'by_creator',
             order_direction: 'direction_ascending',
             limit,
-            active,
+            status,
+            last_id: null,
         });
     }
 

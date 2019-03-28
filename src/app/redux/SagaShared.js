@@ -99,7 +99,8 @@ export function* listProposals({
     order_by,
     order_direction,
     limit,
-    active,
+    status,
+    last_id,
     resolve,
     reject,
 }) {
@@ -111,7 +112,8 @@ export function* listProposals({
             order_by,
             order_direction,
             limit,
-            active
+            status,
+            last_id
         );
     }
 
