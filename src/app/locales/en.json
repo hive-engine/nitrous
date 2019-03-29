@@ -931,6 +931,7 @@
     },
     "steem_proposal_system_jsx": {
         "top_sps": "Steem Proposal System",
+        "votes_update_info": "* Only updated once per hour",
         "table": {
             "id": "Id",
             "creator": "Creator",
@@ -938,7 +939,7 @@
             "start_date": "Start Date",
             "end_date": "End Date",
             "daily_pay": "Daily Pay",
-            "total_votes": "Total Votes",
+            "total_votes": "Total Votes*",
             "permlink": "",
             "subject": "Subject"
         }

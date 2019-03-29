@@ -26,10 +26,19 @@
             display: none;
         }
 
+        tbody {
+            td.id-column,
+            td.daily_pay-column,
+            td.total_votes-column {
+                text-align: right;
+            }
+        }
+
         .proposals-filter-header {
             .proposals-filter-wrapper {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
 
                 .dropdowns {
                     li {
@@ -45,6 +54,11 @@
                             }
                         }
                     }
+                }
+
+                .pagination {
+                    display: flex;
+                    align-items: center;
                 }
             }
         }

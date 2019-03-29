@@ -310,12 +310,19 @@ class SteemProposalSystem extends React.Component {
                                         <span>Status: {status}</span>
                                     </DropdownMenu>
                                 </div>
-                                <Pagination
-                                    nextAvailable={nextAvailable}
-                                    previousAvailable={previousAvailable}
-                                    onNextPage={this.onNext}
-                                    onPreviousPage={this.onPrevious}
-                                />
+                                <div className="pagination">
+                                    <span>
+                                        {tt(
+                                            'steem_proposal_system_jsx.votes_update_info'
+                                        )}
+                                    </span>
+                                    <Pagination
+                                        nextAvailable={nextAvailable}
+                                        previousAvailable={previousAvailable}
+                                        onNextPage={this.onNext}
+                                        onPreviousPage={this.onPrevious}
+                                    />
+                                </div>
                             </div>
                         </td>
                     </tr>
