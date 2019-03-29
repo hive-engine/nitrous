@@ -26,6 +26,12 @@
             display: none;
         }
 
+        tr.proposal-subject-row {
+            td {
+                text-align: center;
+            }
+        }
+
         tbody {
             td.id-column,
             td.daily_pay-column,
@@ -59,6 +65,7 @@
                 .pagination {
                     display: flex;
                     align-items: center;
+                    margin-bottom: 0;
                 }
             }
         }
