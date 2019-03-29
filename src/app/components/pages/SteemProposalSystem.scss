@@ -11,7 +11,7 @@
 
         td.permlink-column {
             display: flex;
-            justify-content: left;
+            justify-content: space-around;
             align-items: center;
         }
 
@@ -35,6 +35,13 @@
                         }
                     }
                 }
+            }
+        }
+
+        .proposal-remove {
+            span {
+                color: red;
+                font-size: 1.25em;
             }
         }
 

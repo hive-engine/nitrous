@@ -2,39 +2,41 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
 import { api } from '@blocktradesdev/steem-js';
+import { List } from 'immutable';
 import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
-// import Pagination from 'app/components/elements/Pagination';
+import Pagination from 'app/components/elements/Pagination';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 
 class SteemProposalSystem extends React.Component {
+    pages = new Map();
+
     filterDropdownItems = [
         {
             value: 'all',
             onClick: () => {
-                this.onFilterChange('all');
+                this.onFilterListProposals('all');
             },
         },
         {
             value: 'active',
             onClick: () => {
-                this.onFilterChange('active');
+                this.onFilterListProposals('active');
             },
         },
         {
             value: 'inactive',
             onClick: () => {
-                this.onFilterChange('inactive');
+                this.onFilterListProposals('inactive');
             },
         },
         {
             value: 'expired',
             onClick: () => {
-                this.onFilterChange('expired');
+                this.onFilterListProposals('expired');
             },
         },
     ];
@@ -60,41 +62,56 @@ class SteemProposalSystem extends React.Component {
         super();
         this.state = {
             currentPage: 1,
-            limit: 5,
-            selectedFilter: 'all',
+            limit: 11,
+            limitPerPage: 10,
+            status: 'all',
             selectedSorter: 'ascending',
             userVotedProposals: null,
+            previous_id: null,
         };
-        this.onPageSelect = this.onPageSelect.bind(this);
+        this.onNext = this.onNext.bind(this);
+        this.onPrevious = this.onPrevious.bind(this);
     }
 
     componentDidMount() {
-        const { listProposals } = this.props;
-        listProposals({
-            start: '',
-            order_by: 'by_creator',
-            order_direction: 'direction_ascending',
-            limit: this.state.limit,
-            status: 'all',
-            last_id: null,
+        this.onFilterListProposals('all');
+    }
+
+    getProposals(
+        limit,
+        status,
+        last_id,
+        order_by = 'by_creator',
+        order_direction = 'direction_ascending',
+        start = ''
+    ) {
+        this.props.listProposals({
+            start,
+            order_by,
+            order_direction,
+            limit,
+            status,
+            last_id,
         });
         api
             .listProposalsAsync(
-                '',
-                'by_creator',
-                'direction_ascending',
-                100,
-                'all',
-                null
+                start,
+                order_by,
+                order_direction,
+                limit,
+                status,
+                last_id
             )
             .then(result => {
                 this.setState({ userVotedProposals: result });
             });
     }
 
-    onFilterChange(selectedFilter) {
-        this.setState({ selectedFilter });
-        this.onFilterListProposals(selectedFilter);
+    onFilterListProposals(status) {
+        const { limit } = this.state;
+        const { last_id } = this.props;
+        this.setState({ status });
+        this.getProposals(limit, status, last_id);
     }
 
     onSortChange(selectedSorter) {
@@ -102,8 +119,23 @@ class SteemProposalSystem extends React.Component {
         // apply sorter
     }
 
-    onPageSelect(newPage) {
-        this.setState({ currentPage: newPage });
+    onNext() {
+        const { last_id, proposals } = this.props;
+        const { currentPage, limit, status } = this.state;
+        this.pages.set(currentPage, {
+            previous_id: proposals.get(0).get('id'),
+            last_id,
+        });
+        this.getProposals(limit, status, last_id);
+        this.setState({ currentPage: currentPage + 1 });
+    }
+
+    onPrevious() {
+        const { currentPage, limit, status } = this.state;
+        const last_id = this.pages.get(currentPage - 1)['previous_id'];
+        this.getProposals(limit, status, last_id);
+        this.pages.delete(currentPage);
+        this.setState({ currentPage: currentPage - 1 });
     }
 
     formatAsset(amount, precision) {
@@ -151,6 +183,7 @@ class SteemProposalSystem extends React.Component {
                         <a
                             href="#"
                             onClick={() => this.onRemoveProposal(proposal)}
+                            className="proposal-remove"
                         >
                             <span key={`remove-icon-${value}`} title="Remove">
                                 &#x2716;
@@ -161,19 +194,6 @@ class SteemProposalSystem extends React.Component {
             default:
                 return value;
         }
-    }
-
-    onFilterListProposals(status) {
-        const { listProposals } = this.props;
-        const { limit } = this.state;
-        listProposals({
-            start: '',
-            order_by: 'by_creator',
-            order_direction: 'direction_ascending',
-            limit,
-            status,
-            last_id: null,
-        });
     }
 
     onUpdateProposalVotes(proposal) {
@@ -212,8 +232,11 @@ class SteemProposalSystem extends React.Component {
     }
 
     renderProposalTable(proposals) {
-        const { currentPage, selectedFilter } = this.state;
+        const { currentPage, status, limitPerPage } = this.state;
         const proposalsArr = proposals.toArray();
+
+        const nextAvailable = proposalsArr.length === limitPerPage;
+        const previousAvailable = currentPage > 1;
 
         return (
             <table>
@@ -226,17 +249,19 @@ class SteemProposalSystem extends React.Component {
                                         items={this.filterDropdownItems}
                                         el="div"
                                         key="proposals-filter"
-                                        selected={selectedFilter}
+                                        selected={status}
                                     >
-                                        <span>Status: {selectedFilter}</span>
+                                        <span>Status: {status}</span>
                                     </DropdownMenu>
                                 </div>
-                                {/* <Pagination
+                                <Pagination
                                     onSelect={this.onPageSelect}
-                                    perPage={5}
-                                    length={7}
                                     currentPage={currentPage}
-                                /> */}
+                                    nextAvailable={nextAvailable}
+                                    previousAvailable={previousAvailable}
+                                    onNextPage={this.onNext}
+                                    onPreviousPage={this.onPrevious}
+                                />
                             </div>
                         </td>
                     </tr>
@@ -255,13 +280,20 @@ class SteemProposalSystem extends React.Component {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colSpan="8">
-                            {/* <Pagination
-                                onSelect={this.onPageSelect}
-                                perPage={5}
-                                length={13}
-                                currentPage={currentPage}
-                            /> */}
+                        <td colSpan="8" className="proposals-filter-header">
+                            <div className="proposals-filter-wrapper">
+                                <div className="dropdowns" />
+                                <Pagination
+                                    onSelect={this.onPageSelect}
+                                    perPage={5}
+                                    length={7}
+                                    currentPage={currentPage}
+                                    nextAvailable={nextAvailable}
+                                    previousAvailable={previousAvailable}
+                                    onNextPage={this.onNext}
+                                    onPreviousPage={this.onPrevious}
+                                />
+                            </div>
                         </td>
                     </tr>
                 </tfoot>
@@ -293,9 +325,16 @@ module.exports = {
     component: connect(
         state => {
             const user = state.user.get('current');
+            const proposals = state.global.get('proposals', List());
+            const last = proposals.size - 1;
+            const last_id =
+                last && last >= 0 ? proposals.get(last).get('id') : null;
+            const newProposals =
+                proposals.size > 10 ? proposals.delete(last) : proposals;
             return {
                 currentUser: user ? user.get('username') : null,
-                proposals: state.global.get('proposals', List()),
+                proposals: newProposals,
+                last_id,
             };
         },
         dispatch => ({
