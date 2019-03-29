@@ -942,6 +942,8 @@
             "total_votes": "Total Votes*",
             "permlink": "",
             "subject": "Subject"
-        }
+        },
+        "confirm_remove_proposal_description":
+            "Proposal removal is permanent and the fee paid for creating the proposal is not refundable."
     }
 }

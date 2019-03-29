@@ -67,6 +67,7 @@ class SteemProposalSystem extends React.Component {
             limitPerPage: 10,
             status: 'all',
             selectedSorter: 'ascending',
+            votingsInProgress: [],
         };
         this.onNext = this.onNext.bind(this);
         this.onPrevious = this.onPrevious.bind(this);
@@ -101,8 +102,8 @@ class SteemProposalSystem extends React.Component {
         limit,
         status,
         last_id,
-        order_by = 'by_creator',
-        order_direction = 'direction_ascending',
+        order_by = 'by_total_votes',
+        order_direction = 'direction_descending',
         start = ''
     ) {
         this.props.listProposals({
@@ -118,8 +119,8 @@ class SteemProposalSystem extends React.Component {
     onFilterListProposals(status) {
         const { limit } = this.state;
         const { last_id } = this.props;
-        this.setState({ status });
-        this.getProposals(limit, status, this.state.last_id);
+        this.setState({ status, currentPage: 1 });
+        this.getProposals(limit, status, null);
         this.setState({ last_id });
     }
 
@@ -158,6 +159,11 @@ class SteemProposalSystem extends React.Component {
 
     onUpdateProposalVotes(proposal, isVoted) {
         const { updateProposalVotes } = this.props;
+        // const newVotingsInProgress = [
+        //     ...this.state.votingsInProgress,
+        //     proposal.get('id'),
+        // ];
+        // this.setState({ votingsInProgress: newVotingsInProgress });
         updateProposalVotes(
             this.props.currentUser,
             [proposal.get('id')],
@@ -207,6 +213,10 @@ class SteemProposalSystem extends React.Component {
                 );
                 return `${amount} SBD`;
             case 'permlink':
+                const isVotingInProgress =
+                    this.state.votingsInProgress.indexOf(proposal.get('id')) >
+                    -1;
+
                 return [
                     <a
                         href={value}
@@ -227,10 +237,14 @@ class SteemProposalSystem extends React.Component {
                                 <span
                                     className={`Voting__button Voting__button-up ${
                                         isVoted ? 'Voting__button--upvoted' : ''
-                                    }`}
+                                    } ${isVotingInProgress ? 'votingUp' : ''}`}
                                 >
                                     <Icon
-                                        name="chevron-up-circle"
+                                        name={`${
+                                            isVotingInProgress
+                                                ? 'empty'
+                                                : 'chevron-up-circle'
+                                        }`}
                                         className="upvote"
                                         key={`vote-icon-${value}`}
                                     />
@@ -402,7 +416,7 @@ module.exports = {
                     transactionActions.broadcastOperation({
                         type: 'update_proposal_votes',
                         operation: { voter, proposal_ids, approve },
-                        confirm: 'Confirm voting proposal',
+                        confirm: null,
                         successCallback: () => {
                             dispatch(
                                 fetchDataSagaActions.listVoterProposals({
@@ -422,7 +436,9 @@ module.exports = {
                     transactionActions.broadcastOperation({
                         type: 'remove_proposal',
                         operation: { proposal_owner, proposal_ids },
-                        confirm: 'Confirm removing proposal',
+                        confirm: tt(
+                            'steem_proposal_system_jsx.confirm_remove_proposal_description'
+                        ),
                         successCallback: () => {
                             dispatch(
                                 fetchDataSagaActions.listProposals({
