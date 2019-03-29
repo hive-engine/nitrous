@@ -233,9 +233,10 @@ class SteemProposalSystem extends React.Component {
 
     renderProposalTable(proposals) {
         const { currentPage, status, limitPerPage } = this.state;
+        const { last_id } = this.props;
         const proposalsArr = proposals.toArray();
 
-        const nextAvailable = proposalsArr.length === limitPerPage;
+        const nextAvailable = proposalsArr.length === limitPerPage && !!last_id;
         const previousAvailable = currentPage > 1;
 
         return (
@@ -328,7 +329,9 @@ module.exports = {
             const proposals = state.global.get('proposals', List());
             const last = proposals.size - 1;
             const last_id =
-                last && last >= 0 ? proposals.get(last).get('id') : null;
+                last >= 0 && proposals.size > 10
+                    ? proposals.get(last).get('id')
+                    : null;
             const newProposals =
                 proposals.size > 10 ? proposals.delete(last) : proposals;
             return {
