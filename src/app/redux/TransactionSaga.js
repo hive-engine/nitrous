@@ -41,8 +41,6 @@ const hook = {
     accepted_vote,
     accepted_account_update,
     accepted_withdraw_vesting,
-    accepted_update_proposal_votes,
-    accepted_remove_proposal,
 };
 
 export function* preBroadcast_transfer({ operation }) {
@@ -328,7 +326,7 @@ function* broadcastPayload({
         for (const [type, operation] of operations) {
             if (hook['accepted_' + type]) {
                 try {
-                    yield call(hook['accepted_' + type], { operation }, keys);
+                    yield call(hook['accepted_' + type], { operation });
                 } catch (error) {
                     console.error(error);
                 }
@@ -368,7 +366,7 @@ function* broadcastPayload({
     }
 }
 
-function* accepted_comment({ operation }, keys) {
+function* accepted_comment({ operation }) {
     const { author, permlink } = operation;
     // update again with new $$ amount from the steemd node
     yield call(getContent, { author, permlink });
@@ -394,7 +392,7 @@ function updateFollowState(action, following, state) {
     return state;
 }
 
-function* accepted_custom_json({ operation }, keys) {
+function* accepted_custom_json({ operation }) {
     const json = JSON.parse(operation.json);
     if (operation.id === 'follow') {
         console.log(operation);
@@ -419,11 +417,11 @@ function* accepted_custom_json({ operation }, keys) {
     return operation;
 }
 
-function* accepted_delete_comment({ operation }, keys) {
+function* accepted_delete_comment({ operation }) {
     yield put(globalActions.deleteContent(operation));
 }
 
-function* accepted_vote({ operation: { author, permlink, weight } }, keys) {
+function* accepted_vote({ operation: { author, permlink, weight } }) {
     console.log(
         'Vote accepted, weight',
         weight,
@@ -440,10 +438,9 @@ function* accepted_vote({ operation: { author, permlink, weight } }, keys) {
     yield call(getContent, { author, permlink });
 }
 
-function* accepted_account_witness_vote(
-    { operation: { account, witness, approve } },
-    keys
-) {
+function* accepted_account_witness_vote({
+    operation: { account, witness, approve },
+}) {
     yield put(
         globalActions.updateAccountWitnessVote({ account, witness, approve })
     );
@@ -456,7 +453,7 @@ function* accepted_account_witness_vote(
     );
 }
 
-function* accepted_withdraw_vesting({ operation }, keys) {
+function* accepted_withdraw_vesting({ operation }) {
     let [account] = yield call(
         [api, api.getAccountsAsync],
         [operation.account]
@@ -465,7 +462,7 @@ function* accepted_withdraw_vesting({ operation }, keys) {
     yield put(globalActions.receiveAccount({ account }));
 }
 
-function* accepted_account_update({ operation }, keys) {
+function* accepted_account_update({ operation }) {
     let [account] = yield call(
         [api, api.getAccountsAsync],
         [operation.account]
@@ -483,27 +480,6 @@ function* accepted_account_update({ operation }, keys) {
     //     if (owner) update.accounts[account].owner = owner
     //     yield put(g.actions.receiveState(update))
     // }
-}
-
-function* accepted_update_proposal_votes({ operation }, keys) {
-    const operations = [
-        'update_proposal_votes',
-        {
-            voter: operation.voter,
-            proposal_ids: operation.proposal_ids,
-            approve: operation.approve,
-        },
-    ];
-}
-
-function* accepted_remove_proposal({ operation }, keys) {
-    const operations = [
-        'remove_proposal',
-        {
-            proposal_owner: operation.proposal_owner,
-            proposal_ids: operation.proposal_ids,
-        },
-    ];
 }
 
 // TODO remove soon, this was replaced by the UserKeys edit running usernamePasswordLogin (on dialog close)
