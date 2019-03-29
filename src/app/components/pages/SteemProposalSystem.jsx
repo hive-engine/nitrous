@@ -48,6 +48,7 @@ class SteemProposalSystem extends React.Component {
         'start_date',
         'end_date',
         'daily_pay',
+        'subject',
         'total_votes',
         'permlink',
     ];
@@ -220,7 +221,11 @@ class SteemProposalSystem extends React.Component {
         return [
             <tr key={`proposal-${id}`}>
                 {this.orderedProposalKeys.map(k => (
-                    <td key={`${k}-${id}`} className={`${k}-column`}>
+                    <td
+                        key={`${k}-${id}`}
+                        className={`${k}-column`}
+                        data-label={tt(`steem_proposal_system_jsx.table.${k}`)}
+                    >
                         {this.formatTableDiv(
                             k,
                             proposal.get(k),
@@ -230,7 +235,7 @@ class SteemProposalSystem extends React.Component {
                     </td>
                 ))}
             </tr>,
-            <tr key="2">
+            <tr key="2" className="proposal-subject-row">
                 <td key={`subject-${id}`} colSpan="8">
                     {proposal.get('subject')}
                 </td>

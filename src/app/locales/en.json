@@ -939,7 +939,8 @@
             "end_date": "End Date",
             "daily_pay": "Daily Pay",
             "total_votes": "Total Votes",
-            "permlink": ""
+            "permlink": "",
+            "subject": "Subject"
         }
     }
 }

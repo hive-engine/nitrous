@@ -13,6 +13,17 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        td.subject-column,
+        td.subject-table-header {
+            display: none;
         }
 
         .proposals-filter-header {
@@ -58,6 +69,43 @@
             }
         }
         @media only screen and (max-width: 768px) {
+            thead tr:nth-child(2) {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            tr.proposal-subject-row {
+                display: none;
+            }
+
+            td.subject-column {
+                display: block;
+            }
+
+            td.permlink-column {
+                display: flex;
+                justify-content: right;
+                align-items: center;
+                a {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            td {
+                display: block;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+            }
         }
     }
 }
