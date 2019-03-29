@@ -29,9 +29,9 @@
         .proposals-filter-header {
             .proposals-filter-wrapper {
                 display: flex;
+                justify-content: space-between;
 
                 .dropdowns {
-                    flex: 1;
                     li {
                         span {
                             padding: 0.4rem;
@@ -80,6 +80,11 @@
 
             tr.proposal-subject-row {
                 display: none;
+            }
+
+            tr:nth-child(4n),
+            tr:nth-child(4n-1) {
+                background-color: transparent;
             }
 
             td.subject-column {

@@ -67,7 +67,6 @@ class SteemProposalSystem extends React.Component {
             limitPerPage: 10,
             status: 'all',
             selectedSorter: 'ascending',
-            userVotedProposals: null,
             previous_id: null,
         };
         this.onNext = this.onNext.bind(this);
@@ -101,18 +100,6 @@ class SteemProposalSystem extends React.Component {
             limit: 4,
             status,
         });
-        api
-            .listProposalsAsync(
-                start,
-                order_by,
-                order_direction,
-                limit,
-                status,
-                last_id
-            )
-            .then(result => {
-                this.setState({ userVotedProposals: result });
-            });
     }
 
     onFilterListProposals(status) {
@@ -385,7 +372,7 @@ module.exports = {
                                     start: '',
                                     order_by: 'by_creator',
                                     order_direction: 'direction_ascending',
-                                    limit: 10,
+                                    limit: 11,
                                     status: 'all',
                                     last_id: null,
                                 })
