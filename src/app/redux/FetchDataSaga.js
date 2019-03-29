@@ -8,7 +8,11 @@ import {
 } from 'redux-saga/effects';
 import { api } from '@blocktradesdev/steem-js';
 import { loadFollows, fetchFollowCount } from 'app/redux/FollowSaga';
-import { getContent, listProposals } from 'app/redux/SagaShared';
+import {
+    getContent,
+    listProposals,
+    listVoterProposals,
+} from 'app/redux/SagaShared';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import constants from './constants';
@@ -17,6 +21,7 @@ import { getStateAsync } from 'app/utils/steemApi';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const LIST_PROPOSALS = 'fetchDataSaga/LIST_PROPOSALS';
+const LIST_VOTER_PROPOSALS = 'fetchDataSaga/LIST_VOTER_PROPOSALS';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 
@@ -24,6 +29,7 @@ export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
     takeEvery(GET_CONTENT, getContentCaller),
     takeEvery(LIST_PROPOSALS, listProposalsCaller),
+    takeEvery(LIST_VOTER_PROPOSALS, listVoterProposalsCaller),
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
@@ -35,6 +41,10 @@ export function* getContentCaller(action) {
 
 export function* listProposalsCaller(action) {
     yield listProposals(action.payload);
+}
+
+export function* listVoterProposalsCaller(action) {
+    yield listVoterProposals(action.payload);
 }
 
 let is_initial_state = true;
@@ -396,6 +406,11 @@ export const actions = {
 
     listProposals: payload => ({
         type: LIST_PROPOSALS,
+        payload,
+    }),
+
+    listVoterProposals: payload => ({
+        type: LIST_VOTER_PROPOSALS,
         payload,
     }),
 

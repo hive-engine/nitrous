@@ -125,6 +125,36 @@ export function* listProposals({
     }
 }
 
+export function* listVoterProposals({
+    start,
+    order_by,
+    order_direction,
+    limit,
+    status,
+    resolve,
+    reject,
+}) {
+    let voterProposals;
+    while (!voterProposals) {
+        voterProposals = yield call(
+            [api, api.listProposalsAsync],
+            start,
+            order_by,
+            order_direction,
+            limit,
+            status,
+            null
+        );
+    }
+
+    yield put(globalActions.receiveListVoterProposals({ voterProposals }));
+    if (resolve && voterProposals) {
+        resolve(voterProposals);
+    } else if (reject && !voterProposals) {
+        reject();
+    }
+}
+
 /**
  * Save this user's preferences, either directly from the submitted payload or from whatever's saved in the store currently.
  *

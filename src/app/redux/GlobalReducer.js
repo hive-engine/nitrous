@@ -41,6 +41,7 @@ const HIDE_DIALOG = 'global/HIDE_DIALOG';
 const ADD_ACTIVE_WITNESS_VOTE = 'global/ADD_ACTIVE_WITNESS_VOTE';
 const REMOVE_ACTIVE_WITNESS_VOTE = 'global/REMOVE_ACTIVE_WITNESS_VOTE';
 const RECEIVE_LIST_PROPOSALS = 'global/RECEIVE_LIST_PROPOSALS';
+const RECEIVE_LIST_VOTER_PROPOSALS = 'global/RECEIVE_LIST_VOTER_PROPOSALS';
 // Saga-related:
 export const GET_STATE = 'global/GET_STATE';
 
@@ -465,6 +466,11 @@ export default function reducer(state = defaultState, action = {}) {
             return state.merge(new_state);
         }
 
+        case RECEIVE_LIST_VOTER_PROPOSALS: {
+            const new_state = fromJS(payload);
+            return state.merge(new_state);
+        }
+
         default:
             return state;
     }
@@ -620,6 +626,11 @@ export const removeActiveWitnessVote = payload => ({
 
 export const receiveListProposals = payload => ({
     type: RECEIVE_LIST_PROPOSALS,
+    payload,
+});
+
+export const receiveListVoterProposals = payload => ({
+    type: RECEIVE_LIST_VOTER_PROPOSALS,
     payload,
 });
 

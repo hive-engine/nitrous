@@ -93,6 +93,13 @@ class SteemProposalSystem extends React.Component {
             status,
             last_id,
         });
+        this.props.listVoterProposals({
+            start,
+            order_by,
+            order_direction,
+            limit: 4,
+            status,
+        });
         api
             .listProposalsAsync(
                 start,
@@ -361,6 +368,16 @@ module.exports = {
                 new Promise((resolve, reject) => {
                     dispatch(
                         fetchDataSagaActions.listProposals({
+                            ...payload,
+                            resolve,
+                            reject,
+                        })
+                    );
+                }),
+            listVoterProposals: payload =>
+                new Promise((resolve, reject) => {
+                    dispatch(
+                        fetchDataSagaActions.listVoterProposals({
                             ...payload,
                             resolve,
                             reject,
