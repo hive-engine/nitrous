@@ -137,13 +137,12 @@ export function* listVoterProposals({
     let voterProposals;
     while (!voterProposals) {
         voterProposals = yield call(
-            [api, api.listProposalsAsync],
+            [api, api.listVoterProposalsAsync],
             start,
             order_by,
             order_direction,
             limit,
-            status,
-            null
+            status
         );
     }
 

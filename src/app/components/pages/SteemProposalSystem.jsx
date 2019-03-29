@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
-import { api } from '@blocktradesdev/steem-js';
 import { List } from 'immutable';
 import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
@@ -63,18 +62,39 @@ class SteemProposalSystem extends React.Component {
         super();
         this.state = {
             currentPage: 1,
+            last_id: null,
             limit: 11,
             limitPerPage: 10,
             status: 'all',
             selectedSorter: 'ascending',
-            previous_id: null,
         };
         this.onNext = this.onNext.bind(this);
         this.onPrevious = this.onPrevious.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.onFilterListProposals('all');
+        if (this.props.currentUser) {
+            this.getVoterProposals(this.props.currentUser);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { currentUser } = nextProps;
+
+        if (currentUser && currentUser !== this.props.currentUser) {
+            this.getVoterProposals(currentUser);
+        }
+    }
+
+    getVoterProposals(user) {
+        this.props.listVoterProposals({
+            start: user,
+            order_by: 'by_creator',
+            order_direction: 'direction_ascending',
+            limit: 1000,
+            status: 'all',
+        });
     }
 
     getProposals(
@@ -93,20 +113,14 @@ class SteemProposalSystem extends React.Component {
             status,
             last_id,
         });
-        this.props.listVoterProposals({
-            start,
-            order_by,
-            order_direction,
-            limit: 4,
-            status,
-        });
     }
 
     onFilterListProposals(status) {
         const { limit } = this.state;
         const { last_id } = this.props;
         this.setState({ status });
-        this.getProposals(limit, status, last_id);
+        this.getProposals(limit, status, this.state.last_id);
+        this.setState({ last_id });
     }
 
     onSortChange(selectedSorter) {
@@ -127,10 +141,13 @@ class SteemProposalSystem extends React.Component {
 
     onPrevious() {
         const { currentPage, limit, status } = this.state;
-        const last_id = this.pages.get(currentPage - 1)['previous_id'];
-        this.getProposals(limit, status, last_id);
-        this.pages.delete(currentPage);
-        this.setState({ currentPage: currentPage - 1 });
+        if (this.pages.size) {
+            const last_id =
+                this.pages.get(currentPage - 1)['previous_id'] || null;
+            this.getProposals(limit, status, last_id);
+            this.pages.delete(currentPage);
+            this.setState({ currentPage: currentPage - 1 });
+        }
     }
 
     formatAsset(amount, precision) {
@@ -139,7 +156,42 @@ class SteemProposalSystem extends React.Component {
         ).toFixed(parseInt(precision));
     }
 
-    formatTableDiv(key, value, proposal, isOwner = false) {
+    onUpdateProposalVotes(proposal, isVoted) {
+        const { updateProposalVotes } = this.props;
+        updateProposalVotes(
+            this.props.currentUser,
+            [proposal.get('id')],
+            !isVoted
+        );
+    }
+
+    onRemoveProposal(proposal) {
+        const { removeProposal } = this.props;
+        removeProposal(this.props.currentUser, [proposal.get('id')]);
+        this.pages.clear();
+        this.setState({ currentPage: 1 });
+    }
+
+    checkVotedProposal(proposalId) {
+        const { voterProposals, currentUser } = this.props;
+        const proposals = voterProposals.get(currentUser);
+        if (proposals && proposals.size) {
+            const votedProposals = proposals.filter(
+                p => p.get('id') === proposalId
+            );
+            return votedProposals.size ? true : false;
+        }
+        return false;
+    }
+
+    formatTableDiv(
+        key,
+        value,
+        proposal,
+        status,
+        isOwner = false,
+        isVoted = false
+    ) {
         switch (key) {
             case 'start_date':
             case 'end_date':
@@ -164,16 +216,28 @@ class SteemProposalSystem extends React.Component {
                     >
                         <Icon name="extlink" className="proposal-extlink" />
                     </a>,
-                    <a
-                        href="#"
-                        onClick={() => this.onUpdateProposalVotes(proposal)}
-                    >
-                        <Icon
-                            name="chevron-up-circle"
-                            className="upvote"
-                            key={`vote-icon-${value}`}
-                        />
-                    </a>,
+                    (status === 'active' || status === 'inactive') && (
+                        <a
+                            href="#"
+                            onClick={() =>
+                                this.onUpdateProposalVotes(proposal, isVoted)
+                            }
+                        >
+                            {
+                                <span
+                                    className={`Voting__button Voting__button-up ${
+                                        isVoted ? 'Voting__button--upvoted' : ''
+                                    }`}
+                                >
+                                    <Icon
+                                        name="chevron-up-circle"
+                                        className="upvote"
+                                        key={`vote-icon-${value}`}
+                                    />
+                                </span>
+                            }
+                        </a>
+                    ),
                     isOwner && (
                         <a
                             href="#"
@@ -189,16 +253,6 @@ class SteemProposalSystem extends React.Component {
             default:
                 return value;
         }
-    }
-
-    onUpdateProposalVotes(proposal) {
-        const { updateProposalVotes } = this.props;
-        updateProposalVotes(this.props.currentUser, [proposal.get('id')], true);
-    }
-
-    onRemoveProposal(proposal) {
-        const { removeProposal } = this.props;
-        removeProposal(this.props.currentUser, [proposal.get('id')]);
     }
 
     renderTableRow(proposal) {
@@ -217,7 +271,9 @@ class SteemProposalSystem extends React.Component {
                             k,
                             proposal.get(k),
                             proposal,
-                            isOwner
+                            proposal.get('status'),
+                            isOwner,
+                            this.checkVotedProposal(id)
                         )}
                     </td>
                 ))}
@@ -236,13 +292,13 @@ class SteemProposalSystem extends React.Component {
         const proposalsArr = proposals.toArray();
 
         const nextAvailable = proposalsArr.length === limitPerPage && !!last_id;
-        const previousAvailable = currentPage > 1;
+        const previousAvailable = currentPage > 1 && this.pages.size;
 
         return (
             <table>
                 <thead>
-                    <tr>
-                        <td colSpan="8" className="proposals-filter-header">
+                    <tr className="proposals-filter-header">
+                        <td colSpan="8">
                             <div className="proposals-filter-wrapper">
                                 <div className="dropdowns">
                                     <DropdownMenu
@@ -255,8 +311,6 @@ class SteemProposalSystem extends React.Component {
                                     </DropdownMenu>
                                 </div>
                                 <Pagination
-                                    onSelect={this.onPageSelect}
-                                    currentPage={currentPage}
                                     nextAvailable={nextAvailable}
                                     previousAvailable={previousAvailable}
                                     onNextPage={this.onNext}
@@ -284,10 +338,6 @@ class SteemProposalSystem extends React.Component {
                             <div className="proposals-filter-wrapper">
                                 <div className="dropdowns" />
                                 <Pagination
-                                    onSelect={this.onPageSelect}
-                                    perPage={5}
-                                    length={7}
-                                    currentPage={currentPage}
                                     nextAvailable={nextAvailable}
                                     previousAvailable={previousAvailable}
                                     onNextPage={this.onNext}
@@ -328,14 +378,14 @@ module.exports = {
             const proposals = state.global.get('proposals', List());
             const last = proposals.size - 1;
             const last_id =
-                last >= 0 && proposals.size > 10
-                    ? proposals.get(last).get('id')
-                    : null;
+                (proposals.size && proposals.get(last).get('id')) || null;
             const newProposals =
                 proposals.size > 10 ? proposals.delete(last) : proposals;
+            const voterProposals = state.global.get('voterProposals', List());
             return {
                 currentUser: user ? user.get('username') : null,
                 proposals: newProposals,
+                voterProposals,
                 last_id,
             };
         },
@@ -349,10 +399,10 @@ module.exports = {
                         successCallback: () => {
                             dispatch(
                                 fetchDataSagaActions.listVoterProposals({
-                                    start: '',
+                                    start: voter,
                                     order_by: 'by_creator',
                                     order_direction: 'direction_ascending',
-                                    limit: 5,
+                                    limit: 1000,
                                     status: 'all',
                                 })
                             );

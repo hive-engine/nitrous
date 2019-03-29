@@ -7,14 +7,6 @@ class Pagination extends React.Component {
         this.onNextPage = this.onNextPage.bind(this);
         this.onPreviousPage = this.onPreviousPage.bind(this);
     }
-    getPageCount() {
-        const { length, perPage } = this.props;
-        return Math.ceil(length / perPage);
-    }
-
-    onPageSelect(pageNumber) {
-        this.props.onSelect(pageNumber);
-    }
 
     onNextPage() {
         this.props.onNextPage();
@@ -36,22 +28,7 @@ class Pagination extends React.Component {
                 >
                     <Icon name="chevron-left" size="1_5x" />
                 </button>
-
-                {/* <ul className="pagination-list">
-                    {[...Array(this.getPageCount())].map((p, i) => {
-                        return (
-                            <li
-                                className={
-                                    currentPage === i + 1 ? `active` : ''
-                                }
-                                key={`pagination-item-${i}`}
-                                onClick={() => this.onPageSelect(i + 1)}
-                            >
-                                {i + 1}
-                            </li>
-                        );
-                    })}
-                </ul> */}
+                {/* implement page numbers */}
                 <button
                     disabled={!nextAvailable}
                     className="button-next"

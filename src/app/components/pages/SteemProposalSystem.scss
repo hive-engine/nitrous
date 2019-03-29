@@ -78,6 +78,10 @@
                 display: block;
             }
 
+            tr.proposals-filter-header {
+                margin-bottom: 2px;
+            }
+
             tr.proposal-subject-row {
                 display: none;
             }
@@ -93,7 +97,7 @@
 
             td.permlink-column {
                 display: flex;
-                justify-content: right;
+                justify-content: flex-end;
                 align-items: center;
                 a {
                     width: 30px;
