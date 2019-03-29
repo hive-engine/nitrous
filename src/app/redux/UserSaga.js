@@ -59,6 +59,7 @@ const highSecurityPages = [
     /\/market/,
     /\/@.+\/(transfers|permissions|password)/,
     /\/~witnesses/,
+    /\/steem_proposal_system/,
 ];
 
 function* loadSavingsWithdraw() {
