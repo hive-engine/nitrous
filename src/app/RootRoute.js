@@ -86,6 +86,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Witnesses')]);
             //});
+        } else if (route.page === 'SteemProposalSystem') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SteemProposalSystem')]);
+            //});
         } else if (route.page === 'SubmitPost') {
             if (process.env.BROWSER) {
                 // require.ensure([], (require) => {
@@ -115,10 +119,6 @@ export default {
             //cb(null, [require('app/components/pages/PostsIndex')]);
             cb(null, [PostsIndex]);
             //});
-        } else if (route.page === 'SteemProposalSystem') {
-            require.ensure([], require => {
-                cb(null, [require('app/components/pages/SteemProposalSystem')]);
-            });
         } else {
             //require.ensure([], (require) => {
             cb(process.env.BROWSER ? null : Error(404), [
