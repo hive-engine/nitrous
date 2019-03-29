@@ -358,6 +358,18 @@ module.exports = {
                     transactionActions.broadcastOperation({
                         type: 'update_proposal_votes',
                         operation: { voter, proposal_ids, approve },
+                        confirm: 'Confirm voting proposal',
+                        successCallback: () => {
+                            dispatch(
+                                fetchDataSagaActions.listVoterProposals({
+                                    start: '',
+                                    order_by: 'by_creator',
+                                    order_direction: 'direction_ascending',
+                                    limit: 5,
+                                    status: 'all',
+                                })
+                            );
+                        },
                     })
                 );
             },
@@ -366,6 +378,19 @@ module.exports = {
                     transactionActions.broadcastOperation({
                         type: 'remove_proposal',
                         operation: { proposal_owner, proposal_ids },
+                        confirm: 'Confirm removing proposal',
+                        successCallback: () => {
+                            dispatch(
+                                fetchDataSagaActions.listProposals({
+                                    start: '',
+                                    order_by: 'by_creator',
+                                    order_direction: 'direction_ascending',
+                                    limit: 10,
+                                    status: 'all',
+                                    last_id: null,
+                                })
+                            );
+                        },
                     })
                 );
             },

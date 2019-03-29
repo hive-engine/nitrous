@@ -494,17 +494,6 @@ function* accepted_update_proposal_votes({ operation }, keys) {
             approve: operation.approve,
         },
     ];
-    try {
-        yield broadcast.updateProposalVotesAsync(
-            {
-                extensions: [],
-                operations,
-            },
-            [keys]
-        );
-    } catch (e) {
-        console.error('error', e);
-    }
 }
 
 function* accepted_remove_proposal({ operation }, keys) {
@@ -515,17 +504,6 @@ function* accepted_remove_proposal({ operation }, keys) {
             proposal_ids: operation.proposal_ids,
         },
     ];
-    try {
-        yield broadcast.removeProposalAsync(
-            {
-                extensions: [],
-                operations,
-            },
-            [keys]
-        );
-    } catch (e) {
-        console.error('error', e);
-    }
 }
 
 // TODO remove soon, this was replaced by the UserKeys edit running usernamePasswordLogin (on dialog close)
