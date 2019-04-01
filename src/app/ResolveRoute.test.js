@@ -7,7 +7,7 @@ describe('routeRegex', () => {
             ['UserProfile1', /^\/(@[\w\.\d-]+)\/?$/],
             [
                 'UserProfile2',
-                /^\/(@[\w\.\d-]+)\/(transfers|permissions|password|settings)\/?$/,
+                /^\/(@[\w\.\d-]+)\/(transfers|curation-rewards|author-rewards|permissions|password|settings)\/?$/,
             ],
         ];
 

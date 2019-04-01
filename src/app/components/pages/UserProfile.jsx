@@ -13,6 +13,8 @@ import UserKeys from 'app/components/elements/UserKeys';
 import PasswordReset from 'app/components/elements/PasswordReset';
 import UserWallet from 'app/components/modules/UserWallet';
 import Settings from 'app/components/modules/Settings';
+import CurationRewards from 'app/components/modules/CurationRewards';
+import AuthorRewards from 'app/components/modules/AuthorRewards';
 import UserList from 'app/components/elements/UserList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
@@ -104,7 +106,8 @@ export default class UserProfile extends React.Component {
 
         let tab_content = null;
 
-        let walletClass = '';
+        let rewardsClass = '',
+            walletClass = '';
         if (section === 'transfers') {
             walletClass = 'active';
             tab_content = (
@@ -118,6 +121,12 @@ export default class UserProfile extends React.Component {
                     />
                 </div>
             );
+        } else if (section === 'curation-rewards') {
+            rewardsClass = 'active';
+            tab_content = <CurationRewards account={account} />;
+        } else if (section === 'author-rewards') {
+            rewardsClass = 'active';
+            tab_content = <AuthorRewards account={account} />;
         } else if (section === 'settings') {
             tab_content = <Settings routeParams={this.props.routeParams} />;
         } else if (section === 'permissions') {
@@ -175,8 +184,32 @@ export default class UserProfile extends React.Component {
             }
         }
 
+        let rewardsMenu = [
+            {
+                link: `/@${accountname}/curation-rewards`,
+                label: tt('g.curation_rewards'),
+                value: tt('g.curation_rewards'),
+            },
+            {
+                link: `/@${accountname}/author-rewards`,
+                label: tt('g.author_rewards'),
+                value: tt('g.author_rewards'),
+            },
+        ];
+
         const top_menu = (
             <div className="row UserProfile__top-menu">
+                <div className="columns small-10 medium-12 medium-expand">
+                    <ul className="menu" style={{ flexWrap: 'wrap' }}>
+                        <DropdownMenu
+                            className={rewardsClass}
+                            items={rewardsMenu}
+                            el="li"
+                            selected={tt('g.rewards')}
+                            position="right"
+                        />
+                    </ul>
+                </div>
                 <div className="columns shrink">
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
                         <li>
