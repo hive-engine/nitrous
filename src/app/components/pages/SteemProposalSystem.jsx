@@ -7,8 +7,8 @@ import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
-import Pagination from 'app/components/elements/Pagination';
-import DropdownMenu from 'app/components/elements/DropdownMenu';
+import Pagination from '../elements/Pagination';
+import DropdownMenu from '../elements/DropdownMenu';
 
 class SteemProposalSystem extends React.Component {
     pages = new Map();
@@ -383,7 +383,7 @@ class SteemProposalSystem extends React.Component {
 }
 
 module.exports = {
-    path: '/steem_proposal_system',
+    path: 'steem_proposal_system',
     component: connect(
         state => {
             const user = state.user.get('current');
