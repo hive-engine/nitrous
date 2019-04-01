@@ -7,8 +7,8 @@ import tt from 'counterpart';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Icon from 'app/components/elements/Icon';
 import * as transactionActions from 'app/redux/TransactionReducer';
-import Pagination from 'app/components/elements/Pagination';
-import DropdownMenu from 'app/components/elements/DropdownMenu';
+import Pagination from '../elements/Pagination';
+import DropdownMenu from '../elements/DropdownMenu';
 
 class SteemProposalSystem extends React.Component {
     pages = new Map();
@@ -73,7 +73,6 @@ class SteemProposalSystem extends React.Component {
             limitPerPage: 10,
             status: 'votable',
             selectedSorter: 'ascending',
-            votingsInProgress: [],
         };
         this.onNext = this.onNext.bind(this);
         this.onPrevious = this.onPrevious.bind(this);
@@ -164,13 +163,7 @@ class SteemProposalSystem extends React.Component {
     }
 
     onUpdateProposalVotes(proposal, isVoted) {
-        const { updateProposalVotes } = this.props;
-        // const newVotingsInProgress = [
-        //     ...this.state.votingsInProgress,
-        //     proposal.get('id'),
-        // ];
-        // this.setState({ votingsInProgress: newVotingsInProgress });
-        updateProposalVotes(
+        this.props.updateProposalVotes(
             this.props.currentUser,
             [proposal.get('id')],
             !isVoted
@@ -178,8 +171,7 @@ class SteemProposalSystem extends React.Component {
     }
 
     onRemoveProposal(proposal) {
-        const { removeProposal } = this.props;
-        removeProposal(this.props.currentUser, [proposal.get('id')]);
+        this.props.removeProposal(this.props.currentUser, [proposal.get('id')]);
         this.pages.clear();
         this.setState({ currentPage: 1 });
     }
@@ -220,8 +212,7 @@ class SteemProposalSystem extends React.Component {
                 return `${amount} SBD`;
             case 'permlink':
                 const isVotingInProgress =
-                    this.state.votingsInProgress.indexOf(proposal.get('id')) >
-                    -1;
+                    this.props.votesInProgress.indexOf(proposal.get('id')) > -1;
 
                 return [
                     <a
@@ -234,7 +225,7 @@ class SteemProposalSystem extends React.Component {
                     </a>,
                     (status === 'active' || status === 'inactive') && (
                         <a
-                            href="#"
+                            href="javascript:void(0)"
                             onClick={() =>
                                 this.onUpdateProposalVotes(proposal, isVoted)
                             }
@@ -260,7 +251,7 @@ class SteemProposalSystem extends React.Component {
                     ),
                     isOwner && (
                         <a
-                            href="#"
+                            href="javascript:void(0)"
                             onClick={() => this.onRemoveProposal(proposal)}
                             className="proposal-remove"
                         >
@@ -398,10 +389,11 @@ class SteemProposalSystem extends React.Component {
 }
 
 module.exports = {
-    path: '/steem_proposal_system',
+    path: 'steem_proposal_system',
     component: connect(
         state => {
             const user = state.user.get('current');
+            const currentUser = user && user.get('username');
             const proposals = state.global.get('proposals', List());
             const last = proposals.size - 1;
             const last_id =
@@ -409,11 +401,16 @@ module.exports = {
             const newProposals =
                 proposals.size > 10 ? proposals.delete(last) : proposals;
             const voterProposals = state.global.get('voterProposals', List());
+            const votesInProgress = state.global.get(
+                `transaction_proposal_vote_active_${currentUser}`,
+                List()
+            );
             return {
-                currentUser: user ? user.get('username') : null,
+                currentUser,
                 proposals: newProposals,
                 voterProposals,
                 last_id,
+                votesInProgress,
             };
         },
         dispatch => ({
