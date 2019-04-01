@@ -38,6 +38,12 @@ class SteemProposalSystem extends React.Component {
                 this.onFilterListProposals('expired');
             },
         },
+        {
+            value: 'votable',
+            onClick: () => {
+                this.onFilterListProposals('votable');
+            },
+        },
     ];
 
     orderedProposalKeys = [
@@ -65,7 +71,7 @@ class SteemProposalSystem extends React.Component {
             last_id: null,
             limit: 11,
             limitPerPage: 10,
-            status: 'all',
+            status: 'votable',
             selectedSorter: 'ascending',
             votingsInProgress: [],
         };
