@@ -41,6 +41,7 @@ const hook = {
     accepted_vote,
     accepted_account_update,
     accepted_withdraw_vesting,
+    accepted_update_proposal_votes,
 };
 
 export function* preBroadcast_transfer({ operation }) {
@@ -96,8 +97,15 @@ function* preBroadcast_account_witness_vote({ operation, username }) {
     return operation;
 }
 
-function preBroadcast_update_proposal_votes({ operation, username }) {
+function* preBroadcast_update_proposal_votes({ operation, username }) {
     if (!operation.voter) operation.voter = username;
+    const { voter, proposal_ids } = operation;
+    yield put(
+        globalActions.addActiveProposalVote({
+            voter,
+            proposal_ids,
+        })
+    );
     return operation;
 }
 
@@ -449,6 +457,17 @@ function* accepted_account_witness_vote({
         globalActions.removeActiveWitnessVote({
             account,
             witness,
+        })
+    );
+}
+
+function* accepted_update_proposal_votes({
+    operation: { voter, proposal_ids },
+}) {
+    yield put(
+        globalActions.removeActiveProposalVote({
+            voter,
+            proposal_ids,
         })
     );
 }
