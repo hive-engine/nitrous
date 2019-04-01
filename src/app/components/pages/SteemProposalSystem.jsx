@@ -96,8 +96,8 @@ class SteemProposalSystem extends React.Component {
     getVoterProposals(user) {
         this.props.listVoterProposals({
             start: user,
-            order_by: 'by_creator',
-            order_direction: 'direction_ascending',
+            order_by: 'by_total_votes',
+            order_direction: 'direction_descending',
             limit: 1000,
             status: 'all',
         });
@@ -428,8 +428,8 @@ module.exports = {
                             dispatch(
                                 fetchDataSagaActions.listVoterProposals({
                                     start: voter,
-                                    order_by: 'by_creator',
-                                    order_direction: 'direction_ascending',
+                                    order_by: 'by_total_votes',
+                                    order_direction: 'direction_descending',
                                     limit: 1000,
                                     status: 'all',
                                 })
@@ -450,8 +450,8 @@ module.exports = {
                             dispatch(
                                 fetchDataSagaActions.listProposals({
                                     start: '',
-                                    order_by: 'by_creator',
-                                    order_direction: 'direction_ascending',
+                                    order_by: 'by_total_votes',
+                                    order_direction: 'direction_descending',
                                     limit: 11,
                                     status: 'all',
                                     last_id: null,
