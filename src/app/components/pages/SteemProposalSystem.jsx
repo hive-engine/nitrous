@@ -233,8 +233,12 @@ class SteemProposalSystem extends React.Component {
                             {
                                 <span
                                     className={`Voting__button Voting__button-up ${
-                                        isVoted ? 'Voting__button--upvoted' : ''
-                                    } ${isVotingInProgress ? 'votingUp' : ''}`}
+                                        isVotingInProgress
+                                            ? 'votingUp'
+                                            : isVoted
+                                              ? 'Voting__button--upvoted'
+                                              : ''
+                                    }`}
                                 >
                                     <Icon
                                         name={`${
