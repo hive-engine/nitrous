@@ -66,6 +66,7 @@ export default class UserProfile extends React.Component {
                 globalStatus,
                 accountname,
                 isMyAccount,
+                socialUrl,
             },
             onPrint,
         } = this;
@@ -203,7 +204,7 @@ export default class UserProfile extends React.Component {
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
                         <li>
                             <a
-                                href={`https:\/\/steemit.com\/@${accountname}`}
+                                href={`${socialUrl}/@${accountname}`}
                                 target="_blank"
                             >
                                 {tt('g.blog')}
@@ -317,6 +318,7 @@ module.exports = {
         (state, ownProps) => {
             const wifShown = state.global.get('UserKeys_wifShown');
             const currentUser = state.user.get('current');
+            const socialUrl = state.app.get('socialUrl');
             const accountname = ownProps.routeParams.accountname.toLowerCase();
             let isMyAccount =
                 currentUser && currentUser.get('username') === accountname;
@@ -330,6 +332,7 @@ module.exports = {
                 currentUser,
                 accountname: accountname,
                 isMyAccount,
+                socialUrl,
             };
         },
         dispatch => ({
