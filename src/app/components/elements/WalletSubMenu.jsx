@@ -29,7 +29,7 @@ export default ({ accountname, isMyAccount }) => {
                         to={`/@${accountname}/password`}
                         activeClassName="active"
                     >
-                        {tt('g.password')}
+                        {tt('g.change_password')}
                     </Link>
                 </li>
             ) : null}

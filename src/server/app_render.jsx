@@ -69,6 +69,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             app: {
                 viewMode: determineViewMode(ctx.request.search),
                 env: process.env.NODE_ENV,
+                socialUrl: config.social_url,
             },
         };
 

@@ -66,6 +66,7 @@ export default class UserProfile extends React.Component {
                 globalStatus,
                 accountname,
                 isMyAccount,
+                socialUrl,
             },
             onPrint,
         } = this;
@@ -75,7 +76,7 @@ export default class UserProfile extends React.Component {
         let { section } = this.props.routeParams;
         if (!section) {
             if (process.env.BROWSER) {
-                browserHistory.push(`/@${accountname}/transfers`);
+                browserHistory.replace(`/@${accountname}/transfers`);
             }
             return null;
         }
@@ -201,6 +202,14 @@ export default class UserProfile extends React.Component {
             <div className="row UserProfile__top-menu">
                 <div className="columns small-10 medium-12 medium-expand">
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
+                        <li>
+                            <a
+                                href={`${socialUrl}/@${accountname}`}
+                                target="_blank"
+                            >
+                                {tt('g.blog')}
+                            </a>
+                        </li>
                         <DropdownMenu
                             className={rewardsClass}
                             items={rewardsMenu}
@@ -309,6 +318,7 @@ module.exports = {
         (state, ownProps) => {
             const wifShown = state.global.get('UserKeys_wifShown');
             const currentUser = state.user.get('current');
+            const socialUrl = state.app.get('socialUrl');
             const accountname = ownProps.routeParams.accountname.toLowerCase();
             let isMyAccount =
                 currentUser && currentUser.get('username') === accountname;
@@ -322,6 +332,7 @@ module.exports = {
                 currentUser,
                 accountname: accountname,
                 isMyAccount,
+                socialUrl,
             };
         },
         dispatch => ({

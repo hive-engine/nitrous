@@ -15,7 +15,7 @@ class WalletIndex extends React.Component {
         const { username, loggedIn } = this.props;
         if (loggedIn) {
             if (process.env.BROWSER) {
-                browserHistory.push(`/@${username}/transfers`);
+                browserHistory.replace(`/@${username}/transfers`);
             }
         }
     }
@@ -24,7 +24,7 @@ class WalletIndex extends React.Component {
         const { username, loggedIn } = this.props;
         if (!prevProps.loggedIn && loggedIn) {
             if (process.env.BROWSER) {
-                browserHistory.push(`/@${username}/transfers`);
+                browserHistory.replace(`/@${username}/transfers`);
             }
         }
     }

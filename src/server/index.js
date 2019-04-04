@@ -32,6 +32,7 @@ global.$STM_Config = {
     site_domain: config.get('site_domain'),
     facebook_app_id: config.get('facebook_app_id'),
     google_analytics_id: config.get('google_analytics_id'),
+    social_url: config.get('social_url'),
 };
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
