@@ -75,7 +75,7 @@ export default class UserProfile extends React.Component {
         let { section } = this.props.routeParams;
         if (!section) {
             if (process.env.BROWSER) {
-                browserHistory.push(`/@${accountname}/transfers`);
+                browserHistory.replace(`/@${accountname}/transfers`);
             }
             return null;
         }
