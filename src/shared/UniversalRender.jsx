@@ -236,7 +236,7 @@ export async function serverRender(
     } catch (e) {
         console.error('Routing error:', e.toString(), location);
         return {
-            title: 'Routing error - Steemit',
+            title: 'Routing error - Steemit Wallet',
             statusCode: 500,
             body: renderToString(
                 ErrorPage ? <ErrorPage /> : <span>Routing error</span>
@@ -247,7 +247,7 @@ export async function serverRender(
     if (error || !renderProps) {
         // debug('error')('Router error', error);
         return {
-            title: 'Page Not Found - Steemit',
+            title: 'Page Not Found - Steemit Wallet',
             statusCode: 404,
             body: renderToString(<NotFound />),
         };
@@ -270,7 +270,7 @@ export async function serverRender(
         ) {
             // protect for invalid account
             return {
-                title: 'User Not Found - Steemit',
+                title: 'User Not Found - Steemit Wallet',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -291,7 +291,7 @@ export async function serverRender(
         if (location.match(routeRegex.UserProfile1)) {
             console.error('User/not found: ', location);
             return {
-                title: 'Page Not Found - Steemit',
+                title: 'Page Not Found - Steemit Wallet',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -328,8 +328,8 @@ export async function serverRender(
     }
 
     return {
-        title: 'Steemit',
-        titleBase: 'Steemit - ',
+        title: 'Steemit Wallet',
+        titleBase: 'Steemit Wallet - ',
         meta,
         statusCode: status,
         body: Iso.render(app, server_store.getState()),

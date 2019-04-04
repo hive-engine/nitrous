@@ -4,14 +4,14 @@ import normalizeProfile from 'app/utils/NormalizeProfile';
 import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
 
 const site_desc =
-    'Steemit is a social media platform where everyone gets paid for creating and curating content. It leverages a robust digital points system (Steem) for digital rewards.';
+    'Steemit Wallet is an online wallet for managing Steem accounts.';
 
 function addSiteMeta(metas) {
-    metas.push({ title: 'Steemit' });
+    metas.push({ title: 'Steemit Wallet' });
     metas.push({ name: 'description', content: site_desc });
     metas.push({ property: 'og:type', content: 'website' });
-    metas.push({ property: 'og:site_name', content: 'Steemit' });
-    metas.push({ property: 'og:title', content: 'Steemit' });
+    metas.push({ property: 'og:site_name', content: 'Steemit Wallet' });
+    metas.push({ property: 'og:title', content: 'Steemit Wallet' });
     metas.push({ property: 'og:description', content: site_desc });
     metas.push({
         property: 'og:image',
@@ -41,7 +41,7 @@ export default function extractMeta(chain_data, rp) {
             const d = extractContent(objAccessor, content, false);
             const url = 'https://steemit.com' + d.link;
             const canonicalUrl = makeCanonicalLink(d);
-            const title = d.title + ' — Steemit';
+            const title = d.title + ' — Steemit Wallet';
             const desc = d.desc + ' by ' + d.author;
             const image = d.image_link || profile.profile_image;
             const { category, created } = d;
@@ -60,7 +60,7 @@ export default function extractMeta(chain_data, rp) {
                 content: image || 'https://steemit.com/images/steemit.png',
             });
             metas.push({ name: 'og:description', content: desc });
-            metas.push({ name: 'og:site_name', content: 'Steemit' });
+            metas.push({ name: 'og:site_name', content: 'Steemit Wallet' });
             metas.push({ name: 'fb:app_id', content: $STM_Config.fb_app });
             metas.push({ name: 'article:tag', content: category });
             metas.push({
