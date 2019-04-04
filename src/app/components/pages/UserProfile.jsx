@@ -201,6 +201,14 @@ export default class UserProfile extends React.Component {
             <div className="row UserProfile__top-menu">
                 <div className="columns small-10 medium-12 medium-expand">
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
+                        <li>
+                            <a
+                                href={`https:\/\/steemit.com\/@${accountname}`}
+                                target="_blank"
+                            >
+                                {tt('g.blog')}
+                            </a>
+                        </li>
                         <DropdownMenu
                             className={rewardsClass}
                             items={rewardsMenu}
