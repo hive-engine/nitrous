@@ -220,6 +220,31 @@ class Settings extends React.Component {
         return (
             <div className="Settings">
                 <div className="row">
+                    <div className="small-12 medium-6 large-4 columns">
+                        <h4>{tt('settings_jsx.preferences')}</h4>
+                        <label>
+                            {tt('g.choose_language')}
+                            <select
+                                defaultValue={user_preferences.locale}
+                                onChange={this.handleLanguageChange}
+                            >
+                                <option value="en">English</option>
+                                <option value="es">Spanish Español</option>
+                                <option value="ru">Russian русский</option>
+                                <option value="fr">French français</option>
+                                <option value="it">Italian italiano</option>
+                                <option value="ko">Korean 한국어</option>
+                                <option value="ja">Japanese 日本語</option>
+                                <option value="pl">Polish</option>
+                                <option value="zh">Chinese 简体中文</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                <div className="row">
                     <form
                         onSubmit={this.handleSubmitForm}
                         className="small-12 medium-6 large-4 columns"
@@ -355,32 +380,6 @@ class Settings extends React.Component {
                             </small>
                         ) : null}
                     </form>
-                </div>
-
-                <br />
-                <br />
-                <h4>{tt('settings_jsx.preferences')}</h4>
-
-                <div className="row">
-                    <div className="small-12 medium-6 large-12 columns">
-                        <label>
-                            {tt('g.choose_language')}
-                            <select
-                                defaultValue={user_preferences.locale}
-                                onChange={this.handleLanguageChange}
-                            >
-                                <option value="en">English</option>
-                                <option value="es">Spanish Español</option>
-                                <option value="ru">Russian русский</option>
-                                <option value="fr">French français</option>
-                                <option value="it">Italian italiano</option>
-                                <option value="ko">Korean 한국어</option>
-                                <option value="ja">Japanese 日本語</option>
-                                <option value="pl">Polish</option>
-                                <option value="zh">Chinese 简体中文</option>
-                            </select>
-                        </label>
-                    </div>
                 </div>
             </div>
         );
