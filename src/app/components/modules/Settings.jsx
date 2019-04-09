@@ -198,12 +198,7 @@ class Settings extends React.Component {
         const { state, props } = this;
 
         const { submitting, valid, touched } = this.state.accountSettings;
-        const disabled =
-            !props.isOwnAccount ||
-            state.loading ||
-            submitting ||
-            !valid ||
-            !touched;
+        const disabled = state.loading || submitting || !valid || !touched;
 
         const {
             profile_image,
@@ -215,7 +210,7 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        const { account, isOwnAccount, user_preferences } = this.props;
+        const { account, user_preferences } = this.props;
 
         return (
             <div className="Settings">
@@ -392,7 +387,6 @@ export default connect(
         const { accountname } = ownProps.routeParams;
         const account = state.global.getIn(['accounts', accountname]).toJS();
         const current_user = state.user.get('current');
-        const username = current_user ? current_user.get('username') : '';
         let metaData = account
             ? o2j.ifStringParseJSON(account.json_metadata)
             : {};
@@ -405,7 +399,6 @@ export default connect(
             account,
             metaData,
             accountname,
-            isOwnAccount: username == accountname,
             profile,
             user_preferences,
             ...ownProps,
