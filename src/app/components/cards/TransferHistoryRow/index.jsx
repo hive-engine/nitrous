@@ -17,6 +17,7 @@ class TransferHistoryRow extends React.Component {
             benefactor_reward,
             powerdown_vests,
             reward_vests,
+            socialUrl,
         } = this.props;
         // context -> account perspective
 
@@ -177,14 +178,16 @@ class TransferHistoryRow extends React.Component {
                 });
             // tt('transferhistoryrow_jsx.start_power_down_of') + ' ' + powerdown_vests + ' STEEM';
         } else if (type === 'curation_reward') {
-            const linkToComment =
-                data.comment_author + '/' + data.comment_permlink;
             message = (
                 <span>
                     {tt('transferhistoryrow_jsx.curation_reward', {
                         curation_reward,
                     })}
-                    {otherAccountLink(linkToComment)}
+                    {postLink(
+                        socialUrl,
+                        data.comment_author,
+                        data.comment_permlink
+                    )}
                 </span>
             );
             // `${curation_reward} STEEM POWER` + tt('g.for');
@@ -199,7 +202,7 @@ class TransferHistoryRow extends React.Component {
                         steem_payout,
                         sbd_payout: data.sbd_payout,
                     })}
-                    {otherAccountLink(data.author + '/' + data.permlink)}
+                    {postLink(socialUrl, data.author, data.permlink)}
                 </span>
             );
             // `${data.sbd_payout}${steem_payout}, ${tt( 'g.and' )} ${author_reward} STEEM POWER ${tt('g.for')}`;
@@ -311,6 +314,12 @@ const otherAccountLink = username =>
         <Link to={`/@${username}`}>{username}</Link>
     );
 
+const postLink = (socialUrl, author, permlink) => (
+    <Link to={`{socialUrl}/@${author}/{permlink}`}>
+        {author}/{permlink}
+    </Link>
+);
+
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
@@ -337,6 +346,7 @@ export default connect(
             type === 'comment_benefactor_reward'
                 ? numberWithCommas(vestsToSp(state, data.reward))
                 : undefined;
+        const socialUrl = state.app.get('socialUrl');
         return {
             ...ownProps,
             curation_reward,
@@ -344,6 +354,7 @@ export default connect(
             benefactor_reward,
             powerdown_vests,
             reward_vests,
+            socialUrl,
         };
     }
 )(TransferHistoryRow);
