@@ -315,9 +315,9 @@ const otherAccountLink = username =>
     );
 
 const postLink = (socialUrl, author, permlink) => (
-    <Link to={`{socialUrl}/@${author}/{permlink}`}>
+    <a href={`${socialUrl}/@${author}/${permlink}`} target="_blank">
         {author}/{permlink}
-    </Link>
+    </a>
 );
 
 export default connect(
