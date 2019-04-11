@@ -315,7 +315,7 @@ const otherAccountLink = username =>
     );
 
 const postLink = (socialUrl, author, permlink) => (
-    <Link to={`{socialUrl}/@${author}/{permlink}`}>
+    <Link to={`${socialUrl}/@${author}/${permlink}`}>
         {author}/{permlink}
     </Link>
 );
