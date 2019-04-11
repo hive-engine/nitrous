@@ -188,16 +188,17 @@ class Settings extends React.Component {
         });
     };
 
+    handleLanguageChange = event => {
+        const locale = event.target.value;
+        const userPreferences = { ...this.props.user_preferences, locale };
+        this.props.setUserPreferences(userPreferences);
+    };
+
     render() {
         const { state, props } = this;
 
         const { submitting, valid, touched } = this.state.accountSettings;
-        const disabled =
-            !props.isOwnAccount ||
-            state.loading ||
-            submitting ||
-            !valid ||
-            !touched;
+        const disabled = state.loading || submitting || !valid || !touched;
 
         const {
             profile_image,
@@ -209,10 +210,35 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        const { account, isOwnAccount, user_preferences } = this.props;
+        const { account, user_preferences } = this.props;
 
         return (
             <div className="Settings">
+                <div className="row">
+                    <div className="small-12 medium-6 large-4 columns">
+                        <h4>{tt('settings_jsx.preferences')}</h4>
+                        <label>
+                            {tt('g.choose_language')}
+                            <select
+                                defaultValue={user_preferences.locale}
+                                onChange={this.handleLanguageChange}
+                            >
+                                <option value="en">English</option>
+                                <option value="es">Spanish Español</option>
+                                <option value="ru">Russian русский</option>
+                                <option value="fr">French français</option>
+                                <option value="it">Italian italiano</option>
+                                <option value="ko">Korean 한국어</option>
+                                <option value="ja">Japanese 日本語</option>
+                                <option value="pl">Polish</option>
+                                <option value="zh">Chinese 简体中文</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <br />
+
                 <div className="row">
                     <form
                         onSubmit={this.handleSubmitForm}
@@ -361,7 +387,6 @@ export default connect(
         const { accountname } = ownProps.routeParams;
         const account = state.global.getIn(['accounts', accountname]).toJS();
         const current_user = state.user.get('current');
-        const username = current_user ? current_user.get('username') : '';
         let metaData = account
             ? o2j.ifStringParseJSON(account.json_metadata)
             : {};
@@ -374,7 +399,6 @@ export default connect(
             account,
             metaData,
             accountname,
-            isOwnAccount: username == accountname,
             profile,
             user_preferences,
             ...ownProps,
@@ -384,6 +408,9 @@ export default connect(
     dispatch => ({
         changeLanguage: language => {
             dispatch(userActions.changeLanguage(language));
+        },
+        setUserPreferences: payload => {
+            dispatch(appActions.setUserPreferences(payload));
         },
         uploadImage: (file, progress) =>
             dispatch(userActions.uploadImage({ file, progress })),
