@@ -514,7 +514,7 @@
         "the_active_key_is_used_to_make_transfers_and_place_orders":
             "The active key is used to make transfers and place orders in the internal market.",
         "the_owner_key_is_required_to_change_other_keys":
-            "The owner key is the master key for the account and is required to change the other keys.",
+            "The owner key is required to change the other keys.",
         "the_private_key_or_password_should_be_kept_offline":
             "The private key or password for the owner key should be kept offline as much as possible.",
         "the_memo_key_is_used_to_create_and_read_memos":
@@ -821,7 +821,7 @@
         "already_power_down":
             "You are already powering down %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s paid out so far). Note that if you change the power down amount the payout schedule will reset.",
         "delegating":
-            "You are delegating %(AMOUNT)s %(LIQUID_TICKER)s. That amount is locked up and not available to power down until the delegation is removed and a full reward period has passed.",
+            "You are delegating %(AMOUNT)s %(LIQUID_TICKER)s. That amount is locked up and not available to power down until the delegation is removed and 5 days have passed.",
         "per_week": "That's ~%(AMOUNT)s %(LIQUID_TICKER)s per week.",
         "warning":
             "Leaving less than %(AMOUNT)s %(VESTING_TOKEN)s in your account is not recommended and can leave your account in a unusable state.",
