@@ -64,7 +64,23 @@ export function* fetchState(location_change_action) {
 
     yield put(appActions.fetchDataBegin());
     try {
-        const state = yield call(getStateAsync, url);
+        let state = yield call(getStateAsync, url);
+        if (state.content) {
+            // Fetch SCOT data
+            const m = pathname.match(/@([a-z0-9\.-]+)\/(.*)#?/);
+            if (m && m.length === 3) {
+                const author = m[1];
+                const permlink = m[2];
+                if (permlink !== 'feed') {
+                    let scotData = yield fetch(
+                        `http://54.91.228.37:5000/@${author}/${permlink}`,
+                        { method: 'GET' }
+                    );
+                    scotData = yield scotData.json();
+                    state.scotData = scotData;
+                }
+            }
+        }
         yield put(globalActions.receiveState(state));
         yield call(syncPinnedPosts);
     } catch (error) {

@@ -65,6 +65,7 @@ class Voting extends React.Component {
         voting: PropTypes.bool,
         price_per_steem: PropTypes.number,
         sbd_print_rate: PropTypes.number,
+        scotData: PropTypes.object,
     };
 
     static defaultProps = {
@@ -230,6 +231,7 @@ class Voting extends React.Component {
             price_per_steem,
             sbd_print_rate,
             username,
+            scotData,
         } = this.props;
 
         const { votingUp, votingDown, showWeight, myVote } = this.state;
@@ -353,9 +355,29 @@ class Voting extends React.Component {
             );
         }
 
-        const total_votes = post_obj.getIn(['stats', 'total_votes']);
+        let scot_pending_token;
+        let scot_total_author_payout;
+        let scot_total_curator_payout;
+        let scot_active_votes;
+        let scot_payout;
+        let scot_cashout_time;
+        if (scotData) {
+            scot_pending_token = scotData.get('pending_token');
+            scot_total_author_payout = scotData.get('total_payout_value');
+            scot_total_curator_payout = scotData.get('curator_payout_value');
+            scot_active_votes = scotData.get('active_votes');
+            scot_cashout_time = scotData.get('cashout_time');
+            scot_payout = scot_pending_token
+                ? scot_pending_token
+                : scot_total_author_payout + scot_total_curator_payout;
+        }
+        const total_votes = scot_active_votes
+            ? scot_active_votes.toJS().length
+            : post_obj.getIn(['stats', 'total_votes']);
 
-        const cashout_time = post_obj.get('cashout_time');
+        const cashout_time = scot_cashout_time
+            ? scot_cashout_time
+            : post_obj.get('cashout_time');
         const max_payout = parsePayoutAmount(
             post_obj.get('max_accepted_payout')
         );
@@ -400,40 +422,53 @@ class Voting extends React.Component {
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
         const cashout_active =
-            pending_payout > 0 ||
+            (!scotData && pending_payout > 0) ||
+            (scotData && scot_pending_token > 0) ||
             (cashout_time.indexOf('1969') !== 0 &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
 
         if (cashout_active) {
-            payoutItems.push({
-                value: tt('voting_jsx.pending_payout', {
-                    value: formatDecimal(pending_payout).join(''),
-                }),
-            });
-            if (max_payout > 0) {
+            if (scotData) {
+                if (scot_pending_token > 0) {
+                    payoutItems.push({ value: 'Pending Payout' });
+                    payoutItems.push({ value: `${scot_pending_token} SCOTT` });
+                    payoutItems.push({
+                        value: <TimeAgoWrapper date={cashout_time} />,
+                    });
+                }
+            } else {
                 payoutItems.push({
-                    value:
-                        '(' +
-                        formatDecimal(pending_payout_printed_sbd).join('') +
-                        ' ' +
-                        DEBT_TOKEN_SHORT +
-                        ', ' +
-                        (sbd_print_rate != SBD_PRINT_RATE_MAX
-                            ? formatDecimal(pending_payout_printed_steem).join(
-                                  ''
-                              ) +
-                              ' ' +
-                              LIQUID_TOKEN_UPPERCASE +
-                              ', '
-                            : '') +
-                        formatDecimal(pending_payout_sp).join('') +
-                        ' ' +
-                        INVEST_TOKEN_SHORT +
-                        ')',
+                    value: tt('voting_jsx.pending_payout', {
+                        value: formatDecimal(pending_payout).join(''),
+                    }),
+                });
+                if (max_payout > 0) {
+                    payoutItems.push({
+                        value:
+                            '(' +
+                            formatDecimal(pending_payout_printed_sbd).join('') +
+                            ' ' +
+                            DEBT_TOKEN_SHORT +
+                            ', ' +
+                            (sbd_print_rate != SBD_PRINT_RATE_MAX
+                                ? formatDecimal(
+                                      pending_payout_printed_steem
+                                  ).join('') +
+                                  ' ' +
+                                  LIQUID_TOKEN_UPPERCASE +
+                                  ', '
+                                : '') +
+                            formatDecimal(pending_payout_sp).join('') +
+                            ' ' +
+                            INVEST_TOKEN_SHORT +
+                            ')',
+                    });
+                }
+                payoutItems.push({
+                    value: <TimeAgoWrapper date={cashout_time} />,
                 });
             }
-            payoutItems.push({ value: <TimeAgoWrapper date={cashout_time} /> });
         }
 
         if (max_payout == 0) {
@@ -452,7 +487,19 @@ class Voting extends React.Component {
                 }),
             });
         }
-        if (total_author_payout > 0) {
+        if (scotData) {
+            if (scot_total_author_payout) {
+                payoutItems.push({
+                    value: `Past Token Payouts ${scot_payout} SCOTT`,
+                });
+                payoutItems.push({
+                    value: `- Author ${scot_total_author_payout} SCOTT`,
+                });
+                payoutItems.push({
+                    value: `- Curator ${scot_total_curator_payout} SCOTT`,
+                });
+            }
+        } else if (total_author_payout > 0) {
             payoutItems.push({
                 value: tt('voting_jsx.past_payouts', {
                     value: formatDecimal(
@@ -471,12 +518,13 @@ class Voting extends React.Component {
                 }),
             });
         }
+
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
                 <span style={payout_limit_hit ? { opacity: '0.5' } : {}}>
                     <FormattedAsset
-                        amount={payout}
-                        asset="$"
+                        amount={scotData ? scot_payout : payout}
+                        asset={scotData ? 'SCOTT' : '$'}
                         classname={max_payout === 0 ? 'strikethrough' : ''}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
@@ -485,8 +533,14 @@ class Voting extends React.Component {
         );
 
         let voters_list = null;
-        if (showList && total_votes > 0 && active_votes) {
-            const avotes = active_votes.toJS();
+        if (
+            showList &&
+            total_votes > 0 &&
+            (active_votes || scot_active_votes)
+        ) {
+            const avotes = scot_active_votes
+                ? scot_active_votes.toJS()
+                : active_votes.toJS();
             avotes.sort(
                 (a, b) =>
                     Math.abs(parseInt(a.rshares)) >
@@ -609,6 +663,7 @@ export default connect(
     (state, ownProps) => {
         const post = state.global.getIn(['content', ownProps.post]);
         if (!post) return ownProps;
+        const scotData = state.global.getIn(['scotData', 'SCOTT']);
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
@@ -652,6 +707,7 @@ export default connect(
             voting,
             price_per_steem,
             sbd_print_rate,
+            scotData,
         };
     },
 
