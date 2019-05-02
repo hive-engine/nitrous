@@ -486,13 +486,18 @@ function* uploadImage({
 
     const stateUser = yield select(state => state.user);
     const username = stateUser.getIn(['current', 'username']);
-    const d = stateUser.getIn(['current', 'private_keys', 'posting_private']);
+    const hasPosting = stateUser.getIn(['current', 'private_keys', 'posting_private']);
+    const hasActive = stateUser.getIn(['current', 'private_keys', 'active_private']);
+
     if (!username) {
         progress({ error: 'Please login first.' });
         return;
     }
-    if (!d) {
-        progress({ error: 'Login with your posting key' });
+
+    if (!hasPosting && !hasActive) {
+        // we still allow upload with the posting key, but it will prompt for active to update either way
+        // (due to current blockchain rules)
+        progress({ error: 'Login with your active key' });
         return;
     }
 
@@ -533,7 +538,7 @@ function* uploadImage({
         formData.append('filebase64', dataBs64);
     }
 
-    const sig = Signature.signBufferSha256(bufSha, d);
+    const sig = Signature.signBufferSha256(bufSha, (hasPosting ? hasPosting : hasActive));
     const postUrl = `${$STM_Config.upload_image}/${username}/${sig.toHex()}`;
 
     const xhr = new XMLHttpRequest();
