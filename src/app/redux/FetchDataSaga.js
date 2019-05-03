@@ -1,4 +1,5 @@
 import {
+    all,
     call,
     put,
     select,
@@ -29,6 +30,15 @@ export const fetchDataWatches = [
 
 export function* getContentCaller(action) {
     yield getContent(action.payload);
+}
+
+async function getScotDataAsync(key) {
+    const scotData = await fetch(`http://54.91.228.37:5000/@${key}`, {
+        method: 'GET',
+    });
+    if (scotData.ok) {
+        return [key, await scotData.json()];
+    }
 }
 
 let is_initial_state = true;
@@ -66,27 +76,23 @@ export function* fetchState(location_change_action) {
     try {
         let state = yield call(getStateAsync, url);
         if (state.content) {
-            // Fetch SCOT data
-            const m = pathname.match(/@([a-z0-9\.-]+)\/(.*)#?/);
-            if (m && m.length === 3) {
-                const author = m[1];
-                const permlink = m[2];
-                if (
-                    permlink !== 'feed' &&
-                    permlink !== 'comments' &&
-                    permlink !== 'replies'
-                ) {
-                    let scotData = yield fetch(
-                        `http://54.91.228.37:5000/@${author}/${permlink}`,
-                        { method: 'GET' }
-                    );
-                    scotData = yield scotData.json();
-                    const postState = state.content[`${author}/${permlink}`];
-                    if (postState) {
-                        postState.scotData = scotData;
-                    }
+            const allScotData = yield all(
+                Object.entries(state.content)
+                    .filter(entry => {
+                        return entry[0].match(/[a-z0-9\.-]+\/.*?/);
+                    })
+                    .map(entry => {
+                        const k = entry[0];
+                        const v = entry[1];
+                        // Fetch SCOT data
+                        return call(getScotDataAsync, k);
+                    })
+            );
+            allScotData.forEach(entry => {
+                if (entry) {
+                    state.content[entry[0]].scotData = entry[1];
                 }
-            }
+            });
         }
         yield put(globalActions.receiveState(state));
         yield call(syncPinnedPosts);
