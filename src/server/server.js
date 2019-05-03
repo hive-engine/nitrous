@@ -36,7 +36,7 @@ const app = new Koa();
 app.name = 'Steemit app';
 const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
-const cacheOpts = { maxAge: 86400000, gzip: true, buffer: true };
+const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
 
 // Serve static assets without fanfare
 app.use(
@@ -129,9 +129,9 @@ function convertEntriesToArrays(obj) {
 }
 
 // Fetch cached currency data for homepage
-const steemMarket = new SteemMarket();
+//const steemMarket = new SteemMarket();
 app.use(function*(next) {
-    this.steemMarketData = yield steemMarket.get();
+    this.steemMarketData = {}; // = yield steemMarket.get();
     yield next;
 });
 
