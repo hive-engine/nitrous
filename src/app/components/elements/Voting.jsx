@@ -362,9 +362,13 @@ class Voting extends React.Component {
         let scot_payout;
         let scot_cashout_time;
         if (scotData) {
-            scot_pending_token = scotData.get('pending_token');
-            scot_total_author_payout = scotData.get('total_payout_value');
-            scot_total_curator_payout = scotData.get('curator_payout_value');
+            const scot_dec = 1000;
+            scot_pending_token =
+                parseInt(scotData.get('pending_token')) / scot_dec;
+            scot_total_author_payout =
+                parseInt(scotData.get('total_payout_value')) / scot_dec;
+            scot_total_curator_payout =
+                parseInt(scotData.get('curator_payout_value')) / scot_dec;
             scot_active_votes = scotData.get('active_votes');
             scot_cashout_time = scotData.get('cashout_time');
             scot_payout = scot_pending_token
@@ -663,7 +667,7 @@ export default connect(
     (state, ownProps) => {
         const post = state.global.getIn(['content', ownProps.post]);
         if (!post) return ownProps;
-        const scotData = state.global.getIn(['scotData', 'SCOTT']);
+        const scotData = post.getIn(['scotData', 'SCOTT']);
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');

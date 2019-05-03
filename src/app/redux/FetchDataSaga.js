@@ -71,13 +71,20 @@ export function* fetchState(location_change_action) {
             if (m && m.length === 3) {
                 const author = m[1];
                 const permlink = m[2];
-                if (permlink !== 'feed') {
+                if (
+                    permlink !== 'feed' &&
+                    permlink !== 'comments' &&
+                    permlink !== 'replies'
+                ) {
                     let scotData = yield fetch(
                         `http://54.91.228.37:5000/@${author}/${permlink}`,
                         { method: 'GET' }
                     );
                     scotData = yield scotData.json();
-                    state.scotData = scotData;
+                    const postState = state.content[`${author}/${permlink}`];
+                    if (postState) {
+                        postState.scotData = scotData;
+                    }
                 }
             }
         }
