@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -355,12 +356,11 @@ class Voting extends React.Component {
             );
         }
 
-        let scot_pending_token;
-        let scot_total_author_payout;
-        let scot_total_curator_payout;
-        let scot_active_votes;
-        let scot_payout;
-        let scot_cashout_time;
+        let scot_pending_token = 0;
+        let scot_total_author_payout = 0;
+        let scot_total_curator_payout = 0;
+        let payout = 0;
+        let cashout_time = '1969';
         if (scotData) {
             const scot_dec = 1000;
             scot_pending_token =
@@ -369,50 +369,15 @@ class Voting extends React.Component {
                 parseInt(scotData.get('total_payout_value')) / scot_dec;
             scot_total_curator_payout =
                 parseInt(scotData.get('curator_payout_value')) / scot_dec;
-            scot_active_votes = scotData.get('active_votes');
-            scot_cashout_time = scotData.get('cashout_time');
-            scot_payout = scot_pending_token
+            cashout_time = scotData.get('cashout_time');
+            payout = scot_pending_token
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
         }
-        const total_votes = scot_active_votes
-            ? scot_active_votes.toJS().length
-            : post_obj.getIn(['stats', 'total_votes']);
+        const total_votes = active_votes.toJS().length;
 
-        const cashout_time = scot_cashout_time
-            ? scot_cashout_time
-            : post_obj.get('cashout_time');
-        const max_payout = parsePayoutAmount(
-            post_obj.get('max_accepted_payout')
-        );
-        const pending_payout = parsePayoutAmount(
-            post_obj.get('pending_payout_value')
-        );
-        const percent_steem_dollars =
-            post_obj.get('percent_steem_dollars') / 20000;
-        const pending_payout_sbd = pending_payout * percent_steem_dollars;
-        const pending_payout_sp =
-            (pending_payout - pending_payout_sbd) / price_per_steem;
-        const pending_payout_printed_sbd =
-            pending_payout_sbd * (sbd_print_rate / SBD_PRINT_RATE_MAX);
-        const pending_payout_printed_steem =
-            (pending_payout_sbd - pending_payout_printed_sbd) / price_per_steem;
-
-        const promoted = parsePayoutAmount(post_obj.get('promoted'));
-        const total_author_payout = parsePayoutAmount(
-            post_obj.get('total_payout_value')
-        );
-        const total_curator_payout = parsePayoutAmount(
-            post_obj.get('curator_payout_value')
-        );
-
-        let payout =
-            pending_payout + total_author_payout + total_curator_payout;
         if (payout < 0.0) payout = 0.0;
-        if (payout > max_payout) payout = max_payout;
-        const payout_limit_hit = payout >= max_payout;
-        // Show pending payout amount for declined payment posts
-        if (max_payout === 0) payout = pending_payout;
+
         const up = (
             <Icon
                 name={votingUpActive ? 'empty' : 'chevron-up-circle'}
@@ -426,125 +391,41 @@ class Voting extends React.Component {
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
         const cashout_active =
-            (!scotData && pending_payout > 0) ||
-            (scotData && scot_pending_token > 0) ||
+            scot_pending_token > 0 ||
             (cashout_time.indexOf('1969') !== 0 &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
 
         if (cashout_active) {
-            if (scotData) {
-                if (scot_pending_token > 0) {
-                    payoutItems.push({ value: 'Pending Payout' });
-                    payoutItems.push({ value: `${scot_pending_token} SCOTT` });
-                    payoutItems.push({
-                        value: <TimeAgoWrapper date={cashout_time} />,
-                    });
-                }
-            } else {
-                payoutItems.push({
-                    value: tt('voting_jsx.pending_payout', {
-                        value: formatDecimal(pending_payout).join(''),
-                    }),
-                });
-                if (max_payout > 0) {
-                    payoutItems.push({
-                        value:
-                            '(' +
-                            formatDecimal(pending_payout_printed_sbd).join('') +
-                            ' ' +
-                            DEBT_TOKEN_SHORT +
-                            ', ' +
-                            (sbd_print_rate != SBD_PRINT_RATE_MAX
-                                ? formatDecimal(
-                                      pending_payout_printed_steem
-                                  ).join('') +
-                                  ' ' +
-                                  LIQUID_TOKEN_UPPERCASE +
-                                  ', '
-                                : '') +
-                            formatDecimal(pending_payout_sp).join('') +
-                            ' ' +
-                            INVEST_TOKEN_SHORT +
-                            ')',
-                    });
-                }
-                payoutItems.push({
-                    value: <TimeAgoWrapper date={cashout_time} />,
-                });
-            }
-        }
-
-        if (max_payout == 0) {
-            payoutItems.push({ value: tt('voting_jsx.payout_declined') });
-        } else if (max_payout < 1000000) {
+            payoutItems.push({ value: 'Pending Payout' });
+            payoutItems.push({ value: `${scot_pending_token} SCOTT` });
             payoutItems.push({
-                value: tt('voting_jsx.max_accepted_payout', {
-                    value: formatDecimal(max_payout).join(''),
-                }),
+                value: <TimeAgoWrapper date={cashout_time} />,
             });
-        }
-        if (promoted > 0) {
+        } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: tt('voting_jsx.promotion_cost', {
-                    value: formatDecimal(promoted).join(''),
-                }),
-            });
-        }
-        if (scotData) {
-            if (scot_total_author_payout) {
-                payoutItems.push({
-                    value: `Past Token Payouts ${scot_payout} SCOTT`,
-                });
-                payoutItems.push({
-                    value: `- Author ${scot_total_author_payout} SCOTT`,
-                });
-                payoutItems.push({
-                    value: `- Curator ${scot_total_curator_payout} SCOTT`,
-                });
-            }
-        } else if (total_author_payout > 0) {
-            payoutItems.push({
-                value: tt('voting_jsx.past_payouts', {
-                    value: formatDecimal(
-                        total_author_payout + total_curator_payout
-                    ).join(''),
-                }),
+                value: `Past Token Payouts ${payout} SCOTT`,
             });
             payoutItems.push({
-                value: tt('voting_jsx.past_payouts_author', {
-                    value: formatDecimal(total_author_payout).join(''),
-                }),
+                value: `- Author ${scot_total_author_payout} SCOTT`,
             });
             payoutItems.push({
-                value: tt('voting_jsx.past_payouts_curators', {
-                    value: formatDecimal(total_curator_payout).join(''),
-                }),
+                value: `- Curator ${scot_total_curator_payout} SCOTT`,
             });
         }
 
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
-                <span style={payout_limit_hit ? { opacity: '0.5' } : {}}>
-                    <FormattedAsset
-                        amount={scotData ? scot_payout : payout}
-                        asset={scotData ? 'SCOTT' : '$'}
-                        classname={max_payout === 0 ? 'strikethrough' : ''}
-                    />
+                <span>
+                    <FormattedAsset amount={payout} asset={'SCOTT'} />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
             </DropdownMenu>
         );
 
         let voters_list = null;
-        if (
-            showList &&
-            total_votes > 0 &&
-            (active_votes || scot_active_votes)
-        ) {
-            const avotes = scot_active_votes
-                ? scot_active_votes.toJS()
-                : active_votes.toJS();
+        if (showList && total_votes > 0 && active_votes) {
+            const avotes = active_votes.toJS();
             avotes.sort(
                 (a, b) =>
                     Math.abs(parseInt(a.rshares)) >
@@ -670,7 +551,7 @@ export default connect(
         const scotData = post.getIn(['scotData', 'SCOTT']);
         const author = post.get('author');
         const permlink = post.get('permlink');
-        const active_votes = post.get('active_votes');
+        const active_votes = scotData ? scotData.get('active_votes') : List();
         const is_comment = post.get('parent_author') !== '';
 
         const current_account = state.user.get('current');
