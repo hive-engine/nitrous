@@ -360,7 +360,8 @@ class Voting extends React.Component {
         let scot_total_author_payout = 0;
         let scot_total_curator_payout = 0;
         let payout = 0;
-        let cashout_time = '1969';
+        // Arbitrary invalid cash time (steem related behavior)
+        let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
             const scot_dec = 1000;
             scot_pending_token =
@@ -392,7 +393,7 @@ class Voting extends React.Component {
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
         const cashout_active =
             scot_pending_token > 0 ||
-            (cashout_time.indexOf('1969') !== 0 &&
+            (Date.parse(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
 
