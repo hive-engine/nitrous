@@ -15,7 +15,7 @@ function addSiteMeta(metas) {
     metas.push({ property: 'og:description', content: site_desc });
     metas.push({
         property: 'og:image',
-        content: 'https://steemit.com/images/steemit.png',
+        content: 'https://www.weedcash.network/images/weedcash.png',
     });
     metas.push({ property: 'fb:app_id', content: $STM_Config.fb_app });
     metas.push({ name: 'twitter:card', content: 'summary' });
@@ -24,7 +24,7 @@ function addSiteMeta(metas) {
     metas.push({ name: 'twitter:description', site_desc });
     metas.push({
         name: 'twitter:image',
-        content: 'https://steemit.com/images/steemit.png',
+        content: 'https://www.weedcash.network/images/weedcash.png',
     });
 }
 
@@ -39,9 +39,9 @@ export default function extractMeta(chain_data, rp) {
         if (content && content.id !== '0.0.0') {
             // API currently returns 'false' data with id 0.0.0 for posts that do not exist
             const d = extractContent(objAccessor, content, false);
-            const url = 'https://steemit.com' + d.link;
+            const url = 'https://www.weedcash.network' + d.link;
             const canonicalUrl = makeCanonicalLink(d);
-            const title = d.title + ' — Steemit';
+            const title = d.title + ' — Weedcash';
             const desc = d.desc + ' by ' + d.author;
             const image = d.image_link || profile.profile_image;
             const { category, created } = d;
@@ -57,10 +57,11 @@ export default function extractMeta(chain_data, rp) {
             metas.push({ name: 'og:url', content: url });
             metas.push({
                 name: 'og:image',
-                content: image || 'https://steemit.com/images/steemit.png',
+                content:
+                    image || 'https://www.weedcash.network/images/weedcash.png',
             });
             metas.push({ name: 'og:description', content: desc });
-            metas.push({ name: 'og:site_name', content: 'Steemit' });
+            metas.push({ name: 'og:site_name', content: 'Weedcash' });
             metas.push({ name: 'fb:app_id', content: $STM_Config.fb_app });
             metas.push({ name: 'article:tag', content: category });
             metas.push({

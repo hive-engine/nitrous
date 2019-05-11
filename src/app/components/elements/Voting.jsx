@@ -363,7 +363,7 @@ class Voting extends React.Component {
         // Arbitrary invalid cash time (steem related behavior)
         let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
-            const scot_dec = 1000;
+            const scot_dec = 100000000;
             scot_pending_token =
                 parseInt(scotData.get('pending_token')) / scot_dec;
             scot_total_author_payout =
