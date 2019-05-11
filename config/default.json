@@ -4,7 +4,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://steemrewarding.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' www.youtube.com staticxx.facebook.com player.vimeo.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
