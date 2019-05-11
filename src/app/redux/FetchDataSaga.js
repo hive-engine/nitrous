@@ -33,7 +33,7 @@ export function* getContentCaller(action) {
 }
 
 async function getScotDataAsync(key) {
-    const scotData = await fetch(`https://steemrewarding.com/test/@${key}`, {
+    const scotData = await fetch(`https://scot-api.steem-engine.com/@${key}`, {
         method: 'GET',
     });
     if (scotData.ok) {
