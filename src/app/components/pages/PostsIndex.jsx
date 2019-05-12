@@ -316,9 +316,12 @@ module.exports = {
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 sortOrder: ownProps.params.order,
                 topic: ownProps.params.category,
-                categories: state.global
-                    .getIn(['tag_idx', 'trending'])
-                    .take(50),
+                categories: List([
+                    'weedcash',
+                    'weed',
+                    'cannabis',
+                    'psychedelic',
+                ]),
                 pinned: state.offchain.get('pinned_posts'),
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,

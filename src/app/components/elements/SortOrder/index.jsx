@@ -27,6 +27,10 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'trending';
     }
 
+    if (!tag) {
+        tag = 'weedcash';
+    }
+
     const makeRoute = (tag, sort) =>
         tag ? `/${sort.value}/${tag}` : `/${sort.value}`;
 
