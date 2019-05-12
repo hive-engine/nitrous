@@ -165,7 +165,7 @@ class PostsList extends React.Component {
         posts.forEach(item => {
             const cont = content.get(item);
             if (!cont) {
-                console.error('PostsList --> Missing cont key', item);
+                //console.error('PostsList --> Missing cont key', item);
                 return;
             }
             const ignore =

@@ -323,6 +323,25 @@ export async function serverRender(
             ] = pinnedPost;
         });
 
+        const filteredContent = {};
+        Object.entries(onchain.content)
+            .filter(entry => {
+                try {
+                    const jsonMetadata = JSON.parse(entry[1].json_metadata);
+                    return (
+                        jsonMetadata.tags &&
+                        jsonMetadata.tags.find(t => t === 'weedcash')
+                    );
+                } catch (e) {
+                    // Ignore anything that doesn't match tag.
+                }
+                return false;
+            })
+            .forEach(entry => {
+                filteredContent[entry[0]] = entry[1];
+            });
+        onchain.content = filteredContent;
+
         server_store = createStore(rootReducer, {
             app: initialState.app,
             global: onchain,
