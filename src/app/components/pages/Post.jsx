@@ -95,7 +95,10 @@ class Post extends React.Component {
             }
         }
 
-        let replies = dis.get('replies').toJS();
+        let replies = dis
+            .get('replies')
+            .toJS()
+            .filter(c => content.get(c));
 
         sortComments(content, replies, sortOrder);
 
