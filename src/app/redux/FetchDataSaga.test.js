@@ -7,7 +7,7 @@ import constants from './constants';
 import { fetchData } from './FetchDataSaga';
 
 describe('FetchDataSaga', () => {
-    describe('should fetch multiple and filter', () => {
+    xdescribe('should fetch multiple and filter', () => {
         let payload = {
             order: 'by_author',
             author: 'alice',
@@ -110,7 +110,7 @@ describe('FetchDataSaga', () => {
             expect(actual).toEqual(put(appActions.fetchDataEnd()));
         });
     });
-    describe('should not fetch more batches than max batch size', () => {
+    xdescribe('should not fetch more batches than max batch size', () => {
         let payload = {
             order: 'by_author',
             author: 'alice',

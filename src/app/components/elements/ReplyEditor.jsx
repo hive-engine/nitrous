@@ -927,6 +927,8 @@ export default formId =>
                 while (allCategories.size < 5 && postHashtags.length > 0) {
                     allCategories = allCategories.add(postHashtags.shift());
                 }
+                // Add scot tag
+                allCategories = allCategories.add('weedcash');
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
