@@ -27,11 +27,6 @@ const SidebarLinks = ({ username }) => (
                         {tt('g.my_wallet')}
                     </a>
                 </li>
-                <li className="c-sidebar__list-item">
-                    <a className="c-sidebar__link" href="/@steemitblog">
-                        {tt('g.read_offical_blog')}
-                    </a>
-                </li>
             </ul>
         </div>
     </div>

@@ -52,45 +52,9 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'welcome',
-                label: tt('navigation.welcome'),
-                link: `/welcome`,
-            },
-            {
-                value: 'faq',
-                label: tt('navigation.faq'),
-                link: `/faq.html`,
-            },
-            {
-                value: 'tags',
-                label: tt('navigation.explore'),
-                link: `/tags`,
-            },
-            {
                 value: 'market',
                 label: tt('navigation.currency_market'),
-                link: `${walletUrl}/market`,
-            },
-            {
-                value: 'advertise',
-                label: tt('navigation.advertise'),
-                link: 'https://staticfiles.steemit.com/SteemitMediaKit.pdf',
-                isExternal: true,
-            },
-            {
-                value: 'recover_account_step_1',
-                label: tt('navigation.stolen_account_recovery'),
-                link: `${walletUrl}/recover_account_step_1`,
-            },
-            {
-                value: 'change_password',
-                label: tt('navigation.change_account_password'),
-                link: `${walletUrl}/change_password`,
-            },
-            {
-                value: 'vote_for_witnesses',
-                label: tt('navigation.vote_for_witnesses'),
-                link: `${walletUrl}/~witnesses`,
+                link: `https://steem-engine.com/?p=market`,
             },
         ],
         exchanges: [
@@ -114,11 +78,6 @@ const SidePanel = ({
                 value: 'chat',
                 label: tt('navigation.chat'),
                 link: 'https://steem.chat/home',
-            },
-            {
-                value: 'jobs',
-                label: tt('navigation.jobs'),
-                link: 'https://jobs.lever.co/steemit',
             },
             {
                 value: 'tools',
@@ -207,15 +166,6 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['exchanges'].map(makeLink)}
-                </ul>
-                <ul className="vertical menu">
-                    {sidePanelLinks['external'].map(makeLink)}
-                </ul>
-                <ul className="vertical menu">
-                    {sidePanelLinks['organizational'].map(makeLink)}
-                </ul>
-                <ul className="vertical menu">
-                    {sidePanelLinks['legal'].map(makeLink)}
                 </ul>
             </div>
         </div>
