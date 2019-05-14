@@ -47,7 +47,7 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
+    'Bloque64 is a social media platform where everyone gets paid for ' +
     'creating and curating content. It leverages a robust digital points system, called BLQ, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
