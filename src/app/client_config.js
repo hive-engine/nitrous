@@ -1,21 +1,21 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'Bloque64';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
-export const APP_ICON = 'weedcash';
+export const APP_NAME_LATIN = 'Bloque64';
+export const APP_NAME_UPPERCASE = 'BLOQUE64';
+export const APP_ICON = 'bloque64';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
-export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = List(['weedcash', 'weed', 'cannabis', 'psychedelic']);
+export const APP_URL = 'https://blogs.bloque64.com';
+export const APP_DOMAIN = 'blogs.bloque64.com';
+export const SCOT_TAG = 'bloque64';
+export const TAG_LIST = List(['bloque64']);
 export const LIQUID_TOKEN = 'Weed';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'BLQ';
 
 export const VESTING_TOKEN = 'STEEM POWER';
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
@@ -48,7 +48,7 @@ export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
     'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'creating and curating content. It leverages a robust digital points system, called BLQ, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
