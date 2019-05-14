@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import tt from 'counterpart';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
+import { SCOT_TAG } from 'app/client_config';
 import NativeSelect from 'app/components/elements/NativeSelect';
 
 const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
@@ -28,7 +29,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     }
 
     if (!tag) {
-        tag = 'weedcash';
+        tag = SCOT_TAG;
     }
 
     const makeRoute = (tag, sort) =>

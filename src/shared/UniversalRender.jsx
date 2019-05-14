@@ -5,6 +5,7 @@ import Iso from 'iso';
 import React from 'react';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
+import { SCOT_TAG } from 'app/client_config';
 import {
     Router,
     RouterContext,
@@ -330,7 +331,7 @@ export async function serverRender(
                     const jsonMetadata = JSON.parse(entry[1].json_metadata);
                     return (
                         jsonMetadata.tags &&
-                        jsonMetadata.tags.find(t => t === 'weedcash')
+                        jsonMetadata.tags.find(t => t === SCOT_TAG)
                     );
                 } catch (e) {
                     // Ignore anything that doesn't match tag.

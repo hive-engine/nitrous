@@ -16,6 +16,7 @@ import * as appActions from 'app/redux/AppReducer';
 import Userpic from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
 import SvgImage from 'app/components/elements/SvgImage';
+import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
@@ -290,7 +291,7 @@ class Header extends React.Component {
                             {/*LOGO*/}
                             <Link to={logo_link}>
                                 <SvgImage
-                                    name="weedcash"
+                                    name={APP_ICON}
                                     width="150px"
                                     height="40px"
                                 />

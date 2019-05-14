@@ -15,6 +15,7 @@ import * as appActions from './AppReducer';
 import constants from './constants';
 import { fromJS, Map, Set } from 'immutable';
 import { getStateAsync } from 'app/utils/steemApi';
+import { SCOT_TAG } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -82,7 +83,7 @@ export function* fetchState(location_change_action) {
                         const jsonMetadata = JSON.parse(entry[1].json_metadata);
                         return (
                             jsonMetadata.tags &&
-                            jsonMetadata.tags.find(t => t === 'weedcash')
+                            jsonMetadata.tags.find(t => t === SCOT_TAG)
                         );
                     } catch (e) {
                         console.error(e);
@@ -277,7 +278,7 @@ export function* fetchData(action) {
 
             data = data.filter(post => {
                 const jsonMetadata = JSON.parse(post.json_metadata);
-                return jsonMetadata.tags.find(t => t === 'weedcash');
+                return jsonMetadata.tags.find(t => t === SCOT_TAG);
             });
             endOfData = data.length < constants.FETCH_DATA_BATCH_SIZE;
 

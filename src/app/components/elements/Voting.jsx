@@ -392,26 +392,35 @@ class Voting extends React.Component {
 
         if (cashout_active) {
             payoutItems.push({ value: 'Pending Payout' });
-            payoutItems.push({ value: `${scot_pending_token} WEED` });
+            payoutItems.push({
+                value: `${scot_pending_token} ${LIQUID_TOKEN_UPPERCASE}`,
+            });
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
         } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: `Past Token Payouts ${payout} WEED`,
+                value: `Past Token Payouts ${payout} ${LIQUID_TOKEN_UPPERCASE}`,
             });
             payoutItems.push({
-                value: `- Author ${scot_total_author_payout} WEED`,
+                value: `- Author ${scot_total_author_payout} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
             });
             payoutItems.push({
-                value: `- Curator ${scot_total_curator_payout} WEED`,
+                value: `- Curator ${scot_total_curator_payout} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
             });
         }
 
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
                 <span>
-                    <FormattedAsset amount={payout} asset={'WEED'} />
+                    <FormattedAsset
+                        amount={payout}
+                        asset={LIQUID_TOKEN_UPPERCASE}
+                    />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
             </DropdownMenu>
@@ -546,7 +555,7 @@ export default connect(
     (state, ownProps) => {
         const post = state.global.getIn(['content', ownProps.post]);
         if (!post) return ownProps;
-        const scotData = post.getIn(['scotData', 'WEED']);
+        const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = scotData ? scotData.get('active_votes') : List();

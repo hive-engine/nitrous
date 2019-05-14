@@ -17,6 +17,7 @@ import { Set } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
+import { SCOT_TAG } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -928,7 +929,7 @@ export default formId =>
                     allCategories = allCategories.add(postHashtags.shift());
                 }
                 // Add scot tag
-                allCategories = allCategories.add('weedcash');
+                allCategories = allCategories.add(SCOT_TAG);
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};

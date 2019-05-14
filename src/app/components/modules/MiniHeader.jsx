@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'app/components/elements/Icon';
 import SvgImage from 'app/components/elements/SvgImage';
-import { APP_NAME } from 'app/client_config';
+import { APP_NAME, APP_ICON } from 'app/client_config';
 
 export default function MiniHeader() {
     return (
@@ -13,7 +13,7 @@ export default function MiniHeader() {
                             <li className="Header__top-logo">
                                 <a href="/">
                                     <SvgImage
-                                        name="weedcash"
+                                        name={APP_ICON}
                                         width="150px"
                                         height="40px"
                                     />

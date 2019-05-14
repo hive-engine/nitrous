@@ -1,4 +1,5 @@
 import React from 'react';
+import { APP_ICON } from 'app/client_config';
 import SvgImage from 'app/components/elements/SvgImage';
 import { translateHtml } from 'app/Translator';
 
@@ -7,7 +8,7 @@ export default class Index extends React.Component {
         return (
             <div className="Index">
                 <div className="text-center">
-                    <SvgImage name="weedcash" width="480px" height="240px" />
+                    <SvgImage name={APP_ICON} width="480px" height="240px" />
                 </div>
                 <h1 className="center text-center">
                     {translateHtml(
