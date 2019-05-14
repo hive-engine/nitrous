@@ -12,7 +12,16 @@ export const APP_ICON = 'actnearn';
 export const APP_URL = 'https://actnearn.herokuapp.com';
 export const APP_DOMAIN = 'actnearn.herokuapp.com';
 export const SCOT_TAG = 'actnearn';
-export const TAG_LIST = List(['actnearn']);
+export const TAG_LIST = List([
+    'actnearn',
+    'twitter',
+    'facebook',
+    'linkedin',
+    'youtube',
+    'instagram',
+    'social',
+    'influence',
+]);
 export const LIQUID_TOKEN = 'Actnearn';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'ACTNEARN';
