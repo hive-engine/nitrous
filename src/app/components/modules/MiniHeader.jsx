@@ -34,11 +34,6 @@ export default function MiniHeader() {
                                     </svg>
                                 </a>
                             </li>
-                            <li className="Header__top-steemit show-for-medium">
-                                <a href="/">
-                                    <span className="beta">beta</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>

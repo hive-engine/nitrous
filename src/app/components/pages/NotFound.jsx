@@ -17,11 +17,7 @@ class NotFound extends React.Component {
                                     </Link>
                                 </li>
                                 <li className="Header__top-steemit show-for-medium noPrint">
-                                    <a href="/">
-                                        steemit<span className="beta">
-                                            beta
-                                        </span>
-                                    </a>
+                                    <a href="/">steemit</a>
                                 </li>
                             </ul>
                         </div>
