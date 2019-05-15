@@ -1,21 +1,21 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'SteemCoinPan';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
-export const APP_ICON = 'weedcash';
+export const APP_NAME_LATIN = 'SteemCoinPan';
+export const APP_NAME_UPPERCASE = 'STEEMCOINPAN';
+export const APP_ICON = 'steemcoinpan';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
-export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = List(['weedcash', 'weed', 'cannabis', 'psychedelic']);
-export const LIQUID_TOKEN = 'Weed';
+export const APP_URL = 'https://www.steemcoinpan.com';
+export const APP_DOMAIN = 'www.steemcoinpan.com';
+export const SCOT_TAG = 'sct';
+export const TAG_LIST = List(['steemcoinpan']);
+export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'SCT';
 
 export const VESTING_TOKEN = 'STEEM POWER';
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
@@ -47,8 +47,8 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'SteemCoinPan is a social media platform where everyone gets paid for ' +
+    'creating and curating content. It leverages a robust digital points system, called SCT, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
