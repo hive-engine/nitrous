@@ -15,7 +15,7 @@ import * as appActions from './AppReducer';
 import constants from './constants';
 import { fromJS, Map, Set } from 'immutable';
 import { getStateAsync } from 'app/utils/steemApi';
-import { SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -33,13 +33,17 @@ export function* getContentCaller(action) {
     yield getContent(action.payload);
 }
 
-async function getScotDataAsync(key) {
-    const scotData = await fetch(`https://scot-api.steem-engine.com/@${key}`, {
+async function getScotDataAsync(path) {
+    const scotData = await fetch(`https://scot-api.steem-engine.com/${path}`, {
         method: 'GET',
     });
     if (scotData.ok) {
-        return [key, await scotData.json()];
+        return await scotData.json();
     }
+}
+
+async function getScotPostDataAsync(key) {
+    return [key, await getScotDataAsync(`@${key}`)];
 }
 
 let is_initial_state = true;
@@ -65,7 +69,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = 'trending';
+    if (url === '/') url = `/trending/${SCOT_TAG}`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
@@ -75,40 +79,100 @@ export function* fetchState(location_change_action) {
 
     yield put(appActions.fetchDataBegin());
     try {
-        let state = yield call(getStateAsync, url);
-        if (state.content) {
-            state.content = Object.fromEntries(
-                Object.entries(state.content).filter(entry => {
-                    try {
-                        const jsonMetadata = JSON.parse(entry[1].json_metadata);
-                        return (
-                            jsonMetadata.tags &&
-                            jsonMetadata.tags.find(t => t === SCOT_TAG)
-                        );
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    return false;
+        // handle trending/hot/promoted feeds differently.
+        const state = yield call(getStateAsync, url);
+        const urlParts = url.match(/^[\/]?trending\/?([^\/]*)/);
+        if (urlParts) {
+            // first call feed.
+            let feedData = yield call(
+                getScotDataAsync,
+                `get_discussions_by_trending?token=${
+                    LIQUID_TOKEN_UPPERCASE
+                }&limit=20`
+            );
+            console.log(feedData);
+            // First fetch missing data.
+            if (!state.content) {
+                state.content = {};
+            }
+            const missingKeys = feedData
+                .map(d => d.authorperm.substr(1))
+                .filter(k => !state.content[k]);
+            console.log(missingKeys);
+            const missingContent = yield all(
+                missingKeys.map(k => {
+                    const authorPermlink = k.split('/');
+                    return call(
+                        [api, api.getContentAsync],
+                        authorPermlink[0],
+                        authorPermlink[1]
+                    );
                 })
             );
-            const allScotData = yield all(
-                Object.entries(state.content)
-                    .filter(entry => {
-                        return entry[0].match(/[a-z0-9\.-]+\/.*?/);
-                    })
-                    .map(entry => {
-                        const k = entry[0];
-                        const v = entry[1];
-                        // Fetch SCOT data
-                        return call(getScotDataAsync, k);
-                    })
-            );
-            allScotData.forEach(entry => {
-                if (entry) {
-                    state.content[entry[0]].scotData = entry[1];
-                }
+            missingContent.forEach(c => {
+                state.content[`${c.author}/${c.permlink}`] = c;
             });
+
+            if (!state.discussion_idx) {
+                state.discussion_idx = {};
+            }
+            state.discussion_idx[urlParts[1]].trending = [];
+            feedData.forEach(d => {
+                const key = d.authorperm.substr(1);
+                if (!state.content[key]) {
+                    state.content[key] = {
+                        body: '',
+                        body_length: 0,
+                        permlink: d.authorperm.split('/')[1],
+                        category: d.tags.split(',')[0],
+                        children: 0, // this is supposed to return reply count
+                        replies: [], // intentional
+                    };
+                }
+                Object.assign(state.content[key], d);
+                state.content[key].scotData = {};
+                state.content[key].scotData[LIQUID_TOKEN_UPPERCASE] = d;
+
+                state.discussion_idx[urlParts[1]].trending.push(key);
+            });
+        } else {
+            if (state.content) {
+                state.content = Object.fromEntries(
+                    Object.entries(state.content).filter(entry => {
+                        try {
+                            const jsonMetadata = JSON.parse(
+                                entry[1].json_metadata
+                            );
+                            return (
+                                jsonMetadata.tags &&
+                                jsonMetadata.tags.find(t => t === SCOT_TAG)
+                            );
+                        } catch (e) {
+                            console.error(e);
+                        }
+                        return false;
+                    })
+                );
+                const allScotData = yield all(
+                    Object.entries(state.content)
+                        .filter(entry => {
+                            return entry[0].match(/[a-z0-9\.-]+\/.*?/);
+                        })
+                        .map(entry => {
+                            const k = entry[0];
+                            const v = entry[1];
+                            // Fetch SCOT data
+                            return call(getScotPostDataAsync, k);
+                        })
+                );
+                allScotData.forEach(entry => {
+                    if (entry) {
+                        state.content[entry[0]].scotData = entry[1];
+                    }
+                });
+            }
         }
+        console.log(state);
         yield put(globalActions.receiveState(state));
         yield call(syncPinnedPosts);
     } catch (error) {
