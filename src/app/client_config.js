@@ -11,7 +11,7 @@ export const APP_ICON = 'steemcoinpan';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.steemcoinpan.com';
 export const APP_DOMAIN = 'www.steemcoinpan.com';
-export const SCOT_TAG = 'sct';
+export const SCOT_TAG = 'steemcoinpan';
 export const TAG_LIST = List(['steemcoinpan']);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
