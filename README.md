@@ -1,4 +1,19 @@
 
+# Nitrous
+
+Nitrous is the customized condenser (see below) that integrates with the
+ [Steem Engine Token Scotbot](https://sto.steem-engine.com/#/launch/scotbot).
+
+The instructions below are still accurate, but you need a few things to configure.
+
+`src/app/client_config.js` collects most of the settings that are necessary to configure.
+
+There is one last one within `src/app/components/elements/Voting.jsx` containing the factor to
+divide token balances by in `scot_dec` (should be moved to client_config soon).
+
+When running, `SDC_IMAGE_PROXY_PREFIX` and `SDC_UPLOAD_IMAGE_URL` can be set to
+`https://steemitimages.com` (eventually this dependency should be changed).
+
 # Condenser
 
 
