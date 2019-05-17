@@ -12,7 +12,20 @@ export const APP_ICON = 'steemcoinpan';
 export const APP_URL = 'https://www.steemcoinpan.com';
 export const APP_DOMAIN = 'www.steemcoinpan.com';
 export const SCOT_TAG = 'sct';
-export const TAG_LIST = List(['sct']);
+export const TAG_LIST = List([
+    'sct',
+    'bitcoin',
+    'steem',
+    'eos',
+    'eth',
+    'tron',
+    'xrp',
+    'bch',
+    'ada',
+    'dash',
+    'coinstory',
+    'coinnews',
+]);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';
