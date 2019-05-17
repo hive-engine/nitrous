@@ -13,6 +13,10 @@ export const APP_URL = 'https://www.weedcash.network';
 export const APP_DOMAIN = 'www.weedcash.network';
 export const SCOT_TAG = 'weedcash';
 export const TAG_LIST = List([
+    'weedcash',
+    'weed',
+    'cannabis',
+    'psychedelic',
     'review',
     'natural-medicine',
     'concentrate',
