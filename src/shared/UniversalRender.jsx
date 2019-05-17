@@ -5,7 +5,6 @@ import Iso from 'iso';
 import React from 'react';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
-import { SCOT_TAG } from 'app/client_config';
 import {
     Router,
     RouterContext,
@@ -323,25 +322,6 @@ export async function serverRender(
                 `${pinnedPost.author}/${pinnedPost.permlink}`
             ] = pinnedPost;
         });
-
-        const filteredContent = {};
-        Object.entries(onchain.content)
-            .filter(entry => {
-                try {
-                    const jsonMetadata = JSON.parse(entry[1].json_metadata);
-                    return (
-                        jsonMetadata.tags &&
-                        jsonMetadata.tags.find(t => t === SCOT_TAG)
-                    );
-                } catch (e) {
-                    // Ignore anything that doesn't match tag.
-                }
-                return false;
-            })
-            .forEach(entry => {
-                filteredContent[entry[0]] = entry[1];
-            });
-        onchain.content = filteredContent;
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
