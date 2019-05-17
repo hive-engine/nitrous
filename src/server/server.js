@@ -21,6 +21,7 @@ import session from '@steem/crypto-session';
 import csrf from 'koa-csrf';
 import minimist from 'minimist';
 import config from 'config';
+import { APP_DOMAIN } from 'app/client_config';
 import { routeRegex } from 'app/ResolveRoute';
 import secureRandom from 'secure-random';
 import userIllegalContent from 'app/utils/userIllegalContent';
@@ -279,6 +280,15 @@ if (env === 'production') {
         delete helmetConfig.directives.reportUri;
     }
     app.use(helmet.contentSecurityPolicy(helmetConfig));
+
+    // For heroku, redirect SSL
+    app.use(function*(next) {
+        if (this.request.headers['x-forwarded-proto'] == 'http') {
+            this.response.redirect(`https://${APP_DOMAIN}${this.request.url}`);
+            return;
+        }
+        yield next;
+    });
 }
 
 if (env !== 'test') {

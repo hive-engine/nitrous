@@ -22,7 +22,9 @@ const SidebarLinks = ({ username }) => (
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href={'/@' + username + '/transfers'}
+                        href={`https://steem-engine.com/?p=balances&a=${
+                            username
+                        }`}
                     >
                         {tt('g.my_wallet')}
                     </a>
