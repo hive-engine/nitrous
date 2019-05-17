@@ -465,16 +465,6 @@ function* usernamePasswordLogin2({
     }
 
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
-    // Feature Flags
-    if (useKeychain || private_keys.get('posting_private')) {
-        yield fork(
-            getFeatureFlags,
-            username,
-            useKeychain ? null : private_keys.get('posting_private').toString()
-        );
-    }
-    // TOS acceptance
-    yield fork(promptTosAcceptance, username);
 
     // Redirect user to the appropriate page after login.
     if (afterLoginRedirectToWelcome) {
