@@ -16,6 +16,7 @@ export const TAG_LIST = List([
     'weedcash',
     'weed',
     'cannabis',
+    'hemp',
     'psychedelic',
     'review',
     'natural-medicine',
