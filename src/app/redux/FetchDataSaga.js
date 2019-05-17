@@ -240,7 +240,10 @@ export function* fetchData(action) {
                 data
                     .filter(post => {
                         const jsonMetadata = JSON.parse(post.json_metadata);
-                        return jsonMetadata.tags.find(t => t === SCOT_TAG);
+                        return (
+                            jsonMetadata.tags &&
+                            jsonMetadata.tags.find(t => t === SCOT_TAG)
+                        );
                     })
                     .map(post =>
                         call(async () => {
