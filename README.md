@@ -1,4 +1,21 @@
 
+# Nitrous
+
+![](https://cdn.steemitimages.com/DQmRyQGq91TECBfsCqbNsRvqdqZD4ktmbgu8rGXPK4yvTcY/image.png)
+
+Nitrous is the customized condenser (see below) that integrates with the
+ [Steem Engine Token Scotbot](https://sto.steem-engine.com/#/launch/scotbot).
+
+The instructions below are still accurate, but you need a few things to configure.
+
+`src/app/client_config.js` collects most of the settings that are necessary to configure.
+
+There is one last one within `src/app/components/elements/Voting.jsx` containing the factor to
+divide token balances by in `scot_dec` (should be moved to client_config soon).
+
+When running, `SDC_IMAGE_PROXY_PREFIX` and `SDC_UPLOAD_IMAGE_URL` can be set to
+`https://steemitimages.com` (eventually this dependency should be changed).
+
 # Condenser
 
 
@@ -7,44 +24,24 @@ blockchain-based social media platform, steemit.com.  It uses
 [STEEM](https://github.com/steemit/steem), a blockchain powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
 applications.   
 
-## Why would I want to use Condenser (steemit.com front-end)?
-
-* Learning how to build blockchain-based web applications using STEEM as a
-  content storage mechanism in react.js
-* Reviewing the inner workings of the steemit.com social media platform
-* Assisting with software development for steemit.com
-
 ## Installation
 
 #### Docker
 
 We highly recommend using docker to run condenser in production. This is how we run the
-live steemit.com site and it is the most supported (and fastest) method of
-both building and running condenser. We will always have the latest version
-of condenser (master branch) available on Docker Hub. Configuration settings
+live com site and it is the most supported (and fastest) method of
+both building and running condenser. Configuration settings
 can be set using environment variables (see configuration section below for
 more information). If you need to install docker, you can get it at
 https://get.docker.com
 
-To bring up a running container it's as simple as this:
-
-```bash
-docker run -it -p 8080:8080 steemit/condenser
-```
-
-Environment variables can be added like this:
-
-```bash
-docker run -it -p 8080:8080 steemit/condenser
-```
-
-If you would like to modify, build, and run condenser using docker, it's as
+To modify, build, and run condenser using docker, it's as
 simple as pulling in the github repo and issuing one command to build it,
 like this:
 
 ```bash
-git clone https://github.com/steemit/condenser
-cd condenser
+git clone https://github.com/eonwarped/nitrous
+cd nitrous
 docker build -t="myname/condenser:mybranch" .
 docker run -it -p 8080:8080 myname/condenser:mybranch
 ```
@@ -55,8 +52,8 @@ docker run -it -p 8080:8080 myname/condenser:mybranch
 #### Clone the repository and make a tmp folder
 
 ```bash
-git clone https://github.com/steemit/condenser
-cd condenser
+git clone https://github.com/eonwarped/nitrous
+cd nitrous
 mkdir tmp
 ```
 
@@ -110,7 +107,7 @@ It will take quite a bit longer to start in this mode (~60s) as it needs to
 build and start the webpack-dev-server.
 
 By default you will be connected to steemit.com's public steem node at
-`wss://steemd.steeemit.com`. This is actually on the real blockchain and
+`https://api.steeemit.com`. This is actually on the real blockchain and
 you would use your regular account name and credentials to login - there is
 not an official separate testnet at this time. If you intend to run a
 full-fledged site relying on your own, we recommend looking into running a
@@ -134,8 +131,8 @@ stored in `config/defaults.json`.
 Environment variables using an example like this:
 
 ```bash
-export SDC_CLIENT_STEEMD_URL="wss://steemd.steemit.com"
-export SDC_SERVER_STEEMD_URL="wss://steemd.steemit.com"
+export SDC_CLIENT_STEEMD_URL="https://api.steemit.com"
+export SDC_SERVER_STEEMD_URL="https://api.steemit.com"
 ```
 
 Keep in mind environment variables only exist in your active session, so if
@@ -216,21 +213,3 @@ OFFLINE_SSR_TEST=true NODE_ENV=production node --prof lib/server/index.js
 ```
 
 This will read data from the blobs in `api_mockdata` directory. If you want to use another set of mock data, create a similar directory to that one and add an argument `OFFLINE_SSR_TEST_DATA_DIR` pointing to your new directory.
-
-### Run blackbox tests using nightwatch
-
-To run a Selenium test suite, start the condenser docker image with a name `condenser` (like `docker run --name condenser -itp 8080:8080 steemit/condenser:latest`) and then run the blackboxtest image attached to the condneser image's network:
-
-```
-docker build -t=steemit/condenser-blackboxtest blackboxtest/
-docker run --network container:condenser steemit/condenser-blackboxtest:latest
-
-```
-
-## Issues
-
-To report a non-critical issue, please file an issue on this GitHub project.
-
-If you find a security issue please report details to: security@steemit.com
-
-We will evaluate the risk and make a patch available before filing the issue.
