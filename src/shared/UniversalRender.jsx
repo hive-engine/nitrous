@@ -5,7 +5,6 @@ import Iso from 'iso';
 import React from 'react';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
-import { SCOT_TAG } from 'app/client_config';
 import {
     Router,
     RouterContext,
