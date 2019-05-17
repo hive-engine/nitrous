@@ -12,7 +12,18 @@ export const APP_ICON = 'weedcash';
 export const APP_URL = 'https://www.weedcash.network';
 export const APP_DOMAIN = 'www.weedcash.network';
 export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = List(['weedcash', 'weed', 'cannabis', 'psychedelic']);
+export const TAG_LIST = List([
+    'review',
+    'natural-medicine',
+    'concentrate',
+    'edibles',
+    'breeding',
+    'glass',
+    'canna-curate',
+    'hash',
+    'cbd',
+    'news',
+]);
 export const LIQUID_TOKEN = 'Weed';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'WEED';
