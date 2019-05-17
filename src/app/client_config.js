@@ -9,8 +9,8 @@ export const APP_NAME_UPPERCASE = 'ACTNEARN';
 export const APP_ICON = 'actnearn';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://actnearn.herokuapp.com';
-export const APP_DOMAIN = 'actnearn.herokuapp.com';
+export const APP_URL = 'https://www.actnearn.com';
+export const APP_DOMAIN = 'www.actnearn.com';
 export const SCOT_TAG = 'actnearn';
 export const TAG_LIST = List([
     'actnearn',
