@@ -16,6 +16,9 @@ divide token balances by in `scot_dec` (should be moved to client_config soon).
 When running, `SDC_IMAGE_PROXY_PREFIX` and `SDC_UPLOAD_IMAGE_URL` can be set to
 `https://steemitimages.com` (eventually this dependency should be changed).
 
+Change `src/app/assets/images/favicons` with your own, and also change
+`src/app/assets/static/manifest.json` accordingly.
+
 # Condenser
 
 
