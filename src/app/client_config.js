@@ -19,7 +19,7 @@ export const TAG_LIST = List([
     'hemp',
     'psychedelic',
     'review',
-    'natural-medicine',
+    'naturalmedicine',
     'concentrate',
     'edibles',
     'breeding',
