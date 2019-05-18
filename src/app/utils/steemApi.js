@@ -72,24 +72,6 @@ export async function attachScotData(url, state) {
         });
     } else {
         if (state.content) {
-            const filteredContent = {};
-            Object.entries(state.content)
-                .filter(entry => {
-                    try {
-                        const jsonMetadata = JSON.parse(entry[1].json_metadata);
-                        return (
-                            jsonMetadata.tags &&
-                            jsonMetadata.tags.find(t => t === SCOT_TAG)
-                        );
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    return false;
-                })
-                .forEach(entry => {
-                    filteredContent[entry[0]] = entry[1];
-                });
-            state.content = filteredContent;
             await Promise.all(
                 Object.entries(state.content)
                     .filter(entry => {
@@ -104,6 +86,17 @@ export async function attachScotData(url, state) {
                         );
                     })
             );
+            const filteredContent = {};
+            Object.entries(state.content)
+                .filter(
+                    entry =>
+                        entry[1].scotData &&
+                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]
+                )
+                .forEach(entry => {
+                    filteredContent[entry[0]] = entry[1];
+                });
+            state.content = filteredContent;
         }
     }
 }

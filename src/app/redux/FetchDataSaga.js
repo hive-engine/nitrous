@@ -236,35 +236,31 @@ export function* fetchData(action) {
         while (!fetchDone) {
             let data = yield call([api, api[call_name]], ...args);
 
-            data = yield all(
-                data
-                    .filter(post => {
-                        const jsonMetadata = JSON.parse(post.json_metadata);
-                        return (
-                            jsonMetadata.tags &&
-                            jsonMetadata.tags.find(t => t === SCOT_TAG)
-                        );
-                    })
-                    .map(post =>
-                        call(async () => {
-                            const k = `${post.author}/${post.permlink}`;
-                            const scotData = await getScotDataAsync(`@${k}`);
-                            post.scotData = scotData;
-                            return post;
-                        })
-                    )
-            );
+            // endOfData check and lastValue setting should go before any filtering,
+            // this indicates no further pages in feed.
             endOfData = data.length < constants.FETCH_DATA_BATCH_SIZE;
-
-            batch++;
-            fetchLimitReached = batch >= constants.MAX_BATCHES;
-
             // next arg. Note 'by_replies' does not use same structure.
             const lastValue = data.length > 0 ? data[data.length - 1] : null;
             if (lastValue && order !== 'by_replies') {
                 args[0].start_author = lastValue.author;
                 args[0].start_permlink = lastValue.permlink;
             }
+
+            data = yield all(
+                data.map(post =>
+                    call(async () => {
+                        const k = `${post.author}/${post.permlink}`;
+                        const scotData = await getScotDataAsync(`@${k}`);
+                        post.scotData = scotData;
+                        return post;
+                    })
+                )
+            ).filter(
+                post => post.scotData && post.scotData[LIQUID_TOKEN_UPPERCASE]
+            );
+
+            batch++;
+            fetchLimitReached = batch >= constants.MAX_BATCHES;
 
             // Still return all data but only count ones matching the filter.
             // Rely on UI to actually hide the posts.
