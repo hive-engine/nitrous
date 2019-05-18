@@ -80,6 +80,11 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
 }
 
 function* shouldShowLoginWarning({ username, password }) {
+    // If it's a high-security login page, don't show the warning.
+    if (yield isHighSecurityPage()) {
+        return false;
+    }
+
     // If it's a master key, show the warning.
     if (!auth.isWif(password)) {
         const accounts = yield api.getAccountsAsync([username]);
@@ -384,20 +389,6 @@ function* usernamePasswordLogin2({
         )
             // provided password did not yield memo key, or matched active/owner
             private_keys = private_keys.remove('memo_private');
-
-        if (
-            posting_pubkey === owner_pubkey ||
-            posting_pubkey === active_pubkey
-        ) {
-            yield put(
-                userActions.loginError({
-                    error:
-                        'This login gives owner or active permissions and should not be used here.  Please provide a posting only login.',
-                })
-            );
-            localStorage.removeItem('autopost2');
-            return;
-        }
 
         // If user is signing operation by operaion and has no saved login, don't save to RAM
         if (!operationType || saveLogin) {
