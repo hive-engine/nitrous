@@ -81,9 +81,12 @@ export async function attachScotData(url, state) {
                         const k = entry[0];
                         const v = entry[1];
                         // Fetch SCOT data
-                        state.content[k].scotData = await getScotDataAsync(
-                            `@${k}`
+                        const scotData = await getScotDataAsync(`@${k}`);
+                        Object.assign(
+                            state.content[k],
+                            scotData[LIQUID_TOKEN_UPPERCASE]
                         );
+                        state.content[k].scotData = scotData;
                     })
             );
             const filteredContent = {};
@@ -99,6 +102,17 @@ export async function attachScotData(url, state) {
             state.content = filteredContent;
         }
     }
+}
+
+export async function getContentAsync(author, permlink) {
+    const content = await api.getContentAsync(author, permlink);
+    const scotData = await getScotDataAsync(`@${author}/${permlink}`);
+    // Do not assign scot data directly, or vote count will not show
+    // due to delay in steemd vs scot bot.
+    //Object.assign(content, scotData[LIQUID_TOKEN_UPPERCASE]);
+    content.scotData = scotData;
+
+    return content;
 }
 
 export async function getStateAsync(url) {

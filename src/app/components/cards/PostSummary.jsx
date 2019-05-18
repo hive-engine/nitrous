@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Icon from 'app/components/elements/Icon';
@@ -379,21 +378,10 @@ export default connect(
         const content = state.global.get('content').get(post);
         let pending_payout = '0';
         let total_payout = '0';
+        // Only used for refresh state, do not need SCOT data here.
         if (content) {
-            const scotData = content.getIn([
-                'scotData',
-                LIQUID_TOKEN_UPPERCASE,
-            ]);
-            if (scotData) {
-                pending_payout = scotData.get('pending_token').toString();
-                total_payout = scotData.get('total_payout_value').toString();
-            } else {
-                console.info(
-                    `No Scot Data for ${content.get('author')}/${content.get(
-                        'permlink'
-                    )}`
-                );
-            }
+            pending_payout = content.get('pending_payout_value');
+            total_payout = content.get('total_payout_value');
         }
         return {
             post,
