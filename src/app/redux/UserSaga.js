@@ -54,7 +54,29 @@ export const userWatches = [
     },
 ];
 
-const strCmp = (a, b) => (a > b ? 1 : a < b ? -1 : 0);
+const highSecurityPages = [
+    /\/market/,
+    /\/@.+\/(transfers|permissions|password)/,
+    /\/~witnesses/,
+];
+
+function* isHighSecurityPage(pathname = null) {
+    pathname =
+        pathname || (yield select(state => state.global.get('pathname')));
+    return highSecurityPages.find(p => p.test(pathname)) != null;
+}
+
+function* removeHighSecurityKeys({ payload: { pathname } }) {
+    // Let the user keep the active key when going from one high security page
+    // to another. This helps when the user logins into the Wallet then the
+    // Permissions tab appears (it was hidden). This keeps them from getting
+    // logged out when they click on Permissions (which is really bad because
+    // that tab disappears again).
+    const highSecurityPage = yield isHighSecurityPage(pathname);
+    if (!highSecurityPage) {
+        yield put(userActions.removeHighSecurityKeys());
+    }
+}
 
 function* shouldShowLoginWarning({ username, password }) {
     // If it's a master key, show the warning.
@@ -185,7 +207,7 @@ function* usernamePasswordLogin2({
         [username, userProvidedRole] = username.split('/');
     }
 
-    const pathname = yield select(state => state.global.get('pathname'));
+    const highSecurityLogin = yield isHighSecurityPage();
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
@@ -266,12 +288,12 @@ function* usernamePasswordLogin2({
         );
 
         const hasActiveAuth = authority.get('active') === 'full';
-        if (hasActiveAuth) {
-            console.log('Rejecting due to detected active auth');
+        if (!highSecurityLogin) {
+            const accountName = account.get('name');
+            authority = authority.set('active', 'none');
             yield put(
-                userActions.loginError({ error: 'active_login_blocked' })
+                userActions.setAuthority({ accountName, auth: authority })
             );
-            return;
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
@@ -281,9 +303,6 @@ function* usernamePasswordLogin2({
             return;
         }
 
-        const accountName = account.get('name');
-        authority = authority.set('active', 'none');
-        yield put(userActions.setAuthority({ accountName, auth: authority }));
         const fullAuths = authority.reduce(
             (r, auth, type) => (auth === 'full' ? r.add(type) : r),
             Set()
@@ -301,7 +320,7 @@ function* usernamePasswordLogin2({
                     userActions.loginError({ error: 'owner_login_blocked' })
                 );
                 return;
-            } else if (hasActiveAuth) {
+            } else if (!highSecurityLogin && hasActiveAuth) {
                 yield put(
                     userActions.loginError({ error: 'active_login_blocked' })
                 );
@@ -326,12 +345,29 @@ function* usernamePasswordLogin2({
         }
         if (authority.get('posting') !== 'full')
             private_keys = private_keys.remove('posting_private');
-        if (authority.get('active') !== 'full')
+        if (!highSecurityLogin || authority.get('active') !== 'full')
             private_keys = private_keys.remove('active_private');
 
         const owner_pubkey = account.getIn(['owner', 'key_auths', 0, 0]);
         const active_pubkey = account.getIn(['active', 'key_auths', 0, 0]);
         const posting_pubkey = account.getIn(['posting', 'key_auths', 0, 0]);
+
+        if (!highSecurityLogin) {
+            console.log('Not high security login');
+            if (
+                posting_pubkey === owner_pubkey ||
+                posting_pubkey === active_pubkey
+            ) {
+                yield put(
+                    userActions.loginError({
+                        error:
+                            'This login gives owner or active permissions and should not be used here.  Please provide a posting only login.',
+                    })
+                );
+                localStorage.removeItem('autopost2');
+                return;
+            }
+        }
 
         const memo_pubkey = private_keys.has('memo_private')
             ? private_keys
