@@ -477,7 +477,7 @@ class PostFull extends React.Component {
                             authorRepLog10={authorRepLog10}
                         />
                     </div>
-                    <div className="columns medium-12 large-2 ">
+                    <div className="columns medium-12 large-5 ">
                         <Voting post={post} />
                     </div>
                     <div className="RightShare__Menu small-11 medium-12 large-5 columns">
