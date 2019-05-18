@@ -376,8 +376,8 @@ export default connect(
     (state, props) => {
         const { post } = props;
         const content = state.global.get('content').get(post);
-        let pending_payout = '0';
-        let total_payout = '0';
+        let pending_payout = 0;
+        let total_payout = 0;
         // Only used for refresh state, do not need SCOT data here.
         if (content) {
             pending_payout = content.get('pending_payout_value');
@@ -386,10 +386,8 @@ export default connect(
         return {
             post,
             content,
-            pending_payout: pending_payout
-                ? pending_payout.toString()
-                : pending_payout,
-            total_payout: total_payout ? total_payout.toString() : total_payout,
+            pending_payout: pending_payout ? pending_payout.toString() : '0',
+            total_payout: total_payout ? total_payout.toString() : '0',
             username:
                 state.user.getIn(['current', 'username']) ||
                 state.offchain.get('account'),
