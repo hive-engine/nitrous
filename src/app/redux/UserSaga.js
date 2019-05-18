@@ -25,6 +25,7 @@ import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
 
 export const userWatches = [
+    takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
     takeLatest(
         'user/lookupPreviousOwnerAuthority',
         lookupPreviousOwnerAuthority
