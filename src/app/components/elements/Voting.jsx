@@ -11,6 +11,7 @@ import {
     DEBT_TOKEN_SHORT,
     LIQUID_TOKEN_UPPERCASE,
     INVEST_TOKEN_SHORT,
+    SCOT_DENOM,
 } from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
@@ -356,13 +357,13 @@ class Voting extends React.Component {
         // Arbitrary invalid cash time (steem related behavior)
         let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
-            const scot_dec = 100000000;
             scot_pending_token =
-                parseInt(scotData.get('pending_token')) / scot_dec;
-            scot_total_author_payout =
-                parseInt(scotData.get('total_payout_value')) / scot_dec;
+                parseInt(scotData.get('pending_token')) / SCOT_DENOM;
             scot_total_curator_payout =
-                parseInt(scotData.get('curator_payout_value')) / scot_dec;
+                parseInt(scotData.get('curator_payout_value')) / SCOT_DENOM;
+            scot_total_author_payout =
+                parseInt(scotData.get('total_payout_value')) / SCOT_DENOM;
+            scot_total_author_payout -= scot_total_curator_payout;
             cashout_time = scotData.get('cashout_time');
             payout = scot_pending_token
                 ? scot_pending_token
