@@ -15,7 +15,7 @@ import * as appActions from './AppReducer';
 import constants from './constants';
 import { fromJS, Map, Set } from 'immutable';
 import { getStateAsync, getScotDataAsync } from 'app/utils/steemApi';
-import { SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -246,7 +246,7 @@ export function* fetchData(action) {
                 args[0].start_permlink = lastValue.permlink;
             }
 
-            data = yield all(
+            data = (yield all(
                 data.map(post =>
                     call(async () => {
                         const k = `${post.author}/${post.permlink}`;
@@ -255,7 +255,7 @@ export function* fetchData(action) {
                         return post;
                     })
                 )
-            ).filter(
+            )).filter(
                 post => post.scotData && post.scotData[LIQUID_TOKEN_UPPERCASE]
             );
 
