@@ -2,6 +2,7 @@ import assert from 'assert';
 import secureRandom from 'secure-random';
 import links, * as linksRe from 'app/utils/Links';
 import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
+import { APP_DOMAIN } from 'app/client_config';
 
 describe('Links', () => {
     it('all', () => {
@@ -42,8 +43,8 @@ describe('Links', () => {
     it('by domain', () => {
         const locals = [
             'https://localhost/',
-            'http://steemit.com',
-            'http://steemit.com/group',
+            `http://${APP_DOMAIN}`,
+            `http://${APP_DOMAIN}/group`,
         ];
         match(linksRe.local(), locals);
         matchNot(linksRe.remote(), locals);
@@ -51,7 +52,6 @@ describe('Links', () => {
         const remotes = ['https://example.com/', 'http://abc.co'];
         match(linksRe.remote(), remotes);
         matchNot(linksRe.local(), remotes);
-        // match(linksRe({external: false}), largeData + 'https://steemit.com2/next', 'https://steemit.com2/next')
     });
     it('by image', () => {
         match(linksRe.image(), 'https://example.com/a.jpeg');
