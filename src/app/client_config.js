@@ -28,6 +28,8 @@ export const TAG_LIST = List([
     'coinstory',
     'coinnews',
     'jjm',
+    'suggest',
+    'userguide',
 ]);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
