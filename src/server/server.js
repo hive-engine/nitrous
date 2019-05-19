@@ -21,7 +21,7 @@ import session from '@steem/crypto-session';
 import csrf from 'koa-csrf';
 import minimist from 'minimist';
 import config from 'config';
-import { APP_DOMAIN } from 'app/client_config';
+import { APP_DOMAIN, APP_NAME } from 'app/client_config';
 import { routeRegex } from 'app/ResolveRoute';
 import secureRandom from 'secure-random';
 import userIllegalContent from 'app/utils/userIllegalContent';
@@ -34,7 +34,7 @@ if (cluster.isMaster) console.log('application server starting, please wait.');
 // import uploadImage from 'server/upload-image' //medium-editor
 
 const app = new Koa();
-app.name = 'Steemit app';
+app.name = `${APP_NAME} app`;
 const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };

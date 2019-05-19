@@ -15,6 +15,7 @@ import {
 import { Provider } from 'react-redux';
 import { api } from '@steemit/steem-js';
 
+import { APP_NAME } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -236,7 +237,7 @@ export async function serverRender(
     } catch (e) {
         console.error('Routing error:', e.toString(), location);
         return {
-            title: 'Routing error - Steemit',
+            title: `Routing error - ${APP_NAME}`,
             statusCode: 500,
             body: renderToString(
                 ErrorPage ? <ErrorPage /> : <span>Routing error</span>
@@ -247,7 +248,7 @@ export async function serverRender(
     if (error || !renderProps) {
         // debug('error')('Router error', error);
         return {
-            title: 'Page Not Found - Steemit',
+            title: `Page Not Found - ${APP_NAME}`,
             statusCode: 404,
             body: renderToString(<NotFound />),
         };
@@ -270,7 +271,7 @@ export async function serverRender(
         ) {
             // protect for invalid account
             return {
-                title: 'User Not Found - Steemit',
+                title: `User Not Found - ${APP_NAME}`,
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -308,7 +309,7 @@ export async function serverRender(
             } else {
                 // protect on invalid user pages (i.e /user/transferss)
                 return {
-                    title: 'Page Not Found - Steemit',
+                    title: `Page Not Found - ${APP_NAME}`,
                     statusCode: 404,
                     body: renderToString(<NotFound />),
                 };
@@ -338,7 +339,7 @@ export async function serverRender(
         if (location.match(routeRegex.UserProfile1)) {
             console.error('User/not found: ', location);
             return {
-                title: 'Page Not Found - Steemit',
+                title: `Page Not Found - ${APP_NAME}`,
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -348,7 +349,7 @@ export async function serverRender(
             const stack_trace = e.stack || '[no stack]';
             console.error('State/store error: ', msg, stack_trace);
             return {
-                title: 'Server error - Steemit',
+                title: `Server error - ${APP_NAME}`,
                 statusCode: 500,
                 body: renderToString(<ErrorPage />),
             };
@@ -375,8 +376,8 @@ export async function serverRender(
     }
 
     return {
-        title: 'Steemit',
-        titleBase: 'Steemit - ',
+        title: APP_NAME,
+        titleBase: `${APP_NAME} - `,
         meta,
         statusCode: status,
         body: Iso.render(app, server_store.getState()),
