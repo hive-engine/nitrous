@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
@@ -52,9 +53,18 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'market',
-                label: tt('navigation.currency_market'),
-                link: `https://steem-engine.com/?p=market`,
+                value: 'steemengine',
+                label: 'Steem Engine',
+                link: `https://steem-engine.com/?p=market&t=${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            },
+            {
+                value: 'freedomx',
+                label: 'FreedomEX',
+                link: `https://freedomex.io/trading/${
+                    LIQUID_TOKEN_UPPERCASE
+                }freex`,
             },
         ],
         exchanges: [
@@ -157,15 +167,12 @@ const SidePanel = ({
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
-                    {sidePanelLinks['internal'].map(makeLink)}
-                </ul>
-                <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
-                            {tt('navigation.third_party_exchanges')}
+                            Trade {LIQUID_TOKEN_UPPERCASE}
                         </a>
                     </li>
-                    {sidePanelLinks['exchanges'].map(makeLink)}
+                    {sidePanelLinks['internal'].map(makeLink)}
                 </ul>
             </div>
         </div>
