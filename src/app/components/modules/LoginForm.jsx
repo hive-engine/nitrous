@@ -19,7 +19,6 @@ import PdfDownload from 'app/components/elements/PdfDownload';
 
 class LoginForm extends Component {
     static propTypes = {
-        // Steemit.
         loginError: PropTypes.string,
         onCancel: PropTypes.func,
     };
