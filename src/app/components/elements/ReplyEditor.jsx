@@ -17,7 +17,7 @@ import { Set } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { SCOT_TAG } from 'app/client_config';
+import { APP_NAME, SCOT_TAG } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -942,7 +942,7 @@ export default formId =>
                 if (rtags.links.size) meta.links = rtags.links;
                 else delete meta.links;
 
-                meta.app = 'steemit/0.1';
+                meta.app = `${APP_NAME.toLowerCase()}/0.1`;
                 if (isStory) {
                     meta.format = isHtml ? 'html' : 'markdown';
                 }

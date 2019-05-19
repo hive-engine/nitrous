@@ -11,7 +11,7 @@ import {
 } from 'app/client_config';
 
 function addSiteMeta(metas) {
-    metas.push({ title: 'Steemit' });
+    metas.push({ title: APP_NAME });
     metas.push({ name: 'description', content: SITE_DESCRIPTION });
     metas.push({ property: 'og:type', content: 'website' });
     metas.push({ property: 'og:site_name', content: APP_NAME });

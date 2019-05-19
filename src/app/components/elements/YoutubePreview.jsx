@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
+import { APP_URL } from 'app/client_config';
 
 const { string, number } = PropTypes;
 
@@ -19,7 +20,7 @@ export default class YoutubePreview extends React.Component {
         width: 640,
         height: 360,
         startTime: 0,
-        dataParams: 'enablejsapi=0&rel=0&origin=https://steemit.com',
+        dataParams: `enablejsapi=0&rel=0&origin=${APP_URL}`,
     };
 
     constructor() {

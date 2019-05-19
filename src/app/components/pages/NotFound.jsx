@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'app/components/elements/Icon';
-import SteemLogo from 'app/components/elements/SteemLogo';
+import SvgImage from 'app/components/elements/SvgImage';
+import { APP_ICON } from 'app/client_config';
 
 class NotFound extends React.Component {
     render() {
@@ -9,13 +10,16 @@ class NotFound extends React.Component {
                 <div className="row Header__nav">
                     <div className="small-5 large-4 columns Header__logotype">
                         <a href="/">
-                            <SteemLogo />
+                            <SvgImage
+                                name={APP_ICON}
+                                width="150px"
+                                height="40px"
+                            />
                         </a>
                     </div>
                 </div>
                 <div className="NotFound float-center">
                     <div>
-                        <Icon name="steem" size="4x" />
                         <h4 className="NotFound__header">
                             Sorry! This page doesn't exist.
                         </h4>
