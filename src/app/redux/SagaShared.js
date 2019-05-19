@@ -6,7 +6,7 @@ import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import * as transactionActions from './TransactionReducer';
 import { setUserPreferences } from 'app/utils/ServerApiClient';
-import { getStateAsync } from 'app/utils/steemApi';
+import { getContentAsync, getStateAsync } from 'app/utils/steemApi';
 
 const wait = ms =>
     new Promise(resolve => {
@@ -78,7 +78,7 @@ function* showTransactionErrorNotification() {
 export function* getContent({ author, permlink, resolve, reject }) {
     let content;
     while (!content) {
-        content = yield call([api, api.getContentAsync], author, permlink);
+        content = yield call(getContentAsync, author, permlink);
         if (content['author'] == '') {
             // retry if content not found. #1870
             content = null;
