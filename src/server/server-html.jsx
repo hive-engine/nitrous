@@ -1,5 +1,6 @@
 import * as config from 'config';
 import React from 'react';
+import { APP_NAME } from 'app/client_config';
 
 export default function ServerHTML({
     body,
@@ -133,7 +134,7 @@ export default function ServerHTML({
                     href="/images/favicons/favicon-128.png"
                     sizes="128x128"
                 />
-                <meta name="application-name" content="Steemit" />
+                <meta name="application-name" content={APP_NAME} />
                 <meta name="msapplication-TileColor" content="#FFFFFF" />
                 <meta
                     name="msapplication-TileImage"

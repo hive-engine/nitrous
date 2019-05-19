@@ -2,6 +2,7 @@ import {
     getPhishingWarningMessage,
     getExternalLinkWarningMessage,
 } from 'shared/HtmlReady'; // the only allowable title attributes for div and a tags
+import { APP_DOMAIN } from 'app/client_config';
 
 const iframeWhitelist = [
     {
@@ -188,8 +189,10 @@ export default ({
             if (!href) href = '#';
             href = href.trim();
             const attys = { href };
-            // If it's not a (relative or absolute) steemit URL...
-            if (!href.match(/^(\/(?!\/)|https:\/\/steemit.com)/)) {
+            // If it's not a (relative or absolute) app URL...
+            if (
+                !href.match(new RegExp(`^(\/(?!\/)|https:\/\/${APP_DOMAIN})`))
+            ) {
                 // attys.target = '_blank' // pending iframe impl https://mathiasbynens.github.io/rel-noopener/
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();

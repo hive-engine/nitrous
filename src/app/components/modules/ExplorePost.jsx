@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { APP_URL } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Icon from 'app/components/elements/Icon';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -22,6 +23,7 @@ class ExplorePost extends Component {
         this.onCopyMD = this.onCopyMD.bind(this);
         this.Steemd = this.Steemd.bind(this);
         this.Steemdb = this.Steemdb.bind(this);
+        this.Steemit = this.Steemit.bind(this);
         this.Busy = this.Busy.bind(this);
     }
 
@@ -31,6 +33,10 @@ class ExplorePost extends Component {
 
     Steemdb() {
         serverApiRecordEvent('SteemdbView', this.props.permlink);
+    }
+
+    Steemit() {
+        serverApiRecordEvent('Steemit view', this.props.permlink);
     }
 
     Busy() {
@@ -56,7 +62,8 @@ class ExplorePost extends Component {
         const steemdb = 'https://steemdb.com' + link;
         const busy = 'https://busy.org' + link;
         const steemit = 'https://steemit.com' + link;
-        const steemitmd = '[' + title + '](https://steemit.com' + link + ')';
+        const appLink = APP_URL + link;
+        const md = `[${title}](${APP_URL}${link})`;
         let text =
             this.state.copied == true
                 ? tt('explorepost_jsx.copied')
@@ -73,11 +80,11 @@ class ExplorePost extends Component {
                     <input
                         className="input-group-field share-box"
                         type="text"
-                        value={steemit}
+                        value={appLink}
                         onChange={e => e.preventDefault()}
                     />
                     <CopyToClipboard
-                        text={steemit}
+                        text={appLink}
                         onCopy={this.onCopy}
                         className="ExplorePost__copy-button input-group-label"
                     >
@@ -88,11 +95,11 @@ class ExplorePost extends Component {
                     <input
                         className="input-group-field share-box"
                         type="text"
-                        value={steemitmd}
+                        value={md}
                         onChange={e => e.preventDefault()}
                     />
                     <CopyToClipboard
-                        text={steemitmd}
+                        text={md}
                         onCopy={this.onCopyMD}
                         className="ExplorePost__copy-button input-group-label"
                     >
@@ -121,6 +128,17 @@ class ExplorePost extends Component {
                             steemdb.com <Icon name="extlink" />
                         </a>
                     </li>
+                    <li>
+                        <a
+                            href={steemit}
+                            onClick={this.Steemit}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            steemit.com <Icon name="extlink" />
+                        </a>
+                    </li>
+
                     <li>
                         <a
                             href={busy}
