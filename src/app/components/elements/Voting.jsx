@@ -340,9 +340,6 @@ class Voting extends React.Component {
                 </Dropdown>
             );
 
-            const flagWeight = post_obj.getIn(['stats', 'flagWeight']);
-            //const flag =
-            //    myVote === null || myVote === 0 ? dropdown : revokeFlag;
             downVote = (
                 <span className={classDown}>
                     {myVote === null || myVote === 0 ? dropdown : revokeFlag}
@@ -369,7 +366,7 @@ class Voting extends React.Component {
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
         }
-        const total_votes = active_votes.toJS().length;
+        const total_votes = post_obj.getIn(['stats', 'total_votes']);
 
         if (payout < 0.0) payout = 0.0;
 
@@ -559,7 +556,7 @@ export default connect(
         const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
         const author = post.get('author');
         const permlink = post.get('permlink');
-        const active_votes = scotData ? scotData.get('active_votes') : List();
+        const active_votes = post.get('active_votes');
         const is_comment = post.get('parent_author') !== '';
 
         const current_account = state.user.get('current');
