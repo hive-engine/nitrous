@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Icon from 'app/components/elements/Icon';
@@ -27,6 +28,15 @@ class Header extends React.Component {
 
     constructor() {
         super();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { loggedIn } = this.props;
+        if (prevProps.loggedIn && !loggedIn) {
+            if (process.env.BROWSER) {
+                browserHistory.replace(`/`);
+            }
+        }
     }
 
     render() {
