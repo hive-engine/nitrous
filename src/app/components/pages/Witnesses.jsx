@@ -117,19 +117,21 @@ class Witnesses extends React.Component {
                 />
             );
 
-            let witness_thread = '';
+            let witness_link = '';
             if (thread) {
-                if (links.remote.test(thread)) {
-                    witness_thread = (
-                        <a href={thread}>
+                if (!/^https?:\/\//.test(thread)) {
+                    witness_link = '(No URL provided)';
+                } else if (links.remote.test(thread)) {
+                    witness_link = (
+                        <a href={thread} target="_blank">
                             {tt('witnesses_jsx.external_site')}&nbsp;<Icon name="extlink" />
                         </a>
                     );
                 } else {
-                    witness_thread = (
-                        <Link to={thread}>
-                            {tt('witnesses_jsx.witness_thread')}
-                        </Link>
+                    witness_link = (
+                        <a href={thread} target="_blank">
+                            {tt('witnesses_jsx.witness_thread')}&nbsp;<Icon name="extlink" />
+                        </a>
                     );
                 }
             }
@@ -155,7 +157,11 @@ class Witnesses extends React.Component {
                                         owner,
                                         !myVote
                                     )}
-                                    title={myVote === true ? tt('g.remove_vote') : tt('g.vote')}
+                                    title={
+                                        myVote === true
+                                            ? tt('g.remove_vote')
+                                            : tt('g.vote')
+                                    }
                                 >
                                     {up}
                                 </a>
@@ -174,7 +180,7 @@ class Witnesses extends React.Component {
                             </small>
                         )}
                     </td>
-                    <td>{witness_thread}</td>
+                    <td>{witness_link}</td>
                 </tr>
             );
         });
@@ -441,7 +447,7 @@ module.exports = {
                             operation: { account: username, witness, approve },
                             confirm: !approve
                                 ? 'You are about to remove your vote for this witness'
-                                : null
+                                : null,
                         })
                     );
                 },
