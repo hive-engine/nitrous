@@ -7,7 +7,6 @@ import tt from 'counterpart';
 class Login extends React.Component {
     componentWillMount() {
         const { username, loggedIn } = this.props;
-        console.log('component will mount..');
         if (loggedIn) {
             if (process.env.BROWSER) {
                 browserHistory.replace(`/@${username}/transfers`);
@@ -16,7 +15,6 @@ class Login extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('component did update..');
         const { username, loggedIn } = this.props;
         if (!prevProps.loggedIn && loggedIn) {
             if (process.env.BROWSER) {
