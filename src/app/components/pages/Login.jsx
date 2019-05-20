@@ -37,7 +37,7 @@ class Login extends React.Component {
         return (
             <div className="Login row">
                 <div className="column">
-                    <LoginForm />
+                    <LoginForm loginType="basic" />
                 </div>
             </div>
         );

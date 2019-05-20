@@ -442,8 +442,8 @@ function checkPasswordChecksum(password) {
 import { connect } from 'react-redux';
 export default connect(
     // mapStateToProps
-    state => {
-        const loginType = state.user.get('login_type');
+    (state, ownProps) => {
+        const loginType = ownProps.loginType || state.user.get('login_type');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
         const loginBroadcastOperation = state.user.get(
