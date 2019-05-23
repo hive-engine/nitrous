@@ -46,7 +46,7 @@ export default function init(config) {
             document,
             'script',
             `https://www.googletagmanager.com/gtag/js?id=${
-                config.gtag_meausrement_id
+                config.gtag_measurement_id
             }`,
             'dataLayer'
         );
