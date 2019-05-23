@@ -360,7 +360,11 @@ class Voting extends React.Component {
                 parseInt(scotData.get('curator_payout_value')) / SCOT_DENOM;
             scot_total_author_payout =
                 parseInt(scotData.get('total_payout_value')) / SCOT_DENOM;
+            const scot_bene_payout =
+                parseInt(scotData.get('beneficiaries_payout_value')) /
+                SCOT_DENOM;
             scot_total_author_payout -= scot_total_curator_payout;
+            scot_total_author_payout -= scot_bene_payout;
             cashout_time = scotData.get('cashout_time');
             payout = scot_pending_token
                 ? scot_pending_token
