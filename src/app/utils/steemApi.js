@@ -2,6 +2,9 @@ import { api } from '@steemit/steem-js';
 import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
+import SSC from 'sscjs';
+
+const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 export async function getScotDataAsync(path) {
     return await axios({
@@ -18,7 +21,7 @@ export async function getScotDataAsync(path) {
 }
 
 export async function attachScotData(url, state) {
-    const urlParts = url.match(/^[\/]?(trending|hot)\/?([^\/]*)/);
+    let urlParts = url.match(/^[\/]?(trending|hot)\/?([^\/]*)/);
     if (urlParts && (!urlParts[2] || urlParts[2] === SCOT_TAG) /*tag*/) {
         const feedType = urlParts[1];
         const tag = urlParts[2]; // Not suported for general tags yet.
@@ -70,37 +73,53 @@ export async function attachScotData(url, state) {
 
             state.discussion_idx[tag][feedType].push(key);
         });
-    } else {
-        if (state.content) {
-            await Promise.all(
-                Object.entries(state.content)
-                    .filter(entry => {
-                        return entry[0].match(/[a-z0-9\.-]+\/.*?/);
-                    })
-                    .map(async entry => {
-                        const k = entry[0];
-                        const v = entry[1];
-                        // Fetch SCOT data
-                        const scotData = await getScotDataAsync(`@${k}`);
-                        Object.assign(
-                            state.content[k],
-                            scotData[LIQUID_TOKEN_UPPERCASE]
-                        );
-                        state.content[k].scotData = scotData;
-                    })
-            );
-            const filteredContent = {};
-            Object.entries(state.content)
-                .filter(
-                    entry =>
-                        entry[1].scotData &&
-                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]
-                )
-                .forEach(entry => {
-                    filteredContent[entry[0]] = entry[1];
-                });
-            state.content = filteredContent;
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        console.log(account);
+        const tokenBalances = await ssc.findOne('tokens', 'balances', {
+            account,
+            symbol: LIQUID_TOKEN_UPPERCASE,
+        });
+        console.log(tokenBalances);
+        if (tokenBalances) {
+            state.accounts[account].token_balances = tokenBalances;
         }
+        return;
+    }
+
+    if (state.content) {
+        await Promise.all(
+            Object.entries(state.content)
+                .filter(entry => {
+                    return entry[0].match(/[a-z0-9\.-]+\/.*?/);
+                })
+                .map(async entry => {
+                    const k = entry[0];
+                    const v = entry[1];
+                    // Fetch SCOT data
+                    const scotData = await getScotDataAsync(`@${k}`);
+                    Object.assign(
+                        state.content[k],
+                        scotData[LIQUID_TOKEN_UPPERCASE]
+                    );
+                    state.content[k].scotData = scotData;
+                })
+        );
+        const filteredContent = {};
+        Object.entries(state.content)
+            .filter(
+                entry =>
+                    entry[1].scotData &&
+                    entry[1].scotData[LIQUID_TOKEN_UPPERCASE]
+            )
+            .forEach(entry => {
+                filteredContent[entry[0]] = entry[1];
+            });
+        state.content = filteredContent;
     }
 }
 
