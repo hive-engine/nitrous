@@ -105,7 +105,7 @@
         "sign_up": "Sign up",
         "since": "since %(date)s",
         "submit": "Submit",
-        "power_up": "Power Up",
+        "power_up": "Stake",
         "submit_a_story": "Post",
         "tag": "Tag",
         "to": " to ",
@@ -482,17 +482,17 @@
     },
     "tips_js": {
         "liquid_token":
-            "Tradeable tokens that may be transferred anywhere at anytime.<br/>%(LIQUID_TOKEN)s can be converted to %(VESTING_TOKEN)s in a process called powering up.",
+            "Tradeable tokens that may be transferred anywhere at anytime.<br/>%(LIQUID_TOKEN)s can be converted to %(VESTING_TOKEN)s in a process called staking.",
         "influence_token":
             "Influence tokens which give you more control over post payouts and allow you to earn on curation rewards.",
         "estimated_value":
             "The estimated value is based on an average value of %(LIQUID_TOKEN)s in US dollars.",
         "non_transferable":
-            "%(VESTING_TOKEN)s is non-transferable and requires 3 months (13 payments) to convert back to %(LIQUID_TOKEN)s.",
+            "%(VESTING_TOKEN)s is non-transferable and has some time delay to convert back to %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate."
+            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions. Your delegation amount can fluctuate."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
@@ -532,6 +532,82 @@
         "empty_feed_5": "Browse The FAQ",
         "my_feed": "My Feed",
         "accountnames_feed": "%(account_name)s's Feed"
+    },
+    "transferhistoryrow_jsx": {
+        "to_savings": "to savings",
+        "from_savings": "from savings",
+        "cancel_transfer_from_savings":
+            "Cancel transfer from savings (request %(request_id)s)",
+        "stop_power_down": "Stop power down",
+        "withdraw_vesting": "Start power down of %(powerdown_vests)s STEEM",
+        "start_power_down_of": "Start power down of",
+        "receive_interest_of": "Receive interest of",
+        "bad_actor_caution": "Caution",
+        "bad_actor_explained":
+            "This is from an account that looks fraudulent. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "bad_actor_reveal_memo": "I understand the risk; show anyway.",
+        "from_negative_rep_user_caution": "Caution",
+        "from_negative_rep_user_explained":
+            "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "from_negative_rep_user_reveal_memo":
+            "I understand the risk; show anyway.",
+        "curation_reward": "%(curation_reward)s STEEM POWER for ",
+        "author_reward":
+            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
+        "claim_reward_balance": {
+            "three_rewards":
+                "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
+            "two_rewards":
+                "Claim rewards: %(first_reward)s and %(second_reward)s",
+            "one_reward": "Claim rewards: %(reward)s"
+        },
+        "interest": "Receive interest of %(interest)s",
+        "fill_convert_request":
+            "Fill convert request: %(amount_in)s for %(amount_out)s",
+        "fill_order": {
+            "filled_by_current_owner":
+                "Paid %(open_pays)s for %(current_pays)s",
+            "open_owner_filled_my_order":
+                "Paid %(current_pays)s for %(open_pays)s"
+        },
+        "comment_benefactor_reward":
+            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
+        "transfer_to_vesting": {
+            "from_self": {
+                "no_to": "Transfer %(amount)s to STEEM POWER",
+                "to_someone": "Transfer %(amount)s STEEM POWER to "
+            },
+            "to_self": "Receive %(amount)s STEEM POWER from ",
+            "from_user_to_user":
+                " Transfer %(amount)s STEEM POWER from %(from) to "
+        },
+        "transfer": {
+            "from_self": {
+                "to_savings": "Transfer to savings %(amount)s to ",
+                "from_savings": "Transfer from savings %(amount)s to ",
+                "not_savings": "Transfer %(amount)s to "
+            },
+            "to_self": {
+                "to_savings": "Receive from savings %(amount)s from ",
+                "from_savings": "Transfer from savings %(amount)s from ",
+                "not_savings": "Received %(amount)s from "
+            },
+            "to_someone_from_someone": {
+                "to_savings":
+                    "Transfer to savings %(amount)s from %(from)s to %(to)s",
+                "from_savings":
+                    "Transfer from savings %(amount)s from %(from)s to %(to)s",
+                "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
+            }
+        },
+        "request_id": "Request ID: %(request_id)s"
+    },
+    "savingswithdrawhistory_jsx": {
+        "cancel_this_withdraw_request": "Cancel this withdraw request?",
+        "pending_savings_withdrawals": "PENDING SAVINGS WITHDRAWS",
+        "withdraw": "Withdraw %(amount)s",
+        "to": "to %(to)s",
+        "from_to": "from %(from)s to %(to)s"
     },
     "explorepost_jsx": {
         "copied": "Copied!",
@@ -688,8 +764,8 @@
         "conversion_complete_tip": "Will complete on %(date)s",
         "in_conversion": "%(amount)s in conversion",
         "transfer_to_savings": "Transfer to Savings",
-        "power_up": "Power Up",
-        "power_down": "Power Down",
+        "power_up": "Stake",
+        "power_down": "Unstake",
         "market": "Market",
         "convert_to_LIQUID_TOKEN": "Convert to %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Withdraw %(LIQUID_TOKEN)s",
@@ -701,11 +777,23 @@
         "savings": "SAVINGS",
         "estimated_account_value": "Estimated Account Value",
         "next_power_down_is_scheduled_to_happen":
-            "The next power down is scheduled to happen",
+            "The next unstake is scheduled to happen",
         "transfers_are_temporary_disabled": "Transfers are temporary disabled.",
         "history": "HISTORY",
         "redeem_rewards": "Redeem Rewards (Transfer to Balance)",
         "buy_steem_or_steem_power": "Buy STEEM or STEEM POWER"
+    },
+    "powerdown_jsx": {
+        "power_down": "Unstake",
+        "amount": "Amount",
+        "already_power_down":
+            "You are already unstaking %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s paid out so far). Note that if you change the unstake amount the payout schedule will reset.",
+        "delegating":
+            "You are delegating %(AMOUNT)s %(LIQUID_TICKER)s. That amount is locked up and not available to unstake until the delegation is removed and a full reward period has passed.",
+        "per_week": "That's ~%(AMOUNT)s %(LIQUID_TICKER)s per week.",
+        "warning":
+            "Leaving less than %(AMOUNT)s %(VESTING_TOKEN)s in your account is not recommended and can leave your account in a unusable state.",
+        "error": "Unable to unstake (ERROR: %(MESSAGE)s)"
     },
     "checkloginowner_jsx": {
         "your_password_permissions_were_reduced":

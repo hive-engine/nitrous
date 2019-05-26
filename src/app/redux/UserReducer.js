@@ -12,8 +12,16 @@ export const SAVE_LOGIN_CONFIRM = 'user/SAVE_LOGIN_CONFIRM';
 export const SAVE_LOGIN = 'user/SAVE_LOGIN';
 const REMOVE_HIGH_SECURITY_KEYS = 'user/REMOVE_HIGH_SECURITY_KEYS';
 const CHANGE_LANGUAGE = 'user/CHANGE_LANGUAGE';
+const SHOW_TRANSFER = 'user/SHOW_TRANSFER';
+const HIDE_TRANSFER = 'user/HIDE_TRANSFER';
+const SHOW_POWERDOWN = 'user/SHOW_POWERDOWN';
+const HIDE_POWERDOWN = 'user/HIDE_POWERDOWN';
 const SHOW_PROMOTE_POST = 'user/SHOW_PROMOTE_POST';
 const HIDE_PROMOTE_POST = 'user/HIDE_PROMOTE_POST';
+const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
+const CLEAR_TRANSFER_DEFAULTS = 'user/CLEAR_TRANSFER_DEFAULTS';
+const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
+const CLEAR_POWERDOWN_DEFAULTS = 'user/CLEAR_POWERDOWN_DEFAULTS';
 export const CHECK_KEY_TYPE = 'user/CHECK_KEY_TYPE';
 export const USERNAME_PASSWORD_LOGIN = 'user/USERNAME_PASSWORD_LOGIN';
 export const SET_USER = 'user/SET_USER';
@@ -136,11 +144,35 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_LANGUAGE:
             return state.set('locale', payload);
 
+        case SHOW_TRANSFER:
+            return state.set('show_transfer_modal', true);
+
+        case HIDE_TRANSFER:
+            return state.set('show_transfer_modal', false);
+
+        case SHOW_POWERDOWN:
+            return state.set('show_powerdown_modal', true);
+
+        case HIDE_POWERDOWN:
+            return state.set('show_powerdown_modal', false);
+
         case SHOW_PROMOTE_POST:
             return state.set('show_promote_post_modal', true);
 
         case HIDE_PROMOTE_POST:
             return state.set('show_promote_post_modal', false);
+
+        case SET_TRANSFER_DEFAULTS:
+            return state.set('transfer_defaults', fromJS(payload));
+
+        case CLEAR_TRANSFER_DEFAULTS:
+            return state.remove('transfer_defaults');
+
+        case SET_POWERDOWN_DEFAULTS:
+            return state.set('powerdown_defaults', fromJS(payload));
+
+        case CLEAR_POWERDOWN_DEFAULTS:
+            return state.remove('powerdown_defaults');
 
         case CHECK_KEY_TYPE:
             return state; // saga
@@ -288,6 +320,26 @@ export const changeLanguage = payload => ({
     payload,
 });
 
+export const showTransfer = payload => ({
+    type: SHOW_TRANSFER,
+    payload,
+});
+
+export const hideTransfer = payload => ({
+    type: HIDE_TRANSFER,
+    payload,
+});
+
+export const showPowerdown = payload => ({
+    type: SHOW_POWERDOWN,
+    payload,
+});
+
+export const hidePowerdown = payload => ({
+    type: HIDE_POWERDOWN,
+    payload,
+});
+
 export const showPromotePost = payload => ({
     type: SHOW_PROMOTE_POST,
     payload,
@@ -295,6 +347,26 @@ export const showPromotePost = payload => ({
 
 export const hidePromotePost = payload => ({
     type: HIDE_PROMOTE_POST,
+    payload,
+});
+
+export const setTransferDefaults = payload => ({
+    type: SET_TRANSFER_DEFAULTS,
+    payload,
+});
+
+export const clearTransferDefaults = payload => ({
+    type: CLEAR_TRANSFER_DEFAULTS,
+    payload,
+});
+
+export const setPowerdownDefaults = payload => ({
+    type: SET_POWERDOWN_DEFAULTS,
+    payload,
+});
+
+export const clearPowerdownDefaults = payload => ({
+    type: CLEAR_POWERDOWN_DEFAULTS,
     payload,
 });
 
