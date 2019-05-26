@@ -158,7 +158,8 @@ class UserWallet extends React.Component {
         );
 
         const reward = tokenStatus.pending_token;
-        const rewards_str = `${reward} ${LIQUID_TOKEN_UPPERCASE}`;
+        const rewards_str =
+            reward > 0 ? `${reward} ${LIQUID_TOKEN_UPPERCASE}` : null;
 
         let claimbox;
         if (current_user && rewards_str && isMyAccount) {
