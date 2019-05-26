@@ -12,6 +12,7 @@ export default function ServerHTML({
     adClient,
     gptEnabled,
     gptBidding,
+    fomoId,
 }) {
     let page_title = title;
     return (
@@ -350,6 +351,13 @@ export default function ServerHTML({
                       });
                   `,
                         }}
+                    />
+                ) : null}
+                {fomoId ? (
+                    <script
+                        async
+                        type="text/javascript"
+                        src={`https://load.fomo.com/ads/load.js?id=${fomoId}`}
                     />
                 ) : null}
                 <title>{page_title}</title>
