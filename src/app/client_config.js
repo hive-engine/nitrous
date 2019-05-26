@@ -32,7 +32,7 @@ export const LIQUID_TOKEN = 'Sct';
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';
 export const SCOT_DENOM = 1000;
 
-export const VESTING_TOKEN = 'WEED POWER';
+export const VESTING_TOKEN = 'SCT POWER';
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
 export const DEBT_TOKEN = 'STEEM DOLLAR';
