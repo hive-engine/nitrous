@@ -61,8 +61,6 @@ class Voting extends React.Component {
         post_obj: PropTypes.object,
         enable_slider: PropTypes.bool,
         voting: PropTypes.bool,
-        price_per_steem: PropTypes.number,
-        sbd_print_rate: PropTypes.number,
         scotData: PropTypes.object,
     };
 
@@ -227,8 +225,6 @@ class Voting extends React.Component {
             enable_slider,
             is_comment,
             post_obj,
-            price_per_steem,
-            sbd_print_rate,
             username,
             scotData,
         } = this.props;
@@ -354,21 +350,28 @@ class Voting extends React.Component {
         // Arbitrary invalid cash time (steem related behavior)
         let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
-            scot_pending_token =
-                parseInt(scotData.get('pending_token')) / SCOT_DENOM;
-            scot_total_curator_payout =
-                parseInt(scotData.get('curator_payout_value')) / SCOT_DENOM;
-            scot_total_author_payout =
-                parseInt(scotData.get('total_payout_value')) / SCOT_DENOM;
-            const scot_bene_payout =
-                parseInt(scotData.get('beneficiaries_payout_value')) /
-                SCOT_DENOM;
+            scot_pending_token = parseInt(scotData.get('pending_token'));
+            scot_total_curator_payout = parseInt(
+                scotData.get('curator_payout_value')
+            );
+            scot_total_author_payout = parseInt(
+                scotData.get('total_payout_value')
+            );
+            const scot_bene_payout = parseInt(
+                scotData.get('beneficiaries_payout_value')
+            );
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_bene_payout;
             cashout_time = scotData.get('cashout_time');
             payout = scot_pending_token
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
+
+            // divide by SCOT_DENOM
+            scot_pending_token /= SCOT_DENOM;
+            scot_total_curator_payout /= SCOT_DENOM;
+            scot_total_author_payout /= SCOT_DENOM;
+            payout /= SCOT_DENOM;
         }
         const total_votes = post_obj.getIn(['stats', 'total_votes']);
 
@@ -386,9 +389,15 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
+        if (
+            cashout_time &&
+            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time)
+        ) {
+            cashout_time = cashout_time + 'Z'; // Firefox really wants this Z (Zulu)
+        }
         const cashout_active =
             scot_pending_token > 0 ||
-            (Date.parse(cashout_time) > Date.now() &&
+            (new Date(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
 
@@ -581,8 +590,6 @@ export default connect(
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
         );
-        const price_per_steem = pricePerSteem(state);
-        const sbd_print_rate = state.global.getIn(['props', 'sbd_print_rate']);
         const enable_slider =
             net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD;
 
@@ -598,8 +605,6 @@ export default connect(
             post_obj: post,
             loggedin: username != null,
             voting,
-            price_per_steem,
-            sbd_print_rate,
             scotData,
         };
     },
