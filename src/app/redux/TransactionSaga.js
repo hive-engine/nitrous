@@ -16,6 +16,9 @@ import * as userActions from 'app/redux/UserReducer';
 import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
+import SSC from 'sscjs';
+
+const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
@@ -23,6 +26,7 @@ export const transactionWatches = [
 
 const hook = {
     preBroadcast_comment,
+    preBroadcast_transfer,
     preBroadcast_vote,
     error_vote,
     error_custom_json,
@@ -31,7 +35,28 @@ const hook = {
     accepted_delete_comment,
     accepted_vote,
 };
-
+export function* preBroadcast_transfer({ operation }) {
+    let memoStr = operation.memo;
+    if (memoStr) {
+        memoStr = toStringUtf8(memoStr);
+        memoStr = memoStr.trim();
+        if (/^#/.test(memoStr)) {
+            const memo_private = yield select(state =>
+                state.user.getIn(['current', 'private_keys', 'memo_private'])
+            );
+            if (!memo_private)
+                throw new Error(
+                    'Unable to encrypt memo, missing memo private key'
+                );
+            const account = yield call(getAccount, operation.to);
+            if (!account) throw new Error(`Unknown to account ${operation.to}`);
+            const memo_key = account.get('memo_key');
+            memoStr = memo.encode(memo_private, memo_key, memoStr);
+            operation.memo = memoStr;
+        }
+    }
+    return operation;
+}
 const toStringUtf8 = o =>
     o ? (Buffer.isBuffer(o) ? o.toString('utf-8') : o.toString()) : o;
 
@@ -79,6 +104,11 @@ export function* broadcastOperation({
         allowPostUnsafe,
     };
     console.log('broadcastOperation', operationParam);
+    const needsActiveAuth =
+        !postingOps.has(type) ||
+        (type === 'custom_json' &&
+            operation.required_auths &&
+            operation.required_auths.length > 0);
 
     const conf = typeof confirm === 'function' ? confirm() : confirm;
     if (conf) {
@@ -94,6 +124,7 @@ export function* broadcastOperation({
     }
     const payload = {
         operations: [[type, operation]],
+        needsActiveAuth,
         keys,
         username,
         successCallback,
@@ -122,6 +153,7 @@ export function* broadcastOperation({
                 // user may already be logged in, or just enterend a signing passowrd or wif
                 const signingKey = yield call(findSigningKey, {
                     opType: type,
+                    needsActiveAuth,
                     username,
                     password,
                 });
@@ -181,20 +213,22 @@ function hasPrivateKeys(payload) {
 }
 
 function* broadcastPayload({
-    payload: { operations, keys, username, successCallback, errorCallback },
+    payload: {
+        needsActiveAuth,
+        operations,
+        keys,
+        username,
+        successCallback,
+        errorCallback,
+    },
 }) {
-    let needsActiveAuth = false;
-
     // console.log('broadcastPayload')
     if ($STM_Config.read_only_mode) return;
-    for (const [type] of operations) {
+    for (const [type, operation] of operations) {
         // see also transaction/ERROR
         yield put(
             transactionActions.remove({ key: ['TransactionError', type] })
         );
-        if (!postingOps.has(type)) {
-            needsActiveAuth = true;
-        }
     }
 
     {
@@ -233,7 +267,7 @@ function* broadcastPayload({
     username = username || currentUsername;
 
     try {
-        yield new Promise((resolve, reject) => {
+        const txResult = yield new Promise((resolve, reject) => {
             // Bump transaction (for live UI testing).. Put 0 in now (no effect),
             // to enable browser's autocomplete and help prevent typos.
             const env = process.env;
@@ -264,13 +298,13 @@ function* broadcastPayload({
                     broadcast.send(
                         { extensions: [], operations },
                         keys,
-                        err => {
+                        (err, result) => {
                             if (err) {
                                 console.error(err);
                                 reject(err);
                             } else {
                                 broadcastedEvent();
-                                resolve();
+                                resolve(result);
                             }
                         }
                     );
@@ -285,13 +319,40 @@ function* broadcastPayload({
                                 reject(response.message);
                             } else {
                                 broadcastedEvent();
-                                resolve();
+                                resolve(response.result);
                             }
                         }
                     );
                 }
             }
         });
+        if (
+            operations.length == 1 &&
+            operations[0][0] === 'custom_json' &&
+            operations[0][1].id === 'ssc-mainnet1'
+        ) {
+            // Wait for finish.
+            for (let i = 0; i < 15; i++) {
+                let txInfo = yield ssc.getTransactionInfo(txResult.id);
+                console.log(txInfo);
+                if (txInfo && txInfo.logs) {
+                    const logs = JSON.parse(txInfo.logs);
+                    if (logs.errors) {
+                        throw new Error(
+                            'Error with tx: ' + JSON.stringify(logs.errors)
+                        );
+                    } else {
+                        // Success
+                        break;
+                    }
+                }
+                if (txInfo && txInfo.hash) {
+                    console.log(txInfo.hash);
+                }
+                yield new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            console.log(txResult);
+        }
         // status: accepted
         for (const [type, operation] of operations) {
             if (hook['accepted_' + type]) {
