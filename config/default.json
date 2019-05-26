@@ -196,5 +196,6 @@
   "steem_market_cache": {
     "ttl": 7200,
     "key": "steem-market"
-  }
+  },
+  "fomo_id": null
 }
