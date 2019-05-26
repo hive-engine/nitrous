@@ -1,10 +1,11 @@
 {
   "facebook_app_id": false,
   "google_analytics_id": false,
+  "gtag_measurement_id": false,
   "helmet": {
     "directives": {
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",

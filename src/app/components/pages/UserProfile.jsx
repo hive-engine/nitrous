@@ -208,6 +208,9 @@ export default class UserProfile extends React.Component {
                     <UserWallet
                         account={accountImm}
                         current_user={current_user}
+                        showTransfer={this.props.showTransfer}
+                        showPowerdown={this.props.showPowerdown}
+                        withdrawVesting={this.props.withdrawVesting}
                     />
                 </div>
             );
@@ -481,15 +484,12 @@ export default class UserProfile extends React.Component {
                 <div className="columns shrink">
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
                         <li>
-                            <a
-                                href={`https://steem-engine.com/?p=balances&a=${
-                                    username
-                                }`}
-                                target="_blank"
-                                className={walletClass}
+                            <Link
+                                to={`/@${accountname}/transfers`}
+                                activeClassName="acive"
                             >
                                 {tt('g.wallet')}
-                            </a>
+                            </Link>
                         </li>
                         {isMyAccount && (
                             <li>
@@ -640,6 +640,42 @@ module.exports = {
         dispatch => ({
             login: () => {
                 dispatch(userActions.showLogin());
+            },
+            clearTransferDefaults: () => {
+                dispatch(userActions.clearTransferDefaults());
+            },
+            showTransfer: transferDefaults => {
+                dispatch(userActions.setTransferDefaults(transferDefaults));
+                dispatch(userActions.showTransfer());
+            },
+            clearPowerdownDefaults: () => {
+                dispatch(userActions.clearPowerdownDefaults());
+            },
+            showPowerdown: powerdownDefaults => {
+                console.log('power down defaults:', powerdownDefaults);
+                dispatch(userActions.setPowerdownDefaults(powerdownDefaults));
+                dispatch(userActions.showPowerdown());
+            },
+            withdrawVesting: ({
+                account,
+                vesting_shares,
+                errorCallback,
+                successCallback,
+            }) => {
+                const successCallbackWrapper = (...args) => {
+                    dispatch(
+                        globalActions.getState({ url: `@${account}/transfers` })
+                    );
+                    return successCallback(...args);
+                };
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'withdraw_vesting',
+                        operation: { account, vesting_shares },
+                        errorCallback,
+                        successCallback: successCallbackWrapper,
+                    })
+                );
             },
             requestData: args =>
                 dispatch(fetchDataSagaActions.requestData(args)),

@@ -6,7 +6,13 @@ import { VEST_TICKER, LIQUID_TICKER } from 'app/client_config';
 import { fromJS } from 'immutable';
 import { formatter } from '@steemit/steem-js';
 
-export const numberWithCommas = x => x.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export function numberWithCommas(x) {
+    const parts = x.split('.');
+    return (
+        parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') +
+        (parts[1] ? '.' + parts[1] : '')
+    );
+}
 
 export function vestsToSpf(state, vesting_shares) {
     const { global } = state;

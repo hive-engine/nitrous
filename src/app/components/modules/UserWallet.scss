@@ -1,3 +1,6 @@
+.UserWallet__buysp {
+    @extend .e-btn-hollow;
+}
 .UserWallet {
     padding-top: 2rem;
 
@@ -18,7 +21,10 @@
       }
   }
 }
-
+.UserWallet__buysp {  
+  margin-right: 0 !important; 
+  margin-top: 1rem; 
+}
 .UserWallet__claimbox {
   margin: 1.5rem 0 0.5rem;
   padding: 1rem 1rem 1.1rem 1rem;
@@ -49,7 +55,32 @@
       }
   }
 }
+.WalletSubMenu {  
+  > li > a {  
+    transition: 0.2s all ease-in-out; 
+    @include themify($themes) { 
+      color: themed('textColorSecondary');    
+    }   
 
+     &:hover, &:focus { 
+      @include themify($themes) { 
+        color: themed('textColorAccent');   
+      }   
+    } 
+  } 
+  > li > a.active { 
+    cursor: default;  
+    @include themify($themes) { 
+      color: themed('textColorPrimary');    
+    }       
+    font-weight: bold;  
+  } 
+  @include themify($themes) { 
+    border-bottom: themed('border');    
+  }         
+
+   margin: 0.5rem 0 1rem; 
+}
 // protect for foundation bug for collapsed state drop-downs
 @media only screen and (max-width: 40em) {
     .Wallet_dropdown {

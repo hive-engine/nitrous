@@ -124,9 +124,15 @@ function pubkeyThreshold({ pubkeys, authority }) {
     return available;
 }
 
-export function* findSigningKey({ opType, username, password }) {
+export function* findSigningKey({
+    opType,
+    needsActiveAuth,
+    username,
+    password,
+}) {
     let authTypes;
-    if (postingOps.has(opType)) authTypes = 'posting, active';
+    if (postingOps.has(opType) && !needsActiveAuth)
+        authTypes = 'posting, active';
     else authTypes = 'active, owner';
     authTypes = authTypes.split(', ');
 

@@ -27,7 +27,7 @@ export const LIQUID_TOKEN = 'Actnearn';
 export const LIQUID_TOKEN_UPPERCASE = 'ACTNEARN';
 export const SCOT_DENOM = 100;
 
-export const VESTING_TOKEN = 'STEEM POWER';
+export const VESTING_TOKEN = 'WEED POWER';
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
 export const DEBT_TOKEN = 'STEEM DOLLAR';
