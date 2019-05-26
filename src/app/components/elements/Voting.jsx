@@ -386,9 +386,15 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
+        if (
+            cashout_time &&
+            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time)
+        ) {
+            cashout_time = cashout_time + 'Z'; // Firefox really wants this Z (Zulu)
+        }
         const cashout_active =
             scot_pending_token > 0 ||
-            (Date.parse(cashout_time) > Date.now() &&
+            (new Date(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
 

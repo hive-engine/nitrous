@@ -158,9 +158,7 @@ class TransferForm extends Component {
                       ? tt('transfer_jsx.amount_is_in_form')
                       : insufficientFunds(values.asset, values.amount)
                         ? tt('transfer_jsx.insufficient_funds')
-                        : countDecimals(values.amount) > 3
-                          ? tt('transfer_jsx.use_only_3_digits_of_precison')
-                          : null,
+                        : null,
                 asset: props.toVesting
                     ? null
                     : !values.asset ? tt('g.required') : null,
@@ -598,23 +596,41 @@ export default connect(
                 );
                 dispatch(userActions.hideTransfer());
             };
-            const asset2 = toVesting ? LIQUID_TOKEN_UPPERCASE : asset;
-            const transferOperation = {
-                contractName: 'tokens',
-                contractAction: 'transfer',
-                contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
-                    to,
-                    quantity: amount,
-                    memo: toVesting ? undefined : memo ? memo : '',
-                },
-            };
+            const transferOperation = toVesting
+                ? {
+                      contractName: 'tokens',
+                      contractAction: 'stake',
+                      contractPayload: {
+                          symbol: LIQUID_TOKEN_UPPERCASE,
+                          quantity: amount,
+                      },
+                  }
+                : {
+                      contractName: 'tokens',
+                      contractAction: 'transfer',
+                      contractPayload: {
+                          symbol: LIQUID_TOKEN_UPPERCASE,
+                          to,
+                          quantity: amount,
+                          memo: memo ? memo : '',
+                      },
+                  };
             const operation = {
                 id: 'ssc-mainnet1',
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
             };
-            const confirm = () => <ConfirmTransfer operation={operation} />;
+            const confirm = toVesting
+                ? null
+                : () => (
+                      <ConfirmTransfer
+                          operation={{
+                              contractName: transferOperation.contractName,
+                              contractAction: transferOperation.contractAction,
+                              ...transferOperation.contractPayload,
+                          }}
+                      />
+                  );
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',

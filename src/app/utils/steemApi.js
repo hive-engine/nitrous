@@ -6,18 +6,34 @@ import SSC from 'sscjs';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 
-export async function getScotDataAsync(path) {
+async function callApi(url, params) {
     return await axios({
-        url: `https://scot-api.steem-engine.com/${path}`,
+        url,
         method: 'GET',
+        params,
     })
         .then(response => {
             return response.data;
         })
         .catch(err => {
-            console.error(`Could not fetch scot data, path: ${path}`);
+            console.error(`Could not fetch data, url: ${url}`);
             return {};
         });
+}
+
+async function getSteemEngineAccountHistoryAsync(account) {
+    return callApi('https://api.steem-engine.com/accounts/history', {
+        account,
+        limit: 100,
+        offset: 0,
+        type: 'user',
+        symbol: LIQUID_TOKEN_UPPERCASE,
+        v: new Date().getTime(),
+    });
+}
+
+export async function getScotDataAsync(path, params) {
+    return callApi(`https://scot-api.steem-engine.com/${path}`, params);
 }
 
 export async function attachScotData(url, state) {
@@ -27,9 +43,11 @@ export async function attachScotData(url, state) {
         const tag = urlParts[2]; // Not suported for general tags yet.
         // first call feed.
         let feedData = await getScotDataAsync(
-            `get_discussions_by_${feedType}?token=${
-                LIQUID_TOKEN_UPPERCASE
-            }&limit=20`
+            `get_discussions_by_${feedType}`,
+            {
+                token: LIQUID_TOKEN_UPPERCASE,
+                limit: 20,
+            }
         );
         // First fetch missing data.
         if (!state.content) {
@@ -79,14 +97,30 @@ export async function attachScotData(url, state) {
     urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        console.log(account);
-        const tokenBalances = await ssc.findOne('tokens', 'balances', {
-            account,
-            symbol: LIQUID_TOKEN_UPPERCASE,
-        });
-        console.log(tokenBalances);
+        const [
+            tokenBalances,
+            tokenStatuses,
+            transferHistory,
+        ] = await Promise.all([
+            ssc.findOne('tokens', 'balances', {
+                account,
+                symbol: LIQUID_TOKEN_UPPERCASE,
+            }),
+            getScotDataAsync(`@${account}`, { v: new Date().getTime() }),
+            getSteemEngineAccountHistoryAsync(account),
+        ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
+        }
+        if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
+            state.accounts[account].token_status =
+                tokenStatuses[LIQUID_TOKEN_UPPERCASE];
+        }
+        if (transferHistory) {
+            // Reverse to show recent activity first
+            state.accounts[
+                account
+            ].transfer_history = transferHistory.reverse();
         }
         return;
     }

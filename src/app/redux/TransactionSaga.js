@@ -106,7 +106,9 @@ export function* broadcastOperation({
     console.log('broadcastOperation', operationParam);
     const needsActiveAuth =
         !postingOps.has(type) ||
-        (type === 'custom_json' && operation.required_auths.length > 0);
+        (type === 'custom_json' &&
+            operation.required_auths &&
+            operation.required_auths.length > 0);
 
     const conf = typeof confirm === 'function' ? confirm() : confirm;
     if (conf) {
@@ -122,6 +124,7 @@ export function* broadcastOperation({
     }
     const payload = {
         operations: [[type, operation]],
+        needsActiveAuth,
         keys,
         username,
         successCallback,
@@ -316,7 +319,7 @@ function* broadcastPayload({
                                 reject(response.message);
                             } else {
                                 broadcastedEvent();
-                                resolve();
+                                resolve(response.result);
                             }
                         }
                     );

@@ -6,7 +6,7 @@ import tt from 'counterpart';
 import TransferHistoryRow from 'app/components/cards/TransferHistoryRow';
 import TransactionError from 'app/components/elements/TransactionError';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
-import { numberWithCommas, pricePerSteem } from 'app/utils/StateFunctions';
+import { numberWithCommas } from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
 import { FormattedHTMLMessage } from 'app/Translator';
@@ -74,6 +74,11 @@ class UserWallet extends React.Component {
                   stake: '0',
                   pendingUnstake: '0',
               };
+        const tokenStatus = account.has('token_status')
+            ? account.get('token_status').toJS()
+            : {
+                  pending_token: 0,
+              };
         const balance = tokenBalances.balance;
         const stakeBalance = tokenBalances.stake;
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
@@ -93,62 +98,20 @@ class UserWallet extends React.Component {
             });
         };
 
-        const unstake = (cancel, e) => {
+        const unstake = e => {
             e.preventDefault();
             const name = account.get('name');
-            if (cancel) {
-                const unstakeBalance = cancel ? 0 : stakeBalance;
-                this.setState({ toggleDivestError: null });
-                const errorCallback = e2 => {
-                    this.setState({ toggleDivestError: e2.toString() });
-                };
-                const successCallback = () => {
-                    this.setState({ toggleDivestError: null });
-                };
-                this.props.withdrawVesting({
-                    account: name,
-                    unstakeBalance,
-                    errorCallback,
-                    successCallback,
-                });
-            } else {
-                const to_withdraw = account.get('to_withdraw');
-                const withdrawn = account.get('withdrawn');
-                this.props.showUnstake({
-                    account: name,
-                    to_withdraw,
-                    withdrawn,
-                    stakeBalance,
-                });
-            }
+            this.props.showPowerdown({
+                account: name,
+                stakeBalance,
+            });
         };
-
-        const divesting =
-            parseFloat(account.get('vesting_withdraw_rate').split(' ')[0]) >
-            0.0;
 
         /// transfer log
         let idx = 0;
         const transfer_log = account
             .get('transfer_history')
             .map(item => {
-                const data = item.getIn([1, 'op', 1]);
-                const type = item.getIn([1, 'op', 0]);
-
-                // Filter out rewards
-                if (
-                    type === 'curation_reward' ||
-                    type === 'author_reward' ||
-                    type === 'comment_benefactor_reward'
-                ) {
-                    return null;
-                }
-
-                if (
-                    data.sbd_payout === '0.000 SBD' &&
-                    data.vesting_payout === '0.000000 VESTS'
-                )
-                    return null;
                 return (
                     <TransferHistoryRow
                         key={idx++}
@@ -184,16 +147,9 @@ class UserWallet extends React.Component {
             {
                 value: tt('userwallet_jsx.power_down'),
                 link: '#',
-                onClick: unstake.bind(this, false),
+                onClick: unstake.bind(this),
             },
         ];
-        if (divesting) {
-            power_menu.push({
-                value: 'Cancel Unstake',
-                link: '#',
-                onClick: unstake.bind(this, true),
-            });
-        }
 
         const balance_str = numberWithCommas(balance);
         const stake_balance_str = numberWithCommas(stakeBalance);
@@ -201,31 +157,8 @@ class UserWallet extends React.Component {
             pendingUnstakeBalance
         );
 
-        const reward_steem =
-            parseFloat(account.get('reward_steem_balance').split(' ')[0]) > 0
-                ? account.get('reward_steem_balance')
-                : null;
-        const reward_sp =
-            parseFloat(account.get('reward_vesting_steem').split(' ')[0]) > 0
-                ? account.get('reward_vesting_steem').replace('STEEM', 'SP')
-                : null;
-
-        let rewards = [];
-        if (reward_steem) rewards.push(reward_steem);
-        if (reward_sp) rewards.push(reward_sp);
-
-        let rewards_str;
-        switch (rewards.length) {
-            case 3:
-                rewards_str = `${rewards[0]}, ${rewards[1]} and ${rewards[2]}`;
-                break;
-            case 2:
-                rewards_str = `${rewards[0]} and ${rewards[1]}`;
-                break;
-            case 1:
-                rewards_str = `${rewards[0]}`;
-                break;
-        }
+        const reward = tokenStatus.pending_token;
+        const rewards_str = `${reward} ${LIQUID_TOKEN_UPPERCASE}`;
 
         let claimbox;
         if (current_user && rewards_str && isMyAccount) {
@@ -385,14 +318,16 @@ export default connect(
             };
 
             const operation = {
-                account: username,
-                reward_steem: account.get('reward_steem_balance'),
-                reward_vests: account.get('reward_vesting_balance'),
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify({
+                    symbol: LIQUID_TOKEN_UPPERCASE,
+                }),
             };
 
             dispatch(
                 transactionActions.broadcastOperation({
-                    type: 'claim_reward_balance',
+                    type: 'custom_json',
                     operation,
                     successCallback,
                 })

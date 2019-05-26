@@ -484,15 +484,12 @@ export default class UserProfile extends React.Component {
                 <div className="columns shrink">
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
                         <li>
-                            <a
-                                href={`https://steem-engine.com/?p=balances&a=${
-                                    username
-                                }`}
-                                target="_blank"
-                                className={walletClass}
+                            <Link
+                                to={`/@${accountname}/transfers`}
+                                activeClassName="acive"
                             >
                                 {tt('g.wallet')}
-                            </a>
+                            </Link>
                         </li>
                         {isMyAccount && (
                             <li>

@@ -6,29 +6,17 @@ import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { VEST_TICKER, LIQUID_TICKER, VESTING_TOKEN } from 'app/client_config';
 import {
-    numberWithCommas,
-    spToVestsf,
-    vestsToSpf,
-    vestsToSp,
-    assetFloat,
-} from 'app/utils/StateFunctions';
+    LIQUID_TOKEN_UPPERCASE,
+    VESTING_TOKEN,
+    SCOT_DENOM,
+} from 'app/client_config';
+import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
     constructor(props, context) {
         super(props, context);
-        let new_withdraw;
-        if (props.to_withdraw - props.withdrawn > 0) {
-            new_withdraw = props.to_withdraw - props.withdrawn;
-        } else {
-            // Set the default withrawal amount to (available - 5 STEEM)
-            // This should be removed post hf20
-            new_withdraw = Math.max(
-                0,
-                props.available_shares - spToVestsf(props.state, 5.001)
-            );
-        }
+        const new_withdraw = props.stakeBalance;
         this.state = {
             broadcasting: false,
             manual_entry: false,
@@ -38,25 +26,13 @@ class Powerdown extends React.Component {
 
     render() {
         const { broadcasting, new_withdraw, manual_entry } = this.state;
-        const {
-            account,
-            available_shares,
-            withdrawn,
-            to_withdraw,
-            vesting_shares,
-            delegated_vesting_shares,
-        } = this.props;
-        const formatSp = amount =>
-            numberWithCommas(vestsToSp(this.props.state, amount));
+        const { account, stakeBalance } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
         };
         const inputChange = event => {
             event.preventDefault();
-            let value = spToVestsf(
-                this.props.state,
-                parseFloat(event.target.value.replace(/,/g, ''))
-            );
+            let value = parseFloat(event.target.value.replace(/[, ]/g, ''));
             if (!isFinite(value)) {
                 value = new_withdraw;
             }
@@ -77,64 +53,23 @@ class Powerdown extends React.Component {
             };
             // workaround bad math in react-rangeslider
             let withdraw = new_withdraw;
-            if (withdraw > vesting_shares - delegated_vesting_shares) {
-                withdraw = vesting_shares - delegated_vesting_shares;
+            if (withdraw > stakeBalance) {
+                withdraw = stakeBalance;
             }
-            const vesting_shares = `${withdraw.toFixed(6)} ${VEST_TICKER}`;
+            const unstakeAmount = String(
+                withdraw.toFixed(Math.log10(SCOT_DENOM))
+            );
             this.props.withdrawVesting({
                 account,
-                vesting_shares,
+                unstakeAmount,
                 errorCallback,
                 successCallback,
             });
         };
 
-        const notes = [];
-        if (to_withdraw - withdrawn > 0) {
-            const AMOUNT = formatSp(to_withdraw);
-            const WITHDRAWN = formatSp(withdrawn);
-            notes.push(
-                <li key="already_power_down">
-                    {tt('powerdown_jsx.already_power_down', {
-                        AMOUNT,
-                        WITHDRAWN,
-                        LIQUID_TICKER,
-                    })}
-                </li>
-            );
-        }
-        if (delegated_vesting_shares !== 0) {
-            const AMOUNT = formatSp(delegated_vesting_shares);
-            notes.push(
-                <li key="delegating">
-                    {tt('powerdown_jsx.delegating', { AMOUNT, LIQUID_TICKER })}
-                </li>
-            );
-        }
-        if (notes.length === 0) {
-            let AMOUNT = vestsToSpf(this.props.state, new_withdraw) / 13;
-            AMOUNT = AMOUNT.toFixed(AMOUNT >= 10 ? 0 : 1);
-            notes.push(
-                <li key="per_week">
-                    {tt('powerdown_jsx.per_week', { AMOUNT, LIQUID_TICKER })}
-                </li>
-            );
-        }
-        // NOTE: remove this post hf20
-        if (
-            new_withdraw >
-            vesting_shares -
-                delegated_vesting_shares -
-                spToVestsf(this.props.state, 5)
-        ) {
-            const AMOUNT = 5;
-            notes.push(
-                <li key="warning" className="warning">
-                    {tt('powerdown_jsx.warning', { AMOUNT, VESTING_TOKEN })}
-                </li>
-            );
-        }
+        const formatBalance = bal => numberWithCommas(String(bal));
 
+        const notes = [];
         if (this.state.error_message) {
             const MESSAGE = this.state.error_message;
             notes.push(
@@ -153,9 +88,9 @@ class Powerdown extends React.Component {
                 </div>
                 <Slider
                     value={new_withdraw}
-                    step={0.000001}
-                    max={vesting_shares - delegated_vesting_shares}
-                    format={formatSp}
+                    step={1 / SCOT_DENOM}
+                    max={stakeBalance}
+                    format={formatBalance}
                     onChange={sliderChange}
                 />
                 <p className="powerdown-amount">
@@ -163,12 +98,14 @@ class Powerdown extends React.Component {
                     <br />
                     <input
                         value={
-                            manual_entry ? manual_entry : formatSp(new_withdraw)
+                            manual_entry
+                                ? manual_entry
+                                : formatBalance(new_withdraw)
                         }
                         onChange={inputChange}
                         autoCorrect={false}
                     />
-                    {LIQUID_TICKER}
+                    {LIQUID_TOKEN_UPPERCASE}
                 </p>
                 <ul className="powerdown-notes">{notes}</ul>
                 <button
@@ -189,28 +126,13 @@ export default connect(
     (state, ownProps) => {
         const values = state.user.get('powerdown_defaults');
         const account = values.get('account');
-        const to_withdraw = parseFloat(values.get('to_withdraw')) / 1e6;
-        const withdrawn = parseFloat(values.get('withdrawn')) / 1e6;
-        const vesting_shares = assetFloat(
-            values.get('vesting_shares'),
-            VEST_TICKER
-        );
-        const delegated_vesting_shares = assetFloat(
-            values.get('delegated_vesting_shares'),
-            VEST_TICKER
-        );
-        const available_shares =
-            vesting_shares - to_withdraw - withdrawn - delegated_vesting_shares;
+        const stakeBalance = parseFloat(values.get('stakeBalance'));
 
         return {
             ...ownProps,
             account,
-            available_shares,
-            delegated_vesting_shares,
+            stakeBalance,
             state,
-            to_withdraw,
-            vesting_shares,
-            withdrawn,
         };
     },
     // mapDispatchToProps
@@ -225,7 +147,7 @@ export default connect(
         },
         withdrawVesting: ({
             account,
-            vesting_shares,
+            unstakeAmount,
             errorCallback,
             successCallback,
         }) => {
@@ -235,12 +157,25 @@ export default connect(
                 );
                 return successCallback(...args);
             };
+            const unstakeOperation = {
+                contractName: 'tokens',
+                contractAction: 'unstake',
+                contractPayload: {
+                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    quantity: unstakeAmount,
+                },
+            };
+            const operation = {
+                id: 'ssc-mainnet1',
+                required_auths: [account],
+                json: JSON.stringify(unstakeOperation),
+            };
             dispatch(
                 transactionActions.broadcastOperation({
-                    type: 'withdraw_vesting',
-                    operation: { account, vesting_shares },
-                    errorCallback,
+                    type: 'custom_json',
+                    operation,
                     successCallback: successCallbackWrapper,
+                    errorCallback,
                 })
             );
         },
