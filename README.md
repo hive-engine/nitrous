@@ -17,7 +17,7 @@ When running, `SDC_IMAGE_PROXY_PREFIX` and `SDC_UPLOAD_IMAGE_URL` can be set to
 `https://steemitimages.com` (eventually this dependency should be changed).
 
 Change `src/app/assets/images/favicons` with your own, and also change
-`src/app/assets/static/manifest.json` accordingly.
+`src/app/assets/static/manifest.json` and `src/server/server-html.jsx` accordingly.
 
 # Condenser
 
