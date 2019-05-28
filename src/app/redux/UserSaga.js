@@ -3,6 +3,7 @@ import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -23,6 +24,9 @@ import {
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
+import SSC from 'sscjs';
+
+const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
@@ -231,12 +235,23 @@ function* usernamePasswordLogin2({
         );
         return;
     }
+    // fetch SCOT stake
+    const token_balances = yield call(
+        [ssc, ssc.findOne],
+        'tokens',
+        'balances',
+        {
+            account: username,
+            symbol: LIQUID_TOKEN_UPPERCASE,
+        }
+    );
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
         yield put(
             userActions.setUser({
                 username,
+                token_balances,
                 login_with_keychain: true,
                 vesting_shares: account.get('vesting_shares'),
                 received_vesting_shares: account.get('received_vesting_shares'),
@@ -398,6 +413,7 @@ function* usernamePasswordLogin2({
             yield put(
                 userActions.setUser({
                     username,
+                    token_balances,
                     private_keys,
                     login_owner_pubkey,
                     vesting_shares: account.get('vesting_shares'),
@@ -414,6 +430,7 @@ function* usernamePasswordLogin2({
             yield put(
                 userActions.setUser({
                     username,
+                    token_balances,
                     vesting_shares: account.get('vesting_shares'),
                     received_vesting_shares: account.get(
                         'received_vesting_shares'
@@ -461,6 +478,7 @@ function* usernamePasswordLogin2({
                 yield put(
                     userActions.setUser({
                         username,
+                        token_balances,
                         login_with_keychain: true,
                         vesting_shares: account.get('vesting_shares'),
                         received_vesting_shares: account.get(

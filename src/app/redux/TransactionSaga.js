@@ -334,7 +334,6 @@ function* broadcastPayload({
             // Wait for finish.
             for (let i = 0; i < 15; i++) {
                 let txInfo = yield ssc.getTransactionInfo(txResult.id);
-                console.log(txInfo);
                 if (txInfo && txInfo.logs) {
                     const logs = JSON.parse(txInfo.logs);
                     if (logs.errors) {
@@ -346,12 +345,8 @@ function* broadcastPayload({
                         break;
                     }
                 }
-                if (txInfo && txInfo.hash) {
-                    console.log(txInfo.hash);
-                }
                 yield new Promise(resolve => setTimeout(resolve, 1000));
             }
-            console.log(txResult);
         }
         // status: accepted
         for (const [type, operation] of operations) {
