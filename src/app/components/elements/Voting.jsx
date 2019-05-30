@@ -347,6 +347,7 @@ class Voting extends React.Component {
         let scot_total_author_payout = 0;
         let scot_total_curator_payout = 0;
         let payout = 0;
+        let promoted = 0;
         // Arbitrary invalid cash time (steem related behavior)
         let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
@@ -360,6 +361,7 @@ class Voting extends React.Component {
             const scot_bene_payout = parseInt(
                 scotData.get('beneficiaries_payout_value')
             );
+            promoted = parseInt(scotData.get('promoted'));
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_bene_payout;
             cashout_time = scotData.get('cashout_time');
@@ -372,6 +374,7 @@ class Voting extends React.Component {
             scot_total_curator_payout /= SCOT_DENOM;
             scot_total_author_payout /= SCOT_DENOM;
             payout /= SCOT_DENOM;
+            promoted /= SCOT_DENOM;
         }
         const total_votes = post_obj.getIn(['stats', 'total_votes']);
 
@@ -400,28 +403,40 @@ class Voting extends React.Component {
             (new Date(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
+        const numDecimals = Math.log10(SCOT_DENOM);
 
+        if (promoted > 0) {
+            payoutItems.push({
+                value: `Promotion Cost ${promoted.toFixed(numDecimals)} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            });
+        }
         if (cashout_active) {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
-                value: `${scot_pending_token} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: `${scot_pending_token.toFixed(numDecimals)} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
             });
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
         } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: `Past Token Payouts ${payout} ${LIQUID_TOKEN_UPPERCASE}`,
-            });
-            payoutItems.push({
-                value: `- Author ${scot_total_author_payout} ${
+                value: `Past Token Payouts ${payout.toFixed(numDecimals)} ${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
             payoutItems.push({
-                value: `- Curator ${scot_total_curator_payout} ${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: `- Author ${scot_total_author_payout.toFixed(
+                    numDecimals
+                )} ${LIQUID_TOKEN_UPPERCASE}`,
+            });
+            payoutItems.push({
+                value: `- Curator ${scot_total_curator_payout.toFixed(
+                    numDecimals
+                )} ${LIQUID_TOKEN_UPPERCASE}`,
             });
         }
 
