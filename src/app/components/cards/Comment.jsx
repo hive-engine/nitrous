@@ -15,6 +15,7 @@ import tt from 'counterpart';
 import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 // returns true if the comment has a 'hide' flag AND has no descendants w/ positive payout
 function hideSubtree(cont, c) {
@@ -37,11 +38,12 @@ export function sortComments(cont, comments, sort_order) {
         return a.get('net_rshares') < 0;
     }
     function totalPayout(a) {
-        return (
-            parsePayoutAmount(a.get('pending_payout_value')) +
-            parsePayoutAmount(a.get('total_payout_value')) +
-            parsePayoutAmount(a.get('curator_payout_value'))
-        );
+        const scotData = a.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        return scotData
+            ? parseInt(scotData.get('pending_token')) +
+                  parseInt(scotData.get('total_payout_value')) +
+                  parseInt(scotData.get('curator_payout_value'))
+            : 0;
     }
     function netRshares(a) {
         return Long.fromString(String(a.get('net_rshares')));
