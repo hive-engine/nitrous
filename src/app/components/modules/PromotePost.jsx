@@ -86,7 +86,6 @@ class PromotePost extends Component {
                     >
                         <h4>{tt('promote_post_jsx.promote_post')}</h4>
                         <p>
-                            // translator placeholder uses DEBT_TOKEN
                             {tt(
                                 'promote_post_jsx.spend_your_DEBT_TOKEN_to_advertise_this_post',
                                 { DEBT_TOKEN: LIQUID_TOKEN_UPPERCASE }
