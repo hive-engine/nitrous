@@ -79,7 +79,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
                 body_length: d.desc.length,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
-                children: d.children, // this is supposed to return reply count
+                children: d.children,
                 replies: [], // intentional
             };
         } else {
@@ -263,7 +263,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                         body_length: scotData.desc.length,
                         permlink: scotData.authorperm.split('/')[1],
                         category: scotData.tags.split(',')[0],
-                        children: scotData.children, // this is supposed to return reply count
+                        children: scotData.children,
                         replies: [], // intentional
                     };
                 }
