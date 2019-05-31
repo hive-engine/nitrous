@@ -637,7 +637,8 @@
         "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Зарегистрируйтесь",
         "signup_button_emphasis": " сейчас!",
-        "returning_users": "Вернувшиеся пользователи: "
+        "returning_users": "Вернувшиеся пользователи: ",
+        "use_keychain": "Use keychain extension"
     },
     "chainvalidation_js": {
         "account_name_should": "Имя аккаунта должно быть ",

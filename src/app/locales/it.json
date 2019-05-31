@@ -627,7 +627,8 @@
         "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "returning_users": "Utenti di ritorno:"
+        "returning_users": "Utenti di ritorno:",
+        "use_keychain": "Use keychain extension"
     },
     "chainvalidation_js": {
         "account_name_should": "Il nome account",
