@@ -19,6 +19,8 @@ export const LIQUID_TOKEN_UPPERCASE = 'WEED';
 export const SCOT_DENOM = 100000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'WEED POWER';
+export const INTERLEAVE_PROMOTED = false;
+
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
 export const DEBT_TOKEN = 'STEEM DOLLAR';
