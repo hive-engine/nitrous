@@ -451,6 +451,64 @@ class Voting extends React.Component {
                 </span>
             </DropdownMenu>
         );
+ 
+        //
+        let cashout_time_steem = '1969-12-31T23:59:59';
+        let payout_steem = 0;
+        let author_payout_value = 0;
+        let curator_payout_value = 0;
+
+        if (post_obj) {
+            cashout_time_steem = post_obj.get('cashout_time');
+            payout_steem = Math.round(parseFloat(String(post_obj.get('pending_payout_value')).split('S')[0]) * 100) / 100;
+            curator_payout_value = Math.round(parseFloat(post_obj.get('curator_payout_value')) / 100000 * 100) / 100;
+            author_payout_value = Math.round(parseFloat(post_obj.get('total_payout_value')) / 100000 * 100) / 100;
+        }
+
+        if (
+            cashout_time_steem &&
+            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time_steem)
+        ) {
+            cashout_time_steem = cashout_time_steem + 'Z'; // Firefox really wants this Z (Zulu)
+        }
+        const cashout_active_steem = 
+            payout_steem > 0 ||
+            (new Date(cashout_time_steem) > Date.now());
+
+        const payoutItemsSteem = [];
+
+        if(cashout_active_steem){
+            payoutItemsSteem.push({ value: 'Pending Payout' });
+            payoutItemsSteem.push({
+                value: `$${payout_steem}`,
+            });
+        } else {
+            payout_steem = Math.round((curator_payout_value + author_payout_value) * 100) / 100;
+            payoutItemsSteem.push({
+                value: `Past Token Payouts $${payout_steem}`,
+            });
+            payoutItemsSteem.push({
+                value: `- Author $${author_payout_value}`,
+            });
+            payoutItemsSteem.push({
+                value: `- Curator $${curator_payout_value}`,
+            });
+            //payout_steem = parseFloat(String(curator_payout_value).split(' ')[0]) + parseFloat(String(author_payout_value).split(' ')[0]);
+        }
+
+
+        const payoutElSteem = (
+            <DropdownMenu el="div" items={payoutItemsSteem}>
+                <span></span>
+                <span>
+                    <FormattedAsset
+                        amount={payout_steem}
+                        asset='$'
+                    />
+                    {payoutItemsSteem.length > 0 && <Icon name="dropdown-arrow" />}
+                </span>
+            </DropdownMenu>
+        );
 
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
@@ -472,7 +530,8 @@ class Voting extends React.Component {
                 const sign = Math.sign(percent);
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter,
+                    //value: (sign > 0 ? '+ ' : '- ') + voter ,
+                    value: (sign > 0 ? '+ ' : '- ') + voter + '(' + percent / 100 + '%)',
                     link: '/@' + voter,
                 });
             }
@@ -570,6 +629,7 @@ class Voting extends React.Component {
                     {downVote}
                     {payoutEl}
                 </span>
+                {payoutElSteem}
                 {voters_list}
             </span>
         );

@@ -1,24 +1,24 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'Sct';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
+export const APP_NAME_LATIN = 'Sct';
+export const APP_NAME_UPPERCASE = 'SCT';
 export const APP_ICON = 'weedcash';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
-export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = List(['weedcash', 'weed', 'cannabis', 'psychedelic']);
-export const LIQUID_TOKEN = 'Weed';
+export const APP_URL = 'http://www.steemcoinpan.com';
+export const APP_DOMAIN = 'www.steemcoinpan.com';
+export const SCOT_TAG = 'sct';
+export const TAG_LIST = List(['sct', 'cannabis', 'psychedelic']);
+export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
-export const SCOT_DENOM = 100000000;
+export const LIQUID_TOKEN_UPPERCASE = 'SCT';
+export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'WEED POWER';
+export const VESTING_TOKEN = 'SCT POWER';
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
 export const DEBT_TOKEN = 'STEEM DOLLAR';
