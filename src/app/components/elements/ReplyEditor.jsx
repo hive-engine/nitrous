@@ -75,6 +75,16 @@ class ReplyEditor extends React.Component {
             const { body } = this.state;
             if (body.value) {
                 raw = body.value;
+            } else if (this.props.isStory) {
+                raw = `---
+※ The following part is needed to put filled in and added to your text, as otherwise it will not be included later on phase II on Triple A.
+※ 리뷰 하단에 다음 두가지 항목 포함 필수 (미포함 시 차후 자체사이트에 반영 안됨)
+
+* Movie URL: (Look at https://www.themoviedb.org/ for your title and put the URL here)
+* * Critic: (Choose between A, AA, AAA and input the Data)
+*
+* * 영화 URL: (https://www.themoviedb.org/ 에서 리뷰하고싶은 영화 검색후 URL 이곳에 삽입)
+* * 별점: (A, AA, AAA 중 선택해서 이곳에 삽입)`;
             }
 
             // Check for draft data
