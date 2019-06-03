@@ -20,6 +20,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
+import { INTERLEAVE_PROMOTED } from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -104,6 +105,7 @@ class PostSummary extends React.Component {
         const pinned = content.get('pinned');
 
         const isPromoted =
+            INTERLEAVE_PROMOTED &&
             promoted &&
             promoted.contains(
                 `${content.get('author')}/${content.get('permlink')}`
