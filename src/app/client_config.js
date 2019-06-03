@@ -50,8 +50,8 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'Triple A Reviews is a social media platform where everyone gets paid for ' +
+    'creating and curating reviews. It leverages a robust digital points system, called AAA, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
