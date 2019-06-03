@@ -1,18 +1,18 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'PALCoin';
+export const APP_NAME = 'PALNet';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'PALCoin';
-export const APP_NAME_UPPERCASE = 'PALCOIN';
+export const APP_NAME_LATIN = 'PALNet';
+export const APP_NAME_UPPERCASE = 'PALNET';
 export const APP_ICON = 'pal';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.palcoin.io';
-export const APP_DOMAIN = 'www.palcoin.io';
-export const SCOT_TAG = 'palcoin';
-export const TAG_LIST = List(['palcoin', 'pal']);
+export const APP_URL = 'https://www.palnet.io';
+export const APP_DOMAIN = 'www.palnet.io';
+export const SCOT_TAG = 'pal';
+export const TAG_LIST = List(['pal']);
 export const LIQUID_TOKEN = 'PAL';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PAL';
