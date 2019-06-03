@@ -89,8 +89,7 @@ class ReplyEditor extends React.Component {
 * Critic: (Choose between A, AA, AAA and input the Data)
 
 * 영화 URL: (https://www.themoviedb.org/ 에서 리뷰하고싶은 영화 검색후 URL 이곳에 삽입)
-* 별점: (A, AA, AAA 중 선택해서 이곳에 삽입)
-`;
+* 별점: (A, AA, AAA 중 선택해서 이곳에 삽입)`;
             }
 
             // Check for draft data
