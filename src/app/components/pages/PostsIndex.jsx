@@ -8,7 +8,7 @@ import { List } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { TAG_LIST } from 'app/client_config';
+import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -62,7 +62,7 @@ class PostsIndex extends React.Component {
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return null;
         const mainDiscussions = topic_discussions.get(order);
-        if (order === 'trending' || order === 'hot') {
+        if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
             let promotedDiscussions = topic_discussions.get('promoted');
             if (
                 promotedDiscussions &&
