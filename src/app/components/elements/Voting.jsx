@@ -40,7 +40,7 @@ const ABOUT_FLAG = (
     </div>
 );
 
-const MAX_VOTES_DISPLAY = 20;
+const MAX_VOTES_DISPLAY = 200;
 const SBD_PRINT_RATE_MAX = 10000;
 const MAX_WEIGHT = 10000;
 
@@ -347,6 +347,7 @@ class Voting extends React.Component {
         let scot_total_author_payout = 0;
         let scot_total_curator_payout = 0;
         let payout = 0;
+        let promoted = 0;
         // Arbitrary invalid cash time (steem related behavior)
         let cashout_time = '1969-12-31T23:59:59';
         if (scotData) {
@@ -360,6 +361,7 @@ class Voting extends React.Component {
             const scot_bene_payout = parseInt(
                 scotData.get('beneficiaries_payout_value')
             );
+            promoted = parseInt(scotData.get('promoted'));
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_bene_payout;
             cashout_time = scotData.get('cashout_time');
@@ -372,6 +374,7 @@ class Voting extends React.Component {
             scot_total_curator_payout /= SCOT_DENOM;
             scot_total_author_payout /= SCOT_DENOM;
             payout /= SCOT_DENOM;
+            promoted /= SCOT_DENOM;
         }
         const total_votes = post_obj.getIn(['stats', 'total_votes']);
 
@@ -400,28 +403,40 @@ class Voting extends React.Component {
             (new Date(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
+        const numDecimals = Math.log10(SCOT_DENOM);
 
+        if (promoted > 0) {
+            payoutItems.push({
+                value: `Promotion Cost ${promoted.toFixed(numDecimals)} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            });
+        }
         if (cashout_active) {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
-                value: `${scot_pending_token} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: `${scot_pending_token.toFixed(numDecimals)} ${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
             });
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
         } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: `Past Token Payouts ${payout} ${LIQUID_TOKEN_UPPERCASE}`,
-            });
-            payoutItems.push({
-                value: `- Author ${scot_total_author_payout} ${
+                value: `Past Token Payouts ${payout.toFixed(numDecimals)} ${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
             payoutItems.push({
-                value: `- Curator ${scot_total_curator_payout} ${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: `- Author ${scot_total_author_payout.toFixed(
+                    numDecimals
+                )} ${LIQUID_TOKEN_UPPERCASE}`,
+            });
+            payoutItems.push({
+                value: `- Curator ${scot_total_curator_payout.toFixed(
+                    numDecimals
+                )} ${LIQUID_TOKEN_UPPERCASE}`,
             });
         }
 
@@ -437,6 +452,64 @@ class Voting extends React.Component {
             </DropdownMenu>
         );
 
+        //
+        let cashout_time_steem = '1969-12-31T23:59:59';
+        let payout_steem = 0;
+        let author_payout_value = 0;
+        let curator_payout_value = 0;
+
+        if (post_obj) {
+            cashout_time_steem = post_obj.get('cashout_time');
+            payout_steem = Math.round(parseFloat(String(post_obj.get('pending_payout_value')).split('S')[0]) * 100) / 100;
+            curator_payout_value = Math.round(parseFloat(post_obj.get('curator_payout_value')) / 100000 * 100) / 100;
+            author_payout_value = Math.round(parseFloat(post_obj.get('total_payout_value')) / 100000 * 100) / 100;
+        }
+
+        if (
+            cashout_time_steem &&
+            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time_steem)
+        ) {
+            cashout_time_steem = cashout_time_steem + 'Z'; // Firefox really wants this Z (Zulu)
+        }
+        const cashout_active_steem = 
+            payout_steem > 0 ||
+            (new Date(cashout_time_steem) > Date.now());
+
+        const payoutItemsSteem = [];
+
+        if(cashout_active_steem){
+            payoutItemsSteem.push({ value: 'Pending Payout' });
+            payoutItemsSteem.push({
+                value: `$${payout_steem}`,
+            });
+        } else {
+            payout_steem = Math.round((curator_payout_value + author_payout_value) * 100) / 100;
+            payoutItemsSteem.push({
+                value: `Past Token Payouts $${payout_steem}`,
+            });
+            payoutItemsSteem.push({
+                value: `- Author $${author_payout_value}`,
+            });
+            payoutItemsSteem.push({
+                value: `- Curator $${curator_payout_value}`,
+            });
+            //payout_steem = parseFloat(String(curator_payout_value).split(' ')[0]) + parseFloat(String(author_payout_value).split(' ')[0]);
+        }
+       
+
+        const payoutElSteem = (
+            <DropdownMenu el="div" items={payoutItemsSteem}>
+                <span></span>
+                <span>
+                    <FormattedAsset
+                        amount={payout_steem}
+                        asset='$'
+                    />
+                    {payoutItemsSteem.length > 0 && <Icon name="dropdown-arrow" />}
+                </span>
+            </DropdownMenu>
+        );
+
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             const avotes = active_votes.toJS();
@@ -448,16 +521,29 @@ class Voting extends React.Component {
                         : 1
             );
             let voters = [];
+
+            let total_rshares = 0;
+            
+            for (
+                let v = 0;
+                v < avotes.length ;
+                ++v
+            ) {
+                const { rshares } = avotes[v];
+                total_rshares += rshares;
+            }
+
             for (
                 let v = 0;
                 v < avotes.length && voters.length < MAX_VOTES_DISPLAY;
                 ++v
             ) {
-                const { percent, voter } = avotes[v];
+                const { percent, voter, rshares } = avotes[v];
                 const sign = Math.sign(percent);
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter,
+                    //value: (sign > 0 ? '+ ' : '- ') + voter ,
+                    value: (sign > 0 ? '+ ' : '- ') + voter + ' (' + percent / 100 + '%) ' + (payout * rshares / total_rshares).toFixed(2) + LIQUID_TOKEN_UPPERCASE,
                     link: '/@' + voter,
                 });
             }
@@ -555,6 +641,7 @@ class Voting extends React.Component {
                     {downVote}
                     {payoutEl}
                 </span>
+                {payoutElSteem}
                 {voters_list}
             </span>
         );
