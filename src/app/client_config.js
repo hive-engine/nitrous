@@ -20,6 +20,7 @@ export const SCOT_DENOM = 10000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'AAA POWER';
 export const INTERLEAVE_PROMOTED = false;
+export const PROMOTED_POST_ACCOUNT = 'triplea.promoted';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
