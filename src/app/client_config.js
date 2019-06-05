@@ -16,7 +16,7 @@ export const TAG_LIST = List(['palnet']);
 export const LIQUID_TOKEN = 'PAL';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PAL';
-export const SCOT_DENOM = 1000;
+export const SCOT_DENOM = 1;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'PAL POWER';
 export const INTERLEAVE_PROMOTED = true;
