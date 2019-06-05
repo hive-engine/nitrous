@@ -41,7 +41,7 @@ const ABOUT_FLAG = (
 );
 
 const MAX_VOTES_DISPLAY = 20;
-const SBD_PRINT_RATE_MAX = 10000;
+const VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES = 1.0 * 1000.0 * 1000.0;
 const MAX_WEIGHT = 10000;
 
 class Voting extends React.Component {
@@ -591,6 +591,17 @@ export default connect(
         const username = current_account
             ? current_account.get('username')
             : null;
+        const vesting_shares = current_account
+            ? current_account.get('vesting_shares')
+            : 0.0;
+        const delegated_vesting_shares = current_account
+            ? current_account.get('delegated_vesting_shares')
+            : 0.0;
+        const received_vesting_shares = current_account
+            ? current_account.get('received_vesting_shares')
+            : 0.0;
+        const net_vesting_shares =
+            vesting_shares - delegated_vesting_shares + received_vesting_shares;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
         );
@@ -598,9 +609,10 @@ export default connect(
             ? current_account.get('token_balances')
             : null;
         const enable_slider =
-            tokenBalances &&
-            parseFloat(tokenBalances.get('stake')) >
-                VOTE_WEIGHT_DROPDOWN_THRESHOLD;
+            net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES ||
+            (tokenBalances &&
+                parseFloat(tokenBalances.get('stake')) >
+                    VOTE_WEIGHT_DROPDOWN_THRESHOLD);
 
         return {
             post: ownProps.post,
