@@ -8,7 +8,7 @@ import { List } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { TAG_LIST } from 'app/client_config';
+import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -22,6 +22,7 @@ import BiddingAd from 'app/components/elements/BiddingAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
+import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -60,7 +61,33 @@ class PostsIndex extends React.Component {
     getPosts(order, category) {
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return null;
-        return topic_discussions.get(order);
+        const mainDiscussions = topic_discussions.get(order);
+        if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
+            let promotedDiscussions = topic_discussions.get('promoted');
+            if (
+                promotedDiscussions &&
+                promotedDiscussions.size > 0 &&
+                mainDiscussions
+            ) {
+                const batchedMainDiscussions = mainDiscussions
+                    .groupBy((v, k) => Math.floor(k / PROMOTED_POST_PAD_SIZE))
+                    .valueSeq();
+                return promotedDiscussions
+                    .interleave(
+                        batchedMainDiscussions.slice(
+                            0,
+                            promotedDiscussions.size
+                        )
+                    )
+                    .concat(
+                        batchedMainDiscussions.slice(promotedDiscussions.size)
+                    )
+                    .flatten()
+                    .toOrderedSet()
+                    .toList();
+            }
+        }
+        return mainDiscussions;
     }
 
     loadMore(last_post) {
@@ -94,7 +121,7 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { categories, pinned } = this.props;
+        const { categories, discussions, pinned } = this.props;
 
         let topics_order = order;
         let posts = [];
@@ -155,6 +182,11 @@ class PostsIndex extends React.Component {
             : null;
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
+
+        const topicDiscussions = discussions.get(category || '');
+        const promotedPosts = topicDiscussions
+            ? topicDiscussions.get('promoted', List()).toSet()
+            : null;
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -247,6 +279,7 @@ class PostsIndex extends React.Component {
                             loadMore={this.loadMore}
                             showPinned={true}
                             showSpam={showSpam}
+                            promoted={promotedPosts}
                         />
                     )}
                 </article>

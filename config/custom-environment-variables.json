@@ -1,6 +1,7 @@
 {
   "facebook_app_id": "SDC_FACEBOOK_APP_ID",
   "google_analytics_id": "SDC_GOOGLE_ANALYTICS_ID",
+  "gtag_measurement_id": "SDC_GTAG_MEASUREMENT_ID",
   "helmet": {
     "directives": {
       "childSrc": "SDC_HELMET_CHILDSRC",
@@ -57,5 +58,6 @@
   "google_ad_client": "GOOGLE_AD_CLIENT",
   "gpt_enabled": "GPT_ENABLED",
   "steem_market_endpoint": "STEEM_MARKET_ENDPOINT",
-  "steem_market_token": "STEEM_MARKET_TOKEN"
+  "steem_market_token": "STEEM_MARKET_TOKEN",
+  "fomo_id": "FOMO_ID"
 }

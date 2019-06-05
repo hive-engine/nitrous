@@ -10,14 +10,12 @@ The instructions below are still accurate, but you need a few things to configur
 
 `src/app/client_config.js` collects most of the settings that are necessary to configure.
 
-There is one last one within `src/app/components/elements/Voting.jsx` containing the factor to
-divide token balances by in `scot_dec` (should be moved to client_config soon).
-
 When running, `SDC_IMAGE_PROXY_PREFIX` and `SDC_UPLOAD_IMAGE_URL` can be set to
-`https://steemitimages.com` (eventually this dependency should be changed).
+`https://steemitimages.com` (eventually this dependency should be changed). `SDC_IMAGE_PROXY-PREFIX` may also
+need a trailing `/`.
 
 Change `src/app/assets/images/favicons` with your own, and also change
-`src/app/assets/static/manifest.json` accordingly.
+`src/app/assets/static/manifest.json` and `src/server/server-html.jsx` accordingly.
 
 # Condenser
 

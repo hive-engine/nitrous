@@ -5,12 +5,7 @@ import ReactDOM from 'react-dom';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import {
-    DEBT_TOKEN,
-    DEBT_TOKEN_SHORT,
-    CURRENCY_SIGN,
-    DEBT_TICKER,
-} from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import tt from 'counterpart';
 
 class PromotePost extends Component {
@@ -52,7 +47,7 @@ class PromotePost extends Component {
         console.log('-- PromotePost.onSubmit -->');
         this.props.dispatchSubmit({
             amount,
-            asset: DEBT_TICKER,
+            asset: LIQUID_TOKEN_UPPERCASE,
             author,
             permlink,
             onClose,
@@ -75,9 +70,11 @@ class PromotePost extends Component {
 
     render() {
         const { amount, loading, amountError, trxError } = this.state;
-        const { currentAccount } = this.props;
-        const balanceValue = currentAccount.get('sbd_balance');
-        const balance = balanceValue ? balanceValue.split(' ')[0] : 0.0;
+        const { currentUser } = this.props;
+        const balance = currentUser.has('token_balances')
+            ? parseFloat(currentUser.getIn(['token_balances', 'balance']))
+            : 0;
+
         const submitDisabled = !amount;
 
         return (
@@ -91,7 +88,7 @@ class PromotePost extends Component {
                         <p>
                             {tt(
                                 'promote_post_jsx.spend_your_DEBT_TOKEN_to_advertise_this_post',
-                                { DEBT_TOKEN }
+                                { DEBT_TOKEN: LIQUID_TOKEN_UPPERCASE }
                             )}.
                         </p>
                         <hr />
@@ -110,9 +107,7 @@ class PromotePost extends Component {
                                         onChange={this.amountChange}
                                     />
                                     <span className="input-group-label">
-                                        {DEBT_TOKEN_SHORT + ' '} ({
-                                            CURRENCY_SIGN
-                                        })
+                                        {LIQUID_TOKEN_UPPERCASE}
                                     </span>
                                     <div className="error">{amountError}</div>
                                 </div>
@@ -121,8 +116,8 @@ class PromotePost extends Component {
                         <div>
                             {tt('g.balance', {
                                 balanceValue: `${balance} ${
-                                    DEBT_TOKEN_SHORT
-                                } (${CURRENCY_SIGN})`,
+                                    LIQUID_TOKEN_UPPERCASE
+                                }`,
                             })}
                         </div>
                         <br />
@@ -159,11 +154,7 @@ class PromotePost extends Component {
 export default connect(
     (state, ownProps) => {
         const currentUser = state.user.getIn(['current']);
-        const currentAccount = state.global.getIn([
-            'accounts',
-            currentUser.get('username'),
-        ]);
-        return { ...ownProps, currentAccount, currentUser };
+        return { ...ownProps, currentUser };
     },
 
     // mapDispatchToProps
@@ -178,14 +169,27 @@ export default connect(
             errorCallback,
         }) => {
             const username = currentUser.get('username');
-            alert('Promoted posts are currently disabled');
-            //window.location.replace($STM_config.wallet_url + `/transfer?to=null&memo=@${author}/${permlink}&amount=`+parseFloat(amount, 10).toFixed(3) + ' ' + asset)
 
+            const successCallback = () => {
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                ); // refresh transfer history
+                onClose();
+            };
+            const transferOperation = {
+                contractName: 'tokens',
+                contractAction: 'transfer',
+                contractPayload: {
+                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    to: 'null',
+                    quantity: amount,
+                    memo: `@${author}/${permlink}`,
+                },
+            };
             const operation = {
-                from: username,
-                to: 'null',
-                amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
-                memo: `@${author}/${permlink}`,
+                id: 'ssc-mainnet1',
+                required_auths: [username],
+                json: JSON.stringify(transferOperation),
                 __config: {
                     successMessage:
                         tt(
@@ -193,6 +197,14 @@ export default connect(
                         ) + '.',
                 },
             };
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                    errorCallback,
+                })
+            );
         },
     })
 )(PromotePost);
