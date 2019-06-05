@@ -247,7 +247,9 @@ class Voting extends React.Component {
             const s = up ? '' : '-';
             return (
                 <span>
-                    <div className="weight-display">{s + b / 100}%</div>
+                    <div className="weight-display">
+                        {s + b / 100}%
+                    </div>
                     <Slider
                         min={100}
                         max={MAX_WEIGHT}
@@ -451,7 +453,7 @@ class Voting extends React.Component {
                 </span>
             </DropdownMenu>
         );
-
+ 
         //
         let cashout_time_steem = '1969-12-31T23:59:59';
         let payout_steem = 0;
@@ -495,7 +497,7 @@ class Voting extends React.Component {
             });
             //payout_steem = parseFloat(String(curator_payout_value).split(' ')[0]) + parseFloat(String(author_payout_value).split(' ')[0]);
         }
-       
+
 
         const payoutElSteem = (
             <DropdownMenu el="div" items={payoutItemsSteem}>

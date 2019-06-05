@@ -14,7 +14,11 @@ import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import constants from './constants';
 import { fromJS, Map, Set } from 'immutable';
-import { getStateAsync, getScotDataAsync } from 'app/utils/steemApi';
+import {
+    fetchFeedDataAsync,
+    getStateAsync,
+    getScotDataAsync,
+} from 'app/utils/steemApi';
 import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
@@ -265,30 +269,17 @@ export function* fetchData(action) {
         let fetchDone = false;
         let batch = 0;
         while (!fetchDone) {
-            let data = yield call([api, api[call_name]], ...args);
+            let { feedData, endOfData, lastValue } = yield call(
+                fetchFeedDataAsync,
+                call_name,
+                ...args
+            );
 
-            // endOfData check and lastValue setting should go before any filtering,
-            // this indicates no further pages in feed.
-            endOfData = data.length < constants.FETCH_DATA_BATCH_SIZE;
-            // next arg. Note 'by_replies' does not use same structure.
-            const lastValue = data.length > 0 ? data[data.length - 1] : null;
+            // Set next arg. Note 'by_replies' does not use same structure.
             if (lastValue && order !== 'by_replies') {
                 args[0].start_author = lastValue.author;
                 args[0].start_permlink = lastValue.permlink;
             }
-
-            data = (yield all(
-                data.map(post =>
-                    call(async () => {
-                        const k = `${post.author}/${post.permlink}`;
-                        const scotData = await getScotDataAsync(`@${k}`);
-                        post.scotData = scotData;
-                        return post;
-                    })
-                )
-            )).filter(
-                post => post.scotData && post.scotData[LIQUID_TOKEN_UPPERCASE]
-            );
 
             batch++;
             fetchLimitReached = batch >= constants.MAX_BATCHES;
@@ -296,8 +287,8 @@ export function* fetchData(action) {
             // Still return all data but only count ones matching the filter.
             // Rely on UI to actually hide the posts.
             fetched += postFilter
-                ? data.filter(postFilter).length
-                : data.length;
+                ? feedData.filter(postFilter).length
+                : feedData.length;
 
             fetchDone =
                 endOfData ||
@@ -306,7 +297,7 @@ export function* fetchData(action) {
 
             yield put(
                 globalActions.receiveData({
-                    data,
+                    data: feedData,
                     order,
                     category,
                     author,
