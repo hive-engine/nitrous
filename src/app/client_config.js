@@ -11,8 +11,8 @@ export const APP_ICON = 'pal';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.palnet.io';
 export const APP_DOMAIN = 'www.palnet.io';
-export const SCOT_TAG = 'pal';
-export const TAG_LIST = List(['pal']);
+export const SCOT_TAG = 'palnet';
+export const TAG_LIST = List(['palnet']);
 export const LIQUID_TOKEN = 'PAL';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PAL';
