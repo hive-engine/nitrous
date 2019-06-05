@@ -69,25 +69,42 @@ class PostsIndex extends React.Component {
                 promotedDiscussions.size > 0 &&
                 mainDiscussions
             ) {
-                const batchedMainDiscussions = mainDiscussions
-                    .groupBy((v, k) => Math.floor(k / PROMOTED_POST_PAD_SIZE))
-                    .valueSeq();
-                return promotedDiscussions
-                    .interleave(
-                        batchedMainDiscussions.slice(
-                            0,
-                            promotedDiscussions.size
-                        )
-                    )
-                    .concat(
-                        batchedMainDiscussions.slice(promotedDiscussions.size)
-                    )
-                    .flatten()
-                    .toOrderedSet()
-                    .toList();
+                const processed = new Set(); // mutable
+                const interleaved = [];
+                const promoted = [];
+                let promotedIndex = 0;
+                for (let i = 0; i < mainDiscussions.size; i++) {
+                    if (i % PROMOTED_POST_PAD_SIZE === 0) {
+                        while (
+                            processed.has(
+                                promotedDiscussions.get(promotedIndex)
+                            ) &&
+                            promotedIndex < promotedDiscussions.size
+                        ) {
+                            promotedIndex++;
+                        }
+                        if (promotedIndex < promotedDiscussions.size) {
+                            const nextPromoted = promotedDiscussions.get(
+                                promotedIndex
+                            );
+                            interleaved.push(nextPromoted);
+                            promoted.push(nextPromoted);
+                            processed.add(nextPromoted);
+                        }
+                    }
+                    const nextDiscussion = mainDiscussions.get(i);
+                    if (!processed.has(nextDiscussion)) {
+                        interleaved.push(nextDiscussion);
+                        processed.add(nextDiscussion);
+                    }
+                }
+                return {
+                    posts: List(interleaved),
+                    promotedPosts: List(promoted),
+                };
             }
         }
-        return mainDiscussions;
+        return { posts: mainDiscussions, promotedPosts: List() };
     }
 
     loadMore(last_post) {
@@ -124,7 +141,8 @@ class PostsIndex extends React.Component {
         const { categories, discussions, pinned } = this.props;
 
         let topics_order = order;
-        let posts = [];
+        let posts = List();
+        let promotedPosts = List();
         let account_name = '';
         let emptyText = '';
         if (category === 'feed') {
@@ -164,7 +182,9 @@ class PostsIndex extends React.Component {
                 );
             }
         } else {
-            posts = this.getPosts(order, category);
+            const processedPosts = this.getPosts(order, category);
+            posts = processedPosts.posts;
+            promotedPosts = processedPosts.promotedPosts;
             if (posts && posts.size === 0) {
                 emptyText = (
                     <div>
@@ -184,9 +204,6 @@ class PostsIndex extends React.Component {
         const { showSpam } = this.state;
 
         const topicDiscussions = discussions.get(category || '');
-        const promotedPosts = topicDiscussions
-            ? topicDiscussions.get('promoted', List()).toSet()
-            : null;
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -272,7 +289,7 @@ class PostsIndex extends React.Component {
                     ) : (
                         <PostsList
                             ref="list"
-                            posts={posts ? posts : List()}
+                            posts={posts}
                             loading={fetching}
                             anyPosts={true}
                             category={category}
