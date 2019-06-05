@@ -60,7 +60,7 @@ class PostsIndex extends React.Component {
 
     getPosts(order, category) {
         const topic_discussions = this.props.discussions.get(category || '');
-        if (!topic_discussions) return null;
+        if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
             let promotedDiscussions = topic_discussions.get('promoted');
@@ -104,7 +104,7 @@ class PostsIndex extends React.Component {
                 };
             }
         }
-        return { posts: mainDiscussions, promotedPosts: List() };
+        return { posts: mainDiscussions || List(), promotedPosts: List() };
     }
 
     loadMore(last_post) {
@@ -149,7 +149,7 @@ class PostsIndex extends React.Component {
             account_name = order.slice(1);
             order = 'by_feed';
             topics_order = 'trending';
-            posts = this.props.accounts.getIn([account_name, 'feed']);
+            posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
                 emptyText = (
