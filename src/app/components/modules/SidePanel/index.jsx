@@ -59,13 +59,6 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
-            },
         ],
         exchanges: [
             {
@@ -107,24 +100,31 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                value: 'Discord',
+                label: 'Discord',
+                link: 'https://discord.gg/956MATM',
             },
             {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
+                value: 'msp_waves',
+                label: 'MSP Waves',
+                link: 'http://mspwaves.com',
             },
             {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
+                value: 'minnowsupport',
+                label: '@minnowsupport',
+                link: '/@minnowsupport',
+                internal: true,
             },
             {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
+                value: 'msp_curation',
+                label: '@msp-curation',
+                link: '/@msp-curation',
+                internal: true,
+            },
+            {
+                value: 'msp_waves',
+                label: '@msp-waves',
+                link: '/@msp-waves',
                 internal: true,
             },
         ],
@@ -166,6 +166,13 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Community</a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
