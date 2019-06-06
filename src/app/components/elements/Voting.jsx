@@ -247,8 +247,32 @@ class Voting extends React.Component {
             const s = up ? '' : '-';
             return (
                 <span>
-                    <div className="weight-display">
-                        {s + b / 100}%
+                    <div className="weight-display">{s + b / 100}%</div>
+                    <div id="btn_group">
+                        <button
+                            id="weight25"
+                            onClick={this.handleButtonWeightChange(up, 2500)}
+                        >
+                            25%
+                        </button>
+                        <button
+                            id="weight50"
+                            onClick={this.handleButtonWeightChange(up, 5000)}
+                        >
+                            50%
+                        </button>
+                        <button
+                            id="weight75"
+                            onClick={this.handleButtonWeightChange(up, 7500)}
+                        >
+                            75%
+                        </button>
+                        <button
+                            id="weight100"
+                            onClick={this.handleButtonWeightChange(up, 10000)}
+                        >
+                            100%
+                        </button>
                     </div>
                     <Slider
                         min={100}
@@ -260,6 +284,34 @@ class Voting extends React.Component {
                         tooltip={false}
                     />
                 </span>
+            );
+        };
+
+        this.handleButtonWeightChange = (up, weight) => e => {
+            let w;
+            if (up) {
+                w = {
+                    up: weight,
+                    down: this.state.sliderWeight.down,
+                };
+            } else {
+                w = {
+                    up: this.state.sliderWeight.up,
+                    down: weight,
+                };
+            }
+            this.setState({ sliderWeight: w });
+
+            const { username, is_comment } = this.props;
+            console.log(username);
+
+            localStorage.setItem(
+                'voteWeight' +
+                    (up ? '' : 'Down') +
+                    '-' +
+                    username +
+                    (is_comment ? '-comment' : ''),
+                weight
             );
         };
 
@@ -453,7 +505,7 @@ class Voting extends React.Component {
                 </span>
             </DropdownMenu>
         );
- 
+
         //
         let cashout_time_steem = '1969-12-31T23:59:59';
         let payout_steem = 0;
@@ -462,9 +514,26 @@ class Voting extends React.Component {
 
         if (post_obj) {
             cashout_time_steem = post_obj.get('cashout_time');
-            payout_steem = Math.round(parseFloat(String(post_obj.get('pending_payout_value')).split('S')[0]) * 100) / 100;
-            curator_payout_value = Math.round(parseFloat(post_obj.get('curator_payout_value')) / 100000 * 100) / 100;
-            author_payout_value = Math.round(parseFloat(post_obj.get('total_payout_value')) / 100000 * 100) / 100;
+            payout_steem =
+                Math.round(
+                    parseFloat(
+                        String(post_obj.get('pending_payout_value')).split(
+                            'S'
+                        )[0]
+                    ) * 100
+                ) / 100;
+            curator_payout_value =
+                Math.round(
+                    parseFloat(post_obj.get('curator_payout_value')) /
+                        100000 *
+                        100
+                ) / 100;
+            author_payout_value =
+                Math.round(
+                    parseFloat(post_obj.get('total_payout_value')) /
+                        100000 *
+                        100
+                ) / 100;
         }
 
         if (
@@ -473,19 +542,20 @@ class Voting extends React.Component {
         ) {
             cashout_time_steem = cashout_time_steem + 'Z'; // Firefox really wants this Z (Zulu)
         }
-        const cashout_active_steem = 
-            payout_steem > 0 ||
-            (new Date(cashout_time_steem) > Date.now());
+        const cashout_active_steem =
+            payout_steem > 0 || new Date(cashout_time_steem) > Date.now();
 
         const payoutItemsSteem = [];
 
-        if(cashout_active_steem){
+        if (cashout_active_steem) {
             payoutItemsSteem.push({ value: 'Pending Payout' });
             payoutItemsSteem.push({
                 value: `$${payout_steem}`,
             });
         } else {
-            payout_steem = Math.round((curator_payout_value + author_payout_value) * 100) / 100;
+            payout_steem =
+                Math.round((curator_payout_value + author_payout_value) * 100) /
+                100;
             payoutItemsSteem.push({
                 value: `Past Token Payouts $${payout_steem}`,
             });
@@ -498,16 +568,14 @@ class Voting extends React.Component {
             //payout_steem = parseFloat(String(curator_payout_value).split(' ')[0]) + parseFloat(String(author_payout_value).split(' ')[0]);
         }
 
-
         const payoutElSteem = (
             <DropdownMenu el="div" items={payoutItemsSteem}>
-                <span></span>
+                <span />
                 <span>
-                    <FormattedAsset
-                        amount={payout_steem}
-                        asset='$'
-                    />
-                    {payoutItemsSteem.length > 0 && <Icon name="dropdown-arrow" />}
+                    <FormattedAsset amount={payout_steem} asset="$" />
+                    {payoutItemsSteem.length > 0 && (
+                        <Icon name="dropdown-arrow" />
+                    )}
                 </span>
             </DropdownMenu>
         );
@@ -525,12 +593,8 @@ class Voting extends React.Component {
             let voters = [];
 
             let total_rshares = 0;
-            
-            for (
-                let v = 0;
-                v < avotes.length ;
-                ++v
-            ) {
+
+            for (let v = 0; v < avotes.length; ++v) {
                 const { rshares } = avotes[v];
                 total_rshares += rshares;
             }
@@ -545,7 +609,14 @@ class Voting extends React.Component {
                 if (sign === 0) continue;
                 voters.push({
                     //value: (sign > 0 ? '+ ' : '- ') + voter ,
-                    value: (sign > 0 ? '+ ' : '- ') + voter + ' (' + percent / 100 + '%) ' + (payout * rshares / total_rshares).toFixed(2) + LIQUID_TOKEN_UPPERCASE,
+                    value:
+                        (sign > 0 ? '+ ' : '- ') +
+                        voter +
+                        ' (' +
+                        percent / 100 +
+                        '%) ' +
+                        (payout * rshares / total_rshares).toFixed(2) +
+                        LIQUID_TOKEN_UPPERCASE,
                     link: '/@' + voter,
                 });
             }

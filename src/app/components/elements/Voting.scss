@@ -401,3 +401,39 @@
   margin: 0 auto;
   padding-bottom: 2px;
 }
+
+#weight25{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right:-4px;
+}
+#weight50{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;    
+    margin-left:-3px;
+}
+#weight75{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right:-4px;
+}
+#weight100{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;    
+  margin-left:-3px;
+}
+#btn_group button{
+    border: 1px solid skyblue;
+    background-color: rgba(0,0,0,0);
+    color: skyblue;
+    padding: 5px;
+}
+#btn_group button:hover{
+    color:white;
+    background-color: skyblue;
+}
+
+#btn_group button:focus{
+  outline:none;
+}
+
