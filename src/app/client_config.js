@@ -12,8 +12,20 @@ export const APP_ICON = 'bloque64';
 export const APP_URL = 'https://blogs.bloque64.com';
 export const APP_DOMAIN = 'blogs.bloque64.com';
 export const SCOT_TAG = 'bloque64';
-export const TAG_LIST = List(['bloque64']);
-export const LIQUID_TOKEN = 'Weed';
+export const TAG_LIST = List([
+    'bloque64',
+    'politica',
+    'economia',
+    'sociedad',
+    'cultura',
+    'musica',
+    'deportes',
+    'tecnolgia',
+    'ciencia',
+    'salud',
+    'blockchain',
+]);
+export const LIQUID_TOKEN = 'BLQ';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'BLQ';
 export const SCOT_DENOM = 100000000;
