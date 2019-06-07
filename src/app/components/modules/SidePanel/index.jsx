@@ -100,7 +100,12 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'Discord',
+                value: 'forum',
+                label: 'Forum',
+                link: 'https://palnet.tokenbb.io',
+            },
+            {
+                value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/956MATM',
             },
@@ -122,7 +127,7 @@ const SidePanel = ({
                 internal: true,
             },
             {
-                value: 'msp_waves',
+                value: 'msp_waves_blog',
                 label: '@msp-waves',
                 link: '/@msp-waves',
                 internal: true,
