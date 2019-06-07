@@ -19,6 +19,7 @@ export const TAG_LIST = List([
     'liberty',
     'minnow',
     'minnowsupport',
+    'spanish',
 ]);
 export const LIQUID_TOKEN = 'PAL';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
