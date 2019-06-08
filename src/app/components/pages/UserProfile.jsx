@@ -210,7 +210,7 @@ export default class UserProfile extends React.Component {
                         current_user={current_user}
                         showTransfer={this.props.showTransfer}
                         showPowerdown={this.props.showPowerdown}
-                        withdrawVesting={this.props.withdrawVesting}
+                        cancelUnstake={this.props.cancelUnstake}
                     />
                 </div>
             );
@@ -292,14 +292,6 @@ export default class UserProfile extends React.Component {
                         <br />
                         <Link to="/trending">
                             {tt('user_profile.explore_trending_articles')}
-                        </Link>
-                        <br />
-                        <Link to="/welcome">
-                            {tt('user_profile.read_the_quick_start_guide')}
-                        </Link>
-                        <br />
-                        <Link to="/faq.html">
-                            {tt('user_profile.browse_the_faq')}
                         </Link>
                         <br />
                     </div>
@@ -656,24 +648,29 @@ module.exports = {
                 dispatch(userActions.setPowerdownDefaults(powerdownDefaults));
                 dispatch(userActions.showPowerdown());
             },
-            withdrawVesting: ({
-                account,
-                vesting_shares,
-                errorCallback,
-                successCallback,
-            }) => {
-                const successCallbackWrapper = (...args) => {
+            cancelUnstake: ({ account, transactionId }) => {
+                const cancelUnstakeOp = {
+                    contractName: 'tokens',
+                    contractAction: 'cancelUnstake',
+                    contractPayload: {
+                        txID: transactionId,
+                    },
+                };
+                const operation = {
+                    id: 'ssc-mainnet1',
+                    required_auths: [account],
+                    json: JSON.stringify(cancelUnstakeOp),
+                };
+                const successCallback = () => {
                     dispatch(
                         globalActions.getState({ url: `@${account}/transfers` })
                     );
-                    return successCallback(...args);
                 };
                 dispatch(
                     transactionActions.broadcastOperation({
-                        type: 'withdraw_vesting',
-                        operation: { account, vesting_shares },
-                        errorCallback,
-                        successCallback: successCallbackWrapper,
+                        type: 'custom_json',
+                        operation,
+                        successCallback,
                     })
                 );
             },
