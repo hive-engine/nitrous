@@ -125,10 +125,15 @@ export async function attachScotData(url, state) {
         const account = urlParts[1];
         const [
             tokenBalances,
+            tokenUnstakes,
             tokenStatuses,
             transferHistory,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
+                account,
+                symbol: LIQUID_TOKEN_UPPERCASE,
+            }),
+            ssc.findOne('tokens', 'pendingUnstakes', {
                 account,
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
@@ -137,6 +142,9 @@ export async function attachScotData(url, state) {
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
+        }
+        if (tokenUnstakes) {
+            state.accounts[account].token_unstakes = tokenUnstakes;
         }
         if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
             state.accounts[account].token_status =
