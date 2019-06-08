@@ -75,6 +75,12 @@ class UserWallet extends React.Component {
                   stake: '0',
                   pendingUnstake: '0',
               };
+        const tokenUnstakes = account.has('token_unstakes')
+            ? account.get('token_unstakes').toJS()
+            : {
+                  quantityLeft: '0',
+              };
+
         const tokenStatus = account.has('token_status')
             ? account.get('token_status').toJS()
             : {
@@ -105,6 +111,14 @@ class UserWallet extends React.Component {
             this.props.showPowerdown({
                 account: name,
                 stakeBalance,
+            });
+        };
+        const cancelUnstake = e => {
+            e.preventDefault();
+            const name = account.get('name');
+            this.props.cancelUnstake({
+                account: name,
+                transactionId: tokenUnstakes.txID,
             });
         };
 
@@ -151,6 +165,14 @@ class UserWallet extends React.Component {
                 onClick: unstake.bind(this),
             },
         ];
+
+        if (parseFloat(tokenUnstakes.quantityLeft) > 0) {
+            power_menu.push({
+                value: 'Cancel Unstake',
+                link: '#',
+                onClick: cancelUnstake.bind(this),
+            });
+        }
 
         const balance_str = numberWithCommas(balance);
         const stake_balance_str = numberWithCommas(stakeBalance);
