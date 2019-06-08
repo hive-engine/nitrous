@@ -20,7 +20,7 @@ export const TAG_LIST = List([
     'cultura',
     'musica',
     'deportes',
-    'tecnolgia',
+    'tecnologia',
     'ciencia',
     'salud',
     'blockchain',
