@@ -284,9 +284,10 @@
     animation: none !important;
   }
   .weight-display {
-    width: 3rem;
+    width: 4rem;
     float: left;
     margin-right: 0.5rem;
+    margin-top: 15px;
     text-align: right;
     color: $dark-gray;
     line-height: 2.6rem;
@@ -296,6 +297,7 @@
     width: 2rem;
     height: 2rem;
     line-height: 2.6rem;
+    margin-right: 15px;
   }
   .rangeslider {
     position: relative;
@@ -402,31 +404,34 @@
   padding-bottom: 2px;
 }
 
-#weight25{
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    margin-right:-4px;
-}
-#weight50{
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;    
-    margin-left:-3px;
-}
-#weight75{
+#weight-left {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  margin-right:-4px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding :5px;
+  margin-right: 0px !important;
 }
-#weight100{
+#weight-center {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding :5px;
+  margin-right: 0px !important;
+}
+#weight-right {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;    
-  margin-left:-3px;
+  border-bottom-right-radius: 5px;
+  padding :5px;
+  margin-right: 0px !important;
 }
 #btn_group button{
     border: 1px solid skyblue;
     background-color: rgba(0,0,0,0);
     color: skyblue;
-    padding: 5px;
 }
 #btn_group button:hover{
     color:white;
