@@ -3,6 +3,6 @@ services:
 
 deploy:
   provider: script
-  script: bash docker_push steemcoinpan
+  script: bash docker_push steemcoinpan/web
   on:
     branch: scotty_steemcoinpan
