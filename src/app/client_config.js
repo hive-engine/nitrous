@@ -22,7 +22,7 @@ export const VESTING_TOKEN = 'AAA POWER';
 export const INTERLEAVE_PROMOTED = false;
 export const PROMOTED_POST_ACCOUNT = 'triplea.promoted';
 
-export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
+export const INVEST_TOKEN_UPPERCASE = 'AAA POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
 export const DEBT_TOKEN = 'STEEM DOLLAR';
 export const DEBT_TOKENS = 'STEEM DOLLARS';
