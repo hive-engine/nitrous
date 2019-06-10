@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import reactForm from 'app/utils/ReactForm';
-import { Map, OrderedSet } from 'immutable';
+import { Map, List, OrderedSet } from 'immutable';
 import Autocomplete from 'react-autocomplete';
 import tt from 'counterpart';
 
@@ -66,7 +66,7 @@ class TransferForm extends Component {
         );
 
         const transferToLog = this.props.currentAccount
-            .get('transfer_history')
+            .get('transfer_history', List())
             .reduce((acc, cur) => {
                 if (cur.getIn([1, 'op', 0]) === 'transfer') {
                     const username = cur.getIn([1, 'op', 1, 'to']);
