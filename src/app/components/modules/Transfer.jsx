@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import reactForm from 'app/utils/ReactForm';
-import { Map } from 'immutable';
+import { Map, OrderedSet } from 'immutable';
 import Autocomplete from 'react-autocomplete';
 import tt from 'counterpart';
 
@@ -27,6 +27,10 @@ class TransferForm extends Component {
         toVesting: PropTypes.bool.isRequired,
         currentAccount: PropTypes.object.isRequired,
         following: PropTypes.object.isRequired,
+    };
+
+    static defaultProps = {
+        following: OrderedSet([]),
     };
 
     constructor(props) {
@@ -583,13 +587,13 @@ export default connect(
             currentAccount,
             toVesting,
             transferToSelf,
+            initialValues,
             following: state.global.getIn([
                 'follow',
                 'getFollowingAsync',
                 currentUser.get('username'),
                 'blog_result',
             ]),
-            initialValues,
         };
     },
 
