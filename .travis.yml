@@ -1,8 +1,0 @@
-services:
-  - docker
-
-deploy:
-  provider: script
-  script: bash docker_push steemcoinpan/web
-  on:
-    branch: scotty_steemcoinpan
