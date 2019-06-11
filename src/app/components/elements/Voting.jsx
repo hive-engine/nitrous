@@ -256,31 +256,36 @@ class Voting extends React.Component {
                             id="weight-left"
                             onClick={this.handleButtonWeightChange(up, 1000)}
                         >
-                            10%
+                            {' '}
+                            10%{' '}
                         </button>
                         <button
                             id="weight-center"
                             onClick={this.handleButtonWeightChange(up, 2500)}
                         >
-                            25%
+                            {' '}
+                            25%{' '}
                         </button>
                         <button
                             id="weight-center"
                             onClick={this.handleButtonWeightChange(up, 5000)}
                         >
-                            50%
+                            {' '}
+                            50%{' '}
                         </button>
                         <button
                             id="weight-center"
                             onClick={this.handleButtonWeightChange(up, 7500)}
                         >
-                            75%
+                            {' '}
+                            75%{' '}
                         </button>
                         <button
                             id="weight-right"
                             onClick={this.handleButtonWeightChange(up, 10000)}
                         >
-                            100%
+                            {' '}
+                            100%{' '}
                         </button>
                     </div>
                     <div>
