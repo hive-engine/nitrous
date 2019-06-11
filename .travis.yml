@@ -11,3 +11,9 @@ deploy:
   script: bash docker_push
   on:
     branch: scotty_aaa
+
+# safelist
+branches:
+  only:
+  - master
+  - scotty_aaa
