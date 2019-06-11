@@ -3,6 +3,10 @@ language: node_js
 services:
   - docker
 
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
 install: true
 
 script:
@@ -10,7 +14,9 @@ script:
 
 deploy:
   provider: script
-  script: bash docker_push
+  script:
+    bash docker_push
+    heroku container:release web --app aaareviews
   on:
     branch: scotty_aaa
 
