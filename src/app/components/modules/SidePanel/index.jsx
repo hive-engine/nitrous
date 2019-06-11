@@ -107,25 +107,19 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                value: 'forum',
+                label: 'Forum',
+                link: 'https://weedcash.tokenbb.io/',
             },
             {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/jMHX3d8',
             },
             {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
-            },
-            {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
-                internal: true,
+                value: 'telegram',
+                label: 'Telegram',
+                link: 'https://t.me/weedcashnetwork',
             },
         ],
         legal: [
@@ -166,6 +160,14 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
+
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Community</a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
