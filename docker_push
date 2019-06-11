@@ -2,4 +2,4 @@
 echo "Docker Login"
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin registry.heroku.com
 echo "Docker Push"
-docker push aaareviews/web
+docker push registry.heroku.com/aaareviews/web
