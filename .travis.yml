@@ -5,8 +5,8 @@ services:
 
 install: true
 
-script:
-  - docker build -t registry.heroku.com/aaareviews/web .
+script: true
+#  - docker build -t registry.heroku.com/aaareviews/web .
 
 deploy:
   provider: script
