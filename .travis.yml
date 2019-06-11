@@ -1,4 +1,4 @@
 # safelist
 branches:
   only:
-  - aaa
+  - scotty_aaa
