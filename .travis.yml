@@ -16,7 +16,6 @@ deploy:
   provider: script
   script:
     bash docker_push
-    heroku container:release web --app aaareviews
   on:
     branch: scotty_aaa
 
