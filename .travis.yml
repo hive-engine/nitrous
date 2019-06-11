@@ -1,0 +1,4 @@
+# safelist
+branches:
+  only:
+  - aaa
