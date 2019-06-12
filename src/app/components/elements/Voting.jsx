@@ -257,6 +257,7 @@ class Voting extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
+                    <div className="weight-display">Voting Power: 100%</div>
                 </span>
             );
         };
@@ -608,11 +609,11 @@ export default connect(
         const tokenBalances = current_account
             ? current_account.get('token_balances')
             : null;
-        const enable_slider =
-            net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES ||
+        const enable_slider = true;
+        /*net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES ||
             (tokenBalances &&
                 parseFloat(tokenBalances.get('stake')) >
-                    VOTE_WEIGHT_DROPDOWN_THRESHOLD);
+                    VOTE_WEIGHT_DROPDOWN_THRESHOLD); */
 
         return {
             post: ownProps.post,

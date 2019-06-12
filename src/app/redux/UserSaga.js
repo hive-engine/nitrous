@@ -47,6 +47,7 @@ export const userWatches = [
             // TODO: log error to server, conveyor is unavailable
         }
     }),
+    takeLatest(userActions.VOTING_POWER_LOOKUP, lookupVotingPower),
     function* getLatestFeedPrice() {
         try {
             const history = yield call([api, api.getFeedHistoryAsync]);
