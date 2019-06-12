@@ -20,6 +20,8 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 
+import FormattedAssetToken from 'app/components/elements/FormattedAssetToken';
+
 class UserWallet extends React.Component {
     constructor() {
         super();
@@ -83,13 +85,14 @@ class UserWallet extends React.Component {
         const balance = tokenBalances.balance;
         const stakeBalance = tokenBalances.stake;
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
-
+        
+        // added by realmankwon (2019-06-12) add all token balances
         const allTokenBalances = account.has('all_token_balances')
             ? account.get('all_token_balances').toJS()
             : {
-                  balance: '0',
+                symbol: '',
+                balance: '0',
                   stake: '0',
-                  symbol: '',
               };
 
         let isMyAccount =
@@ -194,15 +197,19 @@ class UserWallet extends React.Component {
             );
         }
 
-        let all_token_balances_list = '';
+        let all_token_balances_list = [];
 
         for (let v = 0; v < allTokenBalances.length; ++v) {
             const tokenBalance = allTokenBalances[v];
-            const tokenBalanceStr = `${tokenBalance.symbol} : ${
-                tokenBalance.balance
-            }(${tokenBalance.stake})`;
-            console.log(tokenBalanceStr);
-            all_token_balances_list += <div>{tokenBalanceStr}</div>;
+            all_token_balances_list.push(
+                <span>
+                    <FormattedAssetToken
+                        balance={tokenBalance.balance}
+                        stake={tokenBalance.stake}
+                        symbol={tokenBalance.symbol}
+                    />
+                </span>
+            );
         }
 
         return (
@@ -286,8 +293,12 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
+
                 <div className="row">
                     <div className="column small-12">
+                        <br />
+                        <h4>SCOT Token balances</h4>
+                        <br />
                         {all_token_balances_list}
                     </div>
                 </div>

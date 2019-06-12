@@ -127,7 +127,8 @@ export async function attachScotData(url, state) {
             tokenBalances,
             tokenStatuses,
             transferHistory,
-            all_token_balances,
+            // Added by realmankwon (2019-06-12) add all token balances data 
+            allTokenBalances,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -153,8 +154,9 @@ export async function attachScotData(url, state) {
                 account
             ].transfer_history = transferHistory.reverse();
         }
-        if (all_token_balances) {
-            state.accounts[account].all_token_balances = all_token_balances;
+        // Added by realmankwon (2019-06-12) add all token balances data 
+        if (allTokenBalances) {
+            state.accounts[account].all_token_balances = allTokenBalances;
         }
         return;
     }

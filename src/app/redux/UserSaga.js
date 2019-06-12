@@ -246,7 +246,7 @@ function* usernamePasswordLogin2({
         }
     );
 
-    // fetch all SCOT stake
+    // added by realmankwon (2019-06-12) fetch all SCOT stake
     const all_token_balances = yield call(
         [ssc, ssc.find],
         'tokens',
