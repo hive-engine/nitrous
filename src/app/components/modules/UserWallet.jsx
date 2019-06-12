@@ -84,6 +84,14 @@ class UserWallet extends React.Component {
         const stakeBalance = tokenBalances.stake;
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
+        const allTokenBalances = account.has('all_token_balances')
+            ? account.get('all_token_balances').toJS()
+            : {
+                  balance: '0',
+                  stake: '0',
+                  symbol: '',
+              };
+
         let isMyAccount =
             current_user &&
             current_user.get('username') === account.get('name');
@@ -186,6 +194,17 @@ class UserWallet extends React.Component {
             );
         }
 
+        let all_token_balances_list = '';
+
+        for (let v = 0; v < allTokenBalances.length; ++v) {
+            const tokenBalance = allTokenBalances[v];
+            const tokenBalanceStr = `${tokenBalance.symbol} : ${
+                tokenBalance.balance
+            }(${tokenBalance.stake})`;
+            console.log(tokenBalanceStr);
+            all_token_balances_list += <div>{tokenBalanceStr}</div>;
+        }
+
         return (
             <div className="UserWallet">
                 {claimbox}
@@ -269,7 +288,7 @@ class UserWallet extends React.Component {
                 )}
                 <div className="row">
                     <div className="column small-12">
-                        <hr />
+                        {all_token_balances_list}
                     </div>
                 </div>
 

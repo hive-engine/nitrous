@@ -127,6 +127,7 @@ export async function attachScotData(url, state) {
             tokenBalances,
             tokenStatuses,
             transferHistory,
+            all_token_balances,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -134,6 +135,10 @@ export async function attachScotData(url, state) {
             }),
             getScotDataAsync(`@${account}`, { v: new Date().getTime() }),
             getSteemEngineAccountHistoryAsync(account),
+            ssc.find('tokens', 'balances', {
+                account,
+                //symbol: LIQUID_TOKEN_UPPERCASE,
+            }),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -147,6 +152,9 @@ export async function attachScotData(url, state) {
             state.accounts[
                 account
             ].transfer_history = transferHistory.reverse();
+        }
+        if (all_token_balances) {
+            state.accounts[account].all_token_balances = all_token_balances;
         }
         return;
     }
