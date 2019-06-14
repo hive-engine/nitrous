@@ -13,6 +13,7 @@ export default function ServerHTML({
     gptEnabled,
     gptBidding,
     fomoId,
+    pathname,
 }) {
     let page_title = title;
     return (
@@ -348,6 +349,15 @@ export default function ServerHTML({
                 {assets.script.map((href, idx) => (
                     <script key={idx} src={href} />
                 ))}
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" />
+                {
+                    <script
+                        type="text/javascript"
+                        src={`https://tool.steem.world/AAA/JS?locale=${
+                            locale
+                        }&pathname=${encodeURIComponent(pathname)}`}
+                    />
+                }
             </body>
         </html>
     );

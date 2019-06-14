@@ -99,6 +99,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
         const props = {
             body,
             assets,
+            locale: userPreferences.locale,
             title,
             meta,
             shouldSeeAds: googleAds.enabled,
@@ -106,6 +107,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             adClient: googleAds.client,
             gptBidding: googleAds.gptBidding,
             fomoId: config.fomo_id,
+            pathname: ctx.request.url,
         };
         ctx.status = statusCode;
         ctx.body =
