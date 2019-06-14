@@ -48,6 +48,15 @@ export function* fetchState(location_change_action) {
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
     }
 
+    if (
+        pathname === '/' ||
+        pathname === '' ||
+        pathname.indexOf('trending') !== -1 ||
+        pathname.indexOf('hot') !== -1
+    ) {
+        yield fork(getPromotedState, pathname);
+    }
+
     // `ignore_fetch` case should only trigger on initial page load. No need to call
     // fetchState immediately after loading fresh state from the server. Details: #593
     const server_location = yield select(state =>
@@ -86,6 +95,28 @@ export function* fetchState(location_change_action) {
 
     yield put(appActions.fetchDataEnd());
 }
+
+/**
+ * Get promoted state for given path.
+ *
+ * @param {String} pathname
+ */
+export function* getPromotedState(pathname) {
+    const m = pathname.match(/^\/[a-z]*\/(.*)\/?/);
+    const tag = m ? m[1] : '';
+
+    const discussions = yield select(state =>
+        state.global.getIn(['discussion_idx', tag, 'promoted'])
+    );
+
+    if (discussions && discussions.size > 0) {
+        return;
+    }
+
+    const state = yield call(getStateAsync, `/promoted/${tag}`);
+    yield put(globalActions.receiveState(state));
+}
+
 /**
  * Get transfer-related usernames from history and fetch their account data.
  *

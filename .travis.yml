@@ -1,0 +1,26 @@
+language: node_js
+
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
+install: true
+
+script:
+  - docker build -t registry.heroku.com/steemcoinpan/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: scotty_steemcoinpan
+
+# safelist
+branches:
+  only:
+  - master
+  - scotty_steemcoinpan

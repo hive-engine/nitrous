@@ -5,7 +5,10 @@ import ReactDOM from 'react-dom';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    PROMOTED_POST_ACCOUNT,
+} from 'app/client_config';
 import tt from 'counterpart';
 
 class PromotePost extends Component {
@@ -181,7 +184,7 @@ export default connect(
                 contractAction: 'transfer',
                 contractPayload: {
                     symbol: LIQUID_TOKEN_UPPERCASE,
-                    to: 'null',
+                    to: PROMOTED_POST_ACCOUNT,
                     quantity: amount,
                     memo: `@${author}/${permlink}`,
                 },

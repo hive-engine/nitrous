@@ -20,6 +20,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
+import { INTERLEAVE_PROMOTED } from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -29,6 +30,7 @@ class PostSummary extends React.Component {
         content: PropTypes.object.isRequired,
         thumbSize: PropTypes.string,
         nsfwPref: PropTypes.string,
+        promoted: PropTypes.object,
     };
 
     constructor() {
@@ -44,6 +46,7 @@ class PostSummary extends React.Component {
             props.total_payout !== this.props.total_payout ||
             props.username !== this.props.username ||
             props.nsfwPref !== this.props.nsfwPref ||
+            (props.promoted && !props.promoted.equals(this.props.promoted)) ||
             props.blogmode !== this.props.blogmode ||
             state.revealNsfw !== this.state.revealNsfw
         );
@@ -56,7 +59,7 @@ class PostSummary extends React.Component {
 
     render() {
         const { thumbSize, ignore } = this.props;
-        const { post, content } = this.props;
+        const { post, promoted, content } = this.props;
         const { account } = this.props;
         if (!content) return null;
 
@@ -100,6 +103,13 @@ class PostSummary extends React.Component {
             .get('stats', Map())
             .toJS();
         const pinned = content.get('pinned');
+
+        const isPromoted =
+            INTERLEAVE_PROMOTED &&
+            promoted &&
+            promoted.contains(
+                `${content.get('author')}/${content.get('permlink')}`
+            );
         const p = extractContent(immutableAccessor, content);
         const desc = p.desc;
 
@@ -201,6 +211,11 @@ class PostSummary extends React.Component {
                                 </span>
                             )}
                         </Link>
+                        {isPromoted && (
+                            <span className="articles__tag-link">
+                                &nbsp;•&nbsp;{tt('g.promoted')}
+                            </span>
+                        )}
                     </div>
                 </div>
             </div>
@@ -341,7 +356,11 @@ class PostSummary extends React.Component {
         if (!pinned && (gray || ignore)) commentClasses.push('downvoted'); // rephide
 
         return (
-            <div className="articles__summary">
+            <div
+                className={
+                    'articles__summary' + (isPromoted ? ' promoted' : '')
+                }
+            >
                 {reblogged_by}
                 {summary_header}
                 <div

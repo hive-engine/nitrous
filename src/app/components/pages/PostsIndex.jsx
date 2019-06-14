@@ -8,7 +8,7 @@ import { List } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { TAG_LIST } from 'app/client_config';
+import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -22,6 +22,7 @@ import BiddingAd from 'app/components/elements/BiddingAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
+import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -59,8 +60,51 @@ class PostsIndex extends React.Component {
 
     getPosts(order, category) {
         const topic_discussions = this.props.discussions.get(category || '');
-        if (!topic_discussions) return null;
-        return topic_discussions.get(order);
+        if (!topic_discussions) return { posts: List(), promotedPosts: List() };
+        const mainDiscussions = topic_discussions.get(order);
+        if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
+            let promotedDiscussions = topic_discussions.get('promoted');
+            if (
+                promotedDiscussions &&
+                promotedDiscussions.size > 0 &&
+                mainDiscussions
+            ) {
+                const processed = new Set(); // mutable
+                const interleaved = [];
+                const promoted = [];
+                let promotedIndex = 0;
+                for (let i = 0; i < mainDiscussions.size; i++) {
+                    if (i % PROMOTED_POST_PAD_SIZE === 0) {
+                        while (
+                            processed.has(
+                                promotedDiscussions.get(promotedIndex)
+                            ) &&
+                            promotedIndex < promotedDiscussions.size
+                        ) {
+                            promotedIndex++;
+                        }
+                        if (promotedIndex < promotedDiscussions.size) {
+                            const nextPromoted = promotedDiscussions.get(
+                                promotedIndex
+                            );
+                            interleaved.push(nextPromoted);
+                            promoted.push(nextPromoted);
+                            processed.add(nextPromoted);
+                        }
+                    }
+                    const nextDiscussion = mainDiscussions.get(i);
+                    if (!processed.has(nextDiscussion)) {
+                        interleaved.push(nextDiscussion);
+                        processed.add(nextDiscussion);
+                    }
+                }
+                return {
+                    posts: List(interleaved),
+                    promotedPosts: List(promoted),
+                };
+            }
+        }
+        return { posts: mainDiscussions || List(), promotedPosts: List() };
     }
 
     loadMore(last_post) {
@@ -94,17 +138,18 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { categories, pinned } = this.props;
+        const { categories, discussions, pinned } = this.props;
 
         let topics_order = order;
-        let posts = [];
+        let posts = List();
+        let promotedPosts = List();
         let account_name = '';
         let emptyText = '';
         if (category === 'feed') {
             account_name = order.slice(1);
             order = 'by_feed';
             topics_order = 'trending';
-            posts = this.props.accounts.getIn([account_name, 'feed']);
+            posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
                 emptyText = (
@@ -115,14 +160,6 @@ class PostsIndex extends React.Component {
                         <br />
                         <Link to="/trending">
                             {tt('posts_index.empty_feed_3')}
-                        </Link>
-                        <br />
-                        <Link to="/welcome">
-                            {tt('posts_index.empty_feed_4')}
-                        </Link>
-                        <br />
-                        <Link to="/faq.html">
-                            {tt('posts_index.empty_feed_5')}
                         </Link>
                         <br />
                     </div>
@@ -137,7 +174,9 @@ class PostsIndex extends React.Component {
                 );
             }
         } else {
-            posts = this.getPosts(order, category);
+            const processedPosts = this.getPosts(order, category);
+            posts = processedPosts.posts;
+            promotedPosts = processedPosts.promotedPosts;
             if (posts && posts.size === 0) {
                 emptyText = (
                     <div>
@@ -155,6 +194,8 @@ class PostsIndex extends React.Component {
             : null;
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
+
+        const topicDiscussions = discussions.get(category || '');
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -240,13 +281,14 @@ class PostsIndex extends React.Component {
                     ) : (
                         <PostsList
                             ref="list"
-                            posts={posts ? posts : List()}
+                            posts={posts}
                             loading={fetching}
                             anyPosts={true}
                             category={category}
                             loadMore={this.loadMore}
                             showPinned={true}
                             showSpam={showSpam}
+                            promoted={promotedPosts}
                         />
                     )}
                 </article>
