@@ -352,7 +352,10 @@ function* broadcastPayload({
         for (const [type, operation] of operations) {
             if (hook['accepted_' + type]) {
                 try {
-                    yield call(hook['accepted_' + type], { operation });
+                    yield call(hook['accepted_' + type], {
+                        operation,
+                        username,
+                    });
                 } catch (error) {
                     console.error(error);
                 }
@@ -447,7 +450,7 @@ function* accepted_delete_comment({ operation }) {
     yield put(globalActions.deleteContent(operation));
 }
 
-function* accepted_vote({ operation: { author, permlink, weight } }) {
+function* accepted_vote({ operation: { author, permlink, weight }, username }) {
     console.log(
         'Vote accepted, weight',
         weight,
@@ -462,6 +465,13 @@ function* accepted_vote({ operation: { author, permlink, weight } }) {
         })
     );
     yield call(getContent, { author, permlink });
+    // May not update immediately. Delay by 10 seconds.
+    yield new Promise((resolve, reject) =>
+        setTimeout(() => {
+            resolve();
+        }, 10000)
+    );
+    yield put(userActions.lookupVotingPower({ account: username }));
 }
 
 export function* preBroadcast_comment({ operation, username }) {
