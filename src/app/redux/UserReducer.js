@@ -274,7 +274,7 @@ export default function reducer(state = defaultState, action) {
             return state;
 
         case SET_VOTING_POWER: {
-            state = state.setIn(['current', 'voting'], payload);
+            state = state.setIn(['current', 'voting'], fromJS(payload));
             return state;
         }
 
@@ -473,7 +473,7 @@ export const showAnnouncement = () => ({
     type: SHOW_ANNOUNCEMENT,
 });
 
-export const votingPowerLookup = payload => ({
+export const lookupVotingPower = payload => ({
     type: VOTING_POWER_LOOKUP,
     payload,
 });

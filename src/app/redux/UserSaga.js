@@ -25,6 +25,7 @@ import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
+import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 
@@ -246,6 +247,8 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
+    // fetch voting power
+    yield put(userActions.lookupVotingPower({ account: username }));
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
@@ -813,4 +816,15 @@ function* uploadImage({
         }
     };
     xhr.send(formData);
+}
+
+function* lookupVotingPower({ payload: { account } }) {
+    const accountData = yield call(getScotAccountDataAsync, account);
+    console.log(accountData);
+    yield put(
+        userActions.setVotingPower({
+            account,
+            ...accountData[LIQUID_TOKEN_UPPERCASE],
+        })
+    );
 }
