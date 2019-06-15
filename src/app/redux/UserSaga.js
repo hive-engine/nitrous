@@ -237,20 +237,18 @@ function* usernamePasswordLogin2({
         );
         return;
     }
-    if (username) {
-        // fetch SCOT stake
-        const token_balances = yield call(
-            [ssc, ssc.findOne],
-            'tokens',
-            'balances',
-            {
-                account: username,
-                symbol: LIQUID_TOKEN_UPPERCASE,
-            }
-        );
-        // fetch voting power
-        yield put(userActions.lookupVotingPower({ account: username }));
-    }
+    // fetch SCOT stake
+    const token_balances = yield call(
+        [ssc, ssc.findOne],
+        'tokens',
+        'balances',
+        {
+            account: username,
+            symbol: LIQUID_TOKEN_UPPERCASE,
+        }
+    );
+    // Fetch voting power
+    yield put(userActions.lookupVotingPower({ account: username }));
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
