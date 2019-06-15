@@ -274,7 +274,9 @@ export default function reducer(state = defaultState, action) {
             return state;
 
         case SET_VOTING_POWER: {
-            state = state.setIn(['current', 'voting'], fromJS(payload));
+            if (state.get('current')) {
+                state = state.setIn(['current', 'voting'], fromJS(payload));
+            }
             return state;
         }
 
