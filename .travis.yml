@@ -1,3 +1,24 @@
+language: node_js
+
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
+install: true
+
+script:
+  - docker build -t registry.heroku.com/palnet/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: scotty_pal
+
 # safelist
 branches:
   only:
