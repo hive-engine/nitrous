@@ -52,7 +52,7 @@ const voteTestObj = fromJS({
 });
 
 describe('Voting', () => {
-    it('should render flag if user is logged in and flag prop is true.', () => {
+    it('should render flag if user is logged in.', () => {
         const mockStore = configureMockStore()({
             global: mockGlobal,
             offchain: {},
@@ -65,7 +65,6 @@ describe('Voting', () => {
         let wrapped = shallow(
             <Voting
                 post="test"
-                flag={true}
                 vote={(w, p) => {}}
                 post_obj={voteTestObj}
                 price_per_steem={1}
@@ -74,7 +73,12 @@ describe('Voting', () => {
             />
         ).dive();
         expect(wrapped.find('.Voting').length).toEqual(1);
-        expect(wrapped.find('Dropdown').html()).toContain(
+        expect(
+            wrapped
+                .find('Dropdown')
+                .at(1)
+                .html()
+        ).toContain(
             '<span href="#" title="Downvote" id="downvote_button" class="flag">'
         );
     });
@@ -92,7 +96,6 @@ describe('Voting', () => {
         let wrapped = shallow(
             <Voting
                 post="test"
-                flag={true}
                 vote={(w, p) => {}}
                 post_obj={voteTestObj}
                 price_per_steem={1}
@@ -104,11 +107,13 @@ describe('Voting', () => {
         expect(
             wrapped
                 .find('Dropdown')
+                .at(1)
                 .dive()
                 .find('#downvote_button').length
         ).toEqual(1);
         wrapped
             .find('Dropdown')
+            .at(1)
             .dive()
             .find('#downvote_button')
             .simulate('click');
@@ -129,7 +134,6 @@ describe('Voting', () => {
         let wrapped = shallow(
             <Voting
                 post="test"
-                flag={true}
                 vote={(w, p) => {}}
                 post_obj={voteTestObj}
                 price_per_steem={1}
@@ -140,6 +144,7 @@ describe('Voting', () => {
         wrapped.setState({ myVote: 0 });
         wrapped
             .find('Dropdown')
+            .at(1)
             .dive()
             .find('#downvote_button')
             .simulate('click');
@@ -159,7 +164,6 @@ describe('Voting', () => {
         let wrapped = shallow(
             <Voting
                 post="test"
-                flag={true}
                 vote={(w, p) => {}}
                 post_obj={voteTestObj}
                 price_per_steem={1}
@@ -178,31 +182,6 @@ describe('Voting', () => {
         );
     });
 
-    it('should render upvote and should not render flag if user is logged in and flag prop is false.', () => {
-        const mockStore = configureMockStore()({
-            global: mockGlobal,
-            offchain: {},
-            user: mockUser,
-            transaction: {},
-            discussion: {},
-            routing: {},
-            app: {},
-        });
-        let wrapped = shallow(
-            <Voting
-                post="test"
-                flag={false}
-                vote={(w, p) => {}}
-                post_obj={voteTestObj}
-                price_per_steem={1}
-                sbd_print_rate={10000}
-                store={mockStore}
-            />
-        ).dive();
-        expect(wrapped.find('.flag').length).toEqual(0);
-        expect(wrapped.find('.upvote').length).toEqual(1);
-    });
-
     it('should dispatch an action with payload when upvote button is clicked.', () => {
         const mockStore = configureMockStore()({
             global: mockGlobal,
@@ -216,7 +195,7 @@ describe('Voting', () => {
         let wrapped = shallow(
             <Voting
                 post="test"
-                flag={false}
+                flag={true}
                 vote={(w, p) => {}}
                 post_obj={voteTestObj}
                 price_per_steem={1}
@@ -224,7 +203,11 @@ describe('Voting', () => {
                 store={mockStore}
             />
         ).dive();
-        wrapped.find('#upvote_button').simulate('click');
+        wrapped
+            .find('Dropdown')
+            .at(0)
+            .simulate('click');
+        wrapped.find('.confirm_weight').simulate('click');
         expect(mockStore.getActions()[0].type).toEqual(
             'transaction/BROADCAST_OPERATION'
         );
