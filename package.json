@@ -8,14 +8,14 @@
   "description": "steemit.com is the koa web server & middleware and react.js in-browser code for the world's first blockchain content + social media monetization platform!",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack --config ./webpack/prod.config.js && rm -rf ./lib && babel src --out-dir lib -Dq",
+    "build": "NODE_ENV=production webpack --config ./webpack/prod.config.js && del /S /Q .\\lib && babel src --out-dir lib -Dq",
     "test": "jest",
     "eslint": "LIST=`git diff-index --name-only HEAD | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint $LIST; fi",
     "fmt": "prettier --config .prettierrc --write 'src/**/*.js*'",
     "precommit": "lint-staged",
     "production": "NODE_ENV=production node --max_old_space_size=150 lib/server/index.js",
     "start": "NODE_ENV=development babel-node ./webpack/dev-server.js",
-    "debug": "NODE_ENV=development webpack --config ./webpack/debug.config.js && rm -rf ./lib && babel src --source-maps --out-dir lib -D && node --inspect-brk lib/server/index.js",
+    "debug": "NODE_ENV=development webpack --config ./webpack/debug.config.js && del /S /Q .\\lib && babel src --source-maps --out-dir lib -D && node --inspect-brk lib/server/index.js",
     "checktranslations": "node scripts/check_translations.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-build": "build-storybook -c .storybook -o docs"
