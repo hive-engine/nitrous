@@ -270,7 +270,7 @@ class Voting extends React.Component {
                         tooltip={false}
                     />
                     {currentVp ? (
-                        <div className="weight-display">
+                        <div className="voting-power-display">
                             Voting Power: {currentVp.toFixed(1)}%
                         </div>
                     ) : (
