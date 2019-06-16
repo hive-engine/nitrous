@@ -43,8 +43,6 @@ class Header extends React.Component {
             this.forceUpdate();
         };
 
-        console.log(props);
-
         this.state = { announcement: null };
         getAnnouncement(this, props.locale);
     }
