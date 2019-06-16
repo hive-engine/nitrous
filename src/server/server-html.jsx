@@ -21,10 +21,6 @@ export default function ServerHTML({
             <head>
                 <meta charSet="utf-8" />
                 <meta
-                    http-equiv="Content-Security-Policy"
-                    content="default-src 'self' https://tool.steem.world/assets/js/aaa/"
-                />
-                <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
