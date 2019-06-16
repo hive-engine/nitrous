@@ -20,6 +20,8 @@ import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
+import axios from 'axios';
+import { DEFAULT_LANGUAGE } from 'app/client_config';
 
 class Header extends React.Component {
     static propTypes = {
@@ -30,8 +32,8 @@ class Header extends React.Component {
         pathname: PropTypes.string,
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.gptadshown = event => {
             // This makes sure that the sticky header doesn't overlap the welcome splash.
             this.forceUpdate();
@@ -40,6 +42,11 @@ class Header extends React.Component {
             this.props.hideAnnouncement(event);
             this.forceUpdate();
         };
+
+        console.log(props);
+
+        this.state = { announcement: null };
+        getAnnouncement(this, props.locale);
     }
 
     componentDidMount() {
@@ -279,9 +286,20 @@ class Header extends React.Component {
         return (
             <Headroom>
                 <header className="Header">
-                    {this.props.showAnnouncement && (
-                        <Announcement onClose={this.hideAnnouncement} />
-                    )}
+                    {this.state.announcement &&
+                        this.props.showAnnouncement &&
+                        shouldShowAnnouncement(this.state.announcement.id) && (
+                            <Announcement
+                                onClose={() =>
+                                    this.hideAnnouncement(
+                                        this.state.announcement.id
+                                    )
+                                }
+                                id={this.state.announcement.id}
+                                title={this.state.announcement.title}
+                                link={this.state.announcement.link}
+                            />
+                        )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
                     <div>
                         <GptAd type="Basic" slotName="top_nav" />
@@ -405,7 +423,9 @@ const mapStateToProps = (state, ownProps) => {
         username,
         loggedIn,
         userPath,
-        nightmodeEnabled: state.user.getIn(['user_preferences', 'nightmode']),
+        nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
+        locale:
+            state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,
         account_meta: user_profile,
         current_account_name,
         showAnnouncement: state.user.get('showAnnouncement'),
@@ -434,9 +454,42 @@ const mapDispatchToProps = dispatch => ({
     hideSidePanel: () => {
         dispatch(userActions.hideSidePanel());
     },
-    hideAnnouncement: () => dispatch(userActions.hideAnnouncement()),
+    hideAnnouncement: id => dispatch(userActions.hideAnnouncement({ id })),
 });
 
 const connectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
+
+function shouldShowAnnouncement(id) {
+    if (
+        typeof id !== 'undefined' &&
+        (typeof localStorage === 'undefined' ||
+            (typeof localStorage !== 'undefined' &&
+                localStorage.getItem('hideAnnouncement') !== id.toString()))
+    )
+        return true;
+    else return false;
+}
+
+async function getAnnouncement(component, locale) {
+    try {
+        const jsonLocale = locale !== 'ko' ? 'en' : locale;
+
+        const response = await axios.get(
+            `https://tool.steem.world/assets/js/aaa/announcement-${
+                jsonLocale
+            }.json`
+        );
+
+        if (!response || !response.data) return;
+
+        component.setState({
+            announcement: {
+                id: response.data.id,
+                title: response.data.title,
+                link: response.data.link,
+            },
+        });
+    } catch (e) {}
+}
 
 export default connectedHeader;
