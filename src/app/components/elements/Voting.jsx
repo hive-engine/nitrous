@@ -226,9 +226,21 @@ class Voting extends React.Component {
             is_comment,
             post_obj,
             username,
+            votingData,
             scotData,
         } = this.props;
 
+        // Incorporate 5 day regeneration time.
+        const currentVp = votingData
+            ? Math.min(
+                  votingData.get('voting_power') +
+                      (new Date() -
+                          Date.parse(votingData.get('last_vote_time'))) *
+                          10000 /
+                          (1000 * 60 * 60 * 24 * 5),
+                  10000
+              ) / 100
+            : 0;
         const {
             votingUp,
             votingDown,
@@ -257,6 +269,13 @@ class Voting extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
+                    {currentVp ? (
+                        <div className="weight-display">
+                            Voting Power: {currentVp.toFixed(1)}%
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </span>
             );
         };
@@ -591,28 +610,16 @@ export default connect(
         const username = current_account
             ? current_account.get('username')
             : null;
-        const vesting_shares = current_account
-            ? current_account.get('vesting_shares')
-            : 0.0;
-        const delegated_vesting_shares = current_account
-            ? current_account.get('delegated_vesting_shares')
-            : 0.0;
-        const received_vesting_shares = current_account
-            ? current_account.get('received_vesting_shares')
-            : 0.0;
-        const net_vesting_shares =
-            vesting_shares - delegated_vesting_shares + received_vesting_shares;
+        const votingData = current_account
+            ? current_account.get('voting')
+            : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
         );
         const tokenBalances = current_account
             ? current_account.get('token_balances')
             : null;
-        const enable_slider =
-            net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES ||
-            (tokenBalances &&
-                parseFloat(tokenBalances.get('stake')) >
-                    VOTE_WEIGHT_DROPDOWN_THRESHOLD);
+        const enable_slider = true;
 
         return {
             post: ownProps.post,
@@ -626,6 +633,7 @@ export default connect(
             post_obj: post,
             loggedin: username != null,
             voting,
+            votingData,
             scotData,
         };
     },
