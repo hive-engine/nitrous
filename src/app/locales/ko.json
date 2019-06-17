@@ -43,6 +43,8 @@
         "logout": "로그아웃",
         "memo": "메모",
         "mute": "차단",
+        "my_feed": "내 피드",
+        "my_wallet": "내 지갑",
         "my_blog": "내 블로그",
         "my_comments": "내가 쓴 댓글",
         "my_replies": "받은 댓글",
@@ -500,6 +502,7 @@
         "to_save_your_preferences": "to save your preferences"
     },
     "posts_index": {
+        "my_feed": "내 피드",
         "empty_feed_1": "Looks like you haven't followed anything yet",
         "empty_feed_2":
             "If you recently added new users to follow, your personalized feed will populate once new content is available",
@@ -632,7 +635,9 @@
         "asset_currently_collecting":
             "%(asset)s의 연이율은 현재 %(interest)s%% 입니다.",
         "beware_of_spam_and_phishing_links":
-            "메모에는 스팸과 피싱 링크가 포함 될 수 있으니 주의하십시오. 신뢰할 수없는 사용자의 링크를 열지 마십시오. 또한 다른 어떤 웹 사이트에도 개인키를 공개하지 마십시오."
+            "메모에는 스팸과 피싱 링크가 포함 될 수 있으니 주의하십시오. 신뢰할 수없는 사용자의 링크를 열지 마십시오. 또한 다른 어떤 웹 사이트에도 개인키를 공개하지 마십시오.",
+        "transactions_make_take_a_few_minutes":
+            "트랜잭션이 블록체인에 반영되기까지 보통 수분이 소요되며 이후 아래 내역에 보여집니다."
     },
     "userwallet_jsx": {
         "conversion_complete_tip": "Will complete on",
