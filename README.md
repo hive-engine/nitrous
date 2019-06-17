@@ -1,5 +1,5 @@
 
-# Condenser
+# Condenser [![CircleCI](https://circleci.com/gh/steemit/wallet.svg?style=svg)](https://circleci.com/gh/steemit/wallet)
 
 
 Condenser is the react.js web interface to the world's first and best
