@@ -21,6 +21,7 @@ import {
     formatDecimal,
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
+import { getDate } from 'app/utils/Date';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Dropdown from 'app/components/elements/Dropdown';
@@ -234,8 +235,7 @@ class Voting extends React.Component {
         const currentVp = votingData
             ? Math.min(
                   votingData.get('voting_power') +
-                      (new Date() -
-                          Date.parse(votingData.get('last_vote_time'))) *
+                      (new Date() - getDate(votingData.get('last_vote_time'))) *
                           10000 /
                           (1000 * 60 * 60 * 24 * 5),
                   10000
@@ -411,15 +411,9 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
-        if (
-            cashout_time &&
-            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time)
-        ) {
-            cashout_time = cashout_time + 'Z'; // Firefox really wants this Z (Zulu)
-        }
         const cashout_active =
             scot_pending_token > 0 ||
-            (new Date(cashout_time) > Date.now() &&
+            (getDate(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
         const numDecimals = Math.log10(SCOT_DENOM);
