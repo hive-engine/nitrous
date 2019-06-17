@@ -247,8 +247,6 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
-    // Fetch voting power
-    yield put(userActions.lookupVotingPower({ account: username }));
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
@@ -264,6 +262,8 @@ function* usernamePasswordLogin2({
                 ),
             })
         );
+        // Fetch voting power
+        yield put(userActions.lookupVotingPower({ account: username }));
         return;
     }
 
@@ -513,6 +513,9 @@ function* usernamePasswordLogin2({
         // Does not need to be fatal
         console.error('Server Login Error', error);
     }
+
+    // Fetch voting power
+    yield put(userActions.lookupVotingPower({ account: username }));
 
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
 
