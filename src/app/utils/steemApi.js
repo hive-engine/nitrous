@@ -36,6 +36,10 @@ export async function getScotDataAsync(path, params) {
     return callApi(`https://scot-api.steem-engine.com/${path}`, params);
 }
 
+export async function getScotAccountDataAsync(account) {
+    return getScotDataAsync(`@${account}`, { v: new Date().getTime() });
+}
+
 async function getAuthorRep(feedData) {
     const authors = feedData.map(d => d.author);
     const authorRep = {};
@@ -137,7 +141,7 @@ export async function attachScotData(url, state) {
                 account,
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
-            getScotDataAsync(`@${account}`, { v: new Date().getTime() }),
+            getScotAccountDataAsync(account),
             getSteemEngineAccountHistoryAsync(account),
         ]);
         if (tokenBalances) {
