@@ -14,7 +14,6 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
-    SCOT_DENOM,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -63,7 +62,7 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops } = this.props;
+        const { account, current_user, gprops, scotPrecision } = this.props;
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -180,7 +179,7 @@ class UserWallet extends React.Component {
             pendingUnstakeBalance
         );
 
-        const reward = tokenStatus.pending_token / SCOT_DENOM;
+        const reward = tokenStatus.pending_token / Math.pow(10, scotPrecision);
         const rewards_str =
             reward > 0 ? `${reward} ${LIQUID_TOKEN_UPPERCASE}` : null;
 
@@ -326,9 +325,11 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const gprops = state.global.get('props');
+        const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
             gprops: state.global.get('props').toJS(),
+            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
     // mapDispatchToProps

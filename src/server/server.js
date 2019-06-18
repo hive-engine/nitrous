@@ -5,7 +5,7 @@ import helmet from 'koa-helmet';
 import koa_logger from 'koa-logger';
 import requestTime from './requesttimings';
 import StatsLoggerClient from './utils/StatsLoggerClient';
-import { SteemMarket } from './utils/SteemMarket';
+import { ScotConfig } from './utils/ScotConfig';
 import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';
@@ -129,10 +129,10 @@ function convertEntriesToArrays(obj) {
     }, {});
 }
 
-// Fetch cached currency data for homepage
-//const steemMarket = new SteemMarket();
+// Fetch cached data
+const scotConfig = new ScotConfig();
 app.use(function*(next) {
-    this.steemMarketData = {}; // = yield steemMarket.get();
+    this.scotConfigData = yield scotConfig.get();
     yield next;
 });
 
