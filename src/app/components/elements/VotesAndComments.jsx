@@ -11,10 +11,15 @@ class VotesAndComments extends React.Component {
         // HTML properties
         post: PropTypes.string.isRequired,
         commentsLink: PropTypes.string.isRequired,
+        showVotes : PropTypes.bool,
 
         // Redux connect properties
         comments: PropTypes.number,
         totalVotes: PropTypes.number,
+    };
+
+    static defaultProps = {
+        showVotes: true,
     };
 
     constructor(props) {
@@ -26,7 +31,7 @@ class VotesAndComments extends React.Component {
     }
 
     render() {
-        const { comments, commentsLink, totalVotes } = this.props;
+        const { comments, commentsLink, totalVotes, showVotes } = this.props;
         let comments_tooltip = tt(
             'votesandcomments_jsx.no_responses_yet_click_to_respond'
         );
@@ -36,18 +41,22 @@ class VotesAndComments extends React.Component {
                 { count: comments }
             );
 
+        let total_votes = showVotes ? (
+            <span
+                className="VotesAndComments__votes"
+                title={tt('votesandcomments_jsx.vote_count', {
+                    count: totalVotes,
+                })}
+            >
+                <Icon size="1x" name="chevron-up-circle" />&nbsp;{
+                    totalVotes
+                }
+            </span>
+        ) : ( ' ' );
+
         return (
             <span className="VotesAndComments">
-                <span
-                    className="VotesAndComments__votes"
-                    title={tt('votesandcomments_jsx.vote_count', {
-                        count: totalVotes,
-                    })}
-                >
-                    <Icon size="1x" name="chevron-up-circle" />&nbsp;{
-                        totalVotes
-                    }
-                </span>
+                {total_votes}
                 <span
                     className={
                         'VotesAndComments__comments' +

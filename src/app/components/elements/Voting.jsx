@@ -40,7 +40,7 @@ const ABOUT_FLAG = (
     </div>
 );
 
-const MAX_VOTES_DISPLAY = 20;
+const MAX_VOTES_DISPLAY = 200;
 const VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES = 1.0 * 1000.0 * 1000.0;
 const MAX_WEIGHT = 10000;
 
@@ -247,10 +247,10 @@ class Voting extends React.Component {
             const s = up ? '' : '-';
             return (
                 <span>
-                    <div>
+                    {/* <div>
                         steem vp : {post_obj.get('voting_power')}
                         sct vp : {post_obj.get('scotVotingPower')}
-                    </div>
+                    </div> */}
                     <div id="btn_group">
                         <button
                             id="weight-left"
