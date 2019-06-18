@@ -65,7 +65,7 @@ ScotConfig.prototype.refresh = async function() {
             token: LIQUID_TOKEN_UPPERCASE,
         });
         // Use client config info as backup
-        if (!scotInfo.precision) {
+        if (!scotInfo.precision == null) {
             console.info('Info not found, falling back to client config');
             scotInfo.precision = Math.log10(SCOT_DENOM);
         }
