@@ -21,6 +21,7 @@ import {
     formatDecimal,
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
+import { getDate } from 'app/utils/Date';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Dropdown from 'app/components/elements/Dropdown';
@@ -41,7 +42,7 @@ const ABOUT_FLAG = (
 );
 
 const MAX_VOTES_DISPLAY = 20;
-const SBD_PRINT_RATE_MAX = 10000;
+const VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES = 1.0 * 1000.0 * 1000.0;
 const MAX_WEIGHT = 10000;
 
 class Voting extends React.Component {
@@ -226,9 +227,20 @@ class Voting extends React.Component {
             is_comment,
             post_obj,
             username,
+            votingData,
             scotData,
         } = this.props;
 
+        // Incorporate 5 day regeneration time.
+        const currentVp = votingData
+            ? Math.min(
+                  votingData.get('voting_power') +
+                      (new Date() - getDate(votingData.get('last_vote_time'))) *
+                          10000 /
+                          (1000 * 60 * 60 * 24 * 5),
+                  10000
+              ) / 100
+            : 0;
         const {
             votingUp,
             votingDown,
@@ -257,6 +269,13 @@ class Voting extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
+                    {currentVp ? (
+                        <div className="voting-power-display">
+                            Voting Power: {currentVp.toFixed(1)}%
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </span>
             );
         };
@@ -392,15 +411,9 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
-        if (
-            cashout_time &&
-            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time)
-        ) {
-            cashout_time = cashout_time + 'Z'; // Firefox really wants this Z (Zulu)
-        }
         const cashout_active =
             scot_pending_token > 0 ||
-            (new Date(cashout_time) > Date.now() &&
+            (getDate(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
         const numDecimals = Math.log10(SCOT_DENOM);
@@ -591,16 +604,16 @@ export default connect(
         const username = current_account
             ? current_account.get('username')
             : null;
+        const votingData = current_account
+            ? current_account.get('voting')
+            : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
         );
         const tokenBalances = current_account
             ? current_account.get('token_balances')
             : null;
-        const enable_slider =
-            tokenBalances &&
-            parseFloat(tokenBalances.get('stake')) >
-                VOTE_WEIGHT_DROPDOWN_THRESHOLD;
+        const enable_slider = true;
 
         return {
             post: ownProps.post,
@@ -614,6 +627,7 @@ export default connect(
             post_obj: post,
             loggedin: username != null,
             voting,
+            votingData,
             scotData,
         };
     },

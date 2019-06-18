@@ -60,7 +60,7 @@ class PostsIndex extends React.Component {
 
     getPosts(order, category) {
         const topic_discussions = this.props.discussions.get(category || '');
-        if (!topic_discussions) return null;
+        if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
             let promotedDiscussions = topic_discussions.get('promoted');
@@ -69,25 +69,42 @@ class PostsIndex extends React.Component {
                 promotedDiscussions.size > 0 &&
                 mainDiscussions
             ) {
-                const batchedMainDiscussions = mainDiscussions
-                    .groupBy((v, k) => Math.floor(k / PROMOTED_POST_PAD_SIZE))
-                    .valueSeq();
-                return promotedDiscussions
-                    .interleave(
-                        batchedMainDiscussions.slice(
-                            0,
-                            promotedDiscussions.size
-                        )
-                    )
-                    .concat(
-                        batchedMainDiscussions.slice(promotedDiscussions.size)
-                    )
-                    .flatten()
-                    .toOrderedSet()
-                    .toList();
+                const processed = new Set(); // mutable
+                const interleaved = [];
+                const promoted = [];
+                let promotedIndex = 0;
+                for (let i = 0; i < mainDiscussions.size; i++) {
+                    if (i % PROMOTED_POST_PAD_SIZE === 0) {
+                        while (
+                            processed.has(
+                                promotedDiscussions.get(promotedIndex)
+                            ) &&
+                            promotedIndex < promotedDiscussions.size
+                        ) {
+                            promotedIndex++;
+                        }
+                        if (promotedIndex < promotedDiscussions.size) {
+                            const nextPromoted = promotedDiscussions.get(
+                                promotedIndex
+                            );
+                            interleaved.push(nextPromoted);
+                            promoted.push(nextPromoted);
+                            processed.add(nextPromoted);
+                        }
+                    }
+                    const nextDiscussion = mainDiscussions.get(i);
+                    if (!processed.has(nextDiscussion)) {
+                        interleaved.push(nextDiscussion);
+                        processed.add(nextDiscussion);
+                    }
+                }
+                return {
+                    posts: List(interleaved),
+                    promotedPosts: List(promoted),
+                };
             }
         }
-        return mainDiscussions;
+        return { posts: mainDiscussions || List(), promotedPosts: List() };
     }
 
     loadMore(last_post) {
@@ -124,14 +141,15 @@ class PostsIndex extends React.Component {
         const { categories, discussions, pinned } = this.props;
 
         let topics_order = order;
-        let posts = [];
+        let posts = List();
+        let promotedPosts = List();
         let account_name = '';
         let emptyText = '';
         if (category === 'feed') {
             account_name = order.slice(1);
             order = 'by_feed';
             topics_order = 'trending';
-            posts = this.props.accounts.getIn([account_name, 'feed']);
+            posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
                 emptyText = (
@@ -142,14 +160,6 @@ class PostsIndex extends React.Component {
                         <br />
                         <Link to="/trending">
                             {tt('posts_index.empty_feed_3')}
-                        </Link>
-                        <br />
-                        <Link to="/welcome">
-                            {tt('posts_index.empty_feed_4')}
-                        </Link>
-                        <br />
-                        <Link to="/faq.html">
-                            {tt('posts_index.empty_feed_5')}
                         </Link>
                         <br />
                     </div>
@@ -164,7 +174,9 @@ class PostsIndex extends React.Component {
                 );
             }
         } else {
-            posts = this.getPosts(order, category);
+            const processedPosts = this.getPosts(order, category);
+            posts = processedPosts.posts;
+            promotedPosts = processedPosts.promotedPosts;
             if (posts && posts.size === 0) {
                 emptyText = (
                     <div>
@@ -184,9 +196,6 @@ class PostsIndex extends React.Component {
         const { showSpam } = this.state;
 
         const topicDiscussions = discussions.get(category || '');
-        const promotedPosts = topicDiscussions
-            ? topicDiscussions.get('promoted', List()).toSet()
-            : null;
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -272,7 +281,7 @@ class PostsIndex extends React.Component {
                     ) : (
                         <PostsList
                             ref="list"
-                            posts={posts ? posts : List()}
+                            posts={posts}
                             loading={fetching}
                             anyPosts={true}
                             category={category}
