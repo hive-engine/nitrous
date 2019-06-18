@@ -21,6 +21,7 @@ import {
     formatDecimal,
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
+import { getDate } from 'app/utils/Date';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Dropdown from 'app/components/elements/Dropdown';
@@ -40,7 +41,7 @@ const ABOUT_FLAG = (
     </div>
 );
 
-const MAX_VOTES_DISPLAY = 200;
+const MAX_VOTES_DISPLAY = 20;
 const VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES = 1.0 * 1000.0 * 1000.0;
 const MAX_WEIGHT = 10000;
 
@@ -226,9 +227,20 @@ class Voting extends React.Component {
             is_comment,
             post_obj,
             username,
+            votingData,
             scotData,
         } = this.props;
 
+        // Incorporate 5 day regeneration time.
+        const currentVp = votingData
+            ? Math.min(
+                  votingData.get('voting_power') +
+                      (new Date() - getDate(votingData.get('last_vote_time'))) *
+                          10000 /
+                          (1000 * 60 * 60 * 24 * 5),
+                  10000
+              ) / 100
+            : 0;
         const {
             votingUp,
             votingDown,
@@ -484,15 +496,9 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
-        if (
-            cashout_time &&
-            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time)
-        ) {
-            cashout_time = cashout_time + 'Z'; // Firefox really wants this Z (Zulu)
-        }
         const cashout_active =
             scot_pending_token > 0 ||
-            (new Date(cashout_time) > Date.now() &&
+            (getDate(cashout_time) > Date.now() &&
                 !(is_comment && total_votes == 0));
         const payoutItems = [];
         const numDecimals = Math.log10(SCOT_DENOM);
@@ -574,50 +580,6 @@ class Voting extends React.Component {
                 ) / 100;
         }
 
-        if (
-            cashout_time_steem &&
-            /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(cashout_time_steem)
-        ) {
-            cashout_time_steem = cashout_time_steem + 'Z'; // Firefox really wants this Z (Zulu)
-        }
-        const cashout_active_steem =
-            payout_steem > 0 || new Date(cashout_time_steem) > Date.now();
-
-        const payoutItemsSteem = [];
-
-        if (cashout_active_steem) {
-            payoutItemsSteem.push({ value: 'Pending Payout' });
-            payoutItemsSteem.push({
-                value: `$${payout_steem}`,
-            });
-        } else {
-            payout_steem =
-                Math.round((curator_payout_value + author_payout_value) * 100) /
-                100;
-            payoutItemsSteem.push({
-                value: `Past Token Payouts $${payout_steem}`,
-            });
-            payoutItemsSteem.push({
-                value: `- Author $${author_payout_value}`,
-            });
-            payoutItemsSteem.push({
-                value: `- Curator $${curator_payout_value}`,
-            });
-            //payout_steem = parseFloat(String(curator_payout_value).split(' ')[0]) + parseFloat(String(author_payout_value).split(' ')[0]);
-        }
-
-        const payoutElSteem = (
-            <DropdownMenu el="div" items={payoutItemsSteem}>
-                <span />
-                <span>
-                    <FormattedAsset amount={payout_steem} asset="$" />
-                    {payoutItemsSteem.length > 0 && (
-                        <Icon name="dropdown-arrow" />
-                    )}
-                </span>
-            </DropdownMenu>
-        );
-
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             const avotes = active_votes.toJS();
@@ -630,15 +592,6 @@ class Voting extends React.Component {
             );
             let voters = [];
 
-            // Added By realmankwon (2019-06-14) Sum rshare for SCT price per voter
-            let total_rshares = 0;
-
-            for (let v = 0; v < avotes.length; ++v) {
-                const { rshares } = avotes[v];
-                total_rshares += rshares;
-            }
-            //----------------------------------------------------------------------
-
             for (
                 let v = 0;
                 v < avotes.length && voters.length < MAX_VOTES_DISPLAY;
@@ -648,16 +601,13 @@ class Voting extends React.Component {
                 const sign = Math.sign(percent);
                 if (sign === 0) continue;
                 voters.push({
-                    //value: (sign > 0 ? '+ ' : '- ') + voter ,
                     value:
                         (sign > 0 ? '+ ' : '- ') +
                         voter +
                 // Added By realmankwon (2019-06-14) Display Voting percent & SCT price per voter
                         ' (' +
                         percent / 100 +
-                        '%) ' +
-                        (payout * rshares / total_rshares).toFixed(2) +
-                        LIQUID_TOKEN_UPPERCASE,
+                        '%) ' ,
                 //----------------------------------------------------------------------
                     link: '/@' + voter,
                 });
@@ -756,7 +706,6 @@ class Voting extends React.Component {
                     {downVote}
                     {payoutEl}
                 </span>
-                {payoutElSteem}
                 {voters_list}
             </span>
         );
@@ -779,28 +728,16 @@ export default connect(
         const username = current_account
             ? current_account.get('username')
             : null;
-        const vesting_shares = current_account
-            ? current_account.get('vesting_shares')
-            : 0.0;
-        const delegated_vesting_shares = current_account
-            ? current_account.get('delegated_vesting_shares')
-            : 0.0;
-        const received_vesting_shares = current_account
-            ? current_account.get('received_vesting_shares')
-            : 0.0;
-        const net_vesting_shares =
-            vesting_shares - delegated_vesting_shares + received_vesting_shares;
+        const votingData = current_account
+            ? current_account.get('voting')
+            : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
         );
         const tokenBalances = current_account
             ? current_account.get('token_balances')
             : null;
-        const enable_slider =
-            net_vesting_shares > VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES ||
-            (tokenBalances &&
-                parseFloat(tokenBalances.get('stake')) >
-                    VOTE_WEIGHT_DROPDOWN_THRESHOLD);
+        const enable_slider = true;
 
         return {
             post: ownProps.post,
@@ -814,6 +751,7 @@ export default connect(
             post_obj: post,
             loggedin: username != null,
             voting,
+            votingData,
             scotData,
         };
     },

@@ -25,6 +25,7 @@ import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
+import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 
@@ -47,6 +48,7 @@ export const userWatches = [
             // TODO: log error to server, conveyor is unavailable
         }
     }),
+    takeLatest(userActions.VOTING_POWER_LOOKUP, lookupVotingPower),
     function* getLatestFeedPrice() {
         try {
             const history = yield call([api, api.getFeedHistoryAsync]);
@@ -273,6 +275,8 @@ function* usernamePasswordLogin2({
                 all_token_balances,
             })
         );
+        // Fetch voting power
+        yield put(userActions.lookupVotingPower({ account: username }));
         return;
     }
 
@@ -525,6 +529,9 @@ function* usernamePasswordLogin2({
         // Does not need to be fatal
         console.error('Server Login Error', error);
     }
+
+    // Fetch voting power
+    yield put(userActions.lookupVotingPower({ account: username }));
 
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
 
@@ -828,4 +835,14 @@ function* uploadImage({
         }
     };
     xhr.send(formData);
+}
+
+function* lookupVotingPower({ payload: { account } }) {
+    const accountData = yield call(getScotAccountDataAsync, account);
+    yield put(
+        userActions.setVotingPower({
+            account,
+            ...accountData[LIQUID_TOKEN_UPPERCASE],
+        })
+    );
 }

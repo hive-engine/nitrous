@@ -42,6 +42,8 @@ const SHOW_POST_ADVANCED_SETTINGS = 'user/SHOW_POST_ADVANCED_SETTINGS';
 const HIDE_POST_ADVANCED_SETTINGS = 'user/HIDE_POST_ADVANCED_SETTINGS';
 const HIDE_ANNOUNCEMENT = 'user/HIDE_ANNOUNCEMENT';
 const SHOW_ANNOUNCEMENT = 'user/SHOW_ANNOUNCEMENT';
+export const VOTING_POWER_LOOKUP = 'user/VOTING_POWER_LOOKUP';
+const SET_VOTING_POWER = 'user/SET_VOTING_POWER';
 
 // Saga-related
 export const UPLOAD_IMAGE = 'user/UPLOAD_IMAGE';
@@ -267,6 +269,17 @@ export default function reducer(state = defaultState, action) {
                 sessionStorage.setItem('hideAnnouncement', 'true');
             return state.set('showAnnouncement', false);
 
+        case VOTING_POWER_LOOKUP:
+            // UserSaga
+            return state;
+
+        case SET_VOTING_POWER: {
+            if (state.get('current')) {
+                state = state.setIn(['current', 'voting'], fromJS(payload));
+            }
+            return state;
+        }
+
         default:
             return state;
     }
@@ -460,4 +473,14 @@ export const hideAnnouncement = () => ({
 
 export const showAnnouncement = () => ({
     type: SHOW_ANNOUNCEMENT,
+});
+
+export const lookupVotingPower = payload => ({
+    type: VOTING_POWER_LOOKUP,
+    payload,
+});
+
+export const setVotingPower = payload => ({
+    type: SET_VOTING_POWER,
+    payload,
 });

@@ -23,4 +23,10 @@ deploy:
 branches:
   only:
   - master
+  - scotty_aaa
+  - scotty_actnearn
+  - scotty_bloque64
+  - scotty_pal
+  - scotty_spt
   - scotty_steemcoinpan
+  - scotty_weedcash
