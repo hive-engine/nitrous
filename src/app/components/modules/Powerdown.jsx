@@ -6,11 +6,7 @@ import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    VESTING_TOKEN,
-    SCOT_DENOM,
-} from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, VESTING_TOKEN } from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
@@ -26,7 +22,7 @@ class Powerdown extends React.Component {
 
     render() {
         const { broadcasting, new_withdraw, manual_entry } = this.state;
-        const { account, stakeBalance } = this.props;
+        const { account, stakeBalance, scotPrecision } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
         };
@@ -56,9 +52,7 @@ class Powerdown extends React.Component {
             if (withdraw > stakeBalance) {
                 withdraw = stakeBalance;
             }
-            const unstakeAmount = String(
-                withdraw.toFixed(Math.log10(SCOT_DENOM))
-            );
+            const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
                 account,
                 unstakeAmount,
@@ -67,7 +61,8 @@ class Powerdown extends React.Component {
             });
         };
 
-        const formatBalance = bal => numberWithCommas(String(bal));
+        const formatBalance = bal =>
+            numberWithCommas(String(bal.toFixed(scotPrecision)));
 
         const notes = [];
         if (this.state.error_message) {
@@ -88,7 +83,7 @@ class Powerdown extends React.Component {
                 </div>
                 <Slider
                     value={new_withdraw}
-                    step={1 / SCOT_DENOM}
+                    step={1 / Math.pow(10, scotPrecision)}
                     max={stakeBalance}
                     format={formatBalance}
                     onChange={sliderChange}
@@ -127,12 +122,14 @@ export default connect(
         const values = state.user.get('powerdown_defaults');
         const account = values.get('account');
         const stakeBalance = parseFloat(values.get('stakeBalance'));
+        const scotConfig = state.app.get('scotConfig');
 
         return {
             ...ownProps,
             account,
             stakeBalance,
             state,
+            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
     // mapDispatchToProps
