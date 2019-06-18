@@ -39,6 +39,10 @@ const mockGlobal = Map({
     }),
 });
 
+const mockScotConfig = Map({ info: Map({ precision: 2 }) });
+
+const mockApp = Map({ scotConfig: mockScotConfig });
+
 const mockUser = Map({ current: Map({ username: 'Janice' }) });
 
 const voteTestObj = fromJS({
@@ -60,7 +64,7 @@ describe('Voting', () => {
             transaction: {},
             discussion: {},
             routing: {},
-            app: {},
+            app: mockApp,
         });
         let wrapped = shallow(
             <Voting
@@ -91,7 +95,7 @@ describe('Voting', () => {
             transaction: {},
             discussion: {},
             routing: {},
-            app: {},
+            app: mockApp,
         });
         let wrapped = shallow(
             <Voting
@@ -129,7 +133,7 @@ describe('Voting', () => {
             transaction: {},
             discussion: {},
             routing: {},
-            app: {},
+            app: mockApp,
         });
         let wrapped = shallow(
             <Voting
@@ -159,7 +163,7 @@ describe('Voting', () => {
             transaction: {},
             discussion: {},
             routing: {},
-            app: {},
+            app: mockApp,
         });
         let wrapped = shallow(
             <Voting
@@ -190,7 +194,7 @@ describe('Voting', () => {
             transaction: {},
             discussion: {},
             routing: {},
-            app: {},
+            app: mockApp,
         });
         let wrapped = shallow(
             <Voting
