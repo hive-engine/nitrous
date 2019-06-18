@@ -619,7 +619,8 @@
         "signup_button": "サインアップして",
         "signup_button_emphasis": "STEEMを手に入れよう！",
         "sign_up_get_steem": "登録してSTEEMを手に入れよう！",
-        "returning_users": "再"
+        "returning_users": "再",
+        "use_keychain": "Use keychain extension"
     },
     "chainvalidation_js": {
         "account_name_should": "アカウント名",
