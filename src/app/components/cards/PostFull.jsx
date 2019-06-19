@@ -27,6 +27,7 @@ import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
+import axios from 'axios';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -71,6 +72,7 @@ class PostFull extends React.Component {
         /* Show extra options (component is being viewed alone) */
         cont: PropTypes.object.isRequired,
         post: PropTypes.string.isRequired,
+        locale: PropTypes.string.isRequired,
 
         // connector props
         username: PropTypes.string,
@@ -78,16 +80,19 @@ class PostFull extends React.Component {
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
+        showLuckyBox: PropTypes.func.isRequired,
     };
 
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
+        this.state = { showLuckyBoxIcon: false, luckyBoxUuid: null };
         this.fbShare = this.fbShare.bind(this);
         this.twitterShare = this.twitterShare.bind(this);
         this.redditShare = this.redditShare.bind(this);
         this.linkedInShare = this.linkedInShare.bind(this);
         this.showExplorePost = this.showExplorePost.bind(this);
+        this.showLuckyBoxIcon = this.showLuckyBoxIcon.bind(this);
+        this.showLuckyBox = this.showLuckyBox.bind(this);
         this.onShowReply = () => {
             const { state: { showReply, formId } } = this;
             this.setState({ showReply: !showReply, showEdit: false });
@@ -103,6 +108,23 @@ class PostFull extends React.Component {
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
+
+        const username = props.username;
+        const content = props.cont.get(props.post);
+        const author = content.get('author');
+        const permlink = content.get('permlink');
+
+        if (username && author !== username) {
+            const minSecond = 10;
+            const maxSecond = 20;
+            const randomSecond =
+                Math.floor(Math.random() * (maxSecond - minSecond + 1)) +
+                minSecond;
+
+            setTimeout(() => {
+                this.showLuckyBoxIcon(username, author, permlink);
+            }, randomSecond * 1000);
+        }
     }
 
     componentWillMount() {
@@ -226,6 +248,41 @@ class PostFull extends React.Component {
         const title = this.share_params.rawtitle;
         this.props.showExplorePost(permlink, title);
     };
+
+    showLuckyBox = () => {
+        const uuid = this.state.luckyBoxUuid;
+        const locale = this.props.locale;
+        const hideLuckyBoxIcon = () => {
+            this.setState({
+                showLuckyBoxIcon: false,
+            });
+        };
+        this.props.showLuckyBox(uuid, locale, hideLuckyBoxIcon);
+    };
+
+    async showLuckyBoxIcon(username, author, permlink) {
+        try {
+            const response = await axios.post(
+                'https://tool.steem.world/AAA/CheckLuckyBox',
+                {
+                    username,
+                    author,
+                    permlink,
+                }
+            );
+
+            if (!response || !response.data) return;
+
+            if (response.data.Result === 0) {
+                this.setState({
+                    showLuckyBoxIcon: true,
+                    luckyBoxUuid: response.data.Message,
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     render() {
         const {
@@ -534,9 +591,23 @@ class PostFull extends React.Component {
                         {showReply && renderedEditor}
                     </div>
                 </div>
+                {this.state.showLuckyBoxIcon ? (
+                    <LuckyBoxIcon onClick={this.showLuckyBox} />
+                ) : null}
             </article>
         );
     }
+}
+
+function LuckyBoxIcon(props) {
+    return (
+        <img
+            id="lucky-box-icon"
+            onClick={props.onClick}
+            className="floating"
+            src="/images/luckybox.svg"
+        />
+    );
 }
 
 export default connect(
@@ -579,6 +650,14 @@ export default connect(
                 globalActions.showDialog({
                     name: 'explorePost',
                     params: { permlink, title },
+                })
+            );
+        },
+        showLuckyBox: (uuid, locale, hideLuckyBoxIcon) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'luckyBox',
+                    params: { uuid, locale, hideLuckyBoxIcon },
                 })
             );
         },

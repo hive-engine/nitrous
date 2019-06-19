@@ -834,5 +834,12 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "luckybox": {
+        "popup_title": "Lucky Box",
+        "popup_message1": "You have found a hidden treasure, lucky you!",
+        "popup_message2":
+            "Let's open the box and see what you have found. If you leave the page without opening it, your treasure will vanish where nobody can find it ever again~!",
+        "popup_button": "Open Your Box"
     }
 }

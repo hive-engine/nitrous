@@ -14,7 +14,7 @@ import { Set } from 'immutable';
 import tt from 'counterpart';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { INVEST_TOKEN_UPPERCASE } from 'app/client_config';
+import { INVEST_TOKEN_UPPERCASE, DEFAULT_LANGUAGE } from 'app/client_config';
 import { SIGNUP_URL } from 'shared/constants';
 
 import { isLoggedIn } from 'app/utils/UserUtil';
@@ -25,6 +25,7 @@ class Post extends React.Component {
         post: PropTypes.string,
         routeParams: PropTypes.object,
         sortOrder: PropTypes.string,
+        locale: PropTypes.string,
     };
     constructor() {
         super();
@@ -54,7 +55,7 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder } = this.props;
+        const { content, sortOrder, locale } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
         let post = this.props.post;
         if (!post) {
@@ -203,7 +204,7 @@ class Post extends React.Component {
             <div className="Post">
                 <div className="row">
                     <div className="column">
-                        <PostFull post={post} cont={content} />
+                        <PostFull post={post} cont={content} locale={locale} />
                     </div>
                 </div>
                 {!isLoggedIn() && (
@@ -287,5 +288,7 @@ export default connect((state, ownProps) => {
         sortOrder:
             ownProps.router.getCurrentLocation().query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+        locale:
+            state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,
     };
 })(Post);

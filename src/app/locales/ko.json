@@ -668,5 +668,13 @@
         "ownership_changed_on": "Ownership Changed On ",
         "deadline_for_recovery_is": "Deadline for recovery is",
         "i_understand_dont_show_again": "이 메시지를 다시 보지 않기"
+    },
+    "luckybox": {
+        "popup_title": "보물상자",
+        "popup_message1":
+            "숨겨진 보물상자를 찾으셨군요! 안에 무엇이 있는지 꼭 확인을 하고 가세요.",
+        "popup_message2":
+            "그냥 가시면 이 보물은 다시는 찾을 수 없는 곳으로 영영 사라집니다.",
+        "popup_button": "보물상자 열기"
     }
 }

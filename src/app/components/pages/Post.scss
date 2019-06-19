@@ -36,3 +36,28 @@
   margin: 0 auto 3.5rem;
   font-size: 92%;
 }
+
+#lucky-box-icon {
+  position:absolute;
+  margin: 150vh auto 0 auto;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.floating {  
+  animation-name: floating;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  from { transform: translate(0,  0px); }
+  65%  { transform: translate(0, 15px); }
+  to   { transform: translate(0, -0px); }    
+}
