@@ -3,7 +3,7 @@
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
-    <title>Search - steemit.com</title>
+    <title>Search - steemcoinpan.com</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation-flex.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <style>
@@ -92,7 +92,7 @@
             height: auto;
             display: block;
             height: auto;
-        }    
+        }
       .logo-new .icon-svg {
           fill: #06D6A9;
           transition: 0.2s all ease-in-out;
@@ -104,6 +104,27 @@
         padding: 8px 0;
       }
 
+    </style>
+    <style type="text/css">
+        .box{
+            display: none;
+            width: 100%;
+        }
+        div.gsc-result:hover .box,.box:hover{
+            display: block;
+            position: relative;
+            z-index: 100;
+            width: 100%;
+            max-height: 256px;
+            margin: 10px auto;
+            padding: 10px;
+            background: #fdfdff;
+            border-radius: 5px;
+            border: 3px solid #76A4FC;
+            transition: all 5s ease-in-out;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body>
@@ -127,7 +148,83 @@
         <gcse:search linktarget="_self"></gcse:search>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="//cdn.steemjs.com/lib/latest/steem.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+    var search_res_titles = "div.gsc-wrapper div.gsc-thumbnail-inside a.gs-title";
+
+    steem.api.setOptions({ url: 'https://steemd.minnowsupportproject.org' });
+
+    function render_preview(element) {
+        // render the preview with steem.js
+        if (element && element.href) {
+            var segs = element.href.split("/");
+            var permlink = segs[segs.length - 1];
+            var author = segs[segs.length - 2].replace("@", "");
+            steem.api.getContent(author, permlink, function(err, result) {
+                if (result && result.body) {
+                    append_preview_element(element, result.body);
+                }
+            });
+        }
+    }
+
+    function get_preview_element(e) {
+        var res = $(e).parent().parent().parent();
+        return res.children("div.box");
+    }
+
+    function add_mouseover_listener(e) {
+        var events = $._data(e, "events");
+        if (!events || ! events.mouseover || events.mouseover.length == 0) {
+            $(e).on("mouseover", function(){
+                render_preview(this);
+                get_preview_element(e).show();
+            }).on("mouseout", function(){
+                get_preview_element(e).hide();
+            });
+        }
+    }
+
+    function append_preview_element(e, md) {
+        var res = $(e).parent().parent().parent();
+        if (res.children("div.box").length == 0) {
+            res.append('<div class="box">' + marked(md) + '</div>');
+        }
+    }
+
+    function attach_preview_listeners() {
+        // 1. find the search results elements
+        var elements = $(search_res_titles);
+
+        // 2. add the preview function on mouseover event
+        if (elements && elements.length > 0) {
+            for (var i = 0; i < elements.length; i++) {
+                var e = elements[i];
+                add_mouseover_listener(e);
+            }
+        }
+    }
+
+    function add_dom_render_observer(selector, func) {
+        var i = setInterval(function(){
+            if ($(selector).length != 0) {
+                func();
+                // clearInterval(i);
+            }
+        }, 100);
+    }
+
+    function add_previews() {
+        add_dom_render_observer(search_res_titles, attach_preview_listeners);
+    }
+
+    $(document).ready(function(){
+        add_previews();
+    });
+
   (function() {
     var cx = '002054531452547600153:c65zk0qbyd4';
     var gcse = document.createElement('script');
