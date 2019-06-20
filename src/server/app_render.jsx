@@ -65,6 +65,10 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             gptCategorySlots: config.gpt_category_slots,
             gptBiddingSlots: config.gpt_bidding_slots,
         };
+        const cookieConsent = {
+            enabled: !!config.cookie_consent_enabled,
+            api_key: config.cookie_consent_api_key,
+        };
         // ... and that's the end of user-session-related SSR
         const initial_state = {
             app: {
@@ -108,6 +112,8 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             gptBidding: googleAds.gptBidding,
             fomoId: config.fomo_id,
             pathname: ctx.request.url,
+            shouldSeeCookieConsent: cookieConsent.enabled,
+            cookieConsentApiKey: cookieConsent.api_key,
         };
         ctx.status = statusCode;
         ctx.body =
