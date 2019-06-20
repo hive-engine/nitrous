@@ -220,41 +220,38 @@ class UserWallet extends React.Component {
         }
 
         // added by realmankwon (2019-06-12) add all token balances
-        const allTokenBalances = account.has('all_token_balances')
-        ? account.get('all_token_balances').toJS()
-        : {
-            symbol: '',
-            balance: '0',
-                stake: '0',
-            };
-        
-        // added by realmankwon (2019-06-18) sort by alphabet asc
-        allTokenBalances.sort(
-            (a, b) =>
-                a.symbol >
-                b.symbol
-                    ? 1
-                    : -1
-        );
-
         let all_token_balances_list = [];
 
-        for (let v = 0; v < allTokenBalances.length; ++v) {
-            const tokenBalance = allTokenBalances[v];
-            // added by realmankwon (2019-06-18) except LIQUID_TOKEN_UPPERCASE 
-            if(tokenBalance.symbol === LIQUID_TOKEN_UPPERCASE) continue;
-
-            all_token_balances_list.push(
-                <span>
-                    <FormattedAssetToken
-                        balance={tokenBalance.balance}
-                        stake={tokenBalance.stake}
-                        symbol={tokenBalance.symbol}
-                    />
-                </span>
+        if(account.has('all_token_balances'))
+        {
+            const allTokenBalances = account.get('all_token_balances').toJS()
+        
+            // added by realmankwon (2019-06-18) sort by alphabet asc
+            allTokenBalances.sort(
+                (a, b) =>
+                    a.symbol >
+                    b.symbol
+                        ? 1
+                        : -1
             );
+
+            for (let v = 0; v < allTokenBalances.length; ++v) {
+                const tokenBalance = allTokenBalances[v];
+                // added by realmankwon (2019-06-18) except LIQUID_TOKEN_UPPERCASE 
+                if(tokenBalance.symbol === LIQUID_TOKEN_UPPERCASE) continue;
+
+                all_token_balances_list.push(
+                    <span>
+                        <FormattedAssetToken
+                            balance={tokenBalance.balance}
+                            stake={tokenBalance.stake}
+                            symbol={tokenBalance.symbol}
+                        />
+                    </span>
+                );
+            }
         }
-       
+
         return (
             <div className="UserWallet">
                 {claimbox}
@@ -353,7 +350,7 @@ class UserWallet extends React.Component {
                 
                 <div className="row">
                     <div className="column small-12">
-                        SCOT Token balances
+                        Steem Engine Token
                     </div>
                     <div className="column small-12">
                         <br/>
