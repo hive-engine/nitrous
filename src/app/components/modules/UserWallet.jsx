@@ -73,8 +73,6 @@ class UserWallet extends React.Component {
                   balance: '0',
                   stake: '0',
                   pendingUnstake: '0',
-                  delegationsIn: '0',
-                  delegationsOut: '0',
               };
         const tokenUnstakes = account.has('token_unstakes')
             ? account.get('token_unstakes').toJS()
@@ -88,12 +86,12 @@ class UserWallet extends React.Component {
                   pending_token: 0,
               };
         const balance = tokenBalances.balance;
-        const delegatedStake = tokenBalances.delegationsOut;
+        const delegatedStake = tokenBalances.delegationsOut || '0';
         const stakeBalance =
             parseFloat(tokenBalances.stake) + parseFloat(delegatedStake);
         const netDelegatedStake =
             parseFloat(delegatedStake) -
-            parseFloat(tokenBalances.delegationsIn);
+            parseFloat(tokenBalances.delegationsIn || '0');
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
         let isMyAccount =
