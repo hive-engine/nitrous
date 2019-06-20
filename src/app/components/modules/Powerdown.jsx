@@ -6,17 +6,13 @@ import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    VESTING_TOKEN,
-    SCOT_DENOM,
-} from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, VESTING_TOKEN } from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
     constructor(props, context) {
         super(props, context);
-        const new_withdraw = props.stakeBalance;
+        const new_withdraw = props.stakeBalance - props.delegatedStake;
         this.state = {
             broadcasting: false,
             manual_entry: false,
@@ -26,7 +22,12 @@ class Powerdown extends React.Component {
 
     render() {
         const { broadcasting, new_withdraw, manual_entry } = this.state;
-        const { account, stakeBalance } = this.props;
+        const {
+            account,
+            stakeBalance,
+            delegatedStake,
+            scotPrecision,
+        } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
         };
@@ -53,12 +54,10 @@ class Powerdown extends React.Component {
             };
             // workaround bad math in react-rangeslider
             let withdraw = new_withdraw;
-            if (withdraw > stakeBalance) {
-                withdraw = stakeBalance;
+            if (withdraw > stakeBalance - delegatedStake) {
+                withdraw = stakeBalance - delegatedStake;
             }
-            const unstakeAmount = String(
-                withdraw.toFixed(Math.log10(SCOT_DENOM))
-            );
+            const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
                 account,
                 unstakeAmount,
@@ -67,9 +66,21 @@ class Powerdown extends React.Component {
             });
         };
 
-        const formatBalance = bal => numberWithCommas(String(bal));
+        const formatBalance = bal =>
+            numberWithCommas(String(bal.toFixed(scotPrecision)));
 
         const notes = [];
+        if (delegatedStake !== 0) {
+            const AMOUNT = formatBalance(delegatedStake);
+            notes.push(
+                <li key="delegating">
+                    {tt('powerdown_jsx.delegating', {
+                        AMOUNT,
+                        LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
+                    })}
+                </li>
+            );
+        }
         if (this.state.error_message) {
             const MESSAGE = this.state.error_message;
             notes.push(
@@ -88,8 +99,8 @@ class Powerdown extends React.Component {
                 </div>
                 <Slider
                     value={new_withdraw}
-                    step={1 / SCOT_DENOM}
-                    max={stakeBalance}
+                    step={1 / Math.pow(10, scotPrecision)}
+                    max={stakeBalance - delegatedStake}
                     format={formatBalance}
                     onChange={sliderChange}
                 />
@@ -127,12 +138,16 @@ export default connect(
         const values = state.user.get('powerdown_defaults');
         const account = values.get('account');
         const stakeBalance = parseFloat(values.get('stakeBalance'));
+        const delegatedStake = parseFloat(values.get('delegatedStake'));
+        const scotConfig = state.app.get('scotConfig');
 
         return {
             ...ownProps,
             account,
             stakeBalance,
+            delegatedStake,
             state,
+            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
     // mapDispatchToProps
