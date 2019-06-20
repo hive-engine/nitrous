@@ -89,13 +89,13 @@ class UserWallet extends React.Component {
               };
         const balance = tokenBalances.balance;
         const stakeBalance = tokenBalances.stake;
-        const delegatedStake = tokenBalances.delegationsOut;
+        const delegatedStake = tokenBalances.delegationsOut || 0;
         const netDelegatedStake =
             parseFloat(delegatedStake) -
-            parseFloat(tokenBalances.delegationsIn);
+            parseFloat(tokenBalances.delegationsIn || 0);
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
-        let isMyAccount =
+        const isMyAccount =
             current_user &&
             current_user.get('username') === account.get('name');
 
@@ -144,7 +144,7 @@ class UserWallet extends React.Component {
             .filter(el => !!el)
             .reverse();
 
-        let balance_menu = [
+        const balance_menu = [
             {
                 value: tt('userwallet_jsx.transfer'),
                 link: '#',
@@ -164,7 +164,7 @@ class UserWallet extends React.Component {
                 ),
             },
         ];
-        let power_menu = [
+        const power_menu = [
             {
                 value: tt('userwallet_jsx.power_down'),
                 link: '#',
