@@ -197,5 +197,9 @@
     "ttl": 7200,
     "key": "steem-market"
   },
+  "scot_config_cache": {
+    "ttl": 300,
+    "key": "scot-config"
+  },
   "fomo_id": null
 }
