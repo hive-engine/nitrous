@@ -88,8 +88,9 @@ class UserWallet extends React.Component {
                   pending_token: 0,
               };
         const balance = tokenBalances.balance;
-        const stakeBalance = tokenBalances.stake;
         const delegatedStake = tokenBalances.delegationsOut;
+        const stakeBalance =
+            parseFloat(tokenBalances.stake) + parseFloat(delegatedStake);
         const netDelegatedStake =
             parseFloat(delegatedStake) -
             parseFloat(tokenBalances.delegationsIn);
@@ -115,7 +116,7 @@ class UserWallet extends React.Component {
             const name = account.get('name');
             this.props.showPowerdown({
                 account: name,
-                stakeBalance,
+                stakeBalance: stakeBalance.toFixed(scotPrecision),
                 delegatedStake,
             });
         };
@@ -181,7 +182,9 @@ class UserWallet extends React.Component {
         }
 
         const balance_str = numberWithCommas(balance);
-        const stake_balance_str = numberWithCommas(stakeBalance);
+        const stake_balance_str = numberWithCommas(
+            stakeBalance.toFixed(scotPrecision)
+        );
         const received_stake_balance_str =
             (netDelegatedStake < 0 ? '+' : '') +
             numberWithCommas((-netDelegatedStake).toFixed(scotPrecision));

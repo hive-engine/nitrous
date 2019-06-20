@@ -90,6 +90,12 @@ const SidePanel = ({
                 link: 'https://steem.chat/home',
             },
             {
+                value: 'jobs',
+                label: tt('navigation.jobs'),
+                link:
+                    'https://recruiting.paylocity.com/recruiting/jobs/List/3288/Steemit-Inc',
+            },
+            {
                 value: 'tools',
                 label: tt('navigation.app_center'),
                 link: 'https://steemprojects.com/',
