@@ -73,6 +73,8 @@ class UserWallet extends React.Component {
                   balance: '0',
                   stake: '0',
                   pendingUnstake: '0',
+                  delegationsIn: '0',
+                  delegationsOut: '0',
               };
         const tokenUnstakes = account.has('token_unstakes')
             ? account.get('token_unstakes').toJS()
@@ -87,6 +89,10 @@ class UserWallet extends React.Component {
               };
         const balance = tokenBalances.balance;
         const stakeBalance = tokenBalances.stake;
+        const delegatedStake = tokenBalances.delegationsOut;
+        const netDelegatedStake =
+            parseFloat(delegatedStake) -
+            parseFloat(tokenBalances.delegationsIn);
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
         let isMyAccount =
@@ -110,6 +116,7 @@ class UserWallet extends React.Component {
             this.props.showPowerdown({
                 account: name,
                 stakeBalance,
+                delegatedStake,
             });
         };
         const cancelUnstake = e => {
@@ -175,6 +182,9 @@ class UserWallet extends React.Component {
 
         const balance_str = numberWithCommas(balance);
         const stake_balance_str = numberWithCommas(stakeBalance);
+        const received_stake_balance_str =
+            (netDelegatedStake < 0 ? '+' : '') +
+            numberWithCommas((-netDelegatedStake).toFixed(scotPrecision));
         const pending_unstake_balance_str = numberWithCommas(
             pendingUnstakeBalance
         );
@@ -264,6 +274,20 @@ class UserWallet extends React.Component {
                         ) : (
                             `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
                         )}
+                        {netDelegatedStake != 0 ? (
+                            <div
+                                style={{
+                                    paddingRight: isMyAccount
+                                        ? '0.85rem'
+                                        : null,
+                                }}
+                            >
+                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
+                                    ({received_stake_balance_str}{' '}
+                                    {LIQUID_TOKEN_UPPERCASE})
+                                </Tooltip>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="UserWallet__balance row">
