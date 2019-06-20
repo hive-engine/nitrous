@@ -422,7 +422,7 @@
             "代币的影响力可以使你对文章的赏金有更大的控制权，并可以获得审查奖励。",
         "estimated_value": "基于美元计算，%(LIQUID_TOKEN)s的估值。",
         "non_transferable":
-            "%(VESTING_TOKEN)s是不可转让的，需要3个月(13笔付款)才可换回%(LIQUID_TOKEN)s",
+            "%(VESTING_TOKEN)s是不可转让的，需要3天才可换回%(LIQUID_TOKEN)s",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "%(VESTING_TOKEN)s可以转给你自己或其他人，但是只有转回%(LIQUID_TOKEN)s后，才可以进行下一次转账。",
         "part_of_your_steem_power_is_currently_delegated":
