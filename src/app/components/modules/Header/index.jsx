@@ -38,11 +38,9 @@ class Header extends React.Component {
             // This makes sure that the sticky header doesn't overlap the welcome splash.
             this.forceUpdate();
         };
-
-        this.state = {
-            gptAdRendered: false,
-            showAd: false,
-            showAnnouncement: this.props.showAnnouncement,
+        this.hideAnnouncement = event => {
+            this.props.hideAnnouncement(event);
+            this.forceUpdate();
         };
 
         this.state = { announcement: null };
@@ -59,7 +57,7 @@ class Header extends React.Component {
             return null;
         }
 
-        window.addEventListener('gptadshown', e => this.gptAdRendered(e));
+        window.addEventListener('gptadshown', this.gptadshown);
     }
 
     componentWillUnmount() {
@@ -71,6 +69,8 @@ class Header extends React.Component {
         ) {
             return null;
         }
+
+        window.removeEventListener('gptadshown', this.gptadshown);
     }
 
     // Consider refactor.
@@ -93,23 +93,6 @@ class Header extends React.Component {
         }
     }
 
-    headroomOnUnpin() {
-        this.setState({ showAd: false });
-    }
-
-    headroomOnUnfix() {
-        this.setState({ showAd: true });
-    }
-
-    gptAdRendered() {
-        this.setState({ showAd: true, gptAdRendered: true });
-    }
-
-    hideAnnouncement() {
-        this.setState({ showAnnouncement: false });
-        this.props.hideAnnouncement();
-    }
-
     render() {
         const {
             category,
@@ -129,8 +112,6 @@ class Header extends React.Component {
             account_meta,
             walletUrl,
         } = this.props;
-
-        const { showAd, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -301,22 +282,26 @@ class Header extends React.Component {
         ];
 
         return (
-            <Headroom
-                onUnpin={e => this.headroomOnUnpin(e)}
-                onUnfix={e => this.headroomOnUnfix(e)}
-            >
+            <Headroom>
                 <header className="Header">
-                    {showAnnouncement && (
-                        <Announcement onClose={e => this.hideAnnouncement(e)} />
-                    )}
+                    {this.state.announcement &&
+                        this.props.showAnnouncement &&
+                        shouldShowAnnouncement(this.state.announcement.id) && (
+                            <Announcement
+                                onClose={() =>
+                                    this.hideAnnouncement(
+                                        this.state.announcement.id
+                                    )
+                                }
+                                id={this.state.announcement.id}
+                                title={this.state.announcement.title}
+                                link={this.state.announcement.link}
+                            />
+                        )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
-                    <div style={showAd ? {} : { display: 'none' }}>
-                        <GptAd
-                            type="Freestar"
-                            id="steemit_728x90_970x90_970x250_320x50_ATF"
-                        />
+                    <div>
+                        <GptAd type="Basic" slotName="top_nav" />
                     </div>
-
                     <nav className="row Header__nav">
                         <div className="small-5 large-4 columns Header__logotype">
                             {/*LOGO*/}
