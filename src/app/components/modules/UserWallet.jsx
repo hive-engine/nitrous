@@ -14,7 +14,6 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
-    SCOT_DENOM,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -63,7 +62,7 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops } = this.props;
+        const { account, current_user, gprops, scotPrecision } = this.props;
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -74,6 +73,8 @@ class UserWallet extends React.Component {
                   balance: '0',
                   stake: '0',
                   pendingUnstake: '0',
+                  delegationsIn: '0',
+                  delegationsOut: '0',
               };
         const tokenUnstakes = account.has('token_unstakes')
             ? account.get('token_unstakes').toJS()
@@ -88,6 +89,10 @@ class UserWallet extends React.Component {
               };
         const balance = tokenBalances.balance;
         const stakeBalance = tokenBalances.stake;
+        const delegatedStake = tokenBalances.delegationsOut;
+        const netDelegatedStake =
+            parseFloat(delegatedStake) -
+            parseFloat(tokenBalances.delegationsIn);
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
         let isMyAccount =
@@ -111,6 +116,7 @@ class UserWallet extends React.Component {
             this.props.showPowerdown({
                 account: name,
                 stakeBalance,
+                delegatedStake,
             });
         };
         const cancelUnstake = e => {
@@ -176,11 +182,14 @@ class UserWallet extends React.Component {
 
         const balance_str = numberWithCommas(balance);
         const stake_balance_str = numberWithCommas(stakeBalance);
+        const received_stake_balance_str =
+            (netDelegatedStake < 0 ? '+' : '') +
+            numberWithCommas((-netDelegatedStake).toFixed(scotPrecision));
         const pending_unstake_balance_str = numberWithCommas(
             pendingUnstakeBalance
         );
 
-        const reward = tokenStatus.pending_token / SCOT_DENOM;
+        const reward = tokenStatus.pending_token / Math.pow(10, scotPrecision);
         const rewards_str =
             reward > 0 ? `${reward} ${LIQUID_TOKEN_UPPERCASE}` : null;
 
@@ -265,6 +274,20 @@ class UserWallet extends React.Component {
                         ) : (
                             `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
                         )}
+                        {netDelegatedStake != 0 ? (
+                            <div
+                                style={{
+                                    paddingRight: isMyAccount
+                                        ? '0.85rem'
+                                        : null,
+                                }}
+                            >
+                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
+                                    ({received_stake_balance_str}{' '}
+                                    {LIQUID_TOKEN_UPPERCASE})
+                                </Tooltip>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="UserWallet__balance row">
@@ -326,9 +349,11 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const gprops = state.global.get('props');
+        const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
             gprops: state.global.get('props').toJS(),
+            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
     // mapDispatchToProps

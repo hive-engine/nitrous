@@ -16,7 +16,6 @@ import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
-import SteemMarket from 'app/components/elements/SteemMarket';
 import GptAd from 'app/components/elements/GptAd';
 import BiddingAd from 'app/components/elements/BiddingAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
@@ -301,7 +300,6 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
-                    <SteemMarket />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Basic" slotName="right_nav" />
