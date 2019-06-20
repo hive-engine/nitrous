@@ -247,18 +247,6 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
-
-    // added by realmankwon (2019-06-12) fetch all SCOT stake
-    const all_token_balances = yield call(
-        [ssc, ssc.find],
-        'tokens',
-        'balances',
-        {
-            account: username,
-            // symbol: LIQUID_TOKEN_UPPERCASE,
-        }
-    );
-
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
@@ -272,7 +260,6 @@ function* usernamePasswordLogin2({
                 delegated_vesting_shares: account.get(
                     'delegated_vesting_shares'
                 ),
-                all_token_balances,
             })
         );
         // Fetch voting power
@@ -440,7 +427,6 @@ function* usernamePasswordLogin2({
                     delegated_vesting_shares: account.get(
                         'delegated_vesting_shares'
                     ),
-                    all_token_balances,
                 })
             );
         } else {
@@ -456,7 +442,6 @@ function* usernamePasswordLogin2({
                     delegated_vesting_shares: account.get(
                         'delegated_vesting_shares'
                     ),
-                    all_token_balances,
                 })
             );
         }
@@ -506,7 +491,6 @@ function* usernamePasswordLogin2({
                         delegated_vesting_shares: account.get(
                             'delegated_vesting_shares'
                         ),
-                        all_token_balances,
                     })
                 );
             } else {
