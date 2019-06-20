@@ -8,6 +8,7 @@ export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
     const cache = new NodeCache({
         stdTTL: ttl,
+        deleteOnExpire: false,
     });
     const key = config.scot_config_cache.key;
     cache.on('expired', (k, v) => {
