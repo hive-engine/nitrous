@@ -485,7 +485,8 @@ class Voting extends React.Component {
                 const sign = Math.sign(percent);
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter,
+                    value: (sign > 0 ? '+ ' : '- ') + voter
+                            + ' (' + percent / 100 + '%)',
                     link: '/@' + voter,
                 });
             }
