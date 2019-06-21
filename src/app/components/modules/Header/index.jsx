@@ -473,7 +473,7 @@ async function getAnnouncement(component, locale) {
         const jsonLocale = locale !== 'ko' ? 'en' : locale;
 
         const response = await axios.get(
-            `https://tool.steem.world/assets/js/aaa/announcement-${
+            `https://tool.steem.world/assets/json/aaa/announcement-${
                 jsonLocale
             }.json`
         );
