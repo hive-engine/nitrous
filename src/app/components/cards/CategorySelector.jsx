@@ -101,9 +101,9 @@ export function validateCategory(category, required = true) {
     const cats = category.trim().split(' ');
     return (
         // !category || category.trim() === '' ? 'Required' :
-        cats.length > 5
+        cats.length > 10
             ? tt('category_selector_jsx.use_limited_amount_of_categories', {
-                  amount: 5,
+                  amount: 10,
               })
             : cats.find(c => c.length > 24)
               ? tt('category_selector_jsx.maximum_tag_length_is_24_characters')
