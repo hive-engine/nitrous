@@ -18,6 +18,8 @@ import {
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import FormattedAssetToken from 'app/components/elements/FormattedAssetToken';
+
 
 class UserWallet extends React.Component {
     constructor() {
