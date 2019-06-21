@@ -247,7 +247,6 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
-
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
