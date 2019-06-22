@@ -14,7 +14,7 @@
       "objectSrc": "'none'",
       "pluginTypes": "application/pdf",
       "scriptSrc": "'unsafe-inline' 'unsafe-eval' data: https: 'self' www.google-analytics.com connect.facebook.net",
-      "styleSrc": "'self' 'unsafe-inline' fonts.googleapis.com",
+      "styleSrc": "'self' 'unsafe-inline' fonts.googleapis.com kit-free.fontawesome.com",
       "reportUri": "/api/v1/csp_violation"
     },
     "reportOnly": false,
