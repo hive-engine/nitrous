@@ -843,5 +843,11 @@
         "popup_message2":
             "Let's open the box and see what you have found. If you leave the page without opening it, your treasure will vanish where nobody can find it ever again~!",
         "popup_button": "Open Your Box"
+    },
+    "donation_ranking": {
+        "no_data": "No data for yesterday",
+        "daily_top_donors_title": "Daily Top Donors",
+        "daily_top_donees_title": "Daily Top Donees",
+        "note_for_date": "Based on %(date)s UTC"
     }
 }

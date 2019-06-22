@@ -676,5 +676,11 @@
         "popup_message2":
             "그냥 가시면 이 보물은 다시는 찾을 수 없는 곳으로 영영 사라집니다.",
         "popup_button": "보물상자 열기"
+    },
+    "donation_ranking": {
+        "no_data": "어제의 후원이 없습니다",
+        "daily_top_donors_title": "일일 후원왕",
+        "daily_top_donees_title": "일일 최고 수혜자",
+        "note_for_date": "%(date)s UTC 기준"
     }
 }

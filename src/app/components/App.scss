@@ -203,4 +203,25 @@
   }
 }
 
+.rank-up {
+  color:Dodgerblue;
+}
 
+.rank-down {
+  color:Tomato;
+}
+
+.rank-new {
+  color:Mediumslateblue;
+}
+
+.rank-same {
+  color:gray;
+}
+
+.note {
+  font-size: 80%;
+  @include themify($themes) {
+     color: themed('textColorSecondary');
+  }
+}

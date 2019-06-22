@@ -207,6 +207,7 @@ export default function ServerHTML({
                 {assets.script.map((href, idx) => (
                     <script key={idx} src={href} />
                 ))}
+                <script src="https://kit.fontawesome.com/c2c7de72e5.js" />
             </body>
         </html>
     );
