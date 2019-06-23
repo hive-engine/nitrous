@@ -70,7 +70,7 @@ function getRankingItem(data) {
     return (
         <li className="c-sidebar__list-item" key={data.Rank}>
             {data.Rank}.{' '}
-            <a className="c-sidebar__link" href="#">
+            <a className="c-sidebar__link" href={`/@${data.Username}`}>
                 @{data.Username}
             </a>{' '}
             {getRankDiff(data.RankDiff)}
@@ -114,7 +114,6 @@ const SidebarDonationsRender = data => {
     return (
         <div className="c-sidebar__module">
             <div className="c-sidebar__header">
-                {/* <h3 className="c-sidebar__h3">{tt('g.links')}</h3> */}
                 <h3 className="c-sidebar__h3">
                     {tt('donation_ranking.daily_top_donors_title')}
                 </h3>
@@ -122,7 +121,6 @@ const SidebarDonationsRender = data => {
             <div className="c-sidebar__content">{dailyTopDonors}</div>
             <br />
             <div className="c-sidebar__header">
-                {/* <h3 className="c-sidebar__h3">{tt('g.links')}</h3> */}
                 <h3 className="c-sidebar__h3">
                     {tt('donation_ranking.daily_top_donees_title')}
                 </h3>
