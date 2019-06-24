@@ -235,7 +235,8 @@
             "warning":
                 "Steemit Inc.의 직원을 포함한 합법적 인 사용자는 어떠한 경우에도 개인 키 또는 마스터 비밀번호를 요구하지 않습니다.",
             "checkbox": "네 이해합니다."
-        }
+        },
+        "burn" : "Burn"
     },
     "navigation": {
         "about": "스팀이란?",

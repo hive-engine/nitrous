@@ -13,6 +13,7 @@ import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
+
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
@@ -21,6 +22,8 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+
+import SidebarBurn from 'app/components/elements/SidebarBurn';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -137,7 +140,7 @@ class PostsIndex extends React.Component {
         } = this.props.routeParams;
 
         const { categories, discussions, pinned } = this.props;
-
+    
         let topics_order = order;
         let posts = List();
         let promotedPosts = List();
@@ -298,6 +301,11 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn scotToken={this.props.scotToken} scotMinerTokens={this.props.scotMinerTokens }/>
+                        </div>
+                    )}
                     <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
@@ -354,6 +362,10 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const scotConfig = state.app.get('scotConfig');
+            const scotToken = scotConfig.getIn(['config', 'token']);
+            const scotMinerTokens = scotConfig.getIn(['config', 'miner_tokens']).split(':')[0].replace(/\W/g, '');
+
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -374,6 +386,8 @@ module.exports = {
                     .get('notices')
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+                scotToken : scotToken,
+                scotMinerTokens : scotMinerTokens,
             };
         },
         dispatch => {

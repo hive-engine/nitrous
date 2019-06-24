@@ -237,7 +237,8 @@
             "warning":
                 "Los usuarios legítimos, incluidos los empleados de Steemit Inc., nunca le pedirán una clave privada o contraseña maestra.",
             "checkbox": "Entiendo"
-        }
+        },
+        "burn" : "Burn"
     },
     "navigation": {
         "about": "Sobre",
