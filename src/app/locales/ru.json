@@ -422,7 +422,8 @@
             "few": "%(count)s голоса",
             "many": "%(count)s голосов",
             "other": "%(count)s голосов"
-        }
+        },
+        "voting_power": "Voting Power"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":

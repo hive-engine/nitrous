@@ -12,6 +12,7 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     INVEST_TOKEN_SHORT,
     VOTE_WEIGHT_DROPDOWN_THRESHOLD,
+    SCOT_DENOM,
 } from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
@@ -229,16 +230,17 @@ class Voting extends React.Component {
             votingData,
             scotData,
             scotPrecision,
+            voteRegenSec,
         } = this.props;
 
         const scotDenom = Math.pow(10, scotPrecision);
-        // Incorporate 5 day regeneration time.
+        // Incorporate regeneration time.
         const currentVp = votingData
             ? Math.min(
                   votingData.get('voting_power') +
                       (new Date() - getDate(votingData.get('last_vote_time'))) *
                           10000 /
-                          (1000 * 60 * 60 * 24 * 5),
+                          (1000 * voteRegenSec),
                   10000
               ) / 100
             : 0;
@@ -272,7 +274,8 @@ class Voting extends React.Component {
                     />
                     {currentVp ? (
                         <div className="voting-power-display">
-                            Voting Power: {currentVp.toFixed(1)}%
+                            {tt('voting_jsx.voting_power')}:{' '}
+                            {currentVp.toFixed(1)}%
                         </div>
                     ) : (
                         ''
@@ -630,7 +633,14 @@ export default connect(
             voting,
             votingData,
             scotData,
-            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            scotPrecision: scotConfig.getIn(
+                ['info', 'precision'],
+                Math.log10(SCOT_DENOM)
+            ),
+            voteRegenSec: scotConfig.getIn(
+                ['config', 'vote_regeneration_seconds'],
+                5 * 24 * 60 * 60
+            ),
         };
     },
 

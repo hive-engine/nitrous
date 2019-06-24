@@ -406,7 +406,8 @@
         "votes_plural": {
             "one": "%(count)s件の投票",
             "other": "%(count)s件の投票"
-        }
+        },
+        "voting_power": "Voting Power"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
