@@ -140,7 +140,7 @@ class PostsIndex extends React.Component {
         } = this.props.routeParams;
 
         const { categories, discussions, pinned } = this.props;
-    
+        
         let topics_order = order;
         let posts = List();
         let promotedPosts = List();
@@ -365,7 +365,7 @@ module.exports = {
             const scotConfig = state.app.get('scotConfig');
             const scotToken = scotConfig.getIn(['config', 'token']);
             const scotMinerTokens = scotConfig.getIn(['config', 'miner_tokens']).split(':')[0].replace(/\W/g, '');
-
+           
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
