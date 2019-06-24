@@ -137,7 +137,7 @@ const SidebarDonationsRender = data => {
 class SidebarDonations extends React.Component {
     async getData() {
         try {
-            let sidebarDonations = localStorage.getItem('SidebarDonationsV2');
+            let sidebarDonations = localStorage.getItem('SidebarDonationsV3');
 
             if (
                 sidebarDonations &&
@@ -161,7 +161,7 @@ class SidebarDonations extends React.Component {
             }
 
             localStorage.setItem(
-                'SidebarDonationsV2',
+                'SidebarDonationsV3',
                 JSON.stringify(sidebarDonations)
             );
 
