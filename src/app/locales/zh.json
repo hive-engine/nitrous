@@ -368,7 +368,8 @@
         "votes_plural": {
             "one": "%(count)s个投票",
             "other": "%(count)s个投票"
-        }
+        },
+        "voting_power": "Voting Power"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond": "暂无回复。点击回复。",
