@@ -238,7 +238,10 @@
                 "Los usuarios legítimos, incluidos los empleados de Steemit Inc., nunca le pedirán una clave privada o contraseña maestra.",
             "checkbox": "Entiendo"
         },
-        "burn" : "Burn"
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "Sobre",

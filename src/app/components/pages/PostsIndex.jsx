@@ -239,6 +239,7 @@ class PostsIndex extends React.Component {
         const layoutClass = this.props.blogmode
             ? ' layout-block'
             : ' layout-list';
+
         return (
             <div
                 className={
@@ -303,7 +304,22 @@ class PostsIndex extends React.Component {
                     )}
                     {this.props.isBrowser && (
                         <div>
-                            <SidebarBurn scotToken={this.props.scotToken} scotMinerTokens={this.props.scotMinerTokens }/>
+                            <SidebarBurn 
+                                scotToken={this.props.scotBurn.getIn(['scotToken'])} 
+                                scotTokenCirculating={this.props.scotBurn.getIn(['total_token_balance', 'circulatingSupply'])} 
+                                scotTokenBurn={this.props.scotBurn.getIn(['token_burn_balance', 'balance'])} 
+                                scotTokenStaking={this.props.scotBurn.getIn(['total_token_balance', 'totalStaked'])} 
+                                />
+                        </div>
+                    )}
+                      {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn 
+                                scotToken={this.props.scotBurn.getIn(['scotMinerToken'])} 
+                                scotTokenCirculating={this.props.scotBurn.getIn(['total_token_miner_balances', 'circulatingSupply'])} 
+                                scotTokenBurn={this.props.scotBurn.getIn(['token_miner_burn_balances', 'balance'])} 
+                                scotTokenStaking={this.props.scotBurn.getIn(['total_token_miner_balances', 'totalStaked'])} 
+                                />
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
@@ -363,9 +379,7 @@ module.exports = {
     component: connect(
         (state, ownProps) => {
             const scotConfig = state.app.get('scotConfig');
-            const scotToken = scotConfig.getIn(['config', 'token']);
-            const scotMinerTokens = scotConfig.getIn(['config', 'miner_tokens']).split(':')[0].replace(/\W/g, '');
-           
+            
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -386,8 +400,7 @@ module.exports = {
                     .get('notices')
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                scotToken : scotToken,
-                scotMinerTokens : scotMinerTokens,
+                scotBurn : scotConfig.getIn(['config', 'burn']),
             };
         },
         dispatch => {
