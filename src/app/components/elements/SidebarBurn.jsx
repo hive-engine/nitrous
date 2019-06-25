@@ -24,11 +24,14 @@ const SidebarBurn = ({scotToken, scotTokenCirculating, scotTokenBurn, scotTokenS
     const burn = formatDecimal(scotTokenBurn);
     const burnRate = formatDecimal(scotTokenBurn / (scotTokenCirculating + scotTokenBurn) * 100);
     const staking = formatDecimal(scotTokenStaking);
-    const stakingRate = formatDecimal(scotTokenStaking / (scotTokenCirculating + scotTokenBurn) * 100);
+    const stakingRate = formatDecimal(scotTokenStaking / scotTokenCirculating * 100);
+
+    const styleToken = { color : 'rgb(0, 120, 167)', };
+    const styleBurn = { color : 'red', };
 
     return (
     <div className="c-sidebar__module">
-        <div className="c-sidebar__header">
+        <div className="c-sidebar__header" style={styleToken}>
             <h3 className="c-sidebar__h3">{scotToken}</h3>
         </div>
         <div className="c-sidebar__content">
@@ -48,7 +51,7 @@ const SidebarBurn = ({scotToken, scotTokenCirculating, scotTokenBurn, scotTokenS
                     <span className="integer">{circulating[0]}</span>
                     <span className="decimal">{circulating[1]}</span>
                 </li>
-                <li className="c-sidebar__list-item">
+                <li className="c-sidebar__list-item" style={styleBurn}>
                     {tt('g.burn')} (
                         <span className="integer">{burnRate[0]}</span>
                         <span className="decimal">{burnRate[1]}</span>
