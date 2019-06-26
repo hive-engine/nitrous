@@ -265,12 +265,14 @@ class Voting extends React.Component {
                 : '1969-12-31T23:59:59';
         const cashout_active = getDate(cashout_time) > Date.now();
 
+        const applyRewardsCurve = r =>
+            Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
+            rewardData.reward_pool /
+            rewardData.pending_rshares;
         if (scotData) {
             const voteRshares = scotData.get('vote_rshares');
-            scot_pending_token =
-                Math.pow(voteRshares, rewardData.author_curve_exponent) *
-                rewardData.reward_pool /
-                rewardData.pending_rshares;
+            scot_pending_token = applyRewardsCurve(voteRshares);
+
             scot_total_curator_payout = parseInt(
                 scotData.get('curator_payout_value')
             );
@@ -316,13 +318,7 @@ class Voting extends React.Component {
                     currentVp /
                     (10000 * 100);
                 const voteRshares = scotData.get('vote_rshares');
-                const newValue =
-                    Math.pow(
-                        voteRshares + rshares,
-                        rewardData.author_curve_exponent
-                    ) *
-                    rewardData.reward_pool /
-                    rewardData.pending_rshares;
+                const newValue = applyRewardsCurve(voteRshares + rshares);
                 valueEst = (
                     newValue / Math.pow(10, scotPrecision) -
                     scot_pending_token
@@ -504,6 +500,19 @@ class Voting extends React.Component {
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             const avotes = active_votes.toJS();
+
+            // Compute estimates given current order without rearrangement first
+            let currRshares = 0;
+            for (let i = 0; i < avotes.length; i++) {
+                const vote = avotes[i];
+                vote.estimate = (
+                    (applyRewardsCurve(currRshares + vote.rshares) -
+                        applyRewardsCurve(currRshares)) /
+                    Math.pow(10, scotPrecision)
+                ).toFixed(scotPrecision);
+                currRshares += vote.rshares;
+            }
+
             avotes.sort(
                 (a, b) =>
                     Math.abs(parseInt(a.rshares)) >
@@ -517,11 +526,11 @@ class Voting extends React.Component {
                 v < avotes.length && voters.length < MAX_VOTES_DISPLAY;
                 ++v
             ) {
-                const { percent, voter } = avotes[v];
+                const { percent, voter, estimate } = avotes[v];
                 const sign = Math.sign(percent);
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter,
+                    value: (sign > 0 ? '+ ' : '- ') + voter + ` (${estimate})`,
                     link: '/@' + voter,
                 });
             }
