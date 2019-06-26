@@ -392,7 +392,8 @@
         "votes_plural": {
             "one": "%(count)s głos",
             "other": "%(count)s głosów"
-        }
+        },
+        "voting_power": "Voting Power"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
