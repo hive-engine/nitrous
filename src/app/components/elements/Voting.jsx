@@ -266,8 +266,6 @@ class Voting extends React.Component {
         const cashout_active = getDate(cashout_time) > Date.now();
 
         if (scotData) {
-            scot_pending_token = parseInt(scotData.get('pending_token'));
-            //recomputation goes here TODO
             const voteRshares = scotData.get('vote_rshares');
             scot_pending_token =
                 Math.pow(voteRshares, rewardData.author_curve_exponent) *
