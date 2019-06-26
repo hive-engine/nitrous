@@ -42,15 +42,6 @@ const SidebarBurn = ({scotToken, scotTokenCirculating, scotTokenBurn, scotTokenS
                     <span className="integer">{total[0]}</span>
                     <span className="decimal">{total[1]}</span>
                 </li>
-                <li className="c-sidebar__list-item">
-                    {tt('g.circulating')} (
-                        <span className="integer">{circulatingRate[0]}</span>
-                        <span className="decimal">{circulatingRate[1]}</span>
-                    %) <br/>
-                    {'> '}
-                    <span className="integer">{circulating[0]}</span>
-                    <span className="decimal">{circulating[1]}</span>
-                </li>
                 <li className="c-sidebar__list-item" style={styleBurn}>
                     {tt('g.burn')} (
                         <span className="integer">{burnRate[0]}</span>
@@ -59,6 +50,15 @@ const SidebarBurn = ({scotToken, scotTokenCirculating, scotTokenBurn, scotTokenS
                     {'> '}
                     <span className="integer">{burn[0]}</span>
                     <span className="decimal">{burn[1]}</span>
+                </li>
+                <li className="c-sidebar__list-item">
+                    {tt('g.circulating')} (
+                        <span className="integer">{circulatingRate[0]}</span>
+                        <span className="decimal">{circulatingRate[1]}</span>
+                    %) <br/>
+                    {'> '}
+                    <span className="integer">{circulating[0]}</span>
+                    <span className="decimal">{circulating[1]}</span>
                 </li>
                 <li className="c-sidebar__list-item">
                     {tt('g.staking')} (
