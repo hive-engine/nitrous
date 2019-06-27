@@ -501,16 +501,19 @@ class Voting extends React.Component {
         if (showList && total_votes > 0 && active_votes) {
             const avotes = active_votes.toJS();
 
-            // Compute estimates given current order without rearrangement first
+            // Compute estimates given current order without rearrangement first,
+            // only if scot is present.
             let currRshares = 0;
-            for (let i = 0; i < avotes.length; i++) {
-                const vote = avotes[i];
-                vote.estimate = (
-                    (applyRewardsCurve(currRshares + vote.rshares) -
-                        applyRewardsCurve(currRshares)) /
-                    Math.pow(10, scotPrecision)
-                ).toFixed(scotPrecision);
-                currRshares += vote.rshares;
+            if (scotData) {
+                for (let i = 0; i < avotes.length; i++) {
+                    const vote = avotes[i];
+                    vote.estimate = (
+                        (applyRewardsCurve(currRshares + vote.rshares) -
+                            applyRewardsCurve(currRshares)) /
+                        Math.pow(10, scotPrecision)
+                    ).toFixed(scotPrecision);
+                    currRshares += vote.rshares;
+                }
             }
 
             avotes.sort(
