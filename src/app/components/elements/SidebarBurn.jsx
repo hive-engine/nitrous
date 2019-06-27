@@ -41,6 +41,7 @@ const SidebarBurn = ({
     const styleBurn = { color: 'red' };
 
     return (
+<<<<<<< HEAD
         <div className="c-sidebar__module">
             <div className="c-sidebar__header" style={styleToken}>
                 <h3 className="c-sidebar__h3">{scotToken}</h3>
@@ -73,6 +74,40 @@ const SidebarBurn = ({
                     </li>
                     <li className="c-sidebar__list-item">
                         {tt('g.staking')} (
+=======
+    <div className="c-sidebar__module">
+        <div className="c-sidebar__header" style={styleToken}>
+            <h3 className="c-sidebar__h3">{scotToken}</h3>
+        </div>
+        <div className="c-sidebar__content">
+            <ul className="c-sidebar__list">
+                <li className="c-sidebar__list-item" >
+                    {tt('g.total')} <br/>
+                    {'> '}
+                    <span className="integer">{total[0]}</span>
+                    <span className="decimal">{total[1]}</span>
+                </li>
+                <li className="c-sidebar__list-item" style={styleBurn}>
+                    {tt('g.burn')} (
+                        <span className="integer">{burnRate[0]}</span>
+                        <span className="decimal">{burnRate[1]}</span>
+                    %) <br/>
+                    {'> '}
+                    <span className="integer">{burn[0]}</span>
+                    <span className="decimal">{burn[1]}</span>
+                </li>
+                <li className="c-sidebar__list-item">
+                    {tt('g.circulating')} (
+                        <span className="integer">{circulatingRate[0]}</span>
+                        <span className="decimal">{circulatingRate[1]}</span>
+                    %) <br/>
+                    {'> '}
+                    <span className="integer">{circulating[0]}</span>
+                    <span className="decimal">{circulating[1]}</span>
+                </li>
+                <li className="c-sidebar__list-item">
+                    {tt('g.staking')} (
+>>>>>>> 8808c6460ed38e43e34cc13b5897533c77d68c47
                         <span className="integer">{stakingRate[0]}</span>
                         <span className="decimal">{stakingRate[1]}</span>
                         %) <br />
