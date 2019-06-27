@@ -25,6 +25,7 @@ export const TAG_LIST = List([
 export const LIQUID_TOKEN = 'Sports';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SPORTS';
+// used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'SPORTS POWER';
