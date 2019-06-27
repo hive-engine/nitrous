@@ -13,6 +13,7 @@ import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
+
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
@@ -21,6 +22,8 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+
+import SidebarBurn from 'app/components/elements/SidebarBurn';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -236,6 +239,7 @@ class PostsIndex extends React.Component {
         const layoutClass = this.props.blogmode
             ? ' layout-block'
             : ' layout-list';
+
         return (
             <div
                 className={
@@ -298,6 +302,49 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn
+                                scotToken={this.props.scotBurn.getIn([
+                                    'scotToken',
+                                ])}
+                                scotTokenCirculating={this.props.scotBurn.getIn(
+                                    ['total_token_balance', 'circulatingSupply']
+                                )}
+                                scotTokenBurn={this.props.scotBurn.getIn([
+                                    'token_burn_balance',
+                                    'balance',
+                                ])}
+                                scotTokenStaking={this.props.scotBurn.getIn([
+                                    'total_token_balance',
+                                    'totalStaked',
+                                ])}
+                            />
+                        </div>
+                    )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn
+                                scotToken={this.props.scotBurn.getIn([
+                                    'scotMinerToken',
+                                ])}
+                                scotTokenCirculating={this.props.scotBurn.getIn(
+                                    [
+                                        'total_token_miner_balances',
+                                        'circulatingSupply',
+                                    ]
+                                )}
+                                scotTokenBurn={this.props.scotBurn.getIn([
+                                    'token_miner_burn_balances',
+                                    'balance',
+                                ])}
+                                scotTokenStaking={this.props.scotBurn.getIn([
+                                    'total_token_miner_balances',
+                                    'totalStaked',
+                                ])}
+                            />
+                        </div>
+                    )}
                     <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
@@ -354,6 +401,8 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const scotConfig = state.app.get('scotConfig');
+
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -374,6 +423,7 @@ module.exports = {
                     .get('notices')
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+                scotBurn: scotConfig.getIn(['config', 'burn']),
             };
         },
         dispatch => {

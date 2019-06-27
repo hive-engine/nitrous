@@ -4,6 +4,9 @@ import NodeCache from 'node-cache';
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
+
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
     const cache = new NodeCache({
@@ -70,7 +73,50 @@ ScotConfig.prototype.refresh = async function() {
             console.info('Info not found, falling back to client config');
             scotInfo.precision = Math.log10(SCOT_DENOM);
         }
+
+        scotConfig.burn = {};
+
+        scotConfig.burn.scotToken = scotConfig.token;
+        scotConfig.burn.scotMinerToken = scotConfig.miner_tokens
+            .split(':')[0]
+            .replace(/\W/g, '');
+
+        const [
+            totalTokenBalance,
+            tokenBurnBalance,
+            totalTokenMinerBalance,
+            tokenMinerBurnBalance,
+        ] = await Promise.all([
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.burn.scotToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.burn.scotToken,
+            }),
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.burn.scotMinerToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.burn.scotMinerToken,
+            }),
+        ]);
+
+        if (totalTokenBalance) {
+            scotConfig.burn.total_token_balance = totalTokenBalance;
+        }
+        if (tokenBurnBalance) {
+            scotConfig.burn.token_burn_balance = tokenBurnBalance;
+        }
+        if (totalTokenMinerBalance) {
+            scotConfig.burn.total_token_miner_balances = totalTokenMinerBalance;
+        }
+        if (tokenMinerBurnBalance) {
+            scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
+        }
         this.cache.set(key, { info: scotInfo, config: scotConfig });
+
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);

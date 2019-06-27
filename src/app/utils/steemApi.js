@@ -123,6 +123,7 @@ export async function attachScotData(url, state) {
     let urlParts = url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
+
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -185,6 +186,7 @@ export async function attachScotData(url, state) {
         if (allTokenBalances) {
             state.accounts[account].all_token_balances = allTokenBalances;
         }
+
         return;
     }
 
