@@ -531,9 +531,10 @@ class Voting extends React.Component {
             ) {
                 const { percent, voter, estimate } = avotes[v];
                 const sign = Math.sign(percent);
+                const estimateStr = estimate ? ` (${estimate})` : '';
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter + ` (${estimate})`,
+                    value: (sign > 0 ? '+ ' : '- ') + voter + estimateStr,
                     link: '/@' + voter,
                 });
             }
