@@ -65,7 +65,9 @@ function mergeContent(content, scotData) {
             }
         });
     }
-    content.last_update = lastUpdate;
+    if (lastUpdate) {
+        content.last_update = lastUpdate;
+    }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
 }
