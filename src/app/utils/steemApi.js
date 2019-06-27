@@ -49,6 +49,27 @@ async function getAuthorRep(feedData) {
     return authorRep;
 }
 
+function mergeContent(content, scotData) {
+    const voted = content.active_votes;
+    const lastUpdate = content.last_update;
+    Object.assign(content, scotData);
+    if (voted) {
+        const scotVoted = new Set(content.active_votes.map(v => v.voter));
+        voted.forEach(v => {
+            if (!scotVoted.has(v.voter)) {
+                content.active_votes.push({
+                    voter: v.voter,
+                    percent: v.percent,
+                    rshares: 0,
+                });
+            }
+        });
+    }
+    content.last_update = lastUpdate;
+    content.scotData = {};
+    content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
+}
+
 async function fetchMissingData(tag, feedType, state, feedData) {
     if (!state.content) {
         state.content = {};
@@ -89,10 +110,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         } else {
             filteredContent[key] = state.content[key];
         }
-        Object.assign(filteredContent[key], d);
-        filteredContent[key].scotData = {};
-        filteredContent[key].scotData[LIQUID_TOKEN_UPPERCASE] = d;
-
+        mergeContent(filteredContent[key], d);
         discussionIndex.push(key);
     });
     state.content = filteredContent;
@@ -191,11 +209,10 @@ export async function attachScotData(url, state) {
                     const v = entry[1];
                     // Fetch SCOT data
                     const scotData = await getScotDataAsync(`@${k}`);
-                    Object.assign(
+                    mergeContent(
                         state.content[k],
                         scotData[LIQUID_TOKEN_UPPERCASE]
                     );
-                    state.content[k].scotData = scotData;
                 })
         );
         const filteredContent = {};
@@ -215,11 +232,7 @@ export async function attachScotData(url, state) {
 export async function getContentAsync(author, permlink) {
     const content = await api.getContentAsync(author, permlink);
     const scotData = await getScotDataAsync(`@${author}/${permlink}`);
-    // Do not assign scot data directly, or vote count will not show
-    // due to delay in steemd vs scot bot.
-    //Object.assign(content, scotData[LIQUID_TOKEN_UPPERCASE]);
-    content.scotData = scotData;
-
+    mergeContent(content, scotData[LIQUID_TOKEN_UPPERCASE]);
     return content;
 }
 
@@ -279,9 +292,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                         replies: [], // intentional
                     };
                 }
-                Object.assign(content, scotData);
-                content.scotData = {};
-                content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
+                mergeContent(content, scotData);
                 return content;
             })
         );
@@ -300,8 +311,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             feedData.map(async post => {
                 const k = `${post.author}/${post.permlink}`;
                 const scotData = await getScotDataAsync(`@${k}`);
-                Object.assign(post, scotData[LIQUID_TOKEN_UPPERCASE]);
-                post.scotData = scotData;
+                mergeContent(post, scotData[LIQUID_TOKEN_UPPERCASE]);
                 return post;
             })
         );
