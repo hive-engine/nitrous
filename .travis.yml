@@ -1,9 +1,23 @@
 language: node_js
 
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
 install: true
 
 script:
-  - yarn run test
+  - docker build -t registry.heroku.com/battlegamesio/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: scotty_battle
 
 # safelist
 branches:
@@ -16,3 +30,4 @@ branches:
   - scotty_spt
   - scotty_steemcoinpan
   - scotty_weedcash
+  - scotty_battle
