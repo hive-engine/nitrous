@@ -16,6 +16,7 @@ export const TAG_LIST = List(['aaa']);
 export const LIQUID_TOKEN = 'AAA';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'AAA';
+// used as backup
 export const SCOT_DENOM = 10000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'AAA POWER';
