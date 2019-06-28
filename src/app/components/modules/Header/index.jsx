@@ -314,7 +314,7 @@ class Header extends React.Component {
                             <Link to={logo_link}>
                                 <SvgImage
                                     name={APP_ICON}
-                                    width="125px"
+                                    width="150px"
                                     height="40px"
                                 />
                             </Link>

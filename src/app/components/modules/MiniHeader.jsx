@@ -14,7 +14,7 @@ export default function MiniHeader() {
                                 <a href="/">
                                     <SvgImage
                                         name={APP_ICON}
-                                        width="125px"
+                                        width="150px"
                                         height="40px"
                                     />
                                 </a>
