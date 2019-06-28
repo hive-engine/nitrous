@@ -5,7 +5,7 @@ import helmet from 'koa-helmet';
 import koa_logger from 'koa-logger';
 import requestTime from './requesttimings';
 import StatsLoggerClient from './utils/StatsLoggerClient';
-import { SteemMarket } from './utils/SteemMarket';
+import { ScotConfig } from './utils/ScotConfig';
 import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';
@@ -28,6 +28,7 @@ import userIllegalContent from 'app/utils/userIllegalContent';
 import koaLocale from 'koa-locale';
 import { getSupportedLocales } from './utils/misc';
 import { pinnedPosts } from './utils/PinnedPosts';
+import fs from 'fs';
 
 if (cluster.isMaster) console.log('application server starting, please wait.');
 
@@ -39,10 +40,17 @@ const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
 
+// import ads.txt to be served statically
+const adstxt = fs.readFileSync(
+    path.join(__dirname, '../app/assets/ads.txt'),
+    'utf8'
+);
+
 // Serve static assets without fanfare
 app.use(
     favicon(path.join(__dirname, '../app/assets/images/favicons/favicon.ico'))
 );
+
 app.use(
     mount(
         '/favicons',
@@ -52,12 +60,14 @@ app.use(
         )
     )
 );
+
 app.use(
     mount(
         '/images',
         staticCache(path.join(__dirname, '../app/assets/images'), cacheOpts)
     )
 );
+
 app.use(
     mount(
         '/javascripts',
@@ -67,6 +77,14 @@ app.use(
         )
     )
 );
+
+app.use(
+    mount('/ads.txt', function*() {
+        this.type = 'text/plain';
+        this.body = adstxt;
+    })
+);
+
 // Proxy asset folder to webpack development server in development mode
 if (env === 'development') {
     const webpack_dev_port = process.env.PORT
@@ -129,10 +147,10 @@ function convertEntriesToArrays(obj) {
     }, {});
 }
 
-// Fetch cached currency data for homepage
-//const steemMarket = new SteemMarket();
+// Fetch cached data
+const scotConfig = new ScotConfig();
 app.use(function*(next) {
-    this.steemMarketData = {}; // = yield steemMarket.get();
+    this.scotConfigData = yield scotConfig.get();
     yield next;
 });
 

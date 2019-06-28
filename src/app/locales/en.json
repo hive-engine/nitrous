@@ -29,6 +29,8 @@
         "edit": "Edit",
         "email": "Email",
         "external_link_message": "This link will take you away from the app",
+        "affiliation_steemit": "Steemit Team",
+        "affiliation_sm": "Steem Monsters Team",
         "feed": "Feed",
         "follow": "Follow",
         "for": " for ",
@@ -430,7 +432,9 @@
         "votes_plural": {
             "one": "%(count)s vote",
             "other": "%(count)s votes"
-        }
+        },
+        "voting_power": "Voting Power",
+        "estimated_vote": "Estimated Vote Value"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
