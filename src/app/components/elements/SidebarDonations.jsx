@@ -183,7 +183,7 @@ class SidebarDonations extends React.Component {
                 try {
                     this.setState({ data: await this.getData() });
                 } catch (e) {
-                    console.log(err);
+                    console.log(e);
                 }
             })();
         }
