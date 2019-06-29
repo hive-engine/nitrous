@@ -13,11 +13,16 @@ export const APP_URL = 'https://www.sportstalksocial.com';
 export const APP_DOMAIN = 'www.sportstalksocial.com';
 export const SCOT_TAG = 'sportstalk';
 export const TAG_LIST = List([
-    'soccer',
     'football',
+    'amfootball',
     'baseball',
     'basketball',
     'mma',
+    'horseracing',
+    'cricket',
+    'golf',
+    'hockey',
+    'tennis',
     'wrestling',
     'fantasy',
     'esports',
