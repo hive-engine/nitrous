@@ -195,7 +195,6 @@ export default function ServerHTML({
                         src={`https://load.fomo.com/ads/load.js?id=${fomoId}`}
                     />
                 ) : null}
-                <script src="https://kit.fontawesome.com/c2c7de72e5.js" />
                 <title>{page_title}</title>
             </head>
             <body>
