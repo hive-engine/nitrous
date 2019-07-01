@@ -219,6 +219,7 @@ export default function ServerHTML({
                     />
                 ) : null}
                 <title>{page_title}</title>
+		<script async type="text/javascript" src="https://www.dclick.io/static/js/ad.min.js" />
             </head>
             <body>
                 {

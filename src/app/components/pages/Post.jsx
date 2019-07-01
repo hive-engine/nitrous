@@ -21,6 +21,7 @@ class Post extends React.Component {
     static propTypes = {
         content: PropTypes.object.isRequired,
         post: PropTypes.string,
+	ad_name: PropTypes.string,
         routeParams: PropTypes.object,
         sortOrder: PropTypes.string,
     };
@@ -55,9 +56,11 @@ class Post extends React.Component {
         const { content, sortOrder } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
         let post = this.props.post;
+        let ad_name = this.props.post;
         if (!post) {
             const route_params = this.props.routeParams;
             post = route_params.username + '/' + route_params.slug;
+            ad_name = route_params.username;
         }
         const dis = content.get(post);
 
@@ -237,6 +240,7 @@ class Post extends React.Component {
                         />
                     </div>
                 ) : null}
+			<div className="dclickad" data-client="sct" data-slot="1560418367527" data-beneficiary={ad_name} data-percentage="50"/>
                 <div id="#comments" className="Post_comments row hfeed">
                     <div className="column large-12">
                         <div className="Post_comments__content">
