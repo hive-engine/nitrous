@@ -65,7 +65,9 @@ function mergeContent(content, scotData) {
             }
         });
     }
-    content.last_update = lastUpdate;
+    if (lastUpdate) {
+        content.last_update = lastUpdate;
+    }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
 }
@@ -123,6 +125,7 @@ export async function attachScotData(url, state) {
     let urlParts = url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
+
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -150,6 +153,7 @@ export async function attachScotData(url, state) {
             tokenUnstakes,
             tokenStatuses,
             transferHistory,
+            allTokenBalances,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -161,6 +165,9 @@ export async function attachScotData(url, state) {
             }),
             getScotAccountDataAsync(account),
             getSteemEngineAccountHistoryAsync(account),
+            ssc.find('tokens', 'balances', {
+                account,
+            }),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -178,6 +185,10 @@ export async function attachScotData(url, state) {
                 account
             ].transfer_history = transferHistory.reverse();
         }
+        if (allTokenBalances) {
+            state.accounts[account].all_token_balances = allTokenBalances;
+        }
+
         return;
     }
 
