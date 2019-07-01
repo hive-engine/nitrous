@@ -195,6 +195,7 @@ class PostSummary extends React.Component {
                             <Author
                                 author={p.author}
                                 authorRepLog10={authorRepLog10}
+								showAffiliation
                                 follow={false}
                                 mute={false}
                             />
@@ -267,6 +268,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+						    showAffiliation
                         />
                     )}
                 </span>

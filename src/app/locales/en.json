@@ -31,6 +31,8 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_curator": "SCT curator",
+        "affiliation_sct": "SCT Team",		
         "feed": "Feed",
         "follow": "Follow",
         "for": " for ",
@@ -318,7 +320,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Tag (up to 5 tags), the first tag is your main category.",
+            "Tag (up to 10 tags), the first tag is your main category.",
         "select_a_tag": "Select a tag",
         "maximum_tag_length_is_24_characters":
             "Maximum tag length is 24 characters",
