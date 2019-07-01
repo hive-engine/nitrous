@@ -251,6 +251,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+			      			showAffiliation
                         />
                     )}
                     <span className="show-for-medium">{author_category}</span>
