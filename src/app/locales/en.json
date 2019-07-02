@@ -844,7 +844,11 @@
         "popup_message1": "You have found a hidden treasure, lucky you!",
         "popup_message2":
             "Let's open the box and see what you have found. If you leave the page without opening it, your treasure will vanish where nobody can find it ever again~!",
-        "popup_button": "Open Your Box"
+        "popup_button": "Open Your Box",
+        "sidebar_winners_title": "LuckyBox Winners",
+        "sidebar_losers_title": "LuckyBox Skippers",
+        "sidebar_note": "Recent 10 cases of each list",
+        "sidebar_no_data": "No recent data"
     },
     "donation_ranking": {
         "no_data": "No data for yesterday",
