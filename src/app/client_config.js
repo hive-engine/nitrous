@@ -13,20 +13,22 @@ export const APP_URL = 'https://www.steemzzang.com';
 export const APP_DOMAIN = 'www.steemzzang.com';
 export const SCOT_TAG = 'zzan';
 export const TAG_LIST = List([
+    'zzan',
     'notice',
-    'art',
-    'kids',
-    'life',
-    'hobby',
-    'culture',
-    'sports',
-    'market',
-    'coin',
-    'diary',
-    'economy',
+    'newbie',
     'business-proposal',
-    'qna',
+    'economy',
     'politics',
+    'culture',
+    'arts',
+    'diary',
+    'hobby',
+    'life',
+    'literature',
+    'market',
+    'sports',
+    'user-guide',
+    'qna',
 ]);
 export const LIQUID_TOKEN = 'Zzan';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
