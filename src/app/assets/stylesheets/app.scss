@@ -227,3 +227,7 @@ a[rel="nofollow noopener"]:after {
     color: themed('buttonText');
   }
 }
+
+.author-icon svg {
+  margin-bottom: -3px;
+}
