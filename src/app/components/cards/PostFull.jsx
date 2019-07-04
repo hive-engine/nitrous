@@ -84,7 +84,7 @@ function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
                     createDate={content.created}
                     updateDate={content.last_update}
                 />
-                {written_from_nitrous && <span> ❤️</span>}
+                {written_from_nitrous && <span> ❤</span>}
             </div>
         </span>
     );

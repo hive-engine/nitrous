@@ -225,7 +225,7 @@ class PostSummary extends React.Component {
                                 />
                             </span>
 
-                            {written_from_nitrous && <span> ❤️</span>}
+                            {written_from_nitrous && <span> ❤</span>}
 
                             {full_power && (
                                 <span
