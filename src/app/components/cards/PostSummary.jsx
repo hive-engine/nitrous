@@ -20,7 +20,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import { INTERLEAVE_PROMOTED } from 'app/client_config';
+import { INTERLEAVE_PROMOTED, APP_NAME, APP_ICON } from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -123,7 +123,7 @@ class PostSummary extends React.Component {
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
-        const app_name = content.get('app') || '';
+        const app_info = content.get('app') || '';
 
         let post_url;
         let title_text;
@@ -212,10 +212,12 @@ class PostSummary extends React.Component {
                                 />
                             </span>
 
-                            {app_name.startsWith('steemcoinpan/') && (
+                            {app_info.startsWith(`${APP_ICON}/`) && (
                                 <span
                                     className="articles__icon-100"
-                                    title="written from steemcoinpan"
+                                    title={tt('g.written_from', {
+                                        app_name: APP_NAME,
+                                    })}
                                 >
                                     <Icon name="steemcoinpan" />
                                 </span>
