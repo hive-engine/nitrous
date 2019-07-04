@@ -552,10 +552,14 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => ({
-        ...ownProps,
-        username: state.user.getIn(['current', 'username']),
-    }),
+    (state, ownProps) => {
+        console.log(state.app.get('scotConfig'));
+        debugger;
+        return {
+            ...ownProps,
+            username: state.user.getIn(['current', 'username']),
+        };
+    },
 
     // mapDispatchToProps
     dispatch => ({
