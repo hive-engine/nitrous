@@ -246,6 +246,8 @@ class UserWallet extends React.Component {
                         <FormattedAssetToken
                             balance={tokenBalance.balance}
                             stake={tokenBalance.stake}
+                            delegationsIn={tokenBalance.delegationsIn}
+                            delegationsOut={tokenBalance.delegationsOut}
                             symbol={tokenBalance.symbol}
                         />
                     </span>

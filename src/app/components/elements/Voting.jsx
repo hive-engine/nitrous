@@ -327,36 +327,6 @@ class Voting extends React.Component {
             }
             return (
                 <span>
-                    <div id="btn_group" style={btnGroupStyle}>
-                        <button
-                            id="weight-left"
-                            onClick={this.handleButtonWeightChange(up, 2500)}
-                        >
-                            {' '}
-                            25%{' '}
-                        </button>
-                        <button
-                            id="weight-center"
-                            onClick={this.handleButtonWeightChange(up, 5000)}
-                        >
-                            {' '}
-                            50%{' '}
-                        </button>
-                        <button
-                            id="weight-center"
-                            onClick={this.handleButtonWeightChange(up, 7500)}
-                        >
-                            {' '}
-                            75%{' '}
-                        </button>
-                        <button
-                            id="weight-right"
-                            onClick={this.handleButtonWeightChange(up, 10000)}
-                        >
-                            {' '}
-                            100%{' '}
-                        </button>
-                    </div>
                     <div className="weight-display">{s + b / 100}%</div>
                     <Slider
                         min={100}
@@ -383,39 +353,6 @@ class Voting extends React.Component {
                         ''
                     )}
                 </span>
-            );
-        };
-
-        this.handleButtonWeightChange = (up, weight) => e => {
-            let w;
-            if (e.target.value > 100) e.target.value = 100;
-
-            if (weight === -1) {
-                weight = e.target.value * 100;
-            }
-
-            if (up) {
-                w = {
-                    up: weight,
-                    down: this.state.sliderWeight.down,
-                };
-            } else {
-                w = {
-                    up: this.state.sliderWeight.up,
-                    down: weight,
-                };
-            }
-            this.setState({ sliderWeight: w });
-
-            const { username, is_comment } = this.props;
-
-            localStorage.setItem(
-                'voteWeight' +
-                    (up ? '' : 'Down') +
-                    '-' +
-                    username +
-                    (is_comment ? '-comment' : ''),
-                weight
             );
         };
         
