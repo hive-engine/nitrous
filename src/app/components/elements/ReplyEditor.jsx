@@ -20,6 +20,7 @@ import tt from 'counterpart';
 import {
     APP_NAME,
     SCOT_TAG,
+    SCOT_TAG_FIRST,
     APP_MAX_TAG,
     POST_FOOTER,
 } from 'app/client_config';
@@ -971,7 +972,7 @@ export default formId =>
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : formCategories.first();
+                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
                 let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
