@@ -61,3 +61,8 @@
   65%  { transform: translate(0, 15px); }
   to   { transform: translate(0, -0px); }    
 }
+
+.fb_iframe_widget_fluid_desktop, .fb_iframe_widget_fluid_desktop span, .fb_iframe_widget_fluid_desktop iframe {
+  max-width: 100% !important;
+  width: 100% !important;
+}

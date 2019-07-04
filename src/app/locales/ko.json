@@ -961,5 +961,9 @@
         "witness_proxy_set": "위임 설정",
         "witness_proxy_clear": "위임 철회",
         "proxy_update_error": "Your proxy was not updated"
+    },
+    "facebook": {
+        "note_for_facebook_comment":
+            "스팀잇 계정이 없는 경우 페이스북 댓글로 소통하세요."
     }
 }

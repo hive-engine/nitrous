@@ -855,5 +855,9 @@
         "daily_top_donors_title": "Daily Top Donors",
         "daily_top_donees_title": "Daily Top Donees",
         "note_for_date": "Based on %(date)s UTC"
+    },
+    "facebook": {
+        "note_for_facebook_comment":
+            "Add a comment with Facebook if you do not have a Steemit account."
     }
 }
