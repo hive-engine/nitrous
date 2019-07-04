@@ -73,7 +73,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending/${SCOT_TAG}`;
+    if (url === '/') url = `/hot/${SCOT_TAG}`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)

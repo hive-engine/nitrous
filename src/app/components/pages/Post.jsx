@@ -90,9 +90,6 @@ class Post extends React.Component {
                                 <a href="/hot">hot posts</a>
                             </li>
                             <li>
-                                <a href="/trending">trending posts</a>
-                            </li>
-                            <li>
                                 <a href="/promoted">promoted posts</a>
                             </li>
                             <li>

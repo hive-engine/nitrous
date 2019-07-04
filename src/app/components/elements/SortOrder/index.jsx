@@ -22,10 +22,10 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'created';
     }
 
-    // If we are at the homepage, the sort order is 'trending'
+    // If we are at the homepage, the sort order is 'hot'
     if (pathname === '/') {
         tag = '';
-        sort = 'trending';
+        sort = 'hot';
     }
 
     if (!tag) {
@@ -42,19 +42,14 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     const sorts = tag => {
         return [
             {
-                value: 'trending',
-                label: tt('main_menu.trending'),
-                link: `/trending/${tag}`,
+                value: 'hot',
+                label: tt('main_menu.hot'),
+                link: `/hot/${tag}`,
             },
             {
                 value: 'created',
                 label: tt('g.new'),
                 link: `/created/${tag}`,
-            },
-            {
-                value: 'hot',
-                label: tt('main_menu.hot'),
-                link: `/hot/${tag}`,
             },
             {
                 value: 'promoted',
