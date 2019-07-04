@@ -251,7 +251,8 @@
         "total": "Total",
         "circulating": "Circulating",
         "burn": "Burn",
-        "staking": "Staking"
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
