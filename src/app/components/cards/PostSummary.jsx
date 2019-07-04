@@ -127,15 +127,9 @@ class PostSummary extends React.Component {
         let written_from_nitrous;
 
         try {
-            if (
-                JSON.parse(content.get('json_metadata')).app.startsWith(
-                    APP_ICON + '/'
-                )
-            ) {
-                written_from_nitrous = true;
-            } else {
-                written_from_nitrous = false;
-            }
+            written_from_nitrous = JSON.parse(
+                content.get('json_metadata')
+            ).app.startsWith(APP_ICON + '/');
         } catch (e) {
             written_from_nitrous = false;
         }
