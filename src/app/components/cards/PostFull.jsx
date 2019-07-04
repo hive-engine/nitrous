@@ -55,7 +55,7 @@ function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
 
     try {
         console.log(content.json_metadata);
-        if (!JSON.parse(content.json_metadata).app.search(APP_ICON)) {
+        if (JSON.parse(content.json_metadata).app.startsWith(APP_ICON + '/')) {
             written_from_nitrous = true;
         } else {
             written_from_nitrous = false;
