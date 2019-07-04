@@ -21,7 +21,7 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import { APP_DOMAIN, APP_NAME, APP_ICON } from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
@@ -51,6 +51,20 @@ function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
 }
 
 function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
+    let written_from_nitrous;
+
+    try {
+        console.log(content.json_metadata);
+        if (!JSON.parse(content.json_metadata).app.search(APP_ICON)) {
+            written_from_nitrous = true;
+        } else {
+            written_from_nitrous = false;
+        }
+    } catch (e) {
+        console.error('Invalid json_metadata');
+        written_from_nitrous = false;
+    }
+
     return (
         <span className="PostFull__time_author_category_large vcard">
             <Userpic account={content.author} />
@@ -70,6 +84,7 @@ function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
                     createDate={content.created}
                     updateDate={content.last_update}
                 />
+                {written_from_nitrous && <span> ❤️</span>}
             </div>
         </span>
     );

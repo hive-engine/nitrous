@@ -20,7 +20,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import { INTERLEAVE_PROMOTED } from 'app/client_config';
+import { INTERLEAVE_PROMOTED, APP_ICON } from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -124,6 +124,20 @@ class PostSummary extends React.Component {
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
 
+        let written_from_nitrous;
+
+        try {
+            if (
+                !JSON.parse(content.get('json_metadata')).app.search(APP_ICON)
+            ) {
+                written_from_nitrous = true;
+            } else {
+                written_from_nitrous = false;
+            }
+        } catch (e) {
+            written_from_nitrous = false;
+        }
+
         let post_url;
         let title_text;
         let comments_url;
@@ -211,6 +225,8 @@ class PostSummary extends React.Component {
                                 />
                             </span>
 
+                            {written_from_nitrous && <span> ❤️</span>}
+
                             {full_power && (
                                 <span
                                     className="articles__icon-100"
@@ -243,7 +259,11 @@ class PostSummary extends React.Component {
         const content_footer = (
             <div className="PostSummary__footer">
                 <Voting post={post} showList={true} />
-                <VotesAndComments post={post} commentsLink={comments_url} showVotes={false} />
+                <VotesAndComments
+                    post={post}
+                    commentsLink={comments_url}
+                    showVotes={false}
+                />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog
@@ -260,7 +280,11 @@ class PostSummary extends React.Component {
         const summary_footer = (
             <div className="articles__summary-footer">
                 <Voting post={post} showList={true} />
-                <VotesAndComments post={post} commentsLink={comments_url} showVotes={false} />
+                <VotesAndComments
+                    post={post}
+                    commentsLink={comments_url}
+                    showVotes={false}
+                />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog
