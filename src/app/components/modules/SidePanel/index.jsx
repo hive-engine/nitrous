@@ -111,6 +111,11 @@ const SidePanel = ({
                 link: 'https://palnet.tokenbb.io',
             },
             {
+                value: 'paltube',
+                label: 'Palnet Tube',
+                link: 'https://tube.palnet.io',
+            },
+            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/956MATM',
