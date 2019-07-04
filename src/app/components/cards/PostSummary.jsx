@@ -20,7 +20,11 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import { INTERLEAVE_PROMOTED } from 'app/client_config';
+import {
+    APP_NAME,
+    INTERLEAVE_PROMOTED,
+    POSTED_VIA_NITROUS_ICON,
+} from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -123,6 +127,7 @@ class PostSummary extends React.Component {
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
+        const app_name = content.get('app') || '';
 
         let post_url;
         let title_text;
@@ -212,6 +217,16 @@ class PostSummary extends React.Component {
                                     className="updated"
                                 />
                             </span>
+
+                            {POSTED_VIA_NITROUS_ICON &&
+                                app_name.startsWith(APP_NAME.toLowerCase()) && (
+                                    <span
+                                        className="articles__icon-100"
+                                        title={`Posted via ${APP_NAME}`}
+                                    >
+                                        <Icon name={POSTED_VIA_NITROUS_ICON} />
+                                    </span>
+                                )}
 
                             {full_power && (
                                 <span
