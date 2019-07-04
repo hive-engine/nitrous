@@ -1,6 +1,6 @@
 import * as config from 'config';
 import React from 'react';
-import { APP_NAME } from 'app/client_config';
+import { APP_NAME, FACEBOOK_CONFIG } from 'app/client_config';
 
 export default function ServerHTML({
     body,
@@ -26,6 +26,7 @@ export default function ServerHTML({
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
+                <meta property="fb:app_id" content={FACEBOOK_CONFIG.APP_ID} />
                 {meta &&
                     meta.map(m => {
                         if (m.title) {
