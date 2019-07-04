@@ -916,11 +916,12 @@ export default formId =>
                               .split(/ +/)
                         : []
                 );
+                // For ZZAN, add as root category.
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : formCategories.first();
-                let allCategories = Set([...formCategories.toJS()]);
+                        : SCOT_TAG;
+                let allCategories = Set([SCOT_TAG, ...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
 
@@ -928,8 +929,6 @@ export default formId =>
                 while (allCategories.size < 5 && postHashtags.length > 0) {
                     allCategories = allCategories.add(postHashtags.shift());
                 }
-                // Add scot tag
-                allCategories = allCategories.add(SCOT_TAG);
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
