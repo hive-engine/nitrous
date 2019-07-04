@@ -239,7 +239,7 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post },
+            props: { username, post, scotTokens },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -480,7 +480,7 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
@@ -553,11 +553,11 @@ class PostFull extends React.Component {
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
-        console.log(state.app.get('scotConfig'));
-        debugger;
+        const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
             username: state.user.getIn(['current', 'username']),
+            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
         };
     },
 
