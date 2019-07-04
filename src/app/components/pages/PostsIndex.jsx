@@ -149,7 +149,7 @@ class PostsIndex extends React.Component {
         if (category === 'feed') {
             account_name = order.slice(1);
             order = 'by_feed';
-            topics_order = 'trending';
+            topics_order = 'hot';
             posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
@@ -159,9 +159,7 @@ class PostsIndex extends React.Component {
                         <br />
                         {tt('posts_index.empty_feed_2')}.<br />
                         <br />
-                        <Link to="/trending">
-                            {tt('posts_index.empty_feed_3')}
-                        </Link>
+                        <Link to="/hot">{tt('posts_index.empty_feed_3')}</Link>
                         <br />
                     </div>
                 );
@@ -217,9 +215,6 @@ class PostsIndex extends React.Component {
                 });
         } else {
             switch (topics_order) {
-                case 'trending': // cribbed from Header.jsx where it's repeated 2x already :P
-                    page_title = tt('main_menu.trending');
-                    break;
                 case 'created':
                     page_title = tt('g.new');
                     break;

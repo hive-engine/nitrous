@@ -1,5 +1,5 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
