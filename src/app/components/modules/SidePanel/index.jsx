@@ -106,6 +106,12 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'guidelines',
+                label: 'Community Guidelines',
+                link: '/@minnowsupport/palnet-io-rules-and-guidelines',
+                internal: true,
+            },
+            {
                 value: 'forum',
                 label: 'Forum',
                 link: 'https://palnet.tokenbb.io',
