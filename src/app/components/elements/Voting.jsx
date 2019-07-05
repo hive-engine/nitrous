@@ -301,8 +301,7 @@ class Voting extends React.Component {
 
         const votingUpActive = voting && votingUp;
         const votingDownActive = voting && votingDown;
-        const btnGroupStyle = { 'text-align' : 'center',};
-
+        
         const slider = up => {
             const b = up
                 ? this.state.sliderWeight.up
@@ -403,7 +402,7 @@ class Voting extends React.Component {
                         this.readSliderWeight();
                     }}
                     title={invokeFlag}
-                    position={'center'}
+                    position={'right'}
                 >
                     <div className="Voting__adjust_weight_down">
                         {(myVote == null || myVote === 0) &&
