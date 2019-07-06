@@ -262,7 +262,7 @@ class UserWallet extends React.Component {
                 );
 
                 const tokenBalanceStr =
-                    isMyAccount && tokenReward > 0 ? (
+                    current_user && isMyAccount && tokenReward > 0 ? (
                         <span
                             key={tokenBalance.symbol}
                             onClick={e => {
