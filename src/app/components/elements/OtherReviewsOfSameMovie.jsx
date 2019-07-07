@@ -47,6 +47,10 @@ class OtherReviewsOfSameMovie extends React.Component {
                 }&permlink=${this.props.permlink}&movieUrl=${movieUrl}`
             );
 
+            if (response.data !== null && response.data.length === 0) {
+                return null;
+            }
+
             return response.data;
         } catch (e) {
             console.log(e);
