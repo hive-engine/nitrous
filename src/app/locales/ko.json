@@ -963,5 +963,8 @@
     "facebook": {
         "note_for_facebook_comment":
             "스팀잇 계정이 없는 경우 페이스북 댓글로 소통하세요."
+    },
+    "review": {
+        "other_reviews_for_same_movie": "같은 영화, 다른 리뷰"
     }
 }

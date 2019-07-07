@@ -29,6 +29,7 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
 import axios from 'axios';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import OtherReviewsOfSameMovie from 'app/components/elements/OtherReviewsOfSameMovie';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -525,6 +526,11 @@ class PostFull extends React.Component {
                         </div>
                         <div className="PostFull__body entry-content">
                             {contentBody}
+                            <OtherReviewsOfSameMovie
+                                content_body={content_body}
+                                author={author}
+                                permlink={permlink}
+                            />
                         </div>
                     </span>
                 )}
