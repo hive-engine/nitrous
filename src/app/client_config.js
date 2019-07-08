@@ -1,25 +1,25 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'NeoxianCity';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
-export const APP_ICON = 'weedcash';
+export const APP_NAME_LATIN = 'NeoxianCity';
+export const APP_NAME_UPPERCASE = 'NEOXIANCITY';
+export const APP_ICON = 'neoxag';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
-export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = List(['weedcash', 'weed', 'cannabis', 'psychedelic']);
-export const LIQUID_TOKEN = 'Weed';
+export const APP_URL = 'https://www.neoxian.city';
+export const APP_DOMAIN = 'www.neoxian.city';
+export const SCOT_TAG = 'neoxian';
+export const TAG_LIST = List(['neoxian']);
+export const LIQUID_TOKEN = 'Neoxian Silver';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'NEOXAG';
 // used as backup
 export const SCOT_DENOM = 100000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'WEED POWER';
+export const VESTING_TOKEN = 'NEOXIAN POWER';
 export const INTERLEAVE_PROMOTED = true;
 export const PROMOTED_POST_ACCOUNT = 'null';
 
@@ -52,8 +52,8 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'NeoxianCity is a social media platform where everyone gets paid for ' +
+    'creating and curating content. It leverages a robust digital points system, called NEOXAG, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
