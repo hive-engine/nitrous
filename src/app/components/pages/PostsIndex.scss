@@ -143,6 +143,12 @@
     margin: 0;
     padding: 0;
   }
+  &__list-small {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include font-size(11px);
+  }
   &__list-item {
     margin-bottom: 10px;
     line-height: 1.2;
