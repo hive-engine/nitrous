@@ -318,7 +318,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Kategorie (do 5 kategorii), pierwsza kategoria określa główną.",
+            "Kategorie (do 10 kategorii), pierwsza kategoria określa główną.",
         "select_a_tag": "Wybierz kategorię",
         "maximum_tag_length_is_24_characters":
             "Maksymalna długość nazwy kategorii to 24 znaki",
