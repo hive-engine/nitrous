@@ -7,48 +7,78 @@ import secureRandom from 'secure-random';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
 import { api, broadcast, auth, memo } from '@steemit/steem-js';
 
-import { getAccount, getContent } from 'app/redux/SagaShared';
-import { postingOps, findSigningKey } from 'app/redux/AuthSaga';
+import { getAccount } from 'app/redux/SagaShared';
+import { findSigningKey } from 'app/redux/AuthSaga';
 import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
+    takeEvery(transactionActions.UPDATE_AUTHORITIES, updateAuthorities),
+    takeEvery(transactionActions.RECOVER_ACCOUNT, recoverAccount),
 ];
 
 const hook = {
-    preBroadcast_comment,
-    preBroadcast_vote,
-    error_vote,
-    error_custom_json,
-    accepted_comment,
-    accepted_custom_json,
-    accepted_delete_comment,
-    accepted_vote,
+    preBroadcast_transfer,
+    preBroadcast_account_witness_vote,
+    error_account_witness_vote,
+    accepted_account_witness_vote,
+    accepted_account_update,
+    accepted_withdraw_vesting,
 };
 
+export function* preBroadcast_transfer({ operation }) {
+    let memoStr = operation.memo;
+    if (memoStr) {
+        memoStr = toStringUtf8(memoStr);
+        memoStr = memoStr.trim();
+        if (/^#/.test(memoStr)) {
+            const memo_private = yield select(state =>
+                state.user.getIn(['current', 'private_keys', 'memo_private'])
+            );
+            if (!memo_private)
+                throw new Error(
+                    'Unable to encrypt memo, missing memo private key'
+                );
+            const account = yield call(getAccount, operation.to);
+            if (!account) throw new Error(`Unknown to account ${operation.to}`);
+            const memo_key = account.get('memo_key');
+            memoStr = memo.encode(memo_private, memo_key, memoStr);
+            operation.memo = memoStr;
+        }
+    }
+    return operation;
+}
 const toStringUtf8 = o =>
     o ? (Buffer.isBuffer(o) ? o.toString('utf-8') : o.toString()) : o;
 
-function* preBroadcast_vote({ operation, username }) {
-    if (!operation.voter) operation.voter = username;
-    const { voter, author, permlink, weight } = operation;
+function* preBroadcast_account_witness_vote({ operation, username }) {
+    if (!operation.account) operation.account = username;
+    const { account, witness, approve } = operation;
     // give immediate feedback
     yield put(
-        globalActions.set({
-            key: `transaction_vote_active_${author}_${permlink}`,
-            value: true,
+        globalActions.addActiveWitnessVote({
+            account,
+            witness,
         })
     );
-    yield put(
-        globalActions.voted({ username: voter, author, permlink, weight })
-    );
     return operation;
+}
+
+function* error_account_witness_vote({
+    operation: { account, witness, approve },
+}) {
+    yield put(
+        globalActions.updateAccountWitnessVote({
+            account,
+            witness,
+            approve: !approve,
+        })
+    );
 }
 
 /** Keys, username, and password are not needed for the initial call.  This will check the login and may trigger an action to prompt for the password / key. */
@@ -61,7 +91,6 @@ export function* broadcastOperation({
         keys,
         username,
         password,
-        useKeychain,
         successCallback,
         errorCallback,
         allowPostUnsafe,
@@ -73,12 +102,10 @@ export function* broadcastOperation({
         keys,
         username,
         password,
-        useKeychain,
         successCallback,
         errorCallback,
         allowPostUnsafe,
     };
-    console.log('broadcastOperation', operationParam);
 
     const conf = typeof confirm === 'function' ? confirm() : confirm;
     if (conf) {
@@ -116,32 +143,30 @@ export function* broadcastOperation({
         return;
     }
     try {
-        if (!isLoggedInWithKeychain()) {
-            if (!keys || keys.length === 0) {
-                payload.keys = [];
-                // user may already be logged in, or just enterend a signing passowrd or wif
-                const signingKey = yield call(findSigningKey, {
-                    opType: type,
-                    username,
-                    password,
-                });
-                if (signingKey) payload.keys.push(signingKey);
-                else {
-                    if (!password) {
-                        yield put(
-                            userActions.showLogin({
-                                operation: {
-                                    type,
-                                    operation,
-                                    username,
-                                    successCallback,
-                                    errorCallback,
-                                    saveLogin: true,
-                                },
-                            })
-                        );
-                        return;
-                    }
+        if (!keys || keys.length === 0) {
+            payload.keys = [];
+            // user may already be logged in, or just enterend a signing passowrd or wif
+            const signingKey = yield call(findSigningKey, {
+                opType: type,
+                username,
+                password,
+            });
+            if (signingKey) payload.keys.push(signingKey);
+            else {
+                if (!password) {
+                    yield put(
+                        userActions.showLogin({
+                            operation: {
+                                type,
+                                operation,
+                                username,
+                                successCallback,
+                                errorCallback,
+                                saveLogin: true,
+                            },
+                        })
+                    );
+                    return;
                 }
             }
         }
@@ -183,19 +208,12 @@ function hasPrivateKeys(payload) {
 function* broadcastPayload({
     payload: { operations, keys, username, successCallback, errorCallback },
 }) {
-    let needsActiveAuth = false;
-
     // console.log('broadcastPayload')
     if ($STM_Config.read_only_mode) return;
-    for (const [type] of operations) {
-        // see also transaction/ERROR
+    for (const [type] of operations) // see also transaction/ERROR
         yield put(
             transactionActions.remove({ key: ['TransactionError', type] })
         );
-        if (!postingOps.has(type)) {
-            needsActiveAuth = true;
-        }
-    }
 
     {
         const newOps = [];
@@ -227,11 +245,6 @@ function* broadcastPayload({
         }
     };
 
-    // get username
-    const currentUser = yield select(state => state.user.get('current'));
-    const currentUsername = currentUser && currentUser.get('username');
-    username = username || currentUsername;
-
     try {
         yield new Promise((resolve, reject) => {
             // Bump transaction (for live UI testing).. Put 0 in now (no effect),
@@ -260,36 +273,15 @@ function* broadcastPayload({
                     broadcastedEvent();
                 }, 2000);
             } else {
-                if (!isLoggedInWithKeychain()) {
-                    broadcast.send(
-                        { extensions: [], operations },
-                        keys,
-                        err => {
-                            if (err) {
-                                console.error(err);
-                                reject(err);
-                            } else {
-                                broadcastedEvent();
-                                resolve();
-                            }
-                        }
-                    );
-                } else {
-                    const authType = needsActiveAuth ? 'active' : 'posting';
-                    window.steem_keychain.requestBroadcast(
-                        username,
-                        operations,
-                        authType,
-                        response => {
-                            if (!response.success) {
-                                reject(response.message);
-                            } else {
-                                broadcastedEvent();
-                                resolve();
-                            }
-                        }
-                    );
-                }
+                broadcast.send({ extensions: [], operations }, keys, err => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                    } else {
+                        broadcastedEvent();
+                        resolve();
+                    }
+                });
             }
         });
         // status: accepted
@@ -336,174 +328,37 @@ function* broadcastPayload({
     }
 }
 
-function* accepted_comment({ operation }) {
-    const { author, permlink } = operation;
-    // update again with new $$ amount from the steemd node
-    yield call(getContent, { author, permlink });
-    // receiveComment did the linking already (but that is commented out)
-    yield put(globalActions.linkReply(operation));
-    // mark the time (can only post 1 per min)
-    // yield put(user.actions.acceptedComment())
-}
-
-function updateFollowState(action, following, state) {
-    if (action == null) {
-        state = state.update('blog_result', Set(), r => r.delete(following));
-        state = state.update('ignore_result', Set(), r => r.delete(following));
-    } else if (action === 'blog') {
-        state = state.update('blog_result', Set(), r => r.add(following));
-        state = state.update('ignore_result', Set(), r => r.delete(following));
-    } else if (action === 'ignore') {
-        state = state.update('ignore_result', Set(), r => r.add(following));
-        state = state.update('blog_result', Set(), r => r.delete(following));
-    }
-    state = state.set('blog_count', state.get('blog_result', Set()).size);
-    state = state.set('ignore_count', state.get('ignore_result', Set()).size);
-    return state;
-}
-
-function* accepted_custom_json({ operation }) {
-    const json = JSON.parse(operation.json);
-    if (operation.id === 'follow') {
-        console.log(operation);
-        try {
-            if (json[0] === 'follow') {
-                const { follower, following, what: [action] } = json[1];
-                yield put(
-                    globalActions.update({
-                        key: ['follow', 'getFollowingAsync', follower],
-                        notSet: Map(),
-                        updater: m => updateFollowState(action, following, m),
-                    })
-                );
-            }
-        } catch (e) {
-            console.error(
-                'TransactionSaga unrecognized follow custom_json format',
-                operation.json
-            );
-        }
-    }
-    return operation;
-}
-
-function* accepted_delete_comment({ operation }) {
-    yield put(globalActions.deleteContent(operation));
-}
-
-function* accepted_vote({ operation: { author, permlink, weight } }) {
-    console.log(
-        'Vote accepted, weight',
-        weight,
-        'on',
-        author + '/' + permlink,
-        'weight'
-    );
-    // update again with new $$ amount from the steemd node
+function* accepted_account_witness_vote({
+    operation: { account, witness, approve },
+}) {
     yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
+        globalActions.updateAccountWitnessVote({ account, witness, approve })
+    );
+
+    yield put(
+        globalActions.removeActiveWitnessVote({
+            account,
+            witness,
         })
     );
-    yield call(getContent, { author, permlink });
 }
 
-export function* preBroadcast_comment({ operation, username }) {
-    if (!operation.author) operation.author = username;
-    let permlink = operation.permlink;
-    const { author, __config: { originalBody, comment_options } } = operation;
-    const {
-        parent_author = '',
-        parent_permlink = operation.category,
-    } = operation;
-    const { title } = operation;
-    let { body } = operation;
-
-    body = body.trim();
-
-    // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
-
-    let body2;
-    if (originalBody) {
-        const patch = createPatch(originalBody, body);
-        // Putting body into buffer will expand Unicode characters into their true length
-        if (patch && patch.length < new Buffer(body, 'utf-8').length)
-            body2 = patch;
-    }
-    if (!body2) body2 = body;
-    if (!permlink) permlink = yield createPermlink(title, author);
-
-    const md = operation.json_metadata;
-    const json_metadata = typeof md === 'string' ? md : JSON.stringify(md);
-    const op = {
-        ...operation,
-        permlink: permlink.toLowerCase(),
-        parent_author,
-        parent_permlink,
-        json_metadata,
-        title: (operation.title || '').trim(),
-        body: body2,
-    };
-
-    const comment_op = [['comment', op]];
-
-    // comment_options must come directly after comment
-    if (comment_options) {
-        const {
-            max_accepted_payout = ['1000000.000', DEBT_TICKER].join(' '),
-            percent_steem_dollars = 10000, // 10000 === 100%
-            allow_votes = true,
-            allow_curation_rewards = true,
-        } = comment_options;
-        comment_op.push([
-            'comment_options',
-            {
-                author,
-                permlink,
-                max_accepted_payout,
-                percent_steem_dollars,
-                allow_votes,
-                allow_curation_rewards,
-                extensions: comment_options.extensions
-                    ? comment_options.extensions
-                    : [],
-            },
-        ]);
-    }
-
-    return comment_op;
+function* accepted_withdraw_vesting({ operation }) {
+    let [account] = yield call(
+        [api, api.getAccountsAsync],
+        [operation.account]
+    );
+    account = fromJS(account);
+    yield put(globalActions.receiveAccount({ account }));
 }
 
-export function* createPermlink(title, author) {
-    let permlink;
-    if (title && title.trim() !== '') {
-        let s = slug(title);
-        if (s === '') {
-            s = base58.encode(secureRandom.randomBuffer(4));
-        }
-        // only letters numbers and dashes shall survive
-        s = s.toLowerCase().replace(/[^a-z0-9-]+/g, '');
-
-        // ensure the permlink is unique
-        const slugState = yield call([api, api.getContentAsync], author, s);
-        if (slugState.body !== '') {
-            const noise = base58
-                .encode(secureRandom.randomBuffer(4))
-                .toLowerCase();
-            permlink = noise + '-' + s;
-        } else {
-            permlink = s;
-        }
-
-        // ensure permlink conforms to STEEMIT_MAX_PERMLINK_LENGTH
-        if (permlink.length > 255) {
-            permlink = permlink.substring(0, 255);
-        }
-    } else {
-        permlink = Math.floor(Date.now() / 1000).toString(36);
-    }
-
-    return permlink;
+function* accepted_account_update({ operation }) {
+    let [account] = yield call(
+        [api, api.getAccountsAsync],
+        [operation.account]
+    );
+    account = fromJS(account);
+    yield put(globalActions.receiveAccount({ account }));
 }
 
 import diff_match_patch from 'diff-match-patch';
@@ -516,37 +371,254 @@ export function createPatch(text1, text2) {
     return patch;
 }
 
-function* error_custom_json({ operation: { id, required_posting_auths } }) {
-    if (id === 'follow') {
-        const follower = required_posting_auths[0];
-        yield put(
-            globalActions.update({
-                key: ['follow', 'getFollowingAsync', follower, 'loading'],
-                updater: () => null,
-            })
+function slug(text) {
+    return getSlug(text.replace(/[<>]/g, ''), { truncate: 128 });
+}
+
+const pwPubkey = (name, pw, role) =>
+    auth.wifToPublic(auth.toWif(name, pw.trim(), role));
+
+export function* recoverAccount({
+    payload: {
+        account_to_recover,
+        old_password,
+        new_password,
+        onError,
+        onSuccess,
+    },
+}) {
+    const [account] = yield call(
+        [api, api.getAccountsAsync],
+        [account_to_recover]
+    );
+
+    if (!account) {
+        onError('Unknown account ' + account);
+        return;
+    }
+    if (auth.isWif(new_password)) {
+        onError('Your new password should not be a WIF');
+        return;
+    }
+    if (auth.isPubkey(new_password)) {
+        onError('Your new password should not be a Public Key');
+        return;
+    }
+
+    const oldOwnerPrivate = auth.isWif(old_password)
+        ? old_password
+        : auth.toWif(account_to_recover, old_password, 'owner');
+
+    const oldOwner = auth.wifToPublic(oldOwnerPrivate);
+
+    const newOwnerPrivate = auth.toWif(
+        account_to_recover,
+        new_password.trim(),
+        'owner'
+    );
+    const newOwner = auth.wifToPublic(newOwnerPrivate);
+    const newActive = pwPubkey(
+        account_to_recover,
+        new_password.trim(),
+        'active'
+    );
+    const newPosting = pwPubkey(
+        account_to_recover,
+        new_password.trim(),
+        'posting'
+    );
+    const newMemo = pwPubkey(account_to_recover, new_password.trim(), 'memo');
+
+    const new_owner_authority = {
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[newOwner, 1]],
+    };
+
+    const recent_owner_authority = {
+        weight_threshold: 1,
+        account_auths: [],
+        key_auths: [[oldOwner, 1]],
+    };
+
+    try {
+        // TODO: Investigate wrapping in a redux-saga call fn, so it can be tested!.
+        yield broadcast.sendAsync(
+            {
+                extensions: [],
+                operations: [
+                    [
+                        'recover_account',
+                        {
+                            account_to_recover,
+                            new_owner_authority,
+                            recent_owner_authority,
+                        },
+                    ],
+                ],
+            },
+            [oldOwnerPrivate, newOwnerPrivate]
         );
+
+        // change password
+        // change password probably requires a separate transaction (single trx has not been tested)
+        const { json_metadata } = account;
+        // TODO: Investigate wrapping in a redux-saga call fn, so it can be tested!
+        yield broadcast.sendAsync(
+            {
+                extensions: [],
+                operations: [
+                    [
+                        'account_update',
+                        {
+                            account: account.name,
+                            active: {
+                                weight_threshold: 1,
+                                account_auths: [],
+                                key_auths: [[newActive, 1]],
+                            },
+                            posting: {
+                                weight_threshold: 1,
+                                account_auths: [],
+                                key_auths: [[newPosting, 1]],
+                            },
+                            memo_key: newMemo,
+                            json_metadata,
+                        },
+                    ],
+                ],
+            },
+            [newOwnerPrivate]
+        );
+        // Reset all outgoing auto-vesting routes for this user. Condenser - #2835
+        const outgoingAutoVestingRoutes = yield call(
+            [api, api.getWithdrawRoutes],
+            [account.name, 'outgoing']
+        );
+        if (outgoingAutoVestingRoutes && outgoingAutoVestingRoutes.length > 0) {
+            yield all(
+                outgoingAutoVestingRoutes.map(ovr => {
+                    return call(
+                        [broadcast, broadcast.setWithdrawVestingRoute],
+                        [newActive, ovr.from_account, ovr.to_account, 0, true]
+                    );
+                })
+            );
+        }
+        if (onSuccess) onSuccess();
+    } catch (error) {
+        console.error('Recover account', error);
+        if (onError) onError(error);
     }
 }
 
-function* error_vote({ operation: { author, permlink } }) {
-    yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
-        })
-    );
-    yield call(getContent, { author, permlink }); // unvote
-}
+/** auths must start with most powerful key: owner for example */
+export function* updateAuthorities({
+    payload: { accountName, signingKey, auths, twofa, onSuccess, onError },
+}) {
+    // Be sure this account is up-to-date (other required fields are sent in the update)
+    const [account] = yield call([api, api.getAccountsAsync], [accountName]);
+    if (!account) {
+        onError('Account not found');
+        return;
+    }
+    const ops2 = {};
+    let oldPrivate;
+    const addAuth = (authType, oldAuth, newAuth) => {
+        let oldAuthPubkey, oldPrivateAuth;
+        try {
+            oldPrivateAuth = PrivateKey.fromWif(oldAuth);
+            oldAuthPubkey = oldPrivateAuth.toPublic().toString();
+        } catch (e) {
+            try {
+                oldAuthPubkey = PublicKey.fromStringOrThrow(oldAuth).toString();
+            } catch (e2) {
+                //
+            }
+        }
+        if (!oldAuthPubkey) {
+            if (!oldAuth) {
+                onError('Missing old key, not sure what to replace');
+                console.error('Missing old key, not sure what to replace');
+                return false;
+            }
+            oldPrivateAuth = PrivateKey.fromSeed(
+                accountName + authType + oldAuth
+            );
+            oldAuthPubkey = oldPrivateAuth.toPublicKey().toString();
+        }
+        if (authType === 'owner' && !oldPrivate) oldPrivate = oldPrivateAuth;
+        else if (authType === 'active' && !oldPrivate)
+            oldPrivate = oldPrivateAuth;
+        else if (authType === 'posting' && !oldPrivate)
+            oldPrivate = oldPrivateAuth;
 
-// function* error_comment({operation}) {
-//     // Rollback an immediate UI update (the transaction had an error)
-//     yield put(g.actions.deleteContent(operation))
-//     const {author, permlink, parent_author, parent_permlink} = operation
-//     yield call(getContent, {author, permlink})
-//     if (parent_author !== '' && parent_permlink !== '') {
-//         yield call(getContent, {parent_author, parent_permlink})
-//     }
-// }
+        let newPrivate, newAuthPubkey;
+        try {
+            newPrivate = PrivateKey.fromWif(newAuth);
+            newAuthPubkey = newPrivate.toPublicKey().toString();
+        } catch (e) {
+            newPrivate = PrivateKey.fromSeed(accountName + authType + newAuth);
+            newAuthPubkey = newPrivate.toPublicKey().toString();
+        }
 
-function slug(text) {
-    return getSlug(text.replace(/[<>]/g, ''), { truncate: 128 });
+        let authority;
+        if (authType === 'memo') {
+            account.memo_key = newAuthPubkey;
+        } else {
+            authority = fromJS(account[authType]).toJS();
+            authority.key_auths = [];
+            authority.key_auths.push([
+                newAuthPubkey,
+                authority.weight_threshold,
+            ]);
+        }
+        ops2[authType] = authority ? authority : account[authType];
+        return true;
+    };
+    for (const auth of auths)
+        if (!addAuth(auth.authType, auth.oldAuth, auth.newAuth)) return;
+
+    let key = oldPrivate;
+    if (!key) {
+        try {
+            key = PrivateKey.fromWif(signingKey);
+        } catch (e2) {
+            // probably updating a memo .. see if we got an active or owner
+            const auth = authType => {
+                const priv = PrivateKey.fromSeed(
+                    accountName + authType + signingKey
+                );
+                const pubkey = priv.toPublicKey().toString();
+                const authority = account[authType];
+                const key_auths = authority.key_auths;
+                for (let i = 0; i < key_auths.length; i++) {
+                    if (key_auths[i][0] === pubkey) {
+                        return priv;
+                    }
+                }
+                return null;
+            };
+            key = auth('active');
+            if (!key) key = auth('owner');
+        }
+    }
+    if (!key) {
+        onError(`Incorrect Password`);
+        throw new Error('Trying to update a memo without a signing key?');
+    }
+    const { memo_key, json_metadata } = account;
+    const payload = {
+        type: 'account_update',
+        operation: {
+            account: account.name,
+            ...ops2,
+            memo_key,
+            json_metadata,
+        },
+        keys: [key],
+        successCallback: onSuccess,
+        errorCallback: onError,
+    };
+    yield call(broadcastOperation, { payload });
 }

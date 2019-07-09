@@ -1,22 +1,11 @@
 .LoginForm {
-  color: $color-text-dark;
   max-width: 28rem;
   margin: 1rem auto 0.5rem auto;
   label {
     text-transform: none;
-    color: $color-text-dark;
   }
   form {
     margin-top: 1.5rem;
-  }
-}
-.pdf-download {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  button {
-    color: #1A5099;
-    text-transform: initial;
-    cursor: pointer;
   }
 }
 .sign-up {

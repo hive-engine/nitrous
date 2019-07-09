@@ -1,10 +1,6 @@
-.UserWallet {
-    padding-top: 2rem;
 
-    .wallet-link {
-        margin-top: 1rem;
-        padding-left: 1rem;
-    }
+.UserWallet__buysp {
+  @extend .e-btn-hollow;
 }
 
 .UserWallet__balance {
@@ -13,10 +9,15 @@
 
   &.UserWallet__balance.zebra {
       @include themify($themes) {
-        background-color: themed('tableRowEvenBackgroundColor');
-        color: themed('textColorPrimary');
-      }
+        background-color: themed('tableRowEvenBackgroundColor');  
+        color: themed('textColorPrimary');  
+      }   
   }
+}
+
+.UserWallet__buysp {
+  margin-right: 0 !important;
+  margin-top: 1rem;
 }
 
 .UserWallet__claimbox {
@@ -29,10 +30,10 @@
   flex-wrap: wrap;
 
   @include themify($themes) {
-    border: themed('border');
-    background-color: themed('highlightBackgroundColor');
-    color: themed('textColorPrimary');
-  }
+    border: themed('border');  
+    background-color: themed('highlightBackgroundColor');  
+    color: themed('textColorPrimary');  
+  }     
 
   &-text {
     font-weight: bold;
@@ -48,6 +49,40 @@
         margin: 8px 0 0 0;
       }
   }
+}
+
+.WalletSubMenu {
+  > li > a {
+    transition: 0.2s all ease-in-out;
+    padding: 1em 1em 1em 0;
+    @include font-size(16px);
+    @include MQ(M) {
+      @include font-size(18px);
+      padding: 1em 1.5em 1em 0;
+    }
+
+    @include themify($themes) {
+      color: themed('textColorSecondary');  
+    }  
+
+    &:hover, &:focus {
+      @include themify($themes) {
+        color: themed('textColorAccent');  
+      }  
+    }
+  }
+  > li > a.active {
+    cursor: default;
+    @include themify($themes) {
+      color: themed('textColorPrimary');  
+    }     
+    font-weight: bold;
+  }
+  @include themify($themes) {
+    border-bottom: themed('border');  
+  }       
+
+  margin: 0.5rem 0 1rem;
 }
 
 // protect for foundation bug for collapsed state drop-downs

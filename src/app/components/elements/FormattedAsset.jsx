@@ -8,7 +8,6 @@ const FormattedAsset = ({ amount, asset, classname }) => {
     if (amount && typeof amount === 'string') {
         amount = parsePayoutAmount(amount);
     }
-
     const amnt = formatDecimal(amount);
     return asset === '$' ? (
         <span className={`FormattedAsset ${classname}`}>

@@ -144,12 +144,11 @@ class MarkdownViewer extends Component {
         // HtmlReady inserts ~~~ embed:${id} type ~~~
         for (let section of cleanText.split('~~~ embed:')) {
             const match = section.match(
-                /^([A-Za-z0-9\?\=\_\-\/\.]+) (youtube|vimeo|twitch|dtube)\s?(\d+)? ~~~/
+                /^([A-Za-z0-9\?\=\_\-]+) (youtube|vimeo|twitch) ~~~/
             );
             if (match && match.length >= 3) {
                 const id = match[1];
                 const type = match[2];
-                const startTime = match[3] ? parseInt(match[3]) : 0;
                 const w = large ? 640 : 480,
                     h = large ? 360 : 270;
                 if (type === 'youtube') {
@@ -159,15 +158,12 @@ class MarkdownViewer extends Component {
                             width={w}
                             height={h}
                             youTubeId={id}
-                            startTime={startTime}
                             frameBorder="0"
                             allowFullScreen="true"
                         />
                     );
                 } else if (type === 'vimeo') {
-                    const url = `https://player.vimeo.com/video/${id}#t=${
-                        startTime
-                    }s`;
+                    const url = `https://player.vimeo.com/video/${id}`;
                     sections.push(
                         <div className="videoWrapper">
                             <iframe
@@ -196,30 +192,10 @@ class MarkdownViewer extends Component {
                             />
                         </div>
                     );
-                } else if (type === 'dtube') {
-                    const url = `https://emb.d.tube/#!/${id}`;
-                    sections.push(
-                        <div className="videoWrapper">
-                            <iframe
-                                key={idx++}
-                                src={url}
-                                width={w}
-                                height={h}
-                                frameBorder="0"
-                                allowFullScreen
-                            />
-                        </div>
-                    );
                 } else {
                     console.error('MarkdownViewer unknown embed type', type);
                 }
-                if (match[3]) {
-                    section = section.substring(
-                        `${id} ${type} ${startTime} ~~~`.length
-                    );
-                } else {
-                    section = section.substring(`${id} ${type} ~~~`.length);
-                }
+                section = section.substring(`${id} ${type} ~~~`.length);
                 if (section === '') continue;
             }
             sections.push(

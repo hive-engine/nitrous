@@ -7,6 +7,7 @@ gopax-deposit
 hitbtc-exchange
 poloniex
 upbit-exchange
+onepagex
 `
     .trim()
     .split('\n');

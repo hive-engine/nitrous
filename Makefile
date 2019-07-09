@@ -7,7 +7,7 @@ node_modules:
 	yarn install
 
 build:
-	docker build -t steemit/steemit.com .
+	docker build -t steemit/wallet .
 
 clean:
 	rm -rf node_modules *.log tmp npm-debug.log.*

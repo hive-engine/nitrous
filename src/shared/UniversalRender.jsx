@@ -236,7 +236,7 @@ export async function serverRender(
     } catch (e) {
         console.error('Routing error:', e.toString(), location);
         return {
-            title: 'Routing error - Steemit',
+            title: 'Routing error - Steemit Wallet',
             statusCode: 500,
             body: renderToString(
                 ErrorPage ? <ErrorPage /> : <span>Routing error</span>
@@ -247,7 +247,7 @@ export async function serverRender(
     if (error || !renderProps) {
         // debug('error')('Router error', error);
         return {
-            title: 'Page Not Found - Steemit',
+            title: 'Page Not Found - Steemit Wallet',
             statusCode: 404,
             body: renderToString(<NotFound />),
         };
@@ -265,69 +265,16 @@ export async function serverRender(
         // included in the API response, return User Not Found.
         if (
             (url.match(routeRegex.UserProfile1) ||
-                url.match(routeRegex.UserProfile3)) &&
+                url.match(routeRegex.UserProfile2)) &&
             Object.getOwnPropertyNames(onchain.accounts).length === 0
         ) {
             // protect for invalid account
             return {
-                title: 'User Not Found - Steemit',
+                title: 'User Not Found - Steemit Wallet',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
         }
-
-        // If we are not loading a post, truncate state data to bring response size down.
-        if (!url.match(routeRegex.Post)) {
-            for (var key in onchain.content) {
-                //onchain.content[key]['body'] = onchain.content[key]['body'].substring(0, 1024) // TODO: can be removed. will be handled by steemd
-                // Count some stats then remove voting data. But keep current user's votes. (#1040)
-                onchain.content[key]['stats'] = contentStats(
-                    onchain.content[key]
-                );
-                onchain.content[key]['active_votes'] = null;
-            }
-        }
-
-        // Are we loading an un-category-aliased post?
-        if (
-            !url.match(routeRegex.PostsIndex) &&
-            !url.match(routeRegex.UserProfile1) &&
-            !url.match(routeRegex.UserProfile2) &&
-            url.match(routeRegex.PostNoCategory)
-        ) {
-            const params = url.substr(2, url.length - 1).split('/');
-            let content;
-            if (process.env.OFFLINE_SSR_TEST) {
-                content = get_content_perf;
-            } else {
-                content = await api.getContentAsync(params[0], params[1]);
-            }
-            if (content.author && content.permlink) {
-                // valid short post url
-                onchain.content[url.substr(2, url.length - 1)] = content;
-            } else {
-                // protect on invalid user pages (i.e /user/transferss)
-                return {
-                    title: 'Page Not Found - Steemit',
-                    statusCode: 404,
-                    body: renderToString(<NotFound />),
-                };
-            }
-        }
-
-        // Insert the special posts into the list of posts, so there is no
-        // jumping of content.
-        offchain.special_posts.featured_posts.forEach(featuredPost => {
-            onchain.content[
-                `${featuredPost.author}/${featuredPost.permlink}`
-            ] = featuredPost;
-        });
-
-        offchain.special_posts.promoted_posts.forEach(promotedPost => {
-            onchain.content[
-                `${promotedPost.author}/${promotedPost.permlink}`
-            ] = promotedPost;
-        });
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
@@ -344,7 +291,7 @@ export async function serverRender(
         if (location.match(routeRegex.UserProfile1)) {
             console.error('User/not found: ', location);
             return {
-                title: 'Page Not Found - Steemit',
+                title: 'Page Not Found - Steemit Wallet',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -381,8 +328,8 @@ export async function serverRender(
     }
 
     return {
-        title: 'Steemit',
-        titleBase: 'Steemit - ',
+        title: 'Steemit Wallet',
+        titleBase: 'Steemit Wallet - ',
         meta,
         statusCode: status,
         body: Iso.render(app, server_store.getState()),
@@ -476,6 +423,10 @@ function getUrlFromLocation(location) {
         url = url.replace(/\/curation-rewards$/, '/transfers');
     if (url.indexOf('/author-rewards') !== -1)
         url = url.replace(/\/author-rewards$/, '/transfers');
+    if (url.indexOf('/permissions') !== -1)
+        url = url.replace(/\/permissions$/, '/transfers');
+    if (url.indexOf('/password') !== -1)
+        url = url.replace(/\/password$/, '/transfers');
 
     return url;
 }

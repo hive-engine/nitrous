@@ -1,4 +1,5 @@
 .Header {
+  position: fixed;
   backface-visibility: hidden;
   top: 0;
   left: 0;
@@ -18,6 +19,10 @@
     max-width: none;
 }
 
+.Header__usermenu {
+    margin-left: 0.5em;
+}
+
 .ConnectionError {
   margin-right: 4rem;
   color: #ec5840;
@@ -32,12 +37,6 @@
     @include themify($themes) {
       fill: themed('colorAccent');
     }
-  }
-
-  &-beta{
-    position: absolute;
-    top: 38px;
-    left: 136px;
   }
 }
 
@@ -165,7 +164,7 @@ span.Header__hamburger.toggle-menu {
 .announcement-banner__text {
     margin: 0;
     padding: 10px 44px 10px 10px;
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: helvetica, sans-serif;
     font-size: 14px;
     line-height: 1.3;
  }

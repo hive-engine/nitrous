@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { VIEW_MODE_WHISTLE, PARAM_VIEW_MODE } from '../shared/constants';
 import ServerHTML from './server-html';
 import { serverRender } from '../shared/UniversalRender';
+import models from 'db/models';
 import secureRandom from 'secure-random';
 import ErrorPage from 'server/server-error';
 import { determineViewMode } from '../app/utils/Links';
@@ -50,33 +51,25 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             csrf: ctx.csrf,
             new_visit: ctx.session.new_visit,
             config: $STM_Config,
-            special_posts: await ctx.app.specialPostsPromise,
             login_challenge,
         };
-
-        const googleAds = {
-            enabled: !!config.google_ad_enabled,
-            test: !!config.google_ad_test,
-            client: config.google_ad_client,
-            adSlots: config.google_ad_slots,
-            gptEnabled: !!config.gpt_enabled,
-            gptBidding: config.gpt_bidding,
-            gptBasicSlots: config.gpt_basic_slots,
-            gptCategorySlots: config.gpt_category_slots,
-            gptBiddingSlots: config.gpt_bidding_slots,
-        };
-        const cookieConsent = {
-            enabled: !!config.cookie_consent_enabled,
-            api_key: config.cookie_consent_api_key,
-        };
+        if (ctx.session.arec) {
+            const account_recovery_record = await models.AccountRecoveryRequest.findOne(
+                {
+                    attributes: ['id', 'account_name', 'status', 'provider'],
+                    where: { id: ctx.session.arec, status: 'confirmed' },
+                }
+            );
+            if (account_recovery_record) {
+                offchain.recover_account = account_recovery_record.account_name;
+            }
+        }
         // ... and that's the end of user-session-related SSR
         const initial_state = {
             app: {
                 viewMode: determineViewMode(ctx.request.search),
-                googleAds: googleAds,
                 env: process.env.NODE_ENV,
-                walletUrl: config.wallet_url,
-                steemMarket: ctx.steemMarketData,
+                socialUrl: config.social_url,
             },
         };
 
@@ -105,12 +98,6 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             assets,
             title,
             meta,
-            shouldSeeAds: googleAds.enabled,
-            gptEnabled: googleAds.gptEnabled,
-            adClient: googleAds.client,
-            gptBidding: googleAds.gptBidding,
-            shouldSeeCookieConsent: cookieConsent.enabled,
-            cookieConsentApiKey: cookieConsent.api_key,
         };
         ctx.status = statusCode;
         ctx.body =

@@ -11,14 +11,12 @@ export default class YoutubePreview extends React.Component {
         youTubeId: string.isRequired,
         width: number,
         height: number,
-        startTime: number,
         dataParams: string,
     };
 
     static defaultProps = {
         width: 640,
         height: 360,
-        startTime: 0,
         dataParams: 'enablejsapi=0&rel=0&origin=https://steemit.com',
     };
 
@@ -34,7 +32,7 @@ export default class YoutubePreview extends React.Component {
     };
 
     render() {
-        const { youTubeId, width, height, startTime, dataParams } = this.props;
+        const { youTubeId, width, height, dataParams } = this.props;
         const { play } = this.state;
         if (!play) {
             // mqdefault.jpg (medium quality version, 320px × 180px)
@@ -59,7 +57,7 @@ export default class YoutubePreview extends React.Component {
         }
         const autoPlaySrc = `https://www.youtube.com/embed/${
             youTubeId
-        }?autoplay=1&autohide=1&${dataParams}&start=${startTime}`;
+        }?autoplay=1&autohide=1&${dataParams}`;
         return (
             <div className="videoWrapper">
                 <iframe

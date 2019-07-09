@@ -6,7 +6,6 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
-import { hasCompatibleKeychain } from 'app/utils/SteemKeychain';
 import runTests from 'app/utils/BrowserTests';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
@@ -15,17 +14,12 @@ import tt from 'counterpart';
 import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
-import PdfDownload from 'app/components/elements/PdfDownload';
 
 class LoginForm extends Component {
     static propTypes = {
         // Steemit.
         loginError: PropTypes.string,
         onCancel: PropTypes.func,
-    };
-
-    static defaultProps = {
-        afterLoginRedirectToWelcome: false,
     };
 
     constructor(props) {
@@ -77,39 +71,33 @@ class LoginForm extends Component {
         reactForm({
             name: 'login',
             instance: this,
-            fields: [
-                'username',
-                'password',
-                'saveLogin:checked',
-                'useKeychain:checked',
-            ],
+            fields: ['username', 'password', 'saveLogin:checked'],
             initialValues: props.initialValues,
             validation: values => ({
                 username: !values.username
                     ? tt('g.required')
                     : validate_account_name(values.username.split('/')[0]),
-                password: values.useKeychain
-                    ? null
-                    : !values.password
-                      ? tt('g.required')
-                      : PublicKey.fromString(values.password)
-                        ? tt('loginform_jsx.you_need_a_private_password_or_key')
-                        : null,
+                password: !values.password
+                    ? tt('g.required')
+                    : PublicKey.fromString(values.password)
+                      ? tt('loginform_jsx.you_need_a_private_password_or_key')
+                      : null,
             }),
         });
     }
 
     SignUp() {
-        const onType = document.getElementsByClassName('OpAction')[0]
-            .textContent;
+        const opAction = document.getElementsByClassName('OpAction')[0];
+        const onType = opAction ? opAction.textContent : 'Login';
         serverApiRecordEvent('FreeMoneySignUp', onType);
         window.location.href = SIGNUP_URL;
     }
 
-    useKeychainToggle = () => {
-        const { useKeychain } = this.state;
-        useKeychain.props.onChange(!useKeychain.value);
-    };
+    SignIn() {
+        const opAction = document.getElementsByClassName('OpAction')[0];
+        const onType = opAction ? opAction.textContent : 'Login';
+        serverApiRecordEvent('SignIn', onType);
+    }
 
     saveLoginToggle = () => {
         const { saveLogin } = this.state;
@@ -118,7 +106,14 @@ class LoginForm extends Component {
         saveLogin.props.onChange(saveLoginDefault); // change UI
     };
 
+    showChangePassword = () => {
+        const { username, password } = this.state;
+        this.props.showChangePassword(username.value, password.value);
+    };
+
     render() {
+        const loginType = this.props.loginType;
+
         if (!process.env.BROWSER) {
             return (
                 <div className="row">
@@ -171,17 +166,8 @@ class LoginForm extends Component {
             );
         }
 
-        const {
-            walletUrl,
-            showLoginWarning,
-            loginBroadcastOperation,
-            dispatchSubmit,
-            reallySubmit,
-            hideWarning,
-            afterLoginRedirectToWelcome,
-            msg,
-        } = this.props;
-        const { username, password, useKeychain, saveLogin } = this.state;
+        const { loginBroadcastOperation, dispatchSubmit, msg } = this.props;
+        const { username, password, saveLogin } = this.state;
         const { submitting, valid, handleSubmit } = this.state.login;
         const { usernameOnChange, onCancel /*qrReader*/ } = this;
         const disabled = submitting || !valid;
@@ -191,11 +177,6 @@ class LoginForm extends Component {
         let postType = '';
         if (opType === 'vote') {
             postType = tt('loginform_jsx.login_to_vote');
-        } else if (
-            opType === 'custom_json' &&
-            loginBroadcastOperation.getIn(['operation', 'id']) === 'follow'
-        ) {
-            postType = 'Login to Follow Users';
         } else if (loginBroadcastOperation) {
             // check for post or comment in operation
             postType = loginBroadcastOperation.getIn(['operation', 'title'])
@@ -206,9 +187,9 @@ class LoginForm extends Component {
         const authType = /^vote|comment/.test(opType)
             ? tt('loginform_jsx.posting')
             : tt('loginform_jsx.active_or_owner');
-        const submitLabel = showLoginWarning
-            ? tt('loginform_jsx.continue_anyway')
-            : loginBroadcastOperation ? tt('g.sign_in') : tt('g.login');
+        const submitLabel = loginBroadcastOperation
+            ? tt('g.sign_in')
+            : tt('g.login');
         let error =
             password.touched && password.error
                 ? password.error
@@ -218,9 +199,11 @@ class LoginForm extends Component {
                 <span>
                     {tt(
                         'loginform_jsx.this_password_is_bound_to_your_account_owner_key'
-                    )}{' '}
+                    )}
                     {tt('loginform_jsx.however_you_can_use_it_to')}
-                    {tt('loginform_jsx.update_your_password')}{' '}
+                    <a onClick={this.showChangePassword}>
+                        {tt('loginform_jsx.update_your_password')}
+                    </a>{' '}
                     {tt('loginform_jsx.to_obtain_a_more_secure_set_of_keys')}
                 </span>
             );
@@ -229,6 +212,9 @@ class LoginForm extends Component {
                 <span>
                     {tt(
                         'loginform_jsx.this_password_is_bound_to_your_account_active_key'
+                    )}{' '}
+                    {tt(
+                        'loginform_jsx.you_may_use_this_active_key_on_other_more'
                     )}
                 </span>
             );
@@ -245,11 +231,21 @@ class LoginForm extends Component {
                         </p>
                     </div>
                 );
+            } else if (msg === 'accountrecovered') {
+                message = (
+                    <div className="callout primary">
+                        <p>
+                            {tt(
+                                'loginform_jsx.you_account_has_been_successfully_recovered'
+                            )}
+                        </p>
+                    </div>
+                );
             } else if (msg === 'passwordupdated') {
                 message = (
                     <div className="callout primary">
                         <p>
-                            {tt('loginform_jsx.password_update_succes', {
+                            {tt('loginform_jsx.password_update_success', {
                                 accountName: username.value,
                             })}
                         </p>
@@ -258,25 +254,42 @@ class LoginForm extends Component {
             }
         }
         const password_info =
-            !useKeychain.value &&
             checkPasswordChecksum(password.value) === false
                 ? tt('loginform_jsx.password_info')
                 : null;
-        const titleText = (
-            <h3>
-                {tt('loginform_jsx.returning_users')}
-                <span className="OpAction">{title}</span>
-            </h3>
-        );
+
+        const isTransfer =
+            Map.isMap(loginBroadcastOperation) &&
+            loginBroadcastOperation.has('type') &&
+            loginBroadcastOperation
+                .get('type')
+                .toLowerCase()
+                .indexOf('transfer') >= 0;
+
+        let titleText;
+        if (isTransfer) {
+            titleText = (
+                <h3>
+                    <span className="OpAction">
+                        {tt('loginform_jsx.sign_transfer')}
+                    </span>
+                </h3>
+            );
+        } else if (loginType === 'basic') {
+            titleText = <h3>{tt('loginform_jsx.login_to_wallet')}</h3>;
+        } else {
+            titleText = (
+                <h3>
+                    {tt('loginform_jsx.returning_users')}
+                    <span className="OpAction">{title}</span>
+                </h3>
+            );
+        }
 
         const signupLink = (
             <div className="sign-up">
                 <hr />
-                <p>
-                    {tt('loginform_jsx.join_our')}{' '}
-                    <em>{tt('loginform_jsx.amazing_community')}</em>
-                    {tt('loginform_jsx.to_comment_and_reward_others')}
-                </p>
+                <p>{tt('loginform_jsx.dont_have_an_account')}</p>
                 <button
                     type="button"
                     className="button hollow"
@@ -292,12 +305,7 @@ class LoginForm extends Component {
                 onSubmit={handleSubmit(({ data }) => {
                     // bind redux-form to react-redux
                     console.log('Login\tdispatchSubmit');
-                    return dispatchSubmit(
-                        data,
-                        useKeychain.value,
-                        loginBroadcastOperation,
-                        afterLoginRedirectToWelcome
-                    );
+                    return dispatchSubmit(data, loginBroadcastOperation);
                 })}
                 onChange={this.props.clearError}
                 method="post"
@@ -313,37 +321,33 @@ class LoginForm extends Component {
                         {...username.props}
                         onChange={usernameOnChange}
                         autoComplete="on"
-                        disabled={submitting}
+                        disabled={submitting || isTransfer}
                     />
                 </div>
                 {username.touched && username.blur && username.error ? (
                     <div className="error">{username.error}&nbsp;</div>
                 ) : null}
 
-                {useKeychain.value ? (
-                    <div>
-                        {error && <div className="error">{error}&nbsp;</div>}
-                    </div>
-                ) : (
-                    <div>
-                        <input
-                            type="password"
-                            required
-                            ref="pw"
-                            placeholder={tt('loginform_jsx.password_or_wif')}
-                            {...password.props}
-                            autoComplete="on"
-                            disabled={submitting}
-                        />
-                        {error && <div className="error">{error}&nbsp;</div>}
-                        {error &&
-                            password_info && (
-                                <div className="warning">
-                                    {password_info}&nbsp;
-                                </div>
-                            )}
-                    </div>
-                )}
+                <div>
+                    <input
+                        type="password"
+                        required
+                        ref="pw"
+                        placeholder={
+                            loginType === 'basic'
+                                ? tt('loginform_jsx.enter_steem_key')
+                                : tt('loginform_jsx.password_or_wif')
+                        }
+                        {...password.props}
+                        autoComplete="on"
+                        disabled={submitting}
+                    />
+                    {error && <div className="error">{error}&nbsp;</div>}
+                    {error &&
+                        password_info && (
+                            <div className="warning">{password_info}&nbsp;</div>
+                        )}
+                </div>
                 {loginBroadcastOperation && (
                     <div>
                         <div className="info">
@@ -352,23 +356,6 @@ class LoginForm extends Component {
                                 { authType }
                             )}
                         </div>
-                    </div>
-                )}
-                {hasCompatibleKeychain() && (
-                    <div>
-                        <label
-                            className="LoginForm__save-login"
-                            htmlFor="useKeychain"
-                        >
-                            <input
-                                id="useKeychain"
-                                type="checkbox"
-                                ref="pw"
-                                {...useKeychain.props}
-                                onChange={this.useKeychainToggle}
-                                disabled={submitting}
-                            />&nbsp;{tt('loginform_jsx.use_keychain')}
-                        </label>
                     </div>
                 )}
                 <div>
@@ -392,6 +379,7 @@ class LoginForm extends Component {
                         type="submit"
                         disabled={submitting || disabled}
                         className="button"
+                        onClick={this.SignIn}
                     >
                         {submitLabel}
                     </button>
@@ -406,59 +394,7 @@ class LoginForm extends Component {
                         </button>
                     )}
                 </div>
-                {signupLink}
-            </form>
-        );
-
-        const loginWarningTitleText = (
-            <h3>{tt('loginform_jsx.login_warning_title')}</h3>
-        );
-
-        const loginWarningForm = (
-            <form
-                onSubmit={handleSubmit(() => {
-                    console.log('Login\treallySubmit');
-                    const data = {
-                        username: username.value,
-                        password: password.value,
-                        saveLogin: saveLogin.value,
-                        loginBroadcastOperation: loginBroadcastOperation,
-                    };
-                    reallySubmit(data, afterLoginRedirectToWelcome);
-                })}
-                method="post"
-            >
-                <p>{tt('loginform_jsx.login_warning_body')}</p>
-                <div>
-                    <PdfDownload
-                        name={username.value}
-                        password={password.value}
-                        widthInches={8.5}
-                        heightInches={11.0}
-                        label="Download a PDF with keys and instructions"
-                    />
-                    <a
-                        href={`${walletUrl}/@${username.value}/permissions`}
-                        target="_blank"
-                    >
-                        {tt('loginform_jsx.login_warning_link_text')}
-                    </a>
-                </div>
-                <div className="login-modal-buttons">
-                    <br />
-                    <button
-                        type="submit"
-                        disabled={submitting}
-                        className="button"
-                        onClick={e => {
-                            e.preventDefault();
-                            console.log('Login\thideWarning');
-                            hideWarning();
-                        }}
-                    >
-                        {tt('g.try_again')}
-                    </button>
-                </div>
+                {!isTransfer && signupLink}
             </form>
         );
 
@@ -466,8 +402,8 @@ class LoginForm extends Component {
             <div className="LoginForm row">
                 <div className="column">
                     {message}
-                    {showLoginWarning ? loginWarningTitleText : titleText}
-                    {showLoginWarning ? loginWarningForm : form}
+                    {titleText}
+                    {form}
                 </div>
             </div>
         );
@@ -506,16 +442,14 @@ function checkPasswordChecksum(password) {
 import { connect } from 'react-redux';
 export default connect(
     // mapStateToProps
-    state => {
-        const walletUrl = state.app.get('walletUrl');
-        const showLoginWarning = state.user.get('show_login_warning');
+    (state, ownProps) => {
+        const loginType = ownProps.loginType || state.user.get('login_type');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
         const loginBroadcastOperation = state.user.get(
             'loginBroadcastOperation'
         );
         const initialValues = {
-            useKeychain: !!hasCompatibleKeychain(),
             saveLogin: saveLoginDefault,
         };
 
@@ -541,8 +475,7 @@ export default connect(
         if (msg_match && msg_match.length > 1) msg = msg_match[1];
         hasError = !!loginError;
         return {
-            walletUrl,
-            showLoginWarning,
+            loginType,
             loginError,
             loginBroadcastOperation,
             initialValues,
@@ -554,12 +487,7 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
-        dispatchSubmit: (
-            data,
-            useKeychain,
-            loginBroadcastOperation,
-            afterLoginRedirectToWelcome
-        ) => {
+        dispatchSubmit: (data, loginBroadcastOperation) => {
             const { password, saveLogin } = data;
             const username = data.username.trim().toLowerCase();
             if (loginBroadcastOperation) {
@@ -575,7 +503,6 @@ export default connect(
                         operation,
                         username,
                         password,
-                        useKeychain,
                         successCallback,
                         errorCallback,
                     })
@@ -584,49 +511,21 @@ export default connect(
                     userActions.usernamePasswordLogin({
                         username,
                         password,
-                        useKeychain,
                         saveLogin,
-                        afterLoginRedirectToWelcome,
                         operationType: type,
                     })
                 );
 
-                serverApiRecordEvent('SignIn', type);
-
                 dispatch(userActions.closeLogin());
             } else {
                 dispatch(
-                    userActions.checkKeyType({
+                    userActions.usernamePasswordLogin({
                         username,
                         password,
-                        useKeychain,
                         saveLogin,
-                        afterLoginRedirectToWelcome,
                     })
                 );
             }
-        },
-        reallySubmit: (
-            { username, password, saveLogin, loginBroadcastOperation },
-            afterLoginRedirectToWelcome
-        ) => {
-            const { type } = loginBroadcastOperation
-                ? loginBroadcastOperation.toJS()
-                : {};
-
-            serverApiRecordEvent('SignIn', type);
-
-            dispatch(
-                userActions.usernamePasswordLogin({
-                    username,
-                    password,
-                    saveLogin,
-                    afterLoginRedirectToWelcome,
-                })
-            );
-        },
-        hideWarning: () => {
-            dispatch(userActions.hideLoginWarning());
         },
         clearError: () => {
             if (hasError) dispatch(userActions.loginError({ error: null }));
@@ -636,6 +535,17 @@ export default connect(
                 globalActions.showDialog({
                     name: 'qr_reader',
                     params: { handleScan: dataCallback },
+                })
+            );
+        },
+        showChangePassword: (username, defaultPassword) => {
+            dispatch(userActions.closeLogin());
+
+            dispatch(globalActions.remove({ key: 'changePassword' }));
+            dispatch(
+                globalActions.showDialog({
+                    name: 'changePassword',
+                    params: { username, defaultPassword },
                 })
             );
         },

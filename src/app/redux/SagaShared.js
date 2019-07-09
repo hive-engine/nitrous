@@ -15,14 +15,7 @@ const wait = ms =>
 
 export const sharedWatches = [
     takeEvery(globalActions.GET_STATE, getState),
-    takeLatest(
-        [
-            appActions.SET_USER_PREFERENCES,
-            appActions.TOGGLE_NIGHTMODE,
-            appActions.TOGGLE_BLOGMODE,
-        ],
-        saveUserPreferences
-    ),
+    takeLatest([appActions.TOGGLE_NIGHTMODE], saveUserPreferences),
     takeEvery('transaction/ERROR', showTransactionErrorNotification),
 ];
 
@@ -75,35 +68,19 @@ function* showTransactionErrorNotification() {
     }
 }
 
-export function* getContent({ author, permlink, resolve, reject }) {
-    let content;
-    while (!content) {
-        content = yield call([api, api.getContentAsync], author, permlink);
-        if (content['author'] == '') {
-            // retry if content not found. #1870
-            content = null;
-            yield call(wait, 3000);
-        }
-    }
-
-    yield put(globalActions.receiveContent({ content }));
-    if (resolve && content) {
-        resolve(content);
-    } else if (reject && !content) {
-        reject();
-    }
-}
-
 /**
  * Save this user's preferences, either directly from the submitted payload or from whatever's saved in the store currently.
  *
  * @param {Object?} params.payload
  */
 function* saveUserPreferences({ payload }) {
+    console.log('saveUserPreferences', payload);
     if (payload) {
         yield setUserPreferences(payload);
+        return;
     }
 
     const prefs = yield select(state => state.app.get('user_preferences'));
+    console.log('saveUserPreferences prefs', prefs);
     yield setUserPreferences(prefs.toJS());
 }

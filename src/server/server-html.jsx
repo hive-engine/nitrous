@@ -1,19 +1,7 @@
 import * as config from 'config';
 import React from 'react';
 
-export default function ServerHTML({
-    body,
-    assets,
-    locale,
-    title,
-    meta,
-    shouldSeeAds,
-    adClient,
-    gptEnabled,
-    gptBidding,
-    shouldSeeCookieConsent,
-    cookieConsentApiKey,
-}) {
+export default function ServerHTML({ body, assets, locale, title, meta }) {
     let page_title = title;
     return (
         <html lang="en">
@@ -175,49 +163,10 @@ export default function ServerHTML({
                         type="text/css"
                     />
                 ))}
-                {gptEnabled ? (
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                            var freestar = freestar || {};
-                            freestar.hitTime = Date.now();
-                            freestar.queue = freestar.queue || [];
-                            freestar.config = freestar.config || {};
-                            freestar.debug =
-                            window.location.search.indexOf("fsdebug") === -1 ? false : true; // NICE.
-                            freestar.config.enabled_slots = [];
-
-                            !(function(a, b) {
-                            var c = b.getElementsByTagName("script")[0],
-                              d = b.createElement("script"),
-                              e = "https://a.pub.network/steemit-com";
-                            (e += freestar.debug ? "/qa/pubfig.min.js" : "/pubfig.min.js"),
-                              (d.async = !0),
-                              (d.src = e),
-                              c.parentNode.insertBefore(d, c);
-                            })(window, document);
-                        `,
-                        }}
-                    />
-                ) : null}
-                {shouldSeeCookieConsent ? (
-                    <script
-                        id="Cookiebot"
-                        src="https://consent.cookiebot.com/uc.js"
-                        data-cbid={cookieConsentApiKey}
-                        type="text/javascript"
-                        async
-                    />
-                ) : null}
                 <title>{page_title}</title>
             </head>
             <body>
-                {
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{ __html: body }}
-                    />
-                }
+                <div id="content" dangerouslySetInnerHTML={{ __html: body }} />
                 {assets.script.map((href, idx) => (
                     <script key={idx} src={href} />
                 ))}

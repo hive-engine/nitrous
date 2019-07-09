@@ -1,5 +1,4 @@
 import { Map, Set, List, fromJS, Iterable } from 'immutable';
-import resolveRoute from 'app/ResolveRoute';
 import { emptyContent } from 'app/redux/EmptyState';
 import { contentStats } from 'app/utils/StateFunctions';
 import constants from './constants';
@@ -11,16 +10,11 @@ export const defaultState = Map({
 });
 
 // Action constants
-const SET_COLLAPSED = 'global/SET_COLLAPSED';
 const RECEIVE_STATE = 'global/RECEIVE_STATE';
 const RECEIVE_ACCOUNT = 'global/RECEIVE_ACCOUNT';
 const RECEIVE_ACCOUNTS = 'global/RECEIVE_ACCOUNTS';
-const SYNC_SPECIAL_POSTS = 'global/SYNC_SPECIAL_POSTS';
-const RECEIVE_COMMENT = 'global/RECEIVE_COMMENT';
-const RECEIVE_CONTENT = 'global/RECEIVE_CONTENT';
-const LINK_REPLY = 'global/LINK_REPLY';
-const DELETE_CONTENT = 'global/DELETE_CONTENT';
-const VOTED = 'global/VOTED';
+const UPDATE_ACCOUNT_WITNESS_VOTE = 'global/UPDATE_ACCOUNT_WITNESS_VOTE';
+const UPDATE_ACCOUNT_WITNESS_PROXY = 'global/UPDATE_ACCOUNT_WITNESS_PROXY';
 const FETCHING_DATA = 'global/FETCHING_DATA';
 const RECEIVE_DATA = 'global/RECEIVE_DATA';
 const RECEIVE_RECENT_POSTS = 'global/RECEIVE_RECENT_POSTS';
@@ -36,6 +30,8 @@ const FETCH_JSON = 'global/FETCH_JSON';
 const FETCH_JSON_RESULT = 'global/FETCH_JSON_RESULT';
 const SHOW_DIALOG = 'global/SHOW_DIALOG';
 const HIDE_DIALOG = 'global/HIDE_DIALOG';
+const ADD_ACTIVE_WITNESS_VOTE = 'global/ADD_ACTIVE_WITNESS_VOTE';
+const REMOVE_ACTIVE_WITNESS_VOTE = 'global/REMOVE_ACTIVE_WITNESS_VOTE';
 // Saga-related:
 export const GET_STATE = 'global/GET_STATE';
 
@@ -69,25 +65,7 @@ const mergeAccounts = (state, account) => {
 export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
 
-    // Set post category
-    const pathname = state.get('pathname');
-    if (pathname) {
-        const route = resolveRoute(pathname);
-        if (route.page === 'PostsIndex') {
-            const postCategory = route.params[1];
-            state = state.set('postCategory', postCategory);
-        }
-    }
-
     switch (action.type) {
-        case SET_COLLAPSED: {
-            return state.withMutations(map => {
-                map.updateIn(['content', payload.post], value =>
-                    value.merge(Map({ collapsed: payload.collapsed }))
-                );
-            });
-        }
-
         case RECEIVE_STATE: {
             let new_state = fromJS(payload);
             if (new_state.has('content')) {
@@ -100,7 +78,32 @@ export default function reducer(state = defaultState, action = {}) {
                 });
                 new_state = new_state.set('content', content);
             }
-            return state.mergeDeep(new_state);
+            // let transfer_history from new state override completely, otherwise
+            // deep merge may not work as intended.
+            let mergedState = state.mergeDeep(new_state);
+            return mergedState.update(
+                'accounts',
+                accountMap =>
+                    accountMap
+                        ? accountMap.map(
+                              (v, k) =>
+                                  new_state.hasIn([
+                                      'accounts',
+                                      k,
+                                      'transfer_history',
+                                  ])
+                                      ? v.set(
+                                            'transfer_history',
+                                            new_state.getIn([
+                                                'accounts',
+                                                k,
+                                                'transfer_history',
+                                            ])
+                                        )
+                                      : v
+                          )
+                        : accountMap
+            );
         }
 
         case RECEIVE_ACCOUNT: {
@@ -115,142 +118,21 @@ export default function reducer(state = defaultState, action = {}) {
             }, state);
         }
 
-        // Interleave special posts into the map of posts.
-        case SYNC_SPECIAL_POSTS: {
-            return payload.featuredPosts
-                .concat(payload.promotedPosts)
-                .reduce((acc, specialPost) => {
-                    const author = specialPost.get('author');
-                    const permlink = specialPost.get('permlink');
-                    return acc.updateIn(
-                        ['content', `${author}/${permlink}`],
-                        Map(),
-                        p => p.mergeDeep(specialPost)
-                    );
-                }, state);
-        }
-
-        case RECEIVE_COMMENT: {
-            const {
-                author,
-                permlink,
-                parent_author = '',
-                parent_permlink = '',
-                title = '',
-                body,
-            } = payload.op;
-            const key = author + '/' + permlink;
-            let updatedState = state.updateIn(
-                ['content', key],
-                Map(emptyContent),
-                r =>
-                    r.merge({
-                        author,
-                        permlink,
-                        parent_author,
-                        parent_permlink,
-                        title: title.toString('utf-8'),
-                        body: body.toString('utf-8'),
-                    })
+        case UPDATE_ACCOUNT_WITNESS_VOTE: {
+            const { account, witness, approve } = payload;
+            return state.updateIn(
+                ['accounts', account, 'witness_votes'],
+                Set(),
+                votes =>
+                    approve
+                        ? Set(votes).add(witness)
+                        : Set(votes).remove(witness)
             );
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'replies'],
-                    List(),
-                    r => r.insert(0, key)
-                );
-                const children = updatedState.getIn(
-                    ['content', parent_key, 'replies'],
-                    List()
-                ).size;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'children'],
-                    0,
-                    () => children
-                );
-            }
-            return updatedState;
         }
 
-        case RECEIVE_CONTENT: {
-            const content = fromJS(payload.content);
-            const key = content.get('author') + '/' + content.get('permlink');
-            return state.updateIn(['content', key], Map(), c => {
-                c = emptyContentMap.mergeDeep(c);
-                c = c.delete('active_votes');
-                c = c.mergeDeep(content);
-                c = c.set('stats', fromJS(contentStats(c)));
-                return c;
-            });
-        }
-
-        case LINK_REPLY: {
-            const {
-                author,
-                permlink,
-                parent_author = '',
-                parent_permlink = '',
-            } = payload;
-            if (parent_author === '' || parent_permlink === '') return state;
-            const key = author + '/' + permlink;
-            const parent_key = parent_author + '/' + parent_permlink;
-            // Add key if not exist
-            let updatedState = state.updateIn(
-                ['content', parent_key, 'replies'],
-                List(),
-                l => (l.findIndex(i => i === key) === -1 ? l.push(key) : l)
-            );
-            const children = updatedState.getIn(
-                ['content', parent_key, 'replies'],
-                List()
-            ).size;
-            updatedState = updatedState.updateIn(
-                ['content', parent_key, 'children'],
-                0,
-                () => children
-            );
-            return updatedState;
-        }
-
-        case DELETE_CONTENT: {
-            const { author, permlink } = payload;
-            const key = author + '/' + permlink;
-            const content = state.getIn(['content', key]);
-            const parent_author = content.get('parent_author') || '';
-            const parent_permlink = content.get('parent_permlink') || '';
-            let updatedState = state.deleteIn(['content', key]);
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'replies'],
-                    List(),
-                    r => r.filter(i => i !== key)
-                );
-            }
-            return updatedState;
-        }
-
-        case VOTED: {
-            const { username, author, permlink, weight } = payload;
-            const key = ['content', author + '/' + permlink, 'active_votes'];
-            let active_votes = state.getIn(key, List());
-            const idx = active_votes.findIndex(
-                v => v.get('voter') === username
-            );
-            // steemd flips weight into percent
-            if (idx === -1) {
-                active_votes = active_votes.push(
-                    Map({ voter: username, percent: weight })
-                );
-            } else {
-                active_votes = active_votes.set(
-                    idx,
-                    Map({ voter: username, percent: weight })
-                );
-            }
-            state.setIn(key, active_votes);
-            return state;
+        case UPDATE_ACCOUNT_WITNESS_PROXY: {
+            const { account, proxy } = payload;
+            return state.setIn(['accounts', account, 'proxy'], proxy);
         }
 
         case FETCHING_DATA: {
@@ -425,17 +307,27 @@ export default function reducer(state = defaultState, action = {}) {
             return state.update('active_dialogs', d => d.delete(payload.name));
         }
 
+        case ADD_ACTIVE_WITNESS_VOTE: {
+            return state.update(
+                `transaction_witness_vote_active_${payload.account}`,
+                Set(),
+                s => s.add(payload.witness)
+            );
+        }
+
+        case REMOVE_ACTIVE_WITNESS_VOTE: {
+            return state.update(
+                `transaction_witness_vote_active_${payload.account}`,
+                s => s.delete(payload.witness)
+            );
+        }
+
         default:
             return state;
     }
 }
 
 // Action creators
-
-export const setCollapsed = payload => ({
-    type: SET_COLLAPSED,
-    payload,
-});
 
 export const receiveState = payload => ({
     type: RECEIVE_STATE,
@@ -452,33 +344,13 @@ export const receiveAccounts = payload => ({
     payload,
 });
 
-export const syncSpecialPosts = payload => ({
-    type: SYNC_SPECIAL_POSTS,
+export const updateAccountWitnessVote = payload => ({
+    type: UPDATE_ACCOUNT_WITNESS_VOTE,
     payload,
 });
 
-export const receiveComment = payload => ({
-    type: RECEIVE_COMMENT,
-    payload,
-});
-
-export const receiveContent = payload => ({
-    type: RECEIVE_CONTENT,
-    payload,
-});
-
-export const linkReply = payload => ({
-    type: LINK_REPLY,
-    payload,
-});
-
-export const deleteContent = payload => ({
-    type: DELETE_CONTENT,
-    payload,
-});
-
-export const voted = payload => ({
-    type: VOTED,
+export const updateAccountWitnessProxy = payload => ({
+    type: UPDATE_ACCOUNT_WITNESS_PROXY,
     payload,
 });
 
@@ -555,6 +427,16 @@ export const showDialog = payload => ({
 
 export const hideDialog = payload => ({
     type: HIDE_DIALOG,
+    payload,
+});
+
+export const addActiveWitnessVote = payload => ({
+    type: ADD_ACTIVE_WITNESS_VOTE,
+    payload,
+});
+
+export const removeActiveWitnessVote = payload => ({
+    type: REMOVE_ACTIVE_WITNESS_VOTE,
     payload,
 });
 

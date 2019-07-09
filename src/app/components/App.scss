@@ -1,17 +1,21 @@
 .App {
   min-height: 100vh;
-  padding-top: 0px;
+  padding-top: 50px;
 }
 
 .App__content {
-  margin-top: 1rem;
+    margin-top: 2.1rem;
+}
+
+.mini-header .App__content {
+  margin-top: 0;
 }
 
 .welcomeWrapper {
+  margin-top: -1rem;
   padding-bottom: 1rem;
 }
 .welcomeBanner {
-  margin-top: -1rem;
   padding: 4em 0 0em;
   background-color: $color-blue-black;
   color: $color-white;
@@ -62,7 +66,7 @@
     margin-bottom: 16px;
     @include font-size(28px);
     line-height: 1;
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: helvetica, sans-serif;
     max-width: 240px;
     @include opacity(0);
     @include MQ(M) {
@@ -77,7 +81,7 @@
     width: 85%;
     max-width: 310px;
     /*margin: 0 auto; */
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: helvetica, sans-serif;
     line-height: 1.3 !important;
     @include font-size(16px);
     @include opacity(0);
@@ -173,27 +177,6 @@
         }
     }
 }
-.downvoted {
-    opacity: 0.5;
-    -webkit-filter: grayscale(1); // image
-    filter: gray; // image grayscale
-    transition: 0.2s all ease-in-out;
-    color: #848282;
-    @include themify($themes) {
-        color: themed('textColorPrimary');
-    }
-    .Comment__header-user {
-      color: #848282;
-      @include themify($themes) {
-          color: themed('textColorPrimary');
-      }
-    }
-}
-.downvoted:hover {
-    opacity: 1;
-    filter: none;
-    -webkit-filter: none;
-}
 
 .App__announcement {
   padding-right: 40px;
@@ -202,5 +185,3 @@
     right: 0;
   }
 }
-
-

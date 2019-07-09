@@ -1,0 +1,260 @@
+
+
+
+.UserKeys {
+	max-width: 1200px;
+	margin: 0 auto;
+	@include MQ(M) {
+		padding: 0 24px;
+	}
+	h1, h3, h5 {
+		font-weight: bold;
+	}
+	h1 {
+		@include font-size(28px);
+		margin-bottom: 16px;	
+	}
+	h3 {
+		@include font-size(24px);
+		margin-bottom: 0;		
+	}
+	h5 {
+		@include font-size(18px);
+		margin-bottom: 12px;
+
+	}
+	&__intro {
+		margin-bottom: 3em;
+		padding: 16px;
+		
+		@include MQ(M) {
+			padding: 0;
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+	&__intro-col {
+		max-width: 780px;
+		
+		&:nth-child(1) {
+			@include MQ(M) {
+				padding-right: 1em;		
+			}			
+		}
+		&:nth-child(2) {	
+			padding-right: 1em;	
+			@include MQ(M) {
+				padding-left: 1em;	
+				padding-right: 0;	
+			}
+		}
+
+	}	
+	&__diagram {
+		margin-top: 2.5em;
+		width: 100%;
+		max-width: 400px;
+		@include MQ(M) {
+			max-width: 360px;
+		}
+	}
+	&__p {
+		@include font-size(16px);
+		max-width: 660px;
+	}
+	&__link {
+		@include font-size(16px);
+		font-weight: bold;
+	}
+	.hoverBackground {
+		transition: 0.2s all ease-in-out;
+	  &:hover {
+		  @include themify($themes) {
+		    background-color: themed('backgroundColorOpaque');  
+		    color: themed('textColorPrimary');  
+		  }      
+	  }
+	}
+	.button.hollow {
+		@extend .e-btn-hollow;
+	}
+}
+
+
+.key {
+	margin-bottom: 2em;
+	@include themify($themes) {
+	   	border: themed('border');  
+	   	background: themed('moduleBackgroundColor');
+	} 		
+	&__description {
+		@include font-size(16px);
+		line-height: 1.4;
+		&--last {
+			margin-bottom: 0;			
+		}
+
+	}	  	
+	&__title-container {
+		padding: 16px;
+		@include MQ(FL) {
+			padding: 18px 24px;
+		}		
+	  	@include themify($themes) {
+	   		border-bottom: themed('border');  
+	  	} 		
+	}
+	&__content-container {
+		@include MQ(FL) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+	&__col {
+		padding: 16px;
+		@include MQ(FL) {
+			padding: 24px;
+		}
+		&:nth-child(1) {	
+			@include MQ(FL) {
+				padding-right: 50px;
+			}				
+		}
+		&:nth-child(2) {
+		  	@include themify($themes) {
+		   		border-left: themed('border');  
+		   		flex: 0 0 360px;
+		  	}
+		}
+	}
+	&__public {
+		display: none;
+	}
+	.button.hollow {
+		margin: 12px 0 0 0;
+		text-transform: capitalize;
+		font-weight: bold;
+		border-radius: 5px;
+		color: #fff;
+		height: 40px;
+		line-height: 1.2;
+
+		@include MQ(M) {
+			position: relative;
+			left: -2px;
+			border-radius: 0 5px 5px 0;
+			margin: 0;
+		}
+		@include themify($themes) {
+		   	background-color: themed('buttonBackground');
+		   	border: themed('borderTransparent');
+		   	color: themed('buttonText');
+		}
+		&:hover, &:focus {
+			@include themify($themes) {
+			   	background-color: themed('buttonBackgroundHover');
+			   	border: themed('borderTransparent');
+			}			
+		}
+	}
+	&__input {
+		height: 40px;
+		@include font-size(10px);
+		overflow-x: scroll;
+		@media only screen and (min-width: 400px) {
+			@include font-size(11px);
+		}
+		@media only screen and (min-width: 520px) {
+			min-width: 500px;
+			@include font-size(14px);
+		}
+		@media only screen and (min-width: 620px) {
+			@include font-size(15px);
+		}		
+	}
+	&__private-container {
+		width: 100%;
+		@include MQ(M) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+	&__private-input {
+		width: 100%;
+	}
+	&__private-title {
+		width: 100%;
+	}
+	&__reveal {
+		@include MQ(M) {
+			flex: 0 0 75px;
+		}
+	}
+}
+
+.permissions {
+	&__h5 {
+		margin-bottom: 16px;
+	}
+	&__p {
+		margin-bottom: 4px;
+		@include font-size(15px);
+	}
+	&__li {
+		padding: 2px;
+		@include font-size(15px);
+	}
+}
+
+
+.UserKeys .key__input {
+    cursor: text;
+}
+
+.UserKeys .public-keys {
+	margin: 6em 0 0;
+	padding: 64px 0;
+	width: 100vw;
+	position: relative;
+	margin-left: -50vw; 
+	left: 50%;
+	
+	@include themify($themes) {
+		border-top: themed('border');  
+		background: themed('backgroundColorEmphasis');
+	}
+	&__container {
+		width: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 16px;
+	}
+	&__intro {
+		padding: 16px;
+		@include MQ(M) {
+			padding: 24px 24px 0 16px;
+		}
+	}
+	&__h3 {
+		margin-bottom: 12px;
+	}
+	&__description {
+		@include font-size(16px);
+		max-width: 780px;
+	}
+	&__link {
+		font-weight: bold;
+		display: block;
+		margin-top: 0px;
+	}
+}
+
+.react-qr {
+	position: relative;
+	margin-top: 16px;
+	@include MQ(M) {
+		margin-left: 12px;
+		margin-top: -24px;
+		padding-right: 10px;
+	}
+}

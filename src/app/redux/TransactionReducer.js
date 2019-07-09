@@ -4,12 +4,14 @@ import { fromJS, Map } from 'immutable';
 const CONFIRM_OPERATION = 'transaction/CONFIRM_OPERATION';
 const HIDE_CONFIRM = 'transaction/HIDE_CONFIRM';
 export const BROADCAST_OPERATION = 'transaction/BROADCAST_OPERATION';
+export const UPDATE_AUTHORITIES = 'transaction/UPDATE_AUTHORITIES';
 const ERROR = 'transaction/ERROR'; // Has a watcher in SagaShared
 const DELETE_ERROR = 'transaction/DELETE_ERROR';
 const DISMISS_ERROR = 'transaction/DISMISS_ERROR';
 const SET = 'transaction/SET';
 const REMOVE = 'transaction/REMOVE';
 // Saga-related
+export const RECOVER_ACCOUNT = 'transaction/RECOVER_ACCOUNT';
 const defaultState = fromJS({
     operations: [],
     status: { key: '', error: false, busy: false },
@@ -46,6 +48,9 @@ export default function reducer(state = defaultState, action) {
             // See TransactionSaga.js
             return state;
 
+        case UPDATE_AUTHORITIES:
+            return state;
+
         case ERROR: {
             const { operations, error, errorCallback } = payload;
 
@@ -53,24 +58,19 @@ export default function reducer(state = defaultState, action) {
             let errorKey = 'Transaction broadcast error.';
             for (const [type /*, operation*/] of operations) {
                 switch (type) {
-                    case 'vote':
-                        if (/uniqueness constraint/.test(errorStr)) {
-                            errorKey = 'You already voted for this post';
-                            console.error('You already voted for this post.');
-                        }
-                        if (/Voting weight is too small/.test(errorStr)) {
-                            errorKey = 'Voting weight is too small';
-                            errorStr =
-                                'Voting weight is too small, please accumulate more voting power or steem power.';
+                    case 'transfer':
+                        if (/get_balance/.test(errorStr)) {
+                            errorKey = 'Insufficient balance.';
                         }
                         break;
-                    case 'comment':
+                    case 'withdraw_vesting':
                         if (
-                            /You may only post once per minute/.test(errorStr)
-                        ) {
-                            errorKey = 'You may only post once per minute.';
-                        } else if (errorStr === 'Testing, fake error')
-                            errorKey = 'Testing, fake error';
+                            /Account registered by another account requires 10x account creation fee worth of Steem Power/.test(
+                                errorStr
+                            )
+                        )
+                            errorKey =
+                                'Account requires 10x the account creation fee in Steem Power (approximately 30 SP) before it can power down.';
                         break;
                     default:
                         break;
@@ -182,6 +182,11 @@ export const broadcastOperation = payload => ({
     payload,
 });
 
+export const updateAuthorities = payload => ({
+    type: UPDATE_AUTHORITIES,
+    payload,
+});
+
 export const error = payload => ({
     type: ERROR,
     payload,
@@ -204,5 +209,10 @@ export const set = payload => ({
 
 export const remove = payload => ({
     type: REMOVE,
+    payload,
+});
+
+export const recoverAccount = payload => ({
+    type: RECOVER_ACCOUNT,
     payload,
 });

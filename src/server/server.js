@@ -5,7 +5,6 @@ import helmet from 'koa-helmet';
 import koa_logger from 'koa-logger';
 import requestTime from './requesttimings';
 import StatsLoggerClient from './utils/StatsLoggerClient';
-import { SteemMarket } from './utils/SteemMarket';
 import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';
@@ -14,8 +13,9 @@ import favicon from 'koa-favicon';
 import staticCache from 'koa-static-cache';
 import useRedirects from './redirects';
 import useGeneralApi from './api/general';
-import useUserJson from './json/user_json';
-import usePostJson from './json/post_json';
+import useAccountRecoveryApi from './api/account_recovery';
+import useEnterAndConfirmEmailPages from './sign_up_pages/enter_confirm_email';
+import useEnterAndConfirmMobilePages from './sign_up_pages/enter_confirm_mobile';
 import isBot from 'koa-isbot';
 import session from '@steem/crypto-session';
 import csrf from 'koa-csrf';
@@ -26,8 +26,6 @@ import secureRandom from 'secure-random';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import koaLocale from 'koa-locale';
 import { getSupportedLocales } from './utils/misc';
-import { specialPosts } from './utils/SpecialPosts';
-import fs from 'fs';
 
 if (cluster.isMaster) console.log('application server starting, please wait.');
 
@@ -39,17 +37,10 @@ const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: true };
 
-// import ads.txt to be served statically
-const adstxt = fs.readFileSync(
-    path.join(__dirname, '../app/assets/ads.txt'),
-    'utf8'
-);
-
 // Serve static assets without fanfare
 app.use(
     favicon(path.join(__dirname, '../app/assets/images/favicons/favicon.ico'))
 );
-
 app.use(
     mount(
         '/favicons',
@@ -59,14 +50,12 @@ app.use(
         )
     )
 );
-
 app.use(
     mount(
         '/images',
         staticCache(path.join(__dirname, '../app/assets/images'), cacheOpts)
     )
 );
-
 app.use(
     mount(
         '/javascripts',
@@ -76,14 +65,6 @@ app.use(
         )
     )
 );
-
-app.use(
-    mount('/ads.txt', function*() {
-        this.type = 'text/plain';
-        this.body = adstxt;
-    })
-);
-
 // Proxy asset folder to webpack development server in development mode
 if (env === 'development') {
     const webpack_dev_port = process.env.PORT
@@ -146,13 +127,6 @@ function convertEntriesToArrays(obj) {
     }, {});
 }
 
-// Fetch cached currency data for homepage
-const steemMarket = new SteemMarket();
-app.use(function*(next) {
-    this.steemMarketData = yield steemMarket.get();
-    yield next;
-});
-
 // some redirects and health status
 app.use(function*(next) {
     if (this.method === 'GET' && this.url === '/.well-known/healthcheck.json') {
@@ -167,40 +141,22 @@ app.use(function*(next) {
         return;
     }
 
-    // redirect to home page/feed if known account
+    // redirect to home page if known account
     if (this.method === 'GET' && this.url === '/' && this.session.a) {
         this.status = 302;
-        this.redirect(`/@${this.session.a}/feed`);
+        this.redirect(`/@${this.session.a}`);
         return;
     }
     // normalize user name url from cased params
-    if (
-        this.method === 'GET' &&
-        (routeRegex.UserProfile1.test(this.url) ||
-            routeRegex.PostNoCategory.test(this.url) ||
-            routeRegex.Post.test(this.url))
-    ) {
+    if (this.method === 'GET' && routeRegex.UserProfile1.test(this.url)) {
         const p = this.originalUrl.toLowerCase();
         let userCheck = '';
-        if (routeRegex.Post.test(this.url)) {
-            userCheck = p.split('/')[2].slice(1);
-        } else {
-            userCheck = p.split('/')[1].slice(1);
-        }
+        userCheck = p.split('/')[1].slice(1);
         if (userIllegalContent.includes(userCheck)) {
             console.log('Illegal content user found blocked', userCheck);
             this.status = 451;
             return;
         }
-        if (p !== this.originalUrl) {
-            this.status = 301;
-            this.redirect(p);
-            return;
-        }
-    }
-    // normalize top category filtering from cased params
-    if (this.method === 'GET' && routeRegex.CategoryFilters.test(this.url)) {
-        const p = this.originalUrl.toLowerCase();
         if (p !== this.originalUrl) {
             this.status = 301;
             this.redirect(p);
@@ -238,11 +194,11 @@ if (env === 'production') {
     app.use(koa_logger());
 }
 
-// app.use(
-//     helmet({
-//         hsts: false,
-//     })
-// );
+app.use(
+    helmet({
+        hsts: false,
+    })
+);
 
 app.use(
     mount(
@@ -279,9 +235,10 @@ app.use(function*(next) {
 });
 
 useRedirects(app);
-useUserJson(app);
-usePostJson(app);
+useEnterAndConfirmEmailPages(app);
+useEnterAndConfirmMobilePages(app);
 
+useAccountRecoveryApi(app);
 useGeneralApi(app);
 
 // helmet wants some things as bools and some as lists, makes config difficult.
@@ -296,26 +253,16 @@ if (env === 'production') {
     if (helmetConfig.directives.reportUri === '-') {
         delete helmetConfig.directives.reportUri;
     }
+
     app.use(helmet.contentSecurityPolicy(helmetConfig));
 }
 
 if (env !== 'test') {
     const appRender = require('./app_render');
 
-    // Load special posts and store them on the ctx for later use. Since
-    // we're inside a generator, we can't `await` here, so we pass a promise
-    // so `src/server/app_render.jsx` can `await` on it.
-    app.specialPostsPromise = specialPosts();
-    // refresh special posts every five minutes
-    setInterval(function() {
-        return new Promise(function(resolve, reject) {
-            app.specialPostsPromise = specialPosts();
-            resolve();
-        });
-    }, 300000);
-
     app.use(function*() {
         yield appRender(this, supportedLocales, resolvedAssets);
+        // if (app_router.dbStatus.ok) recordWebEvent(this, 'page_load');
         const bot = this.state.isBot;
         if (bot) {
             console.log(
