@@ -4,8 +4,9 @@ import reactForm from 'app/utils/ReactForm';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-import CategorySelector from 'app/components/cards/CategorySelector';
-import { validateCategory } from 'app/components/cards/CategorySelector';
+import CategorySelector, {
+    validateCategory,
+} from 'app/components/cards/CategorySelector';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
@@ -17,7 +18,7 @@ import { Set } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG } from 'app/client_config';
+import { APP_NAME, SCOT_TAG, TAG_LIST } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -570,6 +571,7 @@ class ReplyEditor extends React.Component {
                                         disabled={loading}
                                         isEdit={isEdit}
                                         tabIndex={3}
+                                        trending={TAG_LIST}
                                     />
                                     <div className="error">
                                         {(category.touched || category.value) &&

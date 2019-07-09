@@ -320,7 +320,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "タグ(最大5つ)。1つ目のタグはメインカテゴリです。日本語の投稿には japanese を含めてください。",
+            "タグ(最大10つ)。1つ目のタグはメインカテゴリです。日本語の投稿には japanese を含めてください。",
         "select_a_tag": "タグを選択してください",
         "maximum_tag_length_is_24_characters": "タグの最大長は24文字です。",
         "use_limited_amount_of_categories":
