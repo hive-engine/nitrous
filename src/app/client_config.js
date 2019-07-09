@@ -25,6 +25,7 @@ export const TAG_LIST = List([
     'hobby',
     'life',
     'literature',
+    'book',
     'market',
     'sports',
     'user-guide',
