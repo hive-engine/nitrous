@@ -113,19 +113,14 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'forum',
-                label: 'Forum',
-                link: 'https://weedcash.tokenbb.io/',
-            },
-            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/jMHX3d8',
             },
             {
-                value: 'telegram',
-                label: 'Telegram',
-                link: 'https://t.me/weedcashnetwork',
+                value: 'video',
+                label: 'Weedcash Video',
+                link: 'https://video.weedcash.network',
             },
         ],
         legal: [
