@@ -1,0 +1,25 @@
+language: node_js
+
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
+install: true
+
+script:
+  - docker build -t registry.heroku.com/eontestnetw/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: eonwarped_testnet_wallet
+
+# safelist
+branches:
+  only:
+  - eonwarped_testnet_wallet
