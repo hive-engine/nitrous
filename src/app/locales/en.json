@@ -271,7 +271,8 @@
         "bluepaper": "Steem Bluepaper",
         "smt_whitepaper": "SMT Whitepaper",
         "whitepaper": "Steem Whitepaper",
-        "jobs": "Jobs at Steemit"
+        "jobs": "Jobs at Steemit",
+        "steem_proposal_system": "Steem Proposal System"
     },
     "reply_editor": {
         "shorten_title": "Shorten title",
@@ -663,7 +664,8 @@
         "curation_rewards_by": "Curation rewards by %(username)s",
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
-        "comments_by": "Comments by %(username)s"
+        "comments_by": "Comments by %(username)s",
+        "steem_proposal_system": "Steem Proposal System"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
@@ -879,5 +881,22 @@
         "steem_power_description": "Vesting influence token",
         "sbd_symbol": "SBD",
         "sbd_description": "Seeks price stability with USD"
+    },
+    "steem_proposal_system_jsx": {
+        "top_sps": "Steem Proposal System",
+        "votes_update_info": "* Only updated once per hour",
+        "table": {
+            "id": "Id",
+            "creator": "Creator",
+            "receiver": "Receiver",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "daily_pay": "Daily Pay",
+            "total_votes": "Total Votes*",
+            "permlink": "",
+            "subject": "Subject"
+        },
+        "confirm_remove_proposal_description":
+            "Proposal removal is permanent and the fee paid for creating the proposal is not refundable."
     }
 }

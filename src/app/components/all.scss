@@ -25,6 +25,7 @@
 @import "./elements/SanitizedLink/styles";
 @import "./elements/HelpTip/styles";
 @import "./elements/Dropdown";
+@import "./elements/Pagination/styles";
 
 // modules
 @import "./modules/Header/styles";
@@ -50,3 +51,4 @@
 @import "./pages/Witnesses";
 @import "./pages/About";
 @import "./pages/WalletIndex";
+@import "./pages/SteemProposalSystem";

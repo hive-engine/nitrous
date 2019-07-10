@@ -4,8 +4,8 @@ import tt from 'counterpart';
 import getSlug from 'speakingurl';
 import base58 from 'bs58';
 import secureRandom from 'secure-random';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast, auth, memo } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
+import { api, broadcast, auth, memo } from '@blocktradesdev/steem-js';
 
 import { getAccount } from 'app/redux/SagaShared';
 import { findSigningKey } from 'app/redux/AuthSaga';
@@ -25,10 +25,13 @@ export const transactionWatches = [
 const hook = {
     preBroadcast_transfer,
     preBroadcast_account_witness_vote,
+    preBroadcast_update_proposal_votes,
+    preBroadcast_remove_proposal,
     error_account_witness_vote,
     accepted_account_witness_vote,
     accepted_account_update,
     accepted_withdraw_vesting,
+    accepted_update_proposal_votes,
 };
 
 export function* preBroadcast_transfer({ operation }) {
@@ -66,6 +69,23 @@ function* preBroadcast_account_witness_vote({ operation, username }) {
             witness,
         })
     );
+    return operation;
+}
+
+function* preBroadcast_update_proposal_votes({ operation, username }) {
+    if (!operation.voter) operation.voter = username;
+    const { voter, proposal_ids } = operation;
+    yield put(
+        globalActions.addActiveProposalVote({
+            voter,
+            proposal_ids,
+        })
+    );
+    return operation;
+}
+
+function preBroadcast_remove_proposal({ operation, username }) {
+    if (!operation.proposal_owner) operation.proposal_owner = username;
     return operation;
 }
 
@@ -339,6 +359,17 @@ function* accepted_account_witness_vote({
         globalActions.removeActiveWitnessVote({
             account,
             witness,
+        })
+    );
+}
+
+function* accepted_update_proposal_votes({
+    operation: { voter, proposal_ids },
+}) {
+    yield put(
+        globalActions.removeActiveProposalVote({
+            voter,
+            proposal_ids,
         })
     );
 }

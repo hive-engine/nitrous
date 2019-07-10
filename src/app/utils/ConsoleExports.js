@@ -3,7 +3,7 @@ import {
     PublicKey,
     Aes,
     key_utils,
-} from '@steemit/steem-js/lib/auth/ecc';
+} from '@blocktradesdev/steem-js/lib/auth/ecc';
 
 // import secureRandom from 'secure-random'
 // import links from 'app/utils/Links'

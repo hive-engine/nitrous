@@ -4,7 +4,7 @@ import { parsePayoutAmount, repLog10 } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import { VEST_TICKER, LIQUID_TICKER } from 'app/client_config';
 import { fromJS } from 'immutable';
-import { formatter } from '@steemit/steem-js';
+import { formatter } from '@blocktradesdev/steem-js';
 
 export const numberWithCommas = x => x.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 

@@ -81,8 +81,10 @@ class Header extends React.Component {
             route.page == 'RecoverAccountStep2'
         ) {
             page_title = tt('header_jsx.stolen_account_recovery');
+        } else if (route.page === 'SteemProposalSystem') {
+            page_title = tt('header_jsx.steem_proposal_system');
         } else if (route.page === 'UserProfile') {
-            let user_name = route.params[0].slice(1);
+            const user_name = route.params[0].slice(1);
             const name = account_meta
                 ? normalizeProfile(account_meta.toJS()).name
                 : null;
