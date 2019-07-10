@@ -257,9 +257,9 @@
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "Este voto ya existe, el usuario tiene que quitar el voto al witness",
         "total": "Total",
-        "circulating": "Circulating",
+        "circulating": "Circulate",
         "burn": "Burn",
-        "staking": "Staking"
+        "staking": "Stake"
     },
     "navigation": {
         "about": "Sobre",
