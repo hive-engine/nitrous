@@ -250,9 +250,9 @@
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "vote currently exists, user must be indicate a desire to reject witness",
         "total": "Total",
-        "circulating": "Circulating",
+        "circulating": "Circulate",
         "burn": "Burn",
-        "staking": "Staking",
+        "staking": "Stake",
         "written_from": "%(app_name)s에서 작성되었습니다."
     },
     "navigation": {
