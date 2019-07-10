@@ -69,7 +69,9 @@ const SidebarBurn = ({
                             }}
                         >
                             <div>
-                                {tt('g.burn')} (
+                                {tt('g.burn')}
+                                <br />
+                                (
                                 <span className="integer">{burnRate[0]}</span>
                                 <span className="decimal">{burnRate[1]}</span>
                                 %)
@@ -88,7 +90,9 @@ const SidebarBurn = ({
                             }}
                         >
                             <div>
-                                {tt('g.circulating')} (
+                                {tt('g.circulating')}
+                                <br />
+                                (
                                 <span className="integer">
                                     {circulatingRate[0]}
                                 </span>
@@ -115,7 +119,8 @@ const SidebarBurn = ({
                             }}
                         >
                             <div>
-                                {tt('g.staking')} (
+                                {tt('g.staking')} <br />
+                                (
                                 <span className="integer">
                                     {stakingRate[0]}
                                 </span>
