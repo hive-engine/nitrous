@@ -249,9 +249,9 @@
             "checkbox": "I understand"
         },
         "total": "Total",
-        "circulating": "Circulate",
+        "circulating": "Circulating",
         "burn": "Burn",
-        "staking": "Stake",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s"
     },
     "navigation": {
