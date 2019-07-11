@@ -36,6 +36,7 @@ class Header extends React.Component {
         this.state = {
             gptAdRendered: false,
             showAd: false,
+            showPresearch: true,
             showAnnouncement: this.props.showAnnouncement,
         };
     }
@@ -85,11 +86,11 @@ class Header extends React.Component {
     }
 
     headroomOnUnpin() {
-        this.setState({ showAd: false });
+        this.setState({ showAd: false, showPresearch: false });
     }
 
     headroomOnUnfix() {
-        this.setState({ showAd: true });
+        this.setState({ showAd: true, showPresearch: true });
     }
 
     gptAdRendered() {
@@ -121,7 +122,7 @@ class Header extends React.Component {
             walletUrl,
         } = this.props;
 
-        const { showAd, showAnnouncement } = this.state;
+        const { showAd, showPresearch, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -306,6 +307,21 @@ class Header extends React.Component {
                             type="Freestar"
                             id="steemit_728x90_970x90_970x250_320x50_ATF"
                         />
+                    </div>
+
+                    <div style={showPresearch ? {} : { display: 'none' }}>
+                        <center>
+                            <a
+                                href="https://www.presearch.org/signup?rid=811340"
+                                target="_blank"
+                            >
+                                <img
+                                    src="https://www.presearch.org/images/rf/ban-4.jpg"
+                                    title="Presearch"
+                                    alt="presearch"
+                                />
+                            </a>
+                        </center>
                     </div>
 
                     <nav className="row Header__nav">
