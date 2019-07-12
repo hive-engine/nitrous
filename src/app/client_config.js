@@ -9,8 +9,8 @@ export const APP_NAME_UPPERCASE = 'STEEMACE';
 export const APP_ICON = 'steemace';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.steemace.com';
-export const APP_DOMAIN = 'www.steemace.com';
+export const APP_URL = 'https://www.steemace.io/';
+export const APP_DOMAIN = 'www.steemace.io';
 export const SCOT_TAG = 'steemace';
 export const TAG_LIST = List(['steemace']);
 export const LIQUID_TOKEN = 'GG';
