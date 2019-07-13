@@ -29,6 +29,10 @@ export const TAG_LIST = List([
     'market',
     'sports',
     'user-guide',
+    'sct',
+    'actifit',
+    'aaa',
+    'palnet',
     'qna',
 ]);
 export const LIQUID_TOKEN = 'Zzan';
