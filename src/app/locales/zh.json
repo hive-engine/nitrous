@@ -570,7 +570,8 @@
         "keep_me_logged_in": "保持登录状态",
         "sign_up_now_to_earn": "现在就来注册赚取",
         "free_money": "免费的钱！",
-        "returning_users": "返回用户:"
+        "returning_users": "返回用户:",
+        "use_keychain": "Use keychain extension"
     },
     "chainvalidation_js": {
         "account_name_should": "帐户名称应该",

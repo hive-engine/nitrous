@@ -711,6 +711,7 @@
         "returning_users": "Returning Users: ",
         "login_to_wallet": "Login to Wallet",
         "sign_transfer": "Sign to complete transfer",
+        "use_keychain": "Use keychain extension",
         "dont_have_an_account": "Don't have a Steem account?"
     },
     "chainvalidation_js": {

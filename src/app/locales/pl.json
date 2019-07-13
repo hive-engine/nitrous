@@ -607,7 +607,8 @@
         "keep_me_logged_in": "Nie wylogowuj mnie",
         "sign_up_now_to_earn": "Zarejestruj się aby zarabiać ",
         "free_money": "DARMOWY STEEM!",
-        "returning_users": "Powracający użytkownicy: "
+        "returning_users": "Powracający użytkownicy: ",
+        "use_keychain": "Use keychain extension"
     },
     "chainvalidation_js": {
         "account_name_should": "Nazwa konta powinna ",
