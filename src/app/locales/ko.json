@@ -523,7 +523,7 @@
         "estimated_value":
             "%(LIQUID_TOKEN)s의 평균 가격을 US달러로 환산한 기준입니다.",
         "non_transferable":
-            "%(VESTING_TOKEN)s는 전송이 불가능하며, 다시 %(LIQUID_TOKEN)s으로 전환하기 위해서는 3달이 소요됩니다. (13회로 나누어 전환 됩니다)",
+            "%(VESTING_TOKEN)s는 전송이 불가능하며, 다시 %(LIQUID_TOKEN)s으로 전환하기 위해서는 5일이 소요됩니다. (5일뒤 일괄 처리)",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
