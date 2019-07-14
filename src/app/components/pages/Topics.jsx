@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import tt from 'counterpart';
 import PropTypes from 'prop-types';
 import NativeSelect from 'app/components/elements/NativeSelect';
+import { List } from 'immutable';
 
 const Topics = ({
     order,
@@ -33,6 +34,36 @@ const Topics = ({
         return opts['default'];
     };
 
+    const buildPrefix = level => {
+        let a = '';
+        for (let i = 0; i < level; i++) {
+            a = a + '>';
+        }
+        return a;
+    };
+
+    const buildCategories = (categories, level) => {
+        const prefix = buildPrefix(level);
+        if (List.isList(categories)) {
+            return categories.map(c => prefix + c);
+        } else {
+            let c_list = List();
+            categories.mapKeys((c, v) => {
+                c_list = c_list.push(prefix + c);
+                c_list = c_list.concat(buildCategories(v, level + 1));
+            });
+            return c_list;
+        }
+    };
+
+    const parseCategory = cat => {
+        const tag = cat.replace('>', '');
+        const label = cat.replace('>', '\u00a0\u00a0\u00a0');
+        return { tag, label };
+    };
+
+    categories = buildCategories(categories, 0);
+
     if (compact) {
         const extras = username => {
             const ex = {
@@ -53,8 +84,9 @@ const Topics = ({
         const opts = extras(username).concat(
             categories
                 .map(cat => {
-                    const link = order ? `/${order}/${cat}` : `/${cat}`;
-                    return { value: link, label: cat };
+                    const { tag, label } = parseCategory(cat);
+                    const link = order ? `/${order}/${tag}` : `/${tag}`;
+                    return { value: link, label: label };
                 })
                 .toJS()
         );
@@ -68,15 +100,16 @@ const Topics = ({
         );
     } else {
         const categoriesLinks = categories.map(cat => {
-            const link = order ? `/${order}/${cat}` : `/hot/${cat}`;
+            const { tag, label } = parseCategory(cat);
+            const link = order ? `/${order}/${tag}` : `/hot/${tag}`;
             return (
-                <li className="c-sidebar__list-item" key={cat}>
+                <li className="c-sidebar__list-item" key={tag}>
                     <Link
                         to={link}
                         className="c-sidebar__link"
                         activeClassName="active"
                     >
-                        {cat}
+                        {label}
                     </Link>
                 </li>
             );
