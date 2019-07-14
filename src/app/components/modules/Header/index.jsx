@@ -348,7 +348,15 @@ class Header extends React.Component {
                                     </a>
                                 </span>
                             )}
-
+                            {/*CUSTOM SEARCH*/}
+                            <span className="Header__search--desktop">
+                                <SearchInput />
+                            </span>
+                            <span className="Header__search">
+                                <a href="/static/search.html">
+                                    <IconButton icon="magnifyingGlass" />
+                                </a>
+                            </span>
                             {/*SUBMIT STORY*/}
                             {submit_story}
                             {/*USER AVATAR */}
