@@ -113,25 +113,9 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
-            },
-            {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
-            },
-            {
                 value: 'whitepaper',
                 label: 'Whitepaper',
                 link: 'https://www.steemace.io/steemace/@steem-ace/a-new-scot-tribe-on-steem-steemace-com-for-gaming-content-or-over-100k-sp-7-5k-pal-and-120-splinterlands-beta-booster-to-reward',
-            },
-            {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
-                internal: true,
             },
         ],
         legal: [
