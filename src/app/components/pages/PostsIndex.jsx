@@ -130,13 +130,39 @@ class PostsIndex extends React.Component {
     onShowSpam = () => {
         this.setState({ showSpam: !this.state.showSpam });
     };
+
+    loadCategories = (cat, categories) => {
+        if (!cat) return categories;
+
+        // leaf nodes
+        if (List.isList(categories)) {
+            if (categories.includes(cat)) return categories;
+            else return null;
+        } else {
+            for (const c of categories.keys()) {
+                const v = categories.get(c);
+                if (cat === c && v !== null && !v.isEmpty()) {
+                    return v;
+                } else {
+                    const cats = this.loadCategories(cat, v);
+                    if (cats !== null && !cats.isEmpty()) {
+                        return cats;
+                    }
+                }
+            }
+            return null;
+        }
+    };
+
     render() {
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { categories, discussions, pinned } = this.props;
+        const { discussions, pinned } = this.props;
+        const cats = this.loadCategories(category, this.props.categories);
+        const categories = cats ? cats : this.props.categories;
 
         let topics_order = order;
         let posts = List();

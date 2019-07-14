@@ -50,7 +50,10 @@ const Topics = ({
             let c_list = List();
             categories.mapKeys((c, v) => {
                 c_list = c_list.push(prefix + c);
-                c_list = c_list.concat(buildCategories(v, level + 1));
+                // only display two levels
+                if (level == 0) {
+                    c_list = c_list.concat(buildCategories(v, level + 1));
+                }
             });
             return c_list;
         }

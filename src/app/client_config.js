@@ -13,7 +13,13 @@ export const APP_URL = 'https://www.sportstalksocial.com';
 export const APP_DOMAIN = 'www.sportstalksocial.com';
 export const SCOT_TAG = 'sportstalk';
 export const TAG_LIST = fromJSOrdered({
-    football: ['FIFA', 'worldcup'],
+    football: {
+        FIFA: {
+            'euro-cup': ['euro-cup-2016', 'euro-cup-2020'],
+            'american-cup': ['american-cup-2015', 'american-cup-2019'],
+        },
+        worldcup: ['worldcup-2018', 'worldcup-2022'],
+    },
     amfootball: ['NFL', 'collegefb'],
     baseball: [],
     basketball: [],
