@@ -124,8 +124,8 @@ const SidePanel = ({
             },
             {
                 value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
+                label: 'Whitepaper',
+                link: 'https://www.steemace.io/steemace/@steem-ace/a-new-scot-tribe-on-steem-steemace-com-for-gaming-content-or-over-100k-sp-7-5k-pal-and-120-splinterlands-beta-booster-to-reward',
             },
             {
                 value: 'about',
@@ -179,6 +179,15 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
+                </ul>
+                
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">
+                            About
+                        </a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
             </div>
         </div>
