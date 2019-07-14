@@ -58,6 +58,9 @@ export default function resolveRoute(path) {
     if (path === '/~witnesses') {
         return { page: 'Witnesses' };
     }
+    if (path === '/steem_proposal_system') {
+        return { page: 'SteemProposalSystem' };
+    }
     match =
         path.match(routeRegex.UserProfile1) ||
         path.match(routeRegex.UserProfile2);

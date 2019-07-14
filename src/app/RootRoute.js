@@ -44,6 +44,8 @@ export default {
             cb(null, [require('app/components/pages/RecoverAccountStep2')]);
         } else if (route.page === 'Witnesses') {
             cb(null, [require('app/components/pages/Witnesses')]);
+        } else if (route.page === 'SteemProposalSystem') {
+            cb(null, [require('app/components/pages/SteemProposalSystem')]);
         } else if (route.page === 'UserProfile') {
             cb(null, [require('app/components/pages/UserProfile')]);
         } else if (route.page === 'Market') {

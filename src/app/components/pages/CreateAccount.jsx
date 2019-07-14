@@ -4,10 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import runTests from 'app/utils/BrowserTests';

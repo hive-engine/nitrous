@@ -13,7 +13,7 @@ import config from 'config';
 import MiniHeader from 'app/components/modules/MiniHeader';
 import secureRandom from 'secure-random';
 import Mixpanel from 'mixpanel';
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 
 const path = require('path');
 const ROOT = path.join(__dirname, '../../..');

@@ -1,0 +1,141 @@
+.SteemProposalSystem {
+    table {
+        tr:nth-child(4n),
+        tr:nth-child(4n-1) {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(4n -2),
+        tr:nth-child(4n-3) {
+            background-color: white;
+        }
+
+        td.permlink-column {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        td.subject-column,
+        td.subject-table-header {
+            display: none;
+        }
+
+        tr.proposal-subject-row {
+            td {
+                text-align: center;
+            }
+        }
+
+        tbody {
+            td.id-column,
+            td.daily_pay-column,
+            td.total_votes-column {
+                text-align: right;
+            }
+        }
+
+        .proposals-filter-header {
+            .proposals-filter-wrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .dropdowns {
+                    li {
+                        span {
+                            padding: 0.4rem;
+                            font-weight: bold;
+                            text-align: left;
+                            padding-left: 16px;
+
+                            &:hover {
+                                cursor: pointer;
+                                color: $color-teal;
+                            }
+                        }
+                    }
+                }
+
+                .pagination {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .proposal-remove {
+            span {
+                color: red;
+                font-size: 1.25em;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            td.start_date-column,
+            td.end_date-column {
+                width: 22ch;
+            }
+            td.total_votes-column {
+                width: 12ch;
+            }
+            td.daily_pay-column {
+                width: 18ch;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            thead tr:nth-child(2) {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            tr.proposals-filter-header {
+                margin-bottom: 2px;
+            }
+
+            tr.proposal-subject-row {
+                display: none;
+            }
+
+            tr:nth-child(4n),
+            tr:nth-child(4n-1) {
+                background-color: transparent;
+            }
+
+            td.subject-column {
+                display: block;
+            }
+
+            td.permlink-column {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                a {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            td {
+                display: block;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+            }
+        }
+    }
+}

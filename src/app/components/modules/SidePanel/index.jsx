@@ -72,6 +72,11 @@ const SidePanel = ({ alignment, visible, hideSidePanel, username }) => {
                 label: tt('navigation.vote_for_witnesses'),
                 link: `/~witnesses`,
             },
+            {
+                value: 'steem_proposal_system',
+                label: tt('navigation.steem_proposal_system'),
+                link: `/steem_proposal_system`,
+            },
         ],
         exchanges: [
             {

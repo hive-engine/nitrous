@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api } from '@steemit/steem-js';
+import { PrivateKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
+import { api } from '@blocktradesdev/steem-js';
 
 import * as userActions from 'app/redux/UserReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';

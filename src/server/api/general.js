@@ -14,8 +14,12 @@ import {
 } from 'server/utils/misc';
 import coBody from 'co-body';
 import Mixpanel from 'mixpanel';
-import { PublicKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast } from '@steemit/steem-js';
+import {
+    PublicKey,
+    Signature,
+    hash,
+} from '@blocktradesdev/steem-js/lib/auth/ecc';
+import { api, broadcast } from '@blocktradesdev/steem-js';
 
 const ACCEPTED_TOS_TAG = 'accepted_tos_20180614';
 

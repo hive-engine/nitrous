@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { Set, Map, fromJS, List } from 'immutable';
-import { api } from '@steemit/steem-js';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
+import { api } from '@blocktradesdev/steem-js';
+import { PrivateKey } from '@blocktradesdev/steem-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';

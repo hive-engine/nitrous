@@ -1,6 +1,6 @@
 import { fromJS, Map, Set, OrderedSet } from 'immutable';
 import { call, put, select } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 
 import * as globalActions from 'app/redux/GlobalReducer';
 

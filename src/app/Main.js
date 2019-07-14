@@ -9,7 +9,7 @@ import Iso from 'iso';
 import { clientRender } from 'shared/UniversalRender';
 import ConsoleExports from './utils/ConsoleExports';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import * as steem from '@steemit/steem-js';
+import * as steem from '@blocktradesdev/steem-js';
 import { determineViewMode } from 'app/utils/Links';
 import frontendLogger from 'app/utils/FrontendLogger';
 

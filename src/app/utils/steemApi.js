@@ -1,4 +1,4 @@
-import { api } from '@steemit/steem-js';
+import { api } from '@blocktradesdev/steem-js';
 
 import stateCleaner from 'app/redux/stateCleaner';
 

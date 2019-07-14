@@ -13,7 +13,7 @@ import MiniHeader from 'app/components/modules/MiniHeader';
 import tt from 'counterpart';
 import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { key_utils } from '@steemit/steem-js/lib/auth/ecc';
+import { key_utils } from '@blocktradesdev/steem-js/lib/auth/ecc';
 import resolveRoute from 'app/ResolveRoute';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
 
