@@ -67,6 +67,13 @@ const SidePanel = ({
                 }freex`,
             },
         ],
+        community: [
+            {
+                value: 'dtube',
+                label: 'AceTube',
+                link: 'https://tube.steemace.io/',
+            },
+        ],
         exchanges: [
             {
                 value: 'blocktrades',
@@ -156,6 +163,15 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">
+                            Community
+                        </a>
+                    </li>
+                    {sidePanelLinks['community'].map(makeLink)}
+                </ul>
+                
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
