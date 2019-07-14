@@ -17,11 +17,15 @@ export const TAG_LIST = List([
     'nextcolony',
     'drugwars',
     'radaquest',
-    'steemarena',
-    'gamepreview',
+    'roadofrich',
     'gamereview',
     'gaming',
-    'giveaway',
+    'dtube',
+    'vimmtv',
+    'pc',
+    'xbox',
+    'ps4',
+    'vr',
     'battle',
 ]);
 export const LIQUID_TOKEN = 'Battle';
