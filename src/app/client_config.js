@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const APP_NAME = 'SportsTalkSocial';
@@ -12,21 +12,21 @@ export const APP_ICON = 'sports';
 export const APP_URL = 'https://www.sportstalksocial.com';
 export const APP_DOMAIN = 'www.sportstalksocial.com';
 export const SCOT_TAG = 'sportstalk';
-export const TAG_LIST = List([
-    'football',
-    'amfootball',
-    'baseball',
-    'basketball',
-    'mma',
-    'horseracing',
-    'cricket',
-    'golf',
-    'hockey',
-    'tennis',
-    'wrestling',
-    'fantasy',
-    'esports',
-]);
+export const TAG_LIST = fromJSOrdered({
+    football: ['FIFA', 'worldcup'],
+    amfootball: ['NFL', 'collegefb'],
+    baseball: [],
+    basketball: [],
+    mma: [],
+    horseracing: [],
+    cricket: [],
+    golf: [],
+    hockey: [],
+    tennis: [],
+    wrestling: [],
+    fantasy: [],
+    esports: [],
+});
 export const LIQUID_TOKEN = 'Sports';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SPORTS';
