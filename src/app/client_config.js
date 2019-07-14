@@ -12,7 +12,31 @@ export const APP_ICON = 'reggaesteem';
 export const APP_URL = 'https://www.reggaesteem.io';
 export const APP_DOMAIN = 'www.reggaesteem.io';
 export const SCOT_TAG = 'jahm';
-export const TAG_LIST = List(['jahm']);
+export const TAG_LIST = List([
+    'jahm',
+    'reggaesteem',
+    'afrobeatz',
+    'albums',
+    'calypso',
+    'classical',
+    'culture',
+    'dance',
+    'dancehall',
+    'dubstep',
+    'events',
+    'international',
+    'introduceyourself',
+    'fiwi',
+    'fashion',
+    'fusion',
+    'newmusic',
+    'reggae',
+    'reggaeton',
+    'retro',
+    'reviews',
+    'ska',
+    'travel',
+]);
 export const LIQUID_TOKEN = 'Jahm';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'JAHM';
