@@ -168,6 +168,22 @@ function* usernamePasswordLogin({
         return;
     }
 
+    let userProvidedRole; // login via:  username/owner
+    if (username.indexOf('/') > -1) {
+        // "alice/active" will login only with Alices active key
+        [username, userProvidedRole] = username.split('/');
+    }
+
+    const isRole = (role, fn) =>
+        !userProvidedRole || role === userProvidedRole ? fn() : undefined;
+
+    const account = yield call(getAccount, username);
+    if (!account) {
+        console.log('No account');
+        yield put(userActions.loginError({ error: 'Username does not exist' }));
+        return;
+    }
+
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
@@ -182,22 +198,6 @@ function* usernamePasswordLogin({
                 ),
             })
         );
-        return;
-    }
-
-    let userProvidedRole; // login via:  username/owner
-    if (username.indexOf('/') > -1) {
-        // "alice/active" will login only with Alices active key
-        [username, userProvidedRole] = username.split('/');
-    }
-
-    const isRole = (role, fn) =>
-        !userProvidedRole || role === userProvidedRole ? fn() : undefined;
-
-    const account = yield call(getAccount, username);
-    if (!account) {
-        console.log('No account');
-        yield put(userActions.loginError({ error: 'Username does not exist' }));
         return;
     }
 
