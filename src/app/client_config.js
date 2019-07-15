@@ -13,13 +13,16 @@ export const APP_URL = 'https://www.steemace.io/';
 export const APP_DOMAIN = 'www.steemace.io';
 export const SCOT_TAG = 'steemace';
 export const TAG_LIST = List([
-    'splinterlands',
-    'nextcolony',
-    'contest',
     'games',
     'gaming',
     'gamereview',
     'esports',
+    'splinterlands',
+    'steemmonsters',
+    'nextcolony',
+    'roadofrich',
+    'radaquest',
+    'contest',
     'memes',
     'dtube',
     'vimmtv',
@@ -27,6 +30,7 @@ export const TAG_LIST = List([
     'zzan',
     'palnet',
     'battle',
+    'spanish',
     'deutsch',
     'steemfest']);
 export const LIQUID_TOKEN = 'GG';
