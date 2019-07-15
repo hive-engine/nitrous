@@ -955,6 +955,13 @@ export default formId =>
                     return;
                 }
 
+                // Add footer
+                const footer =
+                    '<hr><center>Posted via <a href="https://www.reggaesteem.io/">ReggaeSteem.io</a> | Reggae Culture Rewarded </center>';
+                if (!body.endsWith(footer)) {
+                    body += footer;
+                }
+
                 if (meta.tags.length > 10) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
