@@ -12,7 +12,23 @@ export const APP_ICON = 'steemace';
 export const APP_URL = 'https://www.steemace.io/';
 export const APP_DOMAIN = 'www.steemace.io';
 export const SCOT_TAG = 'steemace';
-export const TAG_LIST = List(['steemace','dtube']);
+export const TAG_LIST = List([
+    'splinterlands',
+    'nextcolony',
+    'contest',
+    'games',
+    'gaming',
+    'gamereview',
+    'esports',
+    'memes',
+    'dtube',
+    'vimmtv',
+    'sct',
+    'zzan',
+    'palnet',
+    'battle',
+    'deutsch',
+    'steemfest']);
 export const LIQUID_TOKEN = 'GG';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'GG';
