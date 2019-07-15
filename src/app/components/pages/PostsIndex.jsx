@@ -57,6 +57,13 @@ class PostsIndex extends React.Component {
     }
 
     getPosts(order, category) {
+        const pinned = this.props.pinned;
+        const pinnedPosts = pinned
+            ? pinned.has('pinned_posts')
+              ? pinned.get('pinned_posts').toJS()
+              : []
+            : [];
+        const notices = this.props.notices || [];
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
@@ -67,7 +74,9 @@ class PostsIndex extends React.Component {
                 promotedDiscussions.size > 0 &&
                 mainDiscussions
             ) {
-                const processed = new Set(); // mutable
+                const processed = new Set(
+                    pinnedPosts.map(p => `${p.author}/${p.permlink}`)
+                ); // mutable
                 const interleaved = [];
                 const promoted = [];
                 let promotedIndex = 0;
