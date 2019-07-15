@@ -28,6 +28,7 @@ export const TAG_LIST = List([
     'qna',
     'sct-alliance',
 ]);
+export const PROMOTED_TAG_LIST = List(['zzan', 'spt']);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';

@@ -13,6 +13,7 @@ const Topics = ({
     className,
     username,
     categories,
+    promoted,
 }) => {
     const handleChange = selectedOption => {
         browserHistory.push(selectedOption.value);
@@ -38,16 +39,16 @@ const Topics = ({
             const ex = {
                 allTags: order => ({
                     value: `/${order}`,
-                    label: `${tt('g.all_tags_mobile')}`,
+                    label: `${promoted ? tt('g.pr_tags') : tt('g.all_tags')}`,
                 }),
                 myFeed: name => ({
                     value: `/@${name}/feed`,
                     label: `${tt('g.my_feed')}`,
                 }),
             };
-            return username
-                ? [ex.allTags(order), ex.myFeed(username)]
-                : [ex.allTags(order)];
+            return !username || promoted
+                ? [ex.allTags(order)]
+                : [ex.allTags(order), ex.myFeed(username)];
         };
 
         const opts = extras(username).concat(
@@ -92,19 +93,23 @@ const Topics = ({
                                     className="c-sidebar__link"
                                     activeClassName="active"
                                 >
-                                    {tt('g.all_tags')}
+                                    {promoted
+                                        ? tt('g.pr_tags')
+                                        : tt('g.all_tags')}
                                 </Link>
                             </div>
                         </li>
                         {categoriesLinks}
-                        <li className="c-sidebar__link">
-                            <Link
-                                className="c-sidebar__link c-sidebar__link--emphasis"
-                                to={`/tags`}
-                            >
-                                {tt('g.show_more_topics')}&hellip;
-                            </Link>
-                        </li>
+                        {!promoted && (
+                            <li className="c-sidebar__link">
+                                <Link
+                                    className="c-sidebar__link c-sidebar__link--emphasis"
+                                    to={`/tags`}
+                                >
+                                    {tt('g.show_more_topics')}&hellip;
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

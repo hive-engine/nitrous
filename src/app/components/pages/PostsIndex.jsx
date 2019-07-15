@@ -8,7 +8,11 @@ import { List } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
+import {
+    INTERLEAVE_PROMOTED,
+    TAG_LIST,
+    PROMOTED_TAG_LIST,
+} from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -36,6 +40,7 @@ class PostsIndex extends React.Component {
         username: PropTypes.string,
         blogmode: PropTypes.bool,
         categories: PropTypes.object,
+        categoriesPromoted: PropTypes.object,
     };
 
     static defaultProps = {
@@ -139,7 +144,12 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { categories, discussions, pinned } = this.props;
+        const {
+            categories,
+            categoriesPromoted,
+            discussions,
+            pinned,
+        } = this.props;
 
         let topics_order = order;
         let posts = List();
@@ -245,7 +255,7 @@ class PostsIndex extends React.Component {
             >
                 <article className="articles">
                     <div className="articles__header row">
-                        <div className="small-6 medium-6 large-6 column">
+                        <div className="small-4 medium-4 large-4 column">
                             <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
                                 {page_title}
                             </h1>
@@ -254,12 +264,25 @@ class PostsIndex extends React.Component {
                                     username={this.props.username}
                                     order={topics_order}
                                     current={category}
-                                    categories={categories}
+                                    categories={categoriesPromoted}
                                     compact={true}
+                                    promoted={true}
                                 />
                             </span>
                         </div>
-                        <div className="small-6 medium-5 large-5 column hide-for-large articles__header-select">
+                        <div className="small-4 medium-4 large-4 column">
+                            <span className="hide-for-mq-large articles__header-select">
+                                <Topics
+                                    username={this.props.username}
+                                    order={topics_order}
+                                    current={category}
+                                    categories={categories}
+                                    compact={true}
+                                    promoted={false}
+                                />
+                            </span>
+                        </div>
+                        <div className="small-4 medium-4 large-4 column hide-for-large articles__header-select">
                             <SortOrder
                                 sortOrder={this.props.sortOrder}
                                 topic={this.props.topic}
@@ -297,6 +320,7 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
+
                     {this.props.isBrowser && (
                         <div>
                             <SidebarBurn
@@ -354,7 +378,16 @@ class PostsIndex extends React.Component {
                         current={category}
                         compact={false}
                         username={this.props.username}
+                        categories={categoriesPromoted}
+                        promoted={true}
+                    />
+                    <Topics
+                        order={topics_order}
+                        current={category}
+                        compact={false}
+                        username={this.props.username}
                         categories={categories}
+                        promoted={false}
                     />
                     <small>
                         <a
@@ -410,6 +443,7 @@ module.exports = {
                 sortOrder: ownProps.params.order,
                 topic: ownProps.params.category,
                 categories: TAG_LIST,
+                categoriesPromoted: PROMOTED_TAG_LIST,
                 pinned: state.offchain.get('pinned_posts'),
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
