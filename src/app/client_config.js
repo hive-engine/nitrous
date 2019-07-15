@@ -68,3 +68,4 @@ export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
 // Other configurations
 export const ALLOW_MASTER_PW = false;
+export const POST_FOOTER = '';

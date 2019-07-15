@@ -17,7 +17,12 @@ import { fromJS, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG, APP_MAX_TAG } from 'app/client_config';
+import {
+    APP_NAME,
+    SCOT_TAG,
+    APP_MAX_TAG,
+    POST_FOOTER,
+} from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -1006,6 +1011,11 @@ export default formId =>
                 if (sanitizeErrors.length) {
                     errorCallback(sanitizeErrors.join('.  '));
                     return;
+                }
+
+                // Add footer
+                if (POST_FOOTER && !body.endsWith(POST_FOOTER)) {
+                    body += POST_FOOTER;
                 }
 
                 if (meta.tags.length > MAX_TAG) {
