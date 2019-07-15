@@ -12,7 +12,30 @@ export const APP_ICON = 'marlians';
 export const APP_URL = 'https://www.marlians.com';
 export const APP_DOMAIN = 'www.marlians.com';
 export const SCOT_TAG = 'marlians';
-export const TAG_LIST = List(['marlians']);
+export const TAG_LIST = List([
+    'marlians',
+    'helloworld',
+    'ye',
+    'iamnotayahooboy',
+    'mamaput',
+    'wazobia',
+    'wetinday',
+    'myagbada',
+    'mybuba',
+    'myeba',
+    'iwantdata (locked)',
+    'ourmamaterry',
+    'ulog',
+    'upnepa',
+    'naijagists',
+    'connections (locked)',
+    'grow (locked)',
+    'postpromotion (locked)',
+    'imadethis',
+    'whoami',
+    'steemgigs',
+    'hangouts',
+]);
 export const LIQUID_TOKEN = 'Marlians';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'MARLIANS';
