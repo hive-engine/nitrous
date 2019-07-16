@@ -1,7 +1,8 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import ReplyEditor from 'app/components/elements/ReplyEditor';
-import { SUBMIT_FORM_ID } from 'shared/constants';
+import { SUBMIT_FORM_ID, MOVIEDB_URL_PATTERN } from 'shared/constants';
+import axios from 'axios';
 
 const formId = SUBMIT_FORM_ID;
 // const richTextEditor = process.env.BROWSER ? require('react-rte-image').default : null;
@@ -14,8 +15,22 @@ class SubmitPost extends React.Component {
     // }
     constructor() {
         super();
-        this.success = (/*operation*/) => {
-            // const { category } = operation
+        this.success = operations => {
+            try {
+                if (operations) {
+                    const { author, permlink, body } = operations[0][0][1];
+
+                    if (MOVIEDB_URL_PATTERN.test(body)) {
+                        axios.post(
+                            'https://tool.steem.world/AAA/AddMoviePost',
+                            { author, permlink }
+                        );
+                    }
+                }
+            } catch (e) {
+                console.log(e);
+            }
+
             localStorage.removeItem('replyEditorData-' + formId);
             browserHistory.push('/created'); //'/category/' + category)
         };

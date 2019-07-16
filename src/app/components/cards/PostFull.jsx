@@ -30,6 +30,7 @@ import { GoogleAd } from 'app/components/elements/GoogleAd';
 import axios from 'axios';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import OtherReviewsOfSameMovie from 'app/components/elements/OtherReviewsOfSameMovie';
+import { MOVIEDB_URL_PATTERN } from 'shared/constants';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -104,6 +105,7 @@ class PostFull extends React.Component {
         this.showExplorePost = this.showExplorePost.bind(this);
         this.showLuckyBoxIcon = this.showLuckyBoxIcon.bind(this);
         this.showLuckyBox = this.showLuckyBox.bind(this);
+        this.successDelete = this.successDelete.bind(this);
         this.onShowReply = () => {
             const { state: { showReply, formId } } = this;
             this.setState({ showReply: !showReply, showEdit: false });
@@ -117,7 +119,11 @@ class PostFull extends React.Component {
         this.onDeletePost = () => {
             const { props: { deletePost } } = this;
             const content = this.props.cont.get(this.props.post);
-            deletePost(content.get('author'), content.get('permlink'));
+            deletePost(
+                content.get('author'),
+                content.get('permlink'),
+                this.successDelete
+            );
         };
 
         const username = props.username;
@@ -258,6 +264,21 @@ class PostFull extends React.Component {
         const permlink = this.share_params.link;
         const title = this.share_params.rawtitle;
         this.props.showExplorePost(permlink, title);
+    };
+
+    successDelete = operations => {
+        try {
+            if (operations) {
+                const { author, permlink } = operations[1];
+
+                axios.post('https://tool.steem.world/AAA/DeletePost', {
+                    author,
+                    permlink,
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     showLuckyBox = () => {
@@ -404,7 +425,26 @@ class PostFull extends React.Component {
                     <Editor
                         {...replyParams}
                         type={this.state.showReply ? 'submit_comment' : 'edit'}
-                        successCallback={() => {
+                        successCallback={operations => {
+                            try {
+                                if (operations) {
+                                    const {
+                                        author,
+                                        permlink,
+                                        body,
+                                    } = operations[0][0][1];
+
+                                    if (MOVIEDB_URL_PATTERN.test(body)) {
+                                        axios.post(
+                                            'https://tool.steem.world/AAA/AddMoviePost',
+                                            { author, permlink }
+                                        );
+                                    }
+                                }
+                            } catch (e) {
+                                console.log(e);
+                            }
+
                             this.setState({
                                 showReply: false,
                                 showEdit: false,
@@ -645,12 +685,13 @@ export default connect(
         unlock: () => {
             dispatch(userActions.showLogin());
         },
-        deletePost: (author, permlink) => {
+        deletePost: (author, permlink, successCallback) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
+                    successCallback,
                 })
             );
         },
