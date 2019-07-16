@@ -55,6 +55,7 @@ export const icons = [
     'pencil2',
     'pin',
     'pin-disabled',
+    'dtube',
 ];
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);
