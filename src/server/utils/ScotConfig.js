@@ -72,7 +72,7 @@ ScotConfig.prototype.refresh = async function() {
                 ? item.json_metadata_value.split(',')
                 : [],
         }));
-
+        
         const scotInfo = await getScotDataAsync('info', {
             token: LIQUID_TOKEN_UPPERCASE,
         });
