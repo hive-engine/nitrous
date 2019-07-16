@@ -1,5 +1,6 @@
 import React from 'react';
 import tt from 'counterpart';
+import Icon from 'app/components/elements/Icon';
 
 const SidebarLinks = ({ username }) => (
     <div className="c-sidebar__module">
@@ -25,6 +26,18 @@ const SidebarLinks = ({ username }) => (
                         href={`/@${username}/transfers`}
                     >
                         {tt('g.my_wallet')}
+                    </a>
+                </li>
+                <li className="c-sidebar__list-item">
+                    <a
+                        className="c-sidebar__link"
+                        href={'https://video.sportstalksocial.com/'}
+                        target="_blank"
+                    >
+                        <span>
+                            {tt('g.scottube')}
+                            <Icon name="dtube" size="2x" />
+                        </span>
                     </a>
                 </li>
             </ul>
