@@ -21,7 +21,7 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import { APP_DOMAIN, APP_NAME, APP_ICON } from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
@@ -239,7 +239,7 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post },
+            props: { username, post, scotTokens },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -260,6 +260,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = '';
+        if (jsonMetadata) app_info = jsonMetadata.app || '';
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -373,6 +375,11 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {app_info.startsWith(`${APP_ICON}/`) && (
+                    <span title={tt('g.written_from', { app_name: APP_NAME })}>
+                        <Icon name="steemcoinpan" />
+                    </span>
+                )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -480,7 +487,7 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
@@ -552,10 +559,14 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => ({
-        ...ownProps,
-        username: state.user.getIn(['current', 'username']),
-    }),
+    (state, ownProps) => {
+        const scotConfig = state.app.get('scotConfig');
+        return {
+            ...ownProps,
+            username: state.user.getIn(['current', 'username']),
+            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
+        };
+    },
 
     // mapDispatchToProps
     dispatch => ({
