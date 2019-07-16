@@ -66,6 +66,7 @@ const Topics = ({
         return { tag, label };
     };
 
+    const max_levels = levels || 3;
     categories = buildCategories(categories, 0, levels);
 
     if (compact) {

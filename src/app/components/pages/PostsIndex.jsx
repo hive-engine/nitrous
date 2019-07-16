@@ -132,26 +132,30 @@ class PostsIndex extends React.Component {
     };
 
     searchCategories(cat, parent, categories) {
-        if (!cat) return { par: parent, cats: categories };
+        if (!cat) return { par: parent, cats: categories, found: false };
 
         // leaf nodes
         if (List.isList(categories)) {
             if (categories.includes(cat))
-                return { par: parent, cats: categories };
-            else return { par: parent, cats: null };
+                return { par: parent, cats: categories, found: true };
+            else return { par: parent, cats: null, found: false };
         } else {
             for (const c of categories.keys()) {
                 const v = categories.get(c);
                 if (cat === c && v !== null && !v.isEmpty()) {
-                    return { par: parent, cats: v };
+                    return { par: parent, cats: v, found: true };
                 } else {
-                    const { par, cats } = this.searchCategories(cat, c, v);
+                    const { par, cats, found } = this.searchCategories(
+                        cat,
+                        c,
+                        v
+                    );
                     if (cats !== null && !cats.isEmpty()) {
-                        return { par, cats };
+                        return { par, cats, found };
                     }
                 }
             }
-            return { par: parent, cats: null };
+            return { par: parent, cats: null, found: false };
         }
     }
 
@@ -180,13 +184,13 @@ class PostsIndex extends React.Component {
         } = this.props.routeParams;
 
         const { discussions, pinned } = this.props;
-        const { par, cats } = this.searchCategories(
+        const { par, cats, found } = this.searchCategories(
             category,
             null,
             this.props.categories
         );
         const categories = this.buildCategories(category, par, cats);
-        const max_levels = category ? 3 : 2;
+        const max_levels = category && found ? 3 : 2;
 
         let topics_order = order;
         let posts = List();
