@@ -129,6 +129,28 @@ const SidePanel = ({
                 link: 'https://discord.gg/QjvDDZd',
             },
         ],
+        television: [
+            {
+                value: 'tv_marlians',
+                label: 'Marlians',
+                link: 'https://www.youtube.com/channel/UCH4tvTSFkjn3KqNQfJVWITQ',
+            },
+            {
+                value: 'tv_uloggers',
+                label: 'UloggersTV',
+                link: 'https://www.youtube.com/channel/UCzI3Rjamg7zSe_o0BwSeIQQ',
+            },
+            {
+                value: 'tv_untalented',
+                label: 'UntalentedTV',
+                link: 'https://www.youtube.com/channel/UCq6ylwOaSG9VDYwZkMr3jMw',
+            },
+            {
+                value: 'tv_teardrops',
+                label: 'TeardropsTV',
+                link: 'https://www.youtube.com/channel/UCnIJlzMZzfrcE0bXabLpXKw',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',
@@ -174,6 +196,14 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">
+                            TV(s)
+                        </a>
+                    </li>
+                    {sidePanelLinks['television'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
