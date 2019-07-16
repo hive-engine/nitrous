@@ -505,12 +505,17 @@ class Voting extends React.Component {
             // only if scot is present.
             let currRshares = 0;
             if (scotData) {
+                const rsharesTotal = avotes
+                    .map(x => x.rshares)
+                    .reduce((x, y) => x + y);
+                const claimsTotal = applyRewardsCurve(rsharesTotal);
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (
+                        payout *
                         (applyRewardsCurve(currRshares + vote.rshares) -
                             applyRewardsCurve(currRshares)) /
-                        Math.pow(10, scotPrecision)
+                        claimsTotal
                     ).toFixed(scotPrecision);
                     currRshares += vote.rshares;
                 }
@@ -655,6 +660,12 @@ export default connect(
                 'author_curve_exponent',
             ]),
         };
+        // set author_curve_exponent to what's on the post (in case of transition period)
+        if (scotData && scotData.has('author_curve_exponent')) {
+            rewardData.author_curve_exponent = scotData.get(
+                'author_curve_exponent'
+            );
+        }
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
