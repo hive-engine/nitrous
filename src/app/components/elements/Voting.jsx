@@ -658,6 +658,12 @@ export default connect(
                 'author_curve_exponent',
             ]),
         };
+        // set author_curve_exponent to what's on the post (in case of transition period)
+        if (scotData && scotData.has('author_curve_exponent')) {
+            rewardData.author_curve_exponent = scotData.get(
+                'author_curve_exponent'
+            );
+        }
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
