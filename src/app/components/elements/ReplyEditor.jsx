@@ -959,7 +959,7 @@ export default formId =>
                 const footer =
                     '<hr><center>Posted via <a href="https://www.reggaesteem.io/">ReggaeSteem.io</a> | Reggae Culture Rewarded </center>';
                 if (!body.endsWith(footer)) {
-                    body += footer;
+                    body += "\n\n" + footer;
                 }
 
                 if (meta.tags.length > 10) {
