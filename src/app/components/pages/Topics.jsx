@@ -14,6 +14,7 @@ const Topics = ({
     className,
     username,
     categories,
+    levels,
 }) => {
     const handleChange = selectedOption => {
         browserHistory.push(selectedOption.value);
@@ -42,7 +43,7 @@ const Topics = ({
         return a;
     };
 
-    const buildCategories = (categories, level) => {
+    const buildCategories = (categories, level, max) => {
         const prefix = buildPrefix(level);
         if (List.isList(categories)) {
             return categories.map(c => prefix + c);
@@ -50,9 +51,9 @@ const Topics = ({
             let c_list = List();
             categories.mapKeys((c, v) => {
                 c_list = c_list.push(prefix + c);
-                // only display two levels
-                if (level == 0) {
-                    c_list = c_list.concat(buildCategories(v, level + 1));
+                // only display max levels
+                if (level < max - 1) {
+                    c_list = c_list.concat(buildCategories(v, level + 1, max));
                 }
             });
             return c_list;
@@ -60,12 +61,12 @@ const Topics = ({
     };
 
     const parseCategory = cat => {
-        const tag = cat.replace('>', '');
-        const label = cat.replace('>', '\u00a0\u00a0\u00a0');
+        const tag = cat.replace(/\>/g, '');
+        const label = cat.replace(/\>/g, '\u00a0\u00a0\u00a0');
         return { tag, label };
     };
 
-    categories = buildCategories(categories, 0);
+    categories = buildCategories(categories, 0, levels);
 
     if (compact) {
         const extras = username => {
