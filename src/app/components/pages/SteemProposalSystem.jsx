@@ -95,8 +95,8 @@ class SteemProposalSystem extends React.Component {
 
     getVoterProposals(user) {
         this.props.listVoterProposals({
-            start: user,
-            order_by: 'by_total_votes',
+            start: [user],
+            order_by: 'by_voter_proposal',
             order_direction: 'descending',
             limit: 1000,
             status: 'all',
@@ -109,10 +109,10 @@ class SteemProposalSystem extends React.Component {
         last_id,
         order_by = 'by_total_votes',
         order_direction = 'descending',
-        start = [0]
+        start = [-1]
     ) {
         this.props.listProposals({
-            start,
+            start: last_id ? start.concat(last_id) : start,
             order_by,
             order_direction,
             limit,
@@ -196,6 +196,7 @@ class SteemProposalSystem extends React.Component {
         isOwner = false,
         isVoted = false
     ) {
+        const { socialUrl } = this.state;
         switch (key) {
             case 'start_date':
             case 'end_date':
@@ -216,7 +217,9 @@ class SteemProposalSystem extends React.Component {
 
                 return [
                     <a
-                        href={value}
+                        href={`${socialUrl}/${proposal.get('creator')}/${
+                            value
+                        }`}
                         target="__blank"
                         key={`proposal-extlink-${value}`}
                         title="Perm link"
@@ -396,6 +399,7 @@ module.exports = {
     path: 'steem_proposal_system',
     component: connect(
         state => {
+            const socialUrl = state.app.get('socialUrl');
             const user = state.user.get('current');
             const currentUser = user && user.get('username');
             const proposals = state.global.get('proposals', List());
@@ -427,8 +431,8 @@ module.exports = {
                         successCallback: () => {
                             dispatch(
                                 fetchDataSagaActions.listVoterProposals({
-                                    start: voter,
-                                    order_by: 'by_total_votes',
+                                    start: [voter],
+                                    order_by: 'by_voter_proposal',
                                     order_direction: 'descending',
                                     limit: 1000,
                                     status: 'all',
@@ -449,7 +453,7 @@ module.exports = {
                         successCallback: () => {
                             dispatch(
                                 fetchDataSagaActions.listProposals({
-                                    start: [0],
+                                    start: [-1],
                                     order_by: 'by_total_votes',
                                     order_direction: 'descending',
                                     limit: 11,

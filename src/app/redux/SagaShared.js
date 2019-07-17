@@ -79,13 +79,18 @@ export function* listProposals({
 }) {
     let proposals;
     while (!proposals) {
-        proposals = yield call(
+        /*proposals = yield call(
             [api, api.listProposalsAsync],
             start,
             limit,
             order_by,
             order_direction,
             status
+        );*/
+        proposals = yield call(
+            [api, api.callAsync],
+            'condenser_api.list_proposals',
+            [start, limit, order_by, order_direction, status]
         );
     }
 
@@ -108,13 +113,18 @@ export function* listVoterProposals({
 }) {
     let voterProposals;
     while (!voterProposals) {
-        voterProposals = yield call(
+        /*voterProposals = yield call(
             [api, api.listVoterProposalsAsync],
             start,
             limit,
             order_by,
             order_direction,
             status
+        );*/
+        voterProposals = yield call(
+            [api, api.callAsync],
+            'condenser_api.list_proposal_votes',
+            [start, limit, order_by, order_direction, status]
         );
     }
 
