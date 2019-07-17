@@ -12,7 +12,7 @@ class NotFound extends React.Component {
                         <a href="/">
                             <SvgImage
                                 name={APP_ICON}
-                                width="40px"
+                                width="180px"
                                 height="40px"
                             />
                         </a>
