@@ -23,7 +23,7 @@ class App extends React.Component {
         // TODO: put both of these and associated toggles into Redux Store.
         this.state = {
             showCallout: true,
-            showBanner: false,
+            showBanner: true,
         };
         this.listenerActive = null;
     }

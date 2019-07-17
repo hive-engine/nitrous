@@ -19,40 +19,26 @@ export default class WelcomePanel extends React.Component {
                         <div className="text-center welcomeImage small-12 show-for-small-only">
                             <img
                                 className="heroImage"
-                                src={require('app/assets/images/welcome-hero.png')}
+                                src={require('app/assets/images/marlians.png')}
                             />
                         </div>
                     </div>
                     <div className="row">
                         <div className="large-1 show-for-large" />
                         <div className="small-12 medium-6 large-5 welcomePitch">
-                            <h2 className="fade-in--1">
-                                {tt('navigation.intro_tagline')}
-                            </h2>
+                            <h2 className="fade-in--1">Marlians -</h2>
                             <h4 className="fade-in--3">
-                                {tt('navigation.intro_paragraph')}
+                                There is 'naijan' and there is 'confirm naijan'.
+                                One is regular, the other is 'great'. Be great.
+                                Be naijan. Get rewarded.<p />
+                                'All' is welcome; all content-types too.
+                                'Nations are locations!'
                             </h4>
-                            <div className="row buttonWrapper">
-                                <a
-                                    className="button button--primary fade-in--5"
-                                    href={SIGNUP_URL}
-                                >
-                                    {' '}
-                                    <b>{tt('navigation.sign_up')}</b>{' '}
-                                </a>
-
-                                <Link
-                                    href="/faq.html"
-                                    className="button ghost fade-in--7"
-                                >
-                                    <b>{tt('navigation.learn_more')}</b>
-                                </Link>
-                            </div>
                         </div>
                         <div className="text-center welcomeImage medium-6 large-5 show-for-medium">
                             <img
                                 className="heroImage"
-                                src={require('app/assets/images/welcome-hero.png')}
+                                src={require('app/assets/images/marlians.png')}
                             />
                         </div>
                     </div>
