@@ -419,6 +419,7 @@ module.exports = {
                 voterProposals,
                 last_id,
                 votesInProgress,
+                socialUrl,
             };
         },
         dispatch => ({
