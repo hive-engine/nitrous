@@ -6,7 +6,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self'",
-      "connectSrc": "'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "'self' steemit.com https://api.steemit.com https://testnet.steemitdev.com api.blocktrades.us",
       "defaultSrc": "'self'",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
