@@ -113,25 +113,42 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
-            },
-            {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
-            },
-            {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
-            },
-            {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
+                value: 'faq',
+                label: 'FAQ',
+                link: '/@surpassinggoogle/announcing-marlians-a-side-project-under-the-teardrops-ecosystem-a-marlians-nitrous-will-be-up-in-the-coming-days',
                 internal: true,
+            },
+            {
+                value: 'get_certified',
+                label: 'Get Certified',
+                link: 'https://discord.gg/usEdeU3',
+            },
+            {
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/QjvDDZd',
+            },
+        ],
+        television: [
+            {
+                value: 'tv_marlians',
+                label: 'Marlians',
+                link: 'https://www.youtube.com/channel/UCH4tvTSFkjn3KqNQfJVWITQ',
+            },
+            {
+                value: 'tv_uloggers',
+                label: 'UloggersTV',
+                link: 'https://www.youtube.com/channel/UCzI3Rjamg7zSe_o0BwSeIQQ',
+            },
+            {
+                value: 'tv_untalented',
+                label: 'UntalentedTV',
+                link: 'https://www.youtube.com/channel/UCq6ylwOaSG9VDYwZkMr3jMw',
+            },
+            {
+                value: 'tv_teardrops',
+                label: 'TeardropsTV',
+                link: 'https://www.youtube.com/channel/UCnIJlzMZzfrcE0bXabLpXKw',
             },
         ],
         legal: [
@@ -171,6 +188,22 @@ const SidePanel = ({
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">
+                            Community
+                        </a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">
+                            TV(s)
+                        </a>
+                    </li>
+                    {sidePanelLinks['television'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
