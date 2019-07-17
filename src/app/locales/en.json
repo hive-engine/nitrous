@@ -213,8 +213,8 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Authors get paid when people like you upvote their post",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "If you enjoyed what you read here, create your account today and start earning FREE STEEM!",
-            "free_steem": "FREE STEEM!",
+                "If you enjoyed what you read here, create your account today and start earning FREE TESTS!",
+            "free_steem": "FREE TESTS!",
             "sign_up_earn_steem": "Sign up now to earn "
         },
         "next_3_strings_together": {
@@ -292,7 +292,7 @@
         "selecting_them": "selecting them",
         "image_upload": "Image upload",
         "power_up_100": "Power Up 100%%",
-        "default_50_50": "50%% SBD / 50%% SP",
+        "default_50_50": "50%% TBD / 50%% TP",
         "decline_payout": "Decline Payout",
         "check_this_to_auto_upvote_your_post":
             "Check this to auto-upvote your post",
@@ -551,7 +551,7 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate."
+            "Part of %(user_name)s's TEST POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
@@ -579,7 +579,7 @@
         "cancel_transfer_from_savings":
             "Cancel transfer from savings (request %(request_id)s)",
         "stop_power_down": "Stop power down",
-        "withdraw_vesting": "Start power down of %(powerdown_vests)s STEEM",
+        "withdraw_vesting": "Start power down of %(powerdown_vests)s TESTS",
         "start_power_down_of": "Start power down of",
         "receive_interest_of": "Receive interest of",
         "bad_actor_caution": "Caution",
@@ -591,9 +591,9 @@
             "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
         "from_negative_rep_user_reveal_memo":
             "I understand the risk; show anyway.",
-        "curation_reward": "%(curation_reward)s STEEM POWER for ",
+        "curation_reward": "%(curation_reward)s TEST POWER for ",
         "author_reward":
-            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
+            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s TEST POWER for ",
         "claim_reward_balance": {
             "three_rewards":
                 "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
@@ -611,15 +611,15 @@
                 "Paid %(current_pays)s for %(open_pays)s"
         },
         "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
+            "%(benefactor_reward)s TEST POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
-                "no_to": "Transfer %(amount)s to STEEM POWER",
-                "to_someone": "Transfer %(amount)s STEEM POWER to "
+                "no_to": "Transfer %(amount)s to TEST POWER",
+                "to_someone": "Transfer %(amount)s TEST POWER to "
             },
-            "to_self": "Receive %(amount)s STEEM POWER from ",
+            "to_self": "Receive %(amount)s TEST POWER from ",
             "from_user_to_user":
-                " Transfer %(amount)s STEEM POWER from %(from) to "
+                " Transfer %(amount)s TEST POWER from %(from) to "
         },
         "transfer": {
             "from_self": {
@@ -708,7 +708,7 @@
             "This operation requires your %(authType)s key or Master password.",
         "keep_me_logged_in": "Keep me logged in",
         "signup_button": "Sign up now to earn ",
-        "signup_button_emphasis": "FREE STEEM!",
+        "signup_button_emphasis": "FREE TESTS!",
         "sign_up_get_steem": "Sign up",
         "returning_users": "Returning Users: ",
         "login_to_wallet": "Login to Wallet",
@@ -816,7 +816,7 @@
         "transfers_are_temporary_disabled": "Transfers are temporary disabled.",
         "history": "HISTORY",
         "redeem_rewards": "Redeem Rewards (Transfer to Balance)",
-        "buy_steem_or_steem_power": "Buy STEEM or STEEM POWER"
+        "buy_steem_or_steem_power": "Buy TESTS or TEST POWER"
     },
     "powerdown_jsx": {
         "power_down": "Power Down",
@@ -876,11 +876,11 @@
             "Welcome to Steemit's official Steem blockchain wallet. Use it to transfer Steem tokens, Power up, vote for Steem Witnesses and change your Steem profile details.",
         "login": "Login",
         "steem_tokens": "Steem tokens",
-        "steem_symbol": "STEEM",
+        "steem_symbol": "TESTS",
         "steem_description": "Liquid platform token",
-        "steem_power_symbol": "STEEM Power",
+        "steem_power_symbol": "TEST Power",
         "steem_power_description": "Vesting influence token",
-        "sbd_symbol": "SBD",
+        "sbd_symbol": "TBD",
         "sbd_description": "Seeks price stability with USD"
     },
     "steem_proposal_system_jsx": {

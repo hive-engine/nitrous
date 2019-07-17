@@ -6,6 +6,7 @@ import Memo from 'app/components/elements/Memo';
 import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
+import { LIQUID_TICKER, INVEST_TOKEN_UPPERCASE } from 'app/client_config';
 
 class TransferHistoryRow extends React.Component {
     render() {
@@ -193,7 +194,7 @@ class TransferHistoryRow extends React.Component {
             // `${curation_reward} STEEM POWER` + tt('g.for');
         } else if (type === 'author_reward') {
             let steem_payout = '';
-            if (data.steem_payout !== '0.000 STEEM')
+            if (data.steem_payout !== '0.000 TESTS')
                 steem_payout = ', ' + data.steem_payout;
             message = (
                 <span>
@@ -213,7 +214,7 @@ class TransferHistoryRow extends React.Component {
             if (parseFloat(data.reward_sbd.split(' ')[0]) > 0)
                 rewards.push(data.reward_sbd);
             if (parseFloat(data.reward_vests.split(' ')[0]) > 0)
-                rewards.push(`${reward_vests} STEEM POWER`);
+                rewards.push(`${reward_vests} ${INVEST_TOKEN_UPPERCASE}`);
 
             switch (rewards.length) {
                 case 3:

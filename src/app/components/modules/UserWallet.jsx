@@ -21,8 +21,10 @@ import { FormattedHTMLMessage } from 'app/Translator';
 import {
     LIQUID_TOKEN,
     LIQUID_TICKER,
+    DEBT_TICKER,
     DEBT_TOKENS,
     VESTING_TOKEN,
+    INVEST_TOKEN_SHORT,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -172,9 +174,10 @@ class UserWallet extends React.Component {
         if (savings_withdraws) {
             savings_withdraws.forEach(withdraw => {
                 const [amount, asset] = withdraw.get('amount').split(' ');
-                if (asset === 'STEEM') savings_pending += parseFloat(amount);
+                if (asset === LIQUID_TICKER)
+                    savings_pending += parseFloat(amount);
                 else {
-                    if (asset === 'SBD')
+                    if (asset === DEBT_TICKER)
                         savings_sbd_pending += parseFloat(amount);
                 }
             });
@@ -241,7 +244,7 @@ class UserWallet extends React.Component {
             !open_orders || !isMyAccount
                 ? 0
                 : open_orders.reduce((o, order) => {
-                      if (order.sell_price.base.indexOf('STEEM') !== -1) {
+                      if (order.sell_price.base.indexOf(LIQUID_TICKER) !== -1) {
                           o += order.for_sale;
                       }
                       return o;
@@ -311,7 +314,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: showTransfer.bind(
                     this,
-                    'STEEM',
+                    LIQUID_TICKER,
                     'Transfer to Account'
                 ),
             },
@@ -320,7 +323,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: showTransfer.bind(
                     this,
-                    'STEEM',
+                    LIQUID_TICKER,
                     'Transfer to Savings'
                 ),
             },
@@ -418,7 +421,7 @@ class UserWallet extends React.Component {
             '$' + sbdOrders.toFixed(3)
         );
         const savings_balance_str = numberWithCommas(
-            saving_balance_steem.toFixed(3) + ' STEEM'
+            saving_balance_steem.toFixed(3) + ' ' + LIQUID_TICKER
         );
         const savings_sbd_balance_str = numberWithCommas(
             '$' + sbd_balance_savings.toFixed(3)
@@ -430,7 +433,11 @@ class UserWallet extends React.Component {
                     LIQUID_TOKEN,
                 }),
                 link: '#',
-                onClick: showTransfer.bind(this, 'STEEM', 'Savings Withdraw'),
+                onClick: showTransfer.bind(
+                    this,
+                    LIQUID_TICKER,
+                    'Savings Withdraw'
+                ),
             },
         ];
         const savings_sbd_menu = [
@@ -458,7 +465,9 @@ class UserWallet extends React.Component {
                 : null;
         const reward_sp =
             parseFloat(account.get('reward_vesting_steem').split(' ')[0]) > 0
-                ? account.get('reward_vesting_steem').replace('STEEM', 'SP')
+                ? account
+                      .get('reward_vesting_steem')
+                      .replace(LIQUID_TICKER, INVEST_TOKEN_SHORT)
                 : null;
 
         let rewards = [];
@@ -530,7 +539,7 @@ class UserWallet extends React.Component {
                 </div>
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM
+                        {LIQUID_TICKER}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.liquid_token"
@@ -543,10 +552,12 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={steem_menu}
                                 el="li"
-                                selected={steem_balance_str + ' STEEM'}
+                                selected={
+                                    steem_balance_str + ' ' + LIQUID_TICKER
+                                }
                             />
                         ) : (
-                            steem_balance_str + ' STEEM'
+                            steem_balance_str + ' ' + LIQUID_TICKER
                         )}
                         {steemOrders ? (
                             <div
@@ -558,7 +569,8 @@ class UserWallet extends React.Component {
                             >
                                 <Link to="/market">
                                     <Tooltip t={tt('market_jsx.open_orders')}>
-                                        (+{steem_orders_balance_str} STEEM)
+                                        (+{steem_orders_balance_str}{' '}
+                                        {LIQUID_TICKER})
                                     </Tooltip>
                                 </Link>
                             </div>
@@ -567,7 +579,7 @@ class UserWallet extends React.Component {
                 </div>
                 <div className="UserWallet__balance row zebra">
                     <div className="column small-12 medium-8">
-                        STEEM POWER
+                        {VESTING_TOKEN}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.influence_token"
@@ -587,10 +599,12 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={power_menu}
                                 el="li"
-                                selected={power_balance_str + ' STEEM'}
+                                selected={
+                                    power_balance_str + ' ' + LIQUID_TICKER
+                                }
                             />
                         ) : (
-                            power_balance_str + ' STEEM'
+                            power_balance_str + ' ' + LIQUID_TICKER
                         )}
                         {delegated_steem != 0 ? (
                             <div
@@ -600,8 +614,9 @@ class UserWallet extends React.Component {
                                         : null,
                                 }}
                             >
-                                <Tooltip t="STEEM POWER delegated to/from this account">
-                                    ({received_power_balance_str} STEEM)
+                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
+                                    ({received_power_balance_str}{' '}
+                                    {LIQUID_TICKER})
                                 </Tooltip>
                             </div>
                         ) : null}
@@ -609,7 +624,7 @@ class UserWallet extends React.Component {
                 </div>
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM DOLLARS
+                        {DEBT_TOKENS}
                         <div className="secondary">{sbdMessage}</div>
                     </div>
                     <div className="column small-12 medium-4">
@@ -699,7 +714,10 @@ class UserWallet extends React.Component {
                                         'next_vesting_withdrawal'
                                     )}
                                 />{' '}
-                                {'(~' + powerdown_balance_str + ' STEEM)'}.
+                                {'(~' +
+                                    powerdown_balance_str +
+                                    ' ' +
+                                    LIQUID_TICKER}.
                             </span>
                         )}
                     </div>
