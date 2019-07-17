@@ -196,7 +196,7 @@ class SteemProposalSystem extends React.Component {
         isOwner = false,
         isVoted = false
     ) {
-        const { socialUrl } = this.state;
+        const { socialUrl } = this.props;
         switch (key) {
             case 'start_date':
             case 'end_date':
@@ -217,7 +217,7 @@ class SteemProposalSystem extends React.Component {
 
                 return [
                     <a
-                        href={`${socialUrl}/${proposal.get('creator')}/${
+                        href={`${socialUrl}/@${proposal.get('creator')}/${
                             value
                         }`}
                         target="__blank"
