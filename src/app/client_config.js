@@ -16,6 +16,7 @@ export const TAG_LIST = List([
     'games',
     'gaming',
     'gamereview',
+    'news',
     'esports',
     'splinterlands',
     'steemmonsters',
