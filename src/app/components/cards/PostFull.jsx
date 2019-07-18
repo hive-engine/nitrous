@@ -269,7 +269,7 @@ class PostFull extends React.Component {
     successDelete = operations => {
         try {
             if (operations) {
-                const { author, permlink } = operations[1];
+                const { author, permlink } = operations[0][1];
 
                 axios.post('https://tool.steem.world/AAA/DeletePost', {
                     author,
