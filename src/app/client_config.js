@@ -6,7 +6,7 @@ export const APP_NAME = 'RealityHub';
 // ie. "Голос" > "Golos"
 export const APP_NAME_LATIN = 'RealityHub';
 export const APP_NAME_UPPERCASE = 'REALITYHUB';
-export const APP_ICON = 'realityhub';
+export const APP_ICON = 'realityhubs';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.realityhubs.com';
