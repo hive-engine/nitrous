@@ -320,8 +320,7 @@ class Voting extends React.Component {
                 const rshares =
                     (up ? 1 : -1) *
                     stakedTokens *
-                    multiplier *
-                    b *
+                    Math.min(multiplier * b, 100.0) *
                     currentVp /
                     (10000 * 100);
                 const voteRshares = scotData.get('vote_rshares');
