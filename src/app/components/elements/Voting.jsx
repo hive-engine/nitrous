@@ -310,11 +310,17 @@ class Voting extends React.Component {
             let valueEst = '';
             if (cashout_active && currentVp) {
                 const stakedTokens = votingData.get('staked_tokens');
+                const multiplier = votingData.get(
+                    up
+                        ? 'vote_weight_multiplier'
+                        : 'downvote_weight_multiplier',
+                    1.0
+                );
                 // need computation for VP. Start with rough estimate.
                 const rshares =
                     (up ? 1 : -1) *
                     stakedTokens *
-                    b *
+                    Math.min(multiplier * b, 10000) *
                     currentVp /
                     (10000 * 100);
                 const voteRshares = scotData.get('vote_rshares');
