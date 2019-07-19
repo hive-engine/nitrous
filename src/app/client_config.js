@@ -1,11 +1,11 @@
 import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'RealityHub';
+export const APP_NAME = 'RealityHubs';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'RealityHub';
-export const APP_NAME_UPPERCASE = 'REALITYHUB';
+export const APP_NAME_LATIN = 'RealityHubs';
+export const APP_NAME_UPPERCASE = 'REALITYHUBS';
 export const APP_ICON = 'realityhubs';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
@@ -52,9 +52,11 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'RealityHub is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called RHB, that ' +
-    'supports real value for digital rewards through market price discovery and liquidity';
+    'RealityHubs is a social media platform where everyone gets rewarded for ' +
+    'sharing their perspectives about product, nature, photograph, and other visuals. ' +
+    'You can earn by creating and curating content. RealityHubs leverages a robust digital ' +
+    'points system, called RHB, that supports real value for digital rewards through market ' +
+    'price discovery and liquidity.';
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
