@@ -9,8 +9,8 @@ export const APP_NAME_UPPERCASE = 'REALITYHUB';
 export const APP_ICON = 'realityhub';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.realityhub.com';
-export const APP_DOMAIN = 'www.realityhub.com';
+export const APP_URL = 'https://www.realityhubs.com';
+export const APP_DOMAIN = 'www.realityhubs.com';
 export const SCOT_TAG = 'realityhub';
 export const TAG_LIST = List(['realityhub']);
 export const LIQUID_TOKEN = 'RHB';
