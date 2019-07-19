@@ -12,7 +12,22 @@ export const APP_ICON = 'battlegames';
 export const APP_URL = 'https://www.battlegames.io';
 export const APP_DOMAIN = 'www.battlegames.io';
 export const SCOT_TAG = 'battle';
-export const TAG_LIST = List(['battle']);
+export const TAG_LIST = List([
+    'splinterlands',
+    'nextcolony',
+    'drugwars',
+    'radaquest',
+    'roadofrich',
+    'gamereview',
+    'gaming',
+    'dtube',
+    'vimmtv',
+    'pc',
+    'xbox',
+    'ps4',
+    'vr',
+    'battle',
+]);
 export const LIQUID_TOKEN = 'Battle';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'BATTLE';
