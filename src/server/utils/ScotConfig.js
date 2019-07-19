@@ -62,9 +62,17 @@ ScotConfig.prototype.refresh = async function() {
 
     const key = config.scot_config_cache.key;
     try {
-        const scotConfig = await getScotDataAsync('config', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
+        const scotConfigs = await getScotDataAsync('config');
+        const [scotConfig] = scotConfigs.filter(
+            item => item.token === LIQUID_TOKEN_UPPERCASE
+        );
+        scotConfig.scotTokens = scotConfigs.map(item => ({
+            ...item,
+            json_metadata_value: item
+                ? item.json_metadata_value.split(',')
+                : [],
+        }));
+        
         const scotInfo = await getScotDataAsync('info', {
             token: LIQUID_TOKEN_UPPERCASE,
         });

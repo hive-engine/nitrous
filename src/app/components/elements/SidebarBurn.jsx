@@ -46,39 +46,94 @@ const SidebarBurn = ({
                 <h3 className="c-sidebar__h3">{scotToken}</h3>
             </div>
             <div className="c-sidebar__content">
-                <ul className="c-sidebar__list">
+                <ul className="c-sidebar__list-small">
                     <li className="c-sidebar__list-item">
-                        {tt('g.total')} <br />
-                        {'> '}
-                        <span className="integer">{total[0]}</span>
-                        <span className="decimal">{total[1]}</span>
-                    </li>
-                    <li className="c-sidebar__list-item">
-                        {tt('g.circulating')} (
-                        <span className="integer">{circulatingRate[0]}</span>
-                        <span className="decimal">{circulatingRate[1]}</span>
-                        %) <br />
-                        {'> '}
-                        <span className="integer">{circulating[0]}</span>
-                        <span className="decimal">{circulating[1]}</span>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <div>{tt('g.total')}</div>
+                            <div>
+                                <span className="integer">{total[0]}</span>
+                                <span className="decimal">{total[1]}</span>
+                            </div>
+                        </div>
                     </li>
                     <li className="c-sidebar__list-item" style={styleBurn}>
-                        {tt('g.burn')} (
-                        <span className="integer">{burnRate[0]}</span>
-                        <span className="decimal">{burnRate[1]}</span>
-                        %) <br />
-                        {'> '}
-                        <span className="integer">{burn[0]}</span>
-                        <span className="decimal">{burn[1]}</span>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <div>
+                                {tt('g.burn')}
+                                <br />
+                                (
+                                <span className="integer">{burnRate[0]}</span>
+                                <span className="decimal">{burnRate[1]}</span>
+                                %)
+                            </div>
+                            <div>
+                                <span className="integer">{burn[0]}</span>
+                                <span className="decimal">{burn[1]}</span>
+                            </div>
+                        </div>
                     </li>
                     <li className="c-sidebar__list-item">
-                        {tt('g.staking')} (
-                        <span className="integer">{stakingRate[0]}</span>
-                        <span className="decimal">{stakingRate[1]}</span>
-                        %) <br />
-                        {'> '}
-                        <span className="integer">{staking[0]}</span>
-                        <span className="decimal">{staking[1]}</span>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <div>
+                                {tt('g.circulating')}
+                                <br />
+                                (
+                                <span className="integer">
+                                    {circulatingRate[0]}
+                                </span>
+                                <span className="decimal">
+                                    {circulatingRate[1]}
+                                </span>
+                                %)
+                            </div>
+                            <div>
+                                <span className="integer">
+                                    {circulating[0]}
+                                </span>
+                                <span className="decimal">
+                                    {circulating[1]}
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li className="c-sidebar__list-item">
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <div>
+                                {tt('g.staking')} <br />
+                                (
+                                <span className="integer">
+                                    {stakingRate[0]}
+                                </span>
+                                <span className="decimal">
+                                    {stakingRate[1]}
+                                </span>
+                                %)
+                            </div>
+                            <div>
+                                <span className="integer">{staking[0]}</span>
+                                <span className="decimal">{staking[1]}</span>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
