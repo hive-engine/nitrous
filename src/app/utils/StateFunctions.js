@@ -159,7 +159,10 @@ export function contentStats(content) {
         String(content.get('net_rshares'))
     ).gt(Long.ZERO);
     const allowDelete = !hasPositiveRshares && content.get('children') === 0;
+    // Expecting this to come from SCOT data.
     const hasPendingPayout =
+        (content.has('vote_rshares') &&
+            parsePayoutAmount(content.get('vote_rshares')) > 0) ||
         parsePayoutAmount(content.get('pending_payout_value')) >= 0.02;
     const authorRepLog10 = repLog10(content.get('author_reputation'));
 
