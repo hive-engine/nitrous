@@ -19,7 +19,7 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -73,7 +73,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending/${SCOT_TAG}`;
+    if (url === '/') url = `/trending`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
