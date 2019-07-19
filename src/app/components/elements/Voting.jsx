@@ -310,11 +310,17 @@ class Voting extends React.Component {
             let valueEst = '';
             if (cashout_active && currentVp) {
                 const stakedTokens = votingData.get('staked_tokens');
+                const multiplier = votingData.get(
+                    up
+                        ? 'vote_weight_multiplier'
+                        : 'downvote_weight_multiplier',
+                    1.0
+                );
                 // need computation for VP. Start with rough estimate.
                 const rshares =
                     (up ? 1 : -1) *
                     stakedTokens *
-                    b *
+                    Math.min(multiplier * b, 10000) *
                     currentVp /
                     (10000 * 100);
                 const voteRshares = scotData.get('vote_rshares');
@@ -660,6 +666,12 @@ export default connect(
                 'author_curve_exponent',
             ]),
         };
+        // set author_curve_exponent to what's on the post (in case of transition period)
+        if (scotData && scotData.has('author_curve_exponent')) {
+            rewardData.author_curve_exponent = scotData.get(
+                'author_curve_exponent'
+            );
+        }
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
