@@ -12,7 +12,12 @@ export const APP_ICON = 'steemleo';
 export const APP_URL = 'https://www.steemleo.com';
 export const APP_DOMAIN = 'www.steemleo.com';
 export const SCOT_TAG = 'steemleo';
-export const TAG_LIST = fromJSOrdered(['steemleo']);
+export const TAG_LIST = fromJSOrdered({
+    steemleo: ['dailyleo', 'learnleo', 'leowritingcontest'],
+    crypto: ['blockchain', 'steem', 'bitcoin'],
+    investing: ['news', 'politics', 'personalfinance'],
+    trading: ['analysis'],
+});
 export const LIQUID_TOKEN = 'Leo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LEO';
