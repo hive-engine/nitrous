@@ -36,7 +36,8 @@ function hasPositivePayout(cont, c) {
 
 export function sortComments(cont, comments, sort_order) {
     function netNegative(a) {
-        return a.get('net_rshares') < 0;
+        // Expected to be merged from SCOT data.
+        return a.get('vote_rshares') < 0;
     }
     function totalPayout(a) {
         const scotData = a.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
