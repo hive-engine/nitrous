@@ -373,7 +373,7 @@ function* broadcastPayload({
         }
         if (successCallback)
             try {
-                successCallback();
+                successCallback(operations);
             } catch (error) {
                 console.error(error);
             }

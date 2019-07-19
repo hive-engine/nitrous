@@ -314,7 +314,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Tag (up to 5 tags), the first tag is your main category.",
+            "Tag (up to 10 tags), the first tag is your main category.",
         "select_a_tag": "Select a tag",
         "maximum_tag_length_is_24_characters":
             "Maximum tag length is 24 characters",
@@ -844,12 +844,23 @@
         "popup_message1": "You have found a hidden treasure, lucky you!",
         "popup_message2":
             "Let's open the box and see what you have found. If you leave the page without opening it, your treasure will vanish where nobody can find it ever again~!",
-        "popup_button": "Open Your Box"
+        "popup_button": "Open Your Box",
+        "sidebar_winners_title": "LuckyBox Winners",
+        "sidebar_losers_title": "LuckyBox Skippers",
+        "sidebar_note": "Recent 10 cases of each list",
+        "sidebar_no_data": "No recent data"
     },
     "donation_ranking": {
         "no_data": "No data for yesterday",
         "daily_top_donors_title": "Daily Top Donors",
         "daily_top_donees_title": "Daily Top Donees",
         "note_for_date": "Based on %(date)s UTC"
+    },
+    "facebook": {
+        "note_for_facebook_comment":
+            "Add a comment with Facebook if you do not have a Steemit account."
+    },
+    "review": {
+        "other_reviews_for_same_movie": "Other reviews of the same movie"
     }
 }

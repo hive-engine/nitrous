@@ -13,6 +13,7 @@ import AffiliationMap from 'app/utils/AffiliationMap';
 import tt from 'counterpart';
 import Overlay from 'react-overlays/lib/Overlay';
 import { findDOMNode } from 'react-dom';
+import AuthorIcon from 'app/components/elements/AuthorIcon';
 
 const { string, bool, number } = PropTypes;
 
@@ -115,6 +116,7 @@ class Author extends React.Component {
                         <Link to={'/@' + author}>{author}</Link>
                     </strong>{' '}
                     <Reputation value={authorRepLog10} />
+                    <AuthorIcon author={author} />
                     {showAffiliation && AffiliationMap[author] ? (
                         <span className="affiliation">
                             {tt('g.affiliation_' + AffiliationMap[author])}
@@ -140,6 +142,7 @@ class Author extends React.Component {
                             to={'/@' + author}
                         >
                             {author} <Reputation value={authorRepLog10} />
+                            <AuthorIcon author={author} />
                             {showAffiliation && AffiliationMap[author] ? (
                                 <span className="affiliation">
                                     {tt(

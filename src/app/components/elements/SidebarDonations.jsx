@@ -40,29 +40,13 @@ Date.prototype.addDays = function(days) {
 
 function getRankDiff(rankDiff) {
     if (rankDiff === 999) {
-        return (
-            <span className="rank-new">
-                <i className="fas fa-angle-double-up" /> new
-            </span>
-        );
+        return <span className="rank-new">new</span>;
     } else if (rankDiff > 0) {
-        return (
-            <span className="rank-up">
-                <i className="fas fa-arrow-up" /> {rankDiff}
-            </span>
-        );
+        return <span className="rank-up">↑ {rankDiff}</span>;
     } else if (rankDiff < 0) {
-        return (
-            <span className="rank-down">
-                <i className="fas fa-arrow-down" /> {-rankDiff}
-            </span>
-        );
+        return <span className="rank-down">↓ {-rankDiff}</span>;
     } else {
-        return (
-            <span className="rank-same">
-                <i className="fas fa-minus" />
-            </span>
-        );
+        return <span className="rank-same">—</span>;
     }
 }
 
@@ -183,7 +167,7 @@ class SidebarDonations extends React.Component {
                 try {
                     this.setState({ data: await this.getData() });
                 } catch (e) {
-                    console.log(err);
+                    console.log(e);
                 }
             })();
         }

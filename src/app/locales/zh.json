@@ -304,7 +304,7 @@
         "advanced_settings": "Advanced settings"
     },
     "category_selector_jsx": {
-        "tag_your_story": "标签(最多5个标签)，第一个标签是您文章的主要类别。",
+        "tag_your_story": "标签(最多10个标签)，第一个标签是您文章的主要类别。",
         "select_a_tag": "选择一个标签",
         "maximum_tag_length_is_24_characters": "最大标签长度为24个字符",
         "use_limited_amount_of_categories": "请只使用%(amount)s个类别",

@@ -326,7 +326,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Mots clés (jusqu'à 5 mots clés), le premier d'entre eux étant votre catégorie principale.",
+            "Mots clés (jusqu'à 10 mots clés), le premier d'entre eux étant votre catégorie principale.",
         "select_a_tag": "Sélectionner un mot clé",
         "maximum_tag_length_is_24_characters":
             "La longueur d'un mot clé est d'au maximum 24 caractères",

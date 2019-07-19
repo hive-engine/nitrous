@@ -19,7 +19,11 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    SCOT_TAG,
+    INTERLEAVE_PROMOTED,
+} from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -51,10 +55,11 @@ export function* fetchState(location_change_action) {
     }
 
     if (
-        pathname === '/' ||
-        pathname === '' ||
-        pathname.indexOf('trending') !== -1 ||
-        pathname.indexOf('hot') !== -1
+        INTERLEAVE_PROMOTED &&
+        (pathname === '/' ||
+            pathname === '' ||
+            pathname.indexOf('trending') !== -1 ||
+            pathname.indexOf('hot') !== -1)
     ) {
         yield fork(getPromotedState, pathname);
     }

@@ -14,6 +14,7 @@ import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
 import SidebarDonations from 'app/components/elements/SidebarDonations';
+import SidebarLuckyBoxUsers from 'app/components/elements/SidebarLuckyBoxUsers';
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
@@ -305,8 +306,8 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser && (
                         <div>
                             {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
                             <SidebarDonations />
+                            <SidebarLinks username={this.props.username} />
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
@@ -318,6 +319,7 @@ class PostsIndex extends React.Component {
                 </aside>
 
                 <aside className="c-sidebar c-sidebar--left">
+                    <SidebarLuckyBoxUsers />
                     <Topics
                         order={topics_order}
                         current={category}

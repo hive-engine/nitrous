@@ -10,12 +10,47 @@ import { Set } from 'immutable';
 import tt from 'counterpart';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { INVEST_TOKEN_UPPERCASE, DEFAULT_LANGUAGE } from 'app/client_config';
+import {
+    INVEST_TOKEN_UPPERCASE,
+    DEFAULT_LANGUAGE,
+    FACEBOOK_CONFIG,
+} from 'app/client_config';
 import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
 
 import Icon from 'app/components/elements/Icon';
+
+function getFullLocale(locale) {
+    switch (locale) {
+        case 'es':
+            return 'es_ES';
+        case 'ru':
+            return 'ru_RU';
+        case 'fr':
+            return 'fr_FR';
+        case 'it':
+            return 'it_IT';
+        case 'ko':
+            return 'ko_KR';
+        case 'ja':
+            return 'ja_JP';
+        case 'pl':
+            return 'pl_PL';
+        case 'zh':
+            return 'zh_CN';
+        default:
+            return 'en_US';
+    }
+}
+
+function initFB() {
+    FB.init({
+        appId: FACEBOOK_CONFIG.APP_ID,
+        version: FACEBOOK_CONFIG.SDK_VERSION,
+        xfbml: true,
+    });
+}
 
 class Post extends React.Component {
     static propTypes = {
@@ -24,11 +59,13 @@ class Post extends React.Component {
         routeParams: PropTypes.object,
         sortOrder: PropTypes.string,
         locale: PropTypes.string,
+        nightmodeEnabled: PropTypes.bool,
     };
     constructor() {
         super();
         this.state = {
             showNegativeComments: false,
+            showFacebookComments: false,
         };
         this.showSignUp = () => {
             serverApiRecordEvent('SignUp', 'Post Promo');
@@ -51,10 +88,44 @@ class Post extends React.Component {
         this.setState({ showAnyway: true });
     };
 
+    loadFacebookSdk = () => {
+        const _this = this;
+
+        window.fbAsyncInit = function() {
+            initFB();
+            _this.setState({ showFacebookComments: true });
+        };
+
+        const locale = getFullLocale(this.props.locale);
+
+        (function(d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                initFB();
+                _this.setState({ showFacebookComments: true });
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = `//connect.facebook.net/${locale}/sdk.js`;
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
+    };
+
+    componentDidMount() {
+        this.loadFacebookSdk();
+    }
+
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder, locale } = this.props;
-        const { showNegativeComments, commentHidden, showAnyway } = this.state;
+        const { content, sortOrder, locale, nightmodeEnabled } = this.props;
+        const {
+            showNegativeComments,
+            commentHidden,
+            showAnyway,
+            showFacebookComments,
+        } = this.state;
         let post = this.props.post;
         if (!post) {
             const route_params = this.props.routeParams;
@@ -254,6 +325,27 @@ class Post extends React.Component {
                             ) : null}
                             {positiveComments}
                             {negativeGroup}
+                            {showFacebookComments && (
+                                <div>
+                                    <hr />
+                                    <span
+                                        className="note"
+                                        style={{ padding: '8px' }}
+                                    >
+                                        {tt(
+                                            'facebook.note_for_facebook_comment'
+                                        )}
+                                    </span>
+                                    <div
+                                        className="fb-comments"
+                                        data-width="100%"
+                                        data-numposts="5"
+                                        data-colorscheme={
+                                            nightmodeEnabled ? 'dark' : 'light'
+                                        }
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -292,5 +384,6 @@ export default connect((state, ownProps) => {
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
         locale:
             state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,
+        nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
     };
 })(Post);

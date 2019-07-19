@@ -255,9 +255,12 @@ class ReplyEditor extends React.Component {
     };
     showDraftSaved() {
         const { draft } = this.refs;
-        draft.className = 'ReplyEditor__draft';
-        void draft.offsetWidth; // reset animation
-        draft.className = 'ReplyEditor__draft ReplyEditor__draft-saved';
+
+        if (draft) {
+            draft.className = 'ReplyEditor__draft';
+            void draft.offsetWidth; // reset animation
+            draft.className = 'ReplyEditor__draft ReplyEditor__draft-saved';
+        }
     }
 
     showAdvancedSettings = e => {

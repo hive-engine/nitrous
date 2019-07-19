@@ -56,5 +56,11 @@ export const SITE_DESCRIPTION =
     'creating and curating reviews. It leverages a robust digital points system, called AAA, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
+// facebook
+export const FACEBOOK_CONFIG = {
+    APP_ID: '406085026783648',
+    SDK_VERSION: 'v3.3',
+};
+
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
