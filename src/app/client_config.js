@@ -11,7 +11,7 @@ export const APP_ICON = 'realityhubs';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.realityhubs.com';
 export const APP_DOMAIN = 'www.realityhubs.com';
-export const SCOT_TAG = 'realityhub';
+export const SCOT_TAG = 'realityhubs';
 export const TAG_LIST = List(['realityhub']);
 export const LIQUID_TOKEN = 'RHB';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
