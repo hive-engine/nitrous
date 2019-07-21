@@ -248,3 +248,8 @@ background-color:#EAEDED !important;
 .theme-light .UserProfile__top-nav {
     background-color: #1C1C1C !important;
 }
+
+.theme-light span.Header__hamburger.toggle-menu::after {
+    background: #eee !important;
+    box-shadow: 0 7px 0 #eee, 0 14px 0 #eee !important;
+}
