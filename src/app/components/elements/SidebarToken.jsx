@@ -62,15 +62,17 @@ const SidebarToken = ({
                         <span className="integer">{circulating[0]}</span>
                         <span className="decimal">{circulating[1]}</span>
                     </li>
-                    <li className="c-sidebar__list-item" style={styleBurn}>
-                        {tt('g.burn')} (
-                        <span className="integer">{burnRate[0]}</span>
-                        <span className="decimal">{burnRate[1]}</span>
-                        %) <br />
-                        {'> '}
-                        <span className="integer">{burn[0]}</span>
-                        <span className="decimal">{burn[1]}</span>
-                    </li>
+                    {scotTokenBurn > 0 && (
+                        <li className="c-sidebar__list-item" style={styleBurn}>
+                            {tt('g.burn')} (
+                            <span className="integer">{burnRate[0]}</span>
+                            <span className="decimal">{burnRate[1]}</span>
+                            %) <br />
+                            {'> '}
+                            <span className="integer">{burn[0]}</span>
+                            <span className="decimal">{burn[1]}</span>
+                        </li>
+                    )}
                     <li className="c-sidebar__list-item">
                         {tt('g.staking')} (
                         <span className="integer">{stakingRate[0]}</span>
