@@ -47,12 +47,14 @@ const SidebarToken = ({
             </div>
             <div className="c-sidebar__content">
                 <ul className="c-sidebar__list">
-                    <li className="c-sidebar__list-item">
-                        {tt('g.total')} <br />
-                        {'> '}
-                        <span className="integer">{total[0]}</span>
-                        <span className="decimal">{total[1]}</span>
-                    </li>
+                    {scotTokenBurn > 0 && (
+                        <li className="c-sidebar__list-item">
+                            {tt('g.total')} <br />
+                            {'> '}
+                            <span className="integer">{total[0]}</span>
+                            <span className="decimal">{total[1]}</span>
+                        </li>
+                    )}
                     <li className="c-sidebar__list-item">
                         {tt('g.circulating')} (
                         <span className="integer">{circulatingRate[0]}</span>
