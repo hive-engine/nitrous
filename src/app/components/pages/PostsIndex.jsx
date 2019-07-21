@@ -355,6 +355,7 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
+                    <Notices notices={this.props.notices} />
                     {this.props.isBrowser && (
                         <div>
                             <SidebarToken
@@ -429,7 +430,6 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
