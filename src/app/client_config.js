@@ -12,7 +12,7 @@ export const APP_ICON = 'realityhubs';
 export const APP_URL = 'https://www.realityhubs.com';
 export const APP_DOMAIN = 'www.realityhubs.com';
 export const SCOT_TAG = 'realityhubs';
-export const TAG_LIST = List(['realityhub']);
+export const TAG_LIST = List(['realityhubs']);
 export const LIQUID_TOKEN = 'RHB';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'RHB';
