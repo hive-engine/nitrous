@@ -18,8 +18,8 @@ export const sharedWatches = [
     takeLatest(
         [
             appActions.SET_USER_PREFERENCES,
-            appActions.TOGGLE_NIGHTMODE,
             appActions.TOGGLE_BLOGMODE,
+            appActions.TOGGLE_NIGHTMODE,
         ],
         saveUserPreferences
     ),
