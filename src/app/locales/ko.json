@@ -248,7 +248,11 @@
         },
         "post_as": "Post as",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "vote currently exists, user must be indicate a desire to reject witness"
+            "vote currently exists, user must be indicate a desire to reject witness",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "스팀이란?",

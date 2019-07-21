@@ -4,6 +4,9 @@ import NodeCache from 'node-cache';
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
+
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
     const cache = new NodeCache({
@@ -70,7 +73,65 @@ ScotConfig.prototype.refresh = async function() {
             console.info('Info not found, falling back to client config');
             scotInfo.precision = Math.log10(SCOT_DENOM);
         }
+
+        scotConfig.tokenStats = {};
+
+        scotConfig.tokenStats.scotToken = scotConfig.token;
+        scotConfig.tokenStats.scotMinerTokens = Object.keys(
+            JSON.parse(scotConfig.miner_tokens)
+        );
+
+        const [
+            totalTokenBalance,
+            tokenBurnBalance,
+            totalTokenMinerBalance,
+            tokenMinerBurnBalance,
+            totalTokenMegaMinerBalance,
+            tokenMegaMinerBurnBalance,
+        ] = await Promise.all([
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.tokenStats.scotToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.tokenStats.scotToken,
+            }),
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.tokenStats.scotMinerTokens[0],
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.tokenStats.scotMinerTokens[0],
+            }),
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.tokenStats.scotMinerTokens[1],
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.tokenStats.scotMinerTokens[1],
+            }),
+        ]);
+
+        if (totalTokenBalance) {
+            scotConfig.tokenStats.total_token_balance = totalTokenBalance;
+        }
+        if (tokenBurnBalance) {
+            scotConfig.tokenStats.token_burn_balance = tokenBurnBalance;
+        }
+        if (totalTokenMinerBalance) {
+            scotConfig.tokenStats.total_token_miner_balance = totalTokenMinerBalance;
+        }
+        if (tokenMinerBurnBalance) {
+            scotConfig.tokenStats.token_miner_burn_balance = tokenMinerBurnBalance;
+        }
+        if (totalTokenMegaMinerBalance) {
+            scotConfig.tokenStats.total_token_mega_miner_balance = totalTokenMegaMinerBalance;
+        }
+        if (totalTokenMegaMinerBalance) {
+            scotConfig.tokenStats.token_mega_miner_burn_balance = tokenMegaMinerBurnBalance;
+        }
         this.cache.set(key, { info: scotInfo, config: scotConfig });
+
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);

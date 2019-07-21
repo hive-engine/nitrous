@@ -241,7 +241,11 @@
         },
         "post_as": "发布为",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "已经投过此见证人，你是否想取消此见证人的投票"
+            "已经投过此见证人，你是否想取消此见证人的投票",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "关于",

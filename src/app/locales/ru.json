@@ -256,7 +256,11 @@
         },
         "post_as": "Запостить как",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "голос уже существует, пользователь должен обозначить желание убрать делегата"
+            "голос уже существует, пользователь должен обозначить желание убрать делегата",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "О проекте",
