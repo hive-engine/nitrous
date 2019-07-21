@@ -20,7 +20,7 @@ export const defaultState = Map({
     user_preferences: Map({
         locale: null,
         nsfwPref: 'warn',
-        nightmode: false,
+        nightmode: true,
         blogmode: false,
         currency: 'USD',
         defaultBlogPayout: '50%',
