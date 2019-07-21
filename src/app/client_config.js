@@ -16,7 +16,6 @@ export const TAG_LIST = List([
     'lassecash',
     'anarchocapitalism',
     'cryptocurrencies',
-    'flatearth',
     'personalpost',
     'design',
     'pictures',
