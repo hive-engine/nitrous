@@ -249,6 +249,9 @@ class PostFull extends React.Component {
     };
 
     showRatePost = rating => {
+        // hide rating reminder
+        this.hideRatingReminder();
+        // show rate post dialog
         const post_content = this.props.cont.get(this.props.post);
         if (!post_content) return;
         const category = post_content.get('category');
@@ -268,7 +271,6 @@ class PostFull extends React.Component {
         // get the link to rating comment by the user
         const { username, post, cont } = this.props;
         const post_content = this.props.cont.get(this.props.post);
-        console.log('post_content', post_content);
         if (!post_content) return;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
@@ -277,7 +279,6 @@ class PostFull extends React.Component {
         const rating_content = this.props.cont.get(
             `${username}/${comment_permlink}`
         );
-        console.log('rating_content', rating_content);
         if (!rating_content) return null;
         const body = rating_content.get('body');
         const m_rating = body.match(/score=\"(\d)\"/);
@@ -286,11 +287,6 @@ class PostFull extends React.Component {
     }
 
     showRatingReminder = target => {
-        console.log(
-            'rating bar reached',
-            this.state.showRating,
-            this.state.rating
-        );
         if (this.state.showRating && !this.state.rating) {
             this.tooltip.toggleHint({ target });
         }
@@ -659,7 +655,6 @@ class PostFull extends React.Component {
                                         class="float-right"
                                         initialRating={this.state.rating}
                                         onChange={this.showRatePost}
-                                        onClick={this.hideRatingReminder}
                                     />
                                 </span>
                             </span>

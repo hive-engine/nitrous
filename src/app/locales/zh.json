@@ -779,8 +779,8 @@
     "rate_post_jsx": {
         "rate_post": "请给帖子评分",
         "rate_post_and_get_vote":
-            "评分后会生成一个包含您的评分的回复，为了感谢您的评价，您的回复将会得到SCT团队的自动点赞",
-        "confirm_rate_post": "您给这篇帖子的评分是： %(rating)s",
+            "确认评分后，将会生成一个包含您的评分的回复。为了感谢您的评价，您的回复将会得到SCT团队的自动点赞",
+        "confirm_rate_post": "您给这篇帖子的评分将是： %(rating)s",
         "rating_comment":
             "@%(username)s 在搜索时，选择了 @%(author)s 的帖子。\n@%(author)s 将获得 %(reward)s %(DEBT_TOKEN)s 的奖励\n@%(username)s 对搜索结果的满意度为 %(rating)s 分。\n\n<div message=\"rating\" score=\"%(rating)s\" />",
         "rating_reminder":
