@@ -252,7 +252,11 @@
         },
         "post_as": "投稿します:",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります"
+            "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "Steemについて",
