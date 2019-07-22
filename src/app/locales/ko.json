@@ -5,7 +5,7 @@
         "and": "and",
         "are_you_sure": "Are you sure?",
         "ask": "Ask",
-        "balance": "잔고",
+        "balance": "잔고: %(balanceValue)s",
         "balances": "잔고",
         "bid": "Bid",
         "blog": "블로그",
