@@ -19,7 +19,7 @@ export default class WelcomePanel extends React.Component {
                         <div className="text-center welcomeImage small-12 show-for-small-only">
                             <img
                                 className="heroImage"
-                                src={require('app/assets/images/welcome-hero.png')}
+                                src={require('app/assets/images/realityhubs.png')}
                             />
                         </div>
                     </div>
@@ -30,29 +30,16 @@ export default class WelcomePanel extends React.Component {
                                 {tt('navigation.intro_tagline')}
                             </h2>
                             <h4 className="fade-in--3">
-                                {tt('navigation.intro_paragraph')}
+                                Get rewarded for sharing your perspectives about
+                                products, natures, photographs, and other
+                                visuals. Post and upvote articles on Realityhubs
+                                to get your share of the daily rewards pool.
                             </h4>
-                            <div className="row buttonWrapper">
-                                <a
-                                    className="button button--primary fade-in--5"
-                                    href={SIGNUP_URL}
-                                >
-                                    {' '}
-                                    <b>{tt('navigation.sign_up')}</b>{' '}
-                                </a>
-
-                                <Link
-                                    href="/faq.html"
-                                    className="button ghost fade-in--7"
-                                >
-                                    <b>{tt('navigation.learn_more')}</b>
-                                </Link>
-                            </div>
                         </div>
                         <div className="text-center welcomeImage medium-6 large-5 show-for-medium">
                             <img
                                 className="heroImage"
-                                src={require('app/assets/images/welcome-hero.png')}
+                                src={require('app/assets/images/realityhubs.png')}
                             />
                         </div>
                     </div>
