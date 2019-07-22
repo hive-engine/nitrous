@@ -253,8 +253,8 @@ export async function getStateAsync(url) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+    const steemitApiStateNeeded = !path.match(
+        /^[\/]?(trending|hot|created|promoted|search)($|\/$|\/([^\/]+)\/?$)/
     );
     const raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)

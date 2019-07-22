@@ -27,7 +27,10 @@ import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
+import PostRating from 'app/components/elements/Rating';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import ReactHintFactory from 'react-hint';
+const ReactHint = ReactHintFactory(React);
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -87,6 +90,7 @@ class PostFull extends React.Component {
         unlock: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
+        showRatePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
     };
 
@@ -113,10 +117,12 @@ class PostFull extends React.Component {
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
+        this.onScroll = this.onScroll.bind(this);
+        this.hideRatingReminder = this.hideRatingReminder.bind(this);
     }
 
     componentWillMount() {
-        const { post } = this.props;
+        const { username, post } = this.props;
         const formId = `postFull-${post}`;
         this.setState({
             formId,
@@ -134,6 +140,17 @@ class PostFull extends React.Component {
                     this.setState({ showEdit: true });
                 }
             }
+
+            // identify whether the post is selected during search
+            const post_content = this.props.cont.get(post);
+            if (!post_content) return;
+            const author = post_content.get('author');
+            const permlink = post_content.get('permlink');
+            const selected = isPostSelected(author, permlink);
+            const showRating = username && username !== author && selected;
+            let rating = null;
+            if (showRating) rating = this.getPostRating();
+            this.setState({ showRating, rating });
         }
     }
 
@@ -231,26 +248,103 @@ class PostFull extends React.Component {
         this.props.showPromotePost(author, permlink);
     };
 
+    showRatePost = rating => {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return;
+        const category = post_content.get('category');
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const body = post_content.get('body');
+        this.props.showRatePost(category, author, permlink, body, rating);
+    };
+
     showExplorePost = () => {
         const permlink = this.share_params.link;
         const title = this.share_params.rawtitle;
         this.props.showExplorePost(permlink, title);
     };
 
+    getPostRating() {
+        // get the link to rating comment by the user
+        const { username, post, cont } = this.props;
+        const post_content = this.props.cont.get(this.props.post);
+        console.log('post_content', post_content);
+        if (!post_content) return;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const comment_permlink = `re-rating-${author}-${permlink}`;
+        // get rating score from comment
+        const rating_content = this.props.cont.get(
+            `${username}/${comment_permlink}`
+        );
+        console.log('rating_content', rating_content);
+        if (!rating_content) return null;
+        const body = rating_content.get('body');
+        const m_rating = body.match(/score=\"(\d)\"/);
+        if (m_rating) return Number(m_rating[1]);
+        else return null;
+    }
+
+    showRatingReminder = target => {
+        console.log(
+            'rating bar reached',
+            this.state.showRating,
+            this.state.rating
+        );
+        if (this.state.showRating && !this.state.rating) {
+            this.tooltip.toggleHint({ target });
+        }
+    };
+
+    hideRatingReminder = () => {
+        if (this.state.showRating && this.tooltip) {
+            this.tooltip.setState({ target: null });
+        }
+    };
+
+    hasReachedBottom(el) {
+        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
+        else return false;
+    }
+
+    componentDidMount() {
+        if (this.state.showRating)
+            document.addEventListener('scroll', this.onScroll);
+    }
+
+    componentWillUnmount() {
+        if (this.state.showRating)
+            document.removeEventListener('scroll', this.onScroll);
+    }
+
+    onScroll = () => {
+        const wrappedElement = document.getElementById('post-rating-bar');
+        if (
+            this.state.showRating &&
+            wrappedElement &&
+            this.hasReachedBottom(wrappedElement)
+        ) {
+            document.removeEventListener('scroll', this.onScroll);
+            this.showRatingReminder(wrappedElement);
+        }
+    };
+
     render() {
         const {
-            props: { username, post, scotTokens },
+            props: { username, post },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
                 formId,
                 showReply,
                 showEdit,
+                showRating,
             },
             onShowReply,
             onShowEdit,
             onDeletePost,
         } = this;
+
         const post_content = this.props.cont.get(this.props.post);
         if (!post_content) return null;
         const p = extractContent(immutableAccessor, post_content);
@@ -487,7 +581,7 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} scotTokens={scotTokens} horizontal />
+                <TagList post={content} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
@@ -545,6 +639,32 @@ class PostFull extends React.Component {
                         >
                             <Icon name="link" className="chain-right" />
                         </button>
+                        {showRating && (
+                            <span>
+                                <ReactHint
+                                    autoPosition
+                                    events={false}
+                                    persist
+                                    ref={ref => {
+                                        this.tooltip = ref;
+                                    }}
+                                />
+                                <span
+                                    data-rh={tt(
+                                        'rate_post_jsx.rating_reminder'
+                                    )}
+                                    data-rh-at="left"
+                                >
+                                    <PostRating
+                                        id="post-rating-bar"
+                                        class="float-right"
+                                        initialRating={this.state.rating}
+                                        onChange={this.showRatePost}
+                                        onClick={this.hideRatingReminder}
+                                    />
+                                </span>
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="row">
@@ -559,14 +679,10 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => {
-        const scotConfig = state.app.get('scotConfig');
-        return {
-            ...ownProps,
-            username: state.user.getIn(['current', 'username']),
-            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
-        };
-    },
+    (state, ownProps) => ({
+        ...ownProps,
+        username: state.user.getIn(['current', 'username']),
+    }),
 
     // mapDispatchToProps
     dispatch => ({
@@ -596,6 +712,14 @@ export default connect(
                 })
             );
         },
+        showRatePost: (category, author, permlink, body, rating) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'ratePost',
+                    params: { category, author, permlink, body, rating },
+                })
+            );
+        },
         showExplorePost: (permlink, title) => {
             dispatch(
                 globalActions.showDialog({
@@ -620,5 +744,15 @@ const saveOnShow = (formId, type) => {
             localStorage.removeItem('replyEditorData-' + formId + '-reply');
             localStorage.removeItem('replyEditorData-' + formId + '-edit');
         }
+    }
+};
+
+const isPostSelected = (author, permlink) => {
+    if (process.env.BROWSER) {
+        return (
+            localStorage.getItem(`selected-@${author}/${permlink}`) === 'true'
+        );
+    } else {
+        return false;
     }
 };
