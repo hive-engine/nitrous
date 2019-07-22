@@ -642,7 +642,6 @@ class PostFull extends React.Component {
                         {showRating && (
                             <span>
                                 <ReactHint
-                                    autoPosition
                                     events={false}
                                     persist
                                     ref={ref => {
