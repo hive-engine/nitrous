@@ -345,3 +345,42 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     }
     return { feedData, endOfData, lastValue };
 }
+
+export async function getSteemPriceInfo() {
+    var steemPrice = callApi('https://postpromoter.net/api/prices');
+    var steemPriceOnUpbit = callApi(
+        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    );
+    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return allInfo;
+}
+
+export async function getHolders(symbol) {
+    var holders_info = [];
+    var cnt = 500;
+    var getCnt = 0;
+    while (true) {
+        var holders = await getHolderOnce(symbol, getCnt * cnt, cnt);
+        getCnt = getCnt + 1;
+        holders_info = holders_info.concat(holders);
+        if (holders.length < cnt) {
+            return holders_info;
+        }
+    }
+}
+
+async function getHolderOnce(symbol, offset = 0, limit = 100) {
+    return new Promise((resolve, reject) => {
+        ssc.find(
+            'tokens',
+            'balances',
+            { symbol: symbol },
+            limit,
+            offset,
+            [],
+            (err, result) => {
+                resolve(result);
+            }
+        );
+    });
+}
