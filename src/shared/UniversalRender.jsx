@@ -464,7 +464,7 @@ export function clientRender(initialState) {
  * @returns {string}
  */
 function getUrlFromLocation(location) {
-    let url = location === '/' ? 'trending' : location;
+    let url = location === '/' ? 'hot' : location;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)

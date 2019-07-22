@@ -14,11 +14,12 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
-    SCOT_DENOM,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import FormattedAssetToken from 'app/components/elements/FormattedAssetToken';
+
 
 class UserWallet extends React.Component {
     constructor() {
@@ -63,7 +64,7 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops } = this.props;
+        const { account, current_user, gprops, scotPrecision } = this.props;
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -87,7 +88,12 @@ class UserWallet extends React.Component {
                   pending_token: 0,
               };
         const balance = tokenBalances.balance;
-        const stakeBalance = tokenBalances.stake;
+        const delegatedStake = tokenBalances.delegationsOut || '0';
+        const stakeBalance =
+            parseFloat(tokenBalances.stake) + parseFloat(delegatedStake);
+        const netDelegatedStake =
+            parseFloat(delegatedStake) -
+            parseFloat(tokenBalances.delegationsIn || '0');
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
 
         let isMyAccount =
@@ -110,7 +116,8 @@ class UserWallet extends React.Component {
             const name = account.get('name');
             this.props.showPowerdown({
                 account: name,
-                stakeBalance,
+                stakeBalance: stakeBalance.toFixed(scotPrecision),
+                delegatedStake,
             });
         };
         const cancelUnstake = e => {
@@ -175,12 +182,17 @@ class UserWallet extends React.Component {
         }
 
         const balance_str = numberWithCommas(balance);
-        const stake_balance_str = numberWithCommas(stakeBalance);
+        const stake_balance_str = numberWithCommas(
+            stakeBalance.toFixed(scotPrecision)
+        );
+        const received_stake_balance_str =
+            (netDelegatedStake < 0 ? '+' : '') +
+            numberWithCommas((-netDelegatedStake).toFixed(scotPrecision));
         const pending_unstake_balance_str = numberWithCommas(
             pendingUnstakeBalance
         );
 
-        const reward = tokenStatus.pending_token / SCOT_DENOM;
+        const reward = tokenStatus.pending_token / Math.pow(10, scotPrecision);
         const rewards_str =
             reward > 0 ? `${reward} ${LIQUID_TOKEN_UPPERCASE}` : null;
 
@@ -206,6 +218,39 @@ class UserWallet extends React.Component {
                     </div>
                 </div>
             );
+        }
+
+        // added by realmankwon (2019-06-12) add all token balances
+        let all_token_balances_list = [];
+
+        if(account.has('all_token_balances'))
+        {
+            const allTokenBalances = account.get('all_token_balances').toJS()
+        
+            // added by realmankwon (2019-06-18) sort by alphabet asc
+            allTokenBalances.sort(
+                (a, b) =>
+                    a.symbol >
+                    b.symbol
+                        ? 1
+                        : -1
+            );
+
+            for (let v = 0; v < allTokenBalances.length; ++v) {
+                const tokenBalance = allTokenBalances[v];
+                // added by realmankwon (2019-06-18) except LIQUID_TOKEN_UPPERCASE 
+                if(tokenBalance.symbol === LIQUID_TOKEN_UPPERCASE) continue;
+
+                all_token_balances_list.push(
+                    <span>
+                        <FormattedAssetToken
+                            balance={tokenBalance.balance}
+                            stake={tokenBalance.stake}
+                            symbol={tokenBalance.symbol}
+                        />
+                    </span>
+                );
+            }
         }
 
         return (
@@ -265,6 +310,20 @@ class UserWallet extends React.Component {
                         ) : (
                             `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
                         )}
+                        {netDelegatedStake != 0 ? (
+                            <div
+                                style={{
+                                    paddingRight: isMyAccount
+                                        ? '0.85rem'
+                                        : null,
+                                }}
+                            >
+                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
+                                    ({received_stake_balance_str}{' '}
+                                    {LIQUID_TOKEN_UPPERCASE})
+                                </Tooltip>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="UserWallet__balance row">
@@ -289,6 +348,17 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
+                
+                <div className="row">
+                    <div className="column small-12">
+                        Steem Engine Token
+                    </div>
+                    <div className="column small-12">
+                        <br/>
+                        {all_token_balances_list}
+                    </div>
+                </div>
+
                 <div className="row">
                     <div className="column small-12">
                         <hr />
@@ -326,9 +396,11 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const gprops = state.global.get('props');
+        const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
             gprops: state.global.get('props').toJS(),
+            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
     // mapDispatchToProps

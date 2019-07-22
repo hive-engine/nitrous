@@ -10,7 +10,8 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import debounce from 'lodash.debounce';
 import { findParent } from 'app/utils/DomUtils';
 import Icon from 'app/components/elements/Icon';
-import GoogleAd from 'app/components/elements/GoogleAd';
+import GptAd from 'app/components/elements/GptAd';
+
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
 function topPosition(domElt) {
@@ -183,7 +184,7 @@ class PostsList extends React.Component {
         // Helper functions for determining whether to show pinned posts.
         const isLoggedInOnFeed = username && pathname === `/@${username}/feed`;
         const isLoggedOutOnTrending =
-            !username && (pathname === '/' || pathname === '/trending');
+            !username && (pathname === '/' || pathname === '/hot');
         const arePinnedPostsVisible =
             showPinned && (isLoggedInOnFeed || isLoggedOutOnTrending);
         const arePinnedPostsReady = isLoggedInOnFeed
@@ -207,16 +208,6 @@ class PostsList extends React.Component {
                 };
                 return (
                     <li key={id}>
-                        <div className="PinLabel">
-                            <span className="PinText">Featured</span>
-                            <a
-                                onClick={close}
-                                className="DismissPost"
-                                title="Dismiss Post"
-                            >
-                                <Icon name="close" />
-                            </a>
-                        </div>
                         <PostSummary
                             account={account}
                             post={id}
@@ -224,6 +215,8 @@ class PostsList extends React.Component {
                             ignore={false}
                             nsfwPref={nsfwPref}
                             promoted={promoted}
+                            featured
+                            featuredOnClose={close}
                         />
                     </li>
                 );
@@ -247,14 +240,9 @@ class PostsList extends React.Component {
                             </li>
 
                             <div className="articles__content-block--ad">
-                                <GoogleAd
-                                    name="in-feed-1"
-                                    format="fluid"
-                                    slot={this.props.adSlots.in_feed_1.slot_id}
-                                    layoutKey={
-                                        this.props.adSlots.in_feed_1.layout_key
-                                    }
-                                    style={{ display: 'block' }}
+                                <GptAd
+                                    type="Freestar"
+                                    id="steemit_728x90_468x60_300x250_InFeed"
                                 />
                             </div>
                         </div>

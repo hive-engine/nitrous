@@ -955,7 +955,7 @@ export default formId =>
                     return;
                 }
 
-                if (meta.tags.length > 5) {
+                if (meta.tags.length > 10) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
                               rootCategory,

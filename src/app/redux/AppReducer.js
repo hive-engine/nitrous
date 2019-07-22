@@ -10,6 +10,7 @@ export const SET_USER_PREFERENCES = 'app/SET_USER_PREFERENCES';
 export const TOGGLE_NIGHTMODE = 'app/TOGGLE_NIGHTMODE';
 export const TOGGLE_BLOGMODE = 'app/TOGGLE_BLOGMODE';
 export const RECEIVE_FEATURE_FLAGS = 'app/RECEIVE_FEATURE_FLAGS';
+const RECEIVE_SCOT_INFO = 'app/RECEIVE_SCOT_INFO';
 
 export const defaultState = Map({
     loading: false,
@@ -76,6 +77,12 @@ export default function reducer(state = defaultState, action = {}) {
                 ? state.get('featureFlags').merge(action.flags)
                 : Map(action.flags);
             return state.set('featureFlags', newFlags);
+        case RECEIVE_SCOT_INFO:
+            const stateInfo = state.getIn(['scotConfig', 'info']);
+            return state.setIn(
+                ['scotConfig', 'info'],
+                stateInfo ? stateInfo.merge(action.info) : Map(action.info)
+            );
         default:
             return state;
     }
@@ -120,6 +127,11 @@ export const toggleBlogmode = () => ({
 export const receiveFeatureFlags = flags => ({
     type: RECEIVE_FEATURE_FLAGS,
     flags,
+});
+
+export const receiveScotInfo = info => ({
+    type: RECEIVE_SCOT_INFO,
+    info,
 });
 
 export const selectors = {

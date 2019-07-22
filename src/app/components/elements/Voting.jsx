@@ -11,8 +11,8 @@ import {
     DEBT_TOKEN_SHORT,
     LIQUID_TOKEN_UPPERCASE,
     INVEST_TOKEN_SHORT,
-    SCOT_DENOM,
     VOTE_WEIGHT_DROPDOWN_THRESHOLD,
+    SCOT_DENOM,
 } from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
@@ -229,18 +229,10 @@ class Voting extends React.Component {
             username,
             votingData,
             scotData,
+            scotPrecision,
+            voteRegenSec,
+            rewardData,
         } = this.props;
-
-        // Incorporate 5 day regeneration time.
-        const currentVp = votingData
-            ? Math.min(
-                  votingData.get('voting_power') +
-                      (new Date() - getDate(votingData.get('last_vote_time'))) *
-                          10000 /
-                          (1000 * 60 * 60 * 24 * 5),
-                  10000
-              ) / 100
-            : 0;
         const {
             votingUp,
             votingDown,
@@ -249,16 +241,128 @@ class Voting extends React.Component {
             myVote,
         } = this.state;
 
+        const scotDenom = Math.pow(10, scotPrecision);
+        // Incorporate regeneration time.
+        const currentVp = votingData
+            ? Math.min(
+                  votingData.get('voting_power') +
+                      (new Date() - getDate(votingData.get('last_vote_time'))) *
+                          10000 /
+                          (1000 * voteRegenSec),
+                  10000
+              ) / 100
+            : 0;
+        // Token values
+        let scot_pending_token = 0;
+        let scot_total_author_payout = 0;
+        let scot_total_curator_payout = 0;
+        let payout = 0;
+        let promoted = 0;
+        // Arbitrary invalid cash time (steem related behavior)
+        const cashout_time =
+            scotData && scotData.has('cashout_time')
+                ? scotData.get('cashout_time')
+                : '1969-12-31T23:59:59';
+        const cashout_active = getDate(cashout_time) > Date.now();
+
+        const applyRewardsCurve = r =>
+            Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
+            rewardData.reward_pool /
+            rewardData.pending_rshares;
+        if (scotData) {
+            const voteRshares = scotData.get('vote_rshares');
+            scot_pending_token = applyRewardsCurve(voteRshares);
+
+            scot_total_curator_payout = parseInt(
+                scotData.get('curator_payout_value')
+            );
+            scot_total_author_payout = parseInt(
+                scotData.get('total_payout_value')
+            );
+            const scot_bene_payout = parseInt(
+                scotData.get('beneficiaries_payout_value')
+            );
+            promoted = parseInt(scotData.get('promoted'));
+            scot_total_author_payout -= scot_total_curator_payout;
+            scot_total_author_payout -= scot_bene_payout;
+            payout = cashout_active
+                ? scot_pending_token
+                : scot_total_author_payout + scot_total_curator_payout;
+
+            // divide by scotDenom
+            scot_pending_token /= scotDenom;
+            scot_total_curator_payout /= scotDenom;
+            scot_total_author_payout /= scotDenom;
+            payout /= scotDenom;
+            promoted /= scotDenom;
+        }
+        const total_votes = post_obj.getIn(['stats', 'total_votes']);
+        if (payout < 0.0) payout = 0.0;
+
         const votingUpActive = voting && votingUp;
         const votingDownActive = voting && votingDown;
+        const btnGroupStyle = { 'text-align' : 'center',};
 
         const slider = up => {
             const b = up
                 ? this.state.sliderWeight.up
                 : this.state.sliderWeight.down;
             const s = up ? '' : '-';
+            let valueEst = '';
+            if (cashout_active && currentVp) {
+                const stakedTokens = votingData.get('staked_tokens');
+                const multiplier = votingData.get(
+                    up
+                        ? 'vote_weight_multiplier'
+                        : 'downvote_weight_multiplier',
+                    1.0
+                );
+                // need computation for VP. Start with rough estimate.
+                const rshares =
+                    (up ? 1 : -1) *
+                    stakedTokens *
+                    Math.min(multiplier * b, 10000) *
+                    currentVp /
+                    (10000 * 100);
+                const voteRshares = scotData.get('vote_rshares');
+                const newValue = applyRewardsCurve(voteRshares + rshares);
+                valueEst = (
+                    newValue / Math.pow(10, scotPrecision) -
+                    scot_pending_token
+                ).toFixed(scotPrecision);
+            }
             return (
                 <span>
+                    <div id="btn_group" style={btnGroupStyle}>
+                        <button
+                            id="weight-left"
+                            onClick={this.handleButtonWeightChange(up, 2500)}
+                        >
+                            {' '}
+                            25%{' '}
+                        </button>
+                        <button
+                            id="weight-center"
+                            onClick={this.handleButtonWeightChange(up, 5000)}
+                        >
+                            {' '}
+                            50%{' '}
+                        </button>
+                        <button
+                            id="weight-center"
+                            onClick={this.handleButtonWeightChange(up, 7500)}
+                        >
+                            {' '}
+                            75%{' '}
+                        </button>
+                        <button
+                            id="weight-right"
+                            onClick={this.handleButtonWeightChange(up, 10000)}
+                        >
+                            {' '}
+                            100%{' '}
+                        </button>
+                    </div>
                     <div className="weight-display">{s + b / 100}%</div>
                     <Slider
                         min={100}
@@ -271,7 +375,15 @@ class Voting extends React.Component {
                     />
                     {currentVp ? (
                         <div className="voting-power-display">
-                            Voting Power: {currentVp.toFixed(1)}%
+                            {tt('voting_jsx.voting_power')}:{' '}
+                            {currentVp.toFixed(1)}%
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {valueEst ? (
+                        <div className="voting-est-display">
+                            {tt('voting_jsx.estimated_vote')}: {valueEst}
                         </div>
                     ) : (
                         ''
@@ -280,6 +392,39 @@ class Voting extends React.Component {
             );
         };
 
+        this.handleButtonWeightChange = (up, weight) => e => {
+            let w;
+            if (e.target.value > 100) e.target.value = 100;
+
+            if (weight === -1) {
+                weight = e.target.value * 100;
+            }
+
+            if (up) {
+                w = {
+                    up: weight,
+                    down: this.state.sliderWeight.down,
+                };
+            } else {
+                w = {
+                    up: this.state.sliderWeight.up,
+                    down: weight,
+                };
+            }
+            this.setState({ sliderWeight: w });
+
+            const { username, is_comment } = this.props;
+
+            localStorage.setItem(
+                'voteWeight' +
+                    (up ? '' : 'Down') +
+                    '-' +
+                    username +
+                    (is_comment ? '-comment' : ''),
+                weight
+            );
+        };
+        
         let downVote;
         if (true) {
             const down = (
@@ -327,7 +472,7 @@ class Voting extends React.Component {
                         this.readSliderWeight();
                     }}
                     title={invokeFlag}
-                    position={'right'}
+                    position={'center'}
                 >
                     <div className="Voting__adjust_weight_down">
                         {(myVote == null || myVote === 0) &&
@@ -362,43 +507,6 @@ class Voting extends React.Component {
             );
         }
 
-        let scot_pending_token = 0;
-        let scot_total_author_payout = 0;
-        let scot_total_curator_payout = 0;
-        let payout = 0;
-        let promoted = 0;
-        // Arbitrary invalid cash time (steem related behavior)
-        let cashout_time = '1969-12-31T23:59:59';
-        if (scotData) {
-            scot_pending_token = parseInt(scotData.get('pending_token'));
-            scot_total_curator_payout = parseInt(
-                scotData.get('curator_payout_value')
-            );
-            scot_total_author_payout = parseInt(
-                scotData.get('total_payout_value')
-            );
-            const scot_bene_payout = parseInt(
-                scotData.get('beneficiaries_payout_value')
-            );
-            promoted = parseInt(scotData.get('promoted'));
-            scot_total_author_payout -= scot_total_curator_payout;
-            scot_total_author_payout -= scot_bene_payout;
-            cashout_time = scotData.get('cashout_time');
-            payout = scot_pending_token
-                ? scot_pending_token
-                : scot_total_author_payout + scot_total_curator_payout;
-
-            // divide by SCOT_DENOM
-            scot_pending_token /= SCOT_DENOM;
-            scot_total_curator_payout /= SCOT_DENOM;
-            scot_total_author_payout /= SCOT_DENOM;
-            payout /= SCOT_DENOM;
-            promoted /= SCOT_DENOM;
-        }
-        const total_votes = post_obj.getIn(['stats', 'total_votes']);
-
-        if (payout < 0.0) payout = 0.0;
-
         const up = (
             <Icon
                 name={votingUpActive ? 'empty' : 'chevron-up-circle'}
@@ -410,17 +518,11 @@ class Voting extends React.Component {
             (myVote > 0 ? ' Voting__button--upvoted' : '') +
             (votingUpActive ? ' votingUp' : '');
 
-        // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
-        const cashout_active =
-            scot_pending_token > 0 ||
-            (getDate(cashout_time) > Date.now() &&
-                !(is_comment && total_votes == 0));
         const payoutItems = [];
-        const numDecimals = Math.log10(SCOT_DENOM);
 
         if (promoted > 0) {
             payoutItems.push({
-                value: `Promotion Cost ${promoted.toFixed(numDecimals)} ${
+                value: `Promotion Cost ${promoted.toFixed(scotPrecision)} ${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
@@ -428,7 +530,7 @@ class Voting extends React.Component {
         if (cashout_active) {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
-                value: `${scot_pending_token.toFixed(numDecimals)} ${
+                value: `${scot_pending_token.toFixed(scotPrecision)} ${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
@@ -437,18 +539,18 @@ class Voting extends React.Component {
             });
         } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: `Past Token Payouts ${payout.toFixed(numDecimals)} ${
+                value: `Past Token Payouts ${payout.toFixed(scotPrecision)} ${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
             payoutItems.push({
                 value: `- Author ${scot_total_author_payout.toFixed(
-                    numDecimals
+                    scotPrecision
                 )} ${LIQUID_TOKEN_UPPERCASE}`,
             });
             payoutItems.push({
                 value: `- Curator ${scot_total_curator_payout.toFixed(
-                    numDecimals
+                    scotPrecision
                 )} ${LIQUID_TOKEN_UPPERCASE}`,
             });
         }
@@ -468,6 +570,27 @@ class Voting extends React.Component {
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             const avotes = active_votes.toJS();
+
+            // Compute estimates given current order without rearrangement first,
+            // only if scot is present.
+            let currRshares = 0;
+            if (scotData) {
+                const rsharesTotal = avotes
+                    .map(x => x.rshares)
+                    .reduce((x, y) => x + y);
+                const claimsTotal = applyRewardsCurve(rsharesTotal);
+                for (let i = 0; i < avotes.length; i++) {
+                    const vote = avotes[i];
+                    vote.estimate = (
+                        payout *
+                        (applyRewardsCurve(currRshares + vote.rshares) -
+                            applyRewardsCurve(currRshares)) /
+                        claimsTotal
+                    ).toFixed(scotPrecision);
+                    currRshares += vote.rshares;
+                }
+            }
+
             avotes.sort(
                 (a, b) =>
                     Math.abs(parseInt(a.rshares)) >
@@ -481,11 +604,14 @@ class Voting extends React.Component {
                 v < avotes.length && voters.length < MAX_VOTES_DISPLAY;
                 ++v
             ) {
-                const { percent, voter } = avotes[v];
+                const { percent, voter, estimate } = avotes[v];
                 const sign = Math.sign(percent);
+                const estimateStr = estimate
+                    ? ` (${percent / 100}% ${estimate})`
+                    : '';
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter,
+                    value: (sign > 0 ? '+ ' : '- ') + voter + estimateStr,
                     link: '/@' + voter,
                 });
             }
@@ -594,7 +720,22 @@ export default connect(
     (state, ownProps) => {
         const post = state.global.getIn(['content', ownProps.post]);
         if (!post) return ownProps;
+        const scotConfig = state.app.get('scotConfig');
         const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const rewardData = {
+            pending_rshares: scotConfig.getIn(['info', 'pending_rshares']),
+            reward_pool: scotConfig.getIn(['info', 'reward_pool']),
+            author_curve_exponent: scotConfig.getIn([
+                'config',
+                'author_curve_exponent',
+            ]),
+        };
+        // set author_curve_exponent to what's on the post (in case of transition period)
+        if (scotData && scotData.has('author_curve_exponent')) {
+            rewardData.author_curve_exponent = scotData.get(
+                'author_curve_exponent'
+            );
+        }
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
@@ -629,6 +770,15 @@ export default connect(
             voting,
             votingData,
             scotData,
+            scotPrecision: scotConfig.getIn(
+                ['info', 'precision'],
+                Math.log10(SCOT_DENOM)
+            ),
+            voteRegenSec: scotConfig.getIn(
+                ['config', 'vote_regeneration_seconds'],
+                5 * 24 * 60 * 60
+            ),
+            rewardData,
         };
     },
 

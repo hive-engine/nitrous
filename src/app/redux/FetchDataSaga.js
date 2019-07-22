@@ -19,11 +19,12 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
+const FETCH_SCOT_INFO = 'fetchDataSaga/FETCH_SCOT_INFO';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -31,6 +32,7 @@ export const fetchDataWatches = [
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
+    takeLatest(FETCH_SCOT_INFO, fetchScotInfo),
 ];
 
 export function* getContentCaller(action) {
@@ -71,7 +73,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending/${SCOT_TAG}`;
+    if (url === '/') url = `/hot`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
@@ -85,6 +87,7 @@ export function* fetchState(location_change_action) {
         const state = yield call(getStateAsync, url);
 
         yield put(globalActions.receiveState(state));
+        yield call(fetchScotInfo);
         yield call(syncPinnedPosts);
         // If a user's transfer page is being loaded, fetch related account data.
         yield call(getTransferUsers, pathname);
@@ -422,6 +425,13 @@ function* fetchJson({
     }
 }
 
+function* fetchScotInfo() {
+    const scotInfo = yield call(getScotDataAsync, 'info', {
+        token: LIQUID_TOKEN_UPPERCASE,
+    });
+    yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
+}
+
 // Action creators
 export const actions = {
     requestData: payload => ({
@@ -436,6 +446,11 @@ export const actions = {
 
     fetchState: payload => ({
         type: FETCH_STATE,
+        payload,
+    }),
+
+    fetchScotInfo: payload => ({
+        type: FETCH_SCOT_INFO,
         payload,
     }),
 };

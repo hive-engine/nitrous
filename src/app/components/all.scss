@@ -14,6 +14,7 @@
 @import "./elements/Userpic";
 @import "./elements/Voting";
 @import "./elements/FormattedAsset";
+@import "./elements/FormattedAssetToken";
 @import "./elements/ReplyEditor";
 @import "./elements/DropdownMenu";
 @import "./elements/VerticalMenu";
@@ -43,7 +44,6 @@
 // modules
 @import "./modules/Header/styles";
 @import "./modules/LoginForm";
-@import "./modules/MiniHeader";
 @import "./modules/SidePanel/styles";
 @import "./modules/Settings";
 @import "./modules/BottomPanel";

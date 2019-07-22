@@ -11,6 +11,7 @@
         "blog": "Blog",
         "browse": "Naviga",
         "buy": "Acquista",
+        "buy_steem_power": "Buy Steem Power",
         "buy_or_sell": "Acquista o vendi",
         "by": "da",
         "cancel": "Cancella",
@@ -27,6 +28,9 @@
         "dismiss": "Abbandona",
         "edit": "Modifica",
         "email": "Email",
+        "external_link_message": "This link will take you away from the app",
+        "affiliation_steemit": "Steemit Team",
+        "affiliation_sm": "Steem Monsters Team",
         "feed": "Feed",
         "follow": "Segui",
         "for": "per",
@@ -37,12 +41,18 @@
         "in_reply_to": "in risposta a",
         "insufficient_balance": "Credito insufficiente",
         "invalid_amount": "Importo errato",
+        "links": "Links",
         "joined": "Connesso",
         "loading": "Caricamento",
         "login": "Login",
         "logout": "Logout",
         "memo": "Memo",
         "mute": "Silenzia",
+        "my_blog": "My blog",
+        "my_comments": "My comments",
+        "my_feed": "My feed",
+        "my_replies": "Replies to me",
+        "my_wallet": "My wallet",
         "new": "Nuovo",
         "newer": "Più recente",
         "next": "Prossimo",
@@ -57,7 +67,7 @@
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
         "post": "Post",
-        "post_as": "Pubblica come",
+        "post_as_user": "Post as %(username)s",
         "posts": "Posts",
         "powered_up_100": "Powered Up 100%%",
         "preview": "Anteprima",
@@ -68,6 +78,7 @@
         "promoted": "promosso",
         "re": "RE",
         "re_to": "RE: %(topic)s",
+        "read_offical_blog": "Steemit Blog",
         "recent_password": "Password Recente",
         "receive": "Ricevi",
         "remove": "Rimuovi",
@@ -100,9 +111,13 @@
         "submit_a_story": "Post",
         "tag": "Tag",
         "to": "a",
+        "topics": "Topics",
+        "toggle_nightmode": "Toggle Night Mode",
         "all_tags": "All tags",
+        "all_tags_mobile": "All content",
         "transfer": "Trasferisci",
         "trending_topics": "Trending Topics",
+        "try_again": "Try Again",
         "type": "Scrivi",
         "unfollow": "Non seguire più",
         "unmute": "Unmute",
@@ -238,19 +253,27 @@
             "warning":
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
-        }
+        },
+        "post_as": "Pubblica come",
+        "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
+            "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness ",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "Circa",
         "explore": "Esplora",
         "APP_NAME_whitepaper": "%(APP_NAME)s Whitepaper",
+        "third_party_exchanges": "Third-party exchanges:",
         "buy_LIQUID_TOKEN": "Compra %(LIQUID_TOKEN)s",
         "sell_LIQUID_TOKEN": "Vendi %(LIQUID_TOKEN)s",
         "currency_market": "Mercato della valuta",
         "stolen_account_recovery": "Recupero degli Account Rubati",
         "change_account_password": "Cambia la password dell'account",
-        "witnesses": "Witness",
         "vote_for_witnesses": "Vota per i Witness",
+        "advertise": "Advertise",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Condizioni di servizio",
         "sign_up": "Entra",
@@ -266,7 +289,9 @@
         "whitepaper": "Steem Whitepaper",
         "intro_tagline": "Il denaro parla",
         "intro_paragraph":
-            "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità."
+            "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità.",
+        "jobs": "Jobs at Steemit",
+        "witnesses": "Witness"
     },
     "main_menu": {
         "hot": "hot",
@@ -297,7 +322,8 @@
         "or_by": "o da",
         "title": "Titolo",
         "update_post": "Aggiorna il Post",
-        "markdown_not_supported": "Il Markdown non è supportato qui"
+        "markdown_not_supported": "Il Markdown non è supportato qui",
+        "advanced_settings": "Advanced settings"
     },
     "category_selector_jsx": {
         "tag_your_story":
@@ -328,6 +354,7 @@
             "Questo post non è disponibile per violazione del copyright.",
         "share_on_facebook": "Condividi su Facebook",
         "share_on_twitter": "Condividi su Twitter",
+        "share_on_reddit": "Share on Reddit",
         "share_on_linkedin": "Condividi su Linkedin",
         "recent_password": "Password recente",
         "in_week_convert_DEBT_TOKEN_to_LIQUID_TOKEN":
@@ -339,7 +366,34 @@
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
-            "Può succedere che ogni tanto la chiave personale di un membro di Steemit possa essere compromessa. La funzione \"Recupera account rubato\" dà 30 giorni al legittimo proprietario dell'account per recuperarlo dal momento in cui il ladro cambia la chiave personale. \"Recupera account rubato\" può essere usato solo su %(APP_URL)s se il proprietario dell'account ha precedentemente inserito %(APP_NAME)s come account fidato e accettato i Termini di Servizio di %(APP_NAME)s."
+            "Può succedere che ogni tanto la chiave personale di un membro di Steemit possa essere compromessa. La funzione \"Recupera account rubato\" dà 30 giorni al legittimo proprietario dell'account per recuperarlo dal momento in cui il ladro cambia la chiave personale. \"Recupera account rubato\" può essere usato solo su %(APP_URL)s se il proprietario dell'account ha precedentemente inserito %(APP_NAME)s come account fidato e accettato i Termini di Servizio di %(APP_NAME)s.",
+        "begin_recovery": "Inizia il Ripristino",
+        "not_valid": "Non valido",
+        "account_name_is_not_found": "Nome account non trovato",
+        "unable_to_recover_account_not_change_ownership_recently":
+            "Non possiamo recuperare questo account, non ha cambiato proprietario di recente. ",
+        "password_not_used_in_last_days":
+            "Questa password non viene usata per questo account da 30 giorni. ",
+        "request_already_submitted_contact_support":
+            "La tua richiesta è stata già inviata e la stiamo lavorando. Puoi contattare %(SUPPORT_EMAIL)sper verificare lo stato della tua richiesta.",
+        "login_with_facebook_or_reddit_media_to_verify_identity":
+            "Effettua il login con Facebook o Reddit per verificare la tua identità ",
+        "login_with_social_media_to_verify_identity":
+            "Effettua il login con   %(provider)s per verificare la tua identità",
+        "enter_email_toverify_identity":
+            "Abbiamo bisogno di verificare la tua identità. Inserisci di seguito il tuo indirizzo email per iniziare la verifica. ",
+        "continue_with_email": "Continua con l'email",
+        "thanks_for_submitting_request_for_account_recovery":
+            "Grazie per aver immesso la tua richiesta per Ripristinare il tuo Account usando l'autenticazione multi fattoriale basata sulla blockchain di %(APP_NAME)s. Ti risponderemo il prima possibile, comunque  considera che potrebbero esserci ritardi nella risposta a causa del grade volume di email. Preparati a verificare la tua identità.",
+        "recovering_account": "Stiamo recuperando l'account",
+        "recover_account": "Recupero Account",
+        "checking_account_owner":
+            "Stiamo controllando il proprietario dell'account",
+        "sending_recovery_request": "Invia richiesta di recupero ",
+        "cant_confirm_account_ownership":
+            "Non siamo riusciti a confermare la proprietà dell'account. Controlla la password.",
+        "account_recovery_request_not_confirmed":
+            "La richiesta di recupero account non è ancora stata confermata. Per favore, ritorna tra un po'. Grazie per la pazienza! "
     },
     "user_profile": {
         "unknown_account": "Account sconosciuto",
@@ -382,7 +436,13 @@
             "Commenti con voti bassi rivelati",
         "sort_order": "Ordinamento",
         "comments_were_hidden_due_to_low_ratings":
-            "Commenti nascosti a causa del basso rating"
+            "Commenti nascosti a causa del basso rating",
+        "comment_sort_order": {
+            "trending": "Trending",
+            "votes": "Votes",
+            "age": "Age",
+            "reputation": "Reputation"
+        }
     },
     "voting_jsx": {
         "flagging_post_can_remove_rewards_the_flag_should_be_used_for_the_following":
@@ -400,17 +460,25 @@
         "past_payouts": "Pagamenti precedenti di %(value)s $",
         "past_payouts_author": "- Autore %(value)s $",
         "past_payouts_curators": "- Curatori %(value)s $",
-        "we_will_reset_curation_rewards_for_this_post":
-            "sarà effettuato il reset delle ricompense del curatore in questo post. ",
         "removing_your_vote": "Rimuovi il tuo voto",
+        "removing_your_vote_will_reset_curation_rewards_for_this_post":
+            "Removing your vote will reset your curation rewards for this post",
         "changing_to_an_upvote": "Cambia in un upvote",
+        "changing_to_an_upvote_will_reset_curation_rewards_for_this_post":
+            "Changing to an Up-Vote will reset your curation rewards for this post",
         "changing_to_a_downvote": "Cambia in un downvote",
+        "changing_to_a_downvote_will_reset_curation_rewards_for_this_post":
+            "Changing to a Down-Vote will reset your curation rewards for this post",
         "confirm_flag": "Conferma il flag",
         "and_more": "e %(count)s in più",
         "votes_plural": {
             "one": "%(count)s voto",
             "other": "%(count)s voti"
-        }
+        },
+        "voting_power": "Voting Power",
+        "estimated_vote": "Estimated Vote Value",
+        "we_will_reset_curation_rewards_for_this_post":
+            "sarà effettuato il reset delle ricompense del curatore in questo post. "
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
@@ -509,7 +577,86 @@
             "Se hai da poco aggiunto nuovi utenti da seguire, quando ci saranno nuovi contenuti disponibili li vedrai nel tuo feed personalizzato.",
         "empty_feed_3": "Esplora gli Articoli in Trending",
         "empty_feed_4": "Leggi la Guida di Avvio Rapido",
-        "empty_feed_5": "Leggi le FAQ"
+        "empty_feed_5": "Leggi le FAQ",
+        "my_feed": "My Feed",
+        "accountnames_feed": "%(account_name)s's Feed"
+    },
+    "transferhistoryrow_jsx": {
+        "to_savings": "ai risparmi",
+        "from_savings": "dai risparmi",
+        "cancel_transfer_from_savings":
+            "Cancella il trasferimento dai risparmi",
+        "stop_power_down": "Interrompi il Power Down",
+        "withdraw_vesting": "Start power down of %(powerdown_vests)s STEEM",
+        "start_power_down_of": "Avvia il Power Down di",
+        "receive_interest_of": "Ricevi l'interesse di",
+        "bad_actor_caution": "Caution",
+        "bad_actor_explained":
+            "This is from an account that looks fraudulent. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "bad_actor_reveal_memo": "I understand the risk; show anyway.",
+        "from_negative_rep_user_caution": "Caution",
+        "from_negative_rep_user_explained":
+            "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "from_negative_rep_user_reveal_memo":
+            "I understand the risk; show anyway.",
+        "curation_reward": "%(curation_reward)s STEEM POWER for ",
+        "author_reward":
+            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
+        "claim_reward_balance": {
+            "three_rewards":
+                "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
+            "two_rewards":
+                "Claim rewards: %(first_reward)s and %(second_reward)s",
+            "one_reward": "Claim rewards: %(reward)s"
+        },
+        "interest": "Receive interest of %(interest)s",
+        "fill_convert_request":
+            "Fill convert request: %(amount_in)s for %(amount_out)s",
+        "fill_order": {
+            "filled_by_current_owner":
+                "Paid %(open_pays)s for %(current_pays)s",
+            "open_owner_filled_my_order":
+                "Paid %(current_pays)s for %(open_pays)s"
+        },
+        "comment_benefactor_reward":
+            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
+        "transfer_to_vesting": {
+            "from_self": {
+                "no_to": "Transfer %(amount)s to STEEM POWER",
+                "to_someone": "Transfer %(amount)s STEEM POWER to "
+            },
+            "to_self": "Receive %(amount)s STEEM POWER from ",
+            "from_user_to_user":
+                " Transfer %(amount)s STEEM POWER from %(from) to "
+        },
+        "transfer": {
+            "from_self": {
+                "to_savings": "Transfer to savings %(amount)s to ",
+                "from_savings": "Transfer from savings %(amount)s to ",
+                "not_savings": "Transfer %(amount)s to "
+            },
+            "to_self": {
+                "to_savings": "Receive from savings %(amount)s from ",
+                "from_savings": "Transfer from savings %(amount)s from ",
+                "not_savings": "Received %(amount)s from "
+            },
+            "to_someone_from_someone": {
+                "to_savings":
+                    "Transfer to savings %(amount)s from %(from)s to %(to)s",
+                "from_savings":
+                    "Transfer from savings %(amount)s from %(from)s to %(to)s",
+                "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
+            }
+        },
+        "request_id": "Request ID: %(request_id)s"
+    },
+    "savingswithdrawhistory_jsx": {
+        "cancel_this_withdraw_request":
+            "Cancellare questa richiesta di prelevamento?",
+        "pending_savings_withdrawals": "PRELIEVI DEI RISPARMI IN SOSPESO",
+        "withdraw": "Ritira %(amount)s",
+        "to": "a %(to)s",
+        "from_to": "da %(from)s a %(to)s"
     },
     "explorepost_jsx": {
         "copied": "Copiato!",
@@ -570,15 +717,43 @@
         "keep_me_logged_in": "Voglio restare connesso",
         "amazing_community": "una comunità incredibile",
         "to_comment_and_reward_others": "per commentare e premiare gli altri. ",
-        "sign_up_get_steem": "Sign up. Get STEEM",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
+        "sign_up_get_steem": "Sign up. Get STEEM",
         "returning_users": "Utenti di ritorno:",
+        "login_warning_title": "Logging in with non-posting key",
+        "login_warning_body":
+            "You are attempting to use a key with more permissions than required for everyday Steemit.com use. Since keys and passwords are more likely to get compromised the more they are used, it is strongly recommended to only use your Posting Key to log in.",
+        "continue_anyway": "Continue Anyway",
+        "login_warning_link_text": "View my Posting Key at Steemit Wallet",
         "join_our": "Unisciti al nostro",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "password_update_success":
+            "La password dell'account %(accountName)s è stata aggiornata con successo"
     },
     "chainvalidation_js": {
+        "account_name_should_not_be_empty": "Account name should not be empty.",
+        "account_name_should_be_longer": "Account name should be longer.",
+        "account_name_should_be_shorter": "Account name should be shorter.",
+        "each_account_segment_should_start_with_a_letter":
+            "Each account segment should start with a letter.",
+        "each_account_segment_should_have_only_letters_digits_or_dashes":
+            "Each account segment should have only letters, digits, or dashes.",
+        "each_account_segment_should_have_only_one_dash_in_a_row":
+            "Each account segment should have only one dash in a row.",
+        "each_account_segment_should_end_with_a_letter_or_digit":
+            "Each account segment should end with a letter or digit.",
+        "each_account_segment_should_be_longer":
+            "Each account segment should be longer.",
+        "verified_exchange_no_memo":
+            "Devi includere una memo per il trasferimento.",
+        "badactor":
+            "Use caution sending to this account. Please double check your spelling for possible phishing.",
+        "memo_has_privatekey":
+            "Please do not include what appears to be a private key or password.",
+        "memo_is_privatekey": "Do not use private keys in memos.",
+        "memo_is_password": "Do not use passwords in memos.",
         "account_name_should": "Il nome account",
         "not_be_empty": "non deve essere vuoto.",
         "be_longer": "essere più lungo.",
@@ -588,9 +763,7 @@
         "have_only_letters_digits_or_dashes":
             "avere solo lettere, cifre o trattini.",
         "have_only_one_dash_in_a_row": "avere solo un trattino per riga. ",
-        "end_with_a_letter_or_digit": "terminare con una lettera o una cifra.",
-        "verified_exchange_no_memo":
-            "Devi includere una memo per il trasferimento."
+        "end_with_a_letter_or_digit": "terminare con una lettera o una cifra."
     },
     "settings_jsx": {
         "invalid_url": "URL invalido",
@@ -606,14 +779,19 @@
         "always_hide": "Nascondi sempre",
         "always_warn": "Avverti sempre",
         "always_show": "Mostra sempre",
+        "choose_default_blog_payout": "Blog post rewards",
+        "choose_default_comment_payout": "Comment post rewards",
         "muted_users": "Utenti mutati",
         "update": "Aggiornamento",
+        "upload_image": "Upload an image",
+        "uploading_image": "Uploading image",
         "profile_image_url": "Url immagine profilo",
         "cover_image_url": "Url immagine di copertina",
         "profile_name": "Mostra nome",
         "profile_about": "About",
         "profile_location": "Località",
-        "profile_website": "Sito"
+        "profile_website": "Sito",
+        "saved": "Saved!"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La quantita deve essere della forma 99999.999",
@@ -637,9 +815,15 @@
         "asset_currently_collecting":
             "%(asset)s attualmente percepiscono %(interest)s%% ISC.",
         "beware_of_spam_and_phishing_links":
-            "Beware of spam and phishing links in transfer memos. Do not open links from users you do not trust. Do not provide your private keys to any third party websites."
+            "Beware of spam and phishing links in transfer memos. Do not open links from users you do not trust. Do not provide your private keys to any third party websites.",
+        "transactions_make_take_a_few_minutes":
+            "Transactions will not show until they are confirmed on the blockchain, which may take a few minutes.",
+        "autocomplete_previous_transfers": "previous transfers",
+        "autocomplete_user_following": "following",
+        "confirm_transfer": "Transfer %(amount)s from %(from)s to %(to)s?"
     },
     "userwallet_jsx": {
+        "transfer": "Transfer",
         "conversion_complete_tip": "Si completerà su",
         "in_conversion": "%(amount)s in conversione",
         "transfer_to_savings": "Sposta nei Risparmi",
@@ -651,6 +835,8 @@
         "withdraw_DEBT_TOKENS": "Preleva %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
             "I token valgono circa $1.00 di %(LIQUID_TICKER)s, attualmente percepiscono %(sbdInterest)s%% ISC.",
+        "tradeable_tokens_transferred":
+            "Tradeable tokens that may be transferred anywhere at anytime.",
         "savings": "RISPARMI",
         "estimated_account_value": "Valore stimato dell'account",
         "next_power_down_is_scheduled_to_happen":
@@ -661,6 +847,18 @@
         "redeem_rewards": "Riscuoti le ricompense (Trasferisci sul conto)",
         "buy_steem_or_steem_power": "Compra STEEM o STEEM POWER"
     },
+    "powerdown_jsx": {
+        "power_down": "Power Down",
+        "amount": "Somma",
+        "already_power_down":
+            "Stai già effettuando il powering down %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s pagati sin ora). Ricorda che se cambi l'ammontare del power down il pagamento programmato verrà resettato.",
+        "delegating":
+            "Stai delegando %(AMOUNT)s %(LIQUID_TICKER)s. Questa somma sarà bloccata e non disponibile per il power down sino a quando la delega non sarà rimossa e non sia passato un intero intervallo di ricompensa.",
+        "per_week": "È ~%(AMOUNT)s %(LIQUID_TICKER)s a settimana.",
+        "warning":
+            "Lasciare meno di %(AMOUNT)s %(VESTING_TOKEN)s sul tuo account è sconsigliato e potrebbe renderlo inutilizzabile.",
+        "error": "Impossibile effettuare il power down (ERROR: %(MESSAGE)s)"
+    },
     "checkloginowner_jsx": {
         "your_password_permissions_were_reduced":
             "I tuoi permessi delle password sono stati ridotti",
@@ -669,5 +867,98 @@
         "ownership_changed_on": "Proprietà Cambiata Su",
         "deadline_for_recovery_is": "Il termine per il ripristino è",
         "i_understand_dont_show_again": "Ho capito, non mostrare nuovamente"
+    },
+    "termsagree_jsx": {
+        "please_review": "Please review our terms to continue",
+        "hi_user": "Hi %(username)s,",
+        "blurb":
+            "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
+        "i_agree_to_steemits": "I agree to Steemit's",
+        "terms_of_service": "Terms of Service",
+        "privacy_policy": "Privacy Policy",
+        "continue": "Continue",
+        "cancel": "Cancel"
+    },
+    "confirmtransactionform_jsx": {
+        "confirm": "Confirm %(transactionType)s"
+    },
+    "modals_jsx": {
+        "your_transaction_failed": "Your transaction failed to process",
+        "out_of_bandwidth_title": "Why? You've run out of Resource Credits",
+        "out_of_bandwidth_reason":
+            "Actions such as posting and voting use computing resources, placing a real cost on the community members who run the Steem blockchain for everyone.",
+        "out_of_bandwidth_reason_2":
+            "To keep things free, Steem intelligently allocates Resource Credits to each user based on their Steem Power holdings, which can be used to submit a limited number of feeless transactions. When a user runs low on Resource Credits, they will either need to wait for them to recharge, or purchase additional Steem Power. This system prioritizes actions by good community members while limiting spam.",
+        "out_of_bandwidth_option_title": "To keep interacting on Steemit:",
+        "out_of_bandwidth_option_1": "Buy and hold more Steem Power",
+        "out_of_bandwidth_option_2":
+            "Wait until your Resource Credits recharge",
+        "out_of_bandwidth_option_3": "Wait until the network usage decreases"
+    },
+    "sanitizedlink_jsx": {
+        "phishylink_caution": "Link hidden; phishing attempt",
+        "phishylink_reveal": "show link"
+    },
+    "market_jsx": {
+        "action": "Azione",
+        "date_created": "Data creazione",
+        "last_price": "Ultimo prezzo",
+        "24h_volume": "Volume nelle 24 ore",
+        "spread": "Spread",
+        "total": "Totale",
+        "available": "Disponibile",
+        "lowest_ask": "Prezzo di vendità più basso",
+        "highest_bid": "Prezzo di acquisto più alto",
+        "buy_orders": "Ordini d'acquisto",
+        "sell_orders": "Ordini di vendita",
+        "trade_history": "Cronologia delle Transazioni",
+        "open_orders": "Ordini Aperti",
+        "sell_amount_for_atleast":
+            "Vendi %(amount_to_sell)s per almeno %(min_to_receive)s (%(effectivePrice)s)",
+        "buy_atleast_amount_for":
+            "Compra ad almeno %(min_to_receive)s per %(amount_to_sell)s (%(effectivePrice)s)",
+        "price_warning_above":
+            "Questo prezzo è ben al di sopra del prezzo di mercato corrente di %(marketPrice)s, sei sicuro?",
+        "price_warning_below":
+            "Questo prezzo è ben al di sotto del prezzo di mercato corrente di %(marketPrice)s, sei sicuro?",
+        "order_cancel_confirm": "Cancella l'ordine %(order_id)s per %(user)s?",
+        "order_cancelled": "Ordine %(order_id)s cancellato",
+        "higher": "Più alto",
+        "lower": "Più basso",
+        "total_DEBT_TOKEN_SHORT_CURRENCY_SIGN":
+            "Totale %(DEBT_TOKEN_SHORT)s (%(CURRENCY_SIGN)s)"
+    },
+    "authorrewards_jsx": {
+        "estimated_author_rewards_last_week":
+            "Ricompense per l'autore stimate durante l'ultima settimana",
+        "author_rewards_history": "Cronologia di Ricompense dell'autore"
+    },
+    "curationrewards_jsx": {
+        "estimated_curation_rewards_last_week":
+            "Ricompense da curatore stimate nell'ultima settimana",
+        "curation_rewards_history": "Cronologia ricompense da curatore"
+    },
+    "witnesses_jsx": {
+        "witness_thread": "witness thread",
+        "top_witnesses": "Voto Witness ",
+        "you_have_votes_remaining": {
+            "zero": "Non hai voti residui",
+            "one": "Ti resta 1 voto",
+            "other": "Hai %(count)svoti residui"
+        },
+        "you_can_vote_for_maximum_of_witnesses":
+            "Puoi votare un massimo di 30 witness",
+        "witness": "Witness",
+        "information": "Informazioni",
+        "if_you_want_to_vote_outside_of_top_enter_account_name":
+            "Se desideri votare un witness al di fuori della top 100, inserisci di seguito il nome account per effettuare il voto. ",
+        "set_witness_proxy":
+            "Puoi anche scegliere un proxy che voterà i witnesses per te. Questo resetterà la tua attuale selezione di testimoni.",
+        "witness_set":
+            "Hai settato un proxy di voto. Se volessi riabilitare il voto manuale, cancella il tuo proxy.",
+        "witness_proxy_current": "Il tuo attuale proxy è:",
+        "witness_proxy_set": "Setta il proxy",
+        "witness_proxy_clear": "Cancella il proxy",
+        "proxy_update_error": "Il tuo proxy non è aggiornato"
     }
 }

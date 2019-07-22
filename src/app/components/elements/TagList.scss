@@ -29,4 +29,40 @@
       }  
     }
   }
+  .TagItem__nitrous {
+    a {
+      @include themify($themes) {
+        background-color: themed('colorAccent');
+        color: themed('buttonText');
+      }
+      &:hover {
+        @include themify($themes) {
+          background-color: themed('colorAccentHover');
+        }
+      }
+    }
+  }
+}
+
+/* tooltip */
+[data-tooltip] {
+  cursor: pointer;
+}
+[data-tooltip]:hover {
+	position: relative;
+}
+[data-tooltip]:hover:after {
+	content: attr(data-tooltip);
+  position: absolute;
+	bottom: 100%;
+	left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+	color: #FFFFFF;
+	font-size: 12px;
+  z-index: 9999;
+  border-radius: 10px;
+  min-width: 170px;
+  padding: 10px;
+  white-space: pre;
+  display: inline-block;
 }

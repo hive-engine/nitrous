@@ -29,6 +29,8 @@
         "edit": "Edit",
         "email": "Email",
         "external_link_message": "This link will take you away from the app",
+        "affiliation_steemit": "Steemit Team",
+        "affiliation_sm": "Steem Monsters Team",
         "feed": "Feed",
         "follow": "Follow",
         "for": " for ",
@@ -245,7 +247,12 @@
             "warning":
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
-        }
+        },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
@@ -430,7 +437,9 @@
         "votes_plural": {
             "one": "%(count)s vote",
             "other": "%(count)s votes"
-        }
+        },
+        "voting_power": "Voting Power",
+        "estimated_vote": "Estimated Vote Value"
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":

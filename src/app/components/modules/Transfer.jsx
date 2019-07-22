@@ -486,6 +486,17 @@ class TransferForm extends Component {
                                         ? tt('g.power_up')
                                         : tt('g.next')}
                                 </button>
+                                {transferToSelf && (
+                                    <button
+                                        className="button hollow no-border"
+                                        disabled={submitting}
+                                        onClick={this.onAdvanced}
+                                    >
+                                        {advanced
+                                            ? tt('g.basic')
+                                            : tt('g.advanced')}
+                                    </button>
+                                )}
                             </span>
                         )}
                     </div>
@@ -602,6 +613,7 @@ export default connect(
                       contractAction: 'stake',
                       contractPayload: {
                           symbol: LIQUID_TOKEN_UPPERCASE,
+                          to,
                           quantity: amount,
                       },
                   }

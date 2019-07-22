@@ -21,20 +21,25 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import { APP_DOMAIN, APP_NAME, APP_ICON } from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
+import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
         <span className="PostFull__time_author_category vcard">
             <Icon name="clock" className="space-right" />
-            <TimeAgoWrapper date={content.created} className="updated" />
+            <TimeAgoWrapper date={content.created} />
             {} {tt('g.by')}{' '}
-            <Author author={content.author} authorRepLog10={authorRepLog10} />
+            <Author
+                author={content.author}
+                authorRepLog10={authorRepLog10}
+                showAffiliation
+            />
             {showTags && (
                 <span>
                     {' '}
@@ -53,13 +58,18 @@ function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
                 <Author
                     author={content.author}
                     authorRepLog10={authorRepLog10}
+                    showAffiliation
                 />
                 <span>
                     {' '}
                     {tt('g.in')} <TagList post={content} single />
                 </span>{' '}
-                •&nbsp;{' '}
-                <TimeAgoWrapper date={content.created} className="updated" />
+                •&nbsp; <TimeAgoWrapper date={content.created} />
+                &nbsp;{' '}
+                <ContentEditedWrapper
+                    createDate={content.created}
+                    updateDate={content.last_update}
+                />
             </div>
         </span>
     );
@@ -229,7 +239,7 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post },
+            props: { username, post, scotTokens },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -250,6 +260,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = '';
+        if (jsonMetadata) app_info = jsonMetadata.app || '';
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -363,6 +375,11 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {app_info.startsWith(`${APP_ICON}/`) && (
+                    <span title={tt('g.written_from', { app_name: APP_NAME })}>
+                        <Icon name="steemcoinpan" />
+                    </span>
+                )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -412,7 +429,8 @@ class PostFull extends React.Component {
         const showReblog = !_isPaidout;
         const showPromote =
             username && !_isPaidout && post_content.get('depth') == 0;
-        const showReplyOption = post_content.get('depth') < 255;
+        const showReplyOption =
+            username !== undefined && post_content.get('depth') < 255;
         const showEditOption = username === author;
         const showDeleteOption =
             username === author && content.stats.allowDelete && !_isPaidout;
@@ -469,7 +487,7 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
@@ -477,7 +495,7 @@ class PostFull extends React.Component {
                             authorRepLog10={authorRepLog10}
                         />
                     </div>
-                    <div className="columns medium-12 large-5 ">
+                    <div className="columns medium-12 large-2 ">
                         <Voting post={post} />
                     </div>
                     <div className="RightShare__Menu small-11 medium-12 large-5 columns">
@@ -541,10 +559,14 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => ({
-        ...ownProps,
-        username: state.user.getIn(['current', 'username']),
-    }),
+    (state, ownProps) => {
+        const scotConfig = state.app.get('scotConfig');
+        return {
+            ...ownProps,
+            username: state.user.getIn(['current', 'username']),
+            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
+        };
+    },
 
     // mapDispatchToProps
     dispatch => ({

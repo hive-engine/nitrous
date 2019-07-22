@@ -142,8 +142,10 @@ function link(state, child) {
     if (url) {
         state.links.add(url);
         if (state.mutate) {
-            // If this link is not relative, http, https, or steem -- add https.
-            if (!/^((#)|(\/(?!\/))|(((steem|https?):)?\/\/))/.test(url)) {
+            // If this link is not relative, http, https, steem or esteem -- add https.
+            if (
+                !/^((#)|(\/(?!\/))|(((steem|esteem|https?):)?\/\/))/.test(url)
+            ) {
                 child.setAttribute('href', 'https://' + url);
             }
 
@@ -268,7 +270,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
         const tagLower = tag2.toLowerCase();
         if (hashtags) hashtags.add(tagLower);
         if (!mutate) return tag;
-        return space + `<a href="/trending/${tagLower}">${tag}</a>`;
+        return space + `<a href="/hot/${tagLower}">${tag}</a>`;
     });
 
     // usertag (mention)

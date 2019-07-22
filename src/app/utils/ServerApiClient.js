@@ -41,9 +41,9 @@ export function serverApiRecordEvent(type, val, rate_limit_ms = 5000) {
     );
 }
 
-let last_page, last_views, last_page_promise;
+let last_page;
 export function recordPageView(page, referer, account) {
-    if (last_page_promise && page === last_page) return last_page_promise;
+    if (last_page && page === last_page) return last_page;
 
     if (!process.env.BROWSER) return Promise.resolve(0);
     if (window.ga) {
@@ -51,13 +51,8 @@ export function recordPageView(page, referer, account) {
         window.ga('set', 'page', page);
         window.ga('send', 'pageview');
     }
-    last_page_promise = api.callAsync('overseer.pageview', {
-        page,
-        referer,
-        account,
-    });
     last_page = page;
-    return last_page_promise;
+    return last_page;
 }
 
 export function saveCords(x, y) {
