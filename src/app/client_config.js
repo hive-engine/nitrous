@@ -76,9 +76,16 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Marlians is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called MARLIANS, that ' +
-    'supports real value for digital rewards through market price discovery and liquidity';
+    'Marlians.com is a social media platform that rewards you ' +
+    "becoming 'confirm naijan. There is 'naijan' and there is " +
+    "'confirm naijan' and while one is regular, the other is 'great'. " +
+    'There is a "Naira Marley" and there is a "Bob Marley", ' +
+    'then there is the likes of "Fela" & "Mohammed Ali". ' +
+    'Now, there is also "you". ' +
+    "\n\nBe 'confirm naijan'; be great; get rewarded!\n" +
+    "You get rewarded in 'MARLIANS', a digital currency " +
+    "that attempts to reward 'greatness'. 'Greatness' being " +
+    "a by-product of 'evolving the human'.";
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
