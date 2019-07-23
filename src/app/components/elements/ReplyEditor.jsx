@@ -955,6 +955,13 @@ export default formId =>
                     return;
                 }
 
+                // Add footer
+                const footer =
+                    '<hr><center><sub>Posted via <a href="https://www.marlians.com/">Marlians.com</a></sub></center>';
+                if (!body.endsWith(footer)) {
+                    body += "\n\n" + footer;
+                }
+
                 if (meta.tags.length > 10) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
