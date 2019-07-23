@@ -538,8 +538,8 @@ class Voting extends React.Component {
 
             avotes.sort(
                 (a, b) =>
-                    Math.abs(parseInt(a.estimate)) >
-                    Math.abs(parseInt(b.estimate))
+                    Math.abs(parseFloat(a.estimate)) >
+                    Math.abs(parseFloat(b.estimate))
                         ? -1
                         : 1
             );
