@@ -186,24 +186,6 @@ export default function ServerHTML({
                         async
                     />
                 ) : null}
-                {adClient ? (
-                    <script
-                        async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-                    />
-                ) : null}
-                {adClient ? (
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                      (adsbygoogle = window.adsbygoogle || []).push({
-                          google_ad_client: "${adClient}",
-                          enable_page_level_ads: true
-                      });
-                  `,
-                        }}
-                    />
-                ) : null}
                 {fomoId ? (
                     <script
                         async
