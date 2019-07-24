@@ -8,7 +8,7 @@
         "balance": "Balance: %(balanceValue)s",
         "balances": "Balances",
         "bid": "Bid",
-        "blog": "Blog",
+        "blog": "Ulog",
         "browse": "Browse",
         "buy": "Buy",
         "buy_steem_power": "Buy Steem Power",
@@ -49,7 +49,7 @@
         "logout": "Logout",
         "memo": "Memo",
         "mute": "Mute",
-        "my_blog": "My blog",
+        "my_blog": "My ulog",
         "my_comments": "My comments",
         "my_feed": "My feed",
         "my_replies": "Replies to me",
@@ -359,7 +359,7 @@
         "user_hasnt_made_any_posts_yet":
             "Looks like %(name)s hasn't made any posts yet!",
         "user_hasnt_started_bloggin_yet":
-            "Looks like %(name)s hasn't started blogging yet!",
+            "Looks like %(name)s hasn't started ulogging yet!",
         "user_hasnt_followed_anything_yet":
             "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
         "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
@@ -721,7 +721,7 @@
         "always_hide": "Always hide",
         "always_warn": "Always warn",
         "always_show": "Always show",
-        "choose_default_blog_payout": "Blog post rewards",
+        "choose_default_blog_payout": "Ulog post rewards",
         "choose_default_comment_payout": "Comment post rewards",
         "muted_users": "Muted Users",
         "update": "Update",
