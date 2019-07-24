@@ -11,13 +11,8 @@ const map = {
     steemitblog: 'steemit',
     steemitdev: 'steemit',
 
-    /*
-    //steem monsters
-    steemmonsters: 'sm',
-    'steem.monsters': 'sm',
-    aggroed: 'sm',
-    yabapmatt: 'sm',
-*/
+    //cerified uloggwr
+    surpassinggoogle: 'certified_ulogger',
 };
 
 export default map;
