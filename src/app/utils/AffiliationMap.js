@@ -65,7 +65,7 @@ const map = {
     anikys3reasure: 'certified_ulogger',
     marshallmustang: 'certified_ulogger',
     hlezama: 'certified_ulogger',
-    tobias-g: 'certified_ulogger',
+    'tobias-g': 'certified_ulogger',
     ambmicheal: 'certified_ulogger',
     jetto: 'certified_ulogger',
     spokerman12: 'certified_ulogger',
