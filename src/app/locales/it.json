@@ -322,8 +322,7 @@
         "advanced_settings": "Advanced settings"
     },
     "category_selector_jsx": {
-        "tag_your_story":
-            "Tag (massimo 5). Il primo tag è la categoria principale. ",
+        "tag_your_story": "Tag: Il primo tag è la categoria principale. ",
         "select_a_tag": "Seleziona un tag",
         "maximum_tag_length_is_24_characters":
             "La lunghezza massima di un tag è 24 caratteri",
