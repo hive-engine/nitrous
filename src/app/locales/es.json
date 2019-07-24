@@ -322,7 +322,7 @@
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Etiqueta (hasta 5 etiquetas), la primera etiqueta es tu principal categoría.",
+            "Etiquetas: la primera etiqueta es tu principal categoría.",
         "select_a_tag": "Selecciona una etiqueta",
         "maximum_tag_length_is_24_characters":
             "La longitud máxima de la etiqueta es de 24 caracteres",
