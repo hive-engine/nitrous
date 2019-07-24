@@ -128,6 +128,11 @@ const SidePanel = ({
                 label: 'Discord',
                 link: 'https://discord.gg/QjvDDZd',
             },
+            {
+                value: 'vote_witness',
+                label: 'Vote steemgigs',
+                link: 'https://app.steemconnect.com/sign/account-witness-vote?witness=steemgigs&approve=1',
+            },
         ],
         television: [
             {
