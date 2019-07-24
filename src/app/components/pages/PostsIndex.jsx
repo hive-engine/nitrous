@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { List } from 'immutable';
+import { List, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -142,13 +142,67 @@ class PostsIndex extends React.Component {
     onShowSpam = () => {
         this.setState({ showSpam: !this.state.showSpam });
     };
+
+    searchCategories(cat, parent, categories) {
+        if (!cat) return { par: parent, cats: categories, found: false };
+
+        // leaf nodes
+        if (List.isList(categories)) {
+            if (categories.includes(cat))
+                return { par: parent, cats: categories, found: true };
+            else return { par: parent, cats: null, found: false };
+        } else {
+            for (const c of categories.keys()) {
+                const v = categories.get(c);
+                if (cat === c && v !== null && !v.isEmpty()) {
+                    return { par: parent, cats: v, found: true };
+                } else {
+                    const { par, cats, found } = this.searchCategories(
+                        cat,
+                        c,
+                        v
+                    );
+                    if (cats !== null && !cats.isEmpty()) {
+                        return { par, cats, found };
+                    }
+                }
+            }
+            return { par: parent, cats: null, found: false };
+        }
+    }
+
+    buildCategories(cat, parent, categories) {
+        if (!categories) return this.props.categories;
+
+        if (!cat) {
+            return categories;
+        } else {
+            let cats = OrderedMap();
+            if (categories.includes(cat)) cats = categories;
+            else cats = cats.set(cat, categories);
+            if (parent !== null) {
+                const children = cats;
+                cats = OrderedMap();
+                cats = cats.set(parent, children);
+            }
+            return cats;
+        }
+    }
+
     render() {
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { categories, discussions, pinned } = this.props;
+        const { discussions, pinned } = this.props;
+        const { par, cats, found } = this.searchCategories(
+            category,
+            null,
+            this.props.categories
+        );
+        const categories = this.buildCategories(category, par, cats);
+        const max_levels = category && found ? 3 : 2;
 
         let topics_order = order;
         let posts = List();
@@ -265,6 +319,7 @@ class PostsIndex extends React.Component {
                                     current={category}
                                     categories={categories}
                                     compact={true}
+                                    levels={max_levels}
                                 />
                             </span>
                         </div>
@@ -364,6 +419,7 @@ class PostsIndex extends React.Component {
                         compact={false}
                         username={this.props.username}
                         categories={categories}
+                        levels={max_levels}
                     />
                     <small>
                         <a
