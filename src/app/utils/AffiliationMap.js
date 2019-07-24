@@ -106,6 +106,7 @@ const map = {
     snook: 'certified_ulogger',
     enjieneer: 'certified_ulogger',
     sn0white: 'certified_ulogger',
+    'ange.nkuru': 'certified_ulogger',
 };
 
 export default map;
