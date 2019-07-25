@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { List, OrderedMap } from 'immutable';
+import { List } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -21,8 +21,6 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
-
-import SidebarToken from 'app/components/elements/SidebarToken';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -141,67 +139,13 @@ class PostsIndex extends React.Component {
     onShowSpam = () => {
         this.setState({ showSpam: !this.state.showSpam });
     };
-
-    searchCategories(cat, parent, categories) {
-        if (!cat) return { par: parent, cats: categories, found: false };
-
-        // leaf nodes
-        if (List.isList(categories)) {
-            if (categories.includes(cat))
-                return { par: parent, cats: categories, found: true };
-            else return { par: parent, cats: null, found: false };
-        } else {
-            for (const c of categories.keys()) {
-                const v = categories.get(c);
-                if (cat === c && v !== null && !v.isEmpty()) {
-                    return { par: parent, cats: v, found: true };
-                } else {
-                    const { par, cats, found } = this.searchCategories(
-                        cat,
-                        c,
-                        v
-                    );
-                    if (cats !== null && !cats.isEmpty()) {
-                        return { par, cats, found };
-                    }
-                }
-            }
-            return { par: parent, cats: null, found: false };
-        }
-    }
-
-    buildCategories(cat, parent, categories) {
-        if (!categories) return this.props.categories;
-
-        if (!cat) {
-            return categories;
-        } else {
-            let cats = OrderedMap();
-            if (categories.includes(cat)) cats = categories;
-            else cats = cats.set(cat, categories);
-            if (parent !== null) {
-                const children = cats;
-                cats = OrderedMap();
-                cats = cats.set(parent, children);
-            }
-            return cats;
-        }
-    }
-
     render() {
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { discussions, pinned } = this.props;
-        const { par, cats, found } = this.searchCategories(
-            category,
-            null,
-            this.props.categories
-        );
-        const categories = this.buildCategories(category, par, cats);
-        const max_levels = category && found ? 3 : 2;
+        const { categories, discussions, pinned } = this.props;
 
         let topics_order = order;
         let posts = List();
@@ -322,7 +266,6 @@ class PostsIndex extends React.Component {
                                     current={category}
                                     categories={categories}
                                     compact={true}
-                                    levels={max_levels}
                                 />
                             </span>
                         </div>
@@ -365,80 +308,6 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
-                    {this.props.isBrowser && (
-                        <div>
-                            <SidebarToken
-                                scotToken={this.props.tokenStats.getIn([
-                                    'scotToken',
-                                ])}
-                                scotTokenCirculating={this.props.tokenStats.getIn(
-                                    ['total_token_balance', 'circulatingSupply']
-                                )}
-                                scotTokenBurn={
-                                    this.props.tokenStats.getIn([
-                                        'token_burn_balance',
-                                        'balance',
-                                    ]) || 0
-                                }
-                                scotTokenStaking={this.props.tokenStats.getIn([
-                                    'total_token_balance',
-                                    'totalStaked',
-                                ])}
-                            />
-                        </div>
-                    )}
-                    {this.props.isBrowser && (
-                        <div>
-                            <SidebarToken
-                                scotToken={this.props.tokenStats.getIn([
-                                    'scotMinerTokens',
-                                    0,
-                                ])}
-                                scotTokenCirculating={this.props.tokenStats.getIn(
-                                    [
-                                        'total_token_miner_balance',
-                                        'circulatingSupply',
-                                    ]
-                                )}
-                                scotTokenBurn={
-                                    this.props.tokenStats.getIn([
-                                        'token_miner_burn_balance',
-                                        'balance',
-                                    ]) || 0
-                                }
-                                scotTokenStaking={this.props.tokenStats.getIn([
-                                    'total_token_miner_balance',
-                                    'totalStaked',
-                                ])}
-                            />
-                        </div>
-                    )}
-                    {this.props.isBrowser && (
-                        <div>
-                            <SidebarToken
-                                scotToken={this.props.tokenStats.getIn([
-                                    'scotMinerTokens',
-                                    1,
-                                ])}
-                                scotTokenCirculating={this.props.tokenStats.getIn(
-                                    [
-                                        'total_token_mega_miner_balance',
-                                        'circulatingSupply',
-                                    ]
-                                )}
-                                scotTokenBurn={
-                                    this.props.tokenStats.getIn([
-                                        'token_mega_miner_burn_balance',
-                                        'balance',
-                                    ]) || 0
-                                }
-                                scotTokenStaking={this.props.tokenStats.getIn([
-                                    'total_token_mega_miner_balance',
-                                    'totalStaked',
-                                ])}
-                            />
-                        </div>
-                    )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -453,7 +322,6 @@ class PostsIndex extends React.Component {
                         compact={false}
                         username={this.props.username}
                         categories={categories}
-                        levels={max_levels}
                     />
                     <small>
                         <a
@@ -495,8 +363,6 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
-            const scotConfig = state.app.get('scotConfig');
-
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -517,7 +383,6 @@ module.exports = {
                     .get('notices')
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                tokenStats: scotConfig.getIn(['config', 'tokenStats']),
             };
         },
         dispatch => {
