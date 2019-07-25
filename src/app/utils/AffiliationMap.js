@@ -109,6 +109,7 @@ const map = {
     'ange.nkuru': 'certified_ulogger',
     'ah-2002': 'certified_ulogger',
     ericet: 'certified_ulogger',
+    mjroja: 'certified_ulogger',
 };
 
 export default map;
