@@ -16,7 +16,7 @@ export class BeneficiarySelector extends React.Component {
         tabIndex: React.PropTypes.number,
 
         // redux connect
-        following: React.PropTypes.array.isRequired,
+        following: React.PropTypes.object.isRequired,
     };
     static defaultProps = {
         id: 'BeneficiarySelectorId',
