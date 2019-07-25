@@ -5,7 +5,6 @@ import { browserHistory } from 'react-router';
 import tt from 'counterpart';
 import PropTypes from 'prop-types';
 import NativeSelect from 'app/components/elements/NativeSelect';
-import { List } from 'immutable';
 
 const Topics = ({
     order,
@@ -14,7 +13,6 @@ const Topics = ({
     className,
     username,
     categories,
-    levels,
 }) => {
     const handleChange = selectedOption => {
         browserHistory.push(selectedOption.value);
@@ -34,40 +32,6 @@ const Topics = ({
         if (currentTag && !currentOrder) return opts['tagOnly'];
         return opts['default'];
     };
-
-    const buildPrefix = level => {
-        let a = '';
-        for (let i = 0; i < level; i++) {
-            a = a + '>';
-        }
-        return a;
-    };
-
-    const buildCategories = (categories, level, max) => {
-        const prefix = buildPrefix(level);
-        if (List.isList(categories)) {
-            return categories.map(c => prefix + c);
-        } else {
-            let c_list = List();
-            categories.mapKeys((c, v) => {
-                c_list = c_list.push(prefix + c);
-                // only display max levels
-                if (level < max - 1) {
-                    c_list = c_list.concat(buildCategories(v, level + 1, max));
-                }
-            });
-            return c_list;
-        }
-    };
-
-    const parseCategory = cat => {
-        const tag = cat.replace(/\>/g, '');
-        const label = cat.replace(/\>/g, '\u00a0\u00a0\u00a0');
-        return { tag, label };
-    };
-
-    const max_levels = levels || 3;
-    categories = buildCategories(categories, 0, levels);
 
     if (compact) {
         const extras = username => {
@@ -89,9 +53,8 @@ const Topics = ({
         const opts = extras(username).concat(
             categories
                 .map(cat => {
-                    const { tag, label } = parseCategory(cat);
-                    const link = order ? `/${order}/${tag}` : `/${tag}`;
-                    return { value: link, label: label };
+                    const link = order ? `/${order}/${cat}` : `/${cat}`;
+                    return { value: link, label: cat };
                 })
                 .toJS()
         );
@@ -105,16 +68,15 @@ const Topics = ({
         );
     } else {
         const categoriesLinks = categories.map(cat => {
-            const { tag, label } = parseCategory(cat);
-            const link = order ? `/${order}/${tag}` : `/hot/${tag}`;
+            const link = order ? `/${order}/${cat}` : `/hot/${cat}`;
             return (
-                <li className="c-sidebar__list-item" key={tag}>
+                <li className="c-sidebar__list-item" key={cat}>
                     <Link
                         to={link}
                         className="c-sidebar__link"
                         activeClassName="active"
                     >
-                        {label}
+                        {cat}
                     </Link>
                 </li>
             );
