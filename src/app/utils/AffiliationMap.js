@@ -110,6 +110,7 @@ const map = {
     'ah-2002': 'certified_ulogger',
     ericet: 'certified_ulogger',
     mjroja: 'certified_ulogger',
+    iamjadeline: 'certified_ulogger',
 };
 
 export default map;
