@@ -111,6 +111,10 @@ const map = {
     ericet: 'certified_ulogger',
     mjroja: 'certified_ulogger',
     iamjadeline: 'certified_ulogger',
+    shanghaipreneur: 'certified_ulogger',
+    lonelywolf: 'certified_ulogger',
+    maskuncoro: 'certified_ulogger',
+    eprolific: 'certified_ulogger',
 };
 
 export default map;
