@@ -18,7 +18,7 @@ export const TAG_LIST = fromJSOrdered({
     boardgames: ['cardgames', 'rpg', 'penandpaper' 'poker'],
     giveaway: ['contest'],
     platforms: ['dtube', 'vimmtv', '3speak'],
-    language: ['spanish', 'deutsch', 'kr', 'cn', 'polish', 'japanese'],
+    languages: ['spanish', 'deutsch', 'kr', 'cn', 'polish', 'japanese'],
 });
 export const LIQUID_TOKEN = 'GG';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
