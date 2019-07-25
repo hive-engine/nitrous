@@ -1,4 +1,4 @@
-import { fromJSOrdered } from './utils/immutable';
+import { List } from 'immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const APP_NAME = 'SteemAce';
@@ -12,14 +12,28 @@ export const APP_ICON = 'steemace';
 export const APP_URL = 'https://www.steemace.io/';
 export const APP_DOMAIN = 'www.steemace.io';
 export const SCOT_TAG = 'steemace';
-export const TAG_LIST = fromJSOrdered({
-    gaming: ['gamingreview', 'letsplay', 'esports', 'news', 'vr', 'mobilegame'],
-    cryptogames: ['splinterlands', 'nextcolony', 'radaquest', 'roadofrich'],
-    boardgames: ['cardgames', 'rpg', 'penandpaper' 'poker'],
-    giveaway: ['contest'],
-    platforms: ['dtube', 'vimmtv', '3speak'],
-    language: ['spanish', 'deutsch', 'kr', 'cn', 'polish', 'japanese'],
-});
+export const TAG_LIST = List([
+    'games',
+    'gaming',
+    'gamereview',
+    'news',
+    'esports',
+    'splinterlands',
+    'steemmonsters',
+    'nextcolony',
+    'roadofrich',
+    'radaquest',
+    'contest',
+    'memes',
+    'dtube',
+    'vimmtv',
+    'sct',
+    'zzan',
+    'palnet',
+    'battle',
+    'spanish',
+    'deutsch',
+    'steemfest']);
 export const LIQUID_TOKEN = 'GG';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'GG';
