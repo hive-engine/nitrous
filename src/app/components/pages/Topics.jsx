@@ -15,7 +15,7 @@ const Topics = ({
     username,
     categories,
     levels,
-}) => {
+ }) => {
     const handleChange = selectedOption => {
         browserHistory.push(selectedOption.value);
     };
