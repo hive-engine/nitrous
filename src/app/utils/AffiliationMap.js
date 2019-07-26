@@ -115,6 +115,12 @@ const map = {
     lonelywolf: 'certified_ulogger',
     maskuncoro: 'certified_ulogger',
     eprolific: 'certified_ulogger',
+    dwin0603: 'certified_ulogger',
+    ajks: 'certified_ulogger',
+    ahmad575447: 'certified_ulogger',
+    ombeye: 'certified_ulogger',
+    htliao: 'certified_ulogger',
+    anroja: 'certified_ulogger',
 };
 
 export default map;
