@@ -34,7 +34,6 @@ export const TAG_LIST = fromJSOrdered({
     trends: ['cleanlabel','sustainability','regenerativeagriculture'],
     vegan: [],
     contest: [],
-    communities: ['ecotrain','innerblocks','sportstalksocial','vegansofsteemit'],
 });
 export const LIQUID_TOKEN = 'Natural';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
