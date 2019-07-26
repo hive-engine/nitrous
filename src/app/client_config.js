@@ -12,7 +12,30 @@ export const APP_ICON = 'natural';
 export const APP_URL = 'https://www.naturalproducts.today';
 export const APP_DOMAIN = 'www.naturalproducts.today';
 export const SCOT_TAG = 'naturalproducts';
-export const TAG_LIST = fromJSOrdered(['naturalproducts']);
+export const TAG_LIST = fromJSOrdered({
+    business: ['healthmarkets','naturalmarkets'], 
+    food: ['functionalfood','healthfood'],
+    beverages: ['functionalbeverages','healthybeverages','sportsbeverages'],
+    healthyliving: [],
+    hemp: ['cbd'],
+    industry: [],
+    ingredients: ['vitamins','minerals'],
+    lifestyle: [],
+    microbiome: ['probiotics','prebiotics','synbiotics'],
+    nutraceuticals: [],
+    organics: [],
+    personalcare: ['cleanbeauty'],
+    practitioner: [],
+    regulations: ['fda','ftc','dshea','pop65','efsa'],
+    research: [],
+    retailer: [],
+    supplements: ['omega3','dietarysupplements','foodsupplements'],
+    botanicals: ['tumeric','ashwaghanda','cranderry','amla','herbs'],
+    trends: ['cleanlabel','sustainability','regenerativeagriculture'],
+    vegan: [],
+    contest: [],
+    communities: ['ecotrain','innerblocks','sportstalksocial','vegansofsteemit'],
+});
 export const LIQUID_TOKEN = 'Natural';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'NATRL';
