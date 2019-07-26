@@ -11,13 +11,8 @@ const map = {
     steemitblog: 'steemit',
     steemitdev: 'steemit',
 
-    /*
-    //steem monsters
-    steemmonsters: 'sm',
-    'steem.monsters': 'sm',
-    aggroed: 'sm',
-    yabapmatt: 'sm',
-*/
+    //neoxag
+    neoxian: 'founder',
 };
 
 export default map;
