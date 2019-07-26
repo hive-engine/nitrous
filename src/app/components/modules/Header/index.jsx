@@ -15,7 +15,7 @@ import * as userActions from 'app/redux/UserReducer';
 import * as appActions from 'app/redux/AppReducer';
 import Userpic from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import SvgImage from 'app/components/elements/SvgImage';
+import AppLogo from 'app/components/elements/AppLogo';
 import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
@@ -312,11 +312,7 @@ class Header extends React.Component {
                         <div className="small-5 large-4 columns Header__logotype">
                             {/*LOGO*/}
                             <Link to={logo_link}>
-                                <SvgImage
-                                    name={APP_ICON}
-                                    width="40px"
-                                    height="40px"
-                                />
+                                <AppLogo />
                             </Link>
                         </div>
 
