@@ -280,7 +280,6 @@ class Header extends React.Component {
                   }
                 : { link: '#', onClick: showLogin, value: tt('g.login') },
         ];
-
         return (
             <Headroom>
                 <header className="Header">
