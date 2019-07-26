@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const APP_NAME = 'PALNet';
@@ -12,7 +12,7 @@ export const APP_ICON = 'pal';
 export const APP_URL = 'https://www.palnet.io';
 export const APP_DOMAIN = 'www.palnet.io';
 export const SCOT_TAG = 'palnet';
-export const TAG_LIST = List([
+export const TAG_LIST = fromJSOrdered([
     'palnet',
     'peace',
     'abundance',
