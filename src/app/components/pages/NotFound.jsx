@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'app/components/elements/Icon';
-import SvgImage from 'app/components/elements/SvgImage';
+import AppLogo from 'app/components/elements/AppLogo';
 import { APP_ICON } from 'app/client_config';
 
 class NotFound extends React.Component {
@@ -10,11 +10,7 @@ class NotFound extends React.Component {
                 <div className="row Header__nav">
                     <div className="small-5 large-4 columns Header__logotype">
                         <a href="/">
-                            <SvgImage
-                                name={APP_ICON}
-                                width="200px"
-                                height="50px"
-                            />
+                            <AppLogo />
                         </a>
                     </div>
                 </div>
