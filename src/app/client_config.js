@@ -17,7 +17,7 @@ export const TAG_LIST = fromJSOrdered({
     cryptogames: ['splinterlands', 'nextcolony', 'radaquest', 'roadofrich'],
     boardgames: ['cardgames', 'rpg', 'penandpaper', 'poker'],
     giveaway: ['contest'],
-    platforms: ['dtube', 'vimmtv', '3speak'],
+    platforms: ['dtube', 'vimmtv', 'threespeak'],
     language: ['spanish', 'deutsch', 'kr', 'cn', 'polish', 'japanese'],
 });
 export const LIQUID_TOKEN = 'GG';
