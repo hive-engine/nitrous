@@ -121,6 +121,10 @@ const map = {
     ombeye: 'certified_ulogger',
     htliao: 'certified_ulogger',
     anroja: 'certified_ulogger',
+    indigoocean: 'certified_ulogger',
+    jaraumoses: 'certified_ulogger',
+    jianan: 'certified_ulogger',
+    ahlawat: 'certified_ulogger',
 };
 
 export default map;
