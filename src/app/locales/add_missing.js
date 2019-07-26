@@ -1,3 +1,5 @@
+// for LANG in fr it ja ko pl ru zh; do echo $LANG; node add_missing.js en $LANG > tmp.json ; mv tmp.json $LANG.json ; done
+
 const fs = require('fs');
 const lodash = require('lodash');
 
