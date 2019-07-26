@@ -25,6 +25,5 @@ const map = {
     travelgirl: 'curator',
     hertz300: 'curator',
 };
-};
 
 export default map;
