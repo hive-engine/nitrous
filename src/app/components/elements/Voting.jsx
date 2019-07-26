@@ -496,6 +496,43 @@ class Voting extends React.Component {
             });
         }
 
+        // add beneficiary info. use toFixed due to a bug of formatDecimal (5.00 is shown as 5,.00)
+        const beneficiaries = post_obj.get('beneficiaries');
+        if (
+            rewardData.enable_comment_beneficiaries &&
+            beneficiaries &&
+            !beneficiaries.isEmpty()
+        ) {
+            payoutItems.push({ value: tt('g.beneficiaries') });
+
+            // to remove tt('g.beneficiaries') in the above if there is no beneficiary,
+            // i.e., if all beneficiaries are in exclude_beneficiaries_accounts (e.g., @finex, @likwid)
+            let popBeneficiaries = true;
+            beneficiaries.forEach(function(key) {
+                if (
+                    rewardData.exclude_beneficiaries_accounts.includes(
+                        key.get('account')
+                    )
+                ) {
+                    return;
+                }
+
+                popBeneficiaries = false;
+                payoutItems.push({
+                    value:
+                        '- ' +
+                        key.get('account') +
+                        ': ' +
+                        (parseFloat(key.get('weight')) / 100).toFixed(2) +
+                        '%',
+                    link: '/@' + key.get('account'),
+                });
+            });
+            if (popBeneficiaries) {
+                payoutItems.pop(); // pop tt('g.beneficiaries')
+            }
+        }
+
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
                 <span>
@@ -538,8 +575,8 @@ class Voting extends React.Component {
 
             avotes.sort(
                 (a, b) =>
-                    Math.abs(parseInt(a.estimate)) >
-                    Math.abs(parseInt(b.estimate))
+                    Math.abs(parseFloat(a.estimate)) >
+                    Math.abs(parseFloat(b.estimate))
                         ? -1
                         : 1
             );
@@ -671,6 +708,14 @@ export default connect(
             author_curve_exponent: scotConfig.getIn([
                 'config',
                 'author_curve_exponent',
+            ]),
+            enable_comment_beneficiaries: scotConfig.getIn([
+                'config',
+                'enable_comment_beneficiaries',
+            ]),
+            exclude_beneficiaries_accounts: scotConfig.getIn([
+                'config',
+                'exclude_beneficiaries_accounts',
             ]),
         };
         // set author_curve_exponent to what's on the post (in case of transition period)
