@@ -11,13 +11,20 @@ const map = {
     steemitblog: 'steemit',
     steemitdev: 'steemit',
 
-    /*
-    //steem monsters
-    steemmonsters: 'sm',
-    'steem.monsters': 'sm',
-    aggroed: 'sm',
-    yabapmatt: 'sm',
-*/
+    //steemace
+    thebluewin: 'admin',
+    auminda: 'admin',
+    ladywalker: 'admin',
+    xyrijan: 'tribe_team',
+    remy98: 'tribe_team',
+    debonaire: 'tribe_team',
+    shirtpants: 'tribe_team',
+    tamaritsa28: 'tribe_team',
+    'helpie-caster': 'curator',
+    wilhb81: 'curator',
+    travelgirl: 'curator',
+    hertz300: 'curator',
+};
 };
 
 export default map;
