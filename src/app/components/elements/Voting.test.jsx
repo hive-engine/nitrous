@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
-import { fromJS, Map } from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 import renderer from 'react-test-renderer';
 import rootReducer from 'app/redux/RootReducer';
 import Voting from './Voting';
@@ -26,7 +26,7 @@ const mockGlobal = Map({
         test: Map({
             author: 'Jane Doe',
             permlink: 'zip',
-            active_votes: Map({}),
+            active_votes: List([]),
             stats: {
                 total_votes: 1,
             },
