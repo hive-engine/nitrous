@@ -27,7 +27,7 @@ import secureRandom from 'secure-random';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import koaLocale from 'koa-locale';
 import { getSupportedLocales } from './utils/misc';
-import { specialPosts } from './utils/SpecialPosts';
+import { pinnedPosts } from './utils/PinnedPosts';
 import fs from 'fs';
 
 if (cluster.isMaster) console.log('application server starting, please wait.');
@@ -312,14 +312,14 @@ if (env === 'production') {
 if (env !== 'test') {
     const appRender = require('./app_render');
 
-    // Load special posts and store them on the ctx for later use. Since
+    // Load the pinned posts and store them on the ctx for later use. Since
     // we're inside a generator, we can't `await` here, so we pass a promise
     // so `src/server/app_render.jsx` can `await` on it.
-    app.specialPostsPromise = specialPosts();
-    // refresh special posts every five minutes
+    app.pinnedPostsPromise = pinnedPosts();
+    // refresh pinned posts every five minutes
     setInterval(function() {
         return new Promise(function(resolve, reject) {
-            app.specialPostsPromise = specialPosts();
+            app.pinnedPostsPromise = pinnedPosts();
             resolve();
         });
     }, 300000);
