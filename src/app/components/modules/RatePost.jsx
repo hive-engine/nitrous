@@ -150,13 +150,18 @@ export default connect(
             };
 
             const rate_template = (username, author, rating, reward) => {
-                return tt('rate_post_jsx.rating_comment', {
-                    username,
-                    author,
-                    rating,
-                    reward,
-                    DEBT_TOKEN: LIQUID_TOKEN_UPPERCASE,
-                });
+                const message_tag = `\n\n<div message_id=\"rating\" score=\"${
+                    rating
+                }\" />`;
+                return (
+                    tt('rate_post_jsx.rating_comment', {
+                        username,
+                        author,
+                        rating,
+                        reward,
+                        DEBT_TOKEN: LIQUID_TOKEN_UPPERCASE,
+                    }) + message_tag
+                );
             };
 
             const __config = {};

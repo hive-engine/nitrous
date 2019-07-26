@@ -778,7 +778,7 @@
             "A comment that contains your rating will be generated. To gratitude your raintg, your rating comment will be voted automatically by SCT team.",
         "confirm_rate_post": "Your rating for this post is %(rating)s",
         "rating_comment":
-            "@%(username)s selected @%(author)s's post in search.\n@%(author)s will be given %(reward)s %(DEBT_TOKEN)s\n@%(username)s's search satisfaction score is %(rating)s point.\n\n<div message=\"rating\" score=\"%(rating)s\" />",
+            "@%(username)s selected @%(author)s's post in search.\n@%(author)s will be given %(reward)s %(DEBT_TOKEN)s\n@%(username)s's search satisfaction score is %(rating)s point.",
         "rating_reminder":
             "Please rate this post.\n After rating, a comment that contains the rating score will be generated, and SCT team will vote your comment later."
     },
