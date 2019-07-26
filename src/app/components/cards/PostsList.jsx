@@ -184,7 +184,10 @@ class PostsList extends React.Component {
         // Helper functions for determining whether to show pinned posts.
         const isLoggedInOnFeed = username && pathname === `/@${username}/feed`;
         const isLoggedOutOnTrending =
-            !username && (pathname === '/' || pathname === '/trending');
+            !username &&
+            (pathname === '/' ||
+                pathname === '/trending' ||
+                pathname === '/trending/');
         const arePinnedPostsVisible =
             showPinned && (isLoggedInOnFeed || isLoggedOutOnTrending);
         const arePinnedPostsReady = isLoggedInOnFeed
@@ -238,13 +241,6 @@ class PostsList extends React.Component {
                                     promoted={promoted}
                                 />
                             </li>
-
-                            <div className="articles__content-block--ad">
-                                <GptAd
-                                    type="Freestar"
-                                    id="steemit_728x90_468x60_300x250_InFeed"
-                                />
-                            </div>
                         </div>
                     );
                 }
