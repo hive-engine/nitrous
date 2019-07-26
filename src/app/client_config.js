@@ -15,7 +15,7 @@ export const SCOT_TAG = 'steemace';
 export const TAG_LIST = fromJSOrdered({
     gaming: ['gamingreview', 'letsplay', 'esports', 'news', 'vr', 'mobilegame'],
     cryptogames: ['splinterlands', 'nextcolony', 'radaquest', 'roadofrich'],
-    boardgames: ['cardgames', 'rpg', 'penandpaper', 'poker'],
+    tabletop: ['rpg', 'boardgames', 'cardgames', 'poker'],
     giveaway: ['contest'],
     platforms: ['dtube', 'vimmtv', 'threespeak'],
     language: ['spanish', 'deutsch', 'kr', 'cn', 'polish', 'japanese'],
