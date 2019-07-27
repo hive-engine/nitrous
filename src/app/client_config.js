@@ -12,7 +12,7 @@ export const APP_ICON = 'weedcash';
 export const APP_URL = 'https://www.weedcash.network';
 export const APP_DOMAIN = 'www.weedcash.network';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 12;
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'weedcash';
 export const TAG_LIST = fromJSOrdered([
     'weedcash',
