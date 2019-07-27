@@ -13,7 +13,7 @@ import sanitizeConfig, { allowedTags } from 'app/utils/SanitizeConfig';
 import sanitize from 'sanitize-html';
 import HtmlReady from 'shared/HtmlReady';
 import * as globalActions from 'app/redux/GlobalReducer';
-import { fromJS, Set } from 'immutable';
+import { fromJS, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
@@ -807,7 +807,9 @@ export default formId =>
             let { category, title, body } = ownProps;
             if (/submit_/.test(type)) title = body = '';
             if (isStory && jsonMetadata && jsonMetadata.tags) {
-                category = Set([category, ...jsonMetadata.tags]).join(' ');
+                category = OrderedSet([category, ...jsonMetadata.tags]).join(
+                    ' '
+                );
             }
 
             const defaultPayoutType = state.app.getIn(
@@ -952,7 +954,7 @@ export default formId =>
                     return;
                 }
 
-                const formCategories = Set(
+                const formCategories = OrderedSet(
                     category
                         ? category
                               .trim()
@@ -964,11 +966,12 @@ export default formId =>
                     originalPost && originalPost.category
                         ? originalPost.category
                         : formCategories.first();
-                let allCategories = Set([...formCategories.toJS()]);
+                let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
 
                 let postHashtags = [...rtags.hashtags];
+                // "- allCategories.includes(SCOT_TAG) ? 0 : 1" to save the last tag space for SCOT_TAG
                 while (
                     allCategories.size <
                     MAX_TAG - allCategories.includes(SCOT_TAG)
