@@ -13,7 +13,7 @@ export const APP_URL = 'https://www.steemace.io/';
 export const APP_DOMAIN = 'www.steemace.io';
 export const SCOT_TAG = 'steemace';
 export const TAG_LIST = fromJSOrdered({
-    gaming: ['gamingreview', 'letsplay', 'esports', 'news', 'vr', 'mobilegame'],
+    gaming: ['gamingreview', 'letsplay', 'esports', 'news', 'vr', 'mobilegame', 'development'],
     cryptogames: ['splinterlands', 'nextcolony', 'radaquest', 'roadofrich'],
     tabletop: ['tabletop-rpg', 'boardgame', 'cardgame', 'poker'],
     giveaway: ['contest'],
