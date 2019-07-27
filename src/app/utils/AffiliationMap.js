@@ -13,7 +13,7 @@ const map = {
     naturalcuration: 'naturalprod',
     nonatrl4u: 'naturalprod',
     naturalproducts: 'naturalprod',
-    natrlbounties: 'naturalprod',
+    naturalbounties: 'naturalprod',
     natrlvoter: 'naturalprod',
     naturalpromo: 'naturalprod',
     jasonbu: 'natural',
