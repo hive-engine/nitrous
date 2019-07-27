@@ -16,8 +16,9 @@ const map = {
     naturalbounties: 'naturalprod',
     natrlvoter: 'naturalprod',
     naturalpromo: 'naturalprod',
-    jasonbu: 'natural',
-    lmon: 'naturla',
+    jasonbu: 'naturale',
+    lmon: 'naturale',
+    liambu: 'naturalc',
 
     /*
     //steem monsters
