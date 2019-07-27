@@ -10,6 +10,14 @@ const map = {
     roadscape: 'steemit',
     steemitblog: 'steemit',
     steemitdev: 'steemit',
+    naturalcuration: 'naturalprod',
+    nonatrl4u: 'naturalprod',
+    naturalproducts: 'naturalprod',
+    natrlbounties: 'naturalprod',
+    natrlvoter: 'naturalprod',
+    naturalpromo: 'naturalprod',
+    jasonbu: 'natural',
+    lmon: 'naturla',
 
     /*
     //steem monsters
