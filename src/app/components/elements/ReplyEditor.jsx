@@ -17,11 +17,12 @@ import { fromJS, Set } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG } from 'app/client_config';
+import { APP_NAME, SCOT_TAG, APP_MAX_TAG } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
 const RTE_DEFAULT = false;
+const MAX_TAG = APP_MAX_TAG || 10;
 
 class ReplyEditor extends React.Component {
     static propTypes = {
@@ -968,7 +969,12 @@ export default formId =>
                     allCategories = allCategories.add(rootCategory);
 
                 let postHashtags = [...rtags.hashtags];
-                while (allCategories.size < 5 && postHashtags.length > 0) {
+                while (
+                    allCategories.size <
+                    MAX_TAG - allCategories.includes(SCOT_TAG)
+                        ? 0
+                        : 1 && postHashtags.length > 0
+                ) {
                     allCategories = allCategories.add(postHashtags.shift());
                 }
                 // Add scot tag
@@ -998,7 +1004,7 @@ export default formId =>
                     return;
                 }
 
-                if (meta.tags.length > 10) {
+                if (meta.tags.length > MAX_TAG) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
                               rootCategory,
