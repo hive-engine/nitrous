@@ -125,6 +125,7 @@ const map = {
     jaraumoses: 'certified_ulogger',
     jianan: 'certified_ulogger',
     ahlawat: 'certified_ulogger',
+    heberwords: 'certified_ulogger',
 };
 
 export default map;
