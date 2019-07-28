@@ -11,6 +11,8 @@ export const APP_ICON = 'reggaesteem';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.reggaesteem.io';
 export const APP_DOMAIN = 'www.reggaesteem.io';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'jahm';
 export const TAG_LIST = fromJSOrdered([
     'jahm',
