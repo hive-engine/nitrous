@@ -91,7 +91,7 @@ class RewardPost extends Component {
                             })}
                         </p>
                         {balance < amount && (
-                            <div>
+                            <div className="error">
                                 <hr />
                                 <p>
                                     {tt('g.balance', {
