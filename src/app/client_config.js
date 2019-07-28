@@ -11,6 +11,8 @@ export const APP_ICON = 'steeminventory';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.steeminven.com';
 export const APP_DOMAIN = 'www.steeminven.com';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'iv';
 export const TAG_LIST = fromJSOrdered(['iv']);
 export const LIQUID_TOKEN = 'IV';
