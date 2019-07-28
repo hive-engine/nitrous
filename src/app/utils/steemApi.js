@@ -21,10 +21,11 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account) {
+export async function getSteemEngineAccountHistoryAsync(account, limit) {
+    limit = limit || 100;
     return callApi('https://api.steem-engine.com/accounts/history', {
         account,
-        limit: 100,
+        limit,
         offset: 0,
         type: 'user',
         symbol: LIQUID_TOKEN_UPPERCASE,

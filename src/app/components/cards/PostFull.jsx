@@ -146,7 +146,7 @@ class PostFull extends React.Component {
             if (!post_content) return;
             const author = post_content.get('author');
             const permlink = post_content.get('permlink');
-            const selected = isPostSelected(author, permlink);
+            const selected = isPostRewarded(author, permlink, username);
             const showRating = username && username !== author && selected;
             let rating = null;
             if (showRating) rating = this.getPostRating();
@@ -741,10 +741,12 @@ const saveOnShow = (formId, type) => {
     }
 };
 
-const isPostSelected = (author, permlink) => {
+const isPostRewarded = (author, permlink, username) => {
     if (process.env.BROWSER) {
         return (
-            localStorage.getItem(`selected-@${author}/${permlink}`) === 'true'
+            localStorage.getItem(
+                `rewarded-@${author}/${permlink}-by-${username}`
+            ) === 'true'
         );
     } else {
         return false;

@@ -7,6 +7,11 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GOOGLE_CUSTOM_SEARCH_ID } from 'app/client_config';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import { isLoggedIn } from 'app/utils/UserUtil';
+import { getSteemEngineAccountHistoryAsync } from 'app/utils/steemApi';
+import {
+    SEARCH_SELECTION_REWARD_AMOUNT,
+    SEARCH_SELECTION_BURN_AMOUNT,
+} from 'app/client_config';
 import { api } from '@steemit/steem-js';
 import ReactHintFactory from 'react-hint';
 const ReactHint = ReactHintFactory(React);
@@ -157,7 +162,7 @@ class PaidSearch extends React.Component {
                 return {
                     author,
                     permlink,
-                    key: author + '/' + permlink,
+                    key: '@' + author + '/' + permlink,
                 };
             }
             return null;
@@ -165,14 +170,68 @@ class PaidSearch extends React.Component {
         return null;
     }
 
+    setPostRewarded(key) {
+        // save the selected status in local storage
+        const username = this.props.currentUser.get('username');
+        localStorage.setItem(`rewarded-${key}-by-${username}`, 'true');
+    }
+
+    isPostRewarded(author, permlink, key) {
+        // check the rewarded in local storage
+        const username = this.props.currentUser.get('username');
+        // if the post is owned by the user, don't need to reward
+        if (
+            localStorage.getItem(`rewarded-${key}-by-${username}`) === 'true' ||
+            author === username
+        ) {
+            return true;
+        }
+    }
+
+    async updatePostRewardingRecords() {
+        const username = this.props.currentUser.get('username');
+        const [transfers] = await Promise.all([
+            getSteemEngineAccountHistoryAsync(username, 500),
+        ]);
+        const memo_prefix = 'search and click: ';
+        // filter valid transfers
+        const matched_transfers = transfers.filter(
+            t =>
+                t['memo'] != null &&
+                t['memo'].indexOf(memo_prefix) != -1 &&
+                ((t['to'] == 'null' &&
+                    t['quantity'] >= SEARCH_SELECTION_BURN_AMOUNT) ||
+                    (t['to'] != 'null' &&
+                        t['quantity'] >= SEARCH_SELECTION_REWARD_AMOUNT))
+        );
+        let rewarded_posts = matched_transfers
+            .filter(t => {
+                const receivers = matched_transfers
+                    .filter(t1 => t1['memo'] === t['memo'])
+                    .map(t1 => t1['to']);
+                return receivers.length >= 2 && receivers.includes('null');
+            })
+            .map(t => {
+                if (t['to'] === 'null') {
+                    return t['memo'].replace(memo_prefix, '');
+                } else {
+                    return null;
+                }
+            })
+            .filter(k => k != null);
+        // deduplicate and set reward post records
+        rewarded_posts = [...new Set(rewarded_posts)];
+        rewarded_posts.map(k => this.setPostRewarded(k));
+        console.log('Rewarded Posts:', rewarded_posts);
+    }
+
     showRewardPost(element) {
         const res = this.parsePost(element, 'gs-url');
         if (res) {
-            const { author, permlink } = res;
+            const { author, permlink, key } = res;
 
             const openPage = () => {
-                // save the selected status in local storage
-                localStorage.setItem(`selected-@${author}/${permlink}`, 'true');
+                this.setPostRewarded(key);
                 element.setAttribute('href', element.getAttribute('gs-url'));
                 element.click();
 
@@ -291,36 +350,40 @@ class PaidSearch extends React.Component {
         if (!e.hasAttribute('gs-url-disabled')) {
             const res = this.parsePost(e, 'href');
             if (res) {
+                const { author, permlink, key } = res;
+
                 // add the mark that the element is processed
                 e.setAttribute('gs-url-disabled', '');
                 // update gs-url attribute
                 e.setAttribute('gs-url', e.getAttribute('href'));
-                e.removeAttribute('href');
                 // remove the default google custom search url
                 e.removeAttribute('data-cturl');
-                // remove default click
+                // remove default click by custom search result
                 e.addEventListener('mousedown', event => {
                     event.preventDefault();
                     event.stopPropagation();
                 });
-
-                // add preview and click for title only
-                // if (e.parentNode.getAttribute('class') === 'gs-title') {
-                // show hint after adding data-search argument
+                // show preview for element that has data-search attribute
                 e.setAttribute('data-search', '');
-                e.addEventListener('click', event => {
-                    let href = e.getAttribute('href');
-                    if (
-                        typeof href === typeof undefined ||
-                        href === null ||
-                        href === false
-                    ) {
-                        this.showRewardPost(e);
-                    }
-                });
+
+                // add click event lisnter if post not rewarded
+                if (!this.isPostRewarded(author, permlink, key)) {
+                    // add preview and click for title only
+                    // if (e.parentNode.getAttribute('class') === 'gs-title') {
+                    e.removeAttribute('href');
+                    e.addEventListener('click', event => {
+                        let href = e.getAttribute('href');
+                        if (
+                            typeof href === typeof undefined ||
+                            href === null ||
+                            href === false
+                        ) {
+                            this.showRewardPost(e);
+                        }
+                    });
+                }
 
                 // set initial loading state
-                const { key } = res;
                 let state = {};
                 state[`loading_${key}`] = true;
                 this.setState(state);
@@ -330,6 +393,9 @@ class PaidSearch extends React.Component {
     }
 
     componentDidMount() {
+        // update post rewards info
+        this.updatePostRewardingRecords();
+        // render search engine
         this.insertCSE();
         this.renderCSE();
         // this.loadScripts(this.watchSearchResults);
