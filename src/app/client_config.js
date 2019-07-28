@@ -11,6 +11,8 @@ export const APP_ICON = 'creativecoin';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.creativecoin.xyz';
 export const APP_DOMAIN = 'www.creativecoin.xyz';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'creativecoin';
 export const TAG_LIST = fromJSOrdered(['creativecoin']);
 export const LIQUID_TOKEN = 'CCC';
