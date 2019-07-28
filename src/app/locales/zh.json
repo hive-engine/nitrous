@@ -5,7 +5,7 @@
         "and": "和",
         "are_you_sure": "确定？",
         "ask": "卖价",
-        "balance": "余额",
+        "balance": "余额: %(balanceValue)s",
         "balances": "余额",
         "bid": "买价",
         "blog": "博客",

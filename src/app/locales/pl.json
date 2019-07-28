@@ -5,7 +5,7 @@
         "and": "oraz",
         "are_you_sure": "Na pewno?",
         "ask": "Oferty sprzedaży (ASK)",
-        "balance": "Saldo",
+        "balance": "Saldo: %(balanceValue)s",
         "balances": "Salda",
         "bid": "Oferty kupna (BID) ",
         "blog": "Blog",
