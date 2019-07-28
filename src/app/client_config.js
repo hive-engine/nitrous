@@ -12,6 +12,8 @@ export const APP_ICON = 'steemcoinpan';
 export const APP_URL = 'https://www.steemcoinpan.com';
 export const APP_DOMAIN = 'www.steemcoinpan.com';
 export const SCOT_TAG = 'sct';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const TAG_LIST = fromJSOrdered([
     'notice',
     'sct',
