@@ -206,9 +206,10 @@ class PaidSearch extends React.Component {
         );
         let rewarded_posts = matched_transfers
             .filter(t => {
-                const receivers = matched_transfers
+                let receivers = matched_transfers
                     .filter(t1 => t1['memo'] === t['memo'])
                     .map(t1 => t1['to']);
+                receivers = [...new Set(receivers)];
                 return receivers.length >= 2 && receivers.includes('null');
             })
             .map(t => {
