@@ -11,9 +11,19 @@ export const APP_ICON = 'steemace';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.steemace.io/';
 export const APP_DOMAIN = 'www.steemace.io';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'steemace';
 export const TAG_LIST = fromJSOrdered({
-    gaming: ['gamingreview', 'letsplay', 'esports', 'news', 'vr', 'mobilegame', 'development'],
+    gaming: [
+        'gamingreview',
+        'letsplay',
+        'esports',
+        'news',
+        'vr',
+        'mobilegame',
+        'development',
+    ],
     cryptogames: ['splinterlands', 'nextcolony', 'radaquest', 'roadofrich'],
     tabletop: ['tabletop-rpg', 'boardgame', 'cardgame', 'poker'],
     giveaway: ['contest'],
