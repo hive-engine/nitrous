@@ -12,6 +12,16 @@ export const APP_ICON = 'actnearn';
 export const APP_URL = 'https://www.actnearn.com';
 export const APP_DOMAIN = 'www.actnearn.com';
 export const SCOT_TAG = 'actnearn';
+export const TAG_LIST = fromJSOrdered([
+    'actnearn',
+    'twitter',
+    'facebook',
+    'linkedin',
+    'youtube',
+    'instagram',
+    'social',
+    'influence',
+]);
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const LIQUID_TOKEN = 'Actnearn';
