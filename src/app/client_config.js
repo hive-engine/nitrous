@@ -11,6 +11,8 @@ export const APP_ICON = 'steemleo';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.steemleo.com';
 export const APP_DOMAIN = 'www.steemleo.com';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'steemleo';
 export const TAG_LIST = fromJSOrdered({
     steemleo: ['dailyleo', 'learnleo', 'leowritingcontest'],
