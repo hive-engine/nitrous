@@ -13,6 +13,8 @@ export const APP_URL = 'https://www.triplea.reviews';
 export const APP_DOMAIN = 'www.triplea.reviews';
 export const SCOT_TAG = 'aaa';
 export const TAG_LIST = fromJSOrdered(['aaa']);
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const LIQUID_TOKEN = 'AAA';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'AAA';

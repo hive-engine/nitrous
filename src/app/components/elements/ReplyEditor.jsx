@@ -13,15 +13,16 @@ import sanitizeConfig, { allowedTags } from 'app/utils/SanitizeConfig';
 import sanitize from 'sanitize-html';
 import HtmlReady from 'shared/HtmlReady';
 import * as globalActions from 'app/redux/GlobalReducer';
-import { fromJS, Set } from 'immutable';
+import { fromJS, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG } from 'app/client_config';
+import { APP_NAME, SCOT_TAG, APP_MAX_TAG } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
 const RTE_DEFAULT = false;
+const MAX_TAG = APP_MAX_TAG || 10;
 
 class ReplyEditor extends React.Component {
     static propTypes = {
@@ -824,7 +825,9 @@ export default formId =>
             let { category, title, body } = ownProps;
             if (/submit_/.test(type)) title = body = '';
             if (isStory && jsonMetadata && jsonMetadata.tags) {
-                category = Set([category, ...jsonMetadata.tags]).join(' ');
+                category = OrderedSet([category, ...jsonMetadata.tags]).join(
+                    ' '
+                );
             }
 
             const defaultPayoutType = state.app.getIn(
@@ -969,7 +972,7 @@ export default formId =>
                     return;
                 }
 
-                const formCategories = Set(
+                const formCategories = OrderedSet(
                     category
                         ? category
                               .trim()
@@ -981,12 +984,18 @@ export default formId =>
                     originalPost && originalPost.category
                         ? originalPost.category
                         : formCategories.first();
-                let allCategories = Set([...formCategories.toJS()]);
+                let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
 
                 let postHashtags = [...rtags.hashtags];
-                while (allCategories.size < 5 && postHashtags.length > 0) {
+                // "- allCategories.includes(SCOT_TAG) ? 0 : 1" to save the last tag space for SCOT_TAG
+                while (
+                    allCategories.size <
+                    MAX_TAG - allCategories.includes(SCOT_TAG)
+                        ? 0
+                        : 1 && postHashtags.length > 0
+                ) {
                     allCategories = allCategories.add(postHashtags.shift());
                 }
                 // Add scot tag
@@ -1016,7 +1025,7 @@ export default formId =>
                     return;
                 }
 
-                if (meta.tags.length > 10) {
+                if (meta.tags.length > MAX_TAG) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
                               rootCategory,
