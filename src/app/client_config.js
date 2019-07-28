@@ -11,27 +11,29 @@ export const APP_ICON = 'natural';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.naturalproducts.today';
 export const APP_DOMAIN = 'www.naturalproducts.today';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalproducts';
 export const TAG_LIST = fromJSOrdered({
-    business: ['healthmarkets','naturalmarkets'], 
-    food: ['functionalfood','healthfood'],
-    beverages: ['functionalbeverages','healthybeverages','sportsbeverages'],
+    business: ['healthmarkets', 'naturalmarkets'],
+    food: ['functionalfood', 'healthfood'],
+    beverages: ['functionalbeverages', 'healthybeverages', 'sportsbeverages'],
     healthyliving: [],
     hemp: ['cbd'],
     industry: [],
-    ingredients: ['vitamins','minerals'],
+    ingredients: ['vitamins', 'minerals'],
     lifestyle: [],
-    microbiome: ['probiotics','prebiotics','synbiotics'],
+    microbiome: ['probiotics', 'prebiotics', 'synbiotics'],
     nutraceuticals: [],
     organics: [],
     personalcare: ['cleanbeauty'],
     practitioner: [],
-    regulations: ['fda','ftc','dshea','pop65','efsa'],
+    regulations: ['fda', 'ftc', 'dshea', 'pop65', 'efsa'],
     research: [],
     retailer: [],
-    supplements: ['omega3','dietarysupplements','foodsupplements'],
-    botanicals: ['tumeric','ashwaghanda','cranderry','amla','herbs'],
-    trends: ['cleanlabel','sustainability','regenerativeagriculture'],
+    supplements: ['omega3', 'dietarysupplements', 'foodsupplements'],
+    botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
+    trends: ['cleanlabel', 'sustainability', 'regenerativeagriculture'],
     vegan: [],
     contest: [],
 });
