@@ -11,6 +11,8 @@ export const APP_ICON = 'bloque64';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://blogs.bloque64.com';
 export const APP_DOMAIN = 'blogs.bloque64.com';
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'bloque64';
 export const TAG_LIST = fromJSOrdered([
     'bloque64',
