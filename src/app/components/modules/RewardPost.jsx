@@ -58,12 +58,15 @@ class RewardPost extends Component {
         const { loading, trxError } = this.state;
         const { currentUser, author } = this.props;
 
+        const balance = currentUser.has('token_balances')
+            ? parseFloat(currentUser.getIn(['token_balances', 'balance']))
+            : 0;
         const DEBT_TOKEN = LIQUID_TOKEN_UPPERCASE;
         const amount =
             SEARCH_SELECTION_REWARD_AMOUNT + SEARCH_SELECTION_BURN_AMOUNT;
         const reward_amount = SEARCH_SELECTION_REWARD_AMOUNT;
         const burn_amount = SEARCH_SELECTION_BURN_AMOUNT;
-        const submitDisabled = !author || !amount;
+        const submitDisabled = !author || !amount || balance < amount;
 
         return (
             <div className="RewardPost row">
@@ -87,7 +90,19 @@ class RewardPost extends Component {
                                 burn_amount,
                             })}
                         </p>
-                        <br />
+                        {balance < amount && (
+                            <div>
+                                <hr />
+                                <p>
+                                    {tt('g.balance', {
+                                        balanceValue: `${balance} ${
+                                            LIQUID_TOKEN_UPPERCASE
+                                        }`,
+                                    })}
+                                </p>
+                                <br />
+                            </div>
+                        )}
                         {loading && (
                             <span>
                                 <LoadingIndicator type="circle" />
