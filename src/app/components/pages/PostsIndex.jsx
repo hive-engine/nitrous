@@ -366,7 +366,6 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser && (
                         <div>
                             <SidebarInfo
-                                holders={this.props.scotInfo.getIn(['holders'])}
                                 sct_to_steemp={this.props.scotInfo.getIn([
                                     'sct_to_steemp',
                                 ])}

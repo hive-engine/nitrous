@@ -2,11 +2,7 @@ import * as config from 'config';
 import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
-import {
-    getScotDataAsync,
-    getSteemPriceInfo,
-    getHolders,
-} from 'app/utils/steemApi';
+import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
 
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -98,7 +94,6 @@ ScotConfig.prototype.refresh = async function() {
             tokenBurnBalance,
             totalTokenMinerBalance,
             tokenMinerBurnBalance,
-            holders,
         ] = await Promise.all([
             ssc.findOne('tokens', 'tokens', {
                 symbol: scotConfig.burn.scotToken,
@@ -114,7 +109,6 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.burn.scotMinerToken,
             }),
-            getHolders(scotConfig.token),
         ]);
 
         if (totalTokenBalance) {
@@ -130,28 +124,9 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
         }
 
-        // should filter holders
-        var validHolders = holders.filter(item => item.account != 'null');
-        validHolders = validHolders.filter(item => {
-            if (item.delegationsIn == undefined) {
-                item.delegationsIn = 0;
-            }
-            if (item.delegationsOut == undefined) {
-                item.delegationsOut = 0;
-            }
-            return (
-                item.stake * 1 +
-                    item.balance * 1 +
-                    item.delegationsIn * 1 +
-                    item.delegationsOut * 1 >
-                0
-            );
-        });
-
         const allPrice = await getSteemPriceInfo();
         scotConfig.info = {};
         scotConfig.info.scotToken = scotConfig.token;
-        scotConfig.info.holders = validHolders.length;
         scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
         scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
         scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;

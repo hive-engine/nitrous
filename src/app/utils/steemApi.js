@@ -362,33 +362,3 @@ export async function getSteemPriceInfo() {
     var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
     return allInfo;
 }
-
-export async function getHolders(symbol) {
-    var holders_info = [];
-    var cnt = 500;
-    var getCnt = 0;
-    while (true) {
-        var holders = await getHolderOnce(symbol, getCnt * cnt, cnt);
-        getCnt = getCnt + 1;
-        holders_info = holders_info.concat(holders);
-        if (holders.length < cnt) {
-            return holders_info;
-        }
-    }
-}
-
-async function getHolderOnce(symbol, offset = 0, limit = 100) {
-    return new Promise((resolve, reject) => {
-        ssc.find(
-            'tokens',
-            'balances',
-            { symbol: symbol },
-            limit,
-            offset,
-            [],
-            (err, result) => {
-                resolve(result);
-            }
-        );
-    });
-}
