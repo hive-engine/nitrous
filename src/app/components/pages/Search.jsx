@@ -192,7 +192,8 @@ class PaidSearch extends React.Component {
     renderMarkdown(md) {
         // remove image tag
         // md = md.replace(/(?:!\[(.*?)\]\((.*?)\))/g, '');
-        // let h = marked(md);
+        // // let h = marked(md);
+        // let h = remarkable.render(md);
         // h = $('<p>')
         //     .html(h)
         //     .find('img')
@@ -208,8 +209,7 @@ class PaidSearch extends React.Component {
                 jsonMetadata={{}}
                 large={false}
                 highQualityPost={false}
-                noImage={true}
-                hideImages={true}
+                removeImages={true}
             />
         );
     }
