@@ -356,12 +356,6 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
-                    {this.props.isBrowser && (
-                        <div>
-                            {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
-                        </div>
-                    )}
                     <Notices notices={this.props.notices} />
                     {this.props.isBrowser && (
                         <div>
