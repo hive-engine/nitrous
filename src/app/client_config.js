@@ -487,7 +487,7 @@ export const TAG_LIST = fromJSOrdered({
         },
     },
     tennis: [],
-    fantasy: ['fantasybaseball', 'fantasybasketball', 'fantasyfootball'],
+    fantasy: ['fantasypremierleague', 'fantasybaseball', 'fantasybasketball', 'fantasyfootball'],
     esports: [],
     actifit: [],
 });
@@ -499,7 +499,7 @@ export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'SPORTS POWER';
 export const INTERLEAVE_PROMOTED = true;
-export const PROMOTED_POST_ACCOUNT = 'sportspromo';
+export const PROMOTED_POST_ACCOUNT = 'null';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
