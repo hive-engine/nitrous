@@ -9,6 +9,7 @@ import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import { isLoggedIn } from 'app/utils/UserUtil';
 import { getSteemEngineAccountHistoryAsync } from 'app/utils/steemApi';
 import {
+    APP_URL,
     SEARCH_SELECTION_REWARD_AMOUNT,
     SEARCH_SELECTION_BURN_AMOUNT,
 } from 'app/client_config';
@@ -352,6 +353,16 @@ class PaidSearch extends React.Component {
             const res = this.parsePost(e, 'href');
             if (res) {
                 const { author, permlink, key } = res;
+
+                // replace 'href' attribute's domain with site origin
+                let href = e.getAttribute('href');
+                if (
+                    href.indexOf(APP_URL) != -1 &&
+                    APP_URL !== location.origin
+                ) {
+                    href = href.replace(APP_URL, location.origin);
+                    e.setAttribute('href', href);
+                }
 
                 // add the mark that the element is processed
                 e.setAttribute('gs-url-disabled', '');
