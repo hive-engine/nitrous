@@ -7,6 +7,8 @@ const map = {
         "All forms of content, spanning over every niche allowed here, as long as all aspects of the content like text, videos, images, graphics etc was created 'fresh' and entirely by U, without resourcing from the internet. For help, contact [@snook](https://www.marlians.com/@snook), [@surpassinggoogle](https://www.marlians.com/@surpassinggoogle), [@dreemsteem](https://www.marlians.com/@dreemsteem) or [@anikys3reasure](https://www.marlians.com/@anikys3reasure) **[here!](https://discord.gg/nHVV5e9)**",
     mamaput:
         "Share your canteen or 'street food' moments. Use these moments to exercise and explore more aspects of your human sense. Then, shine this beauty forth in a post. For help, contact [@surpassinggoogle](https://www.marlians.com/@surpassinggoogle), [@sgbonus](https://www.marlians.com/@sgbonus) or [@imbigdee](https://www.marlians.com/@imbigdee) **[here!](https://discord.gg/nHVV5e9)**",
+    steemjet:
+        "Celebrate your [@dimimp](https://www.marlians.com/@dimimp) moments. Shine forth '[SteemJet](https://ulogs.org/@steemjet)' like it should have be shone forth. Be 'confirm naijan'. Relegate reservations, exercise your talents. For help, contact [@surpassinggoogle](https://www.marlians.com/@surpassinggoogle), [@lordjames](https://www.marlians.com/@lordjames) or [@uche-nna](https://www.marlians.com/@uche-nna) **[here!](https://discord.gg/nHVV5e9)**",
 };
 
 export default map;
