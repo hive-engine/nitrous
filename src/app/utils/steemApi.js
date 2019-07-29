@@ -353,3 +353,12 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     }
     return { feedData, endOfData, lastValue };
 }
+
+export async function getSteemPriceInfo() {
+    var steemPrice = callApi('https://postpromoter.net/api/prices');
+    var steemPriceOnUpbit = callApi(
+        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    );
+    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return allInfo;
+}

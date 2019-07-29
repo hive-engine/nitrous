@@ -24,6 +24,7 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
+import SidebarInfo from 'app/components/elements/SidebarInfo';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -355,10 +356,20 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
+                    <Notices notices={this.props.notices} />
                     {this.props.isBrowser && (
                         <div>
-                            {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
+                            <SidebarInfo
+                                sct_to_steemp={this.props.scotInfo.getIn([
+                                    'sct_to_steemp',
+                                ])}
+                                steem_to_dollor={this.props.scotInfo.getIn([
+                                    'steem_to_dollor',
+                                ])}
+                                steem_to_krw={this.props.scotInfo.getIn([
+                                    'steem_to_krw',
+                                ])}
+                            />
                         </div>
                     )}
                     {this.props.isBrowser && (
@@ -404,7 +415,6 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -484,6 +494,7 @@ module.exports = {
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
+                scotInfo: scotConfig.getIn(['config', 'info']),
             };
         },
         dispatch => {
