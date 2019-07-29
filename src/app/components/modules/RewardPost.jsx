@@ -58,15 +58,18 @@ class RewardPost extends Component {
         const { loading, trxError } = this.state;
         const { currentUser, author } = this.props;
 
-        const balance = currentUser.has('token_balances')
+        let balance = currentUser.has('token_balances')
             ? parseFloat(currentUser.getIn(['token_balances', 'balance']))
             : 0;
+        balance = isNaN(balance) ? 0 : balance;
         const DEBT_TOKEN = LIQUID_TOKEN_UPPERCASE;
-        const amount =
-            SEARCH_SELECTION_REWARD_AMOUNT + SEARCH_SELECTION_BURN_AMOUNT;
+        SEARCH_SELECTION_REWARD_AMOUNT + SEARCH_SELECTION_BURN_AMOUNT;
         const reward_amount = SEARCH_SELECTION_REWARD_AMOUNT;
         const burn_amount = SEARCH_SELECTION_BURN_AMOUNT;
-        const submitDisabled = !author || !amount || balance < amount;
+        const amount = reward_amount + burn_amount;
+        const notEnoughBalance =
+            isNaN(balance) || isNaN(amount) || balance < amount;
+        const submitDisabled = !author || !amount || notEnoughBalance;
 
         return (
             <div className="RewardPost row">
@@ -90,7 +93,7 @@ class RewardPost extends Component {
                                 burn_amount,
                             })}
                         </p>
-                        {balance < amount && (
+                        {notEnoughBalance && (
                             <div className="error">
                                 <hr />
                                 <p>
