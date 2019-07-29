@@ -126,6 +126,9 @@ const map = {
     jianan: 'certified_ulogger',
     ahlawat: 'certified_ulogger',
     heberwords: 'certified_ulogger',
+    'bahagia-arbi': 'certified_ulogger',
+    shula14: 'certified_ulogger',
+    ruah: 'certified_ulogger',
 };
 
 export default map;
