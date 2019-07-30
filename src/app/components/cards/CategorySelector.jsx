@@ -58,7 +58,7 @@ class CategorySelector extends React.Component {
     render() {
         const { trending, tabIndex, disabled } = this.props;
         const categories = trending
-            .slice(0, 11)
+            //.slice(0, 11)
             .filterNot(c => validateCategory(c));
         const { createCategory } = this.state;
 
@@ -70,14 +70,36 @@ class CategorySelector extends React.Component {
 
         const impProps = { ...this.props };
         const categoryInput = (
-            <input
-                type="text"
-                {...cleanReduxInput(impProps)}
-                ref="categoryRef"
-                tabIndex={tabIndex}
-                disabled={disabled}
-                autoCapitalize="none"
-            />
+            <span>
+                <input
+                    type="text"
+                    {...cleanReduxInput(impProps)}
+                    ref="categoryRef"
+                    tabIndex={tabIndex}
+                    disabled={disabled}
+                    autoCapitalize="none"
+                />
+                {categories.map((c, idx) => {
+                    return (
+                        <span>
+                            <a
+                                key={idx}
+                                value={c}
+                                onClick={() => {
+                                    if (!impProps.value.includes(c)) {
+                                        impProps.onChange(
+                                            `${impProps.value} ${c}`.trim()
+                                        );
+                                    }
+                                }}
+                            >
+                                #{c}
+                            </a>{' '}
+                            &nbsp;
+                        </span>
+                    );
+                })}
+            </span>
         );
 
         const categorySelect = (
