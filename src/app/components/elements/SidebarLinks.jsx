@@ -55,7 +55,7 @@ const SidebarLinks = ({ username }) => (
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href="https://www.linkedin.com/in/actnearn-actnearn-a9b23916b/"
+                        href="https://www.linkedin.com/in/actnearn-smt-a9b23916b/"
                     >
                         ActnEarn LinkedIn
                     </a>
