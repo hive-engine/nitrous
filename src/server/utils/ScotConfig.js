@@ -2,7 +2,7 @@ import * as config from 'config';
 import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
-import { getScotDataAsync } from 'app/utils/steemApi';
+import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
 
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -72,7 +72,7 @@ ScotConfig.prototype.refresh = async function() {
                 ? item.json_metadata_value.split(',')
                 : [],
         }));
-        
+
         const scotInfo = await getScotDataAsync('info', {
             token: LIQUID_TOKEN_UPPERCASE,
         });
@@ -123,6 +123,14 @@ ScotConfig.prototype.refresh = async function() {
         if (tokenMinerBurnBalance) {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
         }
+
+        const allPrice = await getSteemPriceInfo();
+        scotConfig.info = {};
+        scotConfig.info.scotToken = scotConfig.token;
+        scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
+        scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
+        scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
+
         this.cache.set(key, { info: scotInfo, config: scotConfig });
 
         console.info('Scot Config refreshed...');
