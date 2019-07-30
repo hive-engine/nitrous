@@ -115,13 +115,19 @@ const SidePanel = ({
             {
                 value: 'faq',
                 label: 'FAQ',
-                link: '/@surpassinggoogle/announcing-marlians-a-side-project-under-the-teardrops-ecosystem-a-marlians-nitrous-will-be-up-in-the-coming-days',
+                link:
+                    '/@surpassinggoogle/announcing-marlians-a-side-project-under-the-teardrops-ecosystem-a-marlians-nitrous-will-be-up-in-the-coming-days',
                 internal: true,
             },
             {
                 value: 'get_certified',
                 label: 'Get Certified',
                 link: 'https://discord.gg/usEdeU3',
+            },
+            {
+                value: 'certified_uloggers_list',
+                label: 'Certified Uloggers List',
+                link: 'https://ulogs.org/discover',
             },
             {
                 value: 'discord',
@@ -131,29 +137,34 @@ const SidePanel = ({
             {
                 value: 'vote_witness',
                 label: 'Vote steemgigs',
-                link: 'https://app.steemconnect.com/sign/account-witness-vote?witness=steemgigs&approve=1',
+                link:
+                    'https://app.steemconnect.com/sign/account-witness-vote?witness=steemgigs&approve=1',
             },
         ],
         television: [
             {
                 value: 'tv_marlians',
                 label: 'Marlians',
-                link: 'https://www.youtube.com/channel/UCH4tvTSFkjn3KqNQfJVWITQ',
+                link:
+                    'https://www.youtube.com/channel/UCH4tvTSFkjn3KqNQfJVWITQ',
             },
             {
                 value: 'tv_uloggers',
                 label: 'UloggersTV',
-                link: 'https://www.youtube.com/channel/UCzI3Rjamg7zSe_o0BwSeIQQ',
+                link:
+                    'https://www.youtube.com/channel/UCzI3Rjamg7zSe_o0BwSeIQQ',
             },
             {
                 value: 'tv_untalented',
                 label: 'UntalentedTV',
-                link: 'https://www.youtube.com/channel/UCq6ylwOaSG9VDYwZkMr3jMw',
+                link:
+                    'https://www.youtube.com/channel/UCq6ylwOaSG9VDYwZkMr3jMw',
             },
             {
                 value: 'tv_teardrops',
                 label: 'TeardropsTV',
-                link: 'https://www.youtube.com/channel/UCnIJlzMZzfrcE0bXabLpXKw',
+                link:
+                    'https://www.youtube.com/channel/UCnIJlzMZzfrcE0bXabLpXKw',
             },
         ],
         legal: [
@@ -196,17 +207,13 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Community
-                        </a>
+                        <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            TV(s)
-                        </a>
+                        <a className="menu-section">TV(s)</a>
                     </li>
                     {sidePanelLinks['television'].map(makeLink)}
                 </ul>
