@@ -9,6 +9,8 @@ const map = {
         "Share your canteen or 'street food' moments. Use these moments to exercise and explore more aspects of your human sense. Then, shine this beauty forth in a post. For help, contact [@surpassinggoogle](https://www.marlians.com/@surpassinggoogle), [@sgbonus](https://www.marlians.com/@sgbonus) or [@imbigdee](https://www.marlians.com/@imbigdee) **[here!](https://discord.gg/nHVV5e9)**",
     steemjet:
         "Celebrate your [@dimimp](https://www.marlians.com/@dimimp) moments. Shine forth '[SteemJet](https://ulogs.org/@steemjet)' like it should have be shone forth. Be 'confirm naijan'. Relegate reservations, exercise your talents. For help, contact [@surpassinggoogle](https://www.marlians.com/@surpassinggoogle), [@lordjames](https://www.marlians.com/@lordjames) or [@uche-nna](https://www.marlians.com/@uche-nna) **[here!](https://discord.gg/nHVV5e9)**",
+    'utopian-io':
+        "[#utopian-io](https://www.marlians.com/created/utopian-io) has been a gift. We would like to keep its curation-efforts alive here on 'marlians.com'. We want to curate and reward 'contributions to open-source projects' with [MARLIANS](https://steem-engine.com/?p=market&t=MARLIANS); this can include suggestions, graphics, bug-finds, code etc.  Check out [#macrohard](https://www.marlians.com/created/macrohard), especially if you are not an expert contributor. For help, contact [@tobias-g](https://www.marlians.com/@tobias-g), [cadawg](https://www.marlians.com/@cadawg) or [eastmael](https://www.marlians.com/@eastmael) **[here!](https://discord.gg/nHVV5e9)**",
 };
 
 export default map;
