@@ -549,10 +549,10 @@
             "현재 %(user_name)s 님의 SCT POWER 중 일부는 다른 사용자에게 임대된 상태입니다. 영향력을 행사하거나 신규 사용자를 돕기 위해 SCT POWER를 임대할 수 있습니다. 임대한 수량은 계속 변할 수 있습니다."
     },
     "promote_post_jsx": {
-        "promote_post": "Promote Post",
+        "promote_post": "글 홍보하기",
         "spend_your_DEBT_TOKEN_to_advertise_this_post":
-            "%(DEBT_TOKEN)s를 지불하시면 '홍보글' 코너에 게시물이 올라갑니다.",
-        "you_successfully_promoted_this_post": "홍보 하였습니다.",
+            "홍보글 탭에 이 글을 홍보하시려면 %(DEBT_TOKEN)로 홍보 비용을 납부하셔야 합니다.",
+        "you_successfully_promoted_this_post": "이 글에 대한 홍보가 정상 처리되었습니다",
         "this_post_was_hidden_due_to_low_ratings":
             "다운보팅에 의해 블라인드 처리 되었습니다."
     },
