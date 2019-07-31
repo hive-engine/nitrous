@@ -52,6 +52,7 @@ async function getAuthorRep(feedData) {
 function mergeContent(content, scotData) {
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
+    const title = content.title;
     Object.assign(content, scotData);
     if (voted) {
         const scotVoted = new Set(content.active_votes.map(v => v.voter));
@@ -65,8 +66,12 @@ function mergeContent(content, scotData) {
             }
         });
     }
+    // Restore currently buggy fields
     if (lastUpdate) {
         content.last_update = lastUpdate;
+    }
+    if (title) {
+        content.title = title;
     }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
