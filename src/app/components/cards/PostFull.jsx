@@ -165,8 +165,10 @@ class PostFull extends React.Component {
         setTimeout(() => {
             const { averageRating, peopleRated } = this.getAverageRating();
             if (
-                averageRating !== this.state.averageRating ||
-                peopleRated !== this.state.peopleRated
+                averageRating &&
+                peopleRated &&
+                (averageRating !== this.state.averageRating ||
+                    peopleRated !== this.state.peopleRated)
             ) {
                 this.setState({ averageRating, peopleRated });
                 return true;
@@ -686,8 +688,9 @@ class PostFull extends React.Component {
                                 <span className="PostFull__rating">
                                     <span className="text">
                                         {tt('rate_post_jsx.average_rating', {
-                                            average_rating: this.state
-                                                .averageRating,
+                                            average_rating: this.state.averageRating.toFixed(
+                                                1
+                                            ),
                                         })}
                                     </span>
                                     <PostRating
