@@ -5,9 +5,9 @@
         "and": "and",
         "are_you_sure": "Are you sure?",
         "ask": "Ask",
-        "balance": "잔고",
-        "balances": "잔고",
-        "beneficiaries": "Beneficiaries",
+        "balance": "잔액",
+        "balances": "잔액",
+        "beneficiaries": "베니피셔리",
         "bid": "Bid",
         "blog": "블로그",
         "browse": "Browse",
@@ -40,7 +40,7 @@
         "hide": "숨기기",
         "in": "in",
         "in_reply_to": "in reply to",
-        "insufficient_balance": "잔고 부족",
+        "insufficient_balance": "잔액 부족",
         "invalid_amount": "잘못된 금액",
         "links": "Links",
         "joined": "가입일",
@@ -71,7 +71,7 @@
         "post_as_user": "Post as %(username)s",
         "posts": "Posts",
         "powered_up_100": "Powered Up 100%%",
-        "preview": "Preview",
+        "preview": "미리보기",
         "previous": "Previous",
         "price": "가격",
         "print": "출력",
@@ -82,7 +82,7 @@
         "read_offical_blog": "Steemit Blog",
         "recent_password": "Recent Password",
         "receive": "Receive ",
-        "remove": "Remove",
+        "remove": "삭제",
         "remove_vote": "보팅 취소",
         "replied_to": "replied to %(account)s",
         "replies": "받은 댓글",
@@ -299,8 +299,8 @@
         "use_limited_amount_of_tags":
             "You have %(tagsLength)s tags total%(includingCategory)s. Please use only 5 in your post and category line.",
         "are_you_sure_you_want_to_clear_this_form":
-            "Are you sure you want to exit the comment editor?",
-        "uploading": "Uploading",
+            "편집 중인 내용을 삭제하시겠습니까?",
+        "uploading": "업로딩",
         "draft_saved": "임시 저장.",
         "editor": "에디터",
         "insert_images_by_dragging_dropping":
@@ -317,19 +317,19 @@
         "title": "제목",
         "update_post": "저장",
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
-        "advanced_settings": "Advanced settings",
+        "advanced_settings": "고급 설정",
         "beneficiaries_set": "%(count)s set"
     },
     "beneficiary_selector_jsx": {
-        "header": "Who should receive any rewards?",
-        "add": "Add account",
-        "exceeds_max_beneficiaries": "Can have at most 8 beneficiaries",
-        "beneficiary_cannot_be_self": "Cannot specify self as beneficiary",
-        "beneficiary_cannot_be_duplicate": "Beneficiary cannot be duplicate",
+        "header": "베니피셔리 설정",
+        "add": "계정 추가",
+        "exceeds_max_beneficiaries": "베니피셔리는 최대 8 개까지 설정할 수 있습니다",
+        "beneficiary_cannot_be_self": "본인 계정은 베니피셔리를 설정할 수 없습니다",
+        "beneficiary_cannot_be_duplicate": "동일 계정에 대해 베니피셔리를 중복 설정할 수 없습니다",
         "beneficiary_percent_invalid":
-            "Beneficiary percentage must be from 1-100",
+            "베니피셔리 비율은 최소 1부터 최대 100까지 설정할 수 있습니다",
         "beneficiary_percent_total_invalid":
-            "Beneficiary total percentage must be less than 100"
+            "베니피셔리 비율 합계는 100 보다 작아야 합니다"
     },
     "category_selector_jsx": {
         "tag_your_story":
@@ -337,7 +337,7 @@
         "select_a_tag": "태그를 선택하세요.",
         "maximum_tag_length_is_24_characters": "태그는 24 글자까지 가능합니다.",
         "use_limited_amount_of_categories":
-            "태그는 최대 %(amount)s 개 까지 입력 가능합니다.",
+            "태그는 최대 %(amount)s 개까지 입력 가능합니다.",
         "use_only_lowercase_letters": "소문자만 사용해 주세요.",
         "use_one_dash": "대쉬는 한개만 사용 가능합니다.",
         "use_spaces_to_separate_tags":
@@ -349,11 +349,11 @@
             "태그는 반드시 문자나 숫자로 끝나야 합니다."
     },
     "post_advanced_settings_jsx": {
-        "payout_option_header": "Author rewards",
+        "payout_option_header": "저자 보상",
         "payout_option_description":
-            "What type of tokens do you want as rewards from this post?",
-        "current_default": "Default",
-        "update_default_in_settings": "Update"
+            "이 글에서 발생한 보상은 어떤 형태로 받고 싶나요?",
+        "current_default": "기본",
+        "update_default_in_settings": "설정 업데이트"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -443,10 +443,10 @@
         "comments_were_hidden_due_to_low_ratings":
             "Comments were hidden due to low ratings",
         "comment_sort_order": {
-            "trending": "Trending",
-            "votes": "Votes",
-            "age": "Age",
-            "reputation": "Reputation"
+            "trending": "대세글",
+            "votes": "보팅",
+            "age": "최신글",
+            "reputation": "명성"
         }
     },
     "voting_jsx": {
@@ -475,13 +475,13 @@
         "changing_to_a_downvote_will_reset_curation_rewards_for_this_post":
             "Changing to a Down-Vote will reset your curation rewards for this post",
         "confirm_flag": "Confirm Flag",
-        "and_more": "and %(count)s more",
+        "and_more": "외 %(count)s 명",
         "votes_plural": {
             "one": "%(count)s 보팅",
             "other": "%(count)s 보팅"
         },
-        "voting_power": "Voting Power",
-        "estimated_vote": "Estimated Vote Value",
+        "voting_power": "보팅 파워",
+        "estimated_vote": "보팅 가치(추정치)",
         "we_will_reset_curation_rewards_for_this_post":
             "will reset your curation rewards for this post"
     },
@@ -536,17 +536,17 @@
     },
     "tips_js": {
         "liquid_token":
-            "교환과 송금이 가능한 토큰입니다.<br/> 파워업을 통해 %(LIQUID_TOKEN)s을 %(VESTING_TOKEN)s으로 전환 하실 수 있습니다.",
+            "%(LIQUID_TOKEN)s는 언제든지 전송할 수 있는 거래 가능한 토큰입니다.<br/> 스테이킹이라고 불리는 절차를 통해 %(LIQUID_TOKEN)s는 %(VESTING_TOKEN)s으로 전환할 수 있습니다.",
         "influence_token":
-            "스팀코인판에서의 영향력을 나타냅니다. 스팀 파워가 높을수록 보팅 금액이 더 높아지고, 큐레이션 보상도 더 많이 받을 수 있습니다.",
+            "%(VESTING_TOKEN)s를 활용해 큐레이션 보상을 받을 수 있으며, %(VESTING_TOKEN)s가 높을수록 글 보상에 대한 영향력이 늘어납니다.",
         "estimated_value":
-            "%(LIQUID_TOKEN)s의 평균 가격을 US달러로 환산한 기준입니다.",
+            "추정 가치는 %(LIQUID_TOKEN)s의 평균 가격을 US달러로 환산한 것입니다.",
         "non_transferable":
-            "%(VESTING_TOKEN)s는 전송이 불가능하며, 다시 %(LIQUID_TOKEN)s으로 전환하기 위해서는 3달이 소요됩니다. (13회로 나누어 전환 됩니다)",
+            "%(VESTING_TOKEN)s는 전송할 수 없으며, 파워다운 후 3일이 지나면 %(LIQUID_TOKEN)s로 전환됩니다.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
-            "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
+            "%(VESTING_TOKEN)s는 내가 임대받거나 다른 사람에게 임대해줄 수 있지만, 전송할 수 없습니다. 전송하려면 %(LIQUID_TOKEN)s로 전환해야 합니다.",
         "part_of_your_steem_power_is_currently_delegated":
-            "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다."
+            "현재 %(user_name)s 님의 %(VESTING_TOKEN)s 중 일부는 다른 사용자에게 임대된 상태입니다. 영향력을 행사하거나 신규 사용자를 돕기 위해 %(VESTING_TOKEN)s를 임대할 수 있습니다. 임대한 수량은 계속 변할 수 있습니다."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
@@ -583,8 +583,8 @@
         "empty_feed_3": "Explore Trending Articles",
         "empty_feed_4": "Read The Quick Start Guide",
         "empty_feed_5": "Browse The FAQ",
-        "my_feed": "My Feed",
-        "accountnames_feed": "%(account_name)s's Feed"
+        "my_feed": "피드",
+        "accountnames_feed": "%(account_name)s의 피드"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
@@ -798,13 +798,13 @@
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",
-        "insufficient_funds": "잔고 부족",
+        "insufficient_funds": "잔액 부족",
         "use_only_3_digits_of_precison": "최대 소수점 3자리까지 입력 가능",
         "send_to_account": "Send to account",
         "asset": "Asset",
         "this_memo_is_private": "공개되지 않는 메모입니다.",
         "this_memo_is_public": "모두에게 공개되는 메모입니다.",
-        "convert_to_VESTING_TOKEN": "Convert to %(VESTING_TOKEN)s",
+        "convert_to_VESTING_TOKEN": "%(VESTING_TOKEN)s로 전환하기",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "3일간의 예치기간이 지나야 출금하실 수 있으며, ",
         "move_funds_to_another_account": "다른 Steem 계좌로 송금",
