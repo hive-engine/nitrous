@@ -784,7 +784,11 @@
         "rating_comment":
             "@%(username)s 在搜索时，选择了 @%(author)s 的帖子。\n@%(author)s 将获得 %(reward)s %(DEBT_TOKEN)s 的奖励\n@%(username)s 对搜索结果的满意度为 %(rating)s 分。",
         "rating_reminder":
-            "请您给帖子评分\n。您的评分将自动生成一个留言，并获得来自SCT团队的点赞。"
+            "请您给帖子评分\n。您的评分将自动生成一个留言，并获得来自SCT团队的点赞。",
+        "please_rate": "请评价",
+        "your_rating": "您的评价",
+        "average_rating": "整体评分: %(average_rating)s",
+        "people_rated": "%(num)s人评价"
     },
     "reward_post_jsx": {
         "reward_post": "奖励这篇文章的作者",

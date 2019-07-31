@@ -141,20 +141,38 @@ class PostFull extends React.Component {
                 }
             }
 
-            // identify whether the post is selected during search
+            // identify whether the post is rewarded during search
             const post_content = this.props.cont.get(post);
             if (!post_content) return;
             const author = post_content.get('author');
             const permlink = post_content.get('permlink');
-            const selected = isPostRewarded(author, permlink, username);
-            const showRating = username && username !== author && selected;
-            let rating = null;
-            if (showRating) rating = this.getPostRating();
-            this.setState({ showRating, rating });
+            const rewarded = isPostRewardedByUser(author, permlink, username);
+            const showUserRating = username && username !== author && rewarded;
+            let userRating = null;
+            if (showUserRating) userRating = this.getUserRating();
+            const { averageRating, peopleRated } = this.getAverageRating();
+            this.setState({
+                showUserRating,
+                userRating,
+                averageRating,
+                peopleRated,
+            });
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        // add a check about rating
+        setTimeout(() => {
+            const { averageRating, peopleRated } = this.getAverageRating();
+            if (
+                averageRating !== this.state.averageRating ||
+                peopleRated !== this.state.peopleRated
+            ) {
+                this.setState({ averageRating, peopleRated });
+                return true;
+            }
+        }, 1000);
+
         const names = 'cont, post, username'.split(', ');
         return (
             names.findIndex(name => this.props[name] !== nextProps[name]) !==
@@ -259,6 +277,8 @@ class PostFull extends React.Component {
         const permlink = post_content.get('permlink');
         const body = post_content.get('body');
         this.props.showRatePost(category, author, permlink, body, rating);
+        // update userRating
+        this.setState({ userRating: rating });
     };
 
     showExplorePost = () => {
@@ -267,18 +287,9 @@ class PostFull extends React.Component {
         this.props.showExplorePost(permlink, title);
     };
 
-    getPostRating() {
-        // get the link to rating comment by the user
-        const { username, post, cont } = this.props;
-        const post_content = this.props.cont.get(this.props.post);
-        if (!post_content) return;
-        const author = post_content.get('author');
-        const permlink = post_content.get('permlink');
-        const comment_permlink = `re-rating-${author}-${permlink}`;
+    getRatingFromComment(author_perm) {
         // get rating score from comment
-        const rating_content = this.props.cont.get(
-            `${username}/${comment_permlink}`
-        );
+        const rating_content = this.props.cont.get(author_perm);
         if (!rating_content) return null;
         const body = rating_content.get('body');
         const m_rating = body.match(/score=\"(\d)\"/);
@@ -286,14 +297,45 @@ class PostFull extends React.Component {
         else return null;
     }
 
-    showRatingReminder = target => {
-        if (this.state.showRating && !this.state.rating) {
+    getUserRating() {
+        // get the link to rating comment by the user
+        const { username, post, cont } = this.props;
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return null;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const comment_permlink = `re-rating-${author}-${permlink}`;
+        return this.getRatingFromComment(`${username}/${comment_permlink}`);
+    }
+
+    getAverageRating() {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return {};
+        const replies = post_content.get('replies').toJS();
+        const ratings = replies
+            .filter(c => c.indexOf('/re-rating-') !== -1)
+            .map(c => this.getRatingFromComment(c))
+            .filter(r => r != null);
+        console.log('Replies and Ratings', replies, ratings);
+        if (ratings && ratings.length > 0) {
+            const averageRating =
+                ratings.reduce((a, b) => a + b) / ratings.length;
+            const peopleRated = ratings.length;
+            return {
+                averageRating,
+                peopleRated,
+            };
+        } else return {};
+    }
+
+    showUserRatingReminder = target => {
+        if (this.state.showUserRating && !this.state.userRating) {
             this.tooltip.toggleHint({ target });
         }
     };
 
     hideRatingReminder = () => {
-        if (this.state.showRating && this.tooltip) {
+        if (this.state.showUserRating && this.tooltip) {
             this.tooltip.setState({ target: null });
         }
     };
@@ -304,24 +346,24 @@ class PostFull extends React.Component {
     }
 
     componentDidMount() {
-        if (this.state.showRating)
+        if (this.state.showUserRating)
             document.addEventListener('scroll', this.onScroll);
     }
 
     componentWillUnmount() {
-        if (this.state.showRating)
+        if (this.state.showUserRating)
             document.removeEventListener('scroll', this.onScroll);
     }
 
     onScroll = () => {
-        const wrappedElement = document.getElementById('post-rating-bar');
+        const wrappedElement = document.getElementById('user-rating-bar');
         if (
-            this.state.showRating &&
+            this.state.showUserRating &&
             wrappedElement &&
             this.hasReachedBottom(wrappedElement)
         ) {
             document.removeEventListener('scroll', this.onScroll);
-            this.showRatingReminder(wrappedElement);
+            this.showUserRatingReminder(wrappedElement);
         }
     };
 
@@ -334,7 +376,7 @@ class PostFull extends React.Component {
                 formId,
                 showReply,
                 showEdit,
-                showRating,
+                showUserRating,
             },
             onShowReply,
             onShowEdit,
@@ -635,8 +677,35 @@ class PostFull extends React.Component {
                         >
                             <Icon name="link" className="chain-right" />
                         </button>
-                        {showRating && (
-                            <span>
+                    </div>
+                </div>
+                <div className="row rating">
+                    <div className="columns medium-12 large-5">
+                        {this.state.averageRating &&
+                            this.state.peopleRated && (
+                                <span className="PostFull__rating">
+                                    <span className="text">
+                                        {tt('rate_post_jsx.average_rating', {
+                                            average_rating: this.state
+                                                .averageRating,
+                                        })}
+                                    </span>
+                                    <PostRating
+                                        id="post-average-rating"
+                                        initialRating={this.state.averageRating}
+                                        readonly={true}
+                                    />
+                                    <span className="text">
+                                        {tt('rate_post_jsx.people_rated', {
+                                            num: this.state.peopleRated,
+                                        })}
+                                    </span>
+                                </span>
+                            )}
+                    </div>
+                    <div className="columns medium-12 large-5">
+                        {showUserRating && (
+                            <span className="float-right">
                                 <ReactHint
                                     events={false}
                                     persist
@@ -650,10 +719,18 @@ class PostFull extends React.Component {
                                     )}
                                     data-rh-at="left"
                                 >
+                                    <span className="text">
+                                        {' '}
+                                        {this.state.userRating
+                                            ? tt('rate_post_jsx.your_rating')
+                                            : tt(
+                                                  'rate_post_jsx.please_rate'
+                                              )}{' '}
+                                        {': '}{' '}
+                                    </span>
                                     <PostRating
-                                        id="post-rating-bar"
-                                        class="float-right"
-                                        initialRating={this.state.rating}
+                                        id="user-rating-bar"
+                                        initialRating={this.state.userRating}
                                         onChange={this.showRatePost}
                                     />
                                 </span>
@@ -741,7 +818,7 @@ const saveOnShow = (formId, type) => {
     }
 };
 
-const isPostRewarded = (author, permlink, username) => {
+const isPostRewardedByUser = (author, permlink, username) => {
     if (process.env.BROWSER) {
         return (
             localStorage.getItem(

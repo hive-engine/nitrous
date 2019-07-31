@@ -820,7 +820,11 @@
             "귀하의 평점이 포함 된 의견이 생성되며 자동으로 평점에 투표하게됩니다",
         "confirm_rate_post": "해당 게시물의 등급은: %(rating)s",
         "rating_comment":
-            "@%(username)s 검색 중, 선택됨 @%(author)s 우편.\n@%(author)s 얻을 것이다 %(reward)s %(DEBT_TOKEN)s 보상\n@%(username)s 검색 결과에 대한 만족도는 %(rating)s ."
+            "@%(username)s 검색 중, 선택됨 @%(author)s 우편.\n@%(author)s 얻을 것이다 %(reward)s %(DEBT_TOKEN)s 보상\n@%(username)s 검색 결과에 대한 만족도는 %(rating)s .",
+        "please_rate": "평가 바랍니다",
+        "your_rating": "당신의 순위",
+        "average_rating": "평균 등급: %(average_rating)s",
+        "people_rated": "%(num)s 명 평가"
     },
     "reward_post_jsx": {
         "reward_post": "이 기사의 저자에게 보상하기",
