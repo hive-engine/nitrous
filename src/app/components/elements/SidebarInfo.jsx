@@ -30,12 +30,12 @@ const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
                             <div>{'SCT'}</div>
                             <div>
                                 {locale === 'ko' && (
-                                    <span classNa me="integer">
-                                        {sct_price_with_krw[0]}
+                                    <span className="integer">
+                                        {sct_price_with_krw[0] +
+                                            tt('g.krw') +
+                                            ' ('}
                                     </span>
                                 )}
-                                {locale === 'ko' && <span>{tt('g.krw')}</span>}
-                                {locale === 'ko' && <span>{' ('}</span>}
                                 <span>{'$'}</span>
                                 <span className="integer">{sct_price[0]}</span>
                                 <span className="decimal">{sct_price[1]}</span>
@@ -53,12 +53,10 @@ const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
                             <div>{'STEEM'}</div>
                             <div>
                                 {locale === 'ko' && (
-                                    <span classNa me="integer">
-                                        {steem_to_krw}
+                                    <span className="integer">
+                                        {steem_to_krw + tt('g.krw') + ' ('}
                                     </span>
                                 )}
-                                {locale === 'ko' && <span>{tt('g.krw')}</span>}
-                                {locale === 'ko' && <span>{' ('}</span>}
                                 <span>{'$'}</span>
                                 <span className="integer">
                                     {steem_price[0]}
