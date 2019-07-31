@@ -35,7 +35,7 @@ export const TAG_LIST = fromJSOrdered({
     botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
     trends: ['cleanlabel', 'sustainability', 'regenerativeagriculture'],
     vegan: [],
-    communities: ['innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
+    community: ['innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
     contest: [],
 });
 export const LIQUID_TOKEN = 'Natural';
