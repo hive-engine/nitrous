@@ -51,7 +51,6 @@ class AuthorRecentPosts extends React.PureComponent {
                 `get_discussions_by_blog`,
                 discussionQuery
             );
-            console.log('feedData', feedData);
             lastValue = feedData[feedData.length - 1];
             endOfData = feedData.length < MAX_LIMIT;
             feedData = feedData
@@ -73,7 +72,6 @@ class AuthorRecentPosts extends React.PureComponent {
                 }))
             );
         }
-        console.log('posts', posts);
 
         this.setState({
             fetching: false,
