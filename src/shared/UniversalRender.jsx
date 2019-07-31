@@ -32,6 +32,7 @@ import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
 import { getStateAsync } from 'app/utils/steemApi';
+import axios from 'axios';
 
 let get_state_perf,
     get_content_perf = false;
@@ -324,10 +325,29 @@ export async function serverRender(
             ] = pinnedPost;
         });
 
+        const movie = {};
+
+        if (url.match(routeRegex.Movie)) {
+            let movieType;
+            if (url.indexOf('/movie') === 0) {
+                movieType = 1;
+            } else {
+                movieType = 2;
+            }
+
+            movie.movies = await getMovies(
+                userPreferences.locale,
+                movieType,
+                -1,
+                1
+            );
+        }
+
         server_store = createStore(rootReducer, {
             app: initialState.app,
             global: onchain,
             offchain,
+            movie,
         });
         server_store.dispatch({
             type: '@@router/LOCATION_CHANGE',
@@ -485,4 +505,19 @@ async function apiGetState(url) {
     offchain = await getStateAsync(url);
 
     return offchain;
+}
+
+async function getMovies(languageCode, movieType, genreId, page) {
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetMovies?languageCode=${
+                languageCode
+            }&movieType=${movieType}&genreId=${genreId}&page=${page}`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
 }

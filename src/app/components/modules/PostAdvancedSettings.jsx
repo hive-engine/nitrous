@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import reactForm from 'app/utils/ReactForm';
 import { SUBMIT_FORM_ID } from 'shared/constants';
@@ -6,12 +6,13 @@ import tt from 'counterpart';
 import { fromJS } from 'immutable';
 import BeneficiarySelector from 'app/components/cards/BeneficiarySelector';
 import { validateBeneficiaries } from 'app/components/cards/BeneficiarySelector';
+import PropTypes from 'prop-types';
 
 import * as userActions from 'app/redux/UserReducer';
 
 class PostAdvancedSettings extends Component {
     static propTypes = {
-        formId: React.PropTypes.string.isRequired,
+        formId: PropTypes.string.isRequired,
     };
 
     constructor(props) {

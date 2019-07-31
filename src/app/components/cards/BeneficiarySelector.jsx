@@ -5,18 +5,19 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 import reactForm from 'app/utils/ReactForm';
 import { List, Set } from 'immutable';
 import tt from 'counterpart';
+import PropTypes from 'prop-types';
 
 export class BeneficiarySelector extends React.Component {
     static propTypes = {
         // HTML props
-        id: React.PropTypes.string, // DOM id for active component (focusing, etc...)
-        onChange: React.PropTypes.func.isRequired,
-        onBlur: React.PropTypes.func.isRequired,
-        value: React.PropTypes.array,
-        tabIndex: React.PropTypes.number,
+        id: PropTypes.string, // DOM id for active component (focusing, etc...)
+        onChange: PropTypes.func.isRequired,
+        onBlur: PropTypes.func.isRequired,
+        value: PropTypes.array,
+        tabIndex: PropTypes.number,
 
         // redux connect
-        following: React.PropTypes.object.isRequired,
+        following: PropTypes.object.isRequired,
     };
     static defaultProps = {
         id: 'BeneficiarySelectorId',
