@@ -11,6 +11,7 @@ export const routeRegex = {
     PostJson: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)(\.json)$/,
     UserJson: /^\/(@[\w\.\d-]+)(\.json)$/,
     UserNameJson: /^.*(?=(\.json))/,
+    Movie: /^\/(movie|tv)\/?$/,
 };
 
 export default function resolveRoute(path) {
@@ -102,6 +103,10 @@ export default function resolveRoute(path) {
         );
     if (match) {
         return { page: 'PostsIndex', params: match.slice(1) };
+    }
+    match = path.match(routeRegex.Movie);
+    if (match) {
+        return { page: 'MoviesIndex', params: match.slice(1) };
     }
     return { page: 'NotFound' };
 }
