@@ -129,6 +129,10 @@ const map = {
     'bahagia-arbi': 'certified_ulogger',
     shula14: 'certified_ulogger',
     ruah: 'certified_ulogger',
+    clixmoney: 'certified_ulogger',
+    cetb2008: 'certified_ulogger',
+    vesytz: 'certified_ulogger',
+    engrbev: 'certified_ulogger',
 };
 
 export default map;
