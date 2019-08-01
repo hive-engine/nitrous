@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { List } from 'immutable';
+import { List, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -28,6 +28,7 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
+import SidebarInfo from 'app/components/elements/SidebarInfo';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -65,6 +66,13 @@ class PostsIndex extends React.Component {
     }
 
     getPosts(order, category) {
+        const pinned = this.props.pinned;
+        const pinnedPosts = pinned
+            ? pinned.has('pinned_posts')
+              ? pinned.get('pinned_posts').toJS()
+              : []
+            : [];
+        const notices = this.props.notices || [];
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
@@ -75,7 +83,9 @@ class PostsIndex extends React.Component {
                 promotedDiscussions.size > 0 &&
                 mainDiscussions
             ) {
-                const processed = new Set(); // mutable
+                const processed = new Set(
+                    pinnedPosts.map(p => `${p.author}/${p.permlink}`)
+                ); // mutable
                 const interleaved = [];
                 const promoted = [];
                 let promotedIndex = 0;
@@ -138,18 +148,68 @@ class PostsIndex extends React.Component {
     onShowSpam = () => {
         this.setState({ showSpam: !this.state.showSpam });
     };
+
+    searchCategories(cat, parent, categories) {
+        if (!cat) return { par: parent, cats: categories, found: false };
+
+        // leaf nodes
+        if (List.isList(categories)) {
+            if (categories.includes(cat))
+                return { par: parent, cats: categories, found: true };
+            else return { par: parent, cats: null, found: false };
+        } else {
+            for (const c of categories.keys()) {
+                const v = categories.get(c);
+                if (cat === c && v !== null && !v.isEmpty()) {
+                    return { par: parent, cats: v, found: true };
+                } else {
+                    const { par, cats, found } = this.searchCategories(
+                        cat,
+                        c,
+                        v
+                    );
+                    if (cats !== null && !cats.isEmpty()) {
+                        return { par, cats, found };
+                    }
+                }
+            }
+            return { par: parent, cats: null, found: false };
+        }
+    }
+
+    buildCategories(cat, parent, categories) {
+        if (!categories) return this.props.categories;
+
+        if (!cat) {
+            return categories;
+        } else {
+            let cats = OrderedMap();
+            if (categories.includes(cat)) cats = categories;
+            else cats = cats.set(cat, categories);
+            if (parent !== null) {
+                const children = cats;
+                cats = OrderedMap();
+                cats = cats.set(parent, children);
+            }
+            return cats;
+        }
+    }
+
     render() {
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const {
-            categories,
-            categoriesPromoted,
-            discussions,
-            pinned,
-        } = this.props;
+        const { discussions, pinned } = this.props;
+        const { par, cats, found } = this.searchCategories(
+            category,
+            null,
+            this.props.categories
+        );
+        const categories = this.buildCategories(category, par, cats);
+
+        const max_levels = category && found ? 3 : 2;
 
         let topics_order = order;
         let posts = List();
@@ -279,6 +339,7 @@ class PostsIndex extends React.Component {
                                     categories={categories}
                                     compact={true}
                                     promoted={false}
+                                    levels={max_levels}
                                 />
                             </span>
                         </div>
@@ -314,10 +375,20 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
+                    <Notices notices={this.props.notices} />
                     {this.props.isBrowser && (
                         <div>
-                            {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
+                            <SidebarInfo
+                                sct_to_steemp={this.props.scotInfo.getIn([
+                                    'sct_to_steemp',
+                                ])}
+                                steem_to_dollor={this.props.scotInfo.getIn([
+                                    'steem_to_dollor',
+                                ])}
+                                steem_to_krw={this.props.scotInfo.getIn([
+                                    'steem_to_krw',
+                                ])}
+                            />
                         </div>
                     )}
 
@@ -364,7 +435,6 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -388,6 +458,7 @@ class PostsIndex extends React.Component {
                         username={this.props.username}
                         categories={categories}
                         promoted={false}
+                        levels={max_levels}
                     />
                     <small>
                         <a
@@ -453,6 +524,7 @@ module.exports = {
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
+                scotInfo: scotConfig.getIn(['config', 'info']),
             };
         },
         dispatch => {

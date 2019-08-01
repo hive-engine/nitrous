@@ -169,6 +169,7 @@ class PostSummary extends React.Component {
                     authorRepLog10={authorRepLog10}
                     follow={false}
                     mute={false}
+                    showAffiliation
                 />
                 {} {tt('g.in')} <TagList post={p} single />&nbsp;•&nbsp;
                 <Link to={post_url}>
@@ -198,6 +199,7 @@ class PostSummary extends React.Component {
                                 authorRepLog10={authorRepLog10}
                                 follow={false}
                                 mute={false}
+                                showAffiliation
                             />
                         </span>
 

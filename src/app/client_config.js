@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const APP_NAME = 'SteemCoinPan';
@@ -12,21 +12,25 @@ export const APP_ICON = 'steemcoinpan';
 export const APP_URL = 'https://www.steemcoinpan.com';
 export const APP_DOMAIN = 'www.steemcoinpan.com';
 export const SCOT_TAG = 'sct';
-export const TAG_LIST = List([
-    'notice',
+// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
+export const APP_MAX_TAG = 10;
+export const TAG_LIST = fromJSOrdered([
     'sct',
-    'blockchain',
-    'steem',
-    'bitcoin',
-    'altcoin',
-    'coinnews',
-    'coinstory',
-    'freeboard',
-    'userguide',
-    'community',
-    'suggest',
-    'qna',
+    'sct-notice',
+    'sct-kr',
+    'sct-en',
+    'sct-cn',
+    'sct-altcoin',
+    'sct-bitcoin',
     'sct-alliance',
+    'sct-freeboard',
+    'sct-userguide',
+    'sct-otc',
+    'sct-prediction',
+    'sct-qna',
+    'palnet',
+    'steemleo',
+    'zzan',
 ]);
 export const PROMOTED_TAG_LIST = List(['zzan', 'spt']);
 export const LIQUID_TOKEN = 'Sct';

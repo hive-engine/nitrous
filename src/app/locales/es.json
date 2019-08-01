@@ -7,6 +7,7 @@
         "ask": "Preguntar",
         "balance": "Saldo",
         "balances": "Saldos",
+        "beneficiaries": "Beneficiaries",
         "bid": "Oferta",
         "blog": "Blog",
         "browse": "Navegar",
@@ -323,11 +324,23 @@
         "title": "Título",
         "update_post": "Actualizar Publicación",
         "markdown_not_supported": "Markdown no soportado aquí",
-        "advanced_settings": "Advanced settings"
+        "advanced_settings": "Advanced settings",
+        "beneficiaries_set": "%(count)s set"
+    },
+    "beneficiary_selector_jsx": {
+        "header": "Who should receive any rewards?",
+        "add": "Add account",
+        "exceeds_max_beneficiaries": "Can have at most 8 beneficiaries",
+        "beneficiary_cannot_be_self": "Cannot specify self as beneficiary",
+        "beneficiary_cannot_be_duplicate": "Beneficiary cannot be duplicate",
+        "beneficiary_percent_invalid":
+            "Beneficiary percentage must be from 1-100",
+        "beneficiary_percent_total_invalid":
+            "Beneficiary total percentage must be less than 100"
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Etiqueta (hasta 5 etiquetas), la primera etiqueta es tu principal categoría.",
+            "Etiquetas: la primera etiqueta es tu principal categoría.",
         "select_a_tag": "Selecciona una etiqueta",
         "maximum_tag_length_is_24_characters":
             "La longitud máxima de la etiqueta es de 24 caracteres",

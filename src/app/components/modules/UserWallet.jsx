@@ -20,7 +20,6 @@ import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import FormattedAssetToken from 'app/components/elements/FormattedAssetToken';
 
-
 class UserWallet extends React.Component {
     constructor() {
         super();
@@ -58,6 +57,9 @@ class UserWallet extends React.Component {
         this.setState({ claimInProgress: true }); // disable the claim button
         this.props.claimRewards(account);
     };
+    handleClaimTokenRewards = (account, token) => {
+        this.props.claimTokenRewards(account, token);
+    };
     render() {
         const {
             onShowDepositSteem,
@@ -81,7 +83,6 @@ class UserWallet extends React.Component {
             : {
                   quantityLeft: '0',
               };
-
         const tokenStatus = account.has('token_status')
             ? account.get('token_status').toJS()
             : {
@@ -223,33 +224,63 @@ class UserWallet extends React.Component {
         // added by realmankwon (2019-06-12) add all token balances
         let all_token_balances_list = [];
 
-        if(account.has('all_token_balances'))
-        {
-            const allTokenBalances = account.get('all_token_balances').toJS()
-        
+        if (account.has('all_token_balances')) {
+            const allTokenBalances = account.get('all_token_balances').toJS();
+            const allTokenStatus = account.get('all_token_status');
+            const allTokenInfo = account.get('all_token_info');
+
             // added by realmankwon (2019-06-18) sort by alphabet asc
-            allTokenBalances.sort(
-                (a, b) =>
-                    a.symbol >
-                    b.symbol
-                        ? 1
-                        : -1
-            );
+            allTokenBalances.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
 
             for (let v = 0; v < allTokenBalances.length; ++v) {
                 const tokenBalance = allTokenBalances[v];
-                // added by realmankwon (2019-06-18) except LIQUID_TOKEN_UPPERCASE 
-                if(tokenBalance.symbol === LIQUID_TOKEN_UPPERCASE) continue;
 
-                all_token_balances_list.push(
-                    <span>
-                        <FormattedAssetToken
-                            balance={tokenBalance.balance}
-                            stake={tokenBalance.stake}
-                            symbol={tokenBalance.symbol}
-                        />
-                    </span>
+                // added by realmankwon (2019-06-18) except LIQUID_TOKEN_UPPERCASE
+                if (tokenBalance.symbol === LIQUID_TOKEN_UPPERCASE) continue;
+                const pendingToken = allTokenStatus.getIn([
+                    tokenBalance.symbol,
+                    'pending_token',
+                ]);
+                const tokenPrecision = allTokenInfo.getIn([
+                    tokenBalance.symbol,
+                    'precision',
+                ]);
+                let tokenReward = 0;
+                if (pendingToken && tokenPrecision) {
+                    tokenReward = pendingToken / Math.pow(10, tokenPrecision);
+                }
+
+                const tokenFormattedStr = (
+                    <FormattedAssetToken
+                        balance={tokenBalance.balance}
+                        stake={tokenBalance.stake}
+                        delegationsIn={tokenBalance.delegationsIn}
+                        delegationsOut={tokenBalance.delegationsOut}
+                        reward={tokenReward}
+                        symbol={tokenBalance.symbol}
+                    />
                 );
+
+                const tokenBalanceStr =
+                    current_user && isMyAccount && tokenReward > 0 ? (
+                        <span
+                            key={tokenBalance.symbol}
+                            onClick={e => {
+                                this.handleClaimTokenRewards(
+                                    account,
+                                    tokenBalance.symbol
+                                );
+                            }}
+                        >
+                            {tokenFormattedStr}
+                        </span>
+                    ) : (
+                        <span key={tokenBalance.symbol}>
+                            {tokenFormattedStr}
+                        </span>
+                    );
+
+                all_token_balances_list.push(tokenBalanceStr);
             }
         }
 
@@ -348,13 +379,11 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
-                
+
                 <div className="row">
+                    <div className="column small-12">Steem Engine Token</div>
                     <div className="column small-12">
-                        Steem Engine Token
-                    </div>
-                    <div className="column small-12">
-                        <br/>
+                        <br />
                         {all_token_balances_list}
                     </div>
                 </div>
@@ -418,6 +447,32 @@ export default connect(
                 required_posting_auths: [username],
                 json: JSON.stringify({
                     symbol: LIQUID_TOKEN_UPPERCASE,
+                }),
+            };
+
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                })
+            );
+        },
+
+        claimTokenRewards: (account, token) => {
+            const username = account.get('name');
+            const successCallback = () => {
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                );
+                alert('Success Claim!!');
+            };
+
+            const operation = {
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify({
+                    symbol: token,
                 }),
             };
 

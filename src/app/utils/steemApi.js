@@ -52,6 +52,7 @@ async function getAuthorRep(feedData) {
 function mergeContent(content, scotData) {
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
+    const title = content.title;
     Object.assign(content, scotData);
     if (voted) {
         const scotVoted = new Set(content.active_votes.map(v => v.voter));
@@ -65,8 +66,12 @@ function mergeContent(content, scotData) {
             }
         });
     }
+    // Restore currently buggy fields
     if (lastUpdate) {
         content.last_update = lastUpdate;
+    }
+    if (title) {
+        content.title = title;
     }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
@@ -155,6 +160,7 @@ export async function attachScotData(url, state) {
             tokenStatuses,
             transferHistory,
             allTokenBalances,
+            allTokenInfo,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -169,6 +175,7 @@ export async function attachScotData(url, state) {
             ssc.find('tokens', 'balances', {
                 account,
             }),
+            getScotDataAsync('info', {}),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -179,6 +186,7 @@ export async function attachScotData(url, state) {
         if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
             state.accounts[account].token_status =
                 tokenStatuses[LIQUID_TOKEN_UPPERCASE];
+            state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
             // Reverse to show recent activity first
@@ -186,8 +194,13 @@ export async function attachScotData(url, state) {
                 account
             ].transfer_history = transferHistory.reverse();
         }
+
         if (allTokenBalances) {
             state.accounts[account].all_token_balances = allTokenBalances;
+        }
+
+        if (allTokenInfo) {
+            state.accounts[account].all_token_info = allTokenInfo;
         }
 
         return;
@@ -344,4 +357,13 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         );
     }
     return { feedData, endOfData, lastValue };
+}
+
+export async function getSteemPriceInfo() {
+    var steemPrice = callApi('https://postpromoter.net/api/prices');
+    var steemPriceOnUpbit = callApi(
+        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    );
+    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return allInfo;
 }
