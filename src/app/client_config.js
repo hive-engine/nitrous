@@ -14,25 +14,24 @@ export const APP_DOMAIN = 'www.steemcoinpan.com';
 export const SCOT_TAG = 'sct';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
-export const TAG_LIST = fromJSOrdered([
-    'sct',
-    'sct-notice',
-    'sct-kr',
-    'sct-en',
-    'sct-cn',
-    'sct-altcoin',
-    'sct-bitcoin',
-    'sct-alliance',
-    'sct-freeboard',
-    'sct-userguide',
-    'sct-otc',
-    'sct-prediction',
-    'sct-qna',
-    'palnet',
-    'steemleo',
-    'zzan',
-]);
-export const PROMOTED_TAG_LIST = List(['zzan', 'spt']);
+export const TAG_LIST = fromJSOrdered({
+    sct: [
+        'sct-notice',
+        'sct-kr',
+        'sct-en',
+        'sct-cn',
+        'sct-altcoin',
+        'sct-bitcoin',
+        'sct-alliance',
+        'sct-freeboard',
+        'sct-userguide',
+        'sct-otc',
+        'sct-prediction',
+        'sct-qna',
+    ],
+    scot: ['palnet', 'steemleo', 'zzan'],
+});
+export const PROMOTED_TAG_LIST = fromJSOrdered(['zzan', 'spt']);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';

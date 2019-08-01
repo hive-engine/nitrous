@@ -201,7 +201,7 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { discussions, pinned } = this.props;
+        const { discussions, pinned, categoriesPromoted } = this.props;
         const { par, cats, found } = this.searchCategories(
             category,
             null,
