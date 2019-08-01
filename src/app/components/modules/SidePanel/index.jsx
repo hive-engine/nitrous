@@ -59,13 +59,6 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
-            },
         ],
         community: [
             {
@@ -123,6 +116,11 @@ const SidePanel = ({
                 value: 'whitepaper',
                 label: 'Whitepaper',
                 link: 'https://www.steemace.io/steemace/@steem-ace/a-new-scot-tribe-on-steem-steemace-com-for-gaming-content-or-over-100k-sp-7-5k-pal-and-120-splinterlands-beta-booster-to-reward',
+            },
+            {
+                value: 'guidelines',
+                label: 'Content Guidelines',
+                link: 'https://www.steemace.io/steemace/@steem-ace/steemace-is-for-gaming-content-what-is-gaming-content-updated-version',
             },
         ],
         legal: [
