@@ -33,7 +33,7 @@ export const TAG_LIST = fromJSOrdered({
     retailer: [],
     supplements: ['omega3', 'dietarysupplements', 'foodsupplements'],
     botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
-    trends: ['cleanlabel', 'sustainability', 'regenerativeagriculture'],
+    trends: ['cleanlabel', 'permaculture', 'regenerativeagriculture', 'sustainability'],
     vegan: [],
     community: ['innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
     contest: [],
