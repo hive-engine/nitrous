@@ -612,7 +612,12 @@ class Voting extends React.Component {
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             // Votes are in order of recent votes first.
-            const avotes = active_votes.toJS().reverse();
+            const avotes = active_votes
+                .toJS()
+                .sort(
+                    (a, b) =>
+                        new Date(a.timestamp) < new Date(b.timestamp) ? -1 : 1
+                );
 
             // Compute estimates given current order without rearrangement first,
             // only if scot is present.
