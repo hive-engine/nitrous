@@ -19,7 +19,7 @@ import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
 
-import Icon from 'app/components/elements/Icon';
+import AppLogo from 'app/components/elements/AppLogo';
 
 function getFullLocale(locale) {
     switch (locale) {
@@ -144,7 +144,7 @@ class Post extends React.Component {
             return (
                 <div className="NotFound float-center">
                     <div>
-                        <Icon name="steem" size="4x" />
+                        <AppLogo />
                         <h4 className="NotFound__header">
                             Sorry! This page doesnt exist.
                         </h4>
