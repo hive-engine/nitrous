@@ -133,6 +133,11 @@ const map = {
     cetb2008: 'certified_ulogger',
     vesytz: 'certified_ulogger',
     engrbev: 'certified_ulogger',
+    tesaganewton: 'certified_ulogger',
+    rosatravels: 'certified_ulogger',
+    rainingfall: 'certified_ulogger',
+    garamee21: 'certified_ulogger',
+    hilltop: 'certified_ulogger',
 };
 
 export default map;
