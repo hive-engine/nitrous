@@ -9,7 +9,7 @@ import { authorNameAndRep } from 'app/utils/ComponentFormatters';
 import AuthorDropdown from '../AuthorDropdown';
 import Reputation from 'app/components/elements/Reputation';
 import normalizeProfile from 'app/utils/NormalizeProfile';
-import AffiliationMap from 'app/utils/AffiliationMap';
+const AffiliationMap = require('app/utils/AffiliationMap.json');
 import tt from 'counterpart';
 import Overlay from 'react-overlays/lib/Overlay';
 import { findDOMNode } from 'react-dom';
