@@ -7,15 +7,15 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GOOGLE_CUSTOM_SEARCH_ID } from 'app/client_config';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import { isLoggedIn } from 'app/utils/UserUtil';
-import { getSteemEngineAccountHistoryAsync } from 'app/utils/steemApi';
-import {
-    APP_URL,
-    SEARCH_SELECTION_REWARD_AMOUNT,
-    SEARCH_SELECTION_BURN_AMOUNT,
-} from 'app/client_config';
+import { APP_URL } from 'app/client_config';
 import { api } from '@steemit/steem-js';
 import ReactHintFactory from 'react-hint';
 const ReactHint = ReactHintFactory(React);
+import {
+    setPostRewardedByUser,
+    isPostRewardedByUser,
+    updatePostRewardingRecords,
+} from 'app/utils/CommentUtil';
 
 class PaidSearch extends React.Component {
     constructor(props) {
@@ -171,69 +171,14 @@ class PaidSearch extends React.Component {
         return null;
     }
 
-    setPostRewarded(key) {
-        // save the selected status in local storage
-        const username = this.props.currentUser.get('username');
-        localStorage.setItem(`rewarded-${key}-by-${username}`, 'true');
-    }
-
-    isPostRewarded(author, permlink, key) {
-        // check the rewarded in local storage
-        const username = this.props.currentUser.get('username');
-        // if the post is owned by the user, don't need to reward
-        if (
-            localStorage.getItem(`rewarded-${key}-by-${username}`) === 'true' ||
-            author === username
-        ) {
-            return true;
-        }
-    }
-
-    async updatePostRewardingRecords() {
-        const username = this.props.currentUser.get('username');
-        const [transfers] = await Promise.all([
-            getSteemEngineAccountHistoryAsync(username, 500),
-        ]);
-        const memo_prefix = 'search and click: ';
-        // filter valid transfers
-        const matched_transfers = transfers.filter(
-            t =>
-                t['memo'] != null &&
-                t['memo'].indexOf(memo_prefix) != -1 &&
-                ((t['to'] == 'null' &&
-                    t['quantity'] >= SEARCH_SELECTION_BURN_AMOUNT) ||
-                    (t['to'] != 'null' &&
-                        t['quantity'] >= SEARCH_SELECTION_REWARD_AMOUNT))
-        );
-        let rewarded_posts = matched_transfers
-            .filter(t => {
-                let receivers = matched_transfers
-                    .filter(t1 => t1['memo'] === t['memo'])
-                    .map(t1 => t1['to']);
-                receivers = [...new Set(receivers)];
-                return receivers.length >= 2 && receivers.includes('null');
-            })
-            .map(t => {
-                if (t['to'] === 'null') {
-                    return t['memo'].replace(memo_prefix, '');
-                } else {
-                    return null;
-                }
-            })
-            .filter(k => k != null);
-        // deduplicate and set reward post records
-        rewarded_posts = [...new Set(rewarded_posts)];
-        rewarded_posts.map(k => this.setPostRewarded(k));
-        console.log('Rewarded Posts:', rewarded_posts);
-    }
-
     showRewardPost(element) {
         const res = this.parsePost(element, 'gs-url');
         if (res) {
             const { author, permlink, key } = res;
 
             const openPage = () => {
-                this.setPostRewarded(key);
+                const username = this.props.currentUser.get('username');
+                setPostRewardedByUser(author, permlink, username);
                 element.setAttribute('href', element.getAttribute('gs-url'));
                 element.click();
 
@@ -379,7 +324,11 @@ class PaidSearch extends React.Component {
                 e.setAttribute('data-search', '');
 
                 // add click event lisnter if post not rewarded
-                if (!this.isPostRewarded(author, permlink, key)) {
+                const username = this.props.currentUser.get('username');
+                if (
+                    !isPostRewardedByUser(author, permlink, username) &&
+                    author !== username
+                ) {
                     // add preview and click for title only
                     // if (e.parentNode.getAttribute('class') === 'gs-title') {
                     e.removeAttribute('href');
@@ -404,9 +353,15 @@ class PaidSearch extends React.Component {
         }
     }
 
+    componentWillMount() {
+        if (isLoggedIn()) {
+            // update post rewards info
+            const username = this.props.currentUser.get('username');
+            updatePostRewardingRecords(username);
+        }
+    }
+
     componentDidMount() {
-        // update post rewards info
-        this.updatePostRewardingRecords();
         // render search engine
         this.insertCSE();
         this.renderCSE();
