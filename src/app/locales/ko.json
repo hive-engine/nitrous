@@ -830,28 +830,28 @@
     },
     "search_jsx": {
         "successfully_rewarded_the_author":
-            "당신은 성공적으로 저자에게 보상을주었습니다."
+            "저자에 대한 보상이 정상 처리되었습니다"
     },
     "rate_post_jsx": {
-        "rate_post": "포스트 평가",
+        "rate_post": "글 평가하기",
         "rate_post_and_get_vote":
-            "귀하의 평점이 포함 된 의견이 생성되며 자동으로 평점에 투표하게됩니다",
-        "confirm_rate_post": "해당 게시물의 등급은: %(rating)s",
+            "평점을 작성하면 당신의 평점이 담긴 댓글이 생성될 것입니다. SCT 팀에서는 이 댓글에 대한 업보팅을 지원할 것입니다",
+        "confirm_rate_post": "이 글에 대한 당신의 평점은 %(rating) 입니다",
         "rating_comment":
-            "@%(username)s 검색 중, 선택됨 @%(author)s 우편.\n@%(author)s 얻을 것이다 %(reward)s %(DEBT_TOKEN)s 보상\n@%(username)s 검색 결과에 대한 만족도는 %(rating)s .",
+            "@%(username) 님이 검색을 통해 @%(author) 님의 글을 선택했습니다.\n유료 검색에서 선택된 글을 작성한 @%(author) 님에게는 %(reward) %(DEBT_TOKEN)를 보상으로 지급할 것입니다.\n@%(username) 님의 검색 만족도 평가 점수는 %(rating) 입니다.",
         "please_rate": "평가 바랍니다",
         "your_rating": "당신의 순위",
         "average_rating": "평균 등급: %(average_rating)s",
         "people_rated": "%(num)s 명 평가"
     },
     "reward_post_jsx": {
-        "reward_post": "이 기사의 저자에게 보상하기",
+        "reward_post": "글 저자 보상",
         "reward_post_and_get_vote":
-            "점수를받은 후 귀하의 평가가 포함 된 답변이 생성됩니다. 귀하의 검토에 감사 드리며 귀하의 답변은 SCT 팀에 의해 자동으로 좋아할 것입니다.",
+            "결제 금액 중 일부는 저자에 대한 보상으로 지급됩니다. SCT 팀에서는 유료 검색과 평점 작성을 활성화하기 위해 평점 작성 후 생성된 댓글에 대해 업보팅을 지원할 예정입니다.",
         "confirm_reward_post":
-            "지출해야 할 것입니다 %(amount)s %(DEBT_TOKEN)s 저자에게 보상하기 위해 사용됨 @%(author)s . 이 보상들 중에서, %(reward_amount)s 저자에게 지급됩니다 @%(author)s, 남은 %(burn_amount)s 파괴 될 것이다 (보내기 @null 계정).",
+            "이 글을 작성한 @%(author) 님에 대한 보상으로 %(amount) %(DEBT_TOKEN) 를 지급할 것이며 해당 금액은 지갑 잔액에서 차감됩니다. 보상 금액 %(reward_amount)(DEBT_TOKEN)는 다음과 같이 분배됩니다: 저자 @%(author), 소각 %(burn_amount)(소각 수량은 @null 계정으로 전송됨).",
         "rating_reminder":
-            "게시물을 평가하십시오.\n 귀하의 평점은 자동으로 메시지를 생성하고 SCT 팀으로부터 칭찬을받습니다."
+            "이 글에 대한 평점을 남겨주세요.\n 평점 작성을 완료하시면, 평점이 포함된 댓글이 생성되며 SCT 팀은 이 댓글에 대해 업보팅을 지원할 것입니다."
     },
     "userwallet_jsx": {
         "transfer": "Transfer",
