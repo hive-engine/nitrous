@@ -5,7 +5,7 @@
         "and": "と",
         "are_you_sure": "よろしいですか？",
         "ask": "買値",
-        "balance": "残高",
+        "balance": "残高: %(balanceValue)s",
         "balances": "残高",
         "beneficiaries": "Beneficiaries",
         "bid": "売値",

@@ -77,9 +77,13 @@ const XMLSerializer = new xmldom.XMLSerializer();
 
 /** Embed videos, link mentions and hashtags, etc...
     If hideImages and mutate is set to true all images will be replaced
+    If removeImages is set to true, all images will be removed
     by <pre> elements containing just the image url.
 */
-export default function(html, { mutate = true, hideImages = false } = {}) {
+export default function(
+    html,
+    { mutate = true, hideImages = false, removeImages = false } = {}
+) {
     const state = { mutate };
     state.hashtags = new Set();
     state.usertags = new Set();
@@ -90,7 +94,13 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
         const doc = DOMParser.parseFromString(html, 'text/html');
         traverse(doc, state);
         if (mutate) {
-            if (hideImages) {
+            if (removeImages) {
+                for (const image of Array.from(
+                    doc.getElementsByTagName('img')
+                )) {
+                    image.parentNode.removeChild(image);
+                }
+            } else if (hideImages) {
                 for (const image of Array.from(
                     doc.getElementsByTagName('img')
                 )) {

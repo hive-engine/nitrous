@@ -21,10 +21,11 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account) {
+export async function getSteemEngineAccountHistoryAsync(account, limit) {
+    limit = limit || 100;
     return callApi('https://api.steem-engine.com/accounts/history', {
         account,
-        limit: 100,
+        limit,
         offset: 0,
         type: 'user',
         symbol: LIQUID_TOKEN_UPPERCASE,
@@ -266,8 +267,8 @@ export async function getStateAsync(url) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+    const steemitApiStateNeeded = !path.match(
+        /^[\/]?(trending|hot|created|promoted|search)($|\/$|\/([^\/]+)\/?$)/
     );
     const raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)

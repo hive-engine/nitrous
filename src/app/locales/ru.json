@@ -5,7 +5,7 @@
         "and": "и",
         "are_you_sure": "Вы уверены?",
         "ask": "Продажа",
-        "balance": "Баланс",
+        "balance": "Баланс: %(balanceValue)s",
         "balances": "Балансы",
         "beneficiaries": "Beneficiaries",
         "bid": "Покупка",

@@ -5,7 +5,7 @@
         "and": "e",
         "are_you_sure": "Sei sicuro?",
         "ask": "Ask",
-        "balance": "Saldo",
+        "balance": "Saldo: %(balanceValue)s",
         "balances": "Saldi",
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",

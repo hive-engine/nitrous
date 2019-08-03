@@ -5,7 +5,7 @@
         "and": "and",
         "are_you_sure": "Are you sure?",
         "ask": "Ask",
-        "balance": "잔고",
+        "balance": "잔고: %(balanceValue)s",
         "balances": "잔고",
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",
@@ -538,7 +538,7 @@
         "liquid_token":
             "교환과 송금이 가능한 토큰입니다.<br/> 파워업을 통해 %(LIQUID_TOKEN)s을 %(VESTING_TOKEN)s으로 전환 하실 수 있습니다.",
         "influence_token":
-            "스팀코인판에서의 영향력을 나타냅니다. 스팀 파워가 높을수록 보팅 금액이 더 높아지고, 큐레이션 보상도 더 많이 받을 수 있습니다.",
+            "스팀잇에서의 영향력을 나타냅니다. 스팀 파워가 높을수록 보팅 금액이 더 높아지고, 큐레이션 보상도 더 많이 받을 수 있습니다.",
         "estimated_value":
             "%(LIQUID_TOKEN)s의 평균 가격을 US달러로 환산한 기준입니다.",
         "non_transferable":
@@ -823,6 +823,31 @@
         "autocomplete_previous_transfers": "previous transfers",
         "autocomplete_user_following": "following",
         "confirm_transfer": "Transfer %(amount)s from %(from)s to %(to)s?"
+    },
+    "search_jsx": {
+        "successfully_rewarded_the_author":
+            "당신은 성공적으로 저자에게 보상을주었습니다."
+    },
+    "rate_post_jsx": {
+        "rate_post": "포스트 평가",
+        "rate_post_and_get_vote":
+            "귀하의 평점이 포함 된 의견이 생성되며 자동으로 평점에 투표하게됩니다",
+        "confirm_rate_post": "해당 게시물의 등급은: %(rating)s",
+        "rating_comment":
+            "@%(username)s 검색 중, 선택됨 @%(author)s 우편.\n@%(author)s 얻을 것이다 %(reward)s %(DEBT_TOKEN)s 보상\n@%(username)s 검색 결과에 대한 만족도는 %(rating)s .",
+        "please_rate": "평가 바랍니다",
+        "your_rating": "당신의 순위",
+        "average_rating": "평균 등급: %(average_rating)s",
+        "people_rated": "%(num)s 명 평가"
+    },
+    "reward_post_jsx": {
+        "reward_post": "이 기사의 저자에게 보상하기",
+        "reward_post_and_get_vote":
+            "점수를받은 후 귀하의 평가가 포함 된 답변이 생성됩니다. 귀하의 검토에 감사 드리며 귀하의 답변은 SCT 팀에 의해 자동으로 좋아할 것입니다.",
+        "confirm_reward_post":
+            "지출해야 할 것입니다 %(amount)s %(DEBT_TOKEN)s 저자에게 보상하기 위해 사용됨 @%(author)s . 이 보상들 중에서, %(reward_amount)s 저자에게 지급됩니다 @%(author)s, 남은 %(burn_amount)s 파괴 될 것이다 (보내기 @null 계정).",
+        "rating_reminder":
+            "게시물을 평가하십시오.\n 귀하의 평점은 자동으로 메시지를 생성하고 SCT 팀으로부터 칭찬을받습니다."
     },
     "userwallet_jsx": {
         "transfer": "Transfer",
