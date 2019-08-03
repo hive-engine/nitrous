@@ -138,6 +138,7 @@ const map = {
     rainingfall: 'certified_ulogger',
     garamee21: 'certified_ulogger',
     hilltop: 'certified_ulogger',
+    jonsnow1983: 'certified_ulogger',
 };
 
 export default map;
