@@ -13,6 +13,7 @@ import {
 } from 'app/client_config';
 import tt from 'counterpart';
 import { Set } from 'immutable';
+import { clean_permlink } from 'app/utils/CommentUtil';
 
 class RatePost extends Component {
     static propTypes = {
@@ -170,7 +171,7 @@ export default connect(
                 parent_author: author,
                 parent_permlink: permlink,
                 author: username,
-                permlink: `re-rating-${author}-${permlink}`, // only one
+                permlink: clean_permlink(`re-rating-${author}-${permlink}`), // only one
                 category: category,
                 title: '',
                 body: rate_template(

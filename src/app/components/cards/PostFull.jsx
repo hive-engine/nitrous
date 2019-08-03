@@ -31,6 +31,7 @@ import PostRating from 'app/components/elements/Rating';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import ReactHintFactory from 'react-hint';
 const ReactHint = ReactHintFactory(React);
+import { clean_permlink } from 'app/utils/CommentUtil';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -306,7 +307,9 @@ class PostFull extends React.Component {
         if (!post_content) return null;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
-        const comment_permlink = `re-rating-${author}-${permlink}`;
+        const comment_permlink = clean_permlink(
+            `re-rating-${author}-${permlink}`
+        );
         return this.getRatingFromComment(`${username}/${comment_permlink}`);
     }
 
