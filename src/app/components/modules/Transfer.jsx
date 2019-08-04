@@ -632,17 +632,19 @@ export default connect(
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
             };
-            const confirm = toVesting
-                ? null
-                : () => (
-                      <ConfirmTransfer
-                          operation={{
-                              contractName: transferOperation.contractName,
-                              contractAction: transferOperation.contractAction,
-                              ...transferOperation.contractPayload,
-                          }}
-                      />
-                  );
+            const confirm =
+                toVesting && username === to
+                    ? null
+                    : () => (
+                          <ConfirmTransfer
+                              operation={{
+                                  contractName: transferOperation.contractName,
+                                  contractAction:
+                                      transferOperation.contractAction,
+                                  ...transferOperation.contractPayload,
+                              }}
+                          />
+                      );
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
