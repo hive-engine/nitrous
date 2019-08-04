@@ -14,7 +14,7 @@ export const APP_DOMAIN = 'www.ctptalk.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'ctp';
-export const TAG_LIST = fromJSOrdered(['ctp']);
+export const TAG_LIST = fromJSOrdered(['ctp', 'clicktrackprofit', 'ctptalk']);
 export const LIQUID_TOKEN = 'CTP';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'CTP';
