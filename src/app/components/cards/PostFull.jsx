@@ -31,6 +31,11 @@ import PostRating from 'app/components/elements/Rating';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import ReactHintFactory from 'react-hint';
 const ReactHint = ReactHintFactory(React);
+import {
+    clean_permlink,
+    isPostRewardedByUser,
+    updatePostRewardingRecords,
+} from 'app/utils/CommentUtil';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -141,22 +146,20 @@ class PostFull extends React.Component {
                 }
             }
 
-            // identify whether the post is rewarded during search
-            const post_content = this.props.cont.get(post);
-            if (!post_content) return;
-            const author = post_content.get('author');
-            const permlink = post_content.get('permlink');
-            const rewarded = isPostRewardedByUser(author, permlink, username);
-            const showUserRating = username && username !== author && rewarded;
-            let userRating = null;
-            if (showUserRating) userRating = this.getUserRating();
+            // get average rating info
             const { averageRating, peopleRated } = this.getAverageRating();
             this.setState({
-                showUserRating,
-                userRating,
                 averageRating,
                 peopleRated,
             });
+
+            // check post rewarding status
+            const showUserRating = this.needsShowUserRating();
+            if (!showUserRating) {
+                updatePostRewardingRecords(username, () => {
+                    this.needsShowUserRating();
+                });
+            }
         }
     }
 
@@ -299,6 +302,26 @@ class PostFull extends React.Component {
         else return null;
     }
 
+    needsShowUserRating() {
+        const { username, post } = this.props;
+
+        // identify whether the post is rewarded during search
+        const post_content = this.props.cont.get(post);
+        if (!post_content) return;
+        // update post rewarding info
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const rewarded = isPostRewardedByUser(author, permlink, username);
+        const showUserRating = username && username !== author && rewarded;
+        let userRating = null;
+        if (showUserRating) userRating = this.getUserRating();
+        this.setState({
+            showUserRating,
+            userRating,
+        });
+        return showUserRating;
+    }
+
     getUserRating() {
         // get the link to rating comment by the user
         const { username, post, cont } = this.props;
@@ -306,7 +329,9 @@ class PostFull extends React.Component {
         if (!post_content) return null;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
-        const comment_permlink = `re-rating-${author}-${permlink}`;
+        const comment_permlink = clean_permlink(
+            `re-rating-${author}-${permlink}`
+        );
         return this.getRatingFromComment(`${username}/${comment_permlink}`);
     }
 
@@ -818,17 +843,5 @@ const saveOnShow = (formId, type) => {
             localStorage.removeItem('replyEditorData-' + formId + '-reply');
             localStorage.removeItem('replyEditorData-' + formId + '-edit');
         }
-    }
-};
-
-const isPostRewardedByUser = (author, permlink, username) => {
-    if (process.env.BROWSER) {
-        return (
-            localStorage.getItem(
-                `rewarded-@${author}/${permlink}-by-${username}`
-            ) === 'true'
-        );
-    } else {
-        return false;
     }
 };
