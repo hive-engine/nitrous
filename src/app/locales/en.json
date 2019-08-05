@@ -781,7 +781,7 @@
         "rating_comment":
             "@%(username)s selected @%(author)s's post in search.\n@%(author)s will be given %(reward)s %(DEBT_TOKEN)s\n@%(username)s's search satisfaction score is %(rating)s point.",
         "rating_reminder":
-            "Please rate this post.\n After rating, a comment that contains the rating score will be generated, and SCT team will vote your comment later.",
+            "Please rate this post.\nAfter rating, a comment that contains the rating score will be generated, and SCT team will vote your comment later.",
         "please_rate": "Please rate",
         "your_rating": "Your rating",
         "average_rating": "Average rating: %(average_rating)s",
