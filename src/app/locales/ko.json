@@ -116,7 +116,7 @@
         "toggle_nightmode": "야간모드",
         "all_tags": "전체 태그",
         "all_tags_mobile": "All content",
-        "transfer": "송금 ",
+        "transfer": "전송 ",
         "trending_topics": "Trending Topics",
         "try_again": "Try Again",
         "type": "Type",
@@ -807,7 +807,7 @@
         "convert_to_VESTING_TOKEN": "%(VESTING_TOKEN)s로 전환하기",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "3일간의 예치기간이 지나야 출금하실 수 있으며, ",
-        "move_funds_to_another_account": "다른 Steem 계좌로 송금",
+        "move_funds_to_another_account": "다른 Steem 계좌로 전송",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "금고 보관 시 출금에 3일의 예치기간이 소요됩니다.",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -843,7 +843,7 @@
         "estimated_account_value": "추정 자산가치",
         "next_power_down_is_scheduled_to_happen": "다음 파워다운 예정:",
         "transfers_are_temporary_disabled":
-            "현재 일시적인 이유로 송금이 불가능합니다.",
+            "현재 일시적인 이유로 전송이 불가능합니다.",
         "history": "거래 내역",
         "redeem_rewards": "내 지갑으로 입금하기",
         "buy_steem_or_steem_power": "STEEM, STEEM POWER 구입"
