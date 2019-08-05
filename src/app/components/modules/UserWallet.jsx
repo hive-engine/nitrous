@@ -93,6 +93,10 @@ class UserWallet extends React.Component {
             parseFloat(delegatedStake) -
             parseFloat(tokenBalances.delegationsIn || '0');
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
+        const tokenDelegations = account.has('token_delegations')
+            ? account.get('token_delegations').toJS()
+            : [];
+        debugger;
 
         let isMyAccount =
             current_user &&
