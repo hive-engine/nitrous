@@ -713,8 +713,8 @@
             "The password for %(accountName)s was successfully updated",
         "password_info":
             "암호 또는 개인키가 잘못 입력되었습니다. 타자입력의 실수 또는 데이터 입력의 오류일 수 있습니다. 힌트: steemit 에서 생성된 암호 또는 개인키에는 0(숫자 0), O(영문자O), I(대문자I), l(소문자 L)을 절대로 포함하지 않습니다.",
-        "enter_your_username": "Enter your username",
-        "password_or_wif": "Password or WIF",
+        "enter_your_username": "스팀 계정명을 입력하세요",
+        "password_or_wif": "포스팅 키를 입력하세요",
         "this_operation_requires_your_key_or_master_password":
             "이 작업은 %(authType)s 키 또는 마스터 비밀번호가 필요합니다.",
         "keep_me_logged_in": "로그인 유지",
@@ -724,7 +724,7 @@
         "signup_button_emphasis": "FREE STEEM!",
         "sign_up_get_steem":
             "계정을 만들고 가상화폐 STEEM 을 보상으로 받으세요.",
-        "returning_users": "Returning Users: ",
+        "returning_users": "스팀 코인판 ",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
             "You are attempting to use a key with more permissions than required for everyday Steemit.com use. Since keys and passwords are more likely to get compromised the more they are used, it is strongly recommended to only use your Posting Key to log in.",
@@ -732,7 +732,7 @@
         "login_warning_link_text": "View my Posting Key at Steemit Wallet",
         "join_our": "Join our",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension",
+        "use_keychain": "스팀 키체인 프로그램 사용",
         "password_update_success":
             "The password for %(accountName)s was successfully updated"
     },
