@@ -663,7 +663,8 @@
         "curation_rewards_by": "Curation rewards by",
         "author_rewards_by": "Author rewards by",
         "replies_to": "Replies to",
-        "comments_by": "Comments by"
+        "comments_by": "Comments by",
+        "search": "Search"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":

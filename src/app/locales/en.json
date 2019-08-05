@@ -634,7 +634,8 @@
         "curation_rewards_by": "Curation rewards by %(username)s",
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
-        "comments_by": "Comments by %(username)s"
+        "comments_by": "Comments by %(username)s",
+        "search": "Search"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
