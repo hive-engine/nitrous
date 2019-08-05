@@ -29,6 +29,7 @@ class Modals extends React.Component {
         show_transfer_modal: false,
         show_confirm_modal: false,
         show_login_modal: false,
+        show_delegations_modal: false,
         show_post_advanced_settings_modal: '',
     };
     static propTypes = {
@@ -38,6 +39,7 @@ class Modals extends React.Component {
         show_powerdown_modal: PropTypes.bool,
         show_bandwidth_error_modal: PropTypes.bool,
         show_promote_post_modal: PropTypes.bool,
+        show_delegations_modal: PropTypes.bool,
         show_post_advanced_settings_modal: PropTypes.string,
         hideLogin: PropTypes.func.isRequired,
         username: PropTypes.string,
@@ -47,6 +49,7 @@ class Modals extends React.Component {
         hidePromotePost: PropTypes.func.isRequired,
         hideBandwidthError: PropTypes.func.isRequired,
         hidePostAdvancedSettings: PropTypes.func.isRequired,
+        hideDelegations: PropTypes.func.isRequired,
         notifications: PropTypes.object,
         show_terms_modal: PropTypes.bool,
         removeNotification: PropTypes.func,
@@ -74,8 +77,10 @@ class Modals extends React.Component {
             removeNotification,
             hidePromotePost,
             show_promote_post_modal,
+            show_delegations_modal,
             hideBandwidthError,
             hidePostAdvancedSettings,
+            hideDelegations,
             username,
         } = this.props;
 
@@ -168,6 +173,15 @@ class Modals extends React.Component {
                         />
                     </Reveal>
                 )}
+                {show_delegations_modal && (
+                    <Reveal
+                        onHide={hideDelegations}
+                        show={show_delegations_modal}
+                    >
+                        <CloseButton onClick={hideDelegations} />
+                        <div>show_delegations_modal</div>
+                    </Reveal>
+                )}
                 <NotificationStack
                     style={false}
                     notifications={notifications_array}
@@ -187,6 +201,7 @@ export default connect(
             show_transfer_modal: state.user.get('show_transfer_modal'),
             show_powerdown_modal: state.user.get('show_powerdown_modal'),
             show_promote_post_modal: state.user.get('show_promote_post_modal'),
+            show_delegations_modal: state.user.get('show_delegations_modal'),
             notifications: state.app.get('notifications'),
             show_terms_modal:
                 state.user.get('show_terms_modal') &&
@@ -233,6 +248,10 @@ export default connect(
         hidePostAdvancedSettings: e => {
             if (e) e.preventDefault();
             dispatch(userActions.hidePostAdvancedSettings());
+        },
+        hideDelegations: e => {
+            if (e) e.preventDefault();
+            dispatch(userActions.hideDelegations());
         },
         // example: addNotification: ({key, message}) => dispatch({type: 'ADD_NOTIFICATION', payload: {key, message}}),
         removeNotification: key =>

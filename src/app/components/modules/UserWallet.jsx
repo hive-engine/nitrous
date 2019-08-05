@@ -18,6 +18,7 @@ import {
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import Icon from 'app/components/elements/Icon';
 
 class UserWallet extends React.Component {
     constructor() {
@@ -96,7 +97,6 @@ class UserWallet extends React.Component {
         const tokenDelegations = account.has('token_delegations')
             ? account.get('token_delegations').toJS()
             : [];
-        debugger;
 
         let isMyAccount =
             current_user &&
@@ -280,17 +280,32 @@ class UserWallet extends React.Component {
                             `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
                         )}
                         {netDelegatedStake != 0 ? (
-                            <div
-                                style={{
-                                    paddingRight: isMyAccount
-                                        ? '0.85rem'
-                                        : null,
-                                }}
-                            >
-                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
+                            <div className="Delegations__view">
+                                <Tooltip
+                                    t={`${
+                                        VESTING_TOKEN
+                                    } delegated to/from this account`}
+                                >
                                     ({received_stake_balance_str}{' '}
                                     {LIQUID_TOKEN_UPPERCASE})
                                 </Tooltip>
+                                <a
+                                    href="#"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        const name = account.get('name');
+                                        this.props.showDelegations({
+                                            account: name,
+                                            tokenDelegations,
+                                        });
+                                    }}
+                                >
+                                    <Icon
+                                        size="1x"
+                                        name="eye"
+                                        className="Delegations__view-icon"
+                                    />
+                                </a>
                             </div>
                         ) : null}
                     </div>

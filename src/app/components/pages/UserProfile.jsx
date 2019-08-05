@@ -211,6 +211,7 @@ export default class UserProfile extends React.Component {
                         current_user={current_user}
                         showTransfer={this.props.showTransfer}
                         showPowerdown={this.props.showPowerdown}
+                        showDelegations={this.props.showDelegations}
                         cancelUnstake={this.props.cancelUnstake}
                     />
                 </div>
@@ -655,6 +656,10 @@ module.exports = {
                 console.log('power down defaults:', powerdownDefaults);
                 dispatch(userActions.setPowerdownDefaults(powerdownDefaults));
                 dispatch(userActions.showPowerdown());
+            },
+            showDelegations: delegations => {
+                // dispatch(userActions.setDelegations(delegations));
+                dispatch(userActions.showDelegations());
             },
             cancelUnstake: ({ account, transactionId }) => {
                 const cancelUnstakeOp = {
