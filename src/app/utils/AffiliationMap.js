@@ -139,6 +139,8 @@ const map = {
     garamee21: 'certified_ulogger',
     hilltop: 'certified_ulogger',
     jonsnow1983: 'certified_ulogger',
+    michaelcj: 'certified_ulogger',
+    skyleap: 'certified_ulogger',
 };
 
 export default map;
