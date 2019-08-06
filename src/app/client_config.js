@@ -33,9 +33,9 @@ export const TAG_LIST = fromJSOrdered({
     retailer: [],
     supplements: ['omega3', 'dietarysupplements', 'foodsupplements'],
     botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
-    trends: ['cleanlabel', 'permaculture', 'regenerativeagriculture', 'sustainability'],
+    trends: ['cleanlabel', 'cleanplanet', 'permaculture', 'regenerativeagriculture', 'sustainability'],
     vegan: [],
-    community: ['innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
+    community: ['cleanplanet', 'innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
     contest: [],
 });
 export const LIQUID_TOKEN = 'Natural';
