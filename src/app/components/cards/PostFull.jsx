@@ -740,6 +740,17 @@ class PostFull extends React.Component {
                                     ref={ref => {
                                         this.tooltip = ref;
                                     }}
+                                    onRenderContent={(target, content) => (
+                                        <div
+                                            className="react-hint__content"
+                                            dangerouslySetInnerHTML={{
+                                                __html: String(content).replace(
+                                                    '\n',
+                                                    '<br>'
+                                                ),
+                                            }}
+                                        />
+                                    )}
                                 />
                                 <span
                                     data-rh={tt(

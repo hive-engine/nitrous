@@ -36,6 +36,9 @@ export async function updatePostRewardingRecords(username, callback) {
     const [transfers] = await Promise.all([
         getSteemEngineAccountHistoryAsync(username, 500),
     ]);
+
+    if (!transfers) return;
+
     const memo_prefix = 'search and click: ';
     // filter valid transfers
     const matched_transfers = transfers.filter(
