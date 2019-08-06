@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import tt from 'counterpart';
-import { getScotDataAsync } from 'app/utils/steemApi';
 
-import constants from 'app/redux/constants';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 
 const MAX_LIMIT = 10;
 
@@ -18,71 +17,23 @@ const formatDate = date => {
 };
 
 class AuthorRecentPosts extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            fetching: true,
-            posts: [],
-        };
-    }
-
     componentDidMount() {
-        this.getDiscussionsByAuthor();
-    }
-
-    async getDiscussionsByAuthor() {
+        // this.getDiscussionsByAuthor();
         const { author, permlink } = this.props;
-
-        let posts = [];
-        let fetchDone = false;
-        let lastValue;
-        let batch = 0;
-        let endOfData = false;
-        let fetchLimitReached = false;
-        while (!fetchDone) {
-            const discussionQuery = {
-                token: LIQUID_TOKEN_UPPERCASE,
-                tag: author,
-                limit: MAX_LIMIT + 1,
-                start_author: lastValue && lastValue.author,
-                start_permlink: lastValue && lastValue.permlink,
-            };
-            let feedData = await getScotDataAsync(
-                `get_discussions_by_blog`,
-                discussionQuery
-            );
-            lastValue = feedData[feedData.length - 1];
-            endOfData = feedData.length < MAX_LIMIT;
-            feedData = feedData
-                .filter(e => e.author === author && e.permlink !== permlink)
-                .slice(posts.length ? 1 : 0);
-
-            batch += 1;
-            fetchLimitReached = batch >= constants.MAX_BATCHES;
-            fetchDone =
-                endOfData || fetchLimitReached || feedData.length >= MAX_LIMIT;
-
-            posts = posts.concat(
-                feedData.map((e, i) => ({
-                    id: e.post_id || e.created.replace(/[^\d]/g, ''),
-                    title: e.title,
-                    url: e.url || `/${e.authorperm}`,
-                    children: e.children,
-                    created: e.created,
-                }))
-            );
-        }
-
-        this.setState({
-            fetching: false,
-            posts: posts.slice(0, 10),
+        const postFilter = value =>
+            value.author === author && value.permlink !== permlink;
+        this.props.fetchAuthorRecentPosts({
+            order: 'recent_user_posts',
+            category: '',
+            accountname: author,
+            postFilter,
+            limit: MAX_LIMIT,
         });
     }
 
     render() {
-        const { fetching, posts } = this.state;
-        const { author } = this.props;
-        if (!fetching && (posts && posts.length)) {
+        const { author, loading, discussions, content } = this.props;
+        if (!loading && (discussions && discussions.size)) {
             return (
                 <div className={classNames('AuthorRecentPosts', 'callout')}>
                     <h6>
@@ -90,16 +41,25 @@ class AuthorRecentPosts extends React.PureComponent {
                     </h6>
                     <table>
                         <tbody>
-                            {posts.map(e => (
-                                <tr key={e.id}>
-                                    <th>
-                                        <a href={e.url}>{e.title}</a>
-                                        {'  '}
-                                        <span>({e.children})</span>
-                                    </th>
-                                    <td>{formatDate(e.created)}</td>
-                                </tr>
-                            ))}
+                            {discussions.map(e => {
+                                const cont = content.get(e).toJS();
+                                return (
+                                    <tr key={cont.id || cont.post_id}>
+                                        <th>
+                                            <a
+                                                href={
+                                                    cont.url || cont.authorperm
+                                                }
+                                            >
+                                                {cont.title}
+                                            </a>
+                                            {'  '}
+                                            <span>({cont.children})</span>
+                                        </th>
+                                        <td>{formatDate(cont.created)}</td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -113,4 +73,23 @@ AuthorRecentPosts.propTypes = {
     author: PropTypes.string.isRequired,
 };
 
-export default AuthorRecentPosts;
+export default connect(
+    // mapStateToProps
+    (state, ownProps) => {
+        return {
+            ...ownProps,
+            loading: state.app.get('loading'),
+            discussions: state.global.getIn([
+                'discussion_idx',
+                '',
+                'recent_user_posts',
+            ]),
+            content: state.global.get('content'),
+        };
+    },
+    // mapDispatchToProps
+    dispatch => ({
+        fetchAuthorRecentPosts: args =>
+            dispatch(fetchDataSagaActions.fetchAuthorRecentPosts(args)),
+    })
+)(AuthorRecentPosts);
