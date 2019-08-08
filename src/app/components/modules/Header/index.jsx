@@ -157,6 +157,8 @@ class Header extends React.Component {
             topic = route.params[0];
         } else if (route.page == 'SubmitPost') {
             page_title = tt('header_jsx.create_a_post');
+        } else if (route.page == 'Search') {
+            page_title = tt('header_jsx.search');
         } else if (route.page == 'Privacy') {
             page_title = tt('navigation.privacy_policy');
         } else if (route.page == 'Tos') {
@@ -343,7 +345,19 @@ class Header extends React.Component {
                                     </a>
                                 </span>
                             )}
-
+                            {/*CUSTOM SEARCH*/}
+                            {loggedIn && (
+                                <div>
+                                    <span className="Header__search--desktop">
+                                        <SearchInput />
+                                    </span>
+                                    <span className="Header__search">
+                                        <Link to="/search">
+                                            <IconButton icon="magnifyingGlass" />
+                                        </Link>
+                                    </span>
+                                </div>
+                            )}
                             {/*SUBMIT STORY*/}
                             {submit_story}
                             {/*USER AVATAR */}

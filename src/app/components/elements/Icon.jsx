@@ -55,6 +55,8 @@ export const icons = [
     'pencil2',
     'pin',
     'pin-disabled',
+    'star',
+    'unstar',
     'steemcoinpan',
 ];
 const icons_map = {};
