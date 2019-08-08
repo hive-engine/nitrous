@@ -17,6 +17,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
 
+import Avatar from '@material-ui/core/Avatar';
+
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,7 +29,8 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import TextField from '@material-ui/core/TextField';
 
-import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -39,9 +42,7 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
     },
     card: {
-        height: '100%',
         display: 'flex',
-        flexDirection: 'column',
     },
     cardGrid: {
         marginTop: theme.spacing(1),
@@ -55,20 +56,21 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
     },
     cardMedia: {
-        paddingTop: '56.25%', // 16:9
+        width: 160,
     },
-    cardContent: {
-        flexGrow: 1,
+    avatar: {
+        margin: theme.spacing(0, 1),
+        width: 25,
+        height: 25,
     },
-    chip: {
-        marginTop: theme.spacing(1),
-        marginRight: theme.spacing(1),
+    ratingBox: {
+        margin: 0,
     },
 }));
 
-export default function MoviesIndex(props) {
+export default function ReviewsIndex(props) {
     const classes = useStyles();
-    const { movies } = props;
+    const { reviews } = props;
 
     const [values, setValues, expanded, setExpanded] = React.useState({
         genre: -1,
@@ -168,63 +170,82 @@ export default function MoviesIndex(props) {
                 </form>
                 <main>
                     <Grid container spacing={4} className={classes.cardGrid}>
-                        {movies.map(post => (
-                            <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
-                                <CardActionArea component="a" href="#">
+                        {reviews.map(post => (
+                            <Grid
+                                item
+                                key={`${post.Author}/${post.Permlink}`}
+                                xs={12}
+                                md={6}
+                            >
+                                <CardActionArea
+                                    component="a"
+                                    href={`/@${post.Author}/${post.Permlink}`}
+                                >
                                     <Card className={classes.card}>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={post.PosterPath}
-                                        />
-                                        <CardContent
-                                            className={classes.cardContent}
-                                        >
-                                            <Typography
-                                                gutterBottom
-                                                variant="h5"
-                                                component="h2"
-                                            >
-                                                {post.Title}
-                                            </Typography>
-                                            <Typography
-                                                className={classes.cardDate}
-                                                variant="subtitle1"
-                                                color="textSecondary"
-                                            >
-                                                {new Date(
-                                                    Number(
-                                                        post.ReleaseDate.replace(
-                                                            '/Date(',
-                                                            ''
-                                                        ).replace(')/', '')
-                                                    )
-                                                )
-                                                    .toISOString()
-                                                    .substring(0, 10)}
-                                            </Typography>
-                                            <Typography>
-                                                {post.Overview != null
-                                                    ? post.Overview.length > 100
-                                                      ? post.Overview.substring(
-                                                            0,
-                                                            100
-                                                        ) + ' ...'
-                                                      : post.Overview
-                                                    : null}
-                                            </Typography>
-                                            <div>
-                                                <Chip
-                                                    size="small"
-                                                    label="Horror"
-                                                    className={classes.chip}
-                                                />
-                                                <Chip
-                                                    size="small"
-                                                    label="Drama"
-                                                    className={classes.chip}
-                                                />
-                                            </div>
-                                        </CardContent>
+                                        <div className={classes.cardDetails}>
+                                            <CardContent>
+                                                <Typography
+                                                    component="h2"
+                                                    variant="h5"
+                                                >
+                                                    {post.Title}
+                                                </Typography>
+                                                <Typography
+                                                    className={classes.cardDate}
+                                                    variant="subtitle1"
+                                                    color="textSecondary"
+                                                >
+                                                    <Grid
+                                                        container
+                                                        alignItems="center"
+                                                    >
+                                                        <TimeAgoWrapper
+                                                            date={post.AddDate}
+                                                        />
+                                                        <Avatar
+                                                            alt={post.Author}
+                                                            src={`https://steemitimages.com/u/${
+                                                                post.Author
+                                                            }/avatar`}
+                                                            className={
+                                                                classes.avatar
+                                                            }
+                                                        />
+                                                        @{post.Author}
+                                                    </Grid>
+                                                </Typography>
+                                                <Typography
+                                                    variant="subtitle1"
+                                                    paragraph
+                                                >
+                                                    {post.Summary.substring(
+                                                        0,
+                                                        100
+                                                    )}
+                                                    {' ...'}
+                                                </Typography>
+                                                <Box
+                                                    component="fieldset"
+                                                    mb={3}
+                                                    borderColor="transparent"
+                                                    className={
+                                                        classes.ratingBox
+                                                    }
+                                                >
+                                                    <Rating
+                                                        value={post.Rating}
+                                                        max={3}
+                                                        readOnly
+                                                    />
+                                                </Box>
+                                            </CardContent>
+                                        </div>
+                                        <Hidden xsDown>
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={post.CoverImgUrl}
+                                            />
+                                        </Hidden>
                                     </Card>
                                 </CardActionArea>
                             </Grid>
@@ -254,7 +275,7 @@ module.exports = {
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                movies: state.movie.get('movies').toJS(),
+                reviews: state.movie.get('reviews').toJS(),
             };
         },
         dispatch => {
@@ -263,10 +284,10 @@ module.exports = {
                     dispatch(fetchDataSagaActions.requestData(args)),
             };
         }
-    )(MoviesIndex),
+    )(ReviewsIndex),
 };
 
-MoviesIndex.propTypes = {
+ReviewsIndex.propTypes = {
     discussions: PropTypes.object,
     accounts: PropTypes.object,
     status: PropTypes.object,
@@ -276,5 +297,5 @@ MoviesIndex.propTypes = {
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     categories: PropTypes.object,
-    movies: PropTypes.array.isRequired,
+    reviews: PropTypes.array.isRequired,
 };
