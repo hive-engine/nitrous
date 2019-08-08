@@ -658,7 +658,7 @@ module.exports = {
                 dispatch(userActions.showPowerdown());
             },
             showDelegations: delegations => {
-                // dispatch(userActions.setDelegations(delegations));
+                dispatch(userActions.setDelegations(delegations));
                 dispatch(userActions.showDelegations());
             },
             cancelUnstake: ({ account, transactionId }) => {

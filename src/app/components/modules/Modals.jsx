@@ -16,6 +16,7 @@ import Powerdown from 'app/components/modules/Powerdown';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import TermsAgree from 'app/components/modules/TermsAgree';
 import PostAdvancedSettings from 'app/components/modules/PostAdvancedSettings';
+import Delegations from 'app/components/modules/Delegations';
 
 class Modals extends React.Component {
     static defaultProps = {
@@ -179,7 +180,7 @@ class Modals extends React.Component {
                         show={show_delegations_modal}
                     >
                         <CloseButton onClick={hideDelegations} />
-                        <div>show_delegations_modal</div>
+                        <Delegations />
                     </Reveal>
                 )}
                 <NotificationStack

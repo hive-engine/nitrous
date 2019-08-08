@@ -18,6 +18,7 @@ const SHOW_POWERDOWN = 'user/SHOW_POWERDOWN';
 const HIDE_POWERDOWN = 'user/HIDE_POWERDOWN';
 const SHOW_PROMOTE_POST = 'user/SHOW_PROMOTE_POST';
 const HIDE_PROMOTE_POST = 'user/HIDE_PROMOTE_POST';
+const SET_DELEGATIONS = 'user/SET_DELEGATIONS';
 const SHOW_DELEGATIONS = 'user/SHOW_DELEGATIONS';
 const HIDE_DELEGATIONS = 'user/HIDE_DELEGATIONS';
 const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
@@ -165,6 +166,9 @@ export default function reducer(state = defaultState, action) {
 
         case HIDE_PROMOTE_POST:
             return state.set('show_promote_post_modal', false);
+
+        case SET_DELEGATIONS:
+            return state.set('delegations', fromJS(payload));
 
         case SHOW_DELEGATIONS:
             return state.set('show_delegations_modal', true);
@@ -368,6 +372,11 @@ export const showPromotePost = payload => ({
 
 export const hidePromotePost = payload => ({
     type: HIDE_PROMOTE_POST,
+    payload,
+});
+
+export const setDelegations = payload => ({
+    type: SET_DELEGATIONS,
     payload,
 });
 
