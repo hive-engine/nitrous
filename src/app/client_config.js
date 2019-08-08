@@ -16,8 +16,9 @@ export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalproducts';
 export const TAG_LIST = fromJSOrdered({
     business: ['healthmarkets', 'naturalmarkets'],
-    food: ['functionalfood', 'healthfood'],
+    botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
     beverages: ['functionalbeverages', 'healthybeverages', 'sportsbeverages'],
+    food: ['functionalfood', 'healthfood'],
     healthyliving: [],
     hemp: ['cbd'],
     industry: [],
@@ -28,14 +29,14 @@ export const TAG_LIST = fromJSOrdered({
     organics: [],
     personalcare: ['cleanbeauty'],
     practitioner: [],
+    quality: ['testing'],
     regulations: ['fda', 'ftc', 'dshea', 'pop65', 'efsa'],
     research: [],
     retailer: [],
     supplements: ['omega3', 'dietarysupplements', 'foodsupplements'],
-    botanicals: ['tumeric', 'ashwaghanda', 'cranderry', 'amla', 'herbs'],
     trends: ['cleanlabel', 'cleanplanet', 'permaculture', 'regenerativeagriculture', 'sustainability'],
     vegan: [],
-    community: ['cleanplanet', 'innerblocks', 'naturalmedicine', 'ecotrain', 'steembasicincome'],
+    community: ['cleanplanet', 'innerblocks', 'ecotrain', 'steembasicincome', 'weedcash'],
     contest: [],
 });
 export const LIQUID_TOKEN = 'Natural';
