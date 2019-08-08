@@ -554,7 +554,7 @@
     "promote_post_jsx": {
         "promote_post": "글 홍보하기",
         "spend_your_DEBT_TOKEN_to_advertise_this_post":
-            "홍보글 탭에 이 글을 홍보하시려면 %(DEBT_TOKEN)로 홍보 비용을 납부하셔야 합니다.",
+            "홍보글 탭에 이 글을 홍보하시려면 %(DEBT_TOKEN)s로 홍보 비용을 납부하셔야 합니다.",
         "you_successfully_promoted_this_post":
             "이 글에 대한 홍보가 정상 처리되었습니다",
         "this_post_was_hidden_due_to_low_ratings":
