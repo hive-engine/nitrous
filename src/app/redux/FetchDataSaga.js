@@ -445,12 +445,13 @@ function* fetchAuthorRecentPosts(action) {
         limit,
     } = action.payload;
 
-    const call_name = 'getDiscussionsByBlogAsync';
+    const call_name = 'get_discussions_by_blog';
     yield put(globalActions.fetchingData({ category, order }));
     const args = [
         {
             tag: accountname,
-            limit: constants.FETCH_DATA_BATCH_SIZE,
+            token: LIQUID_TOKEN_UPPERCASE,
+            limit: limit + 1,
         },
     ];
     yield put(appActions.fetchDataBegin());
@@ -460,12 +461,14 @@ function* fetchAuthorRecentPosts(action) {
         let fetchLimitReached = false;
         let fetchDone = false;
         let batch = 0;
+        let lastValue;
+        let endOfData;
         while (!fetchDone) {
-            const { feedData, endOfData, lastValue } = yield call(
-                fetchFeedDataAsync,
-                call_name,
-                ...args
-            );
+            const feedData = yield call(getScotDataAsync, call_name, ...args);
+
+            endOfData = feedData.length < limit;
+            lastValue =
+                feedData.length > 0 ? feedData[feedData.length - 1] : null;
 
             // Set next arg.
             args[0].start_author = lastValue.author;
@@ -480,7 +483,7 @@ function* fetchAuthorRecentPosts(action) {
                 ? feedData.filter(postFilter).length
                 : feedData.length;
 
-            fetchDone = endOfData || fetchLimitReached || fetched >= limit;
+            fetchDone = fetchLimitReached || fetched >= limit;
 
             let data = feedData.filter(postFilter);
             if (fetchDone && fetched > limit) {

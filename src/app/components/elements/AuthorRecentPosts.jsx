@@ -24,7 +24,7 @@ class AuthorRecentPosts extends React.PureComponent {
             value.author === author && value.permlink !== permlink;
         this.props.fetchAuthorRecentPosts({
             order: 'recent_user_posts',
-            category: '',
+            category: author,
             accountname: author,
             postFilter,
             limit: MAX_LIMIT,
@@ -41,16 +41,12 @@ class AuthorRecentPosts extends React.PureComponent {
                     </h6>
                     <table>
                         <tbody>
-                            {discussions.map(e => {
+                            {discussions.map((e, i) => {
                                 const cont = content.get(e).toJS();
                                 return (
-                                    <tr key={cont.id || cont.post_id}>
+                                    <tr key={String(i)}>
                                         <th>
-                                            <a
-                                                href={
-                                                    cont.url || cont.authorperm
-                                                }
-                                            >
+                                            <a href={`/${cont.authorperm}`}>
                                                 {cont.title}
                                             </a>
                                             {'  '}
@@ -81,7 +77,7 @@ export default connect(
             loading: state.app.get('loading'),
             discussions: state.global.getIn([
                 'discussion_idx',
-                '',
+                ownProps.author,
                 'recent_user_posts',
             ]),
             content: state.global.get('content'),
