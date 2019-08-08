@@ -2,7 +2,7 @@ import assert from 'assert';
 import constants from 'app/redux/constants';
 import { parsePayoutAmount, repLog10 } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
-import { VEST_TICKER, LIQUID_TICKER } from 'app/client_config';
+import { VEST_TICKER, LIQUID_TICKER, SCOT_DENOM } from 'app/client_config';
 import { fromJS } from 'immutable';
 import { formatter } from '@steemit/steem-js';
 
@@ -113,7 +113,7 @@ export function isFetchingOrRecentlyUpdated(global_status, order, category) {
     return false;
 }
 
-export function contentStats(content) {
+export function contentStats(content, precision) {
     if (!content) return {};
     if (!(content instanceof Map)) content = fromJS(content);
 
@@ -121,6 +121,10 @@ export function contentStats(content) {
     let neg_rshares = Long.ZERO;
     let total_votes = 0;
     let up_votes = 0;
+
+    const minDigits = precision
+        ? Math.max(0, precision - 2)
+        : Math.log10(SCOT_DENOM) - 2;
 
     // TODO: breaks if content has no active_votes attribute.
 
@@ -139,8 +143,13 @@ export function contentStats(content) {
 
         // For graying: sum up total rshares from voters with non-neg reputation.
         if (String(v.get('reputation')).substring(0, 1) !== '-') {
-            // And also ignore tiny downvotes (9 digits or less)
-            if (!(rshares.substring(0, 1) === '-' && rshares.length < 11)) {
+            // And also ignore tiny downvotes
+            if (
+                !(
+                    rshares.substring(0, 1) === '-' &&
+                    rshares.length < minDigits + 1
+                )
+            ) {
                 net_rshares_adj = net_rshares_adj.add(rshares);
             }
         }
@@ -148,10 +157,13 @@ export function contentStats(content) {
 
     // take negative rshares, divide by 2, truncate 10 digits (plus neg sign), count digits.
     // creates a cheap log10, stake-based flag weight. 1 = approx $400 of downvoting stake; 2 = $4,000; etc
-    const flagWeight = Math.max(String(neg_rshares.div(2)).length - 11, 0);
+    const flagWeight = Math.max(
+        String(neg_rshares.div(2)).length - minDigits - 1,
+        0
+    );
 
     // post must have non-trivial negative rshares to be grayed out. (more than 10 digits)
-    const grayThreshold = -9999999999;
+    const grayThreshold = -(Math.pow(10, minDigits) - 1);
     const meetsGrayThreshold = net_rshares_adj.compare(grayThreshold) < 0;
 
     // to be eligible for deletion, a comment must have non-positive rshares and no replies
@@ -159,7 +171,10 @@ export function contentStats(content) {
         String(content.get('net_rshares'))
     ).gt(Long.ZERO);
     const allowDelete = !hasPositiveRshares && content.get('children') === 0;
+    // Expecting this to come from SCOT data.
     const hasPendingPayout =
+        (content.has('vote_rshares') &&
+            parsePayoutAmount(content.get('vote_rshares')) > 0) ||
         parsePayoutAmount(content.get('pending_payout_value')) >= 0.02;
     const authorRepLog10 = repLog10(content.get('author_reputation'));
 

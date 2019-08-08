@@ -1,5 +1,5 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE, SCOT_TAG } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -52,6 +52,7 @@ async function getAuthorRep(feedData) {
 function mergeContent(content, scotData) {
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
+    const title = content.title;
     Object.assign(content, scotData);
     if (voted) {
         const scotVoted = new Set(content.active_votes.map(v => v.voter));
@@ -65,8 +66,12 @@ function mergeContent(content, scotData) {
             }
         });
     }
+    // Restore currently buggy fields
     if (lastUpdate) {
         content.last_update = lastUpdate;
+    }
+    if (title) {
+        content.title = title;
     }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
@@ -116,9 +121,10 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         discussionIndex.push(key);
     });
     state.content = filteredContent;
-    if (state.discussion_idx[tag]) {
-        state.discussion_idx[tag][feedType] = discussionIndex;
+    if (!state.discussion_idx[tag]) {
+        state.discussion_idx[tag] = {};
     }
+    state.discussion_idx[tag][feedType] = discussionIndex;
 }
 
 export async function attachScotData(url, state) {
@@ -242,7 +248,16 @@ export async function getStateAsync(url) {
     // strip off query string
     const path = url.split('?')[0];
 
-    const raw = await api.getStateAsync(path);
+    // Steemit state not needed for main feeds.
+    const steemitApiStateNeeded = !url.match(
+        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+    );
+    const raw = steemitApiStateNeeded
+        ? await api.getStateAsync(path)
+        : {
+              accounts: {},
+              content: {},
+          };
     await attachScotData(url, raw);
 
     const cleansed = stateCleaner(raw);

@@ -263,15 +263,29 @@ class Voting extends React.Component {
             scotData && scotData.has('cashout_time')
                 ? scotData.get('cashout_time')
                 : '1969-12-31T23:59:59';
-        const cashout_active = getDate(cashout_time) > Date.now();
+        const last_payout =
+            scotData && scotData.has('last_payout')
+                ? scotData.get('last_payout')
+                : '1970-01-01T00:00:00';
+        const cashout_active =
+            getDate(cashout_time) > Date.now() &&
+            (getDate(last_payout) < getDate(cashout_time) ||
+                scot_pending_token > 0);
 
         const applyRewardsCurve = r =>
             Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
             rewardData.reward_pool /
             rewardData.pending_rshares;
+
+        const rsharesTotal = active_votes
+            ? active_votes
+                  .toJS()
+                  .map(x => x.rshares)
+                  .reduce((x, y) => x + y, 0)
+            : 0;
+
         if (scotData) {
-            const voteRshares = scotData.get('vote_rshares');
-            scot_pending_token = applyRewardsCurve(voteRshares);
+            scot_pending_token = applyRewardsCurve(rsharesTotal);
 
             scot_total_curator_payout = parseInt(
                 scotData.get('curator_payout_value')
@@ -310,19 +324,23 @@ class Voting extends React.Component {
             let valueEst = '';
             if (cashout_active && currentVp) {
                 const stakedTokens = votingData.get('staked_tokens');
+                const multiplier = votingData.get(
+                    up
+                        ? 'vote_weight_multiplier'
+                        : 'downvote_weight_multiplier',
+                    1.0
+                );
                 // need computation for VP. Start with rough estimate.
                 const rshares =
                     (up ? 1 : -1) *
                     stakedTokens *
-                    b *
+                    Math.min(multiplier * b, 10000) *
                     currentVp /
                     (10000 * 100);
-                const voteRshares = scotData.get('vote_rshares');
-                const newValue = applyRewardsCurve(voteRshares + rshares);
-                valueEst = (
-                    newValue / Math.pow(10, scotPrecision) -
-                    scot_pending_token
-                ).toFixed(scotPrecision);
+                const newValue = applyRewardsCurve(rsharesTotal + rshares);
+                valueEst = (newValue / scotDenom - scot_pending_token).toFixed(
+                    scotPrecision
+                );
             }
             return (
                 <span>
@@ -485,6 +503,43 @@ class Voting extends React.Component {
             });
         }
 
+        // add beneficiary info. use toFixed due to a bug of formatDecimal (5.00 is shown as 5,.00)
+        const beneficiaries = post_obj.get('beneficiaries');
+        if (
+            rewardData.enable_comment_beneficiaries &&
+            beneficiaries &&
+            !beneficiaries.isEmpty()
+        ) {
+            payoutItems.push({ value: tt('g.beneficiaries') });
+
+            // to remove tt('g.beneficiaries') in the above if there is no beneficiary,
+            // i.e., if all beneficiaries are in exclude_beneficiaries_accounts (e.g., @finex, @likwid)
+            let popBeneficiaries = true;
+            beneficiaries.forEach(function(key) {
+                if (
+                    rewardData.exclude_beneficiaries_accounts.includes(
+                        key.get('account')
+                    )
+                ) {
+                    return;
+                }
+
+                popBeneficiaries = false;
+                payoutItems.push({
+                    value:
+                        '- ' +
+                        key.get('account') +
+                        ': ' +
+                        (parseFloat(key.get('weight')) / 100).toFixed(2) +
+                        '%',
+                    link: '/@' + key.get('account'),
+                });
+            });
+            if (popBeneficiaries) {
+                payoutItems.pop(); // pop tt('g.beneficiaries')
+            }
+        }
+
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
                 <span>
@@ -499,18 +554,32 @@ class Voting extends React.Component {
 
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
-            const avotes = active_votes.toJS();
+            // Votes are in order of recent votes first.
+            const avotes = active_votes
+                .toJS()
+                .sort(
+                    (a, b) =>
+                        new Date(a.timestamp) < new Date(b.timestamp) ? -1 : 1
+                );
 
             // Compute estimates given current order without rearrangement first,
             // only if scot is present.
             let currRshares = 0;
             if (scotData) {
+                // If rsharesTotal is 0, cannot take ratios. Instead, compute estimates as if
+                // pending.
+                const pot = rsharesTotal > 0 ? payout : 1;
+                const denom =
+                    rsharesTotal > 0
+                        ? applyRewardsCurve(rsharesTotal)
+                        : scotDenom;
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (
+                        pot *
                         (applyRewardsCurve(currRshares + vote.rshares) -
                             applyRewardsCurve(currRshares)) /
-                        Math.pow(10, scotPrecision)
+                        denom
                     ).toFixed(scotPrecision);
                     currRshares += vote.rshares;
                 }
@@ -518,8 +587,8 @@ class Voting extends React.Component {
 
             avotes.sort(
                 (a, b) =>
-                    Math.abs(parseInt(a.rshares)) >
-                    Math.abs(parseInt(b.rshares))
+                    Math.abs(parseFloat(a.estimate)) >
+                    Math.abs(parseFloat(b.estimate))
                         ? -1
                         : 1
             );
@@ -652,7 +721,21 @@ export default connect(
                 'config',
                 'author_curve_exponent',
             ]),
+            enable_comment_beneficiaries: scotConfig.getIn([
+                'config',
+                'enable_comment_beneficiaries',
+            ]),
+            exclude_beneficiaries_accounts: scotConfig.getIn([
+                'config',
+                'exclude_beneficiaries_accounts',
+            ]),
         };
+        // set author_curve_exponent to what's on the post (in case of transition period)
+        if (scotData && scotData.has('author_curve_exponent')) {
+            rewardData.author_curve_exponent = scotData.get(
+                'author_curve_exponent'
+            );
+        }
         const author = post.get('author');
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');

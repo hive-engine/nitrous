@@ -15,7 +15,7 @@ import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
 
-import Icon from 'app/components/elements/Icon';
+import AppLogo from 'app/components/elements/AppLogo';
 
 class Post extends React.Component {
     static propTypes = {
@@ -72,7 +72,7 @@ class Post extends React.Component {
             return (
                 <div className="NotFound float-center">
                     <div>
-                        <Icon name="steem" size="4x" />
+                        <AppLogo />
                         <h4 className="NotFound__header">
                             Sorry! This page doesnt exist.
                         </h4>
@@ -103,10 +103,10 @@ class Post extends React.Component {
                 </div>
             );
 
-        // A post should be hidden if it is not pinned, is not told to "show
+        // A post should be hidden if it is not special, is not told to "show
         // anyway", and is designated "gray".
-        const pinned = dis.get('pinned');
-        if (!pinned && !showAnyway) {
+        const special = dis.get('special');
+        if (!special && !showAnyway) {
             const { gray } = dis.get('stats').toJS();
             if (gray) {
                 return (
@@ -149,18 +149,37 @@ class Post extends React.Component {
             );
             replies = replies.slice(0, commentLimit);
         }
+        let commentCount = 0;
+        const positiveComments = replies.map(reply => {
+            commentCount++;
+            let showAd =
+                commentCount % 5 == 0 &&
+                commentCount != replies.length &&
+                commentCount != commentLimit;
 
-        const positiveComments = replies.map(reply => (
-            <Comment
-                root
-                key={post + reply}
-                content={reply}
-                cont={content}
-                sort_order={sortOrder}
-                showNegativeComments={showNegativeComments}
-                onHide={this.onHideComment}
-            />
-        ));
+            return (
+                <div>
+                    <Comment
+                        root
+                        key={post + reply}
+                        content={reply}
+                        cont={content}
+                        sort_order={sortOrder}
+                        showNegativeComments={showNegativeComments}
+                        onHide={this.onHideComment}
+                    />
+
+                    {this.props.gptEnabled && showAd ? (
+                        <div className="Post_footer__ad">
+                            <GptAd
+                                type="Freestar"
+                                id="steemit_728x90_468x60_300x250_BetweenComments"
+                            />
+                        </div>
+                    ) : null}
+                </div>
+            );
+        });
 
         const negativeGroup = commentHidden && (
             <div className="hentry Comment root Comment__negative_group">
