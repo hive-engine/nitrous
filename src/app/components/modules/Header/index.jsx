@@ -36,6 +36,7 @@ class Header extends React.Component {
         this.state = {
             gptAdRendered: false,
             showAd: false,
+            showReviveAd: false,
             showAnnouncement: this.props.showAnnouncement,
         };
     }
@@ -305,6 +306,14 @@ class Header extends React.Component {
                             type="Freestar"
                             id="steemit_728x90_970x90_970x250_320x50_ATF"
                         />
+                    </div>
+                    <div style={showAd ? {} : { display: 'none' }}>
+                        <center>
+                            <ins
+                                data-revive-zoneid="1699"
+                                data-revive-id="727bec5e09208690b050ccfc6a45d384"
+                            />
+                        </center>
                     </div>
 
                     <nav className="row Header__nav">

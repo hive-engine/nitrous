@@ -110,6 +110,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             adClient: googleAds.client,
             gptBidding: googleAds.gptBidding,
             fomoId: config.fomo_id,
+            reviveEnabled: config.revive_enabled,
             shouldSeeCookieConsent: cookieConsent.enabled,
             cookieConsentApiKey: cookieConsent.api_key,
         };
