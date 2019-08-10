@@ -145,6 +145,7 @@ const map = {
     nickyhavey: 'certified_ulogger',
     evegrace: 'certified_ulogger',
     yasu: 'certified_ulogger',
+    wesphilbin: 'certified_ulogger',
 };
 
 export default map;
