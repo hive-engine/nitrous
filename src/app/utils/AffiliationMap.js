@@ -143,6 +143,8 @@ const map = {
     skyleap: 'certified_ulogger',
     tegoshei: 'certified_ulogger',
     nickyhavey: 'certified_ulogger',
+    evegrace: 'certified_ulogger',
+    yasu: 'certified_ulogger',
 };
 
 export default map;
