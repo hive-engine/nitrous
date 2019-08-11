@@ -48,6 +48,10 @@ const SET_VOTING_POWER = 'user/SET_VOTING_POWER';
 // Saga-related
 export const UPLOAD_IMAGE = 'user/UPLOAD_IMAGE';
 
+const SET_DELEGATIONS = 'user/SET_DELEGATIONS';
+const SHOW_DELEGATIONS = 'user/SHOW_DELEGATIONS';
+const HIDE_DELEGATIONS = 'user/HIDE_DELEGATIONS';
+
 const defaultState = fromJS({
     current: null,
     show_login_modal: false,
@@ -280,6 +284,15 @@ export default function reducer(state = defaultState, action) {
             return state;
         }
 
+        case SET_DELEGATIONS:
+            return state.set('delegations', fromJS(payload));
+
+        case SHOW_DELEGATIONS:
+            return state.set('show_delegations_modal', true);
+
+        case HIDE_DELEGATIONS:
+            return state.set('show_delegations_modal', false);
+
         default:
             return state;
     }
@@ -483,5 +496,20 @@ export const lookupVotingPower = payload => ({
 
 export const setVotingPower = payload => ({
     type: SET_VOTING_POWER,
+    payload,
+});
+
+export const setDelegations = payload => ({
+    type: SET_DELEGATIONS,
+    payload,
+});
+
+export const showDelegations = payload => ({
+    type: SHOW_DELEGATIONS,
+    payload,
+});
+
+export const hideDelegations = payload => ({
+    type: HIDE_DELEGATIONS,
     payload,
 });
