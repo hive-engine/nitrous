@@ -30,12 +30,14 @@ class Delegations extends React.Component {
                 </div>
                 <table>
                     <thead>
-                        <th>From</th>
-                        <th>To</th>
-                        <th className="amount">Amount</th>
-                        <th>Symbol</th>
-                        <th>Created</th>
-                        <th>Updated</th>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th className="amount">Amount</th>
+                            <th>Symbol</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {tokenDelegations.map((e, i) => (
