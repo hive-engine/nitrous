@@ -52,6 +52,7 @@ async function getAuthorRep(feedData) {
 function mergeContent(content, scotData) {
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
+    const title = content.title;
     Object.assign(content, scotData);
     if (voted) {
         const scotVoted = new Set(content.active_votes.map(v => v.voter));
@@ -65,8 +66,12 @@ function mergeContent(content, scotData) {
             }
         });
     }
+    // Restore currently buggy fields
     if (lastUpdate) {
         content.last_update = lastUpdate;
+    }
+    if (title) {
+        content.title = title;
     }
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
@@ -153,6 +158,7 @@ export async function attachScotData(url, state) {
             tokenUnstakes,
             tokenStatuses,
             transferHistory,
+            tokenDelegations,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -164,6 +170,10 @@ export async function attachScotData(url, state) {
             }),
             getScotAccountDataAsync(account),
             getSteemEngineAccountHistoryAsync(account),
+            ssc.find('tokens', 'delegations', {
+                $or: [{ from: account }, { to: account }],
+                symbol: LIQUID_TOKEN_UPPERCASE,
+            }),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -180,6 +190,9 @@ export async function attachScotData(url, state) {
             state.accounts[
                 account
             ].transfer_history = transferHistory.reverse();
+        }
+        if (tokenDelegations) {
+            state.accounts[account].token_delegations = tokenDelegations;
         }
         return;
     }

@@ -263,7 +263,14 @@ class Voting extends React.Component {
             scotData && scotData.has('cashout_time')
                 ? scotData.get('cashout_time')
                 : '1969-12-31T23:59:59';
-        const cashout_active = getDate(cashout_time) > Date.now();
+        const last_payout =
+            scotData && scotData.has('last_payout')
+                ? scotData.get('last_payout')
+                : '1970-01-01T00:00:00';
+        const cashout_active =
+            getDate(cashout_time) > Date.now() &&
+            (getDate(last_payout) < getDate(cashout_time) ||
+                scot_pending_token > 0);
 
         const applyRewardsCurve = r =>
             Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
@@ -548,7 +555,12 @@ class Voting extends React.Component {
         let voters_list = null;
         if (showList && total_votes > 0 && active_votes) {
             // Votes are in order of recent votes first.
-            const avotes = active_votes.toJS().reverse();
+            const avotes = active_votes
+                .toJS()
+                .sort(
+                    (a, b) =>
+                        new Date(a.timestamp) < new Date(b.timestamp) ? -1 : 1
+                );
 
             // Compute estimates given current order without rearrangement first,
             // only if scot is present.
