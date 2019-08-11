@@ -248,17 +248,29 @@ export async function getStateAsync(url) {
     // strip off query string
     const path = url.split('?')[0];
 
+    console.log('path');
+    console.log(path);
+
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
-    const raw = steemitApiStateNeeded
+    let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
         : {
               accounts: {},
               content: {},
           };
+    if (raw.error && (path === '/favorite-mentor' || path === 'grow')) {
+        raw = {
+            accounts: {},
+            content: {},
+        };
+    }
     await attachScotData(url, raw);
+
+    console.log('raw');
+    console.log(raw);
 
     const cleansed = stateCleaner(raw);
 

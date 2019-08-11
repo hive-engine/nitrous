@@ -23,6 +23,12 @@ export default function resolveRoute(path) {
     if (path === '/welcome') {
         return { page: 'Welcome' };
     }
+    if (path === '/favorite-mentor') {
+        return { page: 'FavoriteMentor' };
+    }
+    if (path === '/grow') {
+        return { page: 'Grow' };
+    }
     if (path === '/faq.html') {
         return { page: 'Faq' };
     }
