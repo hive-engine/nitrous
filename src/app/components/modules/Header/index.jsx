@@ -310,9 +310,9 @@ class Header extends React.Component {
                     <nav className="row Header__nav">
                         <div className="small-5 large-4 columns Header__logotype">
                             {/*LOGO*/}
-                            <Link to={logo_link}>
+                            <a href="/">
                                 <AppLogo />
-                            </Link>
+                            </a>
                         </div>
 
                         <div className="large-4 columns show-for-large large-centered Header__sort">

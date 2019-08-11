@@ -19,6 +19,14 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Grow') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Grow')]);
+            //});
+        } else if (route.page === 'FavoriteMentor') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/FavoriteMentor')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);

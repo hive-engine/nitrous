@@ -113,6 +113,12 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'grow',
+                label: 'GROW',
+                link: '/grow',
+                internal: true,
+            },
+            {
                 value: 'faq',
                 label: 'FAQ',
                 link:

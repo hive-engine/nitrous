@@ -26,7 +26,7 @@ const Reveal = ({ children, onHide, show }) => {
             style={modalStyle}
         >
             <div
-                className={'reveal fade in'}
+                className={'reveal'}
                 role={'document'}
                 tabIndex={'-1'}
                 style={{ display: 'block' }}
