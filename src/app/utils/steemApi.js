@@ -162,6 +162,7 @@ export async function attachScotData(url, state) {
             transferHistory,
             allTokenBalances,
             allTokenInfo,
+            tokenDelegations,
         ] = await Promise.all([
             ssc.findOne('tokens', 'balances', {
                 account,
@@ -177,6 +178,10 @@ export async function attachScotData(url, state) {
                 account,
             }),
             getScotDataAsync('info', {}),
+            ssc.find('tokens', 'delegations', {
+                $or: [{ from: account }, { to: account }],
+                symbol: LIQUID_TOKEN_UPPERCASE,
+            }),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -204,6 +209,9 @@ export async function attachScotData(url, state) {
             state.accounts[account].all_token_info = allTokenInfo;
         }
 
+        if (tokenDelegations) {
+            state.accounts[account].token_delegations = tokenDelegations;
+        }
         return;
     }
 

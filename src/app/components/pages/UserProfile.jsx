@@ -212,6 +212,7 @@ export default class UserProfile extends React.Component {
                         showTransfer={this.props.showTransfer}
                         showPowerdown={this.props.showPowerdown}
                         cancelUnstake={this.props.cancelUnstake}
+                        showDelegations={this.props.showDelegations}
                     />
                 </div>
             );
@@ -684,6 +685,10 @@ module.exports = {
             },
             requestData: args =>
                 dispatch(fetchDataSagaActions.requestData(args)),
+            showDelegations: delegations => {
+                dispatch(userActions.setDelegations(delegations));
+                dispatch(userActions.showDelegations());
+            },
         })
     )(UserProfile),
 };
