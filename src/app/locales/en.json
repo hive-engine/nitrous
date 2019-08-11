@@ -855,5 +855,8 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     }
 }
