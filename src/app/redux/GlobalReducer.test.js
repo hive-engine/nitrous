@@ -2,13 +2,16 @@ import { Map, OrderedMap, getIn, List, fromJS, Set, merge } from 'immutable';
 import { emptyContent } from 'app/redux/EmptyState';
 import * as globalActions from './GlobalReducer';
 import reducer, { defaultState } from './GlobalReducer';
+import { SCOT_DENOM } from 'app/client_config';
+
+const FLAG_WEIGHT = 2 - Math.min(2, Math.log10(SCOT_DENOM));
 
 const expectedStats = Map({
     isNsfw: false,
     hide: false,
     hasPendingPayout: false,
     gray: false,
-    flagWeight: 0,
+    flagWeight: FLAG_WEIGHT,
     up_votes: 0,
     total_votes: 0,
     authorRepLog10: undefined,
@@ -638,7 +641,7 @@ describe('Global reducer', () => {
                 hide: false,
                 hasPendingPayout: false,
                 gray: false,
-                flagWeight: 0,
+                flagWeight: FLAG_WEIGHT,
                 up_votes: 2,
                 total_votes: 2,
                 authorRepLog10: undefined,
