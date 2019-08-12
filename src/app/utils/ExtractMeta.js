@@ -9,6 +9,7 @@ import {
     SITE_DESCRIPTION,
     TWITTER_HANDLE,
 } from 'app/client_config';
+import tt from 'counterpart';
 
 function addSiteMeta(metas) {
     metas.push({ title: APP_NAME });
@@ -114,6 +115,37 @@ export default function extractMeta(chain_data, rp) {
         metas.push({ name: 'twitter:title', content: title });
         metas.push({ name: 'twitter:description', content: desc });
         metas.push({ name: 'twitter:image', content: image });
+    } else if (rp.order && rp.category && rp.order.charAt(0) !== '@') {
+        // category page
+        let order = rp.order,
+            category = rp.category;
+        if (order !== '')
+            order = order.charAt(0).toUpperCase() + order.slice(1);
+        if (category !== '')
+            category = category.charAt(0).toUpperCase() + category.slice(1);
+        const title =
+            tt('g.site_title', { order, category }) + ` — ${APP_NAME}`;
+        const description = tt('g.site_description', { category });
+
+        metas.push({ title });
+        metas.push({ name: 'description', content: description });
+        metas.push({ property: 'og:type', content: 'website' });
+        metas.push({ property: 'og:site_name', content: APP_NAME });
+        metas.push({ property: 'og:title', content: title });
+        metas.push({ property: 'og:description', content: description });
+        metas.push({
+            property: 'og:image',
+            content: `${APP_URL}/images/${APP_ICON}.png`,
+        });
+        metas.push({ property: 'fb:app_id', content: $STM_Config.fb_app });
+        metas.push({ name: 'twitter:card', content: 'summary' });
+        metas.push({ name: 'twitter:site', content: TWITTER_HANDLE });
+        metas.push({ name: 'twitter:title', content: `#${title}` });
+        metas.push({ name: 'twitter:description', description });
+        metas.push({
+            name: 'twitter:image',
+            content: `${APP_URL}/images/${APP_ICON}.png`,
+        });
     } else {
         // site
         addSiteMeta(metas);

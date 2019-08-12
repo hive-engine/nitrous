@@ -250,7 +250,11 @@
             "warning":
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
-        }
+        },
+        "tagline": "Sports Talk Social: Latest Sports News and Discussions",
+        "site_title": "%(order)s %(category)s News, Posts and Discussions",
+        "site_description":
+            "View the latest \"%(category)s\" news and discussions at Sports Talk Social. Join the discussions and get rewarded for your efforts."
     },
     "navigation": {
         "about": "About Steemit, Inc.",
@@ -633,7 +637,7 @@
         "alternative_sources": "Alternative Sources"
     },
     "header_jsx": {
-        "home": "home",
+        "home": "Sports Talk Social: Latest Sports News and Discussions",
         "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",
