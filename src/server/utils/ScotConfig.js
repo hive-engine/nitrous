@@ -3,6 +3,7 @@ import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
+import { getConfig } from 'app/utils/SctApi';
 
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -131,6 +132,10 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
         scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
 
+        // get SCT thumbup config
+        const thumbupConfig = await getConfig();
+        scotConfig.thumbupConfig = thumbupConfig.data;
+        
         this.cache.set(key, { info: scotInfo, config: scotConfig });
 
         console.info('Scot Config refreshed...');
