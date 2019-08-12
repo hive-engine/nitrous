@@ -11,8 +11,9 @@ export const routeRegex = {
     PostJson: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)(\.json)$/,
     UserJson: /^\/(@[\w\.\d-]+)(\.json)$/,
     UserNameJson: /^.*(?=(\.json))/,
-    Movie: /^\/(movie|tv)\/?$/,
-    Review: /^\/review\/?$/,
+    Movies: /^\/(movie|tv)\/?$/,
+    Movie: /^\/(movie|tv)\/(\d+)(?:-[^\/]+)?\/?$/,
+    Reviews: /^\/review\/?$/,
 };
 
 export default function resolveRoute(path) {
@@ -69,7 +70,10 @@ export default function resolveRoute(path) {
         if (GDPRUserList.includes(match[1].substring(1))) {
             return { page: 'NotFound' };
         }
-        return { page: 'PostsIndex', params: ['home', match[1]] };
+        return {
+            page: 'PostsIndex',
+            params: ['home', match[1]],
+        };
     }
     match =
         path.match(routeRegex.UserProfile1) ||
@@ -79,21 +83,30 @@ export default function resolveRoute(path) {
         if (GDPRUserList.includes(match[1].substring(1))) {
             return { page: 'NotFound' };
         }
-        return { page: 'UserProfile', params: match.slice(1) };
+        return {
+            page: 'UserProfile',
+            params: match.slice(1),
+        };
     }
     match = path.match(routeRegex.PostNoCategory);
     if (match) {
         if (GDPRUserList.includes(match[1].substring(1))) {
             return { page: 'NotFound' };
         }
-        return { page: 'PostNoCategory', params: match.slice(1) };
+        return {
+            page: 'PostNoCategory',
+            params: match.slice(1),
+        };
     }
     match = path.match(routeRegex.Post);
     if (match) {
         if (GDPRUserList.includes(match[2].substring(1))) {
             return { page: 'NotFound' };
         }
-        return { page: 'Post', params: match.slice(1) };
+        return {
+            page: 'Post',
+            params: match.slice(1),
+        };
     }
     match =
         path.match(
@@ -103,15 +116,29 @@ export default function resolveRoute(path) {
             /^\/(hot|trending|promoted|payout|payout_comments|created)\/([\w\d-]+)\/?$/
         );
     if (match) {
-        return { page: 'PostsIndex', params: match.slice(1) };
+        return {
+            page: 'PostsIndex',
+            params: match.slice(1),
+        };
+    }
+    match = path.match(routeRegex.Movies);
+    if (match) {
+        return {
+            page: 'Movies',
+        };
     }
     match = path.match(routeRegex.Movie);
     if (match) {
-        return { page: 'MoviesIndex', params: match.slice(1) };
+        return {
+            page: 'Movie',
+            params: match.slice(1),
+        };
     }
-    match = path.match(routeRegex.Review);
+    match = path.match(routeRegex.Reviews);
     if (match) {
-        return { page: 'ReviewsIndex', params: match.slice(1) };
+        return {
+            page: 'Reviews',
+        };
     }
     return { page: 'NotFound' };
 }

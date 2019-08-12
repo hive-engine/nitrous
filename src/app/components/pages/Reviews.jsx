@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function ReviewsIndex(props) {
+export default function Reviews(props) {
     const classes = useStyles();
     const { reviews } = props;
 
@@ -258,7 +258,7 @@ export default function ReviewsIndex(props) {
 }
 
 module.exports = {
-    path: ':order(/:category)',
+    path: '/review',
     component: connect(
         (state, ownProps) => {
             return {
@@ -269,8 +269,6 @@ module.exports = {
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
-                sortOrder: ownProps.params.order,
-                topic: ownProps.params.category,
                 categories: TAG_LIST,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
@@ -284,10 +282,10 @@ module.exports = {
                     dispatch(fetchDataSagaActions.requestData(args)),
             };
         }
-    )(ReviewsIndex),
+    )(Reviews),
 };
 
-ReviewsIndex.propTypes = {
+Reviews.propTypes = {
     discussions: PropTypes.object,
     accounts: PropTypes.object,
     status: PropTypes.object,

@@ -66,9 +66,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function MoviesIndex(props) {
+export default function Movies(props) {
     const classes = useStyles();
-    const { movies } = props;
+    const { movies, type } = props;
 
     const [values, setValues, expanded, setExpanded] = React.useState({
         genre: -1,
@@ -237,7 +237,7 @@ export default function MoviesIndex(props) {
 }
 
 module.exports = {
-    path: ':order(/:category)',
+    path: ':type',
     component: connect(
         (state, ownProps) => {
             return {
@@ -248,8 +248,7 @@ module.exports = {
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
-                sortOrder: ownProps.params.order,
-                topic: ownProps.params.category,
+                type: ownProps.params.type,
                 categories: TAG_LIST,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
@@ -263,10 +262,10 @@ module.exports = {
                     dispatch(fetchDataSagaActions.requestData(args)),
             };
         }
-    )(MoviesIndex),
+    )(Movies),
 };
 
-MoviesIndex.propTypes = {
+Movies.propTypes = {
     discussions: PropTypes.object,
     accounts: PropTypes.object,
     status: PropTypes.object,
@@ -275,6 +274,7 @@ MoviesIndex.propTypes = {
     loading: PropTypes.bool,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
+    type: PropTypes.string,
     categories: PropTypes.object,
     movies: PropTypes.array.isRequired,
 };
