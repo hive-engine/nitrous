@@ -136,7 +136,7 @@ export const TAG_LIST = fromJSOrdered({
             ],
         },
         ncaafb: {
-            acc: [
+            accfb: [
                 'bostoncollegefb',
                 'clemsonfb',
                 'dukefb',
@@ -153,7 +153,7 @@ export const TAG_LIST = fromJSOrdered({
                 'virginiatechfb',
                 'wakeforestfb',
             ],
-            bigten: [
+            bigtenfb: [
                 'illinoisfb',
                 'indianafb',
                 'iowafb',
@@ -169,7 +169,7 @@ export const TAG_LIST = fromJSOrdered({
                 'rutgersfb',
                 'wisconsinfb',
             ],
-            big12: [
+            big12fb: [
                 'baylorfb',
                 'iowastatefb',
                 'kansasfb',
@@ -181,7 +181,7 @@ export const TAG_LIST = fromJSOrdered({
                 'texastechfb',
                 'westvirginiafb',
             ],
-            pac12: [
+            pac12fb: [
                 'arizonafb',
                 'asufb',
                 'californiafb',
@@ -195,7 +195,7 @@ export const TAG_LIST = fromJSOrdered({
                 'washingtonfb',
                 'washingtonstatefb',
             ],
-            sec: [
+            secfb: [
                 'alabamafb',
                 'arkansasfb',
                 'auburnfb',
@@ -251,7 +251,7 @@ export const TAG_LIST = fromJSOrdered({
             ],
         },
         ncaabaseball: {
-            acc: [
+            accbb: [
                 'bostoncollegebb',
                 'clemsonbb',
                 'dukebb',
@@ -268,7 +268,7 @@ export const TAG_LIST = fromJSOrdered({
                 'virginiatechbb',
                 'wakeforestbb',
             ],
-            bigten: [
+            bigtenbb: [
                 'illinoisbb',
                 'indianabb',
                 'iowabb',
@@ -284,7 +284,7 @@ export const TAG_LIST = fromJSOrdered({
                 'rutgersbb',
                 'wisconsinbb',
             ],
-            big12: [
+            big12bb: [
                 'baylorbb',
                 'iowastatebb',
                 'kansasbb',
@@ -296,7 +296,7 @@ export const TAG_LIST = fromJSOrdered({
                 'texastechbb',
                 'westvirginiabb',
             ],
-            pac12: [
+            pac12bb: [
                 'arizonabb',
                 'asubb',
                 'californiabb',
@@ -310,7 +310,7 @@ export const TAG_LIST = fromJSOrdered({
                 'washingtonbb',
                 'washingtonstatebb',
             ],
-            sec: [
+            secbb: [
                 'alabamabb',
                 'arkansasbb',
                 'auburnbb',
@@ -365,81 +365,81 @@ export const TAG_LIST = fromJSOrdered({
                 'jazz',
             ],
         },
-        ncaam: {
-            acc: [
-                'bostoncollege',
-                'clemson',
-                'duke',
-                'fsu',
-                'georigatech',
-                'louisville',
-                'miami',
-                'ncstate',
-                'unc',
-                'notredame',
-                'pittsburgh',
-                'syracuse',
-                'virginia',
-                'virginiatech',
-                'wakeforest',
+        ncaamb: {
+            accmb: [
+                'bostoncollegemb',
+                'clemsonmb',
+                'dukemb',
+                'fsumb',
+                'georigatechmb',
+                'louisvillemb',
+                'miamimb',
+                'ncstatemb',
+                'uncmb',
+                'notredamemb',
+                'pittsburghmb',
+                'syracusemb',
+                'virginiamb',
+                'virginiatechmb',
+                'wakeforestmb',
             ],
-            bigten: [
-                'illinois',
-                'indiana',
-                'iowa',
-                'maryland',
-                'michigan',
-                'michiganstate',
-                'minnesota',
-                'nebraska',
-                'northwestern',
-                'ohiostate',
-                'pennstate',
-                'purdue',
-                'rutgers',
-                'wisconsin',
+            bigtenmb: [
+                'illinoismb',
+                'indianamb',
+                'iowamb',
+                'marylandmb',
+                'michiganmb',
+                'michiganstatemb',
+                'minnesotamb',
+                'nebraskamb',
+                'northwesternmb',
+                'ohiostatemb',
+                'pennstatemb',
+                'purduemb',
+                'rutgersmb',
+                'wisconsinmb',
             ],
-            big12: [
-                'baylor',
-                'iowastate',
-                'kansas',
-                'kansasstate',
-                'oklahoma',
-                'oklahomastate',
-                'tcu',
-                'texas',
-                'texastech',
-                'westvirginia',
+            big12mb: [
+                'baylormb',
+                'iowastatemb',
+                'kansasmb',
+                'kansasstatemb',
+                'oklahomamb',
+                'oklahomastatemb',
+                'tcumb',
+                'texasmb',
+                'texastechmb',
+                'westvirginiamb',
             ],
-            pac12: [
-                'arizona',
-                'asu',
-                'california',
-                'colorado',
-                'oregon',
-                'oregonstate',
-                'standford',
-                'ucla',
-                'usc',
-                'utah',
-                'washington',
-                'washingtonstate',
+            pac12mb: [
+                'arizonamb',
+                'asumb',
+                'californiamb',
+                'coloradomb',
+                'oregonmb',
+                'oregonstatemb',
+                'standfordmb',
+                'uclamb',
+                'uscmb',
+                'utahmb',
+                'washingtonmb',
+                'washingtonstatemb',
             ],
-            sec: [
-                'alabama',
-                'arkansas',
-                'auburn',
-                'florida',
-                'georgia',
-                'kentucky',
-                'lsu',
-                'mississippistate',
-                'missouri',
-                'olemiss',
-                'southcarolina',
-                'tennessee',
-                'texasam',
-                'vanderbilt',
+            secmb: [
+                'alabamamb',
+                'arkansasmb',
+                'auburnmb',
+                'floridamb',
+                'georgiamb',
+                'kentuckymb',
+                'lsumb',
+                'mississippistatemb',
+                'missourimb',
+                'olemissmb',
+                'southcarolinamb',
+                'tennesseemb',
+                'texasammb',
+                'vanderbiltmb',
             ],
         },
     },
@@ -535,7 +535,7 @@ export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
 // meta info
-export const TWITTER_HANDLE = '@steemit';
+export const TWITTER_HANDLE = '@SportsTalkSteem';
 export const SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-share.png';
 export const TWITTER_SHARE_IMAGE =
