@@ -144,12 +144,17 @@ class Header extends React.Component {
             } else {
                 topic = route.params.length > 1 ? route.params[1] : '';
                 const type =
-                    route.params[0] == 'payout_comments' ? 'comments' : 'posts';
+                    route.params[0] == 'payout_comments'
+                        ? 'comments'
+                        : 'News, Posts and Discussions';
                 let prefix = route.params[0];
                 if (prefix == 'created') prefix = 'New';
                 if (prefix == 'payout') prefix = 'Pending payout';
                 if (prefix == 'payout_comments') prefix = 'Pending payout';
-                if (topic !== '') prefix += ` ${topic}`;
+                if (topic !== '') {
+                    topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                    prefix += ` ${topic}`;
+                }
                 page_title = `${prefix} ${type}`;
             }
         } else if (route.page === 'Post') {
