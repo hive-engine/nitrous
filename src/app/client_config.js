@@ -493,7 +493,7 @@ export const TAG_LIST = fromJSOrdered({
         cricket: [],
         rugby: [],
         cycling: ['giroditalia', 'tourdefrance', 'lavuelta'],
-        motorsports: ['nascar', 'indycar', 'nhra', 'f1'],
+        motorsports: ['nascar', 'indycar', 'nhra', 'formulaone'],
         horseracing: ['breederscup', 'kentuckyderby', 'preaknessstakes', 'belmontstakes', 'kentuckyoaks', 'pegasusworldcup'],
         bodybuilding: [],
         chess: [],
