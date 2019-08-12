@@ -59,13 +59,6 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
-            },
         ],
         exchanges: [
             {
@@ -113,24 +106,25 @@ const SidePanel = ({
         ],
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                value: 'sportstube',
+                label: 'SportsTube',
+                link: 'https://video.sportstalksocial.com',
             },
             {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
+                value: 'discord',
+                label: 'Discord',
+                link: 'http://discord.sportstalk.social',
             },
             {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
+                value: 'scottoday',
+                label: 'SPORTS SCOT.TODAY',
+                link: 'http://scot.today/token/SPORTS',
+                internal: true,
             },
             {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
+                value: 'sports_richlist',
+                label: 'SPORTS Richlist',
+                link: 'https://steem-engine.rocks/tokens/SPORTS/richlist',
                 internal: true,
             },
         ],
@@ -172,6 +166,13 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Community</a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
