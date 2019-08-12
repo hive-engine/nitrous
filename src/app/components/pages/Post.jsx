@@ -34,6 +34,13 @@ class Post extends React.Component {
             window.location = SIGNUP_URL;
         };
     }
+    componentDidMount() {
+        if (!this.props.enabled) {
+            return;
+        }
+
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
 
     toggleNegativeReplies = e => {
         this.setState({
@@ -280,6 +287,18 @@ class Post extends React.Component {
                         />
                     </div>
                 ) : null}
+                {this.props.enabled ? (
+                    <div className="Post_footer__ad2">
+                        <ins
+                            className={'adsbygoogle'}
+                            style={{ display: 'block' }}
+                            data-ad-client={'ca-pub-1316865473229920'}
+                            data-ad-slot={'8744394721'}
+                            data-ad-format={'auto'}
+                            data-full-width-responsive={'true'}
+                        />
+                    </div>
+                ) : null}
             </div>
         );
     }
@@ -305,5 +324,6 @@ export default connect((state, ownProps) => {
         sortOrder:
             ownProps.router.getCurrentLocation().query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+        enabled: state.app.getIn(['googleAds', 'enabled']),
     };
 })(Post);
