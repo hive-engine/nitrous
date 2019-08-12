@@ -341,6 +341,8 @@ export async function serverRender(
                 -1,
                 1
             );
+        } else if (url.match(routeRegex.Review)) {
+            movie.reviews = await getReviews(1, -1, 1);
         }
 
         server_store = createStore(rootReducer, {
@@ -513,6 +515,36 @@ async function getMovies(languageCode, movieType, genreId, page) {
             `https://tool.steem.world/AAA/GetMovies?languageCode=${
                 languageCode
             }&movieType=${movieType}&genreId=${genreId}&page=${page}`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+async function getMovies(languageCode, movieType, genreId, page) {
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetMovies?languageCode=${
+                languageCode
+            }&movieType=${movieType}&genreId=${genreId}&page=${page}`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+async function getReviews(movieType, genreId, page) {
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetPostsByGenre?movieType=${
+                movieType
+            }&genreId=${genreId}&page=${page}`
         );
 
         return response.data;

@@ -12,6 +12,7 @@ export const routeRegex = {
     UserJson: /^\/(@[\w\.\d-]+)(\.json)$/,
     UserNameJson: /^.*(?=(\.json))/,
     Movie: /^\/(movie|tv)\/?$/,
+    Review: /^\/review\/?$/,
 };
 
 export default function resolveRoute(path) {
@@ -107,6 +108,10 @@ export default function resolveRoute(path) {
     match = path.match(routeRegex.Movie);
     if (match) {
         return { page: 'MoviesIndex', params: match.slice(1) };
+    }
+    match = path.match(routeRegex.Review);
+    if (match) {
+        return { page: 'ReviewsIndex', params: match.slice(1) };
     }
     return { page: 'NotFound' };
 }
