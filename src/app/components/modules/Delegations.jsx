@@ -82,7 +82,6 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const value = state.user.get('delegations');
-        // const accounts = state.global.get('accounts');
         return {
             ...ownProps,
             account: value.get('account'),
