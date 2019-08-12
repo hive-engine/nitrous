@@ -25,6 +25,11 @@ export default function ServerHTML({
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
+                <meta
+                    http-equiv="Content-Security-Policy"
+                    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+                />
+
                 {meta &&
                     meta.map(m => {
                         if (m.title) {
