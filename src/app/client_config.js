@@ -446,7 +446,7 @@ export const TAG_LIST = fromJSOrdered({
     combat: {
         boxing: [],
         mma: ['ufc'],
-        wrestling: ['wwe', 'aew'],
+        wrestling: ['wwe', 'aew', 'njpw', 'roh'],
     },
     hockey: {
         nhl: {
@@ -488,21 +488,16 @@ export const TAG_LIST = fromJSOrdered({
         },
     },
     sports: {
-        golf: {
-            masters: [],
-            usopen: [],
-            britishopen: [],
-            pgachampionship: [],
-        },
-        tennis: [],
+        golf: ['masters', 'usopenchampionship', 'britishopen', 'pgachampionship'],
+        tennis: ['wimbledon', 'usopen', 'australianopen', 'frenchopen'],
         cricket: [],
         rugby: [],
-        cycling: [],
+        cycling: ['giroditalia', 'tourdefrance', 'lavuelta'],
         motorsports: ['nascar', 'indycar', 'nhra', 'f1'],
-        horseracing: [],
+        horseracing: ['breederscup', 'kentuckyderby', 'preaknessstakes', 'belmontstakes', 'kentuckyoaks', 'pegasusworldcup'],
         bodybuilding: [],
         chess: [],
-        esports: [],
+        esports: ['fortniteworldcup', 'leagueworldchampionship', 'theinternational', 'cwl', 'overwatchleague', 'haloworldchampionship', 'pubgglobalchampionship', 'dota2asiachampionships'],
     },
     fantasy: ['fantasypremierleague', 'sfpl', 'fantasybaseball', 'fantasybasketball', 'fantasyfootball'],
     actifit: [],
@@ -546,9 +541,9 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'SportsTalkSocial is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called SPORTS, that ' +
-    'supports real value for digital rewards through market price discovery and liquidity';
+    'SportsTalkSocial is a sports focused social media platform where everyone gets ' +
+    'paid for creating and curating content. It leverages a robust digital points system, called SPORTS, ' +
+    'that supports real value for digital rewards through market price discovery and liquidity';
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
