@@ -269,7 +269,7 @@ export async function getStateAsync(url) {
               accounts: {},
               content: {},
           };
-    if (raw.error && (path === '/favorite-mentor' || path === 'grow')) {
+    if (raw.error && (path === '/favorite-mentor' || path === '/grow')) {
         raw = {
             accounts: {},
             content: {},
