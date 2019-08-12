@@ -250,7 +250,8 @@
             "warning":
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
-        }
+        },
+        "tagline": "Sports Talk Social: Latest Sports News and Discussions"
     },
     "navigation": {
         "about": "About Steemit, Inc.",

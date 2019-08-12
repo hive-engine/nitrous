@@ -308,6 +308,15 @@ class PostsIndex extends React.Component {
                 }
             >
                 <article className="articles">
+                    {typeof category === 'undefined' && (
+                        <div className="articles__header row">
+                            <div className="small-6 medium-6 large-6 column">
+                                <h1 className="articles__h1 show-for-mq-large tagline articles__h1--no-wrap">
+                                    {tt('g.tagline')}
+                                </h1>
+                            </div>
+                        </div>
+                    )}
                     <div className="articles__header row">
                         <div className="small-6 medium-6 large-6 column">
                             <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
