@@ -82,8 +82,6 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const value = state.user.get('delegations');
-        // const accounts = state.global.get('accounts');
-        console.log(value.get('tokenDelegations').toJS());
         return {
             ...ownProps,
             account: value.get('account'),
