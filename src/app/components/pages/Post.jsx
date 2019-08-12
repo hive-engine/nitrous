@@ -291,7 +291,7 @@ class Post extends React.Component {
                     <div className="Post_footer__ad2">
                         <ins
                             className={'adsbygoogle'}
-                            style={{ display: 'block' }}
+                            style={{ display: 'inline-block', width: '100%' }}
                             data-ad-client={'ca-pub-1316865473229920'}
                             data-ad-slot={'8744394721'}
                             data-ad-format={'auto'}
