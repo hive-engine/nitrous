@@ -581,7 +581,7 @@ class Voting extends React.Component {
             let popBeneficiaries = true;
             beneficiaries.forEach(function(key) {
                 if (
-                    rewardData.exclude_beneficiaries_accounts.includes(
+                    rewardData.exclude_beneficiaries_accounts && rewardData.exclude_beneficiaries_accounts.includes(
                         key.get('account')
                     )
                 ) {
