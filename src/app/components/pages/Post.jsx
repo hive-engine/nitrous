@@ -260,6 +260,22 @@ class Post extends React.Component {
                         />
                     </div>
                 ) : null}
+                {this.props.enabled ? (
+                    <div className="Post_footer__ad2">
+                        <ins
+                            className={'adsbygoogle'}
+                            style={{
+                                display: 'inline-block',
+                                width: '100%',
+                                textAlign: 'center',
+                            }}
+                            data-ad-client={'ca-pub-1316865473229920'}
+                            data-ad-slot={'8744394721'}
+                            data-ad-format={'auto'}
+                            data-full-width-responsive={'true'}
+                        />
+                    </div>
+                ) : null}
                 <div id="#comments" className="Post_comments row hfeed">
                     <div className="column large-12">
                         <div className="Post_comments__content">
@@ -291,7 +307,11 @@ class Post extends React.Component {
                     <div className="Post_footer__ad2">
                         <ins
                             className={'adsbygoogle'}
-                            style={{ display: 'inline-block', width: '100%' }}
+                            style={{
+                                display: 'inline-block',
+                                width: '100%',
+                                textAlign: 'center',
+                            }}
                             data-ad-client={'ca-pub-1316865473229920'}
                             data-ad-slot={'8744394721'}
                             data-ad-format={'auto'}
