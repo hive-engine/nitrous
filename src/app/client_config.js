@@ -1,32 +1,27 @@
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'Lifestyle';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
-export const APP_ICON = 'weedcash';
+export const APP_NAME_LATIN = 'Lifestyle';
+export const APP_NAME_UPPERCASE = 'LIFESTYLE';
+export const APP_ICON = 'lifestyle';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
+export const APP_URL = 'https://www.one-life.io';
+export const APP_DOMAIN = 'www.one-life.io';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
-export const SCOT_TAG = 'weedcash';
-export const TAG_LIST = fromJSOrdered([
-    'weedcash',
-    'weed',
-    'cannabis',
-    'psychedelic',
-]);
-export const LIQUID_TOKEN = 'Weed';
+export const SCOT_TAG = 'lifestyle';
+export const TAG_LIST = fromJSOrdered(['lifestyle']);
+export const LIQUID_TOKEN = 'Lifestyle';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'LIFESTYLE';
 // used as backup
-export const SCOT_DENOM = 100000000;
+export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'WEED POWER';
+export const VESTING_TOKEN = 'LIFESTYLE POWER';
 export const INTERLEAVE_PROMOTED = true;
 export const PROMOTED_POST_ACCOUNT = 'null';
 
@@ -59,8 +54,8 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'Lifestyle is a social media platform where everyone gets paid for ' +
+    'creating and curating content. It leverages a robust digital points system, called LIFESTYLE, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
