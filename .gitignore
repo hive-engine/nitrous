@@ -9,3 +9,4 @@ tmp/*
 .vagrant
 lib
 
+/.vs
