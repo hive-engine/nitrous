@@ -147,6 +147,10 @@ const map = {
     yasu: 'certified_ulogger',
     wesphilbin: 'certified_ulogger',
     akilie1029: 'certified_ulogger',
+    adesojisouljay: 'certified_ulogger',
+    davidesimoncini: 'certified_ulogger',
+    waybeyondpadthai: 'certified_ulogger',
+    neopch: 'certified_ulogger',
 };
 
 export default map;
