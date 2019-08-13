@@ -11,6 +11,7 @@ import Slider from 'react-rangeslider';
 import { getThumbUpList } from 'app/utils/SctApi';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 
 const MAX_THUMBUP_DISPLAY = 20;
 
@@ -323,9 +324,6 @@ class ThumbUp extends React.Component {
             let thumbupClick = e => {
                 e && e.preventDefault();
                 const amount = this.state.sliderWeight.up + '';
-                const tokenBal = tokenBalances
-                    ? tokenBalances.get('balances')
-                    : 0;
 
                 // check token balance
                 if (
@@ -380,17 +378,28 @@ class ThumbUp extends React.Component {
             thumbUpIcon = <Icon name={'thumbup_fill'} className="upthumb" />;
         }
 
-        const classUp =
-            'ThumbUp__button ThumbUp__button-up' +
-            (thumbup_active ? ' ThumbsUp' : '');
+        const classUp = 'ThumbUp__button ThumbUp__button-up';
+        //  + (thumbup_active ? ' ThumbsUp' : '');
 
         return (
             <span className="ThumbUp">
                 <span className="ThumbUp__inner">
-                    <span className={classUp}>
-                        {thumbUpIcon}
-                        {dropdown}
-                    </span>
+                    {thumbup_active ? (
+                        <span className={classUp}>
+                            <LoadingIndicator
+                                style={{
+                                    display: 'inline-block',
+                                    left: '-36rem',
+                                }}
+                                type="circle"
+                            />
+                        </span>
+                    ) : (
+                        <span className={classUp}>
+                            {thumbUpIcon}
+                            {dropdown}
+                        </span>
+                    )}
                 </span>
                 {thumbs_list}
             </span>

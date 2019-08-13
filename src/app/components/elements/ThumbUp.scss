@@ -32,7 +32,7 @@
     border-radius: 50%;
   }
   div > a {
-    padding-right: 0.5rem;
+    padding-right: 0.4rem;
   }
   > a {
     padding-right: 0.4rem;
@@ -89,7 +89,7 @@
   }
 }
 
-.ThumbsUp .DropdownMenu ul {
+.ThumbUp .DropdownMenu ul {
   width: 260px;
 
   li > a {
@@ -104,6 +104,10 @@
 }
 
 .DropdownMenu.Thumbsup__list ul {
+  li > a {
+    //font-weight: 200;
+  }
+
   li > span {
     padding: 0.25rem 0.5rem;
     font-size: 82.5%;
