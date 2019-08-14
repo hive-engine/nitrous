@@ -5,6 +5,7 @@ import tt from 'counterpart';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import { TAG_LIST } from 'app/client_config';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -70,18 +71,7 @@ export default function Movie(props) {
     const classes = useStyles();
     const { movie, type, id } = props;
 
-    return null;
-
-    const [values, setValues, expanded, setExpanded] = React.useState({
-        genre: -1,
-        order: 'created',
-    });
-
-    const inputLabel = React.useRef(null);
-    const [labelWidth, setLabelWidth] = React.useState(0);
-    React.useEffect(() => {
-        setLabelWidth(inputLabel.current.offsetWidth);
-    }, []);
+    const [values, setValues] = React.useState({});
 
     function handleChange(event) {
         setValues(oldValues => ({
@@ -98,139 +88,25 @@ export default function Movie(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
-                <form className={classes.root} autoComplete="off">
-                    <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                    >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-genre">
-                            Genre
-                        </InputLabel>
-                        <Select
-                            value={values.genre}
-                            onChange={handleChange}
-                            input={
-                                <OutlinedInput
-                                    labelWidth={labelWidth}
-                                    name="genre"
-                                    id="outlined-genre"
-                                />
-                            }
-                        >
-                            <MenuItem value={-1}>
-                                <em>All Genres</em>
-                            </MenuItem>
-                            <MenuItem value={0}>Unknown</MenuItem>
-                            <MenuItem value={1}>SF</MenuItem>
-                            <MenuItem value={2}>Horror</MenuItem>
-                            <MenuItem value={3}>Drama</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                    >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-order">
-                            Sort by
-                        </InputLabel>
-                        <Select
-                            value={values.order}
-                            onChange={handleChange}
-                            input={
-                                <OutlinedInput
-                                    labelWidth={labelWidth}
-                                    name="order"
-                                    id="outlined-order"
-                                />
-                            }
-                        >
-                            <MenuItem value={'created'}>
-                                Review Created
-                            </MenuItem>
-                            <MenuItem value={'release_date'}>
-                                Release Date
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField
-                        id="search-title"
-                        name="title"
-                        label="Search Title"
-                        className={classes.formControl}
-                        onChange={handleSearch('title')}
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </form>
                 <main>
-                    <Grid container spacing={4} className={classes.cardGrid}>
-                        {movies.map(post => (
-                            <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
-                                <CardActionArea component="a" href="#">
-                                    <Card className={classes.card}>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={post.PosterPath}
-                                        />
-                                        <CardContent
-                                            className={classes.cardContent}
-                                        >
-                                            <Typography
-                                                gutterBottom
-                                                variant="h5"
-                                                component="h2"
-                                            >
-                                                {post.Title}
-                                            </Typography>
-                                            <Typography
-                                                className={classes.cardDate}
-                                                variant="subtitle1"
-                                                color="textSecondary"
-                                            >
-                                                {new Date(
-                                                    Number(
-                                                        post.ReleaseDate.replace(
-                                                            '/Date(',
-                                                            ''
-                                                        ).replace(')/', '')
-                                                    )
-                                                )
-                                                    .toISOString()
-                                                    .substring(0, 10)}
-                                            </Typography>
-                                            <Typography>
-                                                {post.Overview != null
-                                                    ? post.Overview.length > 100
-                                                      ? post.Overview.substring(
-                                                            0,
-                                                            100
-                                                        ) + ' ...'
-                                                      : post.Overview
-                                                    : null}
-                                            </Typography>
-                                            <div>
-                                                <Chip
-                                                    size="small"
-                                                    label="Horror"
-                                                    className={classes.chip}
-                                                />
-                                                <Chip
-                                                    size="small"
-                                                    label="Drama"
-                                                    className={classes.chip}
-                                                />
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </CardActionArea>
-                            </Grid>
-                        ))}
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={4}>
+                            <img src={movie.PosterPath} width="300" />
+                        </Grid>
+                        <Grid item xs={12} sm={8}>
+                            <h2>
+                                <b>{movie.Title}</b>
+                            </h2>
+                            <Typography
+                                className={classes.cardDate}
+                                variant="subtitle1"
+                                color="textSecondary"
+                            >
+                                {CustomUtil.convertUnixTimestampToDate(
+                                    movie.ReleaseDate
+                                )}
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </main>
             </Container>

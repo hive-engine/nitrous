@@ -16,6 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -170,7 +171,10 @@ export default function Movies(props) {
                     <Grid container spacing={4} className={classes.cardGrid}>
                         {movies.map(post => (
                             <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
-                                <CardActionArea component="a" href="#">
+                                <CardActionArea
+                                    component="a"
+                                    href={`/${type}/${post.MovieId}`}
+                                >
                                     <Card className={classes.card}>
                                         <CardMedia
                                             className={classes.cardMedia}
@@ -191,16 +195,9 @@ export default function Movies(props) {
                                                 variant="subtitle1"
                                                 color="textSecondary"
                                             >
-                                                {new Date(
-                                                    Number(
-                                                        post.ReleaseDate.replace(
-                                                            '/Date(',
-                                                            ''
-                                                        ).replace(')/', '')
-                                                    )
-                                                )
-                                                    .toISOString()
-                                                    .substring(0, 10)}
+                                                {CustomUtil.convertUnixTimestampToDate(
+                                                    post.ReleaseDate
+                                                )}
                                             </Typography>
                                             <Typography>
                                                 {post.Overview != null
@@ -213,16 +210,21 @@ export default function Movies(props) {
                                                     : null}
                                             </Typography>
                                             <div>
-                                                <Chip
-                                                    size="small"
-                                                    label="Horror"
-                                                    className={classes.chip}
-                                                />
-                                                <Chip
-                                                    size="small"
-                                                    label="Drama"
-                                                    className={classes.chip}
-                                                />
+                                                {post.Genres &&
+                                                    JSON.parse(post.Genres).map(
+                                                        genre => (
+                                                            <Chip
+                                                                key={genre.Id}
+                                                                size="small"
+                                                                label={
+                                                                    genre.Name
+                                                                }
+                                                                className={
+                                                                    classes.chip
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
                                             </div>
                                         </CardContent>
                                     </Card>
