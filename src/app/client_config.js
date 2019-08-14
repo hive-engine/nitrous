@@ -6,7 +6,7 @@ export const APP_NAME = 'Bilpcoin';
 // ie. "Голос" > "Golos"
 export const APP_NAME_LATIN = 'Bilpcoin';
 export const APP_NAME_UPPERCASE = 'BILPCOIN';
-export const APP_ICON = 'bilpcoin';
+export const APP_ICON = 'bpc';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.bilpcoin.io';
