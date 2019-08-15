@@ -83,8 +83,13 @@ const FormattedAssetToken = ({
 FormattedAssetToken.propTypes = {
     item: PropTypes.objectOf(PropTypes.shape).isRequired,
     pendingTokens: PropTypes.arrayOf(PropTypes.shape).isRequired,
-    isMyAccount: PropTypes.bool.isRequired,
-    handleClaimTokenRewards: PropTypes.func.isRequired,
+    isMyAccount: PropTypes.bool,
+    handleClaimTokenRewards: PropTypes.func,
+};
+
+FormattedAssetToken.defaultProps = {
+    isMyAccount: false,
+    handleClaimTokenRewards: () => {},
 };
 
 const FormattedAssetTokens = ({
