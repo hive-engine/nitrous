@@ -9,6 +9,7 @@ module.exports = {
             '/created',
             '/hot',
             '/promoted',
+            '/certified',
             '/about.html',
             '/faq.html',
             '/login.html',

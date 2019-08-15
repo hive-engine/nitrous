@@ -1,5 +1,8 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    CERTIFIED_POST_ACCOUNT,
+} from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -129,23 +132,29 @@ async function fetchMissingData(tag, feedType, state, feedData) {
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|certified)($|\/$|\/([^\/]+)\/?$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
-        const discussionQuery = {
+        let discussionQuery = {
             token: LIQUID_TOKEN_UPPERCASE,
             limit: 20,
         };
+
         if (tag) {
             discussionQuery.tag = tag;
         }
+
+        let path = `get_discussions_by_${feedType}`;
+
+        if (feedType == 'certified') {
+            path = `get_feed`;
+            discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+        }
+
         // first call feed.
-        let feedData = await getScotDataAsync(
-            `get_discussions_by_${feedType}`,
-            discussionQuery
-        );
+        let feedData = await getScotDataAsync(path, discussionQuery);
         await fetchMissingData(tag, feedType, state, feedData);
         return;
     }
@@ -261,7 +270,7 @@ export async function getStateAsync(url) {
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|certified)($|\/$|\/([^\/]+)\/?$)/
     );
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -275,6 +284,7 @@ export async function getStateAsync(url) {
             content: {},
         };
     }
+
     await attachScotData(url, raw);
 
     console.log('raw');
@@ -294,22 +304,26 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Certified)Async/
     );
     if (callNameMatch) {
-        const order = callNameMatch[1].toLowerCase();
-        const discussionQuery = {
+        let order = callNameMatch[1].toLowerCase();
+        let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
         };
+        let path = `get_discussions_by_${order}`;
+
+        if (order == 'certified') {
+            path = `get_feed`;
+            discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+        }
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(
-            `get_discussions_by_${order}`,
-            discussionQuery
-        );
+
+        feedData = await getScotDataAsync(path, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');

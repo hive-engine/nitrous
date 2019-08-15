@@ -10,3 +10,4 @@ tmp/*
 lib
 
 /.vs
+*.sln

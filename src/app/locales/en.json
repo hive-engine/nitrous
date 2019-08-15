@@ -284,7 +284,8 @@
     },
     "main_menu": {
         "hot": "Hot",
-        "trending": "Trending"
+        "trending": "Trending",
+        "certified": "Certified"
     },
     "reply_editor": {
         "shorten_title": "Shorten title",
