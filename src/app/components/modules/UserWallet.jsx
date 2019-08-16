@@ -79,7 +79,6 @@ class UserWallet extends React.Component {
 
         // do not render if account is not loaded or available
         if (!account) return null;
-        console.log(account.toJS());
         const allTokenBalances = account.has('token_balances')
             ? account.get('token_balances').toJS()
             : [
