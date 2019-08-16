@@ -297,7 +297,6 @@ export async function getStateAsync(url) {
 }
 
 export async function fetchFeedDataAsync(call_name, ...args) {
-    asyncCounter = asyncCounter + 1;
     const fetchSize = args[0].limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -317,10 +316,12 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         let path = `get_discussions_by_${order}`;
 
         if (order == 'certified') {
+            asyncCounter = asyncCounter + 1;
             path = `get_feed`;
             discussionQuery.account = CERTIFIED_POST_ACCOUNT;
             discussionQuery.start_entry_id = asyncCounter * fetchSize;
         }
+
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
