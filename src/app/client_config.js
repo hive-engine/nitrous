@@ -36,6 +36,7 @@ export const TAG_LIST = fromJSOrdered([
     'aaa',
     'palnet',
     'qna',
+    'z-museum',
 ]);
 export const LIQUID_TOKEN = 'Zzan';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
