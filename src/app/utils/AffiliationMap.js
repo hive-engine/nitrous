@@ -151,6 +151,7 @@ const map = {
     davidesimoncini: 'certified_ulogger',
     waybeyondpadthai: 'certified_ulogger',
     neopch: 'certified_ulogger',
+    eastmael: 'certified_ulogger',
 };
 
 export default map;
