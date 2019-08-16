@@ -92,15 +92,15 @@ function* shouldShowLoginWarning({ username, password }) {
     }
 
     // If it's a master key, show the warning.
-    if (!auth.isWif(password)) {
-        const accounts = yield api.getAccountsAsync([username]);
-        const account = accounts[0];
-        const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
-            .toPublicKey()
-            .toString();
-        const postingPubKeys = account.posting.key_auths[0];
-        return postingPubKeys.includes(pubKey);
-    }
+    //if (!auth.isWif(password)) {
+    //    const accounts = yield api.getAccountsAsync([username]);
+    //    const account = accounts[0];
+    //    const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
+    //        .toPublicKey()
+    //        .toString();
+    //    const postingPubKeys = account.posting.key_auths[0];
+    //    return postingPubKeys.includes(pubKey);
+    //}
 
     // For any other case, don't show the warning.
     return false;
@@ -322,11 +322,11 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        if (hasOwnerAuth) {
-            console.log('Rejecting due to detected owner auth');
-            yield put(userActions.loginError({ error: 'owner_login_blocked' }));
-            return;
-        }
+        //if (hasOwnerAuth) {
+        //    console.log('Rejecting due to detected owner auth');
+        //    yield put(userActions.loginError({ error: 'owner_login_blocked' }));
+        //    return;
+        //}
 
         const fullAuths = authority.reduce(
             (r, auth, type) => (auth === 'full' ? r.add(type) : r),
@@ -341,10 +341,10 @@ function* usernamePasswordLogin2({
                 login_owner_pubkey === owner_pub_key ||
                 login_wif_owner_pubkey === owner_pub_key
             ) {
-                yield put(
-                    userActions.loginError({ error: 'owner_login_blocked' })
-                );
-                return;
+                //yield put(
+                //    userActions.loginError({ error: 'owner_login_blocked' })
+                //);
+                //return;
             } else if (!highSecurityLogin && hasActiveAuth) {
                 yield put(
                     userActions.loginError({ error: 'active_login_blocked' })
@@ -599,8 +599,11 @@ function* saveLogin_localStorage() {
         console.error('Not logged in');
         return;
     }
-    // Save the lowest security key
-    const posting_private = private_keys && private_keys.get('posting_private');
+    // Save the lowest security key, or owner for SCT
+    const posting_private =
+        private_keys &&
+        (private_keys.get('posting_private') ||
+            private_keys.get('owner_private'));
     if (!login_with_keychain && !posting_private) {
         console.error('No posting key to save?');
         return;
@@ -620,10 +623,10 @@ function* saveLogin_localStorage() {
             if (auth.get(0) === postingPubkey)
                 throw 'Login will not be saved, posting key is the same as active key';
         });
-        account.getIn(['owner', 'key_auths']).forEach(auth => {
-            if (auth.get(0) === postingPubkey)
-                throw 'Login will not be saved, posting key is the same as owner key';
-        });
+        //account.getIn(['owner', 'key_auths']).forEach(auth => {
+        //    if (auth.get(0) === postingPubkey)
+        //        throw 'Login will not be saved, posting key is the same as owner key';
+        //});
     } catch (e) {
         console.error(e);
         return;
