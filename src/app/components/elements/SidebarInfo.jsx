@@ -7,6 +7,8 @@ import {
 
 const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
     const styleToken = { color: 'rgb(0, 120, 167)' };
+    const krwp_to_steem =
+        sct_to_steemp * 1000.0 / (sct_to_steemp * steem_to_krw);
     const krwp_to_sct = formatDecimal(1000.0 / (sct_to_steemp * steem_to_krw));
     const steem_price = formatDecimal(steem_to_dollor);
     const sct_price = formatDecimal(sct_to_steemp * steem_to_dollor);
@@ -20,29 +22,6 @@ const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
             </div>
             <div className="c-sidebar__content">
                 <ul className="c-sidebar__list-small">
-                    <li className="c-sidebar__list-item">
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <div>{'SCT'}</div>
-                            <div>
-                                {locale === 'ko' && (
-                                    <span className="integer">
-                                        {sct_price_with_krw[0] +
-                                            tt('g.krw') +
-                                            ' ('}
-                                    </span>
-                                )}
-                                <span>{'$'}</span>
-                                <span className="integer">{sct_price[0]}</span>
-                                <span className="decimal">{sct_price[1]}</span>
-                                {locale === 'ko' && <span>{')'}</span>}
-                            </div>
-                        </div>
-                    </li>
                     <li className="c-sidebar__list-item">
                         <div
                             style={{
@@ -75,8 +54,40 @@ const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
                                 justifyContent: 'space-between',
                             }}
                         >
+                            <div>{'SCT'}</div>
+                            <div>
+                                <span>
+                                    {sct_to_steemp.toFixed(2) + ' STEEM, '}
+                                </span>
+
+                                {locale === 'ko' && (
+                                    <span className="integer">
+                                        {sct_price_with_krw[0] +
+                                            tt('g.krw') +
+                                            ' ('}
+                                    </span>
+                                )}
+                                <span>{'$'}</span>
+                                <span className="integer">{sct_price[0]}</span>
+                                <span className="decimal">{sct_price[1]}</span>
+                                {locale === 'ko' && <span>{')'}</span>}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li className="c-sidebar__list-item">
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
                             <div>{'KRWP'}</div>
                             <div>
+                                <span>
+                                    {krwp_to_steem.toFixed(3) + ' STEEM, '}
+                                </span>
+
                                 <span className="integer">
                                     {krwp_to_sct[0]}
                                 </span>
