@@ -159,6 +159,7 @@ export async function attachScotData(url, state) {
             tokenStatuses,
             transferHistory,
             tokenDelegations,
+            snaxBalance,
         ] = await Promise.all([
             // modified to get all tokens. - by anpigon
             ssc.find('tokens', 'balances', {
@@ -174,6 +175,7 @@ export async function attachScotData(url, state) {
                 $or: [{ from: account }, { to: account }],
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
+            fetchSnaxBalanceAsync(account),
         ]);
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -194,6 +196,9 @@ export async function attachScotData(url, state) {
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
+        }
+        if (snaxBalance) {
+            state.accounts[account].snax_balance = snaxBalance;
         }
         return;
     }
@@ -349,4 +354,22 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         );
     }
     return { feedData, endOfData, lastValue };
+}
+
+export async function fetchSnaxBalanceAsync(account) {
+    const url = 'https://cdn.snax.one/v1/chain/get_currency_balance';
+    const data = {
+        code: 'snax.token',
+        symbol: 'SNAX',
+        account,
+    };
+    return await axios
+        .post(url, data, {
+            headers: { 'content-type': 'text/plain' },
+        })
+        .then(response => response.data)
+        .catch(err => {
+            console.error(`Could not fetch data, url: ${url}`);
+            return [];
+        });
 }

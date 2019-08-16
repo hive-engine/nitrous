@@ -6,7 +6,13 @@ import tt from 'counterpart';
 import TransferHistoryRow from 'app/components/cards/TransferHistoryRow';
 import TransactionError from 'app/components/elements/TransactionError';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
-import { numberWithCommas } from 'app/utils/StateFunctions';
+import {
+    numberWithCommas,
+    vestingSteem,
+    delegatedSteem,
+    powerdownSteem,
+    pricePerSteem,
+} from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
 import { FormattedHTMLMessage } from 'app/Translator';
@@ -115,6 +121,12 @@ class UserWallet extends React.Component {
         const tokenDelegations = account.has('token_delegations')
             ? account.get('token_delegations').toJS()
             : [];
+        const [snaxBalance] = account.has('snax_balance')
+            ? account.get('snax_balance').toJS()
+            : [];
+        const snax_balance_str = numberWithCommas(
+            parseFloat(snaxBalance).toString()
+        );
 
         let isMyAccount =
             current_user &&
@@ -185,6 +197,14 @@ class UserWallet extends React.Component {
                 ),
             },
         ];
+        if (isMyAccount) {
+            balance_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: `https://steem-engine.com/?p=market&t=${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            });
+        }
         let power_menu = [
             {
                 value: tt('userwallet_jsx.power_down'),
@@ -241,6 +261,9 @@ class UserWallet extends React.Component {
         }
 
         // -------
+        const vesting_steem = vestingSteem(account.toJS(), gprops);
+        const delegated_steem = delegatedSteem(account.toJS(), gprops);
+        // const powerdown_steem = powerdownSteem(account.toJS(), gprops);
 
         const savings_balance = account.get('savings_balance');
         const savings_sbd_balance = account.get('savings_sbd_balance');
@@ -291,25 +314,18 @@ class UserWallet extends React.Component {
         const sbd_balance_savings = parseFloat(
             savings_sbd_balance.split(' ')[0]
         );
+        const received_power_balance_str =
+            (delegated_steem < 0 ? '+' : '') +
+            numberWithCommas((-delegated_steem).toFixed(3));
+
+        const sbd_balance_str = numberWithCommas('$' + sbd_balance.toFixed(3)); // formatDecimal(account.sbd_balance, 3)
 
         const steem_menu = [
             {
-                value: tt('userwallet_jsx.transfer'),
-                link: '#',
-                onClick: showTransfer.bind(
-                    this,
-                    'STEEM',
-                    'Transfer to Account'
-                ),
-            },
-            {
-                value: tt('userwallet_jsx.power_up'),
-                link: '#',
-                onClick: showTransfer.bind(
-                    this,
-                    'VESTS',
-                    'Transfer to Account'
-                ),
+                value: tt('userwallet_jsx.steem_wallet'),
+                link: `https://steemitwallet.com/@${account.get(
+                    'name'
+                )}/transfers`,
             },
         ];
         if (isMyAccount) {
@@ -318,15 +334,17 @@ class UserWallet extends React.Component {
                 link: 'https://steemitwallet.com/market',
             });
         }
-        if (divesting) {
-            power_menu.push({
-                value: 'Cancel Power Down',
-                link: '#',
-                onClick: powerDown.bind(this, true),
-            });
-        }
+        const steem_power_menu = [
+            {
+                value: tt('userwallet_jsx.steem_wallet'),
+                link: `https://steemitwallet.com/@${account.get(
+                    'name'
+                )}/transfers`,
+            },
+        ];
 
         const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
+        const power_balance_str = numberWithCommas(vesting_steem.toFixed(3));
 
         return (
             <div className="UserWallet">
@@ -453,6 +471,70 @@ class UserWallet extends React.Component {
                         )}
                     </div>
                 </div>
+                {/* STEEM POWER */}
+                <div className="UserWallet__balance row zebra">
+                    <div className="column small-12 medium-8">
+                        STEEM POWER
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.influence_token"
+                        />
+                        {delegated_steem != 0 ? (
+                            <span className="secondary">
+                                {tt(
+                                    'tips_js.part_of_your_steem_power_is_currently_delegated',
+                                    { user_name: account.get('name') }
+                                )}
+                            </span>
+                        ) : null}
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={power_balance_str + ' STEEM'}
+                            />
+                        ) : (
+                            power_balance_str + ' STEEM'
+                        )}
+                        {delegated_steem != 0 ? (
+                            <div
+                                style={{
+                                    paddingRight: isMyAccount
+                                        ? '0.85rem'
+                                        : null,
+                                }}
+                            >
+                                <Tooltip t="STEEM POWER delegated to/from this account">
+                                    ({received_power_balance_str} STEEM)
+                                </Tooltip>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+                {/* Steem Dollars */}
+                <div className="UserWallet__balance row">
+                    <div className="column small-12 medium-8">
+                        STEEM DOLLARS
+                        <div className="secondary">
+                            {tt('userwallet_jsx.tradeable_tokens_transferred')}
+                        </div>
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={sbd_balance_str}
+                            />
+                        ) : (
+                            sbd_balance_str
+                        )}
+                    </div>
+                </div>
                 {/* Steem Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div
@@ -479,6 +561,23 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 ) : null}
+                {/* SNAX Balance */}
+                {parseFloat(snaxBalance) ? (
+                    <div className="UserWallet__balance row">
+                        <div className="column small-12 medium-8">
+                            {' SNAX Tokens'}
+                            <FormattedHTMLMessage
+                                className="secondary"
+                                id="tips_js.snax_token"
+                            />
+                        </div>
+                        <div className="column small-12 medium-4">
+                            {snax_balance_str}
+                            {' SNAX'}
+                        </div>
+                    </div>
+                ) : null}
+
                 {disabledWarning && (
                     <div className="row">
                         <div className="column small-12">

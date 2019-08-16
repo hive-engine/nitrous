@@ -544,7 +544,9 @@
         "part_of_your_steem_power_is_currently_delegated":
             "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다.",
         "steem_engine_tokens":
-            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a>은 STEEM 블록체인을 위한 스마트 컨트랙트 플랫폼입니다."
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a>은 STEEM 블록체인을 위한 스마트 컨트랙트 플랫폼입니다.",
+        "snax_token":
+            "Snax는 사용자들이 소셜 활동에 대한 보상을 받을 수 있는 블록체인 플랫폼입니다. 그리고 Steem 계정과 통합될 수 있습니다.<br><a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>에서 Snax에 대해 자세히 알아보십시오."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
@@ -830,6 +832,7 @@
         "power_up": "파워 업",
         "power_down": "파워 다운",
         "market": "거래소",
+        "steem_wallet": "Steem 지갑",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)s 으로 전환",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)s 출금",
         "withdraw_DEBT_TOKENS": "%(DEBT_TOKENS)s 출금",
