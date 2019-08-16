@@ -133,9 +133,8 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
 
         // get SCT thumbup config
-        const thumbupConfig = await getConfig();
-        scotConfig.thumbupConfig = thumbupConfig.data;
-        
+        scotConfig.thumbupConfig = await getConfig();
+
         this.cache.set(key, { info: scotInfo, config: scotConfig });
 
         console.info('Scot Config refreshed...');

@@ -28,16 +28,20 @@ class ThumbUp extends React.Component {
         tokenBalances: PropTypes.object,
         thumbup_active: PropTypes.bool,
         dispatchSubmit: PropTypes.func.isRequired,
-        max_amount: PropTypes.number,
+        max_like_amount: PropTypes.number,
         receive_account: PropTypes.string,
+        divide_author: PropTypes.number,
+        divide_rewards: PropTypes.number,
+        divide_dev: PropTypes.number,
+        divide_burn: PropTypes.number,
     };
     static defaultProps = {
-        max_amount: 1,
+        max_like_amount: 1,
         receive_account: 'uni.dev',
     };
     constructor(props) {
         super(props);
-        const { max_amount } = this.props;
+        const { max_like_amount } = this.props;
         this.state = {
             showWeight: false,
             isMyThumbUp: false,
@@ -45,8 +49,8 @@ class ThumbUp extends React.Component {
             thumbAmount: 0,
             thumbList: null,
             sliderWeight: {
-                up: max_amount,
-                down: max_amount,
+                up: max_like_amount,
+                down: max_like_amount,
             },
         };
 
@@ -74,7 +78,7 @@ class ThumbUp extends React.Component {
                 weight = e.target.value * 100;
             }
 
-            weight = max_amount / 100 * weight;
+            weight = max_like_amount / 100 * weight;
 
             if (up) {
                 w = {
@@ -134,8 +138,10 @@ class ThumbUp extends React.Component {
                 );
                 this.setState({
                     sliderWeight: {
-                        up: sliderWeightUp ? sliderWeightUp : max_amount,
-                        down: sliderWeightDown ? sliderWeightDown : max_amount,
+                        up: sliderWeightUp ? sliderWeightUp : max_like_amount,
+                        down: sliderWeightDown
+                            ? sliderWeightDown
+                            : max_like_amount,
                     },
                 });
             }
@@ -193,8 +199,12 @@ class ThumbUp extends React.Component {
             enable_slider,
             dispatchSubmit,
             thumbup_active,
-            max_amount,
+            max_like_amount,
             receive_account,
+            divide_author,
+            divide_rewards,
+            divide_dev,
+            divide_burn,
         } = this.props;
         const {
             showWeight,
@@ -248,9 +258,9 @@ class ThumbUp extends React.Component {
                         {LIQUID_TOKEN_UPPERCASE}
                     </div>
                     <Slider
-                        min={max_amount * 0.01}
-                        max={max_amount}
-                        step={max_amount / 100}
+                        min={max_like_amount * 0.01}
+                        max={max_like_amount}
+                        step={max_like_amount / 100}
                         value={b}
                         onChange={this.handleWeightChange(up)}
                         onChangeComplete={this.storeSliderWeight(up)}
@@ -331,8 +341,15 @@ class ThumbUp extends React.Component {
                     tokenBalances.get('balance') > 0 &&
                     tokenBalances.get('balance') > amount
                 ) {
-                    const memo = 'Thumbs up';
-                    // to, amount, memo, author, permlink, username,
+                    const memo =
+                        `@${author}/${permlink}: Thumbs up payout (` +
+                        `Author = ${amount * divide_author / 100}SCT,` +
+                        ` Thumbsup pool = ${amount *
+                            divide_rewards /
+                            100}SCT,` +
+                        ` Developer = ${amount * divide_dev / 100}SCT,` +
+                        ` Burn = ${amount * divide_burn / 100}SCT)`;
+
                     dispatchSubmit({
                         // to: receive_account,
                         to: receive_account, // for test
@@ -430,11 +447,12 @@ export default connect(
         const scotConfig = state.app.get('scotConfig');
         const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
 
-        let max_amount, receive_account;
-        if (thumbupConfig && thumbupConfig.get(0)) {
-            max_amount = thumbupConfig.get(0).get('max_like_amount');
-            receive_account = thumbupConfig.get(0).get('receive_account');
-        }
+        const max_like_amount = thumbupConfig.get('max_like_amount');
+        const receive_account = thumbupConfig.get('receive_account');
+        const divide_author = thumbupConfig.get('divide_author');
+        const divide_rewards = thumbupConfig.get('divide_rewards');
+        const divide_dev = thumbupConfig.get('divide_dev');
+        const divide_burn = thumbupConfig.get('divide_burn');
 
         return {
             post: ownProps.post,
@@ -444,8 +462,12 @@ export default connect(
             enable_slider,
             tokenBalances,
             thumbup_active,
-            max_amount,
+            max_like_amount,
             receive_account,
+            divide_author,
+            divide_rewards,
+            divide_dev,
+            divide_burn,
         };
     },
 
