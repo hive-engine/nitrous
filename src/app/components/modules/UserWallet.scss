@@ -23,7 +23,7 @@
   padding-bottom: 1rem;
   padding-top: 1rem;
 
-  &.UserWallet__balance.zebra {
+  &.UserWallet__balance:nth-child(even) {
       @include themify($themes) {
         background-color: themed('tableRowEvenBackgroundColor');
         color: themed('textColorPrimary');
