@@ -8,6 +8,15 @@
         margin-top: 1rem;
         padding-left: 1rem;
     }
+    
+    @include themify($themes) {
+      a.external-link {
+        color: themed('textColorAccent')
+      }
+      a.external-link:hover {
+        color: themed('textColorAccentHover')
+      }
+    }
 }
 
 .UserWallet__balance {

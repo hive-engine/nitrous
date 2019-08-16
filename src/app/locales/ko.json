@@ -540,7 +540,9 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다."
+            "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a>은 STEEM 블록체인을 위한 스마트 컨트랙트 플랫폼입니다."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
