@@ -152,6 +152,7 @@ const map = {
     waybeyondpadthai: 'certified_ulogger',
     neopch: 'certified_ulogger',
     eastmael: 'certified_ulogger',
+    marinmex: 'certified_ulogger',
 };
 
 export default map;
