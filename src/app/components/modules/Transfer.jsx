@@ -188,8 +188,11 @@ class TransferForm extends Component {
         const { transferType } = this.props.initialValues;
         const { currentAccount, tokenBalances } = this.props;
         const { asset } = this.state;
+        const tokenBalance = tokenBalances.find(
+            ({ symbol }) => symbol === asset.value
+        );
         return !asset || asset.value === LIQUID_TOKEN_UPPERCASE
-            ? `${tokenBalances.balance} ${LIQUID_TOKEN_UPPERCASE}`
+            ? `${tokenBalance.balance} ${LIQUID_TOKEN_UPPERCASE}`
             : null;
     }
 
