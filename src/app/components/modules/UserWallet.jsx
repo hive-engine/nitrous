@@ -73,7 +73,7 @@ class UserWallet extends React.Component {
 
         // do not render if account is not loaded or available
         if (!account) return null;
-
+        console.log(account.toJS());
         const allTokenBalances = account.has('token_balances')
             ? account.get('token_balances').toJS()
             : [
@@ -240,6 +240,94 @@ class UserWallet extends React.Component {
             );
         }
 
+        // -------
+
+        const savings_balance = account.get('savings_balance');
+        const savings_sbd_balance = account.get('savings_sbd_balance');
+
+        const powerDown = (cancel, e) => {
+            e.preventDefault();
+            const name = account.get('name');
+            if (cancel) {
+                const vesting_shares = cancel
+                    ? '0.000000 VESTS'
+                    : account.get('vesting_shares');
+                this.setState({ toggleDivestError: null });
+                const errorCallback = e2 => {
+                    this.setState({ toggleDivestError: e2.toString() });
+                };
+                const successCallback = () => {
+                    this.setState({ toggleDivestError: null });
+                };
+                this.props.withdrawVesting({
+                    account: name,
+                    vesting_shares,
+                    errorCallback,
+                    successCallback,
+                });
+            } else {
+                const to_withdraw = account.get('to_withdraw');
+                const withdrawn = account.get('withdrawn');
+                const vesting_shares = account.get('vesting_shares');
+                const delegated_vesting_shares = account.get(
+                    'delegated_vesting_shares'
+                );
+                this.props.showPowerdownSteem({
+                    account: name,
+                    to_withdraw,
+                    withdrawn,
+                    vesting_shares,
+                    delegated_vesting_shares,
+                });
+            }
+        };
+
+        const balance_steem = parseFloat(account.get('balance').split(' ')[0]);
+        const saving_balance_steem = parseFloat(savings_balance.split(' ')[0]);
+        const divesting =
+            parseFloat(account.get('vesting_withdraw_rate').split(' ')[0]) >
+            0.0;
+        const sbd_balance = parseFloat(account.get('sbd_balance'));
+        const sbd_balance_savings = parseFloat(
+            savings_sbd_balance.split(' ')[0]
+        );
+
+        const steem_menu = [
+            {
+                value: tt('userwallet_jsx.transfer'),
+                link: '#',
+                onClick: showTransfer.bind(
+                    this,
+                    'STEEM',
+                    'Transfer to Account'
+                ),
+            },
+            {
+                value: tt('userwallet_jsx.power_up'),
+                link: '#',
+                onClick: showTransfer.bind(
+                    this,
+                    'VESTS',
+                    'Transfer to Account'
+                ),
+            },
+        ];
+        if (isMyAccount) {
+            steem_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: 'https://steemitwallet.com/market',
+            });
+        }
+        if (divesting) {
+            power_menu.push({
+                value: 'Cancel Power Down',
+                link: '#',
+                onClick: powerDown.bind(this, true),
+            });
+        }
+
+        const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
+
         return (
             <div className="UserWallet">
                 {claimbox}
@@ -339,6 +427,32 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
+                {/* STEEM */}
+                <div className="UserWallet__balance row">
+                    <div className="column small-12 medium-8">
+                        STEEM
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.liquid_token"
+                            params={{
+                                LIQUID_TOKEN: 'Steem',
+                                VESTING_TOKEN: 'STEEM POWER',
+                            }}
+                        />
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_menu}
+                                el="li"
+                                selected={`${steem_balance_str} STEEM`}
+                            />
+                        ) : (
+                            `${steem_balance_str} STEEM`
+                        )}
+                    </div>
+                </div>
                 {/* Steem Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div

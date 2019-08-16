@@ -187,6 +187,7 @@ class TransferForm extends Component {
     balanceValue() {
         const { transferType } = this.props.initialValues;
         const { currentAccount, tokenBalances } = this.props;
+        debugger;
         const { asset } = this.state;
         return !asset || asset.value === LIQUID_TOKEN_UPPERCASE
             ? `${tokenBalances.balance} ${LIQUID_TOKEN_UPPERCASE}`
