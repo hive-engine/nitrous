@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { message, Collapse, Button, List } from 'antd';
 import GrowVideoEmbed from './GrowVideoEmbed';
 import * as growSections from './growSections';
+import './bootstrap.scss';
 
 class Grow extends React.Component {
     constructor(props) {
