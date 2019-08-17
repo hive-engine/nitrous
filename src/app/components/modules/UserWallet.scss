@@ -8,13 +8,22 @@
         margin-top: 1rem;
         padding-left: 1rem;
     }
+    
+    @include themify($themes) {
+      a.external-link {
+        color: themed('textColorAccent')
+      }
+      a.external-link:hover {
+        color: themed('textColorAccentHover')
+      }
+    }
 }
 
 .UserWallet__balance {
   padding-bottom: 1rem;
   padding-top: 1rem;
 
-  &.UserWallet__balance.zebra {
+  &.UserWallet__balance:nth-child(even) {
       @include themify($themes) {
         background-color: themed('tableRowEvenBackgroundColor');
         color: themed('textColorPrimary');
