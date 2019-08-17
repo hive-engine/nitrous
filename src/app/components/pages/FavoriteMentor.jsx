@@ -20,14 +20,13 @@ class FavoriteMentor extends React.Component {
                                 <h5 className="card-title">Buying Details</h5>
                                 <hr />
                                 <p className="card-text">
-                                    To get this experience all you need to do is
-                                    send teardrops to the user you wish to
-                                    utilise with memo <q> bropro </q> via
-                                    steem-engine.com. If you don't have the
-                                    specified teardrops amount, you can use the
+                                    To avail of this experience, simply 
+                                    send the specified MARLIANS amount to the user whose service you wish to
+                                    utilise, with the memo <q> favorite mentor </q>. If you don't have the
+                                    specified MARLIANS amount, you can use the
                                     button below to access the market to buy
-                                    teardrops. If you have any questions or
-                                    concerns, all our BroPro members are
+                                    MARLIANS. If you have any questions or
+                                    concerns, all Mentors are
                                     available on our Discord to help with your
                                     queries.
                                 </p>
@@ -40,7 +39,7 @@ class FavoriteMentor extends React.Component {
                                     Cancel
                                 </button>
                                 <a
-                                    href="https://steem-engine.com/?p=market&t=TEARDROPS"
+                                    href="https://steem-engine.com/?p=market&t=MARLIANS"
                                     target="_blank"
                                 >
                                     <button
@@ -62,18 +61,13 @@ class FavoriteMentor extends React.Component {
                             15 Mins Session With Your Favorite Mentor
                         </h3>
                         <p className="lead">
-                            On Ulogs.org, we will explore a 'variety of
-                            rewards'. We are building our entire ecosystem
-                            around a 'grey-list of certified uloggers' (true
-                            celebrities). This is an actual community of
-                            brothers, where each 'certified ulogger' is also a
-                            true fan. Many times, we rigamarole for years
+                            Many times, we rigamarole for years
                             seeking that 'ever-missing piece of the puzzle';
                             sometimes a simple conversation with 'a brother' can
                             turn 'years of rigmarole' into '15 mins of
                             straight-to-the-point'. Check out our growing list
-                            of hand-picked mentors under various niches and book
-                            a moment.
+                            of hand-picked mentors under various niches and 'book
+                            a moment'. Rest assured, each profile in our catalog is a 'certified' user.
                         </p>
                     </div>
                 </div>
@@ -107,7 +101,7 @@ class FavoriteMentor extends React.Component {
                                 <br />
                                 <p className="card-text">
                                     <small className="text-muted">
-                                        Starting at 100 TEARDROPS
+                                        Starting at 100 MARLIANS
                                     </small>
                                 </p>
                                 <p className="card-text mx-auto">
@@ -145,7 +139,7 @@ class FavoriteMentor extends React.Component {
                                 </p>
                                 <p className="card-text">
                                     <small className="text-muted">
-                                        Starting at 500 TEARDROPS
+                                        Starting at 500 MARLIANS
                                     </small>
                                 </p>
                                 <p className="card-text mx-auto">
@@ -183,7 +177,7 @@ class FavoriteMentor extends React.Component {
                                 </p>
                                 <p className="card-text">
                                     <small className="text-muted">
-                                        Starting at 100 TEARDROPS
+                                        Starting at 100 MARLIANS
                                     </small>
                                 </p>
                                 <p className="card-text mx-auto">
