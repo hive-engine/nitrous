@@ -8,6 +8,7 @@ import axios from 'axios';
 import SSC from 'sscjs';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+let asyncCounter = 0;
 
 async function callApi(url, params) {
     return await axios({
@@ -315,9 +316,12 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         let path = `get_discussions_by_${order}`;
 
         if (order == 'certified') {
+            asyncCounter = asyncCounter + 1;
             path = `get_feed`;
             discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+            discussionQuery.start_entry_id = asyncCounter * fetchSize;
         }
+
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;

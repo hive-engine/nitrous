@@ -289,6 +289,13 @@ export function* fetchData(action) {
                 start_permlink: permlink,
             },
         ];
+    } else if (order === 'certified') {
+        call_name = 'getDiscussionsByCertifiedAsync';
+        args = [
+            {
+                limit: constants.FETCH_DATA_BATCH_SIZE,
+            },
+        ];
     } else {
         // this should never happen. undefined behavior
         call_name = 'getDiscussionsByTrendingAsync';
