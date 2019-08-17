@@ -1,5 +1,6 @@
 import React from 'react';
 import Reveal from '../elements/Reveal';
+import './bootstrap.scss';
 
 class FavoriteMentor extends React.Component {
     constructor(props) {
