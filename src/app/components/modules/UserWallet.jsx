@@ -6,7 +6,13 @@ import tt from 'counterpart';
 import TransferHistoryRow from 'app/components/cards/TransferHistoryRow';
 import TransactionError from 'app/components/elements/TransactionError';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
-import { numberWithCommas } from 'app/utils/StateFunctions';
+import {
+    numberWithCommas,
+    vestingSteem,
+    delegatedSteem,
+    powerdownSteem,
+    pricePerSteem,
+} from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
 import { FormattedHTMLMessage } from 'app/Translator';
@@ -19,6 +25,8 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Icon from 'app/components/elements/Icon';
+import classNames from 'classnames';
+import FormattedAssetTokens from 'app/components/elements/FormattedAssetTokens';
 
 class UserWallet extends React.Component {
     constructor() {
@@ -57,6 +65,10 @@ class UserWallet extends React.Component {
         this.setState({ claimInProgress: true }); // disable the claim button
         this.props.claimRewards(account);
     };
+    handleClaimTokenRewards = token => {
+        const { account, claimTokenRewards } = this.props;
+        claimTokenRewards(account, token);
+    };
     render() {
         const {
             onShowDepositSteem,
@@ -67,14 +79,22 @@ class UserWallet extends React.Component {
 
         // do not render if account is not loaded or available
         if (!account) return null;
-
-        const tokenBalances = account.has('token_balances')
+        const allTokenBalances = account.has('token_balances')
             ? account.get('token_balances').toJS()
-            : {
-                  balance: '0',
-                  stake: '0',
-                  pendingUnstake: '0',
-              };
+            : [
+                  {
+                      balance: '0',
+                      stake: '0',
+                      pendingUnstake: '0',
+                      symbol: LIQUID_TOKEN_UPPERCASE,
+                  },
+              ];
+        const tokenBalances = allTokenBalances.find(
+            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+        );
+        const otherTokenBalances = allTokenBalances
+            .filter(({ symbol }) => symbol !== LIQUID_TOKEN_UPPERCASE)
+            .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
         const tokenUnstakes = account.has('token_unstakes')
             ? account.get('token_unstakes').toJS()
             : {
@@ -86,6 +106,9 @@ class UserWallet extends React.Component {
             : {
                   pending_token: 0,
               };
+        const allTokenStatus = account.has('all_token_status')
+            ? account.get('all_token_status').toJS()
+            : [];
         const balance = tokenBalances.balance;
         const delegatedStake = tokenBalances.delegationsOut || '0';
         const stakeBalance =
@@ -97,6 +120,12 @@ class UserWallet extends React.Component {
         const tokenDelegations = account.has('token_delegations')
             ? account.get('token_delegations').toJS()
             : [];
+        const [snaxBalance] = account.has('snax_balance')
+            ? account.get('snax_balance').toJS()
+            : [];
+        const snax_balance_str = numberWithCommas(
+            parseFloat(snaxBalance).toString()
+        );
 
         let isMyAccount =
             current_user &&
@@ -167,6 +196,14 @@ class UserWallet extends React.Component {
                 ),
             },
         ];
+        if (isMyAccount) {
+            balance_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: `https://steem-engine.com/?p=market&t=${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            });
+        }
         let power_menu = [
             {
                 value: tt('userwallet_jsx.power_down'),
@@ -221,6 +258,92 @@ class UserWallet extends React.Component {
                 </div>
             );
         }
+
+        // -------
+        const vesting_steem = vestingSteem(account.toJS(), gprops);
+        const delegated_steem = delegatedSteem(account.toJS(), gprops);
+        // const powerdown_steem = powerdownSteem(account.toJS(), gprops);
+
+        const savings_balance = account.get('savings_balance');
+        const savings_sbd_balance = account.get('savings_sbd_balance');
+
+        const powerDown = (cancel, e) => {
+            e.preventDefault();
+            const name = account.get('name');
+            if (cancel) {
+                const vesting_shares = cancel
+                    ? '0.000000 VESTS'
+                    : account.get('vesting_shares');
+                this.setState({ toggleDivestError: null });
+                const errorCallback = e2 => {
+                    this.setState({ toggleDivestError: e2.toString() });
+                };
+                const successCallback = () => {
+                    this.setState({ toggleDivestError: null });
+                };
+                this.props.withdrawVesting({
+                    account: name,
+                    vesting_shares,
+                    errorCallback,
+                    successCallback,
+                });
+            } else {
+                const to_withdraw = account.get('to_withdraw');
+                const withdrawn = account.get('withdrawn');
+                const vesting_shares = account.get('vesting_shares');
+                const delegated_vesting_shares = account.get(
+                    'delegated_vesting_shares'
+                );
+                this.props.showPowerdownSteem({
+                    account: name,
+                    to_withdraw,
+                    withdrawn,
+                    vesting_shares,
+                    delegated_vesting_shares,
+                });
+            }
+        };
+
+        const balance_steem = parseFloat(account.get('balance').split(' ')[0]);
+        const saving_balance_steem = parseFloat(savings_balance.split(' ')[0]);
+        const divesting =
+            parseFloat(account.get('vesting_withdraw_rate').split(' ')[0]) >
+            0.0;
+        const sbd_balance = parseFloat(account.get('sbd_balance'));
+        const sbd_balance_savings = parseFloat(
+            savings_sbd_balance.split(' ')[0]
+        );
+        const received_power_balance_str =
+            (delegated_steem < 0 ? '+' : '') +
+            numberWithCommas((-delegated_steem).toFixed(3));
+
+        const sbd_balance_str = numberWithCommas('$' + sbd_balance.toFixed(3)); // formatDecimal(account.sbd_balance, 3)
+
+        const steem_menu = [
+            {
+                value: tt('userwallet_jsx.steem_wallet'),
+                link: `https://steemitwallet.com/@${account.get(
+                    'name'
+                )}/transfers`,
+            },
+        ];
+        if (isMyAccount) {
+            steem_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: 'https://steemitwallet.com/market',
+            });
+        }
+        const steem_power_menu = [
+            {
+                value: tt('userwallet_jsx.steem_wallet'),
+                link: `https://steemitwallet.com/@${account.get(
+                    'name'
+                )}/transfers`,
+            },
+        ];
+
+        const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
+        const power_balance_str = numberWithCommas(vesting_steem.toFixed(3));
 
         return (
             <div className="UserWallet">
@@ -310,17 +433,150 @@ class UserWallet extends React.Component {
                         ) : null}
                     </div>
                 </div>
-                <div className="UserWallet__balance row">
-                    <div className="column small-12">
-                        {!!parseFloat(pendingUnstakeBalance) && (
+                {!!parseFloat(pendingUnstakeBalance) && (
+                    <div className="UserWallet__balance row">
+                        <div className="column small-12">
                             <span>
                                 Pending unstake: {pending_unstake_balance_str}{' '}
                                 {LIQUID_TOKEN_UPPERCASE}.
                             </span>
+                            <TransactionError opType="withdraw_vesting" />
+                        </div>
+                    </div>
+                )}
+                {/* STEEM */}
+                <div className="UserWallet__balance row">
+                    <div className="column small-12 medium-8">
+                        STEEM
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.liquid_token"
+                            params={{
+                                LIQUID_TOKEN: 'Steem',
+                                VESTING_TOKEN: 'STEEM POWER',
+                            }}
+                        />
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_menu}
+                                el="li"
+                                selected={`${steem_balance_str} STEEM`}
+                            />
+                        ) : (
+                            `${steem_balance_str} STEEM`
                         )}
-                        <TransactionError opType="withdraw_vesting" />
                     </div>
                 </div>
+                {/* STEEM POWER */}
+                <div className="UserWallet__balance row zebra">
+                    <div className="column small-12 medium-8">
+                        STEEM POWER
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.influence_token"
+                        />
+                        {delegated_steem != 0 ? (
+                            <span className="secondary">
+                                {tt(
+                                    'tips_js.part_of_your_steem_power_is_currently_delegated',
+                                    { user_name: account.get('name') }
+                                )}
+                            </span>
+                        ) : null}
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={power_balance_str + ' STEEM'}
+                            />
+                        ) : (
+                            power_balance_str + ' STEEM'
+                        )}
+                        {delegated_steem != 0 ? (
+                            <div
+                                style={{
+                                    paddingRight: isMyAccount
+                                        ? '0.85rem'
+                                        : null,
+                                }}
+                            >
+                                <Tooltip t="STEEM POWER delegated to/from this account">
+                                    ({received_power_balance_str} STEEM)
+                                </Tooltip>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+                {/* Steem Dollars */}
+                <div className="UserWallet__balance row">
+                    <div className="column small-12 medium-8">
+                        STEEM DOLLARS
+                        <div className="secondary">
+                            {tt('userwallet_jsx.tradeable_tokens_transferred')}
+                        </div>
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={sbd_balance_str}
+                            />
+                        ) : (
+                            sbd_balance_str
+                        )}
+                    </div>
+                </div>
+                {/* Steem Engine Tokens */}
+                {otherTokenBalances && otherTokenBalances.length ? (
+                    <div
+                        className={classNames('UserWallet__balance', 'row', {
+                            zebra: parseFloat(pendingUnstakeBalance),
+                        })}
+                    >
+                        <div className="column small-12">
+                            Steem Engine Token
+                            <FormattedHTMLMessage
+                                className="secondary"
+                                id="tips_js.steem_engine_tokens"
+                            />
+                        </div>
+                        <div className="column small-12">
+                            <FormattedAssetTokens
+                                items={otherTokenBalances}
+                                isMyAccount={isMyAccount}
+                                allTokenStatus={allTokenStatus}
+                                handleClaimTokenRewards={
+                                    this.handleClaimTokenRewards
+                                }
+                            />
+                        </div>
+                    </div>
+                ) : null}
+                {/* SNAX Balance */}
+                {parseFloat(snaxBalance) ? (
+                    <div className="UserWallet__balance row">
+                        <div className="column small-12 medium-8">
+                            {' SNAX Tokens'}
+                            <FormattedHTMLMessage
+                                className="secondary"
+                                id="tips_js.snax_token"
+                            />
+                        </div>
+                        <div className="column small-12 medium-4">
+                            {snax_balance_str}
+                            {' SNAX'}
+                        </div>
+                    </div>
+                ) : null}
+
                 {disabledWarning && (
                     <div className="row">
                         <div className="column small-12">
@@ -394,6 +650,28 @@ export default connect(
                 }),
             };
 
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                })
+            );
+        },
+
+        claimTokenRewards: (account, symbol) => {
+            const username = account.get('name');
+            const successCallback = () => {
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                );
+                alert('Success Claim!!');
+            };
+            const operation = {
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify({ symbol }),
+            };
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
