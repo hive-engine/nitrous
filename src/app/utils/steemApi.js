@@ -271,7 +271,7 @@ export async function getStateAsync(url) {
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted|certified)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|certified|grow|favorite-mentor)($|\/$|\/([^\/]+)\/?$)/
     );
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -279,12 +279,12 @@ export async function getStateAsync(url) {
               accounts: {},
               content: {},
           };
-    if (raw.error && (path === '/favorite-mentor' || path === '/grow')) {
-        raw = {
-            accounts: {},
-            content: {},
-        };
-    }
+//     if (raw.error && (path === '/favorite-mentor' || path === '/grow')) {
+//         raw = {
+//             accounts: {},
+//             content: {},
+//         };
+//     }
 
     await attachScotData(url, raw);
 
