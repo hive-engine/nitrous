@@ -517,7 +517,8 @@ class Voting extends React.Component {
             let popBeneficiaries = true;
             beneficiaries.forEach(function(key) {
                 if (
-                    rewardData.exclude_beneficiaries_accounts && rewardData.exclude_beneficiaries_accounts.includes(
+                    rewardData.exclude_beneficiaries_accounts &&
+                    rewardData.exclude_beneficiaries_accounts.includes(
                         key.get('account')
                     )
                 ) {
@@ -714,9 +715,20 @@ export default connect(
         if (!post) return ownProps;
         const scotConfig = state.app.get('scotConfig');
         const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const commentPool =
+            post.get('parent_author') &&
+            scotConfig.getIn(['info', 'enable_comment_reward_pool'], false);
+        const pending_rshares = scotConfig.getIn([
+            'info',
+            commentPool ? 'comment_pending_rshares' : 'pending_rshares',
+        ]);
+        const reward_pool = scotConfig.getIn([
+            'info',
+            commentPool ? 'comment_reward_pool' : 'reward_pool',
+        ]);
         const rewardData = {
-            pending_rshares: scotConfig.getIn(['info', 'pending_rshares']),
-            reward_pool: scotConfig.getIn(['info', 'reward_pool']),
+            pending_rshares,
+            reward_pool,
             author_curve_exponent: scotConfig.getIn([
                 'config',
                 'author_curve_exponent',
