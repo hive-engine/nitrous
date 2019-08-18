@@ -13,6 +13,8 @@ const map = {
 
     //verified
     thescarletletter: 'verified',
+    discostick: 'verified',
+
 
     /*
     //steem monsters
