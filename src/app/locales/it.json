@@ -94,6 +94,7 @@
         },
         "reputation": "Reputazione",
         "reveal_comment": "Mostra Commento",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "richiesta",
         "required": "Richiesto",
         "rewards": "Ricompense",
@@ -548,7 +549,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "I %(VESTING_TOKEN)s convertiti possono essere spediti a te stesso o a qualcun altro ma non possono non ritrasferirli senza essere convertirli di nuovo in %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Parte del tuo STEEM POWER ti è attualmente delegato. La delegazione è donata per l'influenza o per aiutare i nuovi utenti ad eseguire le azioni su steemit. Il quantitativo delegato può fluttuare."
+            "Parte del tuo STEEM POWER ti è attualmente delegato. La delegazione è donata per l'influenza o per aiutare i nuovi utenti ad eseguire le azioni su steemit. Il quantitativo delegato può fluttuare.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Promuovi post",
@@ -838,6 +843,7 @@
         "power_up": "Power Up",
         "power_down": "Power Down",
         "market": "Market",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Converti in %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Preleva %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Preleva %(DEBT_TOKENS)s",
@@ -906,6 +912,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "Azione",
