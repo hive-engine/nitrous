@@ -98,6 +98,7 @@
         },
         "reputation": "評価",
         "reveal_comment": "コメントを表示する",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "リクエスト",
         "required": "必須です",
         "rewards": "報酬",
@@ -548,7 +549,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "変換した%(VESTING_TOKEN)sは、自分自身や他の人に送ることが可能ですが、もう一度送るには%(LIQUID_TOKEN)sに変換する必要があります。",
         "part_of_your_steem_power_is_currently_delegated":
-            "現在のSTEEM POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがSteemitでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。"
+            "現在のSTEEM POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがSteemitでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "投稿をプロモートする",
@@ -838,6 +843,7 @@
         "power_up": "パワーアップ",
         "power_down": "パワーダウン",
         "market": "取引所",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)sに変換",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)sを引き出す",
         "withdraw_DEBT_TOKENS": "%(DEBT_TOKENS)sを引き出す",
@@ -906,6 +912,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "操作",
