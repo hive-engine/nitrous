@@ -30,6 +30,14 @@ const map = {
     awkwardness: 'verified',
     daiel: 'verified',
     'ebony-hot': 'verified',
+    'soft-touch': 'verified',
+    radnerd26: 'verified',
+    'porn.blog': 'verified',
+    'lady-o': 'verified',
+    'joey-fancy': 'verified',
+    'queen-of-heart': 'verified',
+    
+    
 
     /*
     //steem monsters
