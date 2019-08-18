@@ -94,6 +94,7 @@
         },
         "reputation": "Reputacja",
         "reveal_comment": "Odsłoń komentarz",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "prośba",
         "required": "Wymagany",
         "rewards": "Nagrody",
@@ -547,7 +548,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Przekonwertowane jednostki %(VESTING_TOKEN)s możesz wysłać sobie lub komuś innemu ale nie możesz ich wysłać ponownie bez konwersji z powrotem do tokenów %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Część z Twoich jednostek wpływu STEEM POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Steemit. Kwota oddelegowanych jednostek może się zmieniać w czasie."
+            "Część z Twoich jednostek wpływu STEEM POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Steemit. Kwota oddelegowanych jednostek może się zmieniać w czasie.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Promuj wpis",
@@ -838,6 +843,7 @@
         "power_up": "Zwiększ moc",
         "power_down": "Zmniejsz moc",
         "market": "Giełda",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Zamień na %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Wypłać %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Wypłać %(DEBT_TOKENS)s",
@@ -905,6 +911,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "Akcja",
