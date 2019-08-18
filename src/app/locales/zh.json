@@ -95,6 +95,7 @@
         },
         "reputation": "声誉",
         "reveal_comment": "显示评论",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "请求",
         "required": "需要",
         "rewards": "奖励",
@@ -517,7 +518,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "%(VESTING_TOKEN)s可以转给你自己或其他人，但是只有转回%(LIQUID_TOKEN)s后，才可以进行下一次转账。",
         "part_of_your_steem_power_is_currently_delegated":
-            "有一部分STEEM POWER是代理给你使用的。代理的STEEM POWER是为了帮助新用户在steemit上进行操作。你被代理的数量可能会有波动。"
+            "有一部分STEEM POWER是代理给你使用的。代理的STEEM POWER是为了帮助新用户在steemit上进行操作。你被代理的数量可能会有波动。",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "推广帖子",
@@ -795,6 +800,7 @@
         "power_up": "Power Up",
         "power_down": "Power Down",
         "market": "市场",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "转换为%(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "取出%(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "取出%(DEBT_TOKENS)s",
@@ -860,6 +866,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "功能",
