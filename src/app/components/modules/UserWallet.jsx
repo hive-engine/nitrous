@@ -81,17 +81,15 @@ class UserWallet extends React.Component {
         if (!account) return null;
         const allTokenBalances = account.has('token_balances')
             ? account.get('token_balances').toJS()
-            : [
-                  {
-                      balance: '0',
-                      stake: '0',
-                      pendingUnstake: '0',
-                      symbol: LIQUID_TOKEN_UPPERCASE,
-                  },
-              ];
+            : [];
         const tokenBalances = allTokenBalances.find(
             ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
-        );
+        ) || {
+            balance: '0',
+            stake: '0',
+            pendingUnstake: '0',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+        };
         const otherTokenBalances = allTokenBalances
             .filter(({ symbol }) => symbol !== LIQUID_TOKEN_UPPERCASE)
             .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
