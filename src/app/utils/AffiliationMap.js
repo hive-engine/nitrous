@@ -29,7 +29,7 @@ const map = {
     natashyamonroe: 'verified',
     awkwardness: 'verified',
     daiel: 'verified',
-    ebony-hot: 'verified',
+    'ebony-hot': 'verified',
 
     /*
     //steem monsters
