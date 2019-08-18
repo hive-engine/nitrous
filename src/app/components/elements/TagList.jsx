@@ -28,6 +28,9 @@ export default ({ post, horizontal, single }) => {
         }
     } catch (e) {
         tags = [];
+        try {
+            tags = JSON.parse(json.match(/"tags":\s?(\[[^\]]*\])/)[1]);
+        } catch (e2) {}
     }
 
     // Category should always be first.
