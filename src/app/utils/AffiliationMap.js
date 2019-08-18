@@ -11,6 +11,9 @@ const map = {
     steemitblog: 'steemit',
     steemitdev: 'steemit',
 
+    //verified
+    thescarletletter: 'verified',
+
     /*
     //steem monsters
     steemmonsters: 'sm',
