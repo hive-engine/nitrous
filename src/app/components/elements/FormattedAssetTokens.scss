@@ -1,0 +1,62 @@
+.UserWallet__balance-tokens {
+	margin-top: 15px;
+	text-align: left !important;
+
+	.reward {
+			@include themify($themes) {
+					background-color: themed('colorAccent');
+			}
+	}
+
+	.label {
+			color: #fff;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: baseline;
+			font-weight: 500;
+			display: inline-block;
+			padding: 2px 5px;
+			margin: 0 5px !important;
+			border-radius: 2px;
+			font-size: 0.75rem;
+			vertical-align: 15%;
+			background-color: #999;
+			border: 1px solid transparent;
+			font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+			&[title] {
+					cursor: pointer;
+					position: relative;
+					display: inline-block;
+
+					&:hover::after {
+							visibility: visible;
+					}
+
+					&::after {
+							position: absolute;
+							visibility: hidden;
+							font-size: 0.75rem;
+							width: auto;
+							min-width: 50px;
+							max-width: 300px;
+							word-wrap: break-word;
+							background-color: rgba(0, 0, 0, 0.8);
+							box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+							color: #fff;
+							text-align: center;
+							border-radius: 6px;
+							padding: 5px 7px;
+							z-index: 9999;
+							bottom: 150%;
+							left: 50%;
+							margin-left: -50%;
+							content: attr(title);
+					}
+			}
+	}
+
+	span:focus {
+			outline: none;
+	}
+}
