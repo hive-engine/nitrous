@@ -200,14 +200,9 @@ export default function Movies(props) {
                                                 )}
                                             </Typography>
                                             <Typography>
-                                                {post.Overview != null
-                                                    ? post.Overview.length > 100
-                                                      ? post.Overview.substring(
-                                                            0,
-                                                            100
-                                                        ) + ' ...'
-                                                      : post.Overview
-                                                    : null}
+                                                {CustomUtil.getSummary(
+                                                    post.Overview
+                                                )}
                                             </Typography>
                                             <div>
                                                 {post.Genres &&

@@ -5,6 +5,7 @@ import tt from 'counterpart';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import { TAG_LIST } from 'app/client_config';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -218,11 +219,9 @@ export default function Reviews(props) {
                                                     variant="subtitle1"
                                                     paragraph
                                                 >
-                                                    {post.Summary.substring(
-                                                        0,
-                                                        100
+                                                    {CustomUtil.getSummary(
+                                                        post.Summary
                                                     )}
-                                                    {' ...'}
                                                 </Typography>
                                                 <Box
                                                     component="fieldset"

@@ -30,6 +30,10 @@ import TextField from '@material-ui/core/TextField';
 
 import Chip from '@material-ui/core/Chip';
 
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -40,9 +44,9 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
     },
     card: {
-        height: '100%',
+        // height: '100%',
         display: 'flex',
-        flexDirection: 'column',
+        // flexDirection: 'column',
     },
     cardGrid: {
         marginTop: theme.spacing(1),
@@ -56,10 +60,15 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
     },
     cardMedia: {
-        paddingTop: '56.25%', // 16:9
+        width: 160,
     },
-    cardContent: {
-        flexGrow: 1,
+    avatar: {
+        margin: theme.spacing(0, 1),
+        width: 25,
+        height: 25,
+    },
+    ratingBox: {
+        margin: 0,
     },
     chip: {
         marginTop: theme.spacing(1),
@@ -70,6 +79,8 @@ const useStyles = makeStyles(theme => ({
 export default function Movie(props) {
     const classes = useStyles();
     const { movie, type, id } = props;
+
+    const movieDetails = JSON.parse(movie.Result);
 
     const [values, setValues] = React.useState({});
 
@@ -88,15 +99,15 @@ export default function Movie(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
-                <main>
+                <main className={classes.root}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={4}>
-                            <img src={movie.PosterPath} width="300" />
+                            <img src={movie.PosterPath} width="100%" />
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <h2>
+                            <h3>
                                 <b>{movie.Title}</b>
-                            </h2>
+                            </h3>
                             <Typography
                                 className={classes.cardDate}
                                 variant="subtitle1"
@@ -106,7 +117,105 @@ export default function Movie(props) {
                                     movie.ReleaseDate
                                 )}
                             </Typography>
+                            {movie.Overview}
+                            <p>
+                                Runtime:{' '}
+                                {CustomUtil.getRuntimeString(
+                                    movieDetails.Runtime
+                                )}
+                            </p>
+                            <div>
+                                {movieDetails.Genres &&
+                                    movieDetails.Genres.map(genre => (
+                                        <Chip
+                                            key={genre.Id}
+                                            size="small"
+                                            label={genre.Name}
+                                            className={classes.chip}
+                                        />
+                                    ))}
+                            </div>
                         </Grid>
+                    </Grid>
+                    <Grid container spacing={4} className={classes.cardGrid}>
+                        {movie.Posts.map(post => (
+                            <Grid
+                                item
+                                key={`${post.Author}/${post.Permlink}`}
+                                xs={12}
+                                md={6}
+                            >
+                                <CardActionArea
+                                    component="a"
+                                    href={`/@${post.Author}/${post.Permlink}`}
+                                >
+                                    <Card className={classes.card}>
+                                        <div className={classes.cardDetails}>
+                                            <CardContent>
+                                                <Typography
+                                                    component="h2"
+                                                    variant="h5"
+                                                >
+                                                    {post.Title}
+                                                </Typography>
+                                                <Typography
+                                                    className={classes.cardDate}
+                                                    variant="subtitle1"
+                                                    color="textSecondary"
+                                                >
+                                                    <Grid
+                                                        container
+                                                        alignItems="center"
+                                                    >
+                                                        <TimeAgoWrapper
+                                                            date={post.AddDate}
+                                                        />
+                                                        <Avatar
+                                                            alt={post.Author}
+                                                            src={`https://steemitimages.com/u/${
+                                                                post.Author
+                                                            }/avatar`}
+                                                            className={
+                                                                classes.avatar
+                                                            }
+                                                        />
+                                                        @{post.Author}
+                                                    </Grid>
+                                                </Typography>
+                                                <Typography
+                                                    variant="subtitle1"
+                                                    paragraph
+                                                >
+                                                    {CustomUtil.getSummary(
+                                                        post.Summary
+                                                    )}
+                                                </Typography>
+                                                <Box
+                                                    component="fieldset"
+                                                    mb={3}
+                                                    borderColor="transparent"
+                                                    className={
+                                                        classes.ratingBox
+                                                    }
+                                                >
+                                                    <Rating
+                                                        value={post.Rating}
+                                                        max={3}
+                                                        readOnly
+                                                    />
+                                                </Box>
+                                            </CardContent>
+                                        </div>
+                                        <Hidden xsDown>
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={post.CoverImgUrl}
+                                            />
+                                        </Hidden>
+                                    </Card>
+                                </CardActionArea>
+                            </Grid>
+                        ))}
                     </Grid>
                 </main>
             </Container>
