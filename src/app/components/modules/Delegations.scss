@@ -1,0 +1,15 @@
+.DelegationsModal {
+  thead, tbody {
+    background-color: #f4f4f4 !important;
+    color: $color-text-dark !important;
+  }
+  .amount {
+    text-align: right;
+  }
+  tr.delegationsIn {
+    background-color: #6495ed20 !important;
+  }
+  tr.delegationsOut {
+    background-color: #cd5c5c20 !important;
+  }
+ } 
