@@ -36,6 +36,7 @@ const map = {
     'lady-o': 'verified',
     'joey-fancy': 'verified',
     'queen-of-heart': 'verified',
+    speciallkay: 'verified',
     
     
 
