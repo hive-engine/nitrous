@@ -261,8 +261,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
-        let app_info = '';
-        if (jsonMetadata) app_info = jsonMetadata.app || '';
+        let app_info = p.json_metadata.app || '';
+        // if (jsonMetadata) app_info = jsonMetadata.app || '';
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
