@@ -244,7 +244,10 @@
         "post_as": "发布为",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "已经投过此见证人，你是否想取消此见证人的投票",
-        "written_from": "通过%(app_name)s发布"
+        "written_from": "通过%(app_name)s发布",
+        "all_claim_started":
+            "All claim started. It is completed after about %(seconds)s seconds.",
+        "all_claim_completed": "All claims completed!"
     },
     "navigation": {
         "about": "关于",

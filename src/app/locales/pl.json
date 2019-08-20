@@ -253,7 +253,11 @@
         },
         "post_as": "Napisz jako",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "głos oddany, użytkownik musi wskazać powód odrzucenia delegata"
+            "głos oddany, użytkownik musi wskazać powód odrzucenia delegata",
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "All claim started. It is completed after about %(seconds)s seconds.",
+        "all_claim_completed": "All claims completed!"
     },
     "navigation": {
         "about": "O Steem",
