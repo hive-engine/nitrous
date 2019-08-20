@@ -14,7 +14,23 @@ export const APP_DOMAIN = 'www.photostreem.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'photo';
-export const TAG_LIST = fromJSOrdered(['photo', 'photography']);
+export const TAG_LIST = fromJSOrdered([
+    'photography',
+    'photo',
+    'landscapephotography',
+    'naturephotography',
+    'foodphotography',
+    'animalphotography',
+    'vehiclephotography',
+    'smartphonephotography',
+    'macrophotography',
+    'bnwphotography',
+    'colorchallenge',
+    'monomad',
+    'photofeed',
+    'portraitcontest',
+    'phototoken',
+]);
 export const LIQUID_TOKEN = 'Photo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PHOTO';
