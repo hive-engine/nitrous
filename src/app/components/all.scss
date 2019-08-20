@@ -38,6 +38,7 @@
 @import "./elements/Notices";
 @import "./elements/GoogleAd";
 @import "./elements/GptAd";
+@import "./elements/FormattedAssetTokens";
 
 // modules
 @import "./modules/Header/styles";
@@ -49,6 +50,7 @@
 @import "./modules/Powerdown";
 @import "./modules/ConfirmTransactionForm";
 @import "./modules/Transfer";
+@import "./modules/Delegations";
 
 // pages
 @import "./pages/PostsIndex";
