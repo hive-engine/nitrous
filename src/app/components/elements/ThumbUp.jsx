@@ -72,10 +72,11 @@ class ThumbUp extends React.Component {
 
         this.handleButtonWeightChange = (up, weight) => e => {
             let w;
-            if (e.target.value > 100) e.target.value = 100;
+            if (e.target.value > max_like_amount)
+                e.target.value = max_like_amount;
 
             if (weight === -1) {
-                weight = e.target.value * 100;
+                weight = e.target.value;
             }
 
             weight = max_like_amount / 100 * weight;
@@ -96,7 +97,10 @@ class ThumbUp extends React.Component {
             const { username, is_comment } = this.props;
 
             localStorage.setItem(
-                'voteWeight' + '-' + username + (is_comment ? '-comment' : ''),
+                'thumbupWeight' +
+                    '-' +
+                    username +
+                    (is_comment ? '-comment' : ''),
                 weight
             );
         };
@@ -215,15 +219,11 @@ class ThumbUp extends React.Component {
         } = this.state;
 
         let thumbs_list = null;
-        const btnGroupStyle = { textAlign: 'center' };
         const slider = up => {
-            const b = up
-                ? this.state.sliderWeight.up
-                : this.state.sliderWeight.down;
-
+            const b = this.state.sliderWeight.up;
             return (
                 <span>
-                    <div id="btn_group" style={btnGroupStyle}>
+                    <div id="btn_group">
                         <button
                             id="weight-left"
                             onClick={this.handleButtonWeightChange(up, 25)}
@@ -253,10 +253,6 @@ class ThumbUp extends React.Component {
                             100%{' '}
                         </button>
                     </div>
-                    <div className="weight-display">
-                        {b.toFixed(2)}
-                        {LIQUID_TOKEN_UPPERCASE}
-                    </div>
                     <Slider
                         min={max_like_amount * 0.01}
                         max={max_like_amount}
@@ -266,8 +262,20 @@ class ThumbUp extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
+                    <div className="weight-display">
+                        <input
+                            type="number"
+                            min={max_like_amount * 0.01}
+                            max={max_like_amount}
+                            value={b}
+                            onChange={this.handleButtonWeightChange(up, -1)}
+                        />
+                    </div>
+                    <div className="token-name-display">
+                        {LIQUID_TOKEN_UPPERCASE}
+                    </div>
                     {tokenBalances ? (
-                        <div className="Token-balance-display">
+                        <div className="token-balance-display">
                             {tt('g.balances')} : {tokenBalances.get('balance')}{' '}
                             {LIQUID_TOKEN_UPPERCASE}
                         </div>
@@ -333,8 +341,7 @@ class ThumbUp extends React.Component {
         ) {
             let thumbupClick = e => {
                 e && e.preventDefault();
-                const amount = this.state.sliderWeight.up + '';
-
+                const amount = this.state.sliderWeight.up;
                 // check token balance
                 if (
                     tokenBalances &&
@@ -349,11 +356,11 @@ class ThumbUp extends React.Component {
                             100}SCT,` +
                         ` Developer = ${amount * divide_dev / 100}SCT,` +
                         ` Burn = ${amount * divide_burn / 100}SCT)`;
-
+                    const amountstr = amount + '';
                     dispatchSubmit({
                         // to: receive_account,
                         to: receive_account, // for test
-                        amount,
+                        amountstr,
                         memo,
                         author,
                         permlink,

@@ -22,17 +22,17 @@ export async function getConfig() {
     }
 
     divide.data.forEach(el => {
-        switch (el.account) {
-            case 'author':
+        switch (el.remark) {
+            case 'Author':
                 configData.divide_author = el.rate;
                 break;
-            case 'sct.thumbsup':
+            case 'Thumbs up pool':
                 configData.divide_rewards = el.rate;
                 break;
-            case 'uni.dev':
+            case 'Developer':
                 configData.divide_dev = el.rate;
                 break;
-            case 'null':
+            case 'Burn':
                 configData.divide_burn = el.rate;
                 break;
         }

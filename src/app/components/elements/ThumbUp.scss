@@ -55,8 +55,9 @@
       }
   }
   .close-button {
-    position: relative;
-    margin-left: 1em;
+    // position: relative;
+    line-height: 2.6rem;
+    margin-left: 1.5em;
   }
   > .dropdown-comp > .dropdown__content {
     position: absolute;
@@ -143,17 +144,23 @@
 
 .ThumbUp__adjust_weight {
   padding: 20px 20px 20px;
-  margin-right: 10px;
+  // margin-right: 10px;
   width: 350px;
   min-width: 320px;
   overflow: hidden;
   // .Icon:hover {
   //   animation: none !important;
   // }
-  .Token-balance-display {
+  .token-balance-display {
     float: left;
     margin-right: 0.5rem;
     text-align: right;
+    color: $dark-gray;
+    line-height: 2.6rem;
+  }
+  .token-name-display {
+    float: left;
+    margin-left: 0.5rem;
     color: $dark-gray;
     line-height: 2.6rem;
   }
@@ -165,10 +172,10 @@
     line-height: 2.6rem;
   }
   .weight-display {
-    width: 3rem;
+    width: 3.7rem;
     float: left;
-    margin-right: 0.5rem;
-    text-align: right;
+    margin-left: 0.5rem;
+    text-align: left;
     color: $dark-gray;
     // line-height: 2.6rem;
   }
@@ -311,7 +318,7 @@
   text-align : center !important;
 }
 
-#btn_group button{
+#btn_group button {
     border: 1px solid skyblue;
     background-color: rgba(0,0,0,0);
     color: skyblue;
