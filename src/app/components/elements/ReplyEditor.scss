@@ -127,7 +127,7 @@
 
 /* Medium only */
 @media screen and (min-width: 768px) {
-  .ReplyEditor {
+  .SubmitPost > .ReplyEditor {
     max-width: 108rem;
     .column {
       display: flex;
