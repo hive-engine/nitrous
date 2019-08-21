@@ -67,3 +67,15 @@ export const SITE_DESCRIPTION =
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
+
+// Revive Ads
+export const REVIVE_ADS = {
+    header_banner: {
+        zoneId: '1699',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+    sidebar_right: {
+        zoneId: '1761',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+};

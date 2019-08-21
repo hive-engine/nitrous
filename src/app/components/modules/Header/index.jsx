@@ -20,6 +20,7 @@ import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 
 class Header extends React.Component {
     static propTypes = {
@@ -36,7 +37,7 @@ class Header extends React.Component {
         this.state = {
             gptAdRendered: false,
             showAd: false,
-            showReviveAd: false,
+            showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
     }
@@ -86,11 +87,11 @@ class Header extends React.Component {
     }
 
     headroomOnUnpin() {
-        this.setState({ showAd: false });
+        this.setState({ showAd: false, showReviveAd: false });
     }
 
     headroomOnUnfix() {
-        this.setState({ showAd: true });
+        this.setState({ showAd: true, showReviveAd: true });
     }
 
     gptAdRendered() {
@@ -122,7 +123,7 @@ class Header extends React.Component {
             walletUrl,
         } = this.props;
 
-        const { showAd, showAnnouncement } = this.state;
+        const { showAd, showReviveAd, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -307,12 +308,9 @@ class Header extends React.Component {
                             id="steemit_728x90_970x90_970x250_320x50_ATF"
                         />
                     </div>
-                    <div style={showAd ? {} : { display: 'none' }}>
+                    <div style={showReviveAd ? {} : { display: 'none' }}>
                         <center>
-                            <ins
-                                data-revive-zoneid="1699"
-                                data-revive-id="727bec5e09208690b050ccfc6a45d384"
-                            />
+                            <ReviveAd adKey="header_banner" />
                         </center>
                     </div>
 
