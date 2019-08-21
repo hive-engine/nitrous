@@ -13,6 +13,7 @@ const map = {
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
+    aggroed: 'PAL Founder',
 };
 
 export default map;
