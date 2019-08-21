@@ -13,7 +13,8 @@ const map = {
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
-    aggroed: 'PALnet Founder, Witness, Keychain, Splinterlands, Steem Engine, Steem Foundation',
+    aggroed: 'PALnet Founder, Witness, MSP Waves, Keychain, Splinterlands, Steem Engine, Steem Foundation',
+    ausbitbank: 'Witness, PALnet Founder, Mad Cunt',
 };
 
 export default map;
