@@ -153,6 +153,7 @@ const map = {
     neopch: 'certified_ulogger',
     eastmael: 'certified_ulogger',
     marinmex: 'certified_ulogger',
+    zekepickleman: 'certified_ulogger',
 };
 
 export default map;
