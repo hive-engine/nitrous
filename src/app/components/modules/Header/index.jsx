@@ -309,9 +309,7 @@ class Header extends React.Component {
                         />
                     </div>
                     <div style={showReviveAd ? {} : { display: 'none' }}>
-                        <center>
-                            <ReviveAd adKey="header_banner" />
-                        </center>
+                        <ReviveAd adKey="header_banner" />
                     </div>
 
                     <nav className="row Header__nav">

@@ -7,7 +7,11 @@ class ReviveAd extends React.Component {
         const adKey = this.props.adKey;
         const zoneId = REVIVE_ADS[adKey].zoneId;
         const reviveId = REVIVE_ADS[adKey].reviveId;
-        return <ins data-revive-zoneid={zoneId} data-revive-id={reviveId} />;
+        return (
+            <div className="revive-ad" style={{ width: '100%' }}>
+                <ins data-revive-zoneid={zoneId} data-revive-id={reviveId} />
+            </div>
+        );
     }
 }
 

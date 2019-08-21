@@ -370,7 +370,9 @@ class PostsIndex extends React.Component {
                         </div>
                     ) : null}
                     {this.props.reviveEnabled ? (
-                        <ReviveAd adKey="sidebar_right" />
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_right" />
+                        </div>
                     ) : null}
                 </aside>
 
@@ -411,6 +413,11 @@ class PostsIndex extends React.Component {
                                     slotName="steemit_160x600_Left_2"
                                 />
                             </div>
+                        </div>
+                    ) : null}
+                    {this.props.reviveEnabled ? (
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_left" />
                         </div>
                     ) : null}
                 </aside>
