@@ -13,6 +13,7 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { INVEST_TOKEN_UPPERCASE } from 'app/client_config';
 import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
 
 import AppLogo from 'app/components/elements/AppLogo';
@@ -177,6 +178,11 @@ class Post extends React.Component {
                             />
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled && showAd ? (
+                        <div className="Post_footer__ad">
+                            <ReviveAd adKey="post_footer_betweencomments" />
+                        </div>
+                    ) : null}
                 </div>
             );
         });
@@ -256,6 +262,10 @@ class Post extends React.Component {
                         />
                     </div>
                 ) : null}
+                {this.props.reviveEnabled ? (
+                    <ReviveAd adKey="post_footer_abovecomments" />
+                ) : null}
+
                 <div id="#comments" className="Post_comments row hfeed">
                     <div className="column large-12">
                         <div className="Post_comments__content">
@@ -308,5 +318,6 @@ export default connect((state, ownProps) => {
         sortOrder:
             ownProps.router.getCurrentLocation().query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+        reviveEnabled: state.app.get('reviveEnabled'),
     };
 })(Post);
