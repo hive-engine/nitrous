@@ -28,6 +28,7 @@ const hook = {
     preBroadcast_comment,
     preBroadcast_transfer,
     preBroadcast_vote,
+    preBroadcast_custom_json,
     error_vote,
     error_custom_json,
     accepted_comment,
@@ -73,6 +74,29 @@ function* preBroadcast_vote({ operation, username }) {
     yield put(
         globalActions.voted({ username: voter, author, permlink, weight })
     );
+    return operation;
+}
+
+function* preBroadcast_custom_json({ operation, username }) {
+    if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+
+        // call thumbup reducer
+        const payload = json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            const { sender, author, permlink } = payload;
+            yield put(
+                globalActions.set({
+                    key: `transaction_thumbup_active_${author}_${permlink}`,
+                    value: true,
+                })
+            );
+
+            // yield put(
+            //     globalActions.getThumbUp({ username: sender, author, permlink })
+            // );
+        }
+    }
     return operation;
 }
 
@@ -442,6 +466,18 @@ function* accepted_custom_json({ operation }) {
                 operation.json
             );
         }
+    } else if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+        // call thumbup reducer
+        const payload = json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            const { sender, author, permlink } = payload;
+            yield put(
+                globalActions.remove({
+                    key: `transaction_thumbup_active_${author}_${permlink}`,
+                })
+            );
+        }
     }
     return operation;
 }
@@ -582,8 +618,9 @@ export function createPatch(text1, text2) {
     return patch;
 }
 
-function* error_custom_json({ operation: { id, required_posting_auths } }) {
-    if (id === 'follow') {
+function* error_custom_json({ operation }) {
+    if (operation.id === 'follow') {
+        const { required_posting_auths } = operation;
         const follower = required_posting_auths[0];
         yield put(
             globalActions.update({
@@ -591,6 +628,18 @@ function* error_custom_json({ operation: { id, required_posting_auths } }) {
                 updater: () => null,
             })
         );
+    } else if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+        const payload = json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            yield put(
+                globalActions.remove({
+                    key: `transaction_thumbup_active_${payload.author}_${
+                        payload.permlink
+                    }`,
+                })
+            );
+        }
     }
 }
 

@@ -254,7 +254,8 @@
         "circulating": "Circulating",
         "burn": "Burn",
         "staking": "Staking",
-        "written_from": "written from %(app_name)s"
+        "written_from": "written from %(app_name)s",
+        "thumbsup": "Thumbs up"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
@@ -453,6 +454,12 @@
         },
         "voting_power": "Voting Power",
         "estimated_vote": "Estimated Vote Value"
+    },
+    "thumbup_jsx": {
+        "thumbup_plural": {
+            "one": "%(count)s like",
+            "other": "%(count)s likes"
+        }
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
