@@ -15,7 +15,7 @@ const map = {
     // 'robot.pay' : 'Robot',
     aggroed: 'PALnet Founder, Witness, MSP Waves, Keychain, Splinterlands, Steem Engine, Steem Foundation',
     ausbitbank: 'Witness, PALnet Founder, Mad Cunt',
-    r0nd0n: 'Racist AF',
+    r0nd0n: 'PAL Clown, MSP Waves Station Manager',
     crimsonclad: 'Witness, Artist, Radio Host, Wild Woman'
 };
 
