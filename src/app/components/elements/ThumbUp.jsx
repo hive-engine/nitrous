@@ -356,11 +356,9 @@ class ThumbUp extends React.Component {
                             100}SCT,` +
                         ` Developer = ${amount * divide_dev / 100}SCT,` +
                         ` Burn = ${amount * divide_burn / 100}SCT)`;
-                    const amountstr = amount + '';
                     dispatchSubmit({
-                        // to: receive_account,
                         to: receive_account, // for test
-                        amountstr,
+                        amount: amount + '',
                         memo,
                         author,
                         permlink,
