@@ -100,17 +100,23 @@ class PostFull extends React.Component {
         this.linkedInShare = this.linkedInShare.bind(this);
         this.showExplorePost = this.showExplorePost.bind(this);
         this.onShowReply = () => {
-            const { state: { showReply, formId } } = this;
+            const {
+                state: { showReply, formId },
+            } = this;
             this.setState({ showReply: !showReply, showEdit: false });
             saveOnShow(formId, !showReply ? 'reply' : null);
         };
         this.onShowEdit = () => {
-            const { state: { showEdit, formId } } = this;
+            const {
+                state: { showEdit, formId },
+            } = this;
             this.setState({ showEdit: !showEdit, showReply: false });
             saveOnShow(formId, !showEdit ? 'edit' : null);
         };
         this.onDeletePost = () => {
-            const { props: { deletePost } } = this;
+            const {
+                props: { deletePost },
+            } = this;
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
@@ -410,7 +416,8 @@ class PostFull extends React.Component {
                     <h5>
                         {tt(
                             'postfull_jsx.you_are_viewing_a_single_comments_thread_from'
-                        )}:
+                        )}
+                        :
                     </h5>
                     <p>{content.root_title}</p>
                     <ul>
@@ -510,16 +517,12 @@ class PostFull extends React.Component {
                             {showReplyOption && (
                                 <a onClick={onShowReply}>{tt('g.reply')}</a>
                             )}{' '}
-                            {showEditOption &&
-                                !showEdit && (
-                                    <a onClick={onShowEdit}>{tt('g.edit')}</a>
-                                )}{' '}
-                            {showDeleteOption &&
-                                !showReply && (
-                                    <a onClick={onDeletePost}>
-                                        {tt('g.delete')}
-                                    </a>
-                                )}
+                            {showEditOption && !showEdit && (
+                                <a onClick={onShowEdit}>{tt('g.edit')}</a>
+                            )}{' '}
+                            {showDeleteOption && !showReply && (
+                                <a onClick={onDeletePost}>{tt('g.delete')}</a>
+                            )}
                         </span>
                         <span className="PostFull__responses">
                             <Link
