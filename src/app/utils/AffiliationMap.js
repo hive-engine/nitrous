@@ -154,6 +154,8 @@ const map = {
     eastmael: 'certified_ulogger',
     marinmex: 'certified_ulogger',
     zekepickleman: 'certified_ulogger',
+    uwelang: 'certified_ulogger',
+    giantbear: 'certified_ulogger',
 };
 
 export default map;
