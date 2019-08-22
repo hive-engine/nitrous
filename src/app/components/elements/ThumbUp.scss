@@ -64,6 +64,14 @@
     top: -30px;
     left: -26px;
   }
+
+  @media screen and (max-width: 39.9375em) {
+    > .dropdown-comp > .dropdown__content {
+      position: absolute;
+      top: -30px;
+      left: -205px;
+    }
+  }
 }
 
 .ThumbUp__button-up > a:hover, a.confirm_weight:hover {
