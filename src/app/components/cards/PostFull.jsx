@@ -502,9 +502,9 @@ class PostFull extends React.Component {
                             content={content}
                             authorRepLog10={authorRepLog10}
                         />
-                        {/* {app_info.startsWith(`${APP_ICON}/`) && (
+                        {app_info.startsWith(`${APP_ICON}/`) && (
                             <ThumbUp post={post} />
-                        )} */}
+                        )}
                     </div>
                     <div className="columns medium-12 large-2 ">
                         <Voting post={post} />
