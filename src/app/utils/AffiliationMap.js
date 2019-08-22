@@ -41,6 +41,7 @@ const map = {
     bitfook: 'verified',
     'please-daddy': 'verified',
     'dark-queen': 'verified',
+    kinkytales: 'verified',
     
     
 
