@@ -13,8 +13,8 @@
 @import "./elements/LoadingIndicator";
 @import "./elements/Userpic";
 @import "./elements/Voting";
+@import "./elements/ThumbUp";
 @import "./elements/FormattedAsset";
-@import "./elements/FormattedAssetToken";
 @import "./elements/ReplyEditor";
 @import "./elements/DropdownMenu";
 @import "./elements/VerticalMenu";
@@ -39,6 +39,7 @@
 @import "./elements/Notices";
 @import "./elements/GoogleAd";
 @import "./elements/GptAd";
+@import "./elements/FormattedAssetTokens";
 
 // modules
 @import "./modules/Header/styles";
