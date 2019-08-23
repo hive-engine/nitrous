@@ -145,10 +145,7 @@ class Author extends React.Component {
                             <AuthorIcon author={author} />
                             {showAffiliation && AffiliationMap[author] ? (
                                 <span className="affiliation">
-                                    {tt(
-                                        'g.affiliation_' +
-                                            AffiliationMap[author]
-                                    )}
+                                    {AffiliationMap[author]}
                                 </span>
                             ) : null}
                             <Icon name="dropdown-arrow" />
