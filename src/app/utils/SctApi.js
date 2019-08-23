@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_SERVER_URL = 'http://13.125.53.227:8080';
+const API_SERVER_URL = 'https://apisct.cloud';
 
 const THUMBUP_LIST = '/thumbups/list';
 const CONFIG = '/thumbups/config';
