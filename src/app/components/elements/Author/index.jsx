@@ -117,7 +117,7 @@ class Author extends React.Component {
                     <Reputation value={authorRepLog10} />
                     {showAffiliation && AffiliationMap[author] ? (
                         <span className="affiliation">
-                            {tt('g.affiliation_' + AffiliationMap[author])}
+                            {AffiliationMap[author]}
                         </span>
                     ) : null}
                 </span>
