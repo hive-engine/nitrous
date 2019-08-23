@@ -200,19 +200,6 @@ ul.PostsList__summaries {
     a {
         display: block;
     }
-    &.entry-content > a {
-      padding-top: 4px;
-      font-size: 14px;
-      line-height: 20px;
-      color: #676767;
-      -webkit-line-clamp: 3;
-      word-break: normal;
-      display: -webkit-box;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      word-wrap: break-word;
-    }
   }
   .PostSummary.with-image .PostSummary__reblogged_by,
   .PostSummary.with-image .PostSummary__content {
@@ -262,13 +249,33 @@ ul.PostsList__summaries {
       }
 
       &.articles__content-block--text {
-        .articles__h2.entry-title {
+        margin-bottom: 6px !important;
+
+        .entry-title {
           font-size: 18px;
           font-weight: 600;
           line-height: 24px;
           color: #000;
           -webkit-line-clamp: 2;
           word-break: normal;
+        }
+
+        .entry-content > a {
+          padding-top: 4px;
+          font-size: 14px;
+          line-height: 20px;
+          color: #676767;
+          -webkit-line-clamp: 3;
+          word-break: normal;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          word-wrap: break-word;
+        }
+
+        .articles__summary-footer {
+          margin-top: 16px;
         }
       }
     }
