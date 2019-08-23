@@ -15,7 +15,8 @@ const map = {
     aggroed: 'I Witness and I know things',
     ausbitbank: 'Witness, PALnet Founder, Mad Cunt',
     r0nd0n: 'PAL Clown, MSP Waves Station Manager',
-    crimsonclad: 'Witness, Artist, Radio Host, Wild Woman'
+    crimsonclad: 'Witness, Artist, Radio Host, Wild Woman',
+    torico: 'cookie monsta',
 };
 
 export default map;
