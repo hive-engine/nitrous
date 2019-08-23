@@ -1,27 +1,30 @@
 const map = {
     //steemit
-    ned: 'steemit',
-    justinw: 'steemit',
-    elipowell: 'steemit',
-    vandeberg: 'steemit',
-    birdinc: 'steemit',
-    gerbino: 'steemit',
-    andrarchy: 'steemit',
-    roadscape: 'steemit',
-    steemitblog: 'steemit',
-    steemitdev: 'steemit',
+    ned: 'Steemit',
+    justinw: 'Steemit',
+    elipowell: 'Steemit',
+    vandeberg: 'Steemit',
+    birdinc: 'Steemit',
+    gerbino: 'Steemit',
+    andrarchy: 'Steemit',
+    roadscape: 'Steemit',
+    steemitblog: 'Steemit',
+    steemitdev: 'Steemit',
+
+    // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
+    // 'robot.pay' : 'Robot',
 
     //neoxag
-    neoxian: 'founder',
-    zaku: 'tribe_team',
-    'news-today': 'tribe_team',
-    reazuliqbal: 'tribe_team',
-    bala41288: 'tribe_team',
-    thereikiforest: 'pope',
-    r2cornell: 'dragon',
-    scipio: 'dragon',
-    afolwalex: 'dragon',
-    bullionstackers: 'dragon',
+    neoxian: 'Founder',
+    zaku: 'Tribe Team',
+    'news-today': 'Tribe Team',
+    reazuliqbal: 'Tribe Team',
+    bala41288: 'Tribe Team',
+    thereikiforest: 'Pope',
+    r2cornell: 'Dragon',
+    scipio: 'Dragon',
+    afolwalex: 'Dragon',
+    bullionstackers: 'Dragon',
 };
 
 export default map;
