@@ -264,7 +264,9 @@
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "All claim started. It is completed after about %(seconds)s seconds.",
-        "all_claim_completed": "All claims completed!"
+        "all_claim_completed": "All claims completed!",
+        "pending-orders": "Pending Orders",
+        "my_orders": "My Orders"
     },
     "navigation": {
         "about": "A propos",
@@ -993,5 +995,15 @@
         "witness_proxy_set": "Donner une procuration",
         "witness_proxy_clear": "Annuler la procuration",
         "proxy_update_error": "Votre procuration n'a pas été mise à jour"
+    },
+    "pendingorders_jsx": {
+        "timestamp": "Timestamp",
+        "price": "Price",
+        "quantity": "Quantity",
+        "symbol": "Symbol",
+        "type": "Type",
+        "sum": "Sum",
+        "sell": "Sell",
+        "buy": "Buy"
     }
 }

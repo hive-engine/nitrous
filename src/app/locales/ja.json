@@ -258,7 +258,9 @@
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "All claim started. It is completed after about %(seconds)s seconds.",
-        "all_claim_completed": "All claims completed!"
+        "all_claim_completed": "All claims completed!",
+        "pending-orders": "Pending Orders",
+        "my_orders": "My Orders"
     },
     "navigation": {
         "about": "Steemについて",
@@ -976,5 +978,15 @@
         "witness_proxy_set": "代理人を設定",
         "witness_proxy_clear": "代理人を解除",
         "proxy_update_error": "代理人は更新されませんでした。"
+    },
+    "pendingorders_jsx": {
+        "timestamp": "Timestamp",
+        "price": "Price",
+        "quantity": "Quantity",
+        "symbol": "Symbol",
+        "type": "Type",
+        "sum": "Sum",
+        "sell": "Sell",
+        "buy": "Buy"
     }
 }

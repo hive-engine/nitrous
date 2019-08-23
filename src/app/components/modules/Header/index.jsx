@@ -254,6 +254,7 @@ class Header extends React.Component {
         const wallet_link = `/@${username}/transfers`;
         const settings_link = `/@${username}/settings`;
         const pathCheck = userPath === '/submit.html' ? true : null;
+        const pendingorders_link = `/@${username}/pending-orders`;
 
         const user_menu = [
             {
@@ -272,6 +273,11 @@ class Header extends React.Component {
                 link: wallet_link,
                 icon: 'wallet',
                 value: tt('g.wallet'),
+            },
+            {
+                link: pendingorders_link,
+                icon: 'list-alt',
+                value: tt('g.pending-orders'),
             },
 
             {

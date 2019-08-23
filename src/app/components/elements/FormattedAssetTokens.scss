@@ -24,11 +24,6 @@
 			border: 1px solid transparent;
 			font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-			// under medium
-			@media screen and (max-width: 1240px) {
-				white-space: normal;
-			}
-
 			&[title] {
 					cursor: pointer;
 					position: relative;

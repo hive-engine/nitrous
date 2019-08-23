@@ -23,13 +23,6 @@
   padding-bottom: 1rem;
   padding-top: 1rem;
 
-  // under medium
-  @media screen and (max-width: 1240px) {
-    .DropdownMenu > .VerticalMenu {
-      right: 0;
-    }
-  }
-
   &.UserWallet__balance:nth-child(even) {
       @include themify($themes) {
         background-color: themed('tableRowEvenBackgroundColor');
