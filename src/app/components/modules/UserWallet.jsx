@@ -313,15 +313,12 @@ class UserWallet extends React.Component {
             }
         };
 
-        const balance_steem = parseFloat(account.get('balance').split(' ')[0]);
-        const saving_balance_steem = parseFloat(savings_balance.split(' ')[0]);
+        const balance_steem = parseFloat(account.get('balance', 0));
+        const saving_balance_steem = parseFloat(savings_balance || 0);
         const divesting =
-            parseFloat(account.get('vesting_withdraw_rate').split(' ')[0]) >
-            0.0;
+            parseFloat(account.get('vesting_withdraw_rate', 0)) > 0.0;
         const sbd_balance = parseFloat(account.get('sbd_balance'));
-        const sbd_balance_savings = parseFloat(
-            savings_sbd_balance.split(' ')[0]
-        );
+        const sbd_balance_savings = parseFloat(savings_sbd_balance || 0);
         const received_power_balance_str =
             (delegated_steem < 0 ? '+' : '') +
             numberWithCommas((-delegated_steem).toFixed(3));
