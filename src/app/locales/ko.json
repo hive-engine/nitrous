@@ -255,7 +255,10 @@
         "all_claim_started":
             "전체 토큰의 클레임 요청을 시작합니다. 약 %(seconds)s 초 후에 완료됩니다.",
         "all_claim_completed":
-            "클레임 요청이 완료 되었습니다. 결과는 수분 이내 확인이 가능합니다."
+            "클레임 요청이 완료 되었습니다. 결과는 수분 이내 확인이 가능합니다.",
+        "transaction-history": "거래 내역",
+        "pending-orders": "미체결 주문",
+        "my_orders": "내 주문"
     },
     "navigation": {
         "about": "스팀이란?",
@@ -967,5 +970,15 @@
         "witness_proxy_set": "위임 설정",
         "witness_proxy_clear": "위임 철회",
         "proxy_update_error": "Your proxy was not updated"
+    },
+    "pendingorders_jsx": {
+        "timestamp": "주문시간",
+        "price": "주문가격",
+        "quantity": "주문수량",
+        "symbol": "토큰",
+        "type": "주문종류",
+        "sum": "주문금액",
+        "sell": "매도",
+        "buy": "매수"
     }
 }

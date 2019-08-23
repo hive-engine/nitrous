@@ -150,6 +150,16 @@ export async function attachScotData(url, state) {
         return;
     }
 
+    // pending-orders
+    urlParts = url.match(/^[\/]?@([^\/]+)\/pending-orders[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        const pendingOrders = await getPendingOrdersAsync({ account });
+        state.accounts[account].pending_orders = pendingOrders;
+        return;
+    }
+
+    // transfers
     urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
@@ -372,4 +382,23 @@ export async function fetchSnaxBalanceAsync(account) {
             console.error(`Could not fetch data, url: ${url}`);
             return [];
         });
+}
+
+export async function getPendingOrdersAsync({ account }) {
+    let error = false;
+    let buyBook = [];
+    let sellBook = [];
+    try {
+        [buyBook, sellBook] = await Promise.all([
+            ssc.find('market', 'buyBook', {
+                account,
+            }),
+            ssc.find('market', 'sellBook', {
+                account,
+            }),
+        ]);
+    } catch (e) {
+        error = e.message;
+    }
+    return { buyBook, sellBook, error };
 }

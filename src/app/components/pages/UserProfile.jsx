@@ -30,6 +30,7 @@ import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import SanitizedLink from 'app/components/elements/SanitizedLink';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import PendingOrders from 'app/components/modules/PendingOrders';
 
 export default class UserProfile extends React.Component {
     constructor() {
@@ -216,7 +217,14 @@ export default class UserProfile extends React.Component {
                     />
                 </div>
             );
-        } else if (
+        } else if (section === 'pending-orders') {
+            tab_content = (
+                <div>
+                    <PendingOrders account={accountImm} />
+                </div>
+            );
+        }
+        if (
             section === 'curation-rewards' ||
             section === 'author-rewards' ||
             section === 'permissions' ||
@@ -421,7 +429,8 @@ export default class UserProfile extends React.Component {
             !(
                 section === 'transfers' ||
                 section === 'permissions' ||
-                section === 'password'
+                section === 'password' ||
+                section === 'pending-orders'
             )
         ) {
             tab_content = (
@@ -479,8 +488,16 @@ export default class UserProfile extends React.Component {
                     <ul className="menu" style={{ flexWrap: 'wrap' }}>
                         <li>
                             <Link
+                                to={`/@${accountname}/pending-orders`}
+                                activeClassName="active"
+                            >
+                                {tt('g.pending-orders')}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
                                 to={`/@${accountname}/transfers`}
-                                activeClassName="acive"
+                                activeClassName="active"
                             >
                                 {tt('g.wallet')}
                             </Link>
