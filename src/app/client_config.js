@@ -69,6 +69,7 @@ export const SITE_DESCRIPTION =
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
 // Revive Ads
+export const NO_ADS_STAKE_THRESHOLD = 2000;
 export const REVIVE_ADS = {
     header_banner: {
         zoneId: '1699',
@@ -88,6 +89,10 @@ export const REVIVE_ADS = {
     },
     post_footer_betweencomments: {
         zoneId: '1769',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+    feed: {
+        zoneId: '1777',
         reviveId: '727bec5e09208690b050ccfc6a45d384',
     },
 };
