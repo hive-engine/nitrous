@@ -1,6 +1,5 @@
 import React from 'react';
 import Reveal from '../elements/Reveal';
-import './bootstrap.scss';
 
 class FavoriteMentor extends React.Component {
     constructor(props) {
@@ -20,15 +19,15 @@ class FavoriteMentor extends React.Component {
                                 <h5 className="card-title">Buying Details</h5>
                                 <hr />
                                 <p className="card-text">
-                                    To avail of this experience, simply 
-                                    send the specified MARLIANS amount to the user whose service you wish to
-                                    utilise, with the memo <q> favorite mentor </q>. If you don't have the
-                                    specified MARLIANS amount, you can use the
-                                    button below to access the market to buy
+                                    To avail of this experience, simply send the
+                                    specified MARLIANS amount to the user whose
+                                    service you wish to utilise, with the memo{' '}
+                                    <q> favorite mentor </q>. If you don't have
+                                    the specified MARLIANS amount, you can use
+                                    the button below to access the market to buy
                                     MARLIANS. If you have any questions or
-                                    concerns, all Mentors are
-                                    available on our Discord to help with your
-                                    queries.
+                                    concerns, all Mentors are available on our
+                                    Discord to help with your queries.
                                 </p>
                                 <hr />
                                 <button
@@ -61,13 +60,14 @@ class FavoriteMentor extends React.Component {
                             15 Mins Session With Your Favorite Mentor
                         </h3>
                         <p className="lead">
-                            Many times, we rigamarole for years
-                            seeking that 'ever-missing piece of the puzzle';
-                            sometimes a simple conversation with 'a brother' can
-                            turn 'years of rigmarole' into '15 mins of
+                            Many times, we rigamarole for years seeking that
+                            'ever-missing piece of the puzzle'; sometimes a
+                            simple conversation with 'a brother' can turn 'years
+                            of rigmarole' into '15 mins of
                             straight-to-the-point'. Check out our growing list
-                            of hand-picked mentors under various niches and 'book
-                            a moment'. Rest assured, each profile in our catalog is a 'certified' user.
+                            of hand-picked mentors under various niches and
+                            'book a moment'. Rest assured, each profile in our
+                            catalog is a 'certified' user.
                         </p>
                     </div>
                 </div>
