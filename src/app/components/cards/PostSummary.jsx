@@ -362,7 +362,11 @@ class PostSummary extends React.Component {
             if (this.props.blogmode) {
                 thumb = (
                     <span className="articles__feature-img-container">
-                        <img className="articles__feature-img" src={blogSize} />
+                        <img
+                            className="articles__feature-img"
+                            src={blogSize}
+                            alt=""
+                        />
                     </span>
                 );
             } else {
@@ -378,7 +382,7 @@ class PostSummary extends React.Component {
                                 srcSet={listSize}
                                 media="(min-width: 1000px)"
                             />
-                            <img srcSet={blogSize} />
+                            <img srcSet={blogSize} alt="" />
                         </picture>
                     </span>
                 );
