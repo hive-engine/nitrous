@@ -256,8 +256,7 @@
         "burn": "Burn",
         "staking": "Staking",
         "written_from": "%(app_name)s에서 작성되었습니다.",
-        "krw": "원",
-        "thumbsup": "따봉"
+        "krw": "원"
     },
     "navigation": {
         "about": "스팀이란?",
@@ -489,12 +488,6 @@
         "estimated_vote": "보팅 가치(추정치)",
         "we_will_reset_curation_rewards_for_this_post":
             "will reset your curation rewards for this post"
-    },
-    "thumbup_jsx": {
-        "thumbup_plural": {
-            "one": "%(count)s 따봉",
-            "other": "%(count)s 따봉"
-        }
     },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
