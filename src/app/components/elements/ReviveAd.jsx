@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { REVIVE_ADS, NO_ADS_STAKE_THRESHOLD } from 'app/client_config';
 
 class ReviveAd extends React.Component {
-    shouldComponentUpdate(np, ns) {
-        return np.showAd !== this.props.showAd;
+    componentDidMount() {
+        const { showAd, reviveId } = this.props;
+        if (showAd) {
+            reviveAsync[reviveId].refresh();
+        }
     }
 
     render() {
-        const adKey = this.props.adKey;
-        const showAd = this.props.showAd;
-        const zoneId = REVIVE_ADS[adKey].zoneId;
-        const reviveId = REVIVE_ADS[adKey].reviveId;
+        const { showAd, zoneId, reviveId } = this.props;
         return showAd ? (
             <div className="revive-ad" style={{ width: '100%' }}>
                 <ins data-revive-zoneid={zoneId} data-revive-id={reviveId} />
@@ -25,14 +25,27 @@ export default connect((state, ownProps) => {
     const tokenBalances = current_account
         ? current_account.get('token_balances')
         : null;
-    let showAd = !current_account || !tokenBalances;
+    let showAd = true;
 
     if (tokenBalances) {
         const tokenBalancesJs = tokenBalances.toJS();
         const delegatedStake = tokenBalancesJs.delegationsOut || '0';
         const stakeBalance =
             parseFloat(tokenBalancesJs.stake) + parseFloat(delegatedStake);
-        showAd = stakeBalance < NO_ADS_STAKE_THRESHOLD;
+        if (stakeBalance >= NO_ADS_STAKE_THRESHOLD) {
+            showAd = false;
+        }
     }
-    return { ...ownProps, showAd };
+
+    const adKey = ownProps.adKey;
+    let zoneId = '';
+    let reviveId = '';
+    if (REVIVE_ADS[adKey]) {
+        zoneId = REVIVE_ADS[adKey].zoneId;
+        reviveId = REVIVE_ADS[adKey].reviveId;
+    } else {
+        showAd = false;
+    }
+
+    return { ...ownProps, showAd, zoneId, reviveId };
 })(ReviveAd);
