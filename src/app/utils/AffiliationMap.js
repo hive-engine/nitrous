@@ -17,6 +17,7 @@ const map = {
     r0nd0n: 'PAL Clown, MSP Waves Station Manager',
     crimsonclad: 'Witness, Artist, Radio Host, Wild Woman',
     torico: 'cookie monsta',
+    inertia: 'You know what you did.',
 };
 
 export default map;
