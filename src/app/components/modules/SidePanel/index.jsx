@@ -66,6 +66,18 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }freex`,
             },
+            {
+                value: 'richlist',
+                label: 'Rich List',
+                link: `https://tribes.rocks/lens/?page=rich_list&token=${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            },
+            {
+                value: 'steemengineblockexplorer',
+                label: 'Steem Engine Block Explorer',
+                link: `https://steem-engine.rocks/@${username}`,
+            },
         ],
         exchanges: [
             {
