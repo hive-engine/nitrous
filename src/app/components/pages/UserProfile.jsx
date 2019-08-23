@@ -546,10 +546,7 @@ export default class UserProfile extends React.Component {
                             </Tooltip>
                             {AffiliationMap[accountname] ? (
                                 <span className="affiliation">
-                                    {tt(
-                                        'g.affiliation_' +
-                                            AffiliationMap[accountname]
-                                    )}
+                                    {AffiliationMap[accountname]}
                                 </span>
                             ) : null}
                         </h1>
