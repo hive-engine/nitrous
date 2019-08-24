@@ -131,7 +131,8 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
         scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
         scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
-        
+
+        // get SCT thumbup config
         scotConfig.thumbupConfig = await getConfig();
 
         this.cache.set(key, { info: scotInfo, config: scotConfig });
