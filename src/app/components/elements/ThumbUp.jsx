@@ -38,6 +38,10 @@ class ThumbUp extends React.Component {
   static defaultProps = {
     max_like_amount: 1,
     receive_account: 'uni.dev',
+    divide_author: 'author',
+    divide_rewards: 'sct.thumbsup',
+    divide_dev: 'uni.bank',
+    divide_burn: 'null'
   };
   constructor(props) {
     super(props);
@@ -453,12 +457,12 @@ export default connect(
     const scotConfig = state.app.get('scotConfig');
     const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
 
-    const max_like_amount = thumbupConfig.get('max_like_amount');
-    const receive_account = thumbupConfig.get('receive_account');
-    const divide_author = thumbupConfig.get('divide_author');
-    const divide_rewards = thumbupConfig.get('divide_rewards');
-    const divide_dev = thumbupConfig.get('divide_dev');
-    const divide_burn = thumbupConfig.get('divide_burn');
+    // const max_like_amount = thumbupConfig.get('max_like_amount');
+    // const receive_account = thumbupConfig.get('receive_account');
+    // const divide_author = thumbupConfig.get('divide_author');
+    // const divide_rewards = thumbupConfig.get('divide_rewards');
+    // const divide_dev = thumbupConfig.get('divide_dev');
+    // const divide_burn = thumbupConfig.get('divide_burn');
 
     return {
       post: ownProps.post,
@@ -468,12 +472,12 @@ export default connect(
       enable_slider,
       tokenBalances,
       thumbup_active,
-      max_like_amount,
-      receive_account,
-      divide_author,
-      divide_rewards,
-      divide_dev,
-      divide_burn,
+      max_like_amount: thumbupConfig ? thumbupConfig.get('max_like_amount') : '',
+      receive_account: thumbupConfig ? thumbupConfig.get('receive_account') : '',
+      divide_author: thumbupConfig ? thumbupConfig.get('divide_author') : '',
+      divide_rewards: thumbupConfig ? thumbupConfig.get('divide_rewards') : '',
+      divide_dev: thumbupConfig ? thumbupConfig.get('divide_dev') : '',
+      divide_burn: thumbupConfig ? thumbupConfig.get('divide_burn') : '',
     };
   },
 
