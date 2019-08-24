@@ -463,7 +463,7 @@ class PostFull extends React.Component {
                 itemType="http://schema.org/Blog"
             >
                 {showEdit ? (
-                    renderedEditor
+                    <div className="SubmitPost">{renderedEditor}</div>
                 ) : (
                     <span>
                         <div className="PostFull__header">
