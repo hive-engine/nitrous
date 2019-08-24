@@ -453,12 +453,21 @@ export default connect(
     const scotConfig = state.app.get('scotConfig');
     const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
 
-    const max_like_amount = thumbupConfig.get('max_like_amount');
-    const receive_account = thumbupConfig.get('receive_account');
-    const divide_author = thumbupConfig.get('divide_author');
-    const divide_rewards = thumbupConfig.get('divide_rewards');
-    const divide_dev = thumbupConfig.get('divide_dev');
-    const divide_burn = thumbupConfig.get('divide_burn');
+    let max_like_amount = 100;
+    let receive_account = 'uni.dev';
+    let divide_author = 'author';
+    let divide_rewards = 'sct.thumbsup';
+    let divide_dev = 'uni.bank';
+    let divide_burn = 'null';
+
+    if (thumbupConfig) {
+      max_like_amount = thumbupConfig.get('max_like_amount');
+      receive_account = thumbupConfig.get('receive_account');
+      divide_author = thumbupConfig.get('divide_author');
+      divide_rewards = thumbupConfig.get('divide_rewards');
+      divide_dev = thumbupConfig.get('divide_dev');
+      divide_burn = thumbupConfig.get('divide_burn');
+    }
 
     return {
       post: ownProps.post,
