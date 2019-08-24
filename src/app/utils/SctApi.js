@@ -7,20 +7,21 @@ const CONFIG = '/thumbups/config';
 const DIVIDE = '/thumbups/divide';
 
 export function getThumbUpList(author, permlink) {
-    return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
+  return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
 }
 
 export async function getConfig() {
+  try{
     const config = await axios.get(`${API_SERVER_URL}${CONFIG}`);
     const divide = await axios.get(`${API_SERVER_URL}${DIVIDE}`);
-
+  
     let configData = {};
-
+  
     if (config && config.data && config.data[0]) {
         configData.receive_account = config.data[0].receive_account;
         configData.max_like_amount = config.data[0].max_like_amount;
     }
-
+  
     divide.data.forEach(el => {
         switch (el.remark) {
             case 'Author':
@@ -37,5 +38,13 @@ export async function getConfig() {
                 break;
         }
     });
+
+    console.log(`sctapi getconfig load success`);
     return configData;
+  }catch(e){
+    console.log(`sctapi getconfig fail to load`);
+    console.log(e);
+    // set default config
+    return undefined;
+  }
 }
