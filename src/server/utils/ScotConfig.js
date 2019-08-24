@@ -10,13 +10,11 @@ const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
-    console.log(`===ScotConfig.prototype.storeEmpty ttl:${ttl}`);
     const cache = new NodeCache({
         stdTTL: ttl,
         deleteOnExpire: false,
     });
     const key = config.scot_config_cache.key;
-    console.log(`===ScotConfig() key:${key}`);
     cache.on('expired', (k, v) => {
         console.log('Cache key expired', k);
         if (key === k) {
@@ -30,7 +28,6 @@ export function ScotConfig() {
 
 ScotConfig.prototype.storeEmpty = function() {
     const key = config.scot_config_cache.key;
-    console.log(`===ScotConfig.prototype.storeEmpty key:${key}`);
     return new Promise((res, rej) => {
         this.cache.set(
             key,
@@ -50,7 +47,6 @@ ScotConfig.prototype.storeEmpty = function() {
 ScotConfig.prototype.get = async function() {
     return new Promise((res, rej) => {
         const key = config.scot_config_cache.key;
-        console.log(`===ScotConfig.prototype.get key:${key}`);
         this.cache.get(key, (err, value) => {
             if (err) {
                 console.error('Could not retrieve Scot Config data');
@@ -66,7 +62,6 @@ ScotConfig.prototype.refresh = async function() {
     console.info('Refreshing Scot Config data...');
 
     const key = config.scot_config_cache.key;
-    console.log(`===ScotConfig.prototype.refresh key:${key}`);
     try {
         const scotConfigs = await getScotDataAsync('config');
         const [scotConfig] = scotConfigs.filter(
@@ -137,8 +132,8 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
         scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
 
+        // get SCT thumbup config
         scotConfig.thumbupConfig = await getConfig();
-        console.log(`thumbupConfig:${thumbupConfig}`);
 
         this.cache.set(key, { info: scotInfo, config: scotConfig });
 
