@@ -9,4 +9,3 @@ tmp/*
 .vagrant
 lib
 
-sftp.json
