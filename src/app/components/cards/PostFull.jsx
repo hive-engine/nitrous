@@ -36,6 +36,7 @@ import {
     isPostRewardedByUser,
     updatePostRewardingRecords,
 } from 'app/utils/CommentUtil';
+import ThumbUp from 'app/components/elements/ThumbUp';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -402,7 +403,7 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post },
+            props: { username, post, scotTokens },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -653,13 +654,16 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
                             content={content}
                             authorRepLog10={authorRepLog10}
                         />
+                        {app_info.startsWith(`${APP_ICON}/`) && (
+                            <ThumbUp post={post} />
+                        )}
                     </div>
                     <div className="columns medium-12 large-2 ">
                         <Voting post={post} />
@@ -711,28 +715,27 @@ class PostFull extends React.Component {
                 </div>
                 <div className="row rating">
                     <div className="columns medium-12 large-5">
-                        {this.state.averageRating &&
-                            this.state.peopleRated && (
-                                <span className="PostFull__rating">
-                                    <span className="text">
-                                        {tt('rate_post_jsx.average_rating', {
-                                            average_rating: this.state.averageRating.toFixed(
-                                                1
-                                            ),
-                                        })}
-                                    </span>
-                                    <PostRating
-                                        id="post-average-rating"
-                                        initialRating={this.state.averageRating}
-                                        readonly={true}
-                                    />
-                                    <span className="text">
-                                        {tt('rate_post_jsx.people_rated', {
-                                            num: this.state.peopleRated,
-                                        })}
-                                    </span>
+                        {this.state.averageRating && this.state.peopleRated && (
+                            <span className="PostFull__rating">
+                                <span className="text">
+                                    {tt('rate_post_jsx.average_rating', {
+                                        average_rating: this.state.averageRating.toFixed(
+                                            1
+                                        ),
+                                    })}
                                 </span>
-                            )}
+                                <PostRating
+                                    id="post-average-rating"
+                                    initialRating={this.state.averageRating}
+                                    readonly={true}
+                                />
+                                <span className="text">
+                                    {tt('rate_post_jsx.people_rated', {
+                                        num: this.state.peopleRated,
+                                    })}
+                                </span>
+                            </span>
+                        )}
                     </div>
                     <div className="columns medium-12 large-5">
                         {showUserRating && (
@@ -792,10 +795,14 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => ({
-        ...ownProps,
-        username: state.user.getIn(['current', 'username']),
-    }),
+    (state, ownProps) => {
+        const scotConfig = state.app.get('scotConfig');
+        return {
+            ...ownProps,
+            username: state.user.getIn(['current', 'username']),
+            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
+        };
+    },
 
     // mapDispatchToProps
     dispatch => ({

@@ -28,6 +28,7 @@ const hook = {
     preBroadcast_comment,
     preBroadcast_transfer,
     preBroadcast_vote,
+    preBroadcast_custom_json,
     error_vote,
     error_custom_json,
     accepted_comment,
@@ -73,6 +74,25 @@ function* preBroadcast_vote({ operation, username }) {
     yield put(
         globalActions.voted({ username: voter, author, permlink, weight })
     );
+    return operation;
+}
+
+function* preBroadcast_custom_json({ operation, username }) {
+    if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+
+        // call thumbup reducer
+        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            const { sender, author, permlink } = payload;
+            yield put(
+                globalActions.set({
+                    key: `transaction_thumbup_active_${author}_${permlink}`,
+                    value: true,
+                })
+            );
+        }
+    }
     return operation;
 }
 
@@ -427,7 +447,11 @@ function* accepted_custom_json({ operation }) {
         console.log(operation);
         try {
             if (json[0] === 'follow') {
-                const { follower, following, what: [action] } = json[1];
+                const {
+                    follower,
+                    following,
+                    what: [action],
+                } = json[1];
                 yield put(
                     globalActions.update({
                         key: ['follow', 'getFollowingAsync', follower],
@@ -440,6 +464,18 @@ function* accepted_custom_json({ operation }) {
             console.error(
                 'TransactionSaga unrecognized follow custom_json format',
                 operation.json
+            );
+        }
+    } else if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+        // call thumbup reducer
+        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            const { sender, author, permlink } = payload;
+            yield put(
+                globalActions.remove({
+                    key: `transaction_thumbup_active_${author}_${permlink}`,
+                })
             );
         }
     }
@@ -477,7 +513,10 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
 export function* preBroadcast_comment({ operation, username }) {
     if (!operation.author) operation.author = username;
     let permlink = operation.permlink;
-    const { author, __config: { originalBody, comment_options } } = operation;
+    const {
+        author,
+        __config: { originalBody, comment_options },
+    } = operation;
     const {
         parent_author = '',
         parent_permlink = operation.category,
@@ -582,8 +621,9 @@ export function createPatch(text1, text2) {
     return patch;
 }
 
-function* error_custom_json({ operation: { id, required_posting_auths } }) {
-    if (id === 'follow') {
+function* error_custom_json({ operation }) {
+    if (operation.id === 'follow') {
+        const { required_posting_auths } = operation;
         const follower = required_posting_auths[0];
         yield put(
             globalActions.update({
@@ -591,6 +631,18 @@ function* error_custom_json({ operation: { id, required_posting_auths } }) {
                 updater: () => null,
             })
         );
+    } else if (operation.id === 'ssc-mainnet1') {
+        const json = JSON.parse(operation.json);
+        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        if (payload.type === 'scot-thumbup') {
+            yield put(
+                globalActions.remove({
+                    key: `transaction_thumbup_active_${payload.author}_${
+                        payload.permlink
+                    }`,
+                })
+            );
+        }
     }
 }
 
