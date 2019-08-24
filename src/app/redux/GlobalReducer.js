@@ -108,23 +108,43 @@ export default function reducer(state = defaultState, action = {}) {
                 'accounts',
                 accountMap =>
                     accountMap
-                        ? accountMap.map(
-                              (v, k) =>
+                        ? accountMap.map((v, k) => {
+                              // transfer_history
+                              if (
                                   new_state.hasIn([
                                       'accounts',
                                       k,
                                       'transfer_history',
                                   ])
-                                      ? v.set(
-                                            'transfer_history',
-                                            new_state.getIn([
-                                                'accounts',
-                                                k,
-                                                'transfer_history',
-                                            ])
-                                        )
-                                      : v
-                          )
+                              ) {
+                                  v = v.set(
+                                      'transfer_history',
+                                      new_state.getIn([
+                                          'accounts',
+                                          k,
+                                          'transfer_history',
+                                      ])
+                                  );
+                              }
+                              // pending_orders
+                              if (
+                                  new_state.hasIn([
+                                      'accounts',
+                                      k,
+                                      'pending_orders',
+                                  ])
+                              ) {
+                                  v = v.set(
+                                      'pending_orders',
+                                      new_state.getIn([
+                                          'accounts',
+                                          k,
+                                          'pending_orders',
+                                      ])
+                                  );
+                              }
+                              return v;
+                          })
                         : accountMap
             );
         }

@@ -147,6 +147,7 @@ export default class UserProfile extends React.Component {
                 follow,
                 accountname,
                 walletUrl,
+                cancelOrder,
             },
             onPrint,
         } = this;
@@ -220,7 +221,10 @@ export default class UserProfile extends React.Component {
         } else if (section === 'pending-orders') {
             tab_content = (
                 <div>
-                    <PendingOrders account={accountImm} />
+                    <PendingOrders
+                        account={accountImm}
+                        cancelOrder={cancelOrder}
+                    />
                 </div>
             );
         }
@@ -702,6 +706,39 @@ module.exports = {
             showDelegations: delegations => {
                 dispatch(userActions.setDelegations(delegations));
                 dispatch(userActions.showDelegations());
+            },
+            cancelOrder: ({ account, type, txId }, cb) => {
+                const cancelOrderOp = {
+                    contractName: 'market',
+                    contractAction: 'cancel',
+                    contractPayload: {
+                        type,
+                        id: txId,
+                    },
+                };
+                const operation = {
+                    id: 'ssc-mainnet1',
+                    required_auths: [account],
+                    json: JSON.stringify(cancelOrderOp),
+                };
+                const successCallback = () => {
+                    dispatch(
+                        globalActions.getState({
+                            url: `@${account}/pending-orders`,
+                        })
+                    );
+                };
+                const errorCallback = err => {
+                    cb(err);
+                };
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'custom_json',
+                        operation,
+                        successCallback,
+                        errorCallback,
+                    })
+                );
             },
         })
     )(UserProfile),

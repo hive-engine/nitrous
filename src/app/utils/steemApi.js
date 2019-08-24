@@ -385,11 +385,8 @@ export async function fetchSnaxBalanceAsync(account) {
 }
 
 export async function getPendingOrdersAsync({ account }) {
-    let error = false;
-    let buyBook = [];
-    let sellBook = [];
     try {
-        [buyBook, sellBook] = await Promise.all([
+        let [buyBook, sellBook] = await Promise.all([
             ssc.find('market', 'buyBook', {
                 account,
             }),
@@ -397,8 +394,18 @@ export async function getPendingOrdersAsync({ account }) {
                 account,
             }),
         ]);
+        buyBook = buyBook.map(item => ({
+            type: 'buy',
+            ...item,
+        }));
+        sellBook = sellBook.map(item => ({
+            type: 'sell',
+            ...item,
+        }));
+        return buyBook
+            .concat(sellBook)
+            .sort((a, b) => b.timestamp - a.timestamp);
     } catch (e) {
-        error = e.message;
+        return [];
     }
-    return { buyBook, sellBook, error };
 }
