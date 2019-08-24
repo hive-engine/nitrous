@@ -46,6 +46,7 @@ const map = {
     'dark-queen': 'Verified Creator',
     kinkytales: 'Verified Creator',
     queencity: 'Verified Creator',
+    littlemii: 'Verified Creator',
 };
 
 export default map;
