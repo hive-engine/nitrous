@@ -81,7 +81,7 @@ class CategorySelector extends React.Component {
                 />
                 {categories.map((c, idx) => {
                     return (
-                        <span>
+                        <span key={idx}>
                             <a
                                 key={idx}
                                 value={c}

@@ -217,6 +217,69 @@ ul.PostsList__summaries {
         border-right: none;
     }
   }
+  .articles__summary {
+    .articles__summary-header {
+      .Userpic {
+        width: 32px;
+        height: 32px;
+        border-radius: 32px;
+      }
+    }
+    .articles__content-block {
+      &.articles__content-block--img {
+        max-height: 200px;
+        overflow: hidden;
+
+        .articles__feature-img-container {
+          text-align: center;
+          position: relative;
+          display: block;
+  
+          &::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,.03);
+            border-radius: 6px;
+            content: "";
+          }
+        }
+      }
+
+      &.articles__content-block--text {
+        margin-bottom: 6px !important;
+
+        .entry-title {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 24px;
+          color: #000;
+          -webkit-line-clamp: 2;
+          word-break: normal;
+        }
+
+        .entry-content > a {
+          padding-top: 4px;
+          font-size: 14px;
+          line-height: 20px;
+          color: #676767;
+          -webkit-line-clamp: 3;
+          word-break: normal;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          word-wrap: break-word;
+        }
+
+        .articles__summary-footer {
+          margin-top: 16px;
+        }
+      }
+    }
+  }
 }
 
 .articles__summary {

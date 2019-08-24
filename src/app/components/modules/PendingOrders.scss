@@ -4,6 +4,10 @@
     .PendingOrders__list {
       overflow-x: scroll;
 
+      table {
+          min-width: 200px;
+      }
+
         a {
             text-decoration: underline;
         }
