@@ -18,6 +18,7 @@ const map = {
     crimsonclad: 'Witness, Artist, Radio Host, Wild Woman',
     torico: 'cookie monsta',
     inertia: 'You know what you did.',
+    clayboyn: 'it is what it is',
 };
 
 export default map;
