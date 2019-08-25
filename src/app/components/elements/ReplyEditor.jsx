@@ -17,7 +17,12 @@ import { fromJS, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG, APP_MAX_TAG } from 'app/client_config';
+import {
+    APP_NAME,
+    SCOT_TAG,
+    APP_MAX_TAG,
+    POST_FOOTER,
+} from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -1009,10 +1014,8 @@ export default formId =>
                 }
 
                 // Add footer
-                const footer =
-                    '<hr><center>Posted via <a href="https://www.reggaesteem.io/">ReggaeSteem.io</a> | Reggae Culture Rewarded </center>';
-                if (!body.endsWith(footer)) {
-                    body += '\n\n' + footer;
+                if (POST_FOOTER && !body.endsWith(POST_FOOTER)) {
+                    body += '\n\n' + POST_FOOTER;
                 }
 
                 if (meta.tags.length > MAX_TAG) {
