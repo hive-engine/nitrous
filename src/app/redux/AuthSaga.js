@@ -5,6 +5,7 @@ import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
+import { ALLOW_MASTER_PW } from 'app/client_config';
 
 // operations that require only posting authority
 export const postingOps = Set(
@@ -132,7 +133,7 @@ export function* findSigningKey({
 }) {
     let authTypes;
     if (postingOps.has(opType) && !needsActiveAuth)
-        authTypes = 'posting, active';
+        authTypes = 'posting, active' + (ALLOW_MASTER_PW ? ', owner' : '');
     else authTypes = 'active, owner';
     authTypes = authTypes.split(', ');
 
