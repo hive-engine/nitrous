@@ -84,4 +84,4 @@ export const SEARCH_SELECTION_REWARD_AMOUNT = 0.5;
 export const SEARCH_SELECTION_BURN_AMOUNT = 0.5;
 
 // Other configurations
-export const ALLOW_MASTER_PW = false;
+export const ALLOW_MASTER_PW = true;
