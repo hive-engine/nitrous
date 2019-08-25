@@ -82,3 +82,6 @@ export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 export const GOOGLE_CUSTOM_SEARCH_ID = '007300013170064212310:6xze6cdavke';
 export const SEARCH_SELECTION_REWARD_AMOUNT = 0.5;
 export const SEARCH_SELECTION_BURN_AMOUNT = 0.5;
+
+// Other configurations
+export const ALLOW_MASTER_PW = false;

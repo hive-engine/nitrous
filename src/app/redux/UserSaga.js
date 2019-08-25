@@ -3,7 +3,7 @@ import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { ALLOW_MASTER_PW, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -92,15 +92,15 @@ function* shouldShowLoginWarning({ username, password }) {
     }
 
     // If it's a master key, show the warning.
-    //if (!auth.isWif(password)) {
-    //    const accounts = yield api.getAccountsAsync([username]);
-    //    const account = accounts[0];
-    //    const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
-    //        .toPublicKey()
-    //        .toString();
-    //    const postingPubKeys = account.posting.key_auths[0];
-    //    return postingPubKeys.includes(pubKey);
-    //}
+    if (!ALLOW_MASTER_PW && !auth.isWif(password)) {
+        const accounts = yield api.getAccountsAsync([username]);
+        const account = accounts[0];
+        const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
+            .toPublicKey()
+            .toString();
+        const postingPubKeys = account.posting.key_auths[0];
+        return postingPubKeys.includes(pubKey);
+    }
 
     // For any other case, don't show the warning.
     return false;
@@ -322,11 +322,11 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        //if (hasOwnerAuth) {
-        //    console.log('Rejecting due to detected owner auth');
-        //    yield put(userActions.loginError({ error: 'owner_login_blocked' }));
-        //    return;
-        //}
+        if (!ALLOW_MASTER_PW && hasOwnerAuth) {
+            console.log('Rejecting due to detected owner auth');
+            yield put(userActions.loginError({ error: 'owner_login_blocked' }));
+            return;
+        }
 
         const fullAuths = authority.reduce(
             (r, auth, type) => (auth === 'full' ? r.add(type) : r),
@@ -338,8 +338,9 @@ function* usernamePasswordLogin2({
             localStorage.removeItem('autopost2');
             const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
             if (
-                login_owner_pubkey === owner_pub_key ||
-                login_wif_owner_pubkey === owner_pub_key
+                !ALLOW_MASTER_PW &&
+                (login_owner_pubkey === owner_pub_key ||
+                    login_wif_owner_pubkey === owner_pub_key)
             ) {
                 //yield put(
                 //    userActions.loginError({ error: 'owner_login_blocked' })
@@ -599,11 +600,13 @@ function* saveLogin_localStorage() {
         console.error('Not logged in');
         return;
     }
-    // Save the lowest security key, or owner for SCT
-    const posting_private =
-        private_keys &&
-        (private_keys.get('posting_private') ||
-            private_keys.get('owner_private'));
+
+    // Save the lowest security key, or owner if allowed
+    let posting_private = private_keys && private_keys.get('posting_private');
+    if (!posting_private && ALLOW_MASTER_PW) {
+        posting_private = private_keys.get('owner_private');
+    }
+
     if (!login_with_keychain && !posting_private) {
         console.error('No posting key to save?');
         return;
@@ -623,10 +626,12 @@ function* saveLogin_localStorage() {
             if (auth.get(0) === postingPubkey)
                 throw 'Login will not be saved, posting key is the same as active key';
         });
-        //account.getIn(['owner', 'key_auths']).forEach(auth => {
-        //    if (auth.get(0) === postingPubkey)
-        //        throw 'Login will not be saved, posting key is the same as owner key';
-        //});
+        if (!ALLOW_MASTER_PW) {
+            account.getIn(['owner', 'key_auths']).forEach(auth => {
+                if (auth.get(0) === postingPubkey)
+                    throw 'Login will not be saved, posting key is the same as owner key';
+            });
+        }
     } catch (e) {
         console.error(e);
         return;
