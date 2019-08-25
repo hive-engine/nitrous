@@ -12,6 +12,7 @@ const map = {
     jznsamuel: 'PhotoStreem Curator',
     monochromes: 'PhotoStreem Supported Contest',
     portraitcontest: 'PhotoStreem Supported Contest',
+    roadstories: 'PhotoStreem Tribe Team',
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
