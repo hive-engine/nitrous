@@ -1,7 +1,7 @@
 const map = {
     //steemit
-    ned: 'Steemit',
-    justinw: 'Steemit',
+    brumest: 'PhotoStreem Curator',
+    swedishdragon: 'PhotoStreem Founder',
     elipowell: 'Steemit',
     vandeberg: 'Steemit',
     birdinc: 'Steemit',
