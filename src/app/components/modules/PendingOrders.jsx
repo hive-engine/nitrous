@@ -24,7 +24,7 @@ class PendingOrderItem extends React.PureComponent {
     };
 
     render() {
-        const { item } = this.props;
+        const { item, isMyAccount } = this.props;
         const timestamp = new Date(item.timestamp * 1000);
         const price = parseFloat(item.price);
         const quantity = parseFloat(item.quantity);
@@ -88,24 +88,28 @@ class PendingOrderItem extends React.PureComponent {
                         <i>STEEM</i>
                     </span>
                 </td>
-                <td className="text-center">
-                    <span data-whatinput="mouse" className="button__cancel">
-                        <button
-                            disabled={isBusy}
-                            className="button hollow alert tiny"
-                            onClick={this.cancelOrderHandler}
-                        >
-                            Cancel
-                        </button>
-                        {isBusy && <LoadingIndicator type="circle" inline />}
-                    </span>
-                </td>
+                {isMyAccount && (
+                    <td className="text-center">
+                        <span data-whatinput="mouse" className="button__cancel">
+                            <button
+                                disabled={isBusy}
+                                className="button hollow alert tiny"
+                                onClick={this.cancelOrderHandler}
+                            >
+                                Cancel
+                            </button>
+                            {isBusy && (
+                                <LoadingIndicator type="circle" inline />
+                            )}
+                        </span>
+                    </td>
+                )}
             </tr>
         );
     }
 }
 
-const PendingOrderList = ({ pendingOrders, cancelOrder }) => {
+const PendingOrderList = ({ pendingOrders, cancelOrder, isMyAccount }) => {
     return (
         <table>
             <thead>
@@ -128,34 +132,37 @@ const PendingOrderList = ({ pendingOrders, cancelOrder }) => {
                     <th className="text-right">
                         {tt('pendingorders_jsx.sum')}
                     </th>
-                    <th className="text-center">Action</th>
+                    {isMyAccount && <th className="text-center">Action</th>}
                 </tr>
             </thead>
             <tbody>
                 {pendingOrders.map(item => (
                     <PendingOrderItem
+                        isMyAccount={isMyAccount}
                         key={item.txId}
                         item={item}
                         cancelOrder={cancelOrder}
                     />
                 ))}
-                {pendingOrders.length === 0 ? <EmptyPendingOrders /> : null}
+                {pendingOrders.length === 0 ? (
+                    <EmptyPendingOrders isMyAccount={isMyAccount} />
+                ) : null}
             </tbody>
         </table>
     );
 };
 
-const EmptyPendingOrders = () => {
+const EmptyPendingOrders = ({ isMyAccount }) => {
     return (
         <tr>
-            <td className="text-center" colSpan="7">
+            <td className="text-center" colSpan={isMyAccount ? 7 : 6}>
                 No Data
             </td>
         </tr>
     );
 };
 
-const PendingOrders = ({ account, cancelOrder }) => {
+const PendingOrders = ({ current_user, account, cancelOrder }) => {
     const pendingOrders = account.has('pending_orders')
         ? account.get('pending_orders').toJS()
         : null;
@@ -170,6 +177,8 @@ const PendingOrders = ({ account, cancelOrder }) => {
             cb
         );
     };
+    let isMyAccount =
+        current_user && current_user.get('username') === account.get('name');
     return (
         <div className="PendingOrders">
             <div className="row">
@@ -183,6 +192,7 @@ const PendingOrders = ({ account, cancelOrder }) => {
                 <div className="column small-12 PendingOrders__list">
                     {pendingOrders ? (
                         <PendingOrderList
+                            isMyAccount={isMyAccount}
                             pendingOrders={pendingOrders}
                             cancelOrder={cancelOrderHandler}
                         />

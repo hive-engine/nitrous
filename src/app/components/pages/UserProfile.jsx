@@ -223,6 +223,7 @@ export default class UserProfile extends React.Component {
                 <div>
                     <PendingOrders
                         account={accountImm}
+                        current_user={current_user}
                         cancelOrder={cancelOrder}
                     />
                 </div>

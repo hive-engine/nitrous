@@ -554,15 +554,17 @@ class UserWallet extends React.Component {
                                 id="tips_js.steem_engine_tokens"
                             />
                         </div>
-                        <div className="column small-12 medium-3">
-                            <button
-                                disabled={pendingTokens.length === 0}
-                                className="button hollow ghost slim tiny float-right"
-                                onClick={this.handleClaimAllTokensRewards}
-                            >
-                                All in one claim
-                            </button>
-                        </div>
+                        {isMyAccount && (
+                            <div className="column small-12 medium-3">
+                                <button
+                                    disabled={pendingTokens.length === 0}
+                                    className="button hollow ghost slim tiny float-right"
+                                    onClick={this.handleClaimAllTokensRewards}
+                                >
+                                    All in one claim
+                                </button>
+                            </div>
+                        )}
                         <div className="column small-12">
                             <FormattedAssetTokens
                                 items={otherTokenBalances}
