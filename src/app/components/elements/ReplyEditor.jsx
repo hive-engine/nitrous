@@ -1015,7 +1015,7 @@ export default formId =>
 
                 // Add footer
                 if (POST_FOOTER && !body.endsWith(POST_FOOTER)) {
-                    body += POST_FOOTER;
+                    body += '\n\n' + POST_FOOTER;
                 }
 
                 if (meta.tags.length > MAX_TAG) {
