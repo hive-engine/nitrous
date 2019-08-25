@@ -13,6 +13,8 @@ const map = {
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
+    isaria: 'I Like Kitties',
+    swelker101: 'Owner of CCC and SONIC, Master Of Triangle, Taker of Blame',
 };
 
 export default map;
