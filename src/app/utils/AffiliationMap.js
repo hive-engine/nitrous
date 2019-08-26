@@ -48,6 +48,7 @@ const map = {
     queencity: 'Verified Creator',
     littlemii: 'Verified Creator',
     sirena69fans: 'Verified Creator',
+    nspart: 'Verified Creator',
 };
 
 export default map;
