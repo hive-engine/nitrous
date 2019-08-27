@@ -291,7 +291,7 @@ export async function getStateAsync(url) {
 
 export async function fetchFeedDataAsync(call_name, ...args) {
     const fetchSize = args[0].limit;
-    let feedData;
+    let feedData = [];
     // To indicate if there are no further pages in feed.
     let endOfData;
     // To indicate last fetched value from API.
