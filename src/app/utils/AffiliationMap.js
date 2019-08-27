@@ -160,6 +160,7 @@ const map = {
     zekepickleman: 'Certified Ulogger',
     uwelang: 'Certified Ulogger',
     giantbear: 'Certified Ulogger',
+    kesolink: 'Certified Ulogger',
 };
 
 export default map;
