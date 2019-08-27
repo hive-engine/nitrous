@@ -22,7 +22,6 @@ import {
     SCOT_TAG,
     SCOT_TAG_FIRST,
     APP_MAX_TAG,
-    POST_FOOTER,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -1012,11 +1011,6 @@ export default formId =>
                 if (sanitizeErrors.length) {
                     errorCallback(sanitizeErrors.join('.  '));
                     return;
-                }
-
-                // Add footer
-                if (POST_FOOTER && !body.endsWith(POST_FOOTER)) {
-                    body += '\n\n' + POST_FOOTER;
                 }
 
                 if (meta.tags.length > MAX_TAG) {
