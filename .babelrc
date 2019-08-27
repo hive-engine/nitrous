@@ -1,4 +1,12 @@
 {
   "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["transform-runtime", "transform-decorators-legacy"]
+  "plugins": ["transform-runtime", "transform-decorators-legacy", 
+    ["prismjs", {
+      // ref: https://prismjs.com/#supported-languages
+      "languages": ["javascript", "css", "html", "graphql", "php", "python", "java", "json", "c", "dart", "sql", "bash"],
+      "plugins": ["line-numbers", "show-language"],
+      "theme": "default",
+      "css": true
+    }]
+  ]
 }

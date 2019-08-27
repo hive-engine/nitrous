@@ -96,6 +96,7 @@ export default ({
 
         // title is only set in the case of an external link warning
         a: ['href', 'rel', 'title'],
+        code: ['class'],
     },
     allowedSchemes: ['http', 'https', 'steem', 'esteem'],
     transformTags: {
@@ -197,6 +198,16 @@ export default ({
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();
             }
+            return {
+                tagName,
+                attribs: attys,
+            };
+        },
+        code: (tagName, attribs) => {
+            const attys = { class: 'language-' };
+            const validClass =
+                attribs.class && attribs.class.startsWith('language-');
+            if (validClass) attys.class = attribs.class;
             return {
                 tagName,
                 attribs: attys,

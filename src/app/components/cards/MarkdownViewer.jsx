@@ -8,6 +8,7 @@ import sanitizeConfig, { noImageText } from 'app/utils/SanitizeConfig';
 import sanitize from 'sanitize-html';
 import HtmlReady from 'shared/HtmlReady';
 import tt from 'counterpart';
+import Prism from 'prismjs';
 
 const remarkable = new Remarkable({
     html: true, // remarkable renders first then sanitize runs...
@@ -51,6 +52,12 @@ class MarkdownViewer extends Component {
     constructor() {
         super();
         this.state = { allowNoImage: true };
+    }
+
+    componentDidMount() {
+        // add code highlight by anpigon
+        // Use setTimeout to push onto callback queue so it runs after the DOM is updated
+        Prism.highlightAll();
     }
 
     shouldComponentUpdate(np, ns) {
