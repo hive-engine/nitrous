@@ -89,5 +89,7 @@ export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
 // Other configurations
 export const ALLOW_MASTER_PW = false;
+// Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
     '<hr><center>Posted via <a href="https://www.reggaesteem.io/">ReggaeSteem.io</a> | Reggae Culture Rewarded </center>';
+export const SCOT_TAG_FIRST = false;

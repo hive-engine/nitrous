@@ -20,8 +20,8 @@ import tt from 'counterpart';
 import {
     APP_NAME,
     SCOT_TAG,
+    SCOT_TAG_FIRST,
     APP_MAX_TAG,
-    POST_FOOTER,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -971,7 +971,7 @@ export default formId =>
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : formCategories.first();
+                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
                 let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
@@ -1011,11 +1011,6 @@ export default formId =>
                 if (sanitizeErrors.length) {
                     errorCallback(sanitizeErrors.join('.  '));
                     return;
-                }
-
-                // Add footer
-                if (POST_FOOTER && !body.endsWith(POST_FOOTER)) {
-                    body += '\n\n' + POST_FOOTER;
                 }
 
                 if (meta.tags.length > MAX_TAG) {
