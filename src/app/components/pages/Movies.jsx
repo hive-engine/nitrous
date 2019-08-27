@@ -79,10 +79,12 @@ export default function Movies(props) {
     const { movies, type, locale, loading, requestMovies } = props;
 
     const movieType = type === 'movie' ? 1 : 2;
+    const lastMovieId =
+        movies.length === 0 ? 0 : movies[movies.length - 1].MovieId;
 
     const [values, setValues, expanded, setExpanded] = React.useState({
         genre: -1,
-        order: 'created',
+        order: 'release_date',
     });
 
     const inputLabel = React.useRef(null);
@@ -152,11 +154,11 @@ export default function Movies(props) {
                                 />
                             }
                         >
-                            <MenuItem value={'created'}>
-                                Review Created
-                            </MenuItem>
                             <MenuItem value={'release_date'}>
                                 Release Date
+                            </MenuItem>
+                            <MenuItem value={'created'}>
+                                Review Created
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -253,7 +255,8 @@ export default function Movies(props) {
                                     languageCode: locale,
                                     movieType,
                                     genreId: -1,
-                                    page: 2,
+                                    lastMovieId,
+                                    sortBy: 'release_date',
                                 });
                             }}
                         >

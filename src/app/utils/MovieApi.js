@@ -1,11 +1,25 @@
 import axios from 'axios';
 
-export async function getMovies(languageCode, movieType, genreId, page) {
+export async function getMovies(
+    languageCode,
+    movieType,
+    genreId,
+    lastMovieId,
+    sortBy
+) {
+    let apiName = 'GetMovies';
+
+    if (sortBy === 'created') {
+        apiName = 'GetMoviesOrderedByLastPostAddDate';
+    }
+
     try {
         const response = await axios.get(
-            `https://tool.steem.world/AAA/GetMovies?languageCode=${
+            `https://tool.steem.world/AAA/${apiName}?languageCode=${
                 languageCode
-            }&movieType=${movieType}&genreId=${genreId}&page=${page}`
+            }&movieType=${movieType}&genreId=${genreId}&lastMovieId=${
+                lastMovieId
+            }`
         );
 
         return response.data;
@@ -30,12 +44,20 @@ export async function getMovie(languageCode, movieType, movieId) {
     }
 }
 
-export async function getReviews(movieType, genreId, page) {
+export async function getReviews(
+    movieType,
+    genreId,
+    lastAuthor,
+    lastPermlink,
+    sortBy
+) {
     try {
         const response = await axios.get(
             `https://tool.steem.world/AAA/GetPostsByGenre?movieType=${
                 movieType
-            }&genreId=${genreId}&page=${page}`
+            }&genreId=${genreId}&lastAuthor=${lastAuthor}&lastPermlink=${
+                lastPermlink
+            }`
         );
 
         return response.data;

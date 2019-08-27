@@ -7,28 +7,25 @@ export const movieWatches = [
 ];
 
 function* requestMovies(action) {
-    const { languageCode, movieType, genreId, page } = action.payload;
+    const {
+        languageCode,
+        movieType,
+        genreId,
+        lastMovieId,
+        sortBy,
+    } = action.payload;
 
     try {
-        yield put(movieReducer.actions.requestingMovies());
-
         let data = yield call(
             movieApi.getMovies,
             languageCode,
             movieType,
             genreId,
-            page
+            lastMovieId,
+            sortBy
         );
 
-        yield put(
-            movieReducer.actions.receiveMovies({
-                data,
-                languageCode,
-                movieType,
-                genreId,
-                page,
-            })
-        );
+        yield put(movieReducer.actions.receiveMovies({ data }));
     } catch (error) {
         console.error(action.payload, error);
     }

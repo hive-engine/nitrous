@@ -339,7 +339,8 @@ export async function serverRender(
                 userPreferences.locale,
                 movieType,
                 -1,
-                1
+                0,
+                'release_date'
             );
         } else if (url.match(routeRegex.Movie)) {
             let movieType;
@@ -358,7 +359,7 @@ export async function serverRender(
                 movieId
             );
         } else if (url.match(routeRegex.Reviews)) {
-            movie.reviews = await movieApi.getReviews(1, -1, 1);
+            movie.reviews = await movieApi.getReviews(1, -1, '', '');
         }
 
         server_store = createStore(rootReducer, {
