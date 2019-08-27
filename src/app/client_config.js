@@ -68,4 +68,4 @@ export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
     '<hr><center>Posted on <a href="${POST_URL}">RealityHubs - Rewarding Reviewers</a></center>';
-export const SCOT_TAG_FIRST = false;
+export const SCOT_TAG_FIRST = true;
