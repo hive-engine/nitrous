@@ -32,7 +32,7 @@ import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
 import { getStateAsync } from 'app/utils/steemApi';
-import axios from 'axios';
+import * as movieApi from 'app/utils/MovieApi';
 
 let get_state_perf,
     get_content_perf = false;
@@ -335,7 +335,7 @@ export async function serverRender(
                 movieType = 2;
             }
 
-            movie.movies = await getMovies(
+            movie.movies = await movieApi.getMovies(
                 userPreferences.locale,
                 movieType,
                 -1,
@@ -352,13 +352,13 @@ export async function serverRender(
             const params = url.split('/');
             var movieId = parseInt(params[2]);
 
-            movie.movie = await getMovie(
+            movie.movie = await movieApi.getMovie(
                 userPreferences.locale,
                 movieType,
                 movieId
             );
         } else if (url.match(routeRegex.Reviews)) {
-            movie.reviews = await getReviews(1, -1, 1);
+            movie.reviews = await movieApi.getReviews(1, -1, 1);
         }
 
         server_store = createStore(rootReducer, {
@@ -523,49 +523,4 @@ async function apiGetState(url) {
     offchain = await getStateAsync(url);
 
     return offchain;
-}
-
-async function getMovies(languageCode, movieType, genreId, page) {
-    try {
-        const response = await axios.get(
-            `https://tool.steem.world/AAA/GetMovies?languageCode=${
-                languageCode
-            }&movieType=${movieType}&genreId=${genreId}&page=${page}`
-        );
-
-        return response.data;
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
-}
-
-async function getMovie(languageCode, movieType, movieId) {
-    try {
-        const response = await axios.get(
-            `https://tool.steem.world/AAA/GetMovie?languageCode=${
-                languageCode
-            }&movieType=${movieType}&movieId=${movieId}`
-        );
-
-        return response.data;
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
-}
-
-async function getReviews(movieType, genreId, page) {
-    try {
-        const response = await axios.get(
-            `https://tool.steem.world/AAA/GetPostsByGenre?movieType=${
-                movieType
-            }&genreId=${genreId}&page=${page}`
-        );
-
-        return response.data;
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
 }

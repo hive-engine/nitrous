@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
-import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
-import { TAG_LIST } from 'app/client_config';
-import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import { actions as movieActions } from 'app/redux/MovieReducer';
+import { TAG_LIST, DEFAULT_LANGUAGE } from 'app/client_config';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,11 +30,15 @@ import TextField from '@material-ui/core/TextField';
 
 import Chip from '@material-ui/core/Chip';
 
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(2),
     },
     formControl: {
         marginRight: theme.spacing(1),
@@ -65,11 +69,16 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
     },
+    button: {
+        width: '100%',
+    },
 }));
 
 export default function Movies(props) {
     const classes = useStyles();
-    const { movies, type } = props;
+    const { movies, type, locale, loading, requestMovies } = props;
+
+    const movieType = type === 'movie' ? 1 : 2;
 
     const [values, setValues, expanded, setExpanded] = React.useState({
         genre: -1,
@@ -96,8 +105,8 @@ export default function Movies(props) {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="lg">
-                <form className={classes.root} autoComplete="off">
+            <Container maxWidth="lg" className={classes.root}>
+                <form autoComplete="off">
                     <FormControl
                         variant="outlined"
                         className={classes.formControl}
@@ -227,6 +236,30 @@ export default function Movies(props) {
                             </Grid>
                         ))}
                     </Grid>
+                    {loading ? (
+                        <center>
+                            <LoadingIndicator
+                                style={{ marginBottom: '2rem' }}
+                                type="circle"
+                            />
+                        </center>
+                    ) : (
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                            onClick={() => {
+                                requestMovies({
+                                    languageCode: locale,
+                                    movieType,
+                                    genreId: -1,
+                                    page: 2,
+                                });
+                            }}
+                        >
+                            LOAD MORE MOVIES
+                        </Button>
+                    )}
                 </main>
             </Container>
         </React.Fragment>
@@ -239,39 +272,37 @@ module.exports = {
         (state, ownProps) => {
             return {
                 status: state.global.get('status'),
-                loading: state.app.get('loading'),
+                loading: state.movie.get('loading'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 type: ownProps.params.type,
-                categories: TAG_LIST,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+                locale:
+                    state.app.getIn(['user_preferences', 'locale']) ||
+                    DEFAULT_LANGUAGE,
                 movies: state.movie.get('movies').toJS(),
             };
         },
-        dispatch => {
-            return {
-                requestData: args =>
-                    dispatch(fetchDataSagaActions.requestData(args)),
-            };
-        }
+        dispatch => ({
+            requestMovies: args => dispatch(movieActions.requestMovies(args)),
+        })
     )(Movies),
 };
 
 Movies.propTypes = {
-    discussions: PropTypes.object,
     accounts: PropTypes.object,
     status: PropTypes.object,
     routeParams: PropTypes.object,
-    requestData: PropTypes.func,
+    requestMovies: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     type: PropTypes.string,
-    categories: PropTypes.object,
+    locale: PropTypes.string.isRequired,
     movies: PropTypes.array.isRequired,
 };
