@@ -24,7 +24,13 @@ const map = {
     r2cornell: 'Dragon',
     scipio: 'Dragon',
     afolwalex: 'Dragon',
-    bullionstackers: 'Dragon',
+    swedishdragon: 'Dragon',
+    neoxiancity: 'City',
+    xawi: 'Curator',
+    udezee: 'Curator',
+    rehan12: 'Curator',
+    joedukeg: 'Curator',
+    'mango-juice': 'Curator'
 };
 
 export default map;
