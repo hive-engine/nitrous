@@ -490,12 +490,6 @@
         "we_will_reset_curation_rewards_for_this_post":
             "will reset your curation rewards for this post"
     },
-    "thumbup_jsx": {
-        "thumbup_plural": {
-            "one": "%(count)s 따봉",
-            "other": "%(count)s 따봉"
-        }
-    },
     "votesandcomments_jsx": {
         "no_responses_yet_click_to_respond":
             "댓글이 없습니다. 댓글을 작성하시려면 클릭하세요.",
