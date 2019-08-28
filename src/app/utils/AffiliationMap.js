@@ -1,6 +1,6 @@
 const map = {
     //steemit
-    ned: 'Steemit',
+    ned: 'Who?',
     justinw: 'Steemit',
     elipowell: 'Steemit',
     vandeberg: 'Steemit',
@@ -30,7 +30,8 @@ const map = {
     udezee: 'Curator',
     rehan12: 'Curator',
     joedukeg: 'Curator',
-    'mango-juice': 'Curator'
+    'mango-juice': 'Curator',
+    bwar: 'Bwar'
 };
 
 export default map;
