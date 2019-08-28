@@ -404,26 +404,26 @@ export default function reducer(state = defaultState, action = {}) {
         }
 
         case RECEIVE_AUTHOR_RECENT_POSTS: {
-            const { data, order, category } = payload;
-            let new_state = state.updateIn(
-                ['discussion_idx', category || '', order],
-                List(),
-                list => {
-                    return list.withMutations(posts => {
-                        data.forEach(value => {
-                            const entry = `${value.author}/${value.permlink}`;
-                            if (!posts.includes(entry)) posts.push(entry);
-                        });
+            const { data, accountname, category } = payload;
+            const key = ['accounts', accountname, category];
+            let new_state = state.updateIn(key, List(), list => {
+                return list.withMutations(posts => {
+                    data.forEach(value => {
+                        const entry = `${value.author}/${value.permlink}`;
+                        if (!posts.includes(entry)) posts.push(entry);
                     });
-                }
-            );
+                });
+            });
             new_state = new_state.updateIn(['content'], content => {
                 return content.withMutations(map => {
                     data.forEach(value => {
                         const key = `${value.author}/${value.permlink}`;
                         value = fromJS(value);
                         value = value.set('stats', fromJS(contentStats(value)));
-                        map.set(key, value);
+                        if (!content.has(key)) {
+                            value['body'] = value['desc'];
+                            map.set(key, value);
+                        }
                     });
                 });
             });

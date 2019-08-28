@@ -16,15 +16,13 @@ const formatDate = date => {
     return `${yyyy}-${mm}-${dd}`;
 };
 
-class AuthorRecentPosts extends React.PureComponent {
+class AuthorRecentPosts extends React.Component {
     componentDidMount() {
-        // this.getDiscussionsByAuthor();
         const { author, permlink } = this.props;
         const postFilter = value =>
             value.author === author && value.permlink !== permlink;
         this.props.fetchAuthorRecentPosts({
-            order: 'recent_user_posts',
-            category: author,
+            category: 'recent_user_posts',
             accountname: author,
             postFilter,
             limit: MAX_LIMIT,
@@ -76,7 +74,7 @@ export default connect(
             ...ownProps,
             loading: state.app.get('loading'),
             discussions: state.global.getIn([
-                'discussion_idx',
+                'accounts',
                 ownProps.author,
                 'recent_user_posts',
             ]),
