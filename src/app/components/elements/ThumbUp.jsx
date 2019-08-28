@@ -16,50 +16,32 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 const MAX_THUMBUP_DISPLAY = 20;
 
 class ThumbUp extends React.Component {
-  static propTypes = {
-    // HTML properties
-    post: PropTypes.string.isRequired,
+    static propTypes = {
+        // HTML properties
+        post: PropTypes.string.isRequired,
 
-    // Redux connect properties.
-    author: PropTypes.string, // post was deleted
-    permlink: PropTypes.string,
-    username: PropTypes.string,
-    enable_slider: PropTypes.bool,
-    tokenBalances: PropTypes.object,
-    thumbup_active: PropTypes.bool,
-    dispatchSubmit: PropTypes.func.isRequired,
-    max_like_amount: PropTypes.number,
-    receive_account: PropTypes.string,
-    divide_author: PropTypes.number,
-    divide_rewards: PropTypes.number,
-    divide_dev: PropTypes.number,
-    divide_burn: PropTypes.number,
-  };
-  static defaultProps = {
-    max_like_amount: 1,
-    receive_account: 'uni.dev',
-    divide_author: 50,
-    divide_rewards: 10,
-    divide_dev: 20,
-    divide_burn: 20
-  };
-  constructor(props) {
-    super(props);
-    const { max_like_amount } = this.props;
-    this.state = {
-      showWeight: false,
-      isMyThumbUp: false,
-      thumbCnt: 0,
-      thumbAmount: 0,
-      thumbList: null,
-      sliderWeight: {
-        up: max_like_amount,
-        down: max_like_amount,
-      },
+        // Redux connect properties.
+        author: PropTypes.string, // post was deleted
+        permlink: PropTypes.string,
+        username: PropTypes.string,
+        enable_slider: PropTypes.bool,
+        tokenBalances: PropTypes.object,
+        thumbup_active: PropTypes.bool,
+        dispatchSubmit: PropTypes.func.isRequired,
+        max_like_amount: PropTypes.number,
+        receive_account: PropTypes.string,
+        divide_author: PropTypes.number,
+        divide_rewards: PropTypes.number,
+        divide_dev: PropTypes.number,
+        divide_burn: PropTypes.number,
     };
     static defaultProps = {
         max_like_amount: 1,
         receive_account: 'uni.dev',
+        divide_author: 50,
+        divide_rewards: 10,
+        divide_dev: 20,
+        divide_burn: 20,
     };
     constructor(props) {
         super(props);
@@ -241,6 +223,7 @@ class ThumbUp extends React.Component {
         } = this.state;
 
         let thumbs_list = null;
+
         const slider = up => {
             const b = this.state.sliderWeight.up;
             return (
@@ -341,7 +324,7 @@ class ThumbUp extends React.Component {
 
             thumbs_list = (
                 <DropdownMenu
-                    selected={tt('thumbup_jsx.thumbup_plural', {
+                    selected={tt('g.thumbsup', {
                         count: thumbCnt,
                     })}
                     className="Thumbsup__list"
@@ -364,6 +347,7 @@ class ThumbUp extends React.Component {
             let thumbupClick = e => {
                 e && e.preventDefault();
                 const amount = this.state.sliderWeight.up;
+
                 // check token balance
                 if (
                     tokenBalances &&
@@ -378,6 +362,7 @@ class ThumbUp extends React.Component {
                             100}SCT,` +
                         ` Developer = ${amount * divide_dev / 100}SCT,` +
                         ` Burn = ${amount * divide_burn / 100}SCT)`;
+
                     dispatchSubmit({
                         to: receive_account, // for test
                         amount: amount + '',
@@ -423,7 +408,6 @@ class ThumbUp extends React.Component {
         }
 
         const classUp = 'ThumbUp__button ThumbUp__button-up';
-        //  + (thumbup_active ? ' ThumbsUp' : '');
 
         return (
             <span className="ThumbUp">
@@ -453,96 +437,55 @@ class ThumbUp extends React.Component {
 
 // connect
 export default connect(
-  // mapStateToProps
-  (state, ownProps) => {
-    const post = state.global.getIn(['content', ownProps.post]);
-    if (!post) return ownProps;
-    const author = post.get('author');
-    const permlink = post.get('permlink');
-    const thumbup_active = state.global.get(
-      `transaction_thumbup_active_${author}_${permlink}`
-    );
-    const current_account = state.user.get('current');
-    const username = current_account
-      ? current_account.get('username')
-      : null;
+    // mapStateToProps
+    (state, ownProps) => {
+        const post = state.global.getIn(['content', ownProps.post]);
+        if (!post) return ownProps;
+        const author = post.get('author');
+        const permlink = post.get('permlink');
+        const thumbup_active = state.global.get(
+            `transaction_thumbup_active_${author}_${permlink}`
+        );
+        const current_account = state.user.get('current');
+        const username = current_account
+            ? current_account.get('username')
+            : null;
 
-    const tokenBalances = current_account
-      ? current_account.get('token_balances')
-      : null;
-    const enable_slider = true;
-    const scotConfig = state.app.get('scotConfig');
+        const tokenBalances = current_account
+            ? current_account.get('token_balances')
+            : null;
+        const enable_slider = true;
+        const scotConfig = state.app.get('scotConfig');
 
-    const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
+        const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
 
-    if (thumbupConfig) {
-      console.log(`success load thumbsup config`);
-    }
+        if (thumbupConfig) {
+            console.log(`success load thumbsup config`);
+        }
 
-    return {
-      post: ownProps.post,
-      author,
-      permlink,
-      username,
-      enable_slider,
-      tokenBalances,
-      thumbup_active,
-      max_like_amount: thumbupConfig ? thumbupConfig.get('max_like_amount') : 100,
-      receive_account: thumbupConfig ? thumbupConfig.get('receive_account') : 'uni.dev',
-      divide_author: thumbupConfig ? thumbupConfig.get('divide_author') : 50,
-      divide_rewards: thumbupConfig ? thumbupConfig.get('divide_rewards') : 10,
-      divide_dev: thumbupConfig ? thumbupConfig.get('divide_dev') : 20,
-      divide_burn: thumbupConfig ? thumbupConfig.get('divide_burn') : 20,
-    };
-  },
-
-  dispatch => ({
-    dispatchSubmit: ({
-      to,
-      amount,
-      memo,
-      author,
-      permlink,
-      username,
-      errorCallback,
-    }) => {
-      errorCallback = err => {
-        console.log(err);
-      };
-
-      const confirm = () => {
-        return null;
-      };
-
-      const transferOperation = {
-        contractName: 'tokens',
-        contractAction: 'transfer', // for test, transfer 로 변경
-        contractPayload: {
-          symbol: LIQUID_TOKEN_UPPERCASE,
-          to: to,
-          quantity: amount,
-          memo: memo ? memo : '',
-          type: 'scot-thumbup',
-          author: author,
-          permlink: permlink,
-          sender: username,
-        },
-      };
-      const operation = {
-        id: 'ssc-mainnet1',
-        required_auths: [username],
-        json: JSON.stringify(transferOperation),
-      };
-
-      dispatch(
-        transactionActions.broadcastOperation({
-          type: 'custom_json',
-          operation,
-          confirm,
-          // successCallback,
-          errorCallback,
-        })
-      );
+        return {
+            post: ownProps.post,
+            author,
+            permlink,
+            username,
+            enable_slider,
+            tokenBalances,
+            thumbup_active,
+            max_like_amount: thumbupConfig
+                ? thumbupConfig.get('max_like_amount')
+                : 100,
+            receive_account: thumbupConfig
+                ? thumbupConfig.get('receive_account')
+                : 'uni.dev',
+            divide_author: thumbupConfig
+                ? thumbupConfig.get('divide_author')
+                : 50,
+            divide_rewards: thumbupConfig
+                ? thumbupConfig.get('divide_rewards')
+                : 10,
+            divide_dev: thumbupConfig ? thumbupConfig.get('divide_dev') : 20,
+            divide_burn: thumbupConfig ? thumbupConfig.get('divide_burn') : 20,
+        };
     },
 
     dispatch => ({
