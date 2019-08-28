@@ -255,7 +255,7 @@
         "burn": "Burn",
         "staking": "Staking",
         "written_from": "written from %(app_name)s",
-        "thumbsup": "%(count)s Thumbs up"
+        "thumbsup": "ThumbsUp"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
