@@ -82,7 +82,9 @@ function* preBroadcast_custom_json({ operation, username }) {
         const json = JSON.parse(operation.json);
 
         // call thumbup reducer
-        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             const { sender, author, permlink } = payload;
             yield put(
@@ -447,11 +449,7 @@ function* accepted_custom_json({ operation }) {
         console.log(operation);
         try {
             if (json[0] === 'follow') {
-                const {
-                    follower,
-                    following,
-                    what: [action],
-                } = json[1];
+                const { follower, following, what: [action] } = json[1];
                 yield put(
                     globalActions.update({
                         key: ['follow', 'getFollowingAsync', follower],
@@ -469,7 +467,9 @@ function* accepted_custom_json({ operation }) {
     } else if (operation.id === 'ssc-mainnet1') {
         const json = JSON.parse(operation.json);
         // call thumbup reducer
-        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             const { sender, author, permlink } = payload;
             yield put(
@@ -513,10 +513,7 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
 export function* preBroadcast_comment({ operation, username }) {
     if (!operation.author) operation.author = username;
     let permlink = operation.permlink;
-    const {
-        author,
-        __config: { originalBody, comment_options },
-    } = operation;
+    const { author, __config: { originalBody, comment_options } } = operation;
     const {
         parent_author = '',
         parent_permlink = operation.category,
@@ -632,8 +629,11 @@ function* error_custom_json({ operation }) {
             })
         );
     } else if (operation.id === 'ssc-mainnet1') {
+        // charged search => array
         const json = JSON.parse(operation.json);
-        const payload = Array.isArray(json) ? json[0].contractPayload : json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             yield put(
                 globalActions.remove({

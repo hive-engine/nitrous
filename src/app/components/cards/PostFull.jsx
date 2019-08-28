@@ -109,23 +109,17 @@ class PostFull extends React.Component {
         this.linkedInShare = this.linkedInShare.bind(this);
         this.showExplorePost = this.showExplorePost.bind(this);
         this.onShowReply = () => {
-            const {
-                state: { showReply, formId },
-            } = this;
+            const { state: { showReply, formId } } = this;
             this.setState({ showReply: !showReply, showEdit: false });
             saveOnShow(formId, !showReply ? 'reply' : null);
         };
         this.onShowEdit = () => {
-            const {
-                state: { showEdit, formId },
-            } = this;
+            const { state: { showEdit, formId } } = this;
             this.setState({ showEdit: !showEdit, showReply: false });
             saveOnShow(formId, !showEdit ? 'edit' : null);
         };
         this.onDeletePost = () => {
-            const {
-                props: { deletePost },
-            } = this;
+            const { props: { deletePost } } = this;
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
@@ -350,7 +344,7 @@ class PostFull extends React.Component {
             .filter(c => c.indexOf('/re-rating-') !== -1)
             .map(c => this.getRatingFromComment(c))
             .filter(r => r != null);
-        console.log('Replies and Ratings', replies, ratings);
+
         if (ratings && ratings.length > 0) {
             const averageRating =
                 ratings.reduce((a, b) => a + b) / ratings.length;
@@ -676,12 +670,16 @@ class PostFull extends React.Component {
                             {showReplyOption && (
                                 <a onClick={onShowReply}>{tt('g.reply')}</a>
                             )}{' '}
-                            {showEditOption && !showEdit && (
-                                <a onClick={onShowEdit}>{tt('g.edit')}</a>
-                            )}{' '}
-                            {showDeleteOption && !showReply && (
-                                <a onClick={onDeletePost}>{tt('g.delete')}</a>
-                            )}
+                            {showEditOption &&
+                                !showEdit && (
+                                    <a onClick={onShowEdit}>{tt('g.edit')}</a>
+                                )}{' '}
+                            {showDeleteOption &&
+                                !showReply && (
+                                    <a onClick={onDeletePost}>
+                                        {tt('g.delete')}
+                                    </a>
+                                )}
                         </span>
                         <span className="PostFull__responses">
                             <Link
@@ -715,27 +713,28 @@ class PostFull extends React.Component {
                 </div>
                 <div className="row rating">
                     <div className="columns medium-12 large-5">
-                        {this.state.averageRating && this.state.peopleRated && (
-                            <span className="PostFull__rating">
-                                <span className="text">
-                                    {tt('rate_post_jsx.average_rating', {
-                                        average_rating: this.state.averageRating.toFixed(
-                                            1
-                                        ),
-                                    })}
+                        {this.state.averageRating &&
+                            this.state.peopleRated && (
+                                <span className="PostFull__rating">
+                                    <span className="text">
+                                        {tt('rate_post_jsx.average_rating', {
+                                            average_rating: this.state.averageRating.toFixed(
+                                                1
+                                            ),
+                                        })}
+                                    </span>
+                                    <PostRating
+                                        id="post-average-rating"
+                                        initialRating={this.state.averageRating}
+                                        readonly={true}
+                                    />
+                                    <span className="text">
+                                        {tt('rate_post_jsx.people_rated', {
+                                            num: this.state.peopleRated,
+                                        })}
+                                    </span>
                                 </span>
-                                <PostRating
-                                    id="post-average-rating"
-                                    initialRating={this.state.averageRating}
-                                    readonly={true}
-                                />
-                                <span className="text">
-                                    {tt('rate_post_jsx.people_rated', {
-                                        num: this.state.peopleRated,
-                                    })}
-                                </span>
-                            </span>
-                        )}
+                            )}
                     </div>
                     <div className="columns medium-12 large-5">
                         {showUserRating && (
