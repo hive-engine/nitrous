@@ -82,7 +82,9 @@ function* preBroadcast_custom_json({ operation, username }) {
         const json = JSON.parse(operation.json);
 
         // call thumbup reducer
-        const payload = json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             const { sender, author, permlink } = payload;
             yield put(
@@ -469,7 +471,9 @@ function* accepted_custom_json({ operation }) {
     } else if (operation.id === 'ssc-mainnet1') {
         const json = JSON.parse(operation.json);
         // call thumbup reducer
-        const payload = json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             const { sender, author, permlink } = payload;
             yield put(
@@ -629,8 +633,11 @@ function* error_custom_json({ operation }) {
             })
         );
     } else if (operation.id === 'ssc-mainnet1') {
+        // charged search => array
         const json = JSON.parse(operation.json);
-        const payload = json.contractPayload;
+        const payload = Array.isArray(json)
+            ? json[0].contractPayload
+            : json.contractPayload;
         if (payload.type === 'scot-thumbup') {
             yield put(
                 globalActions.remove({
