@@ -42,8 +42,8 @@ export async function getConfig() {
         console.log(`sctapi getconfig load success`);
         return configData;
     } catch (e) {
-        console.log(`sctapi getconfig fail to load`);
         console.log(e);
+        console.log(`sctapi getconfig fail to load`);
         // set default config
         return undefined;
     }
