@@ -26,7 +26,7 @@ const map = {
     afolwalex: 'Dragon',
     swedishdragon: 'Dragon',
     neoxiancity: 'City',
-    xawi: 'Curator',
+    xawi: 'Everything\'s girl',
     udezee: 'Curator',
     rehan12: 'Curator',
     joedukeg: 'Curator',
