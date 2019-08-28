@@ -238,6 +238,108 @@ class PostFull extends React.Component {
         this.props.showExplorePost(permlink, title);
     };
 
+    getRatingFromComment(author_perm) {
+        // get rating score from comment
+        const rating_content = this.props.cont.get(author_perm);
+        if (!rating_content) return null;
+        const body = rating_content.get('body');
+        const m_rating = body.match(/score=\"(\d)\"/);
+        if (m_rating) return Number(m_rating[1]);
+        else return null;
+    }
+
+    needsShowUserRating() {
+        const { username, post } = this.props;
+
+        // identify whether the post is rewarded during search
+        const post_content = this.props.cont.get(post);
+        if (!post_content) return;
+        // update post rewarding info
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const rewarded = isPostRewardedByUser(author, permlink, username);
+        const showUserRating = username && username !== author && rewarded;
+        let userRating = null;
+        if (showUserRating) userRating = this.getUserRating();
+        this.setState({
+            showUserRating,
+            userRating,
+        });
+        return showUserRating;
+    }
+
+    getUserRating() {
+        // get the link to rating comment by the user
+        const { username, post, cont } = this.props;
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return null;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const comment_permlink = clean_permlink(
+            `re-rating-${author}-${permlink}`
+        );
+        return this.getRatingFromComment(`${username}/${comment_permlink}`);
+    }
+
+    getAverageRating() {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return {};
+        const replies = post_content.get('replies').toJS();
+        const ratings = replies
+            .filter(c => c.indexOf('/re-rating-') !== -1)
+            .map(c => this.getRatingFromComment(c))
+            .filter(r => r != null);
+
+        if (ratings && ratings.length > 0) {
+            const averageRating =
+                ratings.reduce((a, b) => a + b) / ratings.length;
+            const peopleRated = ratings.length;
+            return {
+                averageRating,
+                peopleRated,
+            };
+        } else return {};
+    }
+
+    showUserRatingReminder = target => {
+        if (this.state.showUserRating && !this.state.userRating) {
+            this.tooltip.toggleHint({ target });
+        }
+    };
+
+    hideRatingReminder = () => {
+        if (this.state.showUserRating && this.tooltip) {
+            this.tooltip.setState({ target: null });
+        }
+    };
+
+    hasReachedBottom(el) {
+        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
+        else return false;
+    }
+
+    componentDidMount() {
+        if (this.state.showUserRating)
+            document.addEventListener('scroll', this.onScroll);
+    }
+
+    componentWillUnmount() {
+        if (this.state.showUserRating)
+            document.removeEventListener('scroll', this.onScroll);
+    }
+
+    onScroll = () => {
+        const wrappedElement = document.getElementById('user-rating-bar');
+        if (
+            this.state.showUserRating &&
+            wrappedElement &&
+            this.hasReachedBottom(wrappedElement)
+        ) {
+            document.removeEventListener('scroll', this.onScroll);
+            this.showUserRatingReminder(wrappedElement);
+        }
+    };
+
     render() {
         const {
             props: { username, post, scotTokens },
@@ -550,6 +652,77 @@ class PostFull extends React.Component {
                         >
                             <Icon name="link" className="chain-right" />
                         </button>
+                    </div>
+                </div>
+                <div className="row rating">
+                    <div className="columns medium-12 large-5">
+                        {this.state.averageRating &&
+                            this.state.peopleRated && (
+                                <span className="PostFull__rating">
+                                    <span className="text">
+                                        {tt('rate_post_jsx.average_rating', {
+                                            average_rating: this.state.averageRating.toFixed(
+                                                1
+                                            ),
+                                        })}
+                                    </span>
+                                    <PostRating
+                                        id="post-average-rating"
+                                        initialRating={this.state.averageRating}
+                                        readonly={true}
+                                    />
+                                    <span className="text">
+                                        {tt('rate_post_jsx.people_rated', {
+                                            num: this.state.peopleRated,
+                                        })}
+                                    </span>
+                                </span>
+                            )}
+                    </div>
+                    <div className="columns medium-12 large-5">
+                        {showUserRating && (
+                            <span className="float-right">
+                                <ReactHint
+                                    events={false}
+                                    persist
+                                    ref={ref => {
+                                        this.tooltip = ref;
+                                    }}
+                                    onRenderContent={(target, content) => (
+                                        <div
+                                            className="react-hint__content"
+                                            dangerouslySetInnerHTML={{
+                                                __html: String(content).replace(
+                                                    '\n',
+                                                    '<br>'
+                                                ),
+                                            }}
+                                        />
+                                    )}
+                                />
+                                <span
+                                    data-rh={tt(
+                                        'rate_post_jsx.rating_reminder'
+                                    )}
+                                    data-rh-at="left"
+                                >
+                                    <span className="text">
+                                        {' '}
+                                        {this.state.userRating
+                                            ? tt('rate_post_jsx.your_rating')
+                                            : tt(
+                                                  'rate_post_jsx.please_rate'
+                                              )}{' '}
+                                        {': '}{' '}
+                                    </span>
+                                    <PostRating
+                                        id="user-rating-bar"
+                                        initialRating={this.state.userRating}
+                                        onChange={this.showRatePost}
+                                    />
+                                </span>
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="row">
