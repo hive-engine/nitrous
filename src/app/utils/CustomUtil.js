@@ -26,3 +26,17 @@ export function getRuntimeString(value) {
         return `${minutes}m`;
     }
 }
+
+export function getDistinctGenres(genres) {
+    const result = [];
+    const map = new Map();
+
+    for (const genre of genres) {
+        if (!map.has(genre.Id)) {
+            map.set(genre.Id, true);
+            result.push(genre);
+        }
+    }
+
+    return result;
+}

@@ -76,15 +76,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function Movies(props) {
     const classes = useStyles();
-    const { movies, type, locale, loading, requestMovies } = props;
+    const {
+        movies,
+        type,
+        locale,
+        loading,
+        requestMovies,
+        updateMovies,
+    } = props;
 
     const movieType = type === 'movie' ? 1 : 2;
     const lastMovieId =
         movies.length === 0 ? 0 : movies[movies.length - 1].MovieId;
 
     const [values, setValues, expanded, setExpanded] = React.useState({
-        genre: -1,
-        order: 'release_date',
+        genreId: -1,
+        sortBy: 'release_date',
     });
 
     const inputLabel = React.useRef(null);
@@ -98,6 +105,14 @@ export default function Movies(props) {
             ...oldValues,
             [event.target.name]: event.target.value,
         }));
+
+        updateMovies({
+            languageCode: locale,
+            movieType,
+            genreId: values.genreId,
+            lastMovieId,
+            sortBy: values.sortBy,
+        });
     }
 
     const handleSearch = name => event => {
@@ -113,44 +128,80 @@ export default function Movies(props) {
                         variant="outlined"
                         className={classes.formControl}
                     >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-genre">
+                        <InputLabel
+                            ref={inputLabel}
+                            htmlFor="outlined-genre-id"
+                        >
                             Genre
                         </InputLabel>
                         <Select
-                            value={values.genre}
+                            value={values.genreId}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
                                     labelWidth={labelWidth}
-                                    name="genre"
-                                    id="outlined-genre"
+                                    name="genreId"
+                                    id="outlined-genre-id"
                                 />
                             }
                         >
                             <MenuItem value={-1}>
                                 <em>All Genres</em>
                             </MenuItem>
-                            <MenuItem value={0}>Unknown</MenuItem>
-                            <MenuItem value={1}>SF</MenuItem>
-                            <MenuItem value={2}>Horror</MenuItem>
-                            <MenuItem value={3}>Drama</MenuItem>
+                            <MenuItem value={28}>Action</MenuItem>
+                            <MenuItem value={12}>Adventure</MenuItem>
+                            <MenuItem value={16}>Animation</MenuItem>
+                            <MenuItem value={35}>Comedy</MenuItem>
+                            <MenuItem value={80}>Crime</MenuItem>
+                            <MenuItem value={99}>Documentary</MenuItem>
+                            <MenuItem value={18}>Drama</MenuItem>
+                            <MenuItem value={10751}>Family</MenuItem>
+                            <MenuItem value={14}>Fantasy</MenuItem>
+                            <MenuItem value={36}>History</MenuItem>
+                            <MenuItem value={27}>Horror</MenuItem>
+                            <MenuItem value={10402}>Music</MenuItem>
+                            <MenuItem value={9648}>Mystery</MenuItem>
+                            <MenuItem value={10749}>Romance</MenuItem>
+                            <MenuItem value={878}>Science Fiction</MenuItem>
+                            <MenuItem value={53}>Thriller</MenuItem>
+                            <MenuItem value={10770}>TV Movie</MenuItem>
+                            <MenuItem value={10752}>War</MenuItem>
+                            <MenuItem value={37}>Western</MenuItem>
+                            {/* <MenuItem value={28}>Action</MenuItem>
+                            <MenuItem value={10759}>Action &amp; Adventure</MenuItem>
+                            <MenuItem value={12}>Adventure</MenuItem>
+                            <MenuItem value={16}>Animation</MenuItem>
+                            <MenuItem value={35}>Comedy</MenuItem>
+                            <MenuItem value={80}>Crime</MenuItem>
+                            <MenuItem value={99}>Documentary</MenuItem>
+                            <MenuItem value={18}>Drama</MenuItem>
+                            <MenuItem value={10751}>Family</MenuItem>
+                            <MenuItem value={14}>Fantasy</MenuItem>
+                            <MenuItem value={27}>Horror</MenuItem>
+                            <MenuItem value={9648}>Mystery</MenuItem>
+                            <MenuItem value={10764}>Reality</MenuItem>
+                            <MenuItem value={10749}>Romance</MenuItem>
+                            <MenuItem value={10765}>Sci-Fi &amp; Fantasy</MenuItem>
+                            <MenuItem value={53}>Thriller</MenuItem>
+                            <MenuItem value={10768}>War &amp; Politics</MenuItem>
+                            <MenuItem value={37}>Western</MenuItem> */}
                         </Select>
                     </FormControl>
                     <FormControl
                         variant="outlined"
                         className={classes.formControl}
                     >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-order">
+                        <InputLabel ref={inputLabel} htmlFor="outlined-sort-by">
                             Sort by
                         </InputLabel>
                         <Select
-                            value={values.order}
+                            value={values.sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
                                     labelWidth={labelWidth}
-                                    name="order"
-                                    id="outlined-order"
+                                    name="sortBy"
+                                    id="outlined-sort-by"
                                 />
                             }
                         >
@@ -217,20 +268,18 @@ export default function Movies(props) {
                                             </Typography>
                                             <div>
                                                 {post.Genres &&
-                                                    JSON.parse(post.Genres).map(
-                                                        genre => (
-                                                            <Chip
-                                                                key={genre.Id}
-                                                                size="small"
-                                                                label={
-                                                                    genre.Name
-                                                                }
-                                                                className={
-                                                                    classes.chip
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
+                                                    CustomUtil.getDistinctGenres(
+                                                        JSON.parse(post.Genres)
+                                                    ).map(genre => (
+                                                        <Chip
+                                                            key={genre.Id}
+                                                            size="small"
+                                                            label={genre.Name}
+                                                            className={
+                                                                classes.chip
+                                                            }
+                                                        />
+                                                    ))}
                                             </div>
                                         </CardContent>
                                     </Card>
@@ -254,9 +303,9 @@ export default function Movies(props) {
                                 requestMovies({
                                     languageCode: locale,
                                     movieType,
-                                    genreId: -1,
+                                    genreId: values.genreId,
                                     lastMovieId,
-                                    sortBy: 'release_date',
+                                    sortBy: values.sortBy,
                                 });
                             }}
                         >
@@ -293,6 +342,7 @@ module.exports = {
         },
         dispatch => ({
             requestMovies: args => dispatch(movieActions.requestMovies(args)),
+            updateMovies: args => dispatch(movieActions.updateMovies(args)),
         })
     )(Movies),
 };
@@ -302,6 +352,7 @@ Movies.propTypes = {
     status: PropTypes.object,
     routeParams: PropTypes.object,
     requestMovies: PropTypes.func.isRequired,
+    updateMovies: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     username: PropTypes.string,
     blogmode: PropTypes.bool,

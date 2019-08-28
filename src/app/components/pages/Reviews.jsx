@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
-import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
+import { actions as movieActions } from 'app/redux/MovieReducer';
 import { TAG_LIST } from 'app/client_config';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import * as CustomUtil from 'app/utils/CustomUtil';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,11 +34,15 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(2),
     },
     formControl: {
         marginRight: theme.spacing(1),
@@ -67,15 +72,27 @@ const useStyles = makeStyles(theme => ({
     ratingBox: {
         margin: 0,
     },
+    button: {
+        width: '100%',
+    },
 }));
 
 export default function Reviews(props) {
     const classes = useStyles();
-    const { reviews } = props;
+    const { reviews, loading, requestReviews } = props;
+
+    let lastAuthor = '';
+    let lastPermlink = '';
+
+    if (reviews.length > 0) {
+        lastAuthor = reviews[reviews.length - 1].Author;
+        lastPermlink = reviews[reviews.length - 1].Permlink;
+    }
 
     const [values, setValues, expanded, setExpanded] = React.useState({
-        genre: -1,
-        order: 'created',
+        movieType: 0,
+        genreId: -1,
+        sortBy: 'created',
     });
 
     const inputLabel = React.useRef(null);
@@ -98,50 +115,51 @@ export default function Reviews(props) {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="lg">
-                <form className={classes.root} autoComplete="off">
+            <Container maxWidth="lg" className={classes.root}>
+                <form autoComplete="off">
                     <FormControl
                         variant="outlined"
                         className={classes.formControl}
                     >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-genre">
-                            Genre
+                        <InputLabel
+                            ref={inputLabel}
+                            htmlFor="outlined-movie-type"
+                        >
+                            Type
                         </InputLabel>
                         <Select
-                            value={values.genre}
+                            value={values.movieType}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
                                     labelWidth={labelWidth}
-                                    name="genre"
-                                    id="outlined-genre"
+                                    name="movieType"
+                                    id="outlined-movie-type"
                                 />
                             }
                         >
-                            <MenuItem value={-1}>
-                                <em>All Genres</em>
+                            <MenuItem value={0}>
+                                <em>Movie/TV</em>
                             </MenuItem>
-                            <MenuItem value={0}>Unknown</MenuItem>
-                            <MenuItem value={1}>SF</MenuItem>
-                            <MenuItem value={2}>Horror</MenuItem>
-                            <MenuItem value={3}>Drama</MenuItem>
+                            <MenuItem value={1}>Movie</MenuItem>
+                            <MenuItem value={2}>TV</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl
                         variant="outlined"
                         className={classes.formControl}
                     >
-                        <InputLabel ref={inputLabel} htmlFor="outlined-order">
+                        <InputLabel ref={inputLabel} htmlFor="outlined-sort-by">
                             Sort by
                         </InputLabel>
                         <Select
-                            value={values.order}
+                            value={values.sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
                                     labelWidth={labelWidth}
-                                    name="order"
-                                    id="outlined-order"
+                                    name="sortBy"
+                                    id="outlined-sort-by"
                                 />
                             }
                         >
@@ -239,17 +257,46 @@ export default function Reviews(props) {
                                                 </Box>
                                             </CardContent>
                                         </div>
-                                        <Hidden xsDown>
-                                            <CardMedia
-                                                className={classes.cardMedia}
-                                                image={post.CoverImgUrl}
-                                            />
-                                        </Hidden>
+                                        {post.CoverImgUrl && (
+                                            <Hidden xsDown>
+                                                <CardMedia
+                                                    className={
+                                                        classes.cardMedia
+                                                    }
+                                                    image={post.CoverImgUrl}
+                                                />
+                                            </Hidden>
+                                        )}
                                     </Card>
                                 </CardActionArea>
                             </Grid>
                         ))}
                     </Grid>
+                    {loading ? (
+                        <center>
+                            <LoadingIndicator
+                                style={{ marginBottom: '2rem' }}
+                                type="circle"
+                            />
+                        </center>
+                    ) : (
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                            onClick={() => {
+                                requestReviews({
+                                    movieType: values.movieType,
+                                    genreId: values.genreId,
+                                    lastAuthor,
+                                    lastPermlink,
+                                    sortBy: values.sortBy,
+                                });
+                            }}
+                        >
+                            LOAD MORE REVIEWS
+                        </Button>
+                    )}
                 </main>
             </Container>
         </React.Fragment>
@@ -262,7 +309,7 @@ module.exports = {
         (state, ownProps) => {
             return {
                 status: state.global.get('status'),
-                loading: state.app.get('loading'),
+                loading: state.movie.get('loading'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||
@@ -275,12 +322,9 @@ module.exports = {
                 reviews: state.movie.get('reviews').toJS(),
             };
         },
-        dispatch => {
-            return {
-                requestData: args =>
-                    dispatch(fetchDataSagaActions.requestData(args)),
-            };
-        }
+        dispatch => ({
+            requestReviews: args => dispatch(movieActions.requestReviews(args)),
+        })
     )(Reviews),
 };
 
