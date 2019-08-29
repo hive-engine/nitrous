@@ -502,7 +502,12 @@ export const TAG_LIST = fromJSOrdered({
         },
     },
     sports: {
-        golf: ['masters', 'usopenchampionship', 'britishopen', 'pgachampionship'],
+        golf: [
+            'masters',
+            'usopenchampionship',
+            'britishopen',
+            'pgachampionship',
+        ],
         tennis: ['wimbledon', 'usopen', 'australianopen', 'frenchopen'],
         volleyball: [],
         cricket: [],
@@ -511,18 +516,65 @@ export const TAG_LIST = fromJSOrdered({
         billards: ['pool', 'snooker'],
         cycling: ['giroditalia', 'tourdefrance', 'lavuelta'],
         motorsports: ['nascar', 'indycar', 'nhra', 'formulaone', 'motocross'],
-        horseracing: ['breederscup', 'kentuckyderby', 'preaknessstakes', 'belmontstakes', 'kentuckyoaks', 'pegasusworldcup'],
-        competitionsports: ['dance', 'cheer', 'gymnastics', 'bodybuilding', 'weightlifting', 'figureskating'],
+        horseracing: [
+            'breederscup',
+            'kentuckyderby',
+            'preaknessstakes',
+            'belmontstakes',
+            'kentuckyoaks',
+            'pegasusworldcup',
+        ],
+        competitionsports: [
+            'dance',
+            'cheer',
+            'gymnastics',
+            'bodybuilding',
+            'weightlifting',
+            'figureskating',
+        ],
         watersports: ['swimming', 'surfing', 'rowing', 'waterpolo'],
-        mentalsports: ['chess', 'poker', 'go', 'backgammon', 'draughts', 'mahjong'],
+        mentalsports: [
+            'chess',
+            'poker',
+            'go',
+            'backgammon',
+            'draughts',
+            'mahjong',
+        ],
         discsports: ['discgolf', 'ultimatefrisbee'],
-        extremesports: ['skateboarding', 'bmx', 'snowboarding', 'skiing', 'rollerskating', 'lugeing', 'mountainbiking', 'rockclimbing', 'skydiving', 'rodeo'],
+        extremesports: [
+            'skateboarding',
+            'bmx',
+            'snowboarding',
+            'skiing',
+            'rollerskating',
+            'lugeing',
+            'mountainbiking',
+            'rockclimbing',
+            'skydiving',
+            'rodeo',
+        ],
         tabletennis: [],
         bowling: [],
         outdoors: ['fishing', 'hunting', 'kayaking', 'shooting'],
-        esports: ['fortniteworldcup', 'leagueworldchampionship', 'theinternational', 'cwl', 'overwatchleague', 'haloworldchampionship', 'pubgglobalchampionship', 'dota2asiachampionships'],
+        esports: [
+            'fortniteworldcup',
+            'leagueworldchampionship',
+            'theinternational',
+            'cwl',
+            'overwatchleague',
+            'haloworldchampionship',
+            'pubgglobalchampionship',
+            'dota2asiachampionships',
+        ],
     },
-    fantasy: ['fantasypremierleague', 'sfpl', 'fantasybaseball', 'fantasybasketball', 'fantasyfootball'],
+    fantasy: [
+        'fantasypremierleague',
+        'sfpl',
+        'fantasybaseball',
+        'fantasybasketball',
+        'fantasyfootball',
+    ],
     actifit: [],
 });
 export const LIQUID_TOKEN = 'Sports';
@@ -570,3 +622,9 @@ export const SITE_DESCRIPTION =
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
+
+// Other configurations
+export const ALLOW_MASTER_PW = false;
+// Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+export const POST_FOOTER = '';
+export const SCOT_TAG_FIRST = false;
