@@ -260,6 +260,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "Pubblica come",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness "
