@@ -23,6 +23,7 @@ import {
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
+import * as appActions from 'app/redux/AppReducer';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Icon from 'app/components/elements/Icon';
 import classNames from 'classnames';
@@ -68,6 +69,14 @@ class UserWallet extends React.Component {
     handleClaimTokenRewards = token => {
         const { account, claimTokenRewards } = this.props;
         claimTokenRewards(account, token);
+    };
+    handleClaimAllTokensRewards = () => {
+        const { account, claimAllTokensRewards } = this.props;
+        const allTokenStatus = account.get('all_token_status').toJS();
+        const pendingTokenSymbols = Object.values(allTokenStatus)
+            .filter(e => parseFloat(e.pending_token))
+            .map(({ symbol }) => symbol);
+        claimAllTokensRewards(account, pendingTokenSymbols);
     };
     render() {
         const {
@@ -123,7 +132,9 @@ class UserWallet extends React.Component {
         const snax_balance_str = numberWithCommas(
             parseFloat(snaxBalance).toString()
         );
-
+        const pendingTokens = Object.values(allTokenStatus).filter(e =>
+            parseFloat(e.pending_token)
+        );
         let isMyAccount =
             current_user &&
             current_user.get('username') === account.get('name');
@@ -538,18 +549,27 @@ class UserWallet extends React.Component {
                             zebra: parseFloat(pendingUnstakeBalance),
                         })}
                     >
-                        <div className="column small-12">
+                        <div className="column small-12 medium-9">
                             Steem Engine Token
                             <FormattedHTMLMessage
                                 className="secondary"
                                 id="tips_js.steem_engine_tokens"
                             />
                         </div>
+                        <div className="column small-12 medium-3">
+                            <button
+                                disabled={pendingTokens.length === 0}
+                                className="button hollow ghost slim tiny float-right"
+                                onClick={this.handleClaimAllTokensRewards}
+                            >
+                                All in one claim
+                            </button>
+                        </div>
                         <div className="column small-12">
                             <FormattedAssetTokens
                                 items={otherTokenBalances}
                                 isMyAccount={isMyAccount}
-                                allTokenStatus={allTokenStatus}
+                                pendingTokens={pendingTokens}
                                 handleClaimTokenRewards={
                                     this.handleClaimTokenRewards
                                 }
@@ -661,9 +681,15 @@ export default connect(
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
+                    appActions.addNotification({
+                        key: 'trx_' + Date.now(),
+                        message: `${symbol} Token Claim Completed.`,
+                        dismissAfter: 5000,
+                    })
+                );
+                dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 );
-                alert('Success Claim!!');
             };
 
             const operation = {
@@ -674,6 +700,42 @@ export default connect(
                 }),
             };
 
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                })
+            );
+        },
+
+        claimAllTokensRewards: (account, symbols) => {
+            const username = account.get('name');
+            const successCallback = () => {
+                dispatch(
+                    appActions.addNotification({
+                        key: 'trx_' + Date.now(),
+                        message: tt('g.all_claim_completed'),
+                        dismissAfter: 5000,
+                    })
+                );
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                );
+            };
+            const json = symbols.map(symbol => ({ symbol }));
+            const operation = {
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify(json),
+            };
+            dispatch(
+                appActions.addNotification({
+                    key: 'trx_' + Date.now(),
+                    message: tt('g.all_claim_started', { seconds: 3 }),
+                    dismissAfter: 5000,
+                })
+            );
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
