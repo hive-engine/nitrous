@@ -253,7 +253,11 @@
         "total": "Total",
         "circulating": "Circulating",
         "burn": "Burn",
-        "staking": "Staking"
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
