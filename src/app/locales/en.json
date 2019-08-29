@@ -252,8 +252,8 @@
         },
         "written_from": "written from %(app_name)s",
         "all_claim_started":
-            "All claim started. It is completed after about %(seconds)s seconds.",
-        "all_claim_completed": "All claims completed!",
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "pending-orders": "Pending Orders",
         "my_orders": "My Orders"
     },

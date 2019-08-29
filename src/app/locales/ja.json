@@ -252,6 +252,10 @@
                 "Steemit Inc.の従業員を含む正当なユーザーは秘密キーまたはマスターパスワードを要求することはありません。",
             "checkbox": "理解しました。"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "投稿します:",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります",
