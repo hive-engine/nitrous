@@ -96,3 +96,9 @@ export const REVIVE_ADS = {
         reviveId: '727bec5e09208690b050ccfc6a45d384',
     },
 };
+
+// Other configurations
+export const ALLOW_MASTER_PW = false;
+// Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+export const POST_FOOTER = '';
+export const SCOT_TAG_FIRST = false;
