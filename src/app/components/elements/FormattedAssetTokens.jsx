@@ -94,14 +94,11 @@ FormattedAssetToken.defaultProps = {
 
 const FormattedAssetTokens = ({
     items,
-    allTokenStatus,
+    pendingTokens,
     isMyAccount,
     handleClaimTokenRewards,
 }) => {
     const sortedItems = items.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
-    const pendingTokens = Object.values(allTokenStatus).filter(e =>
-        parseFloat(e.pending_token)
-    );
     return (
         <div className="UserWallet__balance-tokens">
             {sortedItems &&
@@ -120,7 +117,7 @@ const FormattedAssetTokens = ({
 
 FormattedAssetTokens.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape).isRequired,
-    allTokenStatus: PropTypes.objectOf(PropTypes.shape).isRequired,
+    pendingTokens: PropTypes.arrayOf(PropTypes.shape).isRequired,
     isMyAccount: PropTypes.bool,
     handleClaimTokenRewards: PropTypes.func,
 };
