@@ -161,6 +161,7 @@ const map = {
     uwelang: 'Certified Ulogger',
     giantbear: 'Certified Ulogger',
     kesolink: 'Certified Ulogger',
+    joshuaolugbode: 'Certified Ulogger',
 };
 
 export default map;
