@@ -17,7 +17,12 @@ import { fromJS, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import { APP_NAME, SCOT_TAG, APP_MAX_TAG } from 'app/client_config';
+import {
+    APP_NAME,
+    SCOT_TAG,
+    SCOT_TAG_FIRST,
+    APP_MAX_TAG,
+} from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -966,7 +971,7 @@ export default formId =>
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : formCategories.first();
+                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
                 let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
