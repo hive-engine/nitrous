@@ -27,7 +27,15 @@ import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
+import PostRating from 'app/components/elements/Rating';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import ReactHintFactory from 'react-hint';
+const ReactHint = ReactHintFactory(React);
+import {
+    clean_permlink,
+    isPostRewardedByUser,
+    updatePostRewardingRecords,
+} from 'app/utils/CommentUtil';
 import ThumbUp from 'app/components/elements/ThumbUp';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
@@ -88,6 +96,7 @@ class PostFull extends React.Component {
         unlock: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
+        showRatePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
     };
 
@@ -114,10 +123,12 @@ class PostFull extends React.Component {
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
+        this.onScroll = this.onScroll.bind(this);
+        this.hideRatingReminder = this.hideRatingReminder.bind(this);
     }
 
     componentWillMount() {
-        const { post } = this.props;
+        const { username, post } = this.props;
         const formId = `postFull-${post}`;
         this.setState({
             formId,
@@ -135,10 +146,39 @@ class PostFull extends React.Component {
                     this.setState({ showEdit: true });
                 }
             }
+
+            // get average rating info
+            const { averageRating, peopleRated } = this.getAverageRating();
+            this.setState({
+                averageRating,
+                peopleRated,
+            });
+
+            // check post rewarding status
+            const showUserRating = this.needsShowUserRating();
+            if (!showUserRating) {
+                updatePostRewardingRecords(username, () => {
+                    this.needsShowUserRating();
+                });
+            }
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        // add a check about rating
+        setTimeout(() => {
+            const { averageRating, peopleRated } = this.getAverageRating();
+            if (
+                averageRating &&
+                peopleRated &&
+                (averageRating !== this.state.averageRating ||
+                    peopleRated !== this.state.peopleRated)
+            ) {
+                this.setState({ averageRating, peopleRated });
+                return true;
+            }
+        }, 1000);
+
         const names = 'cont, post, username'.split(', ');
         return (
             names.findIndex(name => this.props[name] !== nextProps[name]) !==
@@ -230,6 +270,21 @@ class PostFull extends React.Component {
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
         this.props.showPromotePost(author, permlink);
+    };
+
+    showRatePost = rating => {
+        // hide rating reminder
+        this.hideRatingReminder();
+        // show rate post dialog
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return;
+        const category = post_content.get('category');
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const body = post_content.get('body');
+        this.props.showRatePost(category, author, permlink, body, rating);
+        // update userRating
+        this.setState({ userRating: rating });
     };
 
     showExplorePost = () => {
@@ -349,11 +404,13 @@ class PostFull extends React.Component {
                 formId,
                 showReply,
                 showEdit,
+                showUserRating,
             },
             onShowReply,
             onShowEdit,
             onDeletePost,
         } = this;
+
         const post_content = this.props.cont.get(this.props.post);
         if (!post_content) return null;
         const p = extractContent(immutableAccessor, post_content);
@@ -598,9 +655,9 @@ class PostFull extends React.Component {
                             content={content}
                             authorRepLog10={authorRepLog10}
                         />
-                        {/* {app_info.startsWith(`${APP_ICON}/`) && (
+                        {app_info.startsWith(`${APP_ICON}/`) && (
                             <ThumbUp post={post} />
-                        )} */}
+                        )}
                     </div>
                     <div className="columns medium-12 large-2 ">
                         <Voting post={post} />
@@ -771,6 +828,14 @@ export default connect(
                 globalActions.showDialog({
                     name: 'promotePost',
                     params: { author, permlink },
+                })
+            );
+        },
+        showRatePost: (category, author, permlink, body, rating) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'ratePost',
+                    params: { category, author, permlink, body, rating },
                 })
             );
         },
