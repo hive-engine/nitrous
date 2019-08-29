@@ -24,6 +24,7 @@ import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { syncHistoryWithStore } from 'react-router-redux';
 import rootReducer from 'app/redux/RootReducer';
+import { defaultState as movieDefaultState } from 'app/redux/MovieReducer';
 import rootSaga from 'shared/RootSaga';
 import { component as NotFound } from 'app/components/pages/NotFound';
 import extractMeta from 'app/utils/ExtractMeta';
@@ -33,6 +34,7 @@ import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
 import { getStateAsync } from 'app/utils/steemApi';
 import * as movieApi from 'app/utils/MovieApi';
+import { LIST_MAX_SIZE } from 'shared/constants';
 
 let get_state_perf,
     get_content_perf = false;
@@ -325,7 +327,7 @@ export async function serverRender(
             ] = pinnedPost;
         });
 
-        const movie = {};
+        const movie = movieDefaultState;
 
         if (url.match(routeRegex.Movies)) {
             let movieType;
@@ -342,6 +344,12 @@ export async function serverRender(
                 0,
                 'release_date'
             );
+
+            if (movie.movies.length == LIST_MAX_SIZE) {
+                movie.hasNextList = true;
+            } else {
+                movie.hasNextList = false;
+            }
         } else if (url.match(routeRegex.Movie)) {
             let movieType;
             if (url.indexOf('/movie') === 0) {
@@ -360,6 +368,12 @@ export async function serverRender(
             );
         } else if (url.match(routeRegex.Reviews)) {
             movie.reviews = await movieApi.getReviews(1, -1, '', '');
+
+            if (movie.movies.length == LIST_MAX_SIZE) {
+                movie.hasNextList = true;
+            } else {
+                movie.hasNextList = false;
+            }
         }
 
         server_store = createStore(rootReducer, {

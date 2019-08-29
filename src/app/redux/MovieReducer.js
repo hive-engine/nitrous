@@ -1,4 +1,5 @@
-import { fromJS, List } from 'immutable';
+import { List } from 'immutable';
+import { LIST_MAX_SIZE } from 'shared/constants';
 
 export const REQUEST_MOVIES = 'movie/REQUEST_MOVIES';
 const RECEIVE_MOVIES = 'movie/RECEIVE_MOVIES';
@@ -11,7 +12,7 @@ const REQUEST_REVIEWS_END = 'movie/REQUEST_REVIEWS_END';
 export const UPDATE_MOVIES = 'movie/UPDATE_MOVIES';
 const RECEIVE_UPDATE_MOVIES = 'movie/RECEIVE_UPDATE_MOVIES';
 
-const defaultState = fromJS({ movie: { loading: false } });
+export const defaultState = { loading: false, hasNextList: false };
 
 export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
@@ -21,11 +22,17 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_REVIEWS:
             return state.set('loading', true);
         case RECEIVE_MOVIES:
-            return state.update('movies', list => list.concat(payload.data));
+            return state
+                .update('movies', list => list.concat(payload.data))
+                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_REVIEWS:
-            return state.update('reviews', list => list.concat(payload.data));
+            return state
+                .update('reviews', list => list.concat(payload.data))
+                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_UPDATE_MOVIES:
-            return state.set('movies', List(payload.data));
+            return state
+                .set('movies', List(payload.data))
+                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case REQUEST_MOVIES_END:
         case REQUEST_REVIEWS_END:
             return state.set('loading', false);

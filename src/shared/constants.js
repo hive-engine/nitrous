@@ -5,3 +5,4 @@ export const SIGNUP_URL = 'https://signup.steemit.com';
 export const SUBMIT_FORM_ID = 'submitStory';
 export const PROMOTED_POST_PAD_SIZE = 5;
 export const MOVIEDB_URL_PATTERN = /https:\/\/www\.themoviedb\.org\/(?:movie|tv)\/(?:\d+)/;
+export const LIST_MAX_SIZE = 20;

@@ -31,7 +31,6 @@ import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -81,15 +80,21 @@ export default function Movies(props) {
         type,
         locale,
         loading,
+        hasNextList,
         requestMovies,
         updateMovies,
     } = props;
+
+    const genres = tt(`genre.${type}`);
 
     const movieType = type === 'movie' ? 1 : 2;
     const lastMovieId =
         movies.length === 0 ? 0 : movies[movies.length - 1].MovieId;
 
-    const [values, setValues, expanded, setExpanded] = React.useState({
+    const [values, setValues] = React.useState({
+        languageCode: locale,
+        movieType,
+        lastMovieId: 0,
         genreId: -1,
         sortBy: 'release_date',
     });
@@ -101,18 +106,25 @@ export default function Movies(props) {
     }, []);
 
     function handleChange(event) {
-        setValues(oldValues => ({
-            ...oldValues,
+        const newValues = {
+            ...values,
             [event.target.name]: event.target.value,
-        }));
+        };
 
-        updateMovies({
-            languageCode: locale,
-            movieType,
-            genreId: values.genreId,
-            lastMovieId,
-            sortBy: values.sortBy,
-        });
+        setValues(newValues);
+        updateMovies(newValues);
+    }
+
+    function setGenre(e, genreId) {
+        e.stopPropagation();
+
+        const newValues = {
+            ...values,
+            ['genreId']: genreId,
+        };
+
+        setValues(newValues);
+        updateMovies(newValues);
     }
 
     const handleSearch = name => event => {
@@ -145,46 +157,15 @@ export default function Movies(props) {
                                 />
                             }
                         >
-                            <MenuItem value={-1}>
-                                <em>All Genres</em>
-                            </MenuItem>
-                            <MenuItem value={28}>Action</MenuItem>
-                            <MenuItem value={12}>Adventure</MenuItem>
-                            <MenuItem value={16}>Animation</MenuItem>
-                            <MenuItem value={35}>Comedy</MenuItem>
-                            <MenuItem value={80}>Crime</MenuItem>
-                            <MenuItem value={99}>Documentary</MenuItem>
-                            <MenuItem value={18}>Drama</MenuItem>
-                            <MenuItem value={10751}>Family</MenuItem>
-                            <MenuItem value={14}>Fantasy</MenuItem>
-                            <MenuItem value={36}>History</MenuItem>
-                            <MenuItem value={27}>Horror</MenuItem>
-                            <MenuItem value={10402}>Music</MenuItem>
-                            <MenuItem value={9648}>Mystery</MenuItem>
-                            <MenuItem value={10749}>Romance</MenuItem>
-                            <MenuItem value={878}>Science Fiction</MenuItem>
-                            <MenuItem value={53}>Thriller</MenuItem>
-                            <MenuItem value={10770}>TV Movie</MenuItem>
-                            <MenuItem value={10752}>War</MenuItem>
-                            <MenuItem value={37}>Western</MenuItem>
-                            {/* <MenuItem value={28}>Action</MenuItem>
-                            <MenuItem value={10759}>Action &amp; Adventure</MenuItem>
-                            <MenuItem value={12}>Adventure</MenuItem>
-                            <MenuItem value={16}>Animation</MenuItem>
-                            <MenuItem value={35}>Comedy</MenuItem>
-                            <MenuItem value={80}>Crime</MenuItem>
-                            <MenuItem value={99}>Documentary</MenuItem>
-                            <MenuItem value={18}>Drama</MenuItem>
-                            <MenuItem value={10751}>Family</MenuItem>
-                            <MenuItem value={14}>Fantasy</MenuItem>
-                            <MenuItem value={27}>Horror</MenuItem>
-                            <MenuItem value={9648}>Mystery</MenuItem>
-                            <MenuItem value={10764}>Reality</MenuItem>
-                            <MenuItem value={10749}>Romance</MenuItem>
-                            <MenuItem value={10765}>Sci-Fi &amp; Fantasy</MenuItem>
-                            <MenuItem value={53}>Thriller</MenuItem>
-                            <MenuItem value={10768}>War &amp; Politics</MenuItem>
-                            <MenuItem value={37}>Western</MenuItem> */}
+                            {genres.map(genre => (
+                                <MenuItem value={genre.id} key={genre.id}>
+                                    {genre.id > 0 ? (
+                                        genre.name
+                                    ) : (
+                                        <em>{genre.name}</em>
+                                    )}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <FormControl
@@ -235,7 +216,8 @@ export default function Movies(props) {
                             <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
                                 <CardActionArea
                                     component="a"
-                                    href={`/${type}/${post.MovieId}`}
+                                    onClick={() => console.log(111)}
+                                    //href={`/${type}/${post.MovieId}`}
                                 >
                                     <Card className={classes.card}>
                                         <CardMedia
@@ -278,6 +260,12 @@ export default function Movies(props) {
                                                             className={
                                                                 classes.chip
                                                             }
+                                                            onClick={e =>
+                                                                setGenre(
+                                                                    e,
+                                                                    genre.Id
+                                                                )
+                                                            }
                                                         />
                                                     ))}
                                             </div>
@@ -287,31 +275,33 @@ export default function Movies(props) {
                             </Grid>
                         ))}
                     </Grid>
-                    {loading ? (
-                        <center>
-                            <LoadingIndicator
-                                style={{ marginBottom: '2rem' }}
-                                type="circle"
-                            />
-                        </center>
-                    ) : (
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            className={classes.button}
-                            onClick={() => {
-                                requestMovies({
-                                    languageCode: locale,
-                                    movieType,
-                                    genreId: values.genreId,
-                                    lastMovieId,
-                                    sortBy: values.sortBy,
-                                });
-                            }}
-                        >
-                            LOAD MORE MOVIES
-                        </Button>
-                    )}
+                    {hasNextList ? (
+                        loading ? (
+                            <center>
+                                <LoadingIndicator
+                                    style={{ marginBottom: '2rem' }}
+                                    type="circle"
+                                />
+                            </center>
+                        ) : (
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.button}
+                                onClick={() => {
+                                    requestMovies({
+                                        languageCode: locale,
+                                        movieType,
+                                        genreId: values.genreId,
+                                        lastMovieId,
+                                        sortBy: values.sortBy,
+                                    });
+                                }}
+                            >
+                                LOAD MORE MOVIES
+                            </Button>
+                        )
+                    ) : null}
                 </main>
             </Container>
         </React.Fragment>
@@ -338,6 +328,7 @@ module.exports = {
                     state.app.getIn(['user_preferences', 'locale']) ||
                     DEFAULT_LANGUAGE,
                 movies: state.movie.get('movies').toJS(),
+                hasNextList: state.movie.get('hasNextList'),
             };
         },
         dispatch => ({
@@ -353,10 +344,11 @@ Movies.propTypes = {
     routeParams: PropTypes.object,
     requestMovies: PropTypes.func.isRequired,
     updateMovies: PropTypes.func.isRequired,
-    loading: PropTypes.bool,
+    loading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
-    type: PropTypes.string,
+    type: PropTypes.string.isRequired,
     locale: PropTypes.string.isRequired,
     movies: PropTypes.array.isRequired,
+    hasNextList: PropTypes.bool.isRequired,
 };

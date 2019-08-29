@@ -35,7 +35,6 @@ import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -79,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Reviews(props) {
     const classes = useStyles();
-    const { reviews, loading, requestReviews } = props;
+    const { reviews, loading, hasNextList, requestReviews } = props;
 
     let lastAuthor = '';
     let lastPermlink = '';
@@ -272,31 +271,33 @@ export default function Reviews(props) {
                             </Grid>
                         ))}
                     </Grid>
-                    {loading ? (
-                        <center>
-                            <LoadingIndicator
-                                style={{ marginBottom: '2rem' }}
-                                type="circle"
-                            />
-                        </center>
-                    ) : (
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            className={classes.button}
-                            onClick={() => {
-                                requestReviews({
-                                    movieType: values.movieType,
-                                    genreId: values.genreId,
-                                    lastAuthor,
-                                    lastPermlink,
-                                    sortBy: values.sortBy,
-                                });
-                            }}
-                        >
-                            LOAD MORE REVIEWS
-                        </Button>
-                    )}
+                    {hasNextList ? (
+                        loading ? (
+                            <center>
+                                <LoadingIndicator
+                                    style={{ marginBottom: '2rem' }}
+                                    type="circle"
+                                />
+                            </center>
+                        ) : (
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.button}
+                                onClick={() => {
+                                    requestReviews({
+                                        movieType: values.movieType,
+                                        genreId: values.genreId,
+                                        lastAuthor,
+                                        lastPermlink,
+                                        sortBy: values.sortBy,
+                                    });
+                                }}
+                            >
+                                LOAD MORE REVIEWS
+                            </Button>
+                        )
+                    ) : null}
                 </main>
             </Container>
         </React.Fragment>
@@ -320,6 +321,7 @@ module.exports = {
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviews: state.movie.get('reviews').toJS(),
+                hasNextList: state.movie.get('hasNextList'),
             };
         },
         dispatch => ({
@@ -334,9 +336,10 @@ Reviews.propTypes = {
     status: PropTypes.object,
     routeParams: PropTypes.object,
     requestData: PropTypes.func,
-    loading: PropTypes.bool,
+    loading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     categories: PropTypes.object,
     reviews: PropTypes.array.isRequired,
+    hasNextList: PropTypes.bool.isRequired,
 };
