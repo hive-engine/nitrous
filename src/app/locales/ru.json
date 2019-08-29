@@ -259,6 +259,10 @@
                 "Если кто-то попросил вас опубликовать или показать ваш приватный ключ, это возможно злоумышленник, который пытается украсть ваши токены.",
             "checkbox": "Я понял"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "Запостить как",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "голос уже существует, пользователь должен обозначить желание убрать делегата"
