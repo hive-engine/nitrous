@@ -603,7 +603,7 @@ function* saveLogin_localStorage() {
 
     // Save the lowest security key, or owner if allowed
     let posting_private = private_keys && private_keys.get('posting_private');
-    if (!posting_private && ALLOW_MASTER_PW) {
+    if (private_keys && !posting_private && ALLOW_MASTER_PW) {
         posting_private = private_keys.get('owner_private');
     }
 
