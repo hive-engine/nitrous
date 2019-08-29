@@ -11,7 +11,7 @@ import {
     transactionWatches,
     broadcastOperation,
 } from './TransactionSaga';
-import { DEBT_TICKER } from 'app/client_config';
+import { APP_URL, POST_FOOTER, DEBT_TICKER } from 'app/client_config';
 
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
@@ -39,6 +39,17 @@ const operation = {
 };
 
 const username = 'Beatrice';
+
+function addFooter(body, author, permlink) {
+    const footer = POST_FOOTER.replace(
+        '${POST_URL}',
+        `${APP_URL}/@${author}/${permlink}`
+    );
+    if (footer && !body.endsWith(footer)) {
+        return body + '\n\n' + footer;
+    }
+    return body;
+}
 
 describe('TransactionSaga', () => {
     describe('watch user actions and trigger appropriate saga', () => {
@@ -121,14 +132,22 @@ describe('TransactionSaga', () => {
                         permlink: 'mock-permlink-123',
                         json_metadata: JSON.stringify(operation.json_metadata),
                         title: (operation.title || '').trim(),
-                        body: operation.body,
+                        body: addFooter(
+                            operation.body,
+                            operation.author,
+                            'mock-permlink-123'
+                        ),
                     },
                 ],
             ];
             expect(actual).toEqual(expected);
         });
         it('should return a patch as body value if patch is smaller than body.', () => {
-            const originalBod = operation.body + 'minor difference';
+            const originalBod = addFooter(
+                operation.body + 'minor difference',
+                operation.author,
+                'mock-permlink-123'
+            );
             operation.__config.originalBody = originalBod;
             gen = preBroadcast_comment({ operation, username });
             gen.next(
@@ -138,7 +157,10 @@ describe('TransactionSaga', () => {
                 operation.parent_permlink
             );
             const actual = gen.next('mock-permlink-123').value;
-            const expected = createPatch(originalBod, operation.body);
+            const expected = createPatch(
+                originalBod,
+                addFooter(operation.body, operation.author, 'mock-permlink-123')
+            );
             expect(actual[0][1].body).toEqual(expected);
         });
         it('should return body as body value if patch is larger than body.', () => {
@@ -152,7 +174,11 @@ describe('TransactionSaga', () => {
                 operation.parent_permlink
             );
             const actual = gen.next('mock-permlink-123').value;
-            const expected = operation.body;
+            const expected = addFooter(
+                operation.body,
+                operation.author,
+                'mock-permlink-123'
+            );
             expect(actual[0][1].body).toEqual(expected, 'utf-8');
         });
     });
