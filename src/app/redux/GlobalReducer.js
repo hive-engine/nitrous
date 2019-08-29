@@ -404,7 +404,11 @@ export default function reducer(state = defaultState, action = {}) {
         }
 
         case RECEIVE_AUTHOR_RECENT_POSTS: {
-            const { data, accountname, category } = payload;
+            const {
+                data,
+                accountname,
+                category = 'recent_user_posts',
+            } = payload;
             const key = ['accounts', accountname, category];
             let new_state = state.updateIn(key, List(), list => {
                 return list.withMutations(posts => {
@@ -420,10 +424,7 @@ export default function reducer(state = defaultState, action = {}) {
                         const key = `${value.author}/${value.permlink}`;
                         value = fromJS(value);
                         value = value.set('stats', fromJS(contentStats(value)));
-                        if (!content.has(key)) {
-                            value['body'] = value['desc'];
-                            map.set(key, value);
-                        }
+                        if (!map.has(key)) map.set(key, value);
                     });
                 });
             });

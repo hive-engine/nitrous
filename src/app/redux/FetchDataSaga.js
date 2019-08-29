@@ -485,10 +485,17 @@ function* fetchAuthorRecentPosts(action) {
 
             fetchDone = fetchLimitReached || fetched >= limit;
 
-            let data = feedData.filter(postFilter);
+            let data = postFilter ? feedData.filter(postFilter) : feedData;
             if (fetchDone && fetched > limit) {
                 data = data.slice(0, limit - (fetched - data.length));
             }
+            data = data.map(item => ({
+                ...item,
+                body: item.desc,
+                body_length: item.desc.length,
+                category: item.tags.split(',')[0],
+                replies: [], // intentional
+            }));
 
             yield put(
                 globalActions.receiveAuthorRecentPosts({

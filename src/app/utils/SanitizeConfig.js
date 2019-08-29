@@ -204,7 +204,7 @@ export default ({
             };
         },
         code: (tagName, attribs) => {
-            const attys = { class: 'language-' };
+            const attys = { class: 'language-none' };
             const validClass =
                 attribs.class && attribs.class.startsWith('language-');
             if (validClass) attys.class = attribs.class;
