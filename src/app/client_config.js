@@ -14,7 +14,23 @@ export const APP_DOMAIN = 'www.sagoda.org';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'sago';
-export const TAG_LIST = fromJSOrdered(['sago']);
+export const TAG_LIST = fromJSOrdered([
+    'sago',
+    'sago-notice'
+    'sago-pbl',
+    'sago-freeboard',
+    'sago-club',
+    'sago-photo',
+    'sago-diary',
+    'sago-food',
+    'sago-health',
+    'sago-travel',
+    'sago-news',
+    'sago-otc',
+    'sago-qna',
+    'stc',
+    'sago-education',
+]);
 export const LIQUID_TOKEN = 'Sago';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SAGO';
