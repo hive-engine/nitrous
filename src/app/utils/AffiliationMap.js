@@ -50,6 +50,7 @@ const map = {
     nspart: 'Verified Creator',
     malefica: 'Verified Creator',
     thaiprincess: 'Verified Creator',
+    kooklasckock: 'Verified Craetor',
     
 };
 
