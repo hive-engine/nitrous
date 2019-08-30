@@ -30,6 +30,7 @@ const map = {
     khaleelkazi: 'Dragon',
     followbtcnews: 'Dragon',
     teamsteem: 'Dragon',
+    legendchew: 'Dragon',
     neoxiancity: 'City',
     xawi: 'Everything\'s girl',
     udezee: 'Curator',
