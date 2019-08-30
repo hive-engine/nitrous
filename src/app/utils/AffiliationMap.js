@@ -49,6 +49,8 @@ const map = {
     littlemii: 'Verified Creator',
     nspart: 'Verified Creator',
     malefica: 'Verified Creator',
+    thaiprincess: 'Verified Creator',
+    
 };
 
 export default map;
