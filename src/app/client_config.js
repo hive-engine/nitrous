@@ -16,7 +16,7 @@ export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'sago';
 export const TAG_LIST = fromJSOrdered([
     'sago',
-    'sago-notice'
+    'sago-notice',
     'sago-pbl',
     'sago-freeboard',
     'sago-club',
