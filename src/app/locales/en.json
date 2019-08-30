@@ -520,11 +520,11 @@
             "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
-        "promote_post": "Promote Post",
+        "promote_post": "Propose Post",
         "spend_your_DEBT_TOKEN_to_advertise_this_post":
-            "Spend your %(DEBT_TOKEN)s's to advertise this post in the promoted content section",
+            "Spend your %(DEBT_TOKEN)s's to submit this post to the Proposals section",
         "you_successfully_promoted_this_post":
-            "You successfully promoted this post",
+            "You successfully proposed this post",
         "this_post_was_hidden_due_to_low_ratings":
             "This post was hidden due to low ratings"
     },
