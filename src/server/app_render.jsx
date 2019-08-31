@@ -77,6 +77,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
                 env: process.env.NODE_ENV,
                 walletUrl: config.wallet_url,
                 scotConfig: ctx.scotConfigData,
+                reviveEnabled: config.revive_enabled,
             },
         };
 
@@ -110,6 +111,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             adClient: googleAds.client,
             gptBidding: googleAds.gptBidding,
             fomoId: config.fomo_id,
+            reviveEnabled: config.revive_enabled,
             shouldSeeCookieConsent: cookieConsent.enabled,
             cookieConsentApiKey: cookieConsent.api_key,
         };
