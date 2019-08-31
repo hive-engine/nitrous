@@ -3,6 +3,7 @@
 // https://github.com/eslint/eslint/issues/4442
 import Iso from 'iso';
 import React from 'react';
+import { List } from 'immutable';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import {
@@ -361,11 +362,13 @@ export async function serverRender(
             const params = url.split('/');
             var movieId = parseInt(params[2]);
 
-            movie.movie = await movieApi.getMovie(
+            const movieResult = await movieApi.getMovie(
                 userPreferences.locale,
                 movieType,
                 movieId
             );
+
+            movie.movies = List([movieResult]);
         } else if (url.match(routeRegex.Reviews)) {
             movie.reviews = await movieApi.getReviews(1, -1, '', '');
 

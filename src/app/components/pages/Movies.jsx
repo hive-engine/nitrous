@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import { actions as movieActions } from 'app/redux/MovieReducer';
@@ -215,9 +216,8 @@ export default function Movies(props) {
                         {movies.map(post => (
                             <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
                                 <CardActionArea
-                                    component="a"
-                                    onClick={() => console.log(111)}
-                                    //href={`/${type}/${post.MovieId}`}
+                                    component={Link}
+                                    to={`/${type}/${post.MovieId}`}
                                 >
                                     <Card className={classes.card}>
                                         <CardMedia
@@ -260,12 +260,12 @@ export default function Movies(props) {
                                                             className={
                                                                 classes.chip
                                                             }
-                                                            onClick={e =>
-                                                                setGenre(
-                                                                    e,
-                                                                    genre.Id
-                                                                )
-                                                            }
+                                                            // onClick={e =>
+                                                            //     setGenre(
+                                                            //         e,
+                                                            //         genre.Id
+                                                            //     )
+                                                            // }
                                                         />
                                                     ))}
                                             </div>

@@ -80,7 +80,7 @@ export default function Movie(props) {
     const classes = useStyles();
     const { movie, type, id } = props;
 
-    const movieDetails = JSON.parse(movie.Result);
+    //const movieDetails = JSON.parse(movie.Result);
 
     const [values, setValues] = React.useState({});
 
@@ -118,13 +118,13 @@ export default function Movie(props) {
                                 )}
                             </Typography>
                             {movie.Overview}
-                            <p>
+                            {/* <p>
                                 Runtime:{' '}
                                 {CustomUtil.getRuntimeString(
                                     movieDetails.Runtime
                                 )}
-                            </p>
-                            <div>
+                            </p> */}
+                            {/* <div>
                                 {movieDetails.Genres &&
                                     movieDetails.Genres.map(genre => (
                                         <Chip
@@ -134,89 +134,107 @@ export default function Movie(props) {
                                             className={classes.chip}
                                         />
                                     ))}
-                            </div>
+                            </div> */}
                         </Grid>
                     </Grid>
-                    <Grid container spacing={4} className={classes.cardGrid}>
-                        {movie.Posts.map(post => (
-                            <Grid
-                                item
-                                key={`${post.Author}/${post.Permlink}`}
-                                xs={12}
-                                md={6}
-                            >
-                                <CardActionArea
-                                    component="a"
-                                    href={`/@${post.Author}/${post.Permlink}`}
+                    {movie.Posts != null ? (
+                        <Grid
+                            container
+                            spacing={4}
+                            className={classes.cardGrid}
+                        >
+                            {movie.Posts.map(post => (
+                                <Grid
+                                    item
+                                    key={`${post.Author}/${post.Permlink}`}
+                                    xs={12}
+                                    md={6}
                                 >
-                                    <Card className={classes.card}>
-                                        <div className={classes.cardDetails}>
-                                            <CardContent>
-                                                <Typography
-                                                    component="h2"
-                                                    variant="h5"
-                                                >
-                                                    {post.Title}
-                                                </Typography>
-                                                <Typography
-                                                    className={classes.cardDate}
-                                                    variant="subtitle1"
-                                                    color="textSecondary"
-                                                >
-                                                    <Grid
-                                                        container
-                                                        alignItems="center"
+                                    <CardActionArea
+                                        component="a"
+                                        href={`/@${post.Author}/${
+                                            post.Permlink
+                                        }`}
+                                    >
+                                        <Card className={classes.card}>
+                                            <div
+                                                className={classes.cardDetails}
+                                            >
+                                                <CardContent>
+                                                    <Typography
+                                                        component="h2"
+                                                        variant="h5"
                                                     >
-                                                        <TimeAgoWrapper
-                                                            date={post.AddDate}
+                                                        {post.Title}
+                                                    </Typography>
+                                                    <Typography
+                                                        className={
+                                                            classes.cardDate
+                                                        }
+                                                        variant="subtitle1"
+                                                        color="textSecondary"
+                                                    >
+                                                        <Grid
+                                                            container
+                                                            alignItems="center"
+                                                        >
+                                                            <TimeAgoWrapper
+                                                                date={
+                                                                    post.AddDate
+                                                                }
+                                                            />
+                                                            <Avatar
+                                                                alt={
+                                                                    post.Author
+                                                                }
+                                                                src={`https://steemitimages.com/u/${
+                                                                    post.Author
+                                                                }/avatar`}
+                                                                className={
+                                                                    classes.avatar
+                                                                }
+                                                            />
+                                                            @{post.Author}
+                                                        </Grid>
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="subtitle1"
+                                                        paragraph
+                                                    >
+                                                        {CustomUtil.getSummary(
+                                                            post.Summary
+                                                        )}
+                                                    </Typography>
+                                                    <Box
+                                                        component="fieldset"
+                                                        mb={3}
+                                                        borderColor="transparent"
+                                                        className={
+                                                            classes.ratingBox
+                                                        }
+                                                    >
+                                                        <Rating
+                                                            value={post.Rating}
+                                                            max={3}
+                                                            readOnly
                                                         />
-                                                        <Avatar
-                                                            alt={post.Author}
-                                                            src={`https://steemitimages.com/u/${
-                                                                post.Author
-                                                            }/avatar`}
-                                                            className={
-                                                                classes.avatar
-                                                            }
-                                                        />
-                                                        @{post.Author}
-                                                    </Grid>
-                                                </Typography>
-                                                <Typography
-                                                    variant="subtitle1"
-                                                    paragraph
-                                                >
-                                                    {CustomUtil.getSummary(
-                                                        post.Summary
-                                                    )}
-                                                </Typography>
-                                                <Box
-                                                    component="fieldset"
-                                                    mb={3}
-                                                    borderColor="transparent"
+                                                    </Box>
+                                                </CardContent>
+                                            </div>
+                                            <Hidden xsDown>
+                                                <CardMedia
                                                     className={
-                                                        classes.ratingBox
+                                                        classes.cardMedia
                                                     }
-                                                >
-                                                    <Rating
-                                                        value={post.Rating}
-                                                        max={3}
-                                                        readOnly
-                                                    />
-                                                </Box>
-                                            </CardContent>
-                                        </div>
-                                        <Hidden xsDown>
-                                            <CardMedia
-                                                className={classes.cardMedia}
-                                                image={post.CoverImgUrl}
-                                            />
-                                        </Hidden>
-                                    </Card>
-                                </CardActionArea>
-                            </Grid>
-                        ))}
-                    </Grid>
+                                                    image={post.CoverImgUrl}
+                                                />
+                                            </Hidden>
+                                        </Card>
+                                    </CardActionArea>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    ) : null}
                 </main>
             </Container>
         </React.Fragment>
@@ -227,7 +245,15 @@ module.exports = {
     path: ':type/:id',
     component: connect(
         (state, ownProps) => {
+            const id = parseInt(ownProps.params.id);
+            const movie = state.movie
+                .get('movies')
+                .toJS()
+                .find(o => o.MovieId === id);
+
             return {
+                id,
+                movie,
                 status: state.global.get('status'),
                 loading: state.app.get('loading'),
                 accounts: state.global.get('accounts'),
@@ -236,12 +262,10 @@ module.exports = {
                     state.offchain.get('account'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 type: ownProps.params.type,
-                id: parseInt(ownProps.params.id),
                 categories: TAG_LIST,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                movie: state.movie.get('movie').toJS(),
             };
         },
         dispatch => {
