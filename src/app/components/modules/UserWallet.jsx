@@ -313,15 +313,12 @@ class UserWallet extends React.Component {
             }
         };
 
-        const balance_steem = parseFloat(account.get('balance').split(' ')[0]);
-        const saving_balance_steem = parseFloat(savings_balance.split(' ')[0]);
+        const balance_steem = parseFloat(account.get('balance', 0));
+        const saving_balance_steem = parseFloat(savings_balance || 0);
         const divesting =
-            parseFloat(account.get('vesting_withdraw_rate').split(' ')[0]) >
-            0.0;
+            parseFloat(account.get('vesting_withdraw_rate', 0)) > 0.0;
         const sbd_balance = parseFloat(account.get('sbd_balance'));
-        const sbd_balance_savings = parseFloat(
-            savings_sbd_balance.split(' ')[0]
-        );
+        const sbd_balance_savings = parseFloat(savings_sbd_balance || 0);
         const received_power_balance_str =
             (delegated_steem < 0 ? '+' : '') +
             numberWithCommas((-delegated_steem).toFixed(3));
@@ -557,15 +554,17 @@ class UserWallet extends React.Component {
                                 id="tips_js.steem_engine_tokens"
                             />
                         </div>
-                        <div className="column small-12 medium-3">
-                            <button
-                                disabled={pendingTokens.length === 0}
-                                className="button hollow ghost slim tiny float-right"
-                                onClick={this.handleClaimAllTokensRewards}
-                            >
-                                All in one claim
-                            </button>
-                        </div>
+                        {isMyAccount && (
+                            <div className="column small-12 medium-3">
+                                <button
+                                    disabled={pendingTokens.length === 0}
+                                    className="button hollow ghost slim tiny float-right"
+                                    onClick={this.handleClaimAllTokensRewards}
+                                >
+                                    All in one claim
+                                </button>
+                            </div>
+                        )}
                         <div className="column small-12">
                             <FormattedAssetTokens
                                 items={otherTokenBalances}
@@ -646,7 +645,7 @@ export default connect(
         const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
-            gprops: state.global.get('props').toJS(),
+            gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
