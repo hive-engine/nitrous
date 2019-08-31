@@ -52,6 +52,7 @@ const map = {
     thaiprincess: 'Verified Creator',
     kooklaskock: 'Verified Creator',
     babporn: 'Verified Creator',
+    rapunzzel: 'Verified Creator',
     
 };
 
