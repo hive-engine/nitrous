@@ -162,6 +162,8 @@ const map = {
     giantbear: 'Certified Ulogger',
     kesolink: 'Certified Ulogger',
     joshuaolugbode: 'Certified Ulogger',
+    fitinfun: 'Certified Ulogger',
+    bxlphabet: 'Certified Ulogger',
 };
 
 export default map;
