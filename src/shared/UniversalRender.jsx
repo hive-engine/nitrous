@@ -338,7 +338,7 @@ export async function serverRender(
                 movieType = 2;
             }
 
-            movie.movies = await movieApi.getMovies(
+            const movies = await movieApi.getMovies(
                 userPreferences.locale,
                 movieType,
                 -1,
@@ -346,7 +346,9 @@ export async function serverRender(
                 'release_date'
             );
 
-            if (movie.movies.length == LIST_MAX_SIZE) {
+            movie.movies = movies;
+
+            if (movies.length == LIST_MAX_SIZE) {
                 movie.hasNextList = true;
             } else {
                 movie.hasNextList = false;
@@ -370,9 +372,11 @@ export async function serverRender(
 
             movie.movies = List([movieResult]);
         } else if (url.match(routeRegex.Reviews)) {
-            movie.reviews = await movieApi.getReviews(1, -1, '', '');
+            const reviews = await movieApi.getReviews(1, -1, '', '');
 
-            if (movie.movies.length == LIST_MAX_SIZE) {
+            movie.reviews = reviews;
+
+            if (reviews.length == LIST_MAX_SIZE) {
                 movie.hasNextList = true;
             } else {
                 movie.hasNextList = false;

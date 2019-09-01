@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
-import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
-import { TAG_LIST } from 'app/client_config';
+import { actions as movieActions } from 'app/redux/MovieReducer';
+import { TAG_LIST, DEFAULT_LANGUAGE } from 'app/client_config';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import * as CustomUtil from 'app/utils/CustomUtil';
 
@@ -78,9 +78,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function Movie(props) {
     const classes = useStyles();
-    const { movie, type, id } = props;
+    const { movie, type, id, locale, requestMovie } = props;
 
-    //const movieDetails = JSON.parse(movie.Result);
+    const movieType = type === 'movie' ? 1 : 2;
+
+    const movieDetails = movie.Result ? JSON.parse(movie.Result) : null;
+
+    if (movieDetails === null) {
+        requestMovie({
+            languageCode: locale,
+            movieType,
+            movieId: id,
+        });
+    }
 
     const [values, setValues] = React.useState({});
 
@@ -118,15 +128,19 @@ export default function Movie(props) {
                                 )}
                             </Typography>
                             {movie.Overview}
-                            {/* <p>
+                            <p>
                                 Runtime:{' '}
                                 {CustomUtil.getRuntimeString(
-                                    movieDetails.Runtime
+                                    movieDetails !== null
+                                        ? movieDetails.Runtime
+                                        : null
                                 )}
-                            </p> */}
-                            {/* <div>
-                                {movieDetails.Genres &&
-                                    movieDetails.Genres.map(genre => (
+                            </p>
+                            <div>
+                                {movie.Genres &&
+                                    CustomUtil.getDistinctGenres(
+                                        JSON.parse(movie.Genres)
+                                    ).map(genre => (
                                         <Chip
                                             key={genre.Id}
                                             size="small"
@@ -134,7 +148,7 @@ export default function Movie(props) {
                                             className={classes.chip}
                                         />
                                     ))}
-                            </div> */}
+                            </div>
                         </Grid>
                     </Grid>
                     {movie.Posts != null ? (
@@ -260,6 +274,9 @@ module.exports = {
                 username:
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
+                locale:
+                    state.app.getIn(['user_preferences', 'locale']) ||
+                    DEFAULT_LANGUAGE,
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 type: ownProps.params.type,
                 categories: TAG_LIST,
@@ -268,12 +285,9 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
             };
         },
-        dispatch => {
-            return {
-                requestData: args =>
-                    dispatch(fetchDataSagaActions.requestData(args)),
-            };
-        }
+        dispatch => ({
+            requestMovie: args => dispatch(movieActions.requestMovie(args)),
+        })
     )(Movie),
 };
 

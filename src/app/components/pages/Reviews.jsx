@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import { actions as movieActions } from 'app/redux/MovieReducer';
@@ -196,8 +197,8 @@ export default function Reviews(props) {
                                 md={6}
                             >
                                 <CardActionArea
-                                    component="a"
-                                    href={`/@${post.Author}/${post.Permlink}`}
+                                    component={Link}
+                                    to={`/@${post.Author}/${post.Permlink}`}
                                 >
                                     <Card className={classes.card}>
                                         <div className={classes.cardDetails}>

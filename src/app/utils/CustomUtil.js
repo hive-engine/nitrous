@@ -14,7 +14,7 @@ export function getSummary(value) {
 
 export function getRuntimeString(value) {
     if (!value || isNaN(value)) {
-        return null;
+        return '-';
     }
 
     const hours = parseInt(value / 60);
@@ -36,6 +36,59 @@ export function getDistinctGenres(genres) {
             map.set(genre.Id, true);
             result.push(genre);
         }
+    }
+
+    return result;
+}
+
+export function getJsonValueByMultipleKeys(json, keyNames, separator) {
+    if (!json || !keyNames || separator === null) {
+        return null;
+    }
+
+    const result = [];
+
+    keyNames.map(keyName => result.push(json[keyName]));
+
+    return result.join(separator);
+}
+
+export function arrayToDict(list, keyName, keyPrefix) {
+    return arrayToDictWithMultipleKeys(list, [keyName], '', keyPrefix || '');
+}
+
+export function arrayToDictWithMultipleKeys(
+    list,
+    keyNames,
+    separator,
+    keyPrefix
+) {
+    if (!list || !keyNames || separator === null) {
+        return null;
+    }
+
+    const result = {};
+
+    list.map(
+        o =>
+            (result[
+                (!!keyPrefix ? keyPrefix : '') +
+                    getJsonValueByMultipleKeys(o, keyNames, separator)
+            ] = o)
+    );
+
+    return result;
+}
+
+export function dictToArray(o) {
+    if (!o) {
+        return null;
+    }
+
+    const result = [];
+
+    for (const key in o) {
+        result.push(o[key]);
     }
 
     return result;

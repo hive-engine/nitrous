@@ -37,6 +37,10 @@ export async function getMovie(languageCode, movieType, movieId) {
             }&movieType=${movieType}&movieId=${movieId}`
         );
 
+        response.data.Genres = JSON.stringify(
+            JSON.parse(response.data.Result).Genres
+        );
+
         return response.data;
     } catch (e) {
         console.log(e);
