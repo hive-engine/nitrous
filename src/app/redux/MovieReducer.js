@@ -10,12 +10,15 @@ export const REQUEST_MOVIE = 'movie/REQUEST_MOVIE';
 const RECEIVE_MOVIE = 'movie/RECEIVE_MOVIE';
 const REQUEST_MOVIE_END = 'movie/REQUEST_MOVIE_END';
 
+export const UPDATE_MOVIES = 'movie/UPDATE_MOVIES';
+const RECEIVE_UPDATE_MOVIES = 'movie/RECEIVE_UPDATE_MOVIES';
+
 export const REQUEST_REVIEWS = 'movie/REQUEST_REVIEWS';
 const RECEIVE_REVIEWS = 'movie/RECEIVE_REVIEWS';
 const REQUEST_REVIEWS_END = 'movie/REQUEST_REVIEWS_END';
 
-export const UPDATE_MOVIES = 'movie/UPDATE_MOVIES';
-const RECEIVE_UPDATE_MOVIES = 'movie/RECEIVE_UPDATE_MOVIES';
+export const UPDATE_REVIEWS = 'movie/UPDATE_REVIEWS';
+const RECEIVE_UPDATE_REVIEWS = 'movie/RECEIVE_UPDATE_REVIEWS';
 
 export const defaultState = { loading: false, hasNextList: false };
 
@@ -35,13 +38,17 @@ export default function reducer(state = defaultState, action = {}) {
             return state
                 .update('movies', list => list.concat(fromJS(payload.data)))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
+        case RECEIVE_UPDATE_MOVIES:
+            return state
+                .set('movies', fromJS(payload.data))
+                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_REVIEWS:
             return state
                 .update('reviews', list => list.concat(fromJS(payload.data)))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
-        case RECEIVE_UPDATE_MOVIES:
+        case RECEIVE_UPDATE_REVIEWS:
             return state
-                .set('movies', fromJS(payload.data))
+                .set('reviews', fromJS(payload.data))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case REQUEST_MOVIE_END:
         case REQUEST_MOVIES_END:
@@ -103,6 +110,16 @@ export const actions = {
 
     requestReviewsEnd: () => ({
         type: REQUEST_REVIEWS_END,
+    }),
+
+    updateReviews: payload => ({
+        type: UPDATE_REVIEWS,
+        payload,
+    }),
+
+    receiveUpdateReviews: payload => ({
+        type: RECEIVE_UPDATE_REVIEWS,
+        payload,
     }),
 };
 

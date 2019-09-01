@@ -79,7 +79,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function Reviews(props) {
     const classes = useStyles();
-    const { reviews, loading, hasNextList, requestReviews } = props;
+    const {
+        reviews,
+        loading,
+        hasNextList,
+        requestReviews,
+        updateReviews,
+    } = props;
 
     let lastAuthor = '';
     let lastPermlink = '';
@@ -89,9 +95,11 @@ export default function Reviews(props) {
         lastPermlink = reviews[reviews.length - 1].Permlink;
     }
 
-    const [values, setValues, expanded, setExpanded] = React.useState({
+    const [values, setValues] = React.useState({
         movieType: 0,
         genreId: -1,
+        lastAuthor: '',
+        lastPermlink: '',
         sortBy: 'created',
     });
 
@@ -102,10 +110,13 @@ export default function Reviews(props) {
     }, []);
 
     function handleChange(event) {
-        setValues(oldValues => ({
-            ...oldValues,
+        const newValues = {
+            ...values,
             [event.target.name]: event.target.value,
-        }));
+        };
+
+        setValues(newValues);
+        updateReviews(newValues);
     }
 
     const handleSearch = name => event => {
@@ -327,6 +338,7 @@ module.exports = {
         },
         dispatch => ({
             requestReviews: args => dispatch(movieActions.requestReviews(args)),
+            updateReviews: args => dispatch(movieActions.updateReviews(args)),
         })
     )(Reviews),
 };
@@ -336,7 +348,8 @@ Reviews.propTypes = {
     accounts: PropTypes.object,
     status: PropTypes.object,
     routeParams: PropTypes.object,
-    requestData: PropTypes.func,
+    requestReviews: PropTypes.func.isRequired,
+    updateReviews: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,

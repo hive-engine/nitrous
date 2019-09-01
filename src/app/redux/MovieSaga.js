@@ -7,6 +7,7 @@ export const movieWatches = [
     takeLatest(movieReducer.REQUEST_MOVIES, requestMovies),
     takeLatest(movieReducer.UPDATE_MOVIES, requestMovies),
     takeLatest(movieReducer.REQUEST_REVIEWS, requestReviews),
+    takeLatest(movieReducer.UPDATE_REVIEWS, requestReviews),
 ];
 
 function* requestMovie(action) {
@@ -80,10 +81,16 @@ function* requestReviews(action) {
             sortBy
         );
 
-        yield put(movieReducer.actions.receiveReviews({ data }));
+        if (action.type === movieReducer.REQUEST_REVIEWS) {
+            yield put(movieReducer.actions.receiveReviews({ data }));
+        } else {
+            yield put(movieReducer.actions.receiveUpdateReviews({ data }));
+        }
     } catch (error) {
         console.error(action.payload, error);
     }
 
-    yield put(movieReducer.actions.requestReviewsEnd());
+    if (action.type === movieReducer.REQUEST_REVIEWS) {
+        yield put(movieReducer.actions.requestReviewsEnd());
+    }
 }
