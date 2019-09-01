@@ -17,19 +17,10 @@ export const SCOT_TAG = 'sago';
 export const TAG_LIST = fromJSOrdered([
     'sago',
     'sago-notice',
-    'sago-pbl',
-    'sago-freeboard',
-    'sago-club',
-    'sago-photo',
-    'sago-diary',
-    'sago-food',
-    'sago-health',
-    'sago-travel',
-    'sago-news',
-    'sago-otc',
     'sago-qna',
-    'stc',
-    'sago-education',
+    'sago-pbl',
+    'sago-otc',
+    'sago-suggest',
 ]);
 export const LIQUID_TOKEN = 'Sago';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
