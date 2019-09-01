@@ -38,7 +38,8 @@ const map = {
     joedukeg: 'Curator',
     'mango-juice': 'Curator',
     bwar: 'Bwar',
-    neobooster: 'Syed Shakil'
+    neobooster: 'Syed Shakil',
+    raymondspeaks: 'City Patriot'
 };
 
 export default map;
