@@ -19,6 +19,9 @@ const map = {
     torico: 'cookie monsta',
     inertia: 'You know what you did.',
     clayboyn: 'it is what it is',
+    derangedvisions: 'Photo Nerd',
+    gerber: 'Helper Baby',
+    
 };
 
 export default map;
