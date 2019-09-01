@@ -21,7 +21,7 @@ const map = {
     clayboyn: 'it is what it is',
     derangedvisions: 'Photo Nerd',
     gerber: 'Helper Baby',
-    
+    thekittygirl: 'Fabulous Feline',
 };
 
 export default map;
