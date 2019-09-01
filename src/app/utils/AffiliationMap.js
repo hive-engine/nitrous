@@ -164,6 +164,8 @@ const map = {
     joshuaolugbode: 'Certified Ulogger',
     fitinfun: 'Certified Ulogger',
     bxlphabet: 'Certified Ulogger',
+    thranax: 'Certified Ulogger',
+    emdesan: 'Certified Ulogger',
 };
 
 export default map;
