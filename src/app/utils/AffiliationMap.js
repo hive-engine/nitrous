@@ -166,6 +166,7 @@ const map = {
     bxlphabet: 'Certified Ulogger',
     thranax: 'Certified Ulogger',
     emdesan: 'Certified Ulogger',
+    ecoinstant: 'Certified Ulogger',
 };
 
 export default map;
