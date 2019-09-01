@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import { actions as movieActions } from 'app/redux/MovieReducer';
@@ -78,13 +79,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function Movie(props) {
     const classes = useStyles();
-    const { movie, type, id, locale, requestMovie } = props;
+    const { movie, type, id, locale, loading, requestMovie } = props;
 
     const movieType = type === 'movie' ? 1 : 2;
 
     const movieDetails = movie.Result ? JSON.parse(movie.Result) : null;
 
-    if (movieDetails === null) {
+    if (movieDetails === null && !loading) {
         requestMovie({
             languageCode: locale,
             movieType,
@@ -165,10 +166,8 @@ export default function Movie(props) {
                                     md={6}
                                 >
                                     <CardActionArea
-                                        component="a"
-                                        href={`/@${post.Author}/${
-                                            post.Permlink
-                                        }`}
+                                        component={Link}
+                                        to={`/@${post.Author}/${post.Permlink}`}
                                     >
                                         <Card className={classes.card}>
                                             <div
@@ -235,14 +234,16 @@ export default function Movie(props) {
                                                     </Box>
                                                 </CardContent>
                                             </div>
-                                            <Hidden xsDown>
-                                                <CardMedia
-                                                    className={
-                                                        classes.cardMedia
-                                                    }
-                                                    image={post.CoverImgUrl}
-                                                />
-                                            </Hidden>
+                                            {post.CoverImgUrl && (
+                                                <Hidden xsDown>
+                                                    <CardMedia
+                                                        className={
+                                                            classes.cardMedia
+                                                        }
+                                                        image={post.CoverImgUrl}
+                                                    />
+                                                </Hidden>
+                                            )}
                                         </Card>
                                     </CardActionArea>
                                 </Grid>
@@ -269,7 +270,7 @@ module.exports = {
                 id,
                 movie,
                 status: state.global.get('status'),
-                loading: state.app.get('loading'),
+                loading: state.movie.get('loading'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||

@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { List, fromJS } from 'immutable';
 import { LIST_MAX_SIZE } from 'shared/constants';
 import * as CustomUtil from 'app/utils/CustomUtil';
 
@@ -33,15 +33,15 @@ export default function reducer(state = defaultState, action = {}) {
             );
         case RECEIVE_MOVIES:
             return state
-                .update('movies', list => list.concat(payload.data))
+                .update('movies', list => list.concat(fromJS(payload.data)))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_REVIEWS:
             return state
-                .update('reviews', list => list.concat(payload.data))
+                .update('reviews', list => list.concat(fromJS(payload.data)))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_UPDATE_MOVIES:
             return state
-                .set('movies', List(payload.data))
+                .set('movies', fromJS(payload.data))
                 .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
         case REQUEST_MOVIE_END:
         case REQUEST_MOVIES_END:
@@ -107,13 +107,10 @@ export const actions = {
 };
 
 function getUpdatedMovieList(list, jsonToUpdate) {
-    const result = [];
-
-    list.map(o =>
-        result.push(
-            o.get('MovieId') !== jsonToUpdate.MovieId ? o : jsonToUpdate
-        )
+    return list.map(
+        o =>
+            o.get('MovieId') !== jsonToUpdate.MovieId
+                ? o
+                : o.merge(jsonToUpdate)
     );
-
-    return List(result);
 }
