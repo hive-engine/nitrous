@@ -39,7 +39,8 @@ const map = {
     'mango-juice': 'Curator',
     bwar: 'Bwar',
     neobooster: 'Syed Shakil',
-    raymondspeaks: 'City Patriot'
+    raymondspeaks: 'City Patriot',
+    'neoxag-tip': 'Tip Bot'
 };
 
 export default map;
