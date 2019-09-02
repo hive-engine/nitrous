@@ -176,6 +176,9 @@ class ThumbUp extends React.Component {
     async _checkMyThumbUp(author, permlink, username) {
         // get thumbup list by sct api
         const thumbUpHistory = await getThumbUpList(author, permlink);
+        debugger;
+        const test1 = await getThumbupReceiveTopList();
+        const test2 = await getThumbupSendTopList();
 
         if (author && thumbUpHistory) {
             const cnt = thumbUpHistory.data.cnt;
