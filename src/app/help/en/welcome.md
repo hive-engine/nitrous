@@ -1,22 +1,19 @@
 <span id="disable_router_nav_history_direction_check"></span>
+
 ## Welcome to SteemLeo!
 
 Steemleo is a next-generation social community that is powered by blockchain technology. Content creators can join Steemleo and create blog posts or even upload videos and earn rewards paid out in LEO tokens, which are tradable on the [Steem-Engine Exchange](https://steem-engine.com/?p=market&t=LEO).
-
-
 
 
 This page is filled with information to help you learn about our community and how it works. There is a table of contents below to help you navigate.
 
 If you have further questions or want to create a free account, join our [Discord](https://discord.gg/KgcVDKQ) or Send Us an @tweet on [Twitter](https://twitter.com/steemleo).  
 
-Below that is a list of recommended users to follow, a collection of other resources including the <a href="/faq.html">FAQ Page</a> and [Steem 'Bluepaper'](https://steem.io/steem-bluepaper.pdf), as well as information on where to find help. 
-
 [![](https://i.imgur.com/zoZVqyb.gif)](https://discord.gg/KgcVDKQ)
 
 ## <span id="Table_of_Contents">Table of Contents</span>
 
-### Quick Start Guide
+### Get Started
 
 - <a href="#Free_to_Participate">Free to Participate</a>
 - <a href="#Votes">Votes</a>
@@ -27,20 +24,18 @@ Below that is a list of recommended users to follow, a collection of other resou
 - <a href="#Digital_Currencies">Digital Currencies</a>
 - <a href="#Curation">Curation</a>
 - <a href="#Payments">Payments</a>
-- <a href="#Reputation">Reputation</a>
-- <a href="#Cashing_out_or_Spending_SBD">Cashing out or Spending SBD</a>
-- <a href="#Plagiarism">Plagiarism</a>
-- <a href="#Password_Security">Password Security</a>
-- <a href="#Earning_on_Steemit">Earning on Steemit</a>
+- <a href="#Plagiarism">Content & Community Rules</a>
+- <a href="#Earning_on_SteemLeo">Earning on SteemLeo</a>
 
-### <a href="#Helpful_Posts_from_Steemit_Users">Helpful Posts from Steemit Users</a>
+### <a href="#what_is_the_leo_token">What is The LEO Token?</a>
 ### <a href="#official_accounts">Official SteemLeo Accounts & Curators</a>
 ### <a href="#Other_Resources">Other Resources</a>
 ### <a href="#Get_Help">Get Help</a>
 ### <a href="#steem_tools">Steem Tools & Resources</a>
 
+&nbsp;
 ![](https://i.imgur.com/ZmF0k0b.png)
-
+&nbsp;
 
 ## <span id="Quick_Start_Guide">Get Started </span>
 
@@ -151,47 +146,16 @@ Projected payouts are shown right next to the upvote/flag buttons in terms of LE
 Note: projected payout figures may fluctuate based on several factors before the final payout is reached.
 
 <a href="#Table_of_Contents">^</a>
-### <span id="Reputation">Reputation</span>
+### <span id="Plagiarism">Content & Community Rules</span>
 
-A reputation score is one way that Steemit measures the amount of value you have brought to the community.
+Content posted on Steemleo should be original content (made by you) that is relevant to our community -- Investing/financial content.
 
-The higher the reputation, the more upvotes the account received.
+We are reworking our community guidelines at the moment and will have this section updated with a link to those guidelines as soon as it is available.
 
-All new users start at 25.
-
-Your reputation will go up as you earn upvotes for your posts and comments, but it can come down if they are downvoted (flagged).
+Additionally, we'll make a separate post with content "tips" that will guide you in creating content that is likely to perform well on SteemLeo in terms of attention as well as rewards.
 
 <a href="#Table_of_Contents">^</a>
-### <span id="Cashing_out_or_Spending_SBD">Cashing out or Spending SBD</span>
-
-You can exchange SBD for STEEM in the [Currency Market](https://steemit.com/market). Once you have STEEM, you can "Power Up" in your wallet to gain additional Steem Power.
-
-You can spend your SBD at the [Peerhub Store](https://www.peerhub.com/).
-
-You can also exchange your STEEM and SBD for bitcoin on a third-party exchange such as [BlockTrades](https://blocktrades.us/) or [Bittrex](https://bittrex.com/).
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Plagiarism">Plagiarism</span>
-
-The community is looking for you to create engaging content. 
-
-Plagiarising, which is posting someone else's material as if it were your own, is very frowned upon by the Steem community.
-
-If you are using anyone else's material as part of your posts (including images), even if it is free to use, please cite your sources. You should make sure that you are not violating any copyright laws if you are using someone else's material/images. Limited, sourced material sharing is OK under fair use and fair dealing doctrines.
-
-Remember, your posts should have original content in them. Quotes should not compose an entire post. Include your own thoughts, photographs, art, and ideas. 
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Password_Security">Password Security</span>
-
-**It is not possible to recover lost passwords for Steem accounts**. You are 100% responsible for having it backed up. This means secure digital backups, as well as secured paper backups, stored in different places if possible.
-
-Never put your password into unverified third party websites as they may steal your account. 
-
-Your Steem account is worth real money. Treat your Steem password like you would your bank password and keep it secure! 
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Earning_on_Steemit">Earning on Steemit</span>
+### <span id="Earning_on_SteemLeo">Earning on SteemLeo</span>
 
 Everyone's earnings are different. Have fun. Get involved. Meet new friends. 
 
@@ -203,7 +167,7 @@ Don't get discouraged if you don't earn much at first. Keep up the good work!
 
 ***
 
-## <span id="Helpful_Posts_from_Steemit_Users">What is the LEO Token?</span>
+## <span id="what_is_the_leo_token">What is the LEO Token?</span>
 
 LEO tokens are the native currency of the SteemLeo platform. These tokens are automatically distributed from the rewards pool to SteemLeo content creators, curators and users.
 
@@ -223,7 +187,7 @@ https://steemleo.com/@username/wallet
 
 ### Trade LEO:
 
-You can trade LEO tokens for other cryptocurrencies on the [Steem-Engine Exchange](https://Steem-Engine.com).
+You can trade LEO tokens for other cryptocurrencies on the [Steem-Engine Exchange](https://steem-engine.com/?p=market&t=LEO).
 
 
 
@@ -262,7 +226,9 @@ This means that when you make a blog post on SteemLeo, your content is being sto
 Steem provides a lot of powerful tools and features such as:
 1. 3 second transactions
 2. Free transactions
-3. 
+3. Immutable blockchain
+
+We'll post a more in-depth guide for the Steem blockchain here when it is available.
 
 <a href="#Table_of_Contents">^</a>
 ## <span id="Get_Help">Get Help</span>
