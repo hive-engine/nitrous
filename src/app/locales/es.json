@@ -5,7 +5,7 @@
         "and": "y",
         "are_you_sure": "¿Estás seguro?",
         "ask": "Preguntar",
-        "balance": "Saldo",
+        "balance": "Saldo: %(balanceValue)s",
         "balances": "Saldos",
         "beneficiaries": "Beneficiaries",
         "bid": "Oferta",
@@ -256,7 +256,11 @@
         },
         "post_as": "Publicar como",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "Este voto ya existe, el usuario tiene que quitar el voto al witness"
+            "Este voto ya existe, el usuario tiene que quitar el voto al witness",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "Sobre",

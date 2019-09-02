@@ -18,6 +18,8 @@ const SHOW_POWERDOWN = 'user/SHOW_POWERDOWN';
 const HIDE_POWERDOWN = 'user/HIDE_POWERDOWN';
 const SHOW_PROMOTE_POST = 'user/SHOW_PROMOTE_POST';
 const HIDE_PROMOTE_POST = 'user/HIDE_PROMOTE_POST';
+const SHOW_RATE_POST = 'user/SHOW_RATE_POST';
+const HIDE_RATE_POST = 'user/HIDE_RATE_POST';
 const SET_TRANSFER_DEFAULTS = 'user/SET_TRANSFER_DEFAULTS';
 const CLEAR_TRANSFER_DEFAULTS = 'user/CLEAR_TRANSFER_DEFAULTS';
 const SET_POWERDOWN_DEFAULTS = 'user/SET_POWERDOWN_DEFAULTS';
@@ -167,6 +169,12 @@ export default function reducer(state = defaultState, action) {
 
         case HIDE_PROMOTE_POST:
             return state.set('show_promote_post_modal', false);
+
+        case SHOW_RATE_POST:
+            return state.set('show_rate_post_modal', true);
+
+        case HIDE_RATE_POST:
+            return state.set('show_rate_post_modal', false);
 
         case SET_TRANSFER_DEFAULTS:
             return state.set('transfer_defaults', fromJS(payload));
@@ -373,6 +381,16 @@ export const showPromotePost = payload => ({
 
 export const hidePromotePost = payload => ({
     type: HIDE_PROMOTE_POST,
+    payload,
+});
+
+export const showRatePost = payload => ({
+    type: SHOW_RATE_POST,
+    payload,
+});
+
+export const hideRatePost = payload => ({
+    type: HIDE_RATE_POST,
     payload,
 });
 

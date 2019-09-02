@@ -5,7 +5,7 @@
         "and": "et",
         "are_you_sure": "Etes-vous sûr(e) ?",
         "ask": "Demande",
-        "balance": "Solde",
+        "balance": "Solde: %(balanceValue)s",
         "balances": "Soldes",
         "beneficiaries": "Beneficiaries",
         "bid": "Offre",
@@ -264,7 +264,11 @@
         "all_claim_completed": "Claims completed!",
         "post_as": "Poster en tant que",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "un vote existe actuellement; l'utilisateur doit indiquer une raison pour rejeter le témoin"
+            "un vote existe actuellement; l'utilisateur doit indiquer une raison pour rejeter le témoin",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "A propos",

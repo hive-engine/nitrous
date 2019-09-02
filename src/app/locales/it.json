@@ -5,7 +5,7 @@
         "and": "e",
         "are_you_sure": "Sei sicuro?",
         "ask": "Ask",
-        "balance": "Saldo",
+        "balance": "Saldo: %(balanceValue)s",
         "balances": "Saldi",
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",
@@ -262,7 +262,11 @@
         "all_claim_completed": "Claims completed!",
         "post_as": "Pubblica come",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness "
+            "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness ",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "Circa",

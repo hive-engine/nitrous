@@ -22,6 +22,7 @@ import {
     SCOT_TAG,
     SCOT_TAG_FIRST,
     APP_MAX_TAG,
+    TAG_LIST,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -585,6 +586,7 @@ class ReplyEditor extends React.Component {
                                         disabled={loading}
                                         isEdit={isEdit}
                                         tabIndex={3}
+                                        trending={TAG_LIST}
                                     />
                                     <div className="error">
                                         {(category.touched || category.value) &&
@@ -716,37 +718,37 @@ class ReplyEditor extends React.Component {
                                     </div>
                                 )}
                         </div>
-                        {!loading &&
-                            !rte &&
-                            body.value && (
-                                <div
-                                    className={
-                                        'Preview ' + vframe_section_shrink_class
-                                    }
-                                >
-                                    {!isHtml && (
-                                        <div className="float-right">
-                                            <a
-                                                target="_blank"
-                                                href="https://guides.github.com/features/mastering-markdown/"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {tt(
-                                                    'reply_editor.markdown_styling_guide'
-                                                )}
-                                            </a>
-                                        </div>
-                                    )}
-                                    <h6>{tt('g.preview')}</h6>
-                                    <MarkdownViewer
-                                        text={body.value}
-                                        jsonMetadata={jsonMetadata}
-                                        large={isStory}
-                                        noImage={noImage}
-                                    />
-                                </div>
-                            )}
                     </form>
+                    {!loading &&
+                        !rte &&
+                        body.value && (
+                            <div
+                                className={
+                                    'Preview ' + vframe_section_shrink_class
+                                }
+                            >
+                                {!isHtml && (
+                                    <div className="float-right">
+                                        <a
+                                            target="_blank"
+                                            href="https://guides.github.com/features/mastering-markdown/"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {tt(
+                                                'reply_editor.markdown_styling_guide'
+                                            )}
+                                        </a>
+                                    </div>
+                                )}
+                                <h6>{tt('g.preview')}</h6>
+                                <MarkdownViewer
+                                    text={body.value}
+                                    jsonMetadata={jsonMetadata}
+                                    large={isStory}
+                                    noImage={noImage}
+                                />
+                            </div>
+                        )}
                 </div>
             </div>
         );

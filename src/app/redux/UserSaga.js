@@ -342,10 +342,10 @@ function* usernamePasswordLogin2({
                 (login_owner_pubkey === owner_pub_key ||
                     login_wif_owner_pubkey === owner_pub_key)
             ) {
-                yield put(
-                    userActions.loginError({ error: 'owner_login_blocked' })
-                );
-                return;
+                //yield put(
+                //    userActions.loginError({ error: 'owner_login_blocked' })
+                //);
+                //return;
             } else if (!highSecurityLogin && hasActiveAuth) {
                 yield put(
                     userActions.loginError({ error: 'active_login_blocked' })

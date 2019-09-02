@@ -23,10 +23,10 @@ const Topics = ({
     const currentlySelected = (currentTag, username, currentOrder = false) => {
         const opts = {
             feed: `/@${username}/feed`,
-            tagOnly: `/trending/${currentTag}`,
+            tagOnly: `/hot/${currentTag}`,
             orderOnly: `/${currentOrder}`,
             tagWithOrder: `/${currentOrder}/${currentTag}`,
-            default: `/trending`,
+            default: `/hot`,
         };
         if (currentTag === 'feed') return opts['feed'];
         if (currentTag && currentOrder) return opts['tagWithOrder'];

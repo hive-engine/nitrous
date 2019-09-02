@@ -1,33 +1,45 @@
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'WeedCash';
+export const APP_NAME = 'SteemCoinPan';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'WeedCash';
-export const APP_NAME_UPPERCASE = 'WEEDCASH';
-export const APP_ICON = 'weedcash';
+export const APP_NAME_LATIN = 'SteemCoinPan';
+export const APP_NAME_UPPERCASE = 'STEEMCOINPAN';
+export const APP_ICON = 'steemcoinpan';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.weedcash.network';
-export const APP_DOMAIN = 'www.weedcash.network';
+export const APP_URL = 'https://www.steemcoinpan.com';
+export const APP_DOMAIN = 'www.steemcoinpan.com';
+export const SCOT_TAG = 'sct';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
-export const SCOT_TAG = 'weedcash';
 export const TAG_LIST = fromJSOrdered([
-    'weedcash',
-    'weed',
-    'cannabis',
-    'psychedelic',
+    'sct',
+    'sct-notice',
+    'sct-kr',
+    'sct-en',
+    'sct-cn',
+    'sct-altcoin',
+    'sct-bitcoin',
+    'sct-alliance',
+    'sct-freeboard',
+    'sct-userguide',
+    'sct-otc',
+    'sct-prediction',
+    'sct-qna',
+    'palnet',
+    'steemleo',
+    'zzan',
 ]);
-export const LIQUID_TOKEN = 'Weed';
+export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'SCT';
 // used as backup
-export const SCOT_DENOM = 100000000;
+export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'WEED POWER';
-export const INTERLEAVE_PROMOTED = true;
+export const VESTING_TOKEN = 'SCT POWER';
+export const INTERLEAVE_PROMOTED = false;
 export const PROMOTED_POST_ACCOUNT = 'null';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
@@ -59,15 +71,20 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Weedcash is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+    'SteemCoinPan is a social media platform where everyone gets paid for ' +
+    'creating and curating content. It leverages a robust digital points system, called SCT, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
+// search feature configurations
+export const GOOGLE_CUSTOM_SEARCH_ID = '007300013170064212310:6xze6cdavke';
+export const SEARCH_SELECTION_REWARD_AMOUNT = 0.5;
+export const SEARCH_SELECTION_BURN_AMOUNT = 0.5;
+
 // Other configurations
-export const ALLOW_MASTER_PW = false;
+export const ALLOW_MASTER_PW = true;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
