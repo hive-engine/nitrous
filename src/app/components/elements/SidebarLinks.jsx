@@ -46,7 +46,8 @@ const SidebarLinks = ({ username }) => (
                         Community Guidelines
                     </a>
                 </li>
-                                <li className="c-sidebar__list-item">
+                                
+                <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
                         href="https://steemleo.com/welcome"
