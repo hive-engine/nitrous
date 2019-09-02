@@ -242,9 +242,9 @@ Whether you've got some general questions or account-specific questions, feel fr
 
 The following is a collection of tools and apps to enhance your Steem blockchain experience.
 
-Blocktrades.us --> Blocktrades is an exchange service that allows you to easily send & convert various currencies including STEEM.
+https://Blocktrades.us --> Blocktrades is an exchange service that allows you to easily send & convert various currencies including STEEM.
 
-Steem-Engine.com --> Steem-Engine is both an exchange and a service provider for the Steem blockchain, allowing anyone to create/launch their own tokens and immediately list them on the exchange.
+https://Steem-Engine.com --> Steem-Engine is both an exchange and a service provider for the Steem blockchain, allowing anyone to create/launch their own tokens and immediately list them on the exchange.
 
 https://steemrewarding.com --> Steemrewarding is a tool created by Steem witness & community developer @holger80. It allows you to automate various voting patterns on Steem. I.e. autovote your favorite authors at a specific time.
 
