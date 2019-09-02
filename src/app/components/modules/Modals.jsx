@@ -25,6 +25,7 @@ class Modals extends React.Component {
         removeNotification: () => {},
         show_terms_modal: false,
         show_promote_post_modal: false,
+        show_rate_post_modal: false,
         show_bandwidth_error_modal: false,
         show_powerdown_modal: false,
         show_transfer_modal: false,
@@ -40,6 +41,7 @@ class Modals extends React.Component {
         show_powerdown_modal: PropTypes.bool,
         show_bandwidth_error_modal: PropTypes.bool,
         show_promote_post_modal: PropTypes.bool,
+        show_rate_post_modal: PropTypes.bool,
         show_post_advanced_settings_modal: PropTypes.string,
         hideLogin: PropTypes.func.isRequired,
         username: PropTypes.string,
@@ -78,6 +80,7 @@ class Modals extends React.Component {
             removeNotification,
             hidePromotePost,
             show_promote_post_modal,
+            show_rate_post_modal,
             hideBandwidthError,
             hidePostAdvancedSettings,
             username,
@@ -202,6 +205,7 @@ export default connect(
             show_transfer_modal: state.user.get('show_transfer_modal'),
             show_powerdown_modal: state.user.get('show_powerdown_modal'),
             show_promote_post_modal: state.user.get('show_promote_post_modal'),
+            show_rate_post_modal: state.user.get('show_rate_post_modal'),
             notifications: state.app.get('notifications'),
             show_terms_modal:
                 state.user.get('show_terms_modal') &&

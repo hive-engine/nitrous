@@ -13,6 +13,7 @@ import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
+
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
@@ -21,6 +22,9 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+
+import SidebarBurn from 'app/components/elements/SidebarBurn';
+import SidebarInfo from 'app/components/elements/SidebarInfo';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -64,7 +68,10 @@ class PostsIndex extends React.Component {
               : []
             : [];
         const notices = this.props.notices || [];
-        const topic_discussions = this.props.discussions.get(category || '');
+        let topic_discussions = null;
+        if (this.props.discussions) {
+            topic_discussions = this.props.discussions.get(category || '');
+        }
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
@@ -209,7 +216,7 @@ class PostsIndex extends React.Component {
         if (category === 'feed') {
             account_name = order.slice(1);
             order = 'by_feed';
-            topics_order = 'trending';
+            topics_order = 'hot';
             posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
@@ -219,9 +226,7 @@ class PostsIndex extends React.Component {
                         <br />
                         {tt('posts_index.empty_feed_2')}.<br />
                         <br />
-                        <Link to="/trending">
-                            {tt('posts_index.empty_feed_3')}
-                        </Link>
+                        <Link to="/hot">{tt('posts_index.empty_feed_3')}</Link>
                         <br />
                     </div>
                 );
@@ -256,7 +261,7 @@ class PostsIndex extends React.Component {
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
 
-        const topicDiscussions = discussions.get(category || '');
+        // const topicDiscussions = discussions.get(category || '');
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -277,9 +282,6 @@ class PostsIndex extends React.Component {
                 });
         } else {
             switch (topics_order) {
-                case 'trending': // cribbed from Header.jsx where it's repeated 2x already :P
-                    page_title = tt('main_menu.trending');
-                    break;
                 case 'created':
                     page_title = tt('g.new');
                     break;
@@ -299,6 +301,7 @@ class PostsIndex extends React.Component {
         const layoutClass = this.props.blogmode
             ? ' layout-block'
             : ' layout-list';
+
         return (
             <div
                 className={
@@ -356,13 +359,65 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
+                    <Notices notices={this.props.notices} />
                     {this.props.isBrowser && (
                         <div>
-                            {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
+                            <SidebarInfo
+                                sct_to_steemp={this.props.scotInfo.getIn([
+                                    'sct_to_steemp',
+                                ])}
+                                steem_to_dollor={this.props.scotInfo.getIn([
+                                    'steem_to_dollor',
+                                ])}
+                                steem_to_krw={this.props.scotInfo.getIn([
+                                    'steem_to_krw',
+                                ])}
+                            />
                         </div>
                     )}
-                    <Notices notices={this.props.notices} />
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn
+                                scotToken={this.props.scotBurn.getIn([
+                                    'scotToken',
+                                ])}
+                                scotTokenCirculating={this.props.scotBurn.getIn(
+                                    ['total_token_balance', 'circulatingSupply']
+                                )}
+                                scotTokenBurn={this.props.scotBurn.getIn([
+                                    'token_burn_balance',
+                                    'balance',
+                                ])}
+                                scotTokenStaking={this.props.scotBurn.getIn([
+                                    'total_token_balance',
+                                    'totalStaked',
+                                ])}
+                            />
+                        </div>
+                    )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarBurn
+                                scotToken={this.props.scotBurn.getIn([
+                                    'scotMinerToken',
+                                ])}
+                                scotTokenCirculating={this.props.scotBurn.getIn(
+                                    [
+                                        'total_token_miner_balances',
+                                        'circulatingSupply',
+                                    ]
+                                )}
+                                scotTokenBurn={this.props.scotBurn.getIn([
+                                    'token_miner_burn_balances',
+                                    'balance',
+                                ])}
+                                scotTokenStaking={this.props.scotBurn.getIn([
+                                    'total_token_miner_balances',
+                                    'totalStaked',
+                                ])}
+                            />
+                        </div>
+                    )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -419,6 +474,8 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const scotConfig = state.app.get('scotConfig');
+
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -439,6 +496,8 @@ module.exports = {
                     .get('notices')
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+                scotBurn: scotConfig.getIn(['config', 'burn']),
+                scotInfo: scotConfig.getIn(['config', 'info']),
             };
         },
         dispatch => {

@@ -5,11 +5,7 @@ import tt from 'counterpart';
 const SearchInput = ({ type }) => {
     return (
         <span>
-            <form
-                className={'search-input'}
-                action="/static/search.html"
-                method="GET"
-            >
+            <form className={'search-input'} action="/search" method="GET">
                 <svg
                     className="search-input__icon"
                     width="42"
@@ -34,7 +30,7 @@ const SearchInput = ({ type }) => {
                 />
                 <button
                     className="input-group-button"
-                    href="/static/search.html"
+                    href="/search"
                     type="submit"
                     title={tt('g.search')}
                 />

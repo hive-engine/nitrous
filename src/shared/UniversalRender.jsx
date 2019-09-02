@@ -212,6 +212,17 @@ const onRouterError = error => {
     console.error('onRouterError', error);
 };
 
+async function readOnChain(url) {
+    // a dirty fix that that replace the state of /search with /submit.html
+    const from = '/search',
+        to = '/submit.html';
+    if (url && url.split('?')[0] === from) {
+        url = to;
+        console.log(`apiGetState: replace the state of ${from} with ${url}`);
+    }
+    return await apiGetState(url);
+}
+
 /**
  *
  * @param {*} location
@@ -259,7 +270,7 @@ export async function serverRender(
         const url = getUrlFromLocation(location);
 
         requestTimer.startTimer('apiGetState_ms');
-        onchain = await apiGetState(url);
+        onchain = await readOnChain(url);
         requestTimer.stopTimer('apiGetState_ms');
 
         // If a user profile URL is requested but no profile information is
@@ -464,7 +475,7 @@ export function clientRender(initialState) {
  * @returns {string}
  */
 function getUrlFromLocation(location) {
-    let url = location === '/' ? 'trending' : location;
+    let url = location === '/' ? 'hot' : location;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)

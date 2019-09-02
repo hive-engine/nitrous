@@ -21,13 +21,22 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import { APP_DOMAIN, APP_NAME, APP_ICON } from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
+import PostRating from 'app/components/elements/Rating';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import ReactHintFactory from 'react-hint';
+const ReactHint = ReactHintFactory(React);
+import {
+    clean_permlink,
+    isPostRewardedByUser,
+    updatePostRewardingRecords,
+} from 'app/utils/CommentUtil';
+import ThumbUp from 'app/components/elements/ThumbUp';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -87,6 +96,7 @@ class PostFull extends React.Component {
         unlock: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
+        showRatePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
     };
 
@@ -113,10 +123,12 @@ class PostFull extends React.Component {
             const content = this.props.cont.get(this.props.post);
             deletePost(content.get('author'), content.get('permlink'));
         };
+        this.onScroll = this.onScroll.bind(this);
+        this.hideRatingReminder = this.hideRatingReminder.bind(this);
     }
 
     componentWillMount() {
-        const { post } = this.props;
+        const { username, post } = this.props;
         const formId = `postFull-${post}`;
         this.setState({
             formId,
@@ -134,10 +146,39 @@ class PostFull extends React.Component {
                     this.setState({ showEdit: true });
                 }
             }
+
+            // get average rating info
+            const { averageRating, peopleRated } = this.getAverageRating();
+            this.setState({
+                averageRating,
+                peopleRated,
+            });
+
+            // check post rewarding status
+            const showUserRating = this.needsShowUserRating();
+            if (!showUserRating) {
+                updatePostRewardingRecords(username, () => {
+                    this.needsShowUserRating();
+                });
+            }
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        // add a check about rating
+        setTimeout(() => {
+            const { averageRating, peopleRated } = this.getAverageRating();
+            if (
+                averageRating &&
+                peopleRated &&
+                (averageRating !== this.state.averageRating ||
+                    peopleRated !== this.state.peopleRated)
+            ) {
+                this.setState({ averageRating, peopleRated });
+                return true;
+            }
+        }, 1000);
+
         const names = 'cont, post, username'.split(', ');
         return (
             names.findIndex(name => this.props[name] !== nextProps[name]) !==
@@ -231,26 +272,145 @@ class PostFull extends React.Component {
         this.props.showPromotePost(author, permlink);
     };
 
+    showRatePost = rating => {
+        // hide rating reminder
+        this.hideRatingReminder();
+        // show rate post dialog
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return;
+        const category = post_content.get('category');
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const body = post_content.get('body');
+        this.props.showRatePost(category, author, permlink, body, rating);
+        // update userRating
+        this.setState({ userRating: rating });
+    };
+
     showExplorePost = () => {
         const permlink = this.share_params.link;
         const title = this.share_params.rawtitle;
         this.props.showExplorePost(permlink, title);
     };
 
+    getRatingFromComment(author_perm) {
+        // get rating score from comment
+        const rating_content = this.props.cont.get(author_perm);
+        if (!rating_content) return null;
+        const body = rating_content.get('body');
+        const m_rating = body.match(/score=\"(\d)\"/);
+        if (m_rating) return Number(m_rating[1]);
+        else return null;
+    }
+
+    needsShowUserRating() {
+        const { username, post } = this.props;
+
+        // identify whether the post is rewarded during search
+        const post_content = this.props.cont.get(post);
+        if (!post_content) return;
+        // update post rewarding info
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const rewarded = isPostRewardedByUser(author, permlink, username);
+        const showUserRating = username && username !== author && rewarded;
+        let userRating = null;
+        if (showUserRating) userRating = this.getUserRating();
+        this.setState({
+            showUserRating,
+            userRating,
+        });
+        return showUserRating;
+    }
+
+    getUserRating() {
+        // get the link to rating comment by the user
+        const { username, post, cont } = this.props;
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return null;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        const comment_permlink = clean_permlink(
+            `re-rating-${author}-${permlink}`
+        );
+        return this.getRatingFromComment(`${username}/${comment_permlink}`);
+    }
+
+    getAverageRating() {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return {};
+        const replies = post_content.get('replies').toJS();
+        const ratings = replies
+            .filter(c => c.indexOf('/re-rating-') !== -1)
+            .map(c => this.getRatingFromComment(c))
+            .filter(r => r != null);
+
+        if (ratings && ratings.length > 0) {
+            const averageRating =
+                ratings.reduce((a, b) => a + b) / ratings.length;
+            const peopleRated = ratings.length;
+            return {
+                averageRating,
+                peopleRated,
+            };
+        } else return {};
+    }
+
+    showUserRatingReminder = target => {
+        if (this.state.showUserRating && !this.state.userRating) {
+            this.tooltip.toggleHint({ target });
+        }
+    };
+
+    hideRatingReminder = () => {
+        if (this.state.showUserRating && this.tooltip) {
+            this.tooltip.setState({ target: null });
+        }
+    };
+
+    hasReachedBottom(el) {
+        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
+        else return false;
+    }
+
+    componentDidMount() {
+        if (this.state.showUserRating)
+            document.addEventListener('scroll', this.onScroll);
+    }
+
+    componentWillUnmount() {
+        if (this.state.showUserRating)
+            document.removeEventListener('scroll', this.onScroll);
+    }
+
+    onScroll = () => {
+        const wrappedElement = document.getElementById('user-rating-bar');
+        if (
+            this.state.showUserRating &&
+            wrappedElement &&
+            this.hasReachedBottom(wrappedElement)
+        ) {
+            document.removeEventListener('scroll', this.onScroll);
+            this.showUserRatingReminder(wrappedElement);
+        }
+    };
+
     render() {
         const {
-            props: { username, post },
+            props: { username, post, scotTokens },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
                 formId,
                 showReply,
                 showEdit,
+                showUserRating,
             },
             onShowReply,
             onShowEdit,
             onDeletePost,
         } = this;
+
         const post_content = this.props.cont.get(this.props.post);
         if (!post_content) return null;
         const p = extractContent(immutableAccessor, post_content);
@@ -260,6 +420,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = p.json_metadata.app || '';
+        // if (jsonMetadata) app_info = jsonMetadata.app || '';
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -373,6 +535,11 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {app_info.startsWith(`${APP_ICON}/`) && (
+                    <span title={tt('g.written_from', { app_name: APP_NAME })}>
+                        <Icon name="steemcoinpan" />
+                    </span>
+                )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -402,7 +569,8 @@ class PostFull extends React.Component {
                     <h5>
                         {tt(
                             'postfull_jsx.you_are_viewing_a_single_comments_thread_from'
-                        )}:
+                        )}
+                        :
                     </h5>
                     <p>{content.root_title}</p>
                     <ul>
@@ -480,13 +648,16 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
                             content={content}
                             authorRepLog10={authorRepLog10}
                         />
+                        {app_info.startsWith(`${APP_ICON}/`) && (
+                            <ThumbUp post={post} />
+                        )}
                     </div>
                     <div className="columns medium-12 large-2 ">
                         <Voting post={post} />
@@ -540,6 +711,77 @@ class PostFull extends React.Component {
                         </button>
                     </div>
                 </div>
+                <div className="row rating">
+                    <div className="columns medium-12 large-5">
+                        {this.state.averageRating &&
+                            this.state.peopleRated && (
+                                <span className="PostFull__rating">
+                                    <span className="text">
+                                        {tt('rate_post_jsx.average_rating', {
+                                            average_rating: this.state.averageRating.toFixed(
+                                                1
+                                            ),
+                                        })}
+                                    </span>
+                                    <PostRating
+                                        id="post-average-rating"
+                                        initialRating={this.state.averageRating}
+                                        readonly={true}
+                                    />
+                                    <span className="text">
+                                        {tt('rate_post_jsx.people_rated', {
+                                            num: this.state.peopleRated,
+                                        })}
+                                    </span>
+                                </span>
+                            )}
+                    </div>
+                    <div className="columns medium-12 large-5">
+                        {showUserRating && (
+                            <span className="float-right">
+                                <ReactHint
+                                    events={false}
+                                    persist
+                                    ref={ref => {
+                                        this.tooltip = ref;
+                                    }}
+                                    onRenderContent={(target, content) => (
+                                        <div
+                                            className="react-hint__content"
+                                            dangerouslySetInnerHTML={{
+                                                __html: String(content).replace(
+                                                    '\n',
+                                                    '<br>'
+                                                ),
+                                            }}
+                                        />
+                                    )}
+                                />
+                                <span
+                                    data-rh={tt(
+                                        'rate_post_jsx.rating_reminder'
+                                    )}
+                                    data-rh-at="left"
+                                >
+                                    <span className="text">
+                                        {' '}
+                                        {this.state.userRating
+                                            ? tt('rate_post_jsx.your_rating')
+                                            : tt(
+                                                  'rate_post_jsx.please_rate'
+                                              )}{' '}
+                                        {': '}{' '}
+                                    </span>
+                                    <PostRating
+                                        id="user-rating-bar"
+                                        initialRating={this.state.userRating}
+                                        onChange={this.showRatePost}
+                                    />
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
                 <div className="row">
                     <div className="column large-8 medium-10 small-12">
                         {showReply && renderedEditor}
@@ -552,10 +794,14 @@ class PostFull extends React.Component {
 
 export default connect(
     // mapStateToProps
-    (state, ownProps) => ({
-        ...ownProps,
-        username: state.user.getIn(['current', 'username']),
-    }),
+    (state, ownProps) => {
+        const scotConfig = state.app.get('scotConfig');
+        return {
+            ...ownProps,
+            username: state.user.getIn(['current', 'username']),
+            scotTokens: scotConfig.getIn(['config', 'scotTokens']),
+        };
+    },
 
     // mapDispatchToProps
     dispatch => ({
@@ -582,6 +828,14 @@ export default connect(
                 globalActions.showDialog({
                     name: 'promotePost',
                     params: { author, permlink },
+                })
+            );
+        },
+        showRatePost: (category, author, permlink, body, rating) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'ratePost',
+                    params: { category, author, permlink, body, rating },
                 })
             );
         },

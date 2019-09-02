@@ -250,6 +250,12 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s",
+        "thumbsup": "ThumbsUp",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -650,7 +656,8 @@
         "curation_rewards_by": "Curation rewards by %(username)s",
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
-        "comments_by": "Comments by %(username)s"
+        "comments_by": "Comments by %(username)s",
+        "search": "Search"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
@@ -784,6 +791,31 @@
         "autocomplete_previous_transfers": "previous transfers",
         "autocomplete_user_following": "following",
         "confirm_transfer": "Transfer %(amount)s from %(from)s to %(to)s?"
+    },
+    "search_jsx": {
+        "successfully_rewarded_the_author":
+            "You have successfully rewarded the author"
+    },
+    "rate_post_jsx": {
+        "rate_post": "Rate the Post",
+        "rate_post_and_get_vote":
+            "A comment that contains your rating will be generated. To gratitude your raintg, your rating comment will be voted automatically by SCT team.",
+        "confirm_rate_post": "Your rating for this post is %(rating)s",
+        "rating_comment":
+            "@%(username)s selected @%(author)s's post in search.\n@%(author)s will be given %(reward)s %(DEBT_TOKEN)s\n@%(username)s's search satisfaction score is %(rating)s point.",
+        "rating_reminder":
+            "Please rate this post.\nAfter rating, a comment that contains the rating score will be generated, and SCT team will vote your comment later.",
+        "please_rate": "Please rate",
+        "your_rating": "Your rating",
+        "average_rating": "Average rating: %(average_rating)s",
+        "people_rated": "%(num)s people rated"
+    },
+    "reward_post_jsx": {
+        "reward_post": "Reward the Post’s Author",
+        "reward_post_and_get_vote":
+            "If you'd like to read more about this post, you need to spend %(amount)s %(DEBT_TOKEN)s to reward the author. But don't worry, after you read and rate this post, you'll get vote from SCT team in your rating comment to gratitude your efforts.",
+        "confirm_reward_post":
+            "You'll reward %(amount)s %(DEBT_TOKEN)s to this author @%(author)s. Among which %(reward_amount)s will go to the author @%(author)s, and %(burn_amount)s will be burnt (sent to @null)."
     },
     "userwallet_jsx": {
         "transfer": "Transfer",

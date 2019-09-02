@@ -185,9 +185,7 @@ class PostsList extends React.Component {
         const isLoggedInOnFeed = username && pathname === `/@${username}/feed`;
         const isLoggedOutOnTrending =
             !username &&
-            (pathname === '/' ||
-                pathname === '/trending' ||
-                pathname === '/trending/');
+            (pathname === '/' || pathname === '/hot' || pathname === '/hot/');
         const arePinnedPostsVisible =
             showPinned && (isLoggedInOnFeed || isLoggedOutOnTrending);
         const arePinnedPostsReady = isLoggedInOnFeed

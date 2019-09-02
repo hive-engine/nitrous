@@ -107,7 +107,6 @@ class UserWallet extends React.Component {
             : {
                   quantityLeft: '0',
               };
-
         const tokenStatus = account.has('token_status')
             ? account.get('token_status').toJS()
             : {
@@ -605,6 +604,7 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
+
                 <div className="row">
                     <div className="column small-12">
                         <hr />
@@ -676,7 +676,7 @@ export default connect(
             );
         },
 
-        claimTokenRewards: (account, symbol) => {
+        claimTokenRewards: (account, token) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -690,11 +690,15 @@ export default connect(
                     globalActions.getState({ url: `@${username}/transfers` })
                 );
             };
+
             const operation = {
                 id: 'scot_claim_token',
                 required_posting_auths: [username],
-                json: JSON.stringify({ symbol }),
+                json: JSON.stringify({
+                    symbol: token,
+                }),
             };
+
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',

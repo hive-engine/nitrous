@@ -21,10 +21,11 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account) {
+export async function getSteemEngineAccountHistoryAsync(account, limit) {
+    limit = limit || 100;
     return callApi('https://api.steem-engine.com/accounts/history', {
         account,
-        limit: 100,
+        limit,
         offset: 0,
         type: 'user',
         symbol: LIQUID_TOKEN_UPPERCASE,
@@ -131,6 +132,7 @@ export async function attachScotData(url, state) {
     let urlParts = url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
+
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -158,6 +160,8 @@ export async function attachScotData(url, state) {
             tokenUnstakes,
             tokenStatuses,
             transferHistory,
+            allTokenBalances,
+            allTokenInfo,
             tokenDelegations,
             snaxBalance,
         ] = await Promise.all([
@@ -171,6 +175,10 @@ export async function attachScotData(url, state) {
             }),
             getScotAccountDataAsync(account),
             getSteemEngineAccountHistoryAsync(account),
+            ssc.find('tokens', 'balances', {
+                account,
+            }),
+            getScotDataAsync('info', {}),
             ssc.find('tokens', 'delegations', {
                 $or: [{ from: account }, { to: account }],
                 symbol: LIQUID_TOKEN_UPPERCASE,
@@ -194,6 +202,15 @@ export async function attachScotData(url, state) {
                 account
             ].transfer_history = transferHistory.reverse();
         }
+
+        if (allTokenBalances) {
+            state.accounts[account].all_token_balances = allTokenBalances;
+        }
+
+        if (allTokenInfo) {
+            state.accounts[account].all_token_info = allTokenInfo;
+        }
+
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
         }
@@ -263,8 +280,8 @@ export async function getStateAsync(url) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+    const steemitApiStateNeeded = !path.match(
+        /^[\/]?(trending|hot|created|promoted|search)($|\/$|\/([^\/]+)\/?$)/
     );
     const raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -354,6 +371,15 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         );
     }
     return { feedData, endOfData, lastValue };
+}
+
+export async function getSteemPriceInfo() {
+    var steemPrice = callApi('https://postpromoter.net/api/prices');
+    var steemPriceOnUpbit = callApi(
+        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    );
+    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return allInfo;
 }
 
 export async function fetchSnaxBalanceAsync(account) {

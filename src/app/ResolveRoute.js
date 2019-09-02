@@ -15,7 +15,7 @@ export const routeRegex = {
 
 export default function resolveRoute(path) {
     if (path === '/') {
-        return { page: 'PostsIndex', params: ['trending'] };
+        return { page: 'PostsIndex', params: ['hot'] };
     }
     if (path === '/about.html') {
         return { page: 'About' };
@@ -31,6 +31,9 @@ export default function resolveRoute(path) {
     }
     if (path === '/privacy.html') {
         return { page: 'Privacy' };
+    }
+    if (path === '/search') {
+        return { page: 'Search' };
     }
     if (path === '/support.html') {
         return { page: 'Support' };
