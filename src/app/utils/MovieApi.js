@@ -51,6 +51,7 @@ export async function getMovie(languageCode, movieType, movieId) {
 export async function getReviews(
     movieType,
     genreId,
+    languageCode,
     lastAuthor,
     lastPermlink,
     sortBy
@@ -59,9 +60,9 @@ export async function getReviews(
         const response = await axios.get(
             `https://tool.steem.world/AAA/GetPostsByGenre?movieType=${
                 movieType
-            }&genreId=${genreId}&lastAuthor=${lastAuthor}&lastPermlink=${
-                lastPermlink
-            }`
+            }&genreId=${genreId}&languageCode=${languageCode}&lastAuthor=${
+                lastAuthor
+            }&lastPermlink=${lastPermlink}`
         );
 
         return response.data;

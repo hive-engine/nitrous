@@ -66,6 +66,7 @@ function* requestReviews(action) {
     const {
         movieType,
         genreId,
+        languageCode,
         lastAuthor,
         lastPermlink,
         sortBy,
@@ -76,6 +77,7 @@ function* requestReviews(action) {
             movieApi.getReviews,
             movieType,
             genreId,
+            languageCode,
             lastAuthor,
             lastPermlink,
             sortBy

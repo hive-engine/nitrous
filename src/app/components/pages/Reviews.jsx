@@ -98,6 +98,7 @@ export default function Reviews(props) {
     const [values, setValues] = React.useState({
         movieType: 0,
         genreId: -1,
+        languageCode: ' ',
         lastAuthor: '',
         lastPermlink: '',
         sortBy: 'created',
@@ -154,6 +155,34 @@ export default function Reviews(props) {
                             </MenuItem>
                             <MenuItem value={1}>Movie</MenuItem>
                             <MenuItem value={2}>TV</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
+                    >
+                        <InputLabel
+                            ref={inputLabel}
+                            htmlFor="outlined-language-code"
+                        >
+                            Language
+                        </InputLabel>
+                        <Select
+                            value={values.languageCode}
+                            onChange={handleChange}
+                            input={
+                                <OutlinedInput
+                                    labelWidth={labelWidth}
+                                    name="languageCode"
+                                    id="outlined-language-code"
+                                />
+                            }
+                        >
+                            <MenuItem value={' '}>
+                                <em>All Languages</em>
+                            </MenuItem>
+                            <MenuItem value={'en'}>English</MenuItem>
+                            <MenuItem value={'ko'}>Korean</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl
@@ -300,6 +329,7 @@ export default function Reviews(props) {
                                     requestReviews({
                                         movieType: values.movieType,
                                         genreId: values.genreId,
+                                        languageCode: values.languageCode,
                                         lastAuthor,
                                         lastPermlink,
                                         sortBy: values.sortBy,
