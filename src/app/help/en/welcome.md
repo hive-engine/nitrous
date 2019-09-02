@@ -1,26 +1,20 @@
 <span id="disable_router_nav_history_direction_check"></span>
 ## Welcome to SteemLeo!
 
-This page is full of information to help you learn about the platform and become a successful Steemian. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page.
+Steemleo is a next-generation social community that is powered by blockchain technology. Content creators can join Steemleo and create blog posts or even upload videos and earn rewards paid out in LEO tokens, which are tradable on the [Steem-Engine Exchange](https://steem-engine.com/?p=market&t=LEO).
 
-Included on the page is a "To Do List" with recommended steps to get started with your account, and a "Quick Start Guide" with information on how the platform works. 
 
-Below that is a section of "Helpful Posts from Steemit Users", which contains a collection of posts from users in the community that are helpful for new users getting started. 
+
+
+This page is filled with information to help you learn about our community and how it works. There is a table of contents below to help you navigate.
+
+If you have further questions or want to create a free account, join our [Discord](https://discord.gg/KgcVDKQ) or Send Us an @tweet on [Twitter](https://twitter.com/steemleo).  
 
 Below that is a list of recommended users to follow, a collection of other resources including the <a href="/faq.html">FAQ Page</a> and [Steem 'Bluepaper'](https://steem.io/steem-bluepaper.pdf), as well as information on where to find help. 
 
+[![](https://i.imgur.com/zoZVqyb.gif)](https://discord.gg/KgcVDKQ)
+
 ## <span id="Table_of_Contents">Table of Contents</span>
-
-### To Do List
-
-1. <a href="#Backup_your_password">Backup Your Password</a>
-2. <a href="#Review_the_Quick_Start_Guide">Review the Quick Start Guide</a>
-3. <a href="#Read_the_Helpful_Posts_from_Steemit_Users">Read the Helpful Posts from Steemit Users</a>
-4. <a href="#Setup_your_Profile_Avatar_and_Cover_Image">Setup your Profile, Avatar, and Cover Image</a>
-5. <a href="#Choose_your_NSFW_(Not_Safe_for_Work)_Display_Preference">Choose your "NSFW" (Not Safe for Work) Display Preferences, Language, and Rewards</a>
-6. <a href="#Sign_Up_for_Steem_Chat">Sign Up for Steem Chat</a>
-7. <a href="#Create_your_introduceyourself_post">Create your "Introduceyourself" Post</a>
-8. <a href="#Learn_more">Learn More</a>
 
 ### Quick Start Guide
 
@@ -40,165 +34,121 @@ Below that is a list of recommended users to follow, a collection of other resou
 - <a href="#Earning_on_Steemit">Earning on Steemit</a>
 
 ### <a href="#Helpful_Posts_from_Steemit_Users">Helpful Posts from Steemit Users</a>
-### <a href="#Users_to_Follow">Users to Follow</a>
+### <a href="#official_accounts">Official SteemLeo Accounts & Curators</a>
 ### <a href="#Other_Resources">Other Resources</a>
 ### <a href="#Get_Help">Get Help</a>
-### <a href="#Third_Party_References">Third Party References</a>
+### <a href="#steem_tools">Steem Tools & Resources</a>
 
-***
+![](https://i.imgur.com/ZmF0k0b.png)
 
-## To Do List
-<span></span>
-### <span id="Backup_your_password">1. Backup Your Password</span>
 
-Unlike centralized web services, **it is not possible to recover lost passwords on the Steem blockchain**.
-
-You are entirely responsible for saving your password, backing it up, and keeping it secure.
-
-It is strongly recommended that you store an offline copy of your password somewhere safe in case of a hard drive failure or other calamity. Consider digital offline storage (such as a flash drive or burned CD), secure private cloud-based storage, as well as printed paper. Use multiple methods of storage for best redundancy. 
-
-If your account is valuable, value it!
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Review_the_Quick_Start_Guide">2. Review the Quick Start Guide</span>
-
-The <a href="#Quick_Start_Guide">Quick Start Guide</a> section of this Welcome page contains basic information to help get you started.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Read_the_Helpful_Posts_from_Steemit_Users">3. Read the Helpful Posts from Steemit Users</span>
-
-The <a href="#Helpful_Posts_from_Steemit_Users">Helpful Posts from Steemit Users</a> section of this Welcome page contains many well-written articles from members of the community with tips on how to use Steemit and succeed on the Steem blockchain.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Setup_your_Profile_Avatar_and_Cover_Image">4. Setup your Profile, Avatar, and Cover Image</span>
-
-You can update your profile through the Settings page. This includes your display name, location, about information, and website.
-
-To set your avatar image, enter a link to where the image is located into the "Profile Picture URL" field or use the "Upload an image" feature.
-
-To set your cover image, enter a link to where the image is located into the "Cover Image URL" field or use the "Upload an image" feature.
-
-Once you have made all your changes, click the "Update" button to save your profile.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Choose_your_NSFW_(Not_Safe_for_Work)_Display_Preference">5. Choose your "NSFW" (Not Safe for Work) Display Preference, Language, and Rewards</span>
-
-By default, content that users have tagged as "NSFW" will be hidden, but a link will be shown to reveal the content. You can update your display preference so that NSFW content is always shown by default or is completely hidden with no option to reveal.
-
-You can select the language you wish to display the website in. Currently, English, Spanish, Russian, French, Italian, Korean, Japanese, Polish and Chinese are available to choose from.
-
-You can also choose how you will receive your Blog post rewards and Comment post rewards. It is recommended that you read the <a href="#Digital_Currencies">Digital Currencies</a> section first. 
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Sign_Up_for_Steem_Chat">6. Sign Up for Steem Chat</span>
-
-A lot of users mingle and chat when they are not posting or browsing Steemit. It is a great place to meet people!
-
-There is a link to sign up in the main menu in the upper right corner.
-
-Your [steem.chat](https://steem.chat/home) account is a separate account from your Steem account.
-
-Some channels allow you to share links, but others don't. For instance, [general](https://steem.chat/channel/general) is for discussion without link promotion, while [postpromotion](https://steem.chat/channel/postpromotion) is for promoting your posts.
-
-Each channel will have its rules posted in the "Room Info" section.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Create_your_introduceyourself_post">7. Create your "Introduceyourself" Post</span>
-
-While not required, the tradition for new users is to create an "introduceyourself" post in order to let the community get to know you.
-
-You can see some examples of what other people have done [here](https://steemit.com/trending/introduceyourself). Many users like to take a picture of themselves holding up a piece of paper that says "Steemit" with the current date.
-
-If you have other social media accounts (Twitter, Facebook, etc.) you can help the community verify that you are who you say you are by sharing the link to your Steem profile on them. If you are claiming to be someone famous, this is pretty much expected.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Learn_more">8. Learn More</span>
-
-The <a href="#Other_Resources">Other Resources</a> section of this Welcome page contains helpful links to learn more about the platform. The FAQ page contains answers to the most commonly asked questions and the Bluepaper explains how the platform works.
-
-<a href="#Table_of_Contents">^</a>
-
-***
-
-## <span id="Quick_Start_Guide">Quick Start Guide</span>
+## <span id="Quick_Start_Guide">Get Started </span>
 
 ### <span id="Free_to_Participate">Free to Participate</span>
 
-It is free to post, comment, or vote on all content on Steemit.com. You might even get paid for it!
+SteemLeo is built on the Steem blockchain which boasts features such as 3 second block times and free transactions.
+
+That means that it's free to post, comment and vote on steemleo.com. You'll even earn cryptocurrency rewards for doing so!
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Votes">Votes</span>
 
-Upvotes are Steemit's way of saying you like someone's post or comment.
+#### Upvotes:
+
+Upvotes are how you "like" someone's post or comment... but these are no ordinary "likes". When an upvote is given, it draws on the user's LEO POWER (staked LEO tokens) and distributes newly minted LEO tokens to the author of the post/comment and some to the one who upvoted (curated) the content (50% to the author and 50% to the curator).
+
+The more LEO POWER a user has, the more their upvote will distribute from the total rewards pool.
 
 To upvote, click on the <Icon name="chevron-up-circle" /> *Upvote* icon at the bottom of the post/comment.
 
-Downvotes (flags) are Steemit's way of saying you disapprove of someone's post or comment.
+&nbsp;
 
-To downvote (flag), click on the <Icon name="flag1" /> *Flag* icon at the top right of the post/comment.
+
+| Upvote | Downvote (Flag) |
+| -------- | -------- |
+| <Icon name="chevron-up-circle" /> | <Icon name="flag1" /> |
+
+&nbsp;
+
+
+#### Downvotes (flags):
+
+Downvotes (flags) are how you "dislike" someone's post or comment. downvotes work inversely to upvotes. So if you downvote someone's post/comment, then you will remove rewards from their content which puts them back into the rewards pool to be redistributed to better content. 
+
+To downvote (flag), click on the <Icon name="flag1" /> *Flag* icon at the bottom of the post/comment.
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Comments">Comments</span>
 
-When you are new, commenting on other people's posts can be a great way to get involved in the community and to connect with people!
+Similar to any other social media website, commenting is a great way to build brand awareness for your account. It's a great way to get out there, meet like-minded people and have great discussions.
 
-To comment on a post, or reply to an existing comment, click on the "Reply" link at the bottom of the post/comment.
+You'll quickly learn that on SteemLeo, people love interacting and debating ideas related to investing. You will never find a shortage of passionate investors here on SteemLeo!
+
+Comments are also eligible for upvotes. So participating in the community actually means something! Not only can you have great conversations with like-minded investors, but you can also earn rewards when they upvote your comments! 
+
+To comment on a post, or reply to an existing comment, click on the "Reply" button.
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Creating_Posts">Creating Posts</span>
 
-To create a post, click on the "Post" link in the upper right corner.
+To create a post, click on the "Pencil" icon in the upper right corner next to your profile image (note: you need to be signed in before creating a post).
 
-Posts have three main parts: Title, Content, and Tags.
+![](https://i.imgur.com/xsbZtK3.png)
 
-You will want to make your title attractive and relevant to your content. The first image that you use will become the thumbnail image.
+Posts have four main parts: Title, Content, Tags and Advanced Settings.
 
-You can insert images by dragging & dropping, pasting from the clipboard, or by selecting them.
+![](https://i.imgur.com/xxxGfOZ.png)
 
-Tags will help people find your posts. Each post can have up to five tags, separated by spaces. The tags should all be relevant to the content in the post. You can browse content by tags, as well as see a list of popular tags that other users have used in their posts [here](https://steemit.com/tags).  The first tag becomes the post's category and cannot be changed later.
+Be sure to make a relevant and attractive title for your content. Just like any other social platform, your title and thumbnail often dictate the flow of traffic to your content. The first image that you submit on your post will be the thumbnail.
+
+You can insert images by either dragging & dropping, pasting from the clipboard, or by selecting them.
+
+Tags are extremely important. This is how content is organized both on SteemLeo and on the Steem blockchain. On the homepage of Steemleo.com, you'll notice some tags on the left-hand side. These are the most used tags for the SteemLeo community. Also note that you can use the tags of other communities (including "steemleo") to cross-post to those communities and earn tokens as well.
+
+Using relevant tags is very important, so be sure to do a little research before dropping niche tags on your content. 
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Followers_and_Feeds">Followers and Feeds</span>
 
-To follow an author, click on their username and click the "Follow" button.
+To follow another user, click on their username and click the "Follow" button. This will follow the user on the Steem blockchain which means that you can view their posts in your feed on any Steem interface.
 
-Once you follow someone, all of their posts will show up in your "Feed" on the homepage when you login.
+Once you follow someone, all of their posts will show up in your "Feed" on the SteemLeo homepage when you login.
 
-As other Steemians come across your posts and comments, you will start to gain followers.
-
-You can see all of your followers and the people you are following on your profile page.
+As you grow on SteemLeo and post content consistently, you'll see your follower count increase. You can track your followers (and who you're following) on your profile page: steemleo.com/@username (replace username with your username).
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Resteem">Resteem</span>
 
 If you want to share someone else's post with all of your followers, click on the <Icon name="reblog" /> *resteem* icon. Resteems cannot be undone. 
 
+Resteeming a post is just like "retweeting" on Twitter. It posts straight into your blog feed and allows your followers to see it as well. 
+
 <a href="#Table_of_Contents">^</a>
 ### <span id="Digital_Currencies">Digital Currencies</span>
 
-STEEM, Steem Power and Steem Dollars are the three forms of digital currency used by the Steem Blockchain.
+As mentioned previously, posting on SteemLeo will directly post to the Steem Blockchain. This means that your content is eligble for LEO token rewards as well as STEEM/SBD and other digital currencies when relevant tags are used. 
 
-More information on the three types of tokens can be found in the [Steemit FAQ](https://steemit.com/faq.html#What_is_the_difference_between_STEEM__STEEM_Power__and_Steem_Dollars).
+Note: We'll make a more in-depth section for digital currencies, relevant tag use, etc. and update this guide when it's ready.
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Curation">Curation</span>
 
-Up to 25% of the reward for each post goes to the people who upvoted on it. These people are called Curators.
+Up to 50% of the reward for each post goes to the people who upvoted on it. These users are called Curators.
 
-The more Steem Power you have in your account, the more your votes will be worth, and the more potential curation rewards you can earn!
+The more LEO POWER you have in your wallet, the more your votes will be worth. If your vote is more valuable, you will earn higher curation rewards and simultaneously be able to distribute more rewards to the author as well. 
+
+Curating is almost like a game because curating a post before other curators will increase your curation rewards as you'll earn a sort of "royalty" on any votes that follow yours. Thus, digging up posts by unknown authors and being the first to curate them can lead to greater rewards.
 
 <a href="#Table_of_Contents">^</a>
-### <span id="Payments">Payments</span>
+### <span id="Payments">Payouts</span>
 
-Payouts are made 7 days after the post/comment is created. You can claim your rewards in your wallet after 7 days.
+Payouts are made 7 days after the post/comment is created. You can claim your rewards in your wallet after 7 days. 
 
-The projected payments may fluctuate (up and down) until the final payment amount is reached.
+Projected payouts are shown right next to the upvote/flag buttons in terms of LEO currency. 
 
-Payments for posts are split between the author (at least 75%) and the curators (up to 25%).
+![](https://i.imgur.com/I036JVO.png)
 
-The author reward is paid 50% in Steem Power and 50% in STEEM/SBD by default.
-
-Authors also have the option to decline payout, or be paid in 100% Steem Power!
+Note: projected payout figures may fluctuate based on several factors before the final payout is reached.
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Reputation">Reputation</span>
@@ -253,69 +203,89 @@ Don't get discouraged if you don't earn much at first. Keep up the good work!
 
 ***
 
-## <span id="Helpful_Posts_from_Steemit_Users">Helpful Posts from Steemit Users</span>
-### <span id="Blogging">Blogging</span>
-- [Advice on How To Build a Following](/steemit/@allasyummyfood/how-i-build-a-following-of-160-k-from-scratch)
-- [Steemit Etiquette Guide](/steemit/@thecryptofiend/the-complete-steemit-etiquette-guide-revision-2-0)
-- [8 Mistakes to Avoid](/steemit/@alcibiades/8-mistakes-i-see-beginners-make-on-steemit)
-- [The Importance of Citation](/steemcleaners/@steemcleaners/the-importance-of-citation)
-- [How to Find Success as a Steemit Blogger](/blog/@inquiringtimes/how-to-find-sucess-as-a-steemit-blogger)
-- [The Art of Commenting](/steemcleaners/@steemcleaners/the-art-of-commenting)
-- [Blogging Tools](/blogging/@munteanu/blogging-tools)
-- [The Ultimate Guide of Tips for New Steem Users](/steem-help/@timcliff/the-ultimate-guide-of-tips-for-new-steem-users)
-- [Ways to Find Free and Legal Images](/steem-help/@mindover/don-t-plagiarize-images-here-are-13-free-and-legal-ways-to-find-high-quality-photos-you-can-use-on-steemit)
-- [The Game of Tags](/steemcleaners/@steemcleaners/the-game-of-tags)
-- [Steemit for Artists](/art/@voronoi/steemit-for-artists-a-new-stage-for-craft)
-- [Video interview on how to be successful](/blog/@terrybrock/steemit-success-series--timcliff-on-who-to-target-with-your-content-1512178826-124805)
+## <span id="Helpful_Posts_from_Steemit_Users">What is the LEO Token?</span>
 
-### <span id="Curation">Curation</span>
-- [Curation Rewards Explained](/curation/@liberosist/mind-your-votes-ii-a-guide-to-maximizing-your-curation-rewards)
-- [More Information on Curation Rewards](/steemit/@calamus056/curation-rewards-explained-in-great-detail)
-- [Everything you need to know about potential payouts and flagging](/payout/@timcliff/everything-you-need-to-know-about-potential-payouts-and-flagging-for-new-users)
-- [Guide To Steemit Payouts](/steemit/@shenanigator/the-ultimate-guide-to-steemit-payouts)
+LEO tokens are the native currency of the SteemLeo platform. These tokens are automatically distributed from the rewards pool to SteemLeo content creators, curators and users.
 
-### <span id="Formatting">Formatting</span>
-- [Emojis for Steemit](/emojis/@blueorgy/steemit-emojis-master-list)
-- [5 'Markdown' Tips](/steemit/@steemitguide/markdown-and-html-code-guide-for-beginners-that-includes-5-useful-tips-to-edit-posts-and-comments-using-the-raw-editor)
+Earning LEO tokens can be done in a myriad of ways. The primary distribution of LEO tokens occurs when a post is *upvoted* by someone with staked LEO tokens.
 
-### <span id="Wallet_and_Keys">Wallet and Keys</span>
-- [Understanding Your Wallet](/steemit-help/@merej99/the-steemit-newbie-s-comprehensive-guide-to-understanding-your-wallet-by-merej99)
-- [Steem Keys and Passwords Guide](/steemit-guides/@pfunk/a-user-s-guide-to-the-different-steem-keys-or-passwords)
-- [A Guide To Cashing Out Your STEEM/SBD Using PayPal](/tutorial/@son-of-satire/a-minnows-guide-to-cashing-out-your-steem-sbd-using-paypal-without-using-coinbase-and-their-invasive-identity-checks)
+Staking LEO tokens means that you're vesting them in your account. Vested LEO stake is also called "LEO POWER". Your LEO POWER determines the amount of tokens that you can distribute from the rewards pool with your upvote. 
 
-### <span id="Witnesses">Witnesses</span>
-- [Witness Voting Guide](/witness-category/@timcliff/witness-voting-guide)
+For example, someone with 1,000 LEO POWER will be able to distribute more LEO with their upvote than someone with 100 LEO POWER.
+
+### Wallet Page:
+
+Go to your wallet page to see your balances and stake LEO tokens. You can also view the various other tokens available on the Steem blockchain, such as STEEM and other community tokens like PAL.
+
+https://steemleo.com/@username/wallet
+
+*replace "username" with your Steem username*.
+
+### Trade LEO:
+
+You can trade LEO tokens for other cryptocurrencies on the [Steem-Engine Exchange](https://Steem-Engine.com).
+
+
 
 <a href="#Table_of_Contents">^</a>
-## <span id="Users_to_Follow">Users to Follow</span>
+## <span id="official_accounts">Official SteemLeo Accounts & Curators</span>
 
-- @steemitblog - Official Steemit Announcements
-- @ned - Ned Scott, CEO and Co-Founder of Steemit, Inc.
+Official accounts are marked by an orange badge next to their name on Steemleo.com. If you see an account with a name that appears to be an official account, simply check for the orange badge to confirm. If there's no badge, then it isn't an official SteemLeo account.
+
+- [@steem.leo](https://steemleo.com/@steem.leo)
+- [@noleo4u](https://steemleo.com/@noleo4u)
+- [leo.syndication](https://steemleo.com/@leo.syndication)
+- [learn.leo](https://steemleo.com/@learn.leo)
+- [leo.curation](https://steemleo.com/@leo.curation)
+- [leo.bounties](https://steemleo.com/@leo.bounties)
+- [leo.voter](https://steemleo.com/@leo.voter)
+
+We also have a team of official curators who are always browsing & curating Steemleo content. When you're on Steemleo.com, you'll see an orange badge next to their names, similar to the official accounts.
+
+- [@leothecat](https://steemleo.com/@leothecat) managed by [@gerber](https://steemleo.com/@gerber) 
+- [@neal.leo](https://steemleo.com/@neal.leo) managed by [@nealmcspadden](https://steemleo.com/@nealmcspadden)
+- [@scaredycatcurate](https://steemleo.com/@scaredycatcurate) managed by [@scaredycatguide](https://steemleo.com/@scaredycatguide)
+- [@vxc.leo](https://steemleo.com/@vxc.leo) managed by [@vxc](https://steemleo.com/@vxc)
+- [@schubes](https://steemleo.com/@schubes) managed by [@schubes](https://steemleo.com/@schubes)
+- [@mindtrap-leo](https://steemleo.com/@mindtrap-leo) managed by [@mindtrap](https://steemleo.com/@mindtrap)
+- [@rollandthomas](https://steemleo.com/@rollandthomas) managed by [@rollandthomas](https://steemleo.com/@rollandthomas)
 
 <a href="#Table_of_Contents">^</a>
-## <span id="Other_Resources">Other Resources</span>
+## <span id="Other_Resources">What is the Steem Blockchain</span>
 
-- [FAQ](https://steemit.com/faq.html) - Answers to commonly asked questions
-- [Bluepaper](https://steem.io/steem-bluepaper.pdf) - Explanation of how the platform works
-- [The Steem Whitepaper](https://steem.io/SteemWhitePaper.pdf) - Technical details of the Steem blockchain
-- [Apps Built on Steem](https://steemprojects.com/) - Directory of apps, sites and tools built by Steem community
-- [Steem Block Explorer](https://steemd.com/) - Shows the raw Steem blockchain data 
-- [Steem Blockchain Explorer](https://steemdb.com/) - Analysis pages for the Steem blockchain data
+The SteemLeo Community is a second-layer community that is built on a foundation called the Steem Blockchain. 
+
+The Steem Blockchain acts as a database for everything we do on SteemLeo. Casting a vote, for example, will ultimately broadcast to the base-layer (Steem) and be stored in the blockchain forever as an immutable transaction.
+
+This means that when you make a blog post on SteemLeo, your content is being stored on the Steem Blockchain and is viewable on other Steem interfaces as well. 
+
+Steem provides a lot of powerful tools and features such as:
+1. 3 second transactions
+2. Free transactions
+3. 
 
 <a href="#Table_of_Contents">^</a>
 ## <span id="Get_Help">Get Help</span>
 
-Ask your general questions in the [help](https://steem.chat/channel/help) channel of [steem.chat](https://steem.chat/home). Users in the channel will typically respond to questions within a few hours.
+Whether you've got some general questions or account-specific questions, feel free to hop in our [Discord](https://discord.gg/KgcVDKQ) and we'll help you out. There are various channels in there for different resources, or you could ask for help in general chat and someone will point you in the right direction.
 
-New Member Support Community is a group of people dedicated to helping new users find their way around Steemit. You can find them in the [New Member Support Community](https://discord.gg/HYj4yvw) channel of Discord Chat.
+[![](https://i.imgur.com/zoZVqyb.gif)](https://discord.gg/KgcVDKQ)
 
 <a href="#Table_of_Contents">^</a>
-## <span id="Third_Party_References">Third Party References</span>
+## <span id="steem_tools">Steem Tools & Resources</span>
 
-Peerhub, BlockTrades, Bittrex, Steem Chat, New Member Support Community, and Discord Chat, as well as the tools listed under "Other Resources", are third party applications/services and are not owned or maintained by Steemit, Inc. Their listing here does not constitute an endorsement or recommendation on behalf of Steemit, Inc.
+The following is a collection of tools and apps to enhance your Steem blockchain experience.
 
-All of the links in the "Helpful Posts from Steemit Users" section were created by our users and do not necessarily represent the views of Steemit, Inc. or its management.
+Blocktrades.us --> Blocktrades is an exchange service that allows you to easily send & convert various currencies including STEEM.
 
-Please use the third party tools and content at your own risk.
+Steem-Engine.com --> Steem-Engine is both an exchange and a service provider for the Steem blockchain, allowing anyone to create/launch their own tokens and immediately list them on the exchange.
+
+https://steemrewarding.com --> Steemrewarding is a tool created by Steem witness & community developer @holger80. It allows you to automate various voting patterns on Steem. I.e. autovote your favorite authors at a specific time.
+
+https://dlease.io --> Dlease is a tool for peer-to-peer leases. For example, you could lease 1,000 STEEM POWER for 30 days from another Steem user in exchange for a pre-determined lease price.
+
+https://steemworld.org --> Created by @steemchiller, Steemworld is an incredible tool that simply has too many features to write about here. You can claim all your rewards, monitor your account's blockchain operations, trade the internal market and about a thousand other features with more that are added on a regular basis.
+
+https://steemapps.com --> view a list of apps built on the Steem blockchain as well as performance statistics.
 
 <a href="#Table_of_Contents">^</a>
