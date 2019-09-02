@@ -22,6 +22,7 @@ import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
 import axios from 'axios';
 import { DEFAULT_LANGUAGE } from 'app/client_config';
+import ReviveAd from 'app/components/elements/ReviveAd';
 
 class Header extends React.Component {
     static propTypes = {
@@ -34,16 +35,14 @@ class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        this.gptadshown = event => {
-            // This makes sure that the sticky header doesn't overlap the welcome splash.
-            this.forceUpdate();
-        };
-        this.hideAnnouncement = event => {
-            this.props.hideAnnouncement(event);
-            this.forceUpdate();
+
+        this.state = {
+            gptAdRendered: false,
+            showAd: false,
+            showReviveAd: true,
+            showAnnouncement: this.props.showAnnouncement,
         };
 
-        this.state = { announcement: null };
         getAnnouncement(this, props.locale);
     }
 
@@ -57,7 +56,7 @@ class Header extends React.Component {
             return null;
         }
 
-        window.addEventListener('gptadshown', this.gptadshown);
+        window.addEventListener('gptadshown', e => this.gptAdRendered(e));
     }
 
     componentWillUnmount() {
@@ -69,8 +68,6 @@ class Header extends React.Component {
         ) {
             return null;
         }
-
-        window.removeEventListener('gptadshown', this.gptadshown);
     }
 
     // Consider refactor.
@@ -93,6 +90,23 @@ class Header extends React.Component {
         }
     }
 
+    headroomOnUnpin() {
+        this.setState({ showAd: false, showReviveAd: false });
+    }
+
+    headroomOnUnfix() {
+        this.setState({ showAd: true, showReviveAd: true });
+    }
+
+    gptAdRendered() {
+        this.setState({ showAd: true, gptAdRendered: true });
+    }
+
+    hideAnnouncement(e, id) {
+        this.setState({ showAnnouncement: false });
+        this.props.hideAnnouncement(id);
+    }
+
     render() {
         const {
             category,
@@ -112,6 +126,8 @@ class Header extends React.Component {
             account_meta,
             walletUrl,
         } = this.props;
+
+        const { showAd, showReviveAd, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -281,14 +297,18 @@ class Header extends React.Component {
                 : { link: '#', onClick: showLogin, value: tt('g.login') },
         ];
         return (
-            <Headroom>
+            <Headroom
+                onUnpin={e => this.headroomOnUnpin(e)}
+                onUnfix={e => this.headroomOnUnfix(e)}
+            >
                 <header className="Header">
                     {this.state.announcement &&
                         this.props.showAnnouncement &&
                         shouldShowAnnouncement(this.state.announcement.id) && (
                             <Announcement
-                                onClose={() =>
+                                onClose={e =>
                                     this.hideAnnouncement(
+                                        e,
                                         this.state.announcement.id
                                     )
                                 }
@@ -301,6 +321,10 @@ class Header extends React.Component {
                     <div>
                         <GptAd type="Basic" slotName="top_nav" />
                     </div>
+                    <div style={showReviveAd ? {} : { display: 'none' }}>
+                        <ReviveAd adKey="header_banner" />
+                    </div>
+
                     <nav className="row Header__nav">
                         <div className="small-5 large-4 columns Header__logotype">
                             {/*LOGO*/}
