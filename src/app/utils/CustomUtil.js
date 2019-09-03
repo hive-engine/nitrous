@@ -95,5 +95,9 @@ export function dictToArray(o) {
 }
 
 export function getMovieImageUrl(imagePath) {
-    return `https://image.tmdb.org/t/p${imagePath}`;
+    if (imagePath) {
+        return `https://image.tmdb.org/t/p${imagePath}`;
+    } else {
+        return null;
+    }
 }

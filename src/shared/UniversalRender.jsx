@@ -372,7 +372,7 @@ export async function serverRender(
 
             movie.movies = List([movieResult]);
         } else if (url.match(routeRegex.Reviews)) {
-            const reviews = await movieApi.getReviews(1, -1, '', '', '', '');
+            const reviews = await movieApi.getReviews(0, -1, '', '', '', '');
 
             movie.reviews = reviews;
 

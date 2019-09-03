@@ -111,15 +111,33 @@ export default function Movie(props) {
             <CssBaseline />
             <Container maxWidth="lg">
                 <main className={classes.root}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={4}>
-                            <img
-                                src={CustomUtil.getMovieImageUrl(
-                                    movie.PosterPath
-                                )}
-                                width="100%"
-                            />
-                        </Grid>
+                    <Grid
+                        container
+                        spacing={3}
+                        style={{ position: 'relative' }}
+                    >
+                        <div
+                            style={{
+                                backgroundImage: `url(${CustomUtil.getMovieImageUrl(
+                                    movie.BackdropPath
+                                )})`,
+                                backgroundSize: 'cover',
+                                position: 'absolute',
+                                opacity: 0.1,
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        />
+                        {movie.PosterPath && (
+                            <Grid item xs={12} sm={4}>
+                                <img
+                                    src={CustomUtil.getMovieImageUrl(
+                                        movie.PosterPath
+                                    )}
+                                    width="100%"
+                                />
+                            </Grid>
+                        )}
                         <Grid item xs={12} sm={8}>
                             <h3>
                                 <b>{movie.Title}</b>

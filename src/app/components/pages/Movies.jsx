@@ -226,12 +226,14 @@ export default function Movies(props) {
                                     to={`/${type}/${movie.MovieId}`}
                                 >
                                     <Card className={classes.card}>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={CustomUtil.getMovieImageUrl(
-                                                movie.PosterPath
-                                            )}
-                                        />
+                                        {movie.PosterPath && (
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={CustomUtil.getMovieImageUrl(
+                                                    movie.PosterPath
+                                                )}
+                                            />
+                                        )}
                                         <CardContent
                                             className={classes.cardContent}
                                         >
