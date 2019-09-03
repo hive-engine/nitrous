@@ -93,3 +93,7 @@ export function dictToArray(o) {
 
     return result;
 }
+
+export function getMovieImageUrl(imagePath) {
+    return `https://image.tmdb.org/t/p${imagePath}`;
+}

@@ -113,7 +113,12 @@ export default function Movie(props) {
                 <main className={classes.root}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={4}>
-                            <img src={movie.PosterPath} width="100%" />
+                            <img
+                                src={CustomUtil.getMovieImageUrl(
+                                    movie.PosterPath
+                                )}
+                                width="100%"
+                            />
                         </Grid>
                         <Grid item xs={12} sm={8}>
                             <h3>

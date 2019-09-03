@@ -213,16 +213,24 @@ export default function Movies(props) {
                 </form>
                 <main>
                     <Grid container spacing={4} className={classes.cardGrid}>
-                        {movies.map(post => (
-                            <Grid item key={post.MovieId} xs={12} sm={6} md={4}>
+                        {movies.map(movie => (
+                            <Grid
+                                item
+                                key={movie.MovieId}
+                                xs={12}
+                                sm={6}
+                                md={4}
+                            >
                                 <CardActionArea
                                     component={Link}
-                                    to={`/${type}/${post.MovieId}`}
+                                    to={`/${type}/${movie.MovieId}`}
                                 >
                                     <Card className={classes.card}>
                                         <CardMedia
                                             className={classes.cardMedia}
-                                            image={post.PosterPath}
+                                            image={CustomUtil.getMovieImageUrl(
+                                                movie.PosterPath
+                                            )}
                                         />
                                         <CardContent
                                             className={classes.cardContent}
@@ -232,7 +240,7 @@ export default function Movies(props) {
                                                 variant="h5"
                                                 component="h2"
                                             >
-                                                {post.Title}
+                                                {movie.Title}
                                             </Typography>
                                             <Typography
                                                 className={classes.cardDate}
@@ -240,18 +248,18 @@ export default function Movies(props) {
                                                 color="textSecondary"
                                             >
                                                 {CustomUtil.convertUnixTimestampToDate(
-                                                    post.ReleaseDate
+                                                    movie.ReleaseDate
                                                 )}
                                             </Typography>
                                             <Typography>
                                                 {CustomUtil.getSummary(
-                                                    post.Overview
+                                                    movie.Overview
                                                 )}
                                             </Typography>
                                             <div>
-                                                {post.Genres &&
+                                                {movie.Genres &&
                                                     CustomUtil.getDistinctGenres(
-                                                        JSON.parse(post.Genres)
+                                                        JSON.parse(movie.Genres)
                                                     ).map(genre => (
                                                         <Chip
                                                             key={genre.Id}
