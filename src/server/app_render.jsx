@@ -77,6 +77,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
                 env: process.env.NODE_ENV,
                 walletUrl: config.wallet_url,
                 scotConfig: ctx.scotConfigData,
+                reviveEnabled: config.revive_enabled,
             },
         };
 
