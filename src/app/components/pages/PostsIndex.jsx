@@ -25,6 +25,7 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
+import SidebarThumbsup from 'app/components/elements/SidebarThumbsup';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -418,6 +419,18 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarThumbsup
+                                thumbsUpReceiveList={this.props.scotThumbsUp.get(
+                                    'receiveList'
+                                )}
+                                thumbsUpSendList={this.props.scotThumbsUp.get(
+                                    'sendList'
+                                )}
+                            />
+                        </div>
+                    )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -498,6 +511,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
                 scotInfo: scotConfig.getIn(['config', 'info']),
+                scotThumbsUp: scotConfig.getIn(['config', 'thumbsup']),
             };
         },
         dispatch => {
