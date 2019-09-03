@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: sportstalksocial.com
+Token: e48e1709d3ef5767c66035344eb0ee30a3eac41940eb65c0cf59012751a3e9a1
