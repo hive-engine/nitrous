@@ -5,7 +5,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
@@ -50,8 +50,8 @@
     "auth_token": false
   },
   "upload_image": false,
-  "steemd_connection_client": "https://api.steemit.com",
-  "steemd_connection_server": "https://api.steemit.com",
+  "steemd_connection_client": "https://steemd.minnowsupportproject.org",
+  "steemd_connection_server": "https://steemd.minnowsupportproject.org",
   "steemd_use_appbase": false,
   "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
   "address_prefix": "STM",
