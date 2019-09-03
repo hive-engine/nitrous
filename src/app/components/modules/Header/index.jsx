@@ -20,6 +20,7 @@ import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 
 class Header extends React.Component {
     static propTypes = {
@@ -37,6 +38,7 @@ class Header extends React.Component {
             gptAdRendered: false,
             showAd: false,
             showPresearch: true,
+            showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
     }
@@ -86,11 +88,19 @@ class Header extends React.Component {
     }
 
     headroomOnUnpin() {
-        this.setState({ showAd: false, showPresearch: false });
+        this.setState({
+            showAd: false,
+            showPresearch: false,
+            showReviveAd: false,
+        });
     }
 
     headroomOnUnfix() {
-        this.setState({ showAd: true, showPresearch: true });
+        this.setState({
+            showAd: true,
+            showPresearch: true,
+            showReviveAd: true,
+        });
     }
 
     gptAdRendered() {
@@ -122,7 +132,12 @@ class Header extends React.Component {
             walletUrl,
         } = this.props;
 
-        const { showAd, showPresearch, showAnnouncement } = this.state;
+        const {
+            showAd,
+            showPresearch,
+            showReviveAd,
+            showAnnouncement,
+        } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -306,6 +321,9 @@ class Header extends React.Component {
                             type="Freestar"
                             id="steemit_728x90_970x90_970x250_320x50_ATF"
                         />
+                    </div>
+                    <div style={showReviveAd ? {} : { display: 'none' }}>
+                        <ReviveAd adKey="header_banner" />
                     </div>
 
                     <div style={showPresearch ? {} : { display: 'none' }}>
