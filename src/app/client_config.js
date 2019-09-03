@@ -84,6 +84,35 @@ export const SITE_DESCRIPTION =
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
+// Revive Ads
+export const NO_ADS_STAKE_THRESHOLD = 2000;
+export const REVIVE_ADS = {
+    //header_banner: {
+    //    zoneId: '1699',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //sidebar_left: {
+    //    zoneId: '1767',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //sidebar_right: {
+    //    zoneId: '1761',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //post_footer_abovecomments: {
+    //    zoneId: '1768',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //post_footer_betweencomments: {
+    //    zoneId: '1769',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //feed: {
+    //    zoneId: '1777',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+};
+
 // Other configurations
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
