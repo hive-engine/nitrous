@@ -645,7 +645,7 @@ export default connect(
         const scotConfig = state.app.get('scotConfig');
         return {
             ...ownProps,
-            gprops: state.global.get('props').toJS(),
+            gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
         };
     },
