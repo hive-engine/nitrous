@@ -53,6 +53,7 @@ const map = {
     kooklaskock: 'Verified Creator',
     babporn: 'Verified Creator',
     rapunzzel: 'Verified Creator',
+    hiddenblade: 'Verified Creator',
     
 };
 
