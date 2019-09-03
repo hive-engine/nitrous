@@ -44,6 +44,18 @@ export async function getScotAccountDataAsync(account) {
     return getScotDataAsync(`@${account}`, { v: new Date().getTime() });
 }
 
+async function getAccount(account) {
+    const accounts = await api.getAccountsAsync([account]);
+    console.log(accounts);
+    return accounts && accounts.length > 0 ? accounts[0] : {};
+}
+
+async function getGlobalProps() {
+    const gprops = await api.getDynamicGlobalPropertiesAsync();
+    console.log(gprops);
+    return gprops;
+}
+
 async function getAuthorRep(feedData) {
     const authors = feedData.map(d => d.author);
     const authorRep = {};
@@ -187,6 +199,16 @@ export async function attachScotData(url, state) {
             }),
             fetchSnaxBalanceAsync(account),
         ]);
+
+        if (!state.accounts) {
+            state.accounts = {};
+        }
+        if (!state.accounts[account]) {
+            state.accounts[account] = await getAccount(account);
+        }
+        if (!state.props) {
+            state.props = await getGlobalProps();
+        }
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
         }
@@ -285,13 +307,15 @@ export async function getStateAsync(url) {
               accounts: {},
               content: {},
           };
-//     if (raw.error && (path === '/favorite-mentor' || path === '/grow')) {
-//         raw = {
-//             accounts: {},
-//             content: {},
-//         };
-//     }
-
+    if (!raw) {
+        raw = {};
+    }
+    if (!raw.accounts) {
+        raw.accounts = {};
+    }
+    if (!raw.content) {
+        raw.content = {};
+    }
     await attachScotData(url, raw);
 
     console.log('raw');
