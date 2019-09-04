@@ -37,7 +37,7 @@ class Header extends React.Component {
         this.state = {
             gptAdRendered: false,
             showAd: false,
-            showPresearch: true,
+            showPresearch: false,
             showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
@@ -98,7 +98,7 @@ class Header extends React.Component {
     headroomOnUnfix() {
         this.setState({
             showAd: true,
-            showPresearch: true,
+            showPresearch: false,
             showReviveAd: true,
         });
     }
