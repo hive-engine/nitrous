@@ -53,11 +53,6 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'reggaetube',
-                label: 'ReggaeTube',
-                link: 'https://reggaetube.io',
-            },
-            {
                 value: 'steemengine',
                 label: 'Steem Engine',
                 link: `https://steem-engine.com/?p=market&t=${
@@ -178,6 +173,11 @@ const SidePanel = ({
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section" href="https://reggaetube.io">
+                            ReggaeTube
+                        </a>
+                    </li>
                     <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
