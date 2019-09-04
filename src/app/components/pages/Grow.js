@@ -70,13 +70,11 @@ class Grow extends React.Component {
                                                         Our TV(s)
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.submitAVideo
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.submitAVideo
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -89,7 +87,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -113,13 +111,11 @@ class Grow extends React.Component {
                                                 <div className="ant-list-item-content ant-list-item-content-single">
                                                     <h3>Write To Ulogs.org</h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.writeToUlogs
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.writeToUlogs
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -132,7 +128,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -159,13 +155,11 @@ class Grow extends React.Component {
                                                         Your Favorite Mentor
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.fifteenMinuteMentor
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.fifteenMinuteMentor
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -178,7 +172,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -207,13 +201,11 @@ class Grow extends React.Component {
                                                         Steem Community
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.thirtyMinuteSymposium
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.thirtyMinuteSymposium
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -226,7 +218,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -253,13 +245,11 @@ class Grow extends React.Component {
                                                         Steem Or Outside Steem
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.extraClout
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.extraClout
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -272,7 +262,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -300,13 +290,11 @@ class Grow extends React.Component {
                                                         Life-Changing Move?
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.extraConfidence
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.extraConfidence
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -319,7 +307,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -347,13 +335,11 @@ class Grow extends React.Component {
                                                         e.g Depression?
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.hardToExplainAilment
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.hardToExplainAilment
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -366,7 +352,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -393,13 +379,11 @@ class Grow extends React.Component {
                                                         Or Mail
                                                     </h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.sendUsSomething
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.sendUsSomething
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -412,7 +396,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
@@ -436,13 +420,11 @@ class Grow extends React.Component {
                                                 <div className="ant-list-item-content ant-list-item-content-single">
                                                     <h3>Inspire Us</h3>
                                                     <div className="antContent">
-                                                        <p>
-                                                            <ReactMarkdown
-                                                                source={
-                                                                    growSections.inspireUs
-                                                                }
-                                                            />
-                                                        </p>
+                                                        <ReactMarkdown
+                                                            source={
+                                                                growSections.inspireUs
+                                                            }
+                                                        />
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
@@ -455,7 +437,7 @@ class Grow extends React.Component {
                                             <div className="ant-list-item-extra">
                                                 <div
                                                     role="presentation"
-                                                    class="VideoEmbed"
+                                                    className="VideoEmbed"
                                                 >
                                                     <GrowVideoEmbed
                                                         key="embed"
