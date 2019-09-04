@@ -16,10 +16,10 @@ export const SCOT_TAG = 'sct';
 export const APP_MAX_TAG = 10;
 export const TAG_LIST = fromJSOrdered([
     'sct',
-    'sct-notice',
     'sct-kr',
     'sct-en',
     'sct-cn',
+    'sct-notice',
     'sct-altcoin',
     'sct-bitcoin',
     'sct-alliance',
@@ -31,6 +31,28 @@ export const TAG_LIST = fromJSOrdered([
     'palnet',
     'steemleo',
     'zzan',
+]);
+export const TOPIC_TAG_LIST = fromJSOrdered([
+    'sct-dev',
+    'sct-invest',
+    'sct-market',
+    'sct-game',
+    'sct-movie',
+    'sct-book',
+    'sct-mining',
+    'sct-sports',
+    'sct-cartoon',
+    'sct-meetup',
+    'sct-diary',
+    'sct-freeboard',
+    'sct-bitcoin',
+    'sct-altcoin',
+    'sct-notice',
+    'sct-alliance',
+    'sct-userguide',
+    'sct-otc',
+    'sct-prediction',
+    'sct-qna',
 ]);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
