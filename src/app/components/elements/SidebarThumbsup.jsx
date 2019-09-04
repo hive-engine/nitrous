@@ -5,15 +5,35 @@ import {
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
 
-const SidebarThumbsup = ({ test, thumbsUpReceiveList, thumbsUpSendList }) => {
+const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
     if (thumbsUpReceiveList || thumbsUpSendList) {
         console.log(thumbsUpReceiveList);
         console.log(thumbsUpSendList);
     }
 
-    console.log(test);
+    const viewCnt = 3;
+    let receiveTop = '';
+    let sendTop = '';
 
-    return <div className="c-sidebar__module">{test}</div>;
+    for (let i = 0; i < 3; i++) {
+        receiveTop += `
+            ${thumbsUpReceiveList.getIn([
+                i,
+                'author',
+            ])}:${thumbsUpReceiveList.getIn([i, 'amount'])}\n`;
+        sendTop += `
+            ${thumbsUpSendList.getIn([
+                i,
+                'thumbup_account',
+            ])}:${thumbsUpSendList.getIn([i, 'amount'])}\n`;
+    }
+
+    return (
+        <div className="c-sidebar__module">
+            {receiveTop}
+            {sendTop}
+        </div>
+    );
 };
 
 export default SidebarThumbsup;

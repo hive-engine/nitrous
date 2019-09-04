@@ -428,9 +428,6 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser && (
                         <div>
                             <SidebarThumbsup
-                                teset={this.props.scotBurn.getIn([
-                                    'scotMinerToken',
-                                ])}
                                 thumbsUpReceiveList={this.props.scotThumbsup.getIn(
                                     ['receiveList']
                                 )}
