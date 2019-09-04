@@ -14,7 +14,18 @@ export const APP_DOMAIN = 'www.bilpcoin.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'bilpcoin';
-export const TAG_LIST = fromJSOrdered(['bilpcoin']);
+export const TAG_LIST = fromJSOrdered([
+    'money',
+    'music',
+    'gaming',
+    'crypto',
+    'life',
+    'photography',
+    'news'
+    'spt',
+    'palnet',
+    'neoxian'
+]);
 export const LIQUID_TOKEN = 'Bilpcoin';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'BPC';
