@@ -167,6 +167,7 @@ const map = {
     thranax: 'Certified Ulogger',
     emdesan: 'Certified Ulogger',
     ecoinstant: 'Certified Ulogger',
+    chrisrice: 'Certified Ulogger',
 };
 
 export default map;
