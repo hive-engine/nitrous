@@ -53,6 +53,11 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
+                value: 'reggaetube',
+                label: 'ReggaeTube',
+                link: 'https://reggaetube.io',
+            },
+            {
                 value: 'steemengine',
                 label: 'Steem Engine',
                 link: `https://steem-engine.com/?p=market&t=${
