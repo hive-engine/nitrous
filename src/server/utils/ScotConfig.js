@@ -136,20 +136,11 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
         }
 
-        var tt = thumbsUpReceiveList.data[0];
-        var tt2 = thumbsUpSendList.data[0];
-        console.log(`+_+_+_+_+_+_+_+_${Object.keys(tt[0])}`);
-        console.log(`+_+_+_+_+_+_+_+_${tt[0].author}`);
-        console.log(`+_+_+_+_+_+_+_+_${Object.keys(tt2[0])}`);
-        console.log(`+_+_+_+_+_+_+_+_${tt2[0].thumbup_account}`);
-
         if (thumbsUpReceiveList) {
-            console.log(`input receivelist`);
             scotConfig.thumbsup.receiveList = thumbsUpReceiveList.data[0];
         }
 
         if (thumbsUpSendList) {
-            console.log(`input sendlist`);
             scotConfig.thumbsup.sendList = thumbsUpSendList.data[0];
         }
 
