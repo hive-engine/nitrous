@@ -1,3 +1,5 @@
+const movieImageBaseUrl = 'https://image.tmdb.org/t/p';
+
 export function convertUnixTimestampToDate(value) {
     return new Date(Number(value.replace('/Date(', '').replace(')/', '')))
         .toISOString()
@@ -12,7 +14,7 @@ export function getSummary(value) {
     return value.length > 100 ? value.substring(0, 100) + ' ...' : value;
 }
 
-export function getRuntimeString(value) {
+export function getRuntimeString(value, locale) {
     if (!value || isNaN(value)) {
         return '-';
     }
@@ -20,10 +22,18 @@ export function getRuntimeString(value) {
     const hours = parseInt(value / 60);
     const minutes = value % 60;
 
-    if (hours > 0) {
-        return `${hours}h ${minutes}m`;
+    if (locale === 'ko') {
+        if (hours > 0) {
+            return `${hours}시간 ${minutes}분`;
+        } else {
+            return `${minutes}분`;
+        }
     } else {
-        return `${minutes}m`;
+        if (hours > 0) {
+            return `${hours}h ${minutes}m`;
+        } else {
+            return `${minutes}m`;
+        }
     }
 }
 
@@ -94,10 +104,42 @@ export function dictToArray(o) {
     return result;
 }
 
-export function getMovieImageUrl(imagePath) {
+export function getMoviePosterUrl(imagePath) {
     if (imagePath) {
-        return `https://image.tmdb.org/t/p${imagePath}`;
+        return `${movieImageBaseUrl}/w500${imagePath}`;
     } else {
         return null;
     }
+}
+
+export function getMovieBackdropUrl(imagePath) {
+    if (imagePath) {
+        return `${movieImageBaseUrl}/w780${imagePath}`;
+    } else {
+        return null;
+    }
+}
+
+export function getMovieProfileImageUrl(imagePath) {
+    if (imagePath) {
+        return `${movieImageBaseUrl}/w185${imagePath}`;
+    } else {
+        return null;
+    }
+}
+
+export function getMovieTopCrews(movieDetails) {
+    if (!movieDetails || !movieDetails.Credits || !movieDetails.Credits.Crew) {
+        return [];
+    }
+
+    return movieDetails.Credits.Crew.slice(0, 5);
+}
+
+export function getMovieTopCasts(movieDetails) {
+    if (!movieDetails || !movieDetails.Credits || !movieDetails.Credits.Cast) {
+        return [];
+    }
+
+    return movieDetails.Credits.Cast.slice(0, 5);
 }

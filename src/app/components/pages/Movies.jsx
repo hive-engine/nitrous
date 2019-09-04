@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         marginRight: theme.spacing(1),
+        minWidth: '90px',
     },
     card: {
         height: '100%',
@@ -195,7 +196,7 @@ export default function Movies(props) {
                             </MenuItem>
                         </Select>
                     </FormControl>
-                    <TextField
+                    {/* <TextField
                         id="search-title"
                         name="title"
                         label="Search Title"
@@ -209,7 +210,7 @@ export default function Movies(props) {
                                 </InputAdornment>
                             ),
                         }}
-                    />
+                    /> */}
                 </form>
                 <main>
                     <Grid container spacing={4} className={classes.cardGrid}>
@@ -229,7 +230,7 @@ export default function Movies(props) {
                                         {movie.PosterPath && (
                                             <CardMedia
                                                 className={classes.cardMedia}
-                                                image={CustomUtil.getMovieImageUrl(
+                                                image={CustomUtil.getMoviePosterUrl(
                                                     movie.PosterPath
                                                 )}
                                             />

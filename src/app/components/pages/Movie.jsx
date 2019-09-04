@@ -84,6 +84,8 @@ export default function Movie(props) {
     const movieType = type === 'movie' ? 1 : 2;
 
     const movieDetails = movie.Result ? JSON.parse(movie.Result) : null;
+    const crews = CustomUtil.getMovieTopCrews(movieDetails);
+    const casts = CustomUtil.getMovieTopCasts(movieDetails);
 
     if (movieDetails === null && !loading) {
         requestMovie({
@@ -118,7 +120,7 @@ export default function Movie(props) {
                     >
                         <div
                             style={{
-                                backgroundImage: `url(${CustomUtil.getMovieImageUrl(
+                                backgroundImage: `url(${CustomUtil.getMovieBackdropUrl(
                                     movie.BackdropPath
                                 )})`,
                                 backgroundSize: 'cover',
@@ -131,7 +133,7 @@ export default function Movie(props) {
                         {movie.PosterPath && (
                             <Grid item xs={12} sm={4}>
                                 <img
-                                    src={CustomUtil.getMovieImageUrl(
+                                    src={CustomUtil.getMoviePosterUrl(
                                         movie.PosterPath
                                     )}
                                     width="100%"
@@ -152,14 +154,21 @@ export default function Movie(props) {
                                 )}
                             </Typography>
                             {movie.Overview}
-                            <p>
-                                Runtime:{' '}
-                                {CustomUtil.getRuntimeString(
-                                    movieDetails !== null
-                                        ? movieDetails.Runtime
-                                        : null
-                                )}
-                            </p>
+                            {movieType === 1 && (
+                                <Typography
+                                    className={classes.cardDate}
+                                    variant="subtitle1"
+                                    color="textSecondary"
+                                >
+                                    Runtime:{' '}
+                                    {CustomUtil.getRuntimeString(
+                                        movieDetails !== null
+                                            ? movieDetails.Runtime
+                                            : null,
+                                        locale
+                                    )}
+                                </Typography>
+                            )}
                             <div>
                                 {movie.Genres &&
                                     CustomUtil.getDistinctGenres(
@@ -173,6 +182,65 @@ export default function Movie(props) {
                                         />
                                     ))}
                             </div>
+                            <h4 style={{ marginTop: '50px' }}>
+                                Featured Crew (주요 제작진)
+                            </h4>
+                            <Grid
+                                container
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                                spacing={5}
+                            >
+                                {crews &&
+                                    crews.map(crew => (
+                                        <Grid item key={crew.CreditId}>
+                                            <b>{crew.Name}</b>
+                                            <br />
+                                            {crew.Job}
+                                        </Grid>
+                                    ))}
+                            </Grid>
+                            <h4 style={{ marginTop: '50px' }}>
+                                {movieType === 1
+                                    ? 'Top Billed Cast (주요 출연진)'
+                                    : 'Series Cast (시리즈 출연진)'}
+                            </h4>
+                            <Grid
+                                container
+                                spacing={2}
+                                className={classes.cardGrid}
+                            >
+                                {casts.map(cast => (
+                                    <Grid
+                                        item
+                                        key={cast.CreditId}
+                                        xs={12}
+                                        sm={6}
+                                        md={4}
+                                    >
+                                        <Card className={classes.card}>
+                                            {cast.ProfilePath && (
+                                                <CardMedia
+                                                    className={
+                                                        classes.cardMedia
+                                                    }
+                                                    image={CustomUtil.getMovieProfileImageUrl(
+                                                        cast.ProfilePath
+                                                    )}
+                                                />
+                                            )}
+                                            <CardContent
+                                                className={classes.cardContent}
+                                            >
+                                                <b>{cast.Name}</b>
+                                                <br />
+                                                {cast.Character || '-'}
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </Grid>
                     </Grid>
                     {movie.Posts != null ? (

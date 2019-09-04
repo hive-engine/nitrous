@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         marginRight: theme.spacing(1),
+        minWidth: '90px',
     },
     card: {
         display: 'flex',
@@ -183,9 +184,10 @@ export default function Reviews(props) {
                             </MenuItem>
                             <MenuItem value={'en'}>English</MenuItem>
                             <MenuItem value={'ko'}>Korean</MenuItem>
+                            <MenuItem value={'zh'}>Chinese</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl
+                    {/* <FormControl
                         variant="outlined"
                         className={classes.formControl}
                     >
@@ -210,8 +212,8 @@ export default function Reviews(props) {
                                 Release Date
                             </MenuItem>
                         </Select>
-                    </FormControl>
-                    <TextField
+                    </FormControl> */}
+                    {/* <TextField
                         id="search-title"
                         name="title"
                         label="Search Title"
@@ -225,7 +227,7 @@ export default function Reviews(props) {
                                 </InputAdornment>
                             ),
                         }}
-                    />
+                    /> */}
                 </form>
                 <main>
                     <Grid container spacing={4} className={classes.cardGrid}>
