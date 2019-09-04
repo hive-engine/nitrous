@@ -227,3 +227,229 @@ a[rel="nofollow noopener"]:after {
     color: themed('buttonText');
   }
 }
+
+.cardContainer,
+.growContainer {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1010px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.broproCards {
+    margin: 10px -13px 0;    
+}
+
+.bro-card-wrapper {
+    padding: 0 13px;
+    float: left;
+}
+
+.bro-card {
+    background: #fff;
+    padding: 20px;
+    -webkit-box-shadow: 0 3px 13px rgba(0,0,0,.2);
+    box-shadow: 0 3px 13px rgba(0,0,0,.2);
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 25px;
+    height: 460px;
+    width: 300px;
+}
+
+.bro-card a {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.bro-card h4 {
+    color: purple;
+    font-weight: 700;
+}
+
+.bro-card h6 {
+    margin: 20px;
+    font-size: 14px;
+}
+
+.bro-card button {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    -webkit-transition: .1s;
+    -o-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.bro-card img {
+    border-radius: 50%;
+}
+
+.ant-collapse h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.ant-btn {
+    line-height: 1.5;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 0 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    height: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all .3s cubic-bezier(.645,.045,.355,1);
+    -o-transition: all .3s cubic-bezier(.645,.045,.355,1);
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+    position: relative;
+    color: rgba(0,0,0,.65);
+    background-color: #fff;
+    border-color: #e9e7e7;
+}
+
+.ant-btn-primary, .ant-btn-primary:hover {
+    color: #fff !important;
+    background-color: #1168d9;
+    border-color: #1168d9;
+}
+
+.ant-collapse {
+    font-family: Whitney,Source Sans Pro,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(0,0,0,.65);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fafafa;
+    border-radius: 4px;
+    border: 1px solid #e9e7e7;
+    border-bottom: 0;
+}
+
+.ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+    border-radius: 0 0 4px 4px;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    line-height: 22px;
+    padding: 12px 0 12px 40px;
+    color: rgba(0,0,0,.85);
+    cursor: pointer;
+    position: relative;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+.ant-collapse-content {
+    overflow: hidden;
+    color: rgba(0,0,0,.65);
+    padding: 0 16px;
+    background-color: #fff;
+    border-top: 1px solid #e9e7e7;
+}
+
+.ant-collapse-content > .ant-collapse-content-box {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.ant-list {
+    font-family: Whitney,Source Sans Pro,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(0,0,0,.65);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.ant-list-vertical .ant-list-item {
+    display: block;
+}
+
+.ant-list-lg .ant-list-item {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.ant-list-split .ant-list-item {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.ant-list-vertical .ant-list-item-extra-wrap {
+    display: flex;
+}
+
+.ant-list * {
+    outline: none;
+}
+
+.ant-layout, .ant-layout * {
+    box-sizing: border-box;
+}
+
+.ant-list-vertical .ant-list-item-main {
+    display: block;
+    -webkit-box-flex: 1;
+    flex: 1;
+}
+
+.ant-list-vertical .ant-list-item-content {
+    display: block;
+    color: rgba(0,0,0,.65);
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.ant-list-item-content-single {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+.ant-list-vertical .ant-list-item-extra {
+    margin-left: 58px;
+}
+
+.antContent {
+    margin-bottom: 10px;
+    margin-top: 10px
+}

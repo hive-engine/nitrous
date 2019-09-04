@@ -72,39 +72,34 @@ class FavoriteMentor extends React.Component {
                     </div>
                 </div>
 
-                <div className="container">
-                    <h3>Favorite Mentors</h3>
-                    <div className="card-deck">
-                        <div className="card">
-                            <a
-                                href="https://steemgigs.org/@surpassinggoogle"
-                                className="mx-auto"
-                            >
-                                <img
-                                    src="https://steemitimages.com/u/surpassinggoogle/avatar"
-                                    className="card-img-top rounded-circle mx-auto"
-                                    alt="..."
-                                    style={{ width: '9rem' }}
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="https://steemgigs.org/@surpassinggoogle">
-                                    <h3 className="card-title">
-                                        surpassinggoogle
-                                    </h3>
-                                </a>
-                                <p className="card-text">
-                                    I will provide a 30 min chat session (audio
-                                    or video) about community/project
-                                    development and general success.
-                                </p>
-                                <br />
-                                <p className="card-text">
-                                    <small className="text-muted">
-                                        Starting at 100 MARLIANS
-                                    </small>
-                                </p>
-                                <p className="card-text mx-auto">
+                <div className="container cardContainer">
+                    <div className="center">
+                        <h3>Favorite Mentors</h3>
+                        <div className="broproCards">
+                            <div className="bro-card-wrapper">
+                                <div className="bro-card">
+                                    <a
+                                        href="https://steemgigs.org/@surpassinggoogle"
+                                        className="mx-auto"
+                                    >
+                                        <img
+                                            src="https://steemitimages.com/u/surpassinggoogle/avatar"
+                                            className="card-img-top rounded-circle mx-auto"
+                                            alt="..."
+                                            style={{ width: '9rem' }}
+                                        />
+                                    </a>
+                                    <a href="https://steemgigs.org/@surpassinggoogle">
+                                        <h3 className="card-title">
+                                            surpassinggoogle
+                                        </h3>
+                                    </a>
+                                    <p>
+                                        I will provide a 30 min chat session
+                                        (audio or video) about community/project
+                                        development and general success.
+                                    </p>
+                                    <h6>Starting at 100 MARLIANS</h6>
                                     <button
                                         type="button"
                                         className="btn btn-light mx-auto"
@@ -112,37 +107,31 @@ class FavoriteMentor extends React.Component {
                                     >
                                         Buy Now
                                     </button>
-                                </p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="card">
-                            <a
-                                href="https://steemgigs.org/@tobias-g"
-                                className="mx-auto"
-                            >
-                                <img
-                                    src="https://steemitimages.com/u/tobias-g/avatar"
-                                    className="card-img-top rounded-circle mx-auto"
-                                    alt="..."
-                                    style={{ width: '9rem' }}
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="https://steemgigs.org/@tobias-g">
-                                    <h3 className="card-title">tobias-g</h3>
-                                </a>
-                                <p className="card-text">
-                                    I provide a 30 min chat session (audio) to
-                                    help you design your application UI and
-                                    provide you guidance surrounding developing
-                                    your steem front end.
-                                </p>
-                                <p className="card-text">
-                                    <small className="text-muted">
-                                        Starting at 500 MARLIANS
-                                    </small>
-                                </p>
-                                <p className="card-text mx-auto">
+                            <div className="bro-card-wrapper">
+                                <div className="bro-card">
+                                    <a
+                                        href="https://steemgigs.org/@tobias-g"
+                                        className="mx-auto"
+                                    >
+                                        <img
+                                            src="https://steemitimages.com/u/tobias-g/avatar"
+                                            className="card-img-top rounded-circle mx-auto"
+                                            alt="..."
+                                            style={{ width: '9rem' }}
+                                        />
+                                    </a>
+                                    <a href="https://steemgigs.org/@tobias-g">
+                                        <h3 className="card-title">tobias-g</h3>
+                                    </a>
+                                    <p>
+                                        I provide a 30 min chat session (audio)
+                                        to help you design your application UI
+                                        and provide you guidance surrounding
+                                        developing your steem front end.
+                                    </p>
+                                    <h6>Starting at 500 MARLIANS</h6>
                                     <button
                                         type="button"
                                         className="btn btn-light mx-auto"
@@ -150,37 +139,31 @@ class FavoriteMentor extends React.Component {
                                     >
                                         Buy Now
                                     </button>
-                                </p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="card">
-                            <a
-                                href="https://steemgigs.org/@ankarlie"
-                                className="mx-auto"
-                            >
-                                <img
-                                    src="https://steemitimages.com/u/ankarlie/avatar"
-                                    className="card-img-top rounded-circle mx-auto"
-                                    alt="..."
-                                    style={{ width: '9rem' }}
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="https://steemgigs.org/@ankarlie">
-                                    <h3 className="card-title">ankarlie</h3>
-                                </a>
-                                <p className="card-text">
-                                    I will provide a 30 min chat session
-                                    teaching you about viable crypto
-                                    investments. We will cover trading,
-                                    blockchain, free/paid investments, etc.
-                                </p>
-                                <p className="card-text">
-                                    <small className="text-muted">
-                                        Starting at 100 MARLIANS
-                                    </small>
-                                </p>
-                                <p className="card-text mx-auto">
+                            <div className="bro-card-wrapper">
+                                <div className="bro-card">
+                                    <a
+                                        href="https://steemgigs.org/@ankarlie"
+                                        className="mx-auto"
+                                    >
+                                        <img
+                                            src="https://steemitimages.com/u/ankarlie/avatar"
+                                            className="card-img-top rounded-circle mx-auto"
+                                            alt="..."
+                                            style={{ width: '9rem' }}
+                                        />
+                                    </a>
+                                    <a href="https://steemgigs.org/@ankarlie">
+                                        <h3 className="card-title">ankarlie</h3>
+                                    </a>
+                                    <p>
+                                        I will provide a 30 min chat session
+                                        teaching you about viable crypto
+                                        investments. We will cover trading,
+                                        blockchain, free/paid investments, etc.
+                                    </p>
+                                    <h6>Starting at 100 MARLIANS</h6>
                                     <button
                                         type="button"
                                         className="btn btn-light mx-auto"
@@ -188,7 +171,7 @@ class FavoriteMentor extends React.Component {
                                     >
                                         Buy Now
                                     </button>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
