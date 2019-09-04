@@ -12,12 +12,12 @@ export function getThumbUpList(author, permlink) {
     return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
 }
 
-export function getThumbupReceiveTopList() {
-    return axios.get(`${API_SERVER_URL}${RECEIVE_TOPLIST}/201909`);
+export function getThumbupReceiveTopList(month) {
+    return axios.get(`${API_SERVER_URL}${RECEIVE_TOPLIST}/${month}`);
 }
 
-export function getThumbupSendTopList() {
-    return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/201909}`);
+export function getThumbupSendTopList(month) {
+    return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/${month}}`);
 }
 
 export async function getConfig() {

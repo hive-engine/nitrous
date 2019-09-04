@@ -256,6 +256,12 @@ class PostsIndex extends React.Component {
             }
         }
 
+        if (this.props.thumbsup) {
+            debugger;
+            const test = this.props.thumbsup.getIn(['receiveList']);
+            const test2 = this.props.thumbsup.getIn(['receiveList', 'data']);
+        }
+
         const status = this.props.status
             ? this.props.status.getIn([category || '', order])
             : null;
@@ -422,11 +428,11 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser && (
                         <div>
                             <SidebarThumbsup
-                                thumbsUpReceiveList={this.props.scotThumbsUp.get(
-                                    'receiveList'
+                                thumbsUpReceiveList={this.props.scotThumbsup.getIn(
+                                    ['receiveList']
                                 )}
-                                thumbsUpSendList={this.props.scotThumbsUp.get(
-                                    'sendList'
+                                thumbsUpSendList={this.props.scotThumbsup.getIn(
+                                    ['sendList']
                                 )}
                             />
                         </div>
@@ -511,7 +517,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
                 scotInfo: scotConfig.getIn(['config', 'info']),
-                scotThumbsUp: scotConfig.getIn(['config', 'thumbsup']),
+                scotThumbsup: scotConfig.getIn(['config', 'thumbsup']),
             };
         },
         dispatch => {

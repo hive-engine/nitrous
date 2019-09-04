@@ -94,6 +94,7 @@ ScotConfig.prototype.refresh = async function() {
             .split(':')[0]
             .replace(/\W/g, '');
 
+        // sidebar thumbsup summary
         scotConfig.thumbsup = {};
 
         const [
@@ -118,8 +119,8 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.burn.scotMinerToken,
             }),
-            getThumbupReceiveTopList(),
-            getThumbupSendTopList(),
+            getThumbupReceiveTopList('201909'),
+            getThumbupSendTopList('201909'),
         ]);
 
         if (totalTokenBalance) {
@@ -135,13 +136,21 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
         }
 
-        debugger;
+        var tt = thumbsUpReceiveList.data[0];
+        var tt2 = thumbsUpSendList.data[0];
+        console.log(`+_+_+_+_+_+_+_+_${Object.keys(tt[0])}`);
+        console.log(`+_+_+_+_+_+_+_+_${tt[0].author}`);
+        console.log(`+_+_+_+_+_+_+_+_${Object.keys(tt2[0])}`);
+        console.log(`+_+_+_+_+_+_+_+_${tt2[0].thumbup_account}`);
+
         if (thumbsUpReceiveList) {
-            scotConfig.thumbsup.receiveList = thumbsUpReceiveList;
+            console.log(`input receivelist`);
+            scotConfig.thumbsup.receiveList = thumbsUpReceiveList.data[0];
         }
 
         if (thumbsUpSendList) {
-            scotConfig.thumbsup.sendList = thumbsUpSendList;
+            console.log(`input sendlist`);
+            scotConfig.thumbsup.sendList = thumbsUpSendList.data[0];
         }
 
         const allPrice = await getSteemPriceInfo();
