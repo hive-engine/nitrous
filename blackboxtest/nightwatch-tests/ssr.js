@@ -19,6 +19,8 @@ module.exports = {
             '/change_password',
             '/recover_account_step_1',
             '/market',
+            '/favorite-mentor',
+            '/grow',
             '/submit.html',
         ].forEach(path => testHttpGet('localhost', 8080, path, browser));
     },
