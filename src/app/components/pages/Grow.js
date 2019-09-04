@@ -33,32 +33,17 @@ class Grow extends React.Component {
         };
 
         return (
-            <div className="container">
-                <h2 style={{ color: 'purple', textAlign: 'center' }}>GROW</h2>
-                <div className="accordion" id="accordionExample">
-                    <div className="card">
-                        <div className="card-header" id="headingOne">
-                            <h2 className="mb-0">
-                                <button
-                                    className="btn btn-link"
-                                    type="button"
-                                    data-toggle="collapse"
-                                    data-target="#collapseOne"
-                                    aria-expanded="true"
-                                    aria-controls="collapseOne"
-                                >
-                                    About GROW
-                                </button>
-                            </h2>
+            <div className="container growContainer">
+                <h2 style={{ color: 'black', textAlign: 'center' }}>GROW</h2>
+
+                <div className="ant-collapse">
+                    <div className="ant-collapse-item ant-collapse-item-active">
+                        <div className="ant-collapse-header" id="headingOne">
+                            About GROW
                         </div>
 
-                        <div
-                            id="collapseOne"
-                            className="collapse show"
-                            aria-labelledby="headingOne"
-                            data-parent="#accordionExample"
-                        >
-                            <div className="card-body">
+                        <div className="ant-collapse-content ant-collapse-content-active">
+                            <div className="ant-collapse-content-box">
                                 <ReactMarkdown
                                     source={growSections.aboutGrow}
                                 />
@@ -67,285 +52,425 @@ class Grow extends React.Component {
                     </div>
                 </div>
 
-                <div className="accordion" id="accordionExample2">
-                    <div className="card">
-                        <div className="card-header" id="headingOne">
-                            <h2 className="mb-0">
-                                <button
-                                    className="btn btn-link"
-                                    type="button"
-                                    data-toggle="collapse"
-                                    data-target="#collapseOne"
-                                    aria-expanded="true"
-                                    aria-controls="collapseOne"
-                                >
-                                    Let Us Help Fix Matters
-                                </button>
-                            </h2>
+                <div className="ant-collapse">
+                    <div className="ant-collapse-item ant-collapse-item-active">
+                        <div className="ant-collapse-header">
+                            Let Us Help Fix Matters
                         </div>
 
-                        <div
-                            id="collapseOne"
-                            className="collapse show"
-                            aria-labelledby="headingOne"
-                            data-parent="#accordionExample"
-                        >
-                            <div className="card-body">
-                                <h3>Submit A Video To One Of Our TV(s)</h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.submitAVideo
-                                                }
-                                            />
+                        <div className="ant-collapse-content ant-collapse-content-active">
+                            <div className="ant-collapse-content-box">
+                                <div className="ant-list ant-list-vertical ant-list-lg ant-list-split">
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        Submit A Video To One Of
+                                                        Our TV(s)
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.submitAVideo
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
-                            <div className="card-body">
-                                <h3>Write To Ulogs.org</h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.writeToUlogs
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>
-                                    15 Mins Session With Your Favorite Mentor
-                                </h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.fifteenMinuteMentor
-                                                }
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>Write To Ulogs.org</h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.writeToUlogs
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>
-                                    Apply To Give A 30 Mins Symposium About Your
-                                    Project On A Popular Steem Community
-                                </h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.thirtyMinuteSymposium
-                                                }
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        15 Mins Session With
+                                                        Your Favorite Mentor
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.fifteenMinuteMentor
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="/favorite-mentor"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>
-                                    How About Extra Clout On Steem Or Outside
-                                    Steem
-                                </h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={growSections.extraClout}
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        Apply To Give A 30 Mins
+                                                        Symposium About Your
+                                                        Project On A Popular
+                                                        Steem Community
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.thirtyMinuteSymposium
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>
-                                    Do You Need Extra Confidence To Make A
-                                    Life-Changing Move?
-                                </h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.extraConfidence
-                                                }
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        How About Extra Clout On
+                                                        Steem Or Outside Steem
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.extraClout
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>
-                                    Are You Dealing With Hard-To-Explain Ailment
-                                    e.g Depression?
-                                </h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.hardToExplainAilment
-                                                }
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        Do You Need Extra
+                                                        Confidence To Make A
+                                                        Life-Changing Move?
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.extraConfidence
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>Send Us A Letter, Gift Or Mail</h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={
-                                                    growSections.sendUsSomething
-                                                }
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        Are You Dealing With
+                                                        Hard-To-Explain Ailment
+                                                        e.g Depression?
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.hardToExplainAilment
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="card-body">
-                                <h3>Inspire Us</h3>
-                                <div className="row no-gutters">
-                                    <div className="col-md-8">
-                                        <div style={customCardStyle}>
-                                            <ReactMarkdown
-                                                source={growSections.inspireUs}
-                                            />
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>
+                                                        Send Us A Letter, Gift
+                                                        Or Mail
+                                                    </h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.sendUsSomething
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
-                                        <GrowVideoEmbed
-                                            key="embed"
-                                            embed={{
-                                                provider_name: 'YouTube',
-                                                thumbnail:
-                                                    'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
-                                                embed:
-                                                    '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
-                                            }}
-                                        />
+
+                                    <div className="ant-list-item">
+                                        <div className="ant-list-item-extra-wrap">
+                                            <div className="ant-list-item-main">
+                                                <div className="ant-list-item-content ant-list-item-content-single">
+                                                    <h3>Inspire Us</h3>
+                                                    <div className="antContent">
+                                                        <p>
+                                                            <ReactMarkdown
+                                                                source={
+                                                                    growSections.inspireUs
+                                                                }
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        className="ant-btn ant-btn-primary"
+                                                        href="#"
+                                                    >
+                                                        <span>Click Here</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="ant-list-item-extra">
+                                                <div
+                                                    role="presentation"
+                                                    class="VideoEmbed"
+                                                >
+                                                    <GrowVideoEmbed
+                                                        key="embed"
+                                                        embed={{
+                                                            provider_name:
+                                                                'YouTube',
+                                                            thumbnail:
+                                                                'https://steemitimages.com/360x203/https://img.youtube.com/vi/kKZ1CixLG2s/0.jpg',
+                                                            embed:
+                                                                '<iframe width="270" height="158" src="https://www.youtube.com/embed/kKZ1CixLG2s?autoplay=1&amp;autohide=1&amp;enablejsapi=0&amp;rel=0&amp;origin=https://steemit.com" frameborder="0" allowfullscreen=""></iframe>',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
