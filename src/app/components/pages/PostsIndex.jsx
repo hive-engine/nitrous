@@ -25,6 +25,7 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
+import SidebarThumbsup from 'app/components/elements/SidebarThumbsup';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -64,8 +65,8 @@ class PostsIndex extends React.Component {
         const pinned = this.props.pinned;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
-              ? pinned.get('pinned_posts').toJS()
-              : []
+                ? pinned.get('pinned_posts').toJS()
+                : []
             : [];
         const notices = this.props.notices || [];
         let topic_discussions = null;
@@ -255,6 +256,12 @@ class PostsIndex extends React.Component {
             }
         }
 
+        if (this.props.thumbsup) {
+            debugger;
+            const test = this.props.thumbsup.getIn(['receiveList']);
+            const test2 = this.props.thumbsup.getIn(['receiveList', 'data']);
+        }
+
         const status = this.props.status
             ? this.props.status.getIn([category || '', order])
             : null;
@@ -418,6 +425,21 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
+                    {this.props.isBrowser && (
+                        <div>
+                            <SidebarThumbsup
+                                teset={this.props.scotBurn.getIn([
+                                    'scotMinerToken',
+                                ])}
+                                thumbsUpReceiveList={this.props.scotThumbsup.getIn(
+                                    ['receiveList']
+                                )}
+                                thumbsUpSendList={this.props.scotThumbsup.getIn(
+                                    ['sendList']
+                                )}
+                            />
+                        </div>
+                    )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -498,6 +520,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
                 scotInfo: scotConfig.getIn(['config', 'info']),
+                scotThumbsup: scotConfig.getIn(['config', 'thumbsup']),
             };
         },
         dispatch => {
