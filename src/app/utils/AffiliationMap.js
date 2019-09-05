@@ -54,6 +54,7 @@ const map = {
     babporn: 'Verified Creator',
     rapunzzel: 'Verified Creator',
     hiddenblade: 'Verified Creator',
+    ebonysex: 'Verified Creator',
     
 };
 
