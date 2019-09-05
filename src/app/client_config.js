@@ -32,9 +32,23 @@ export const TAG_LIST = fromJSOrdered([
     'steemleo',
     'zzan',
 ]);
+export const MAIN_TAG_LIST = fromJSOrdered(['sct']);
+export const LANG_TAG_LIST = fromJSOrdered([
+    'sct-kr',
+    'sct-en',
+    'sct-cn',
+    'sct-fr',
+    'sct-deutsch',
+    'sct-polish',
+    'sct-jp',
+]);
 export const TOPIC_TAG_LIST = fromJSOrdered([
-    'sct-dev',
+    'sct-freeboard',
+    'sct-bitcoin',
+    'sct-altcoin',
+    'sct-diary',
     'sct-invest',
+    'sct-dev',
     'sct-market',
     'sct-game',
     'sct-movie',
@@ -43,10 +57,6 @@ export const TOPIC_TAG_LIST = fromJSOrdered([
     'sct-sports',
     'sct-cartoon',
     'sct-meetup',
-    'sct-diary',
-    'sct-freeboard',
-    'sct-bitcoin',
-    'sct-altcoin',
     'sct-notice',
     'sct-alliance',
     'sct-userguide',
