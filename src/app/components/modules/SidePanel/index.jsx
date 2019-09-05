@@ -174,7 +174,7 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section" href="https://reggaetube.io">
+                        <a href="https://reggaetube.io">
                             ReggaeTube
                         </a>
                     </li>
