@@ -23,7 +23,7 @@ const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
     return (
         <div className="c-sidebar__module">
             <div className="c-sidebar__header" style={styleToken}>
-                <h3 className="c-sidebar__h3">Thumbs Up(Receiver)</h3>
+                <h3 className="c-sidebar__h3">Thumbs Up Top 3(To)</h3>
             </div>
             <div className="c-sidebar__content">
                 <ul className="c-sidebar__list-small">
@@ -52,7 +52,7 @@ const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
             </div>
             <br />
             <div className="c-sidebar__header" style={styleToken}>
-                <h3 className="c-sidebar__h3">Thumbs Up(Sender)</h3>
+                <h3 className="c-sidebar__h3">Thumbs Up Top 3(From)</h3>
             </div>
             <div className="c-sidebar__content">
                 <ul className="c-sidebar__list-small">
