@@ -180,7 +180,7 @@ const SidePanel = ({
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaetube.io/upload">
+                        <a href="https://www.reggaetube.io/#!/upload">
                             Upload Video <Icon name="extlink" /> 
                         </a>
                     </li>
