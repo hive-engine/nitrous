@@ -203,8 +203,14 @@ const SidePanel = ({
                         <a href="https://www.reggaesteem.com/advertise" target="_blank">
                             Advertise <Icon name="extlink" /> 
                         </a>
+                    </li>              
+                    <li>
+                        <a className="menu-section">
+                            Trade {LIQUID_TOKEN_UPPERCASE}
+                        </a>
                     </li>
-                     <li>
+                    {sidePanelLinks['internal'].map(makeLink)}
+                    <li>
                         <a className="menu-section">
                             Help
                         </a>
@@ -219,12 +225,6 @@ const SidePanel = ({
                             Discord Support <Icon name="extlink" /> 
                         </a>
                     </li> 
-                    <li>
-                        <a className="menu-section">
-                            Trade {LIQUID_TOKEN_UPPERCASE}
-                        </a>
-                    </li>
-                    {sidePanelLinks['internal'].map(makeLink)}
                   
                 </ul>
             </div>
