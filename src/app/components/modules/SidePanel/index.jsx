@@ -182,7 +182,7 @@ const SidePanel = ({
                         <a href="https://reggaetube.io">
                             Upload Video <Icon name="extlink" /> 
                         </a>
-                    </li> https://www.reggaetube.io/upload
+                    </li>
                     <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
