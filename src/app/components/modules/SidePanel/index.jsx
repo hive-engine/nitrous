@@ -174,10 +174,15 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a href="https://reggaetube.io">
+                        <a className="menu-section" href="https://reggaetube.io">
                             ReggaeTube
                         </a>
                     </li>
+                    <li>
+                        <a href="https://reggaetube.io">
+                            Upload Video <Icon name="extlink" /> 
+                        </a>
+                    </li> https://www.reggaetube.io/upload
                     <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
