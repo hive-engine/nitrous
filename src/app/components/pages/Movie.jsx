@@ -45,9 +45,11 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
     },
     card: {
-        // height: '100%',
         display: 'flex',
-        // flexDirection: 'column',
+    },
+    cardCast: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     cardGrid: {
         marginTop: theme.spacing(1),
@@ -62,6 +64,12 @@ const useStyles = makeStyles(theme => ({
     },
     cardMedia: {
         width: 160,
+    },
+    cardCastMedia: {
+        paddingTop: '90%',
+    },
+    cardContent: {
+        flexGrow: 1,
     },
     avatar: {
         margin: theme.spacing(0, 1),
@@ -169,80 +177,73 @@ export default function Movie(props) {
                                     )}
                                 </Typography>
                             )}
-                            <div>
-                                {movie.Genres &&
-                                    CustomUtil.getDistinctGenres(
-                                        JSON.parse(movie.Genres)
-                                    ).map(genre => (
-                                        <Chip
-                                            key={genre.Id}
-                                            size="small"
-                                            label={genre.Name}
-                                            className={classes.chip}
-                                        />
-                                    ))}
-                            </div>
+                            {movie.Genres &&
+                                CustomUtil.getDistinctGenres(
+                                    JSON.parse(movie.Genres)
+                                ).map(genre => (
+                                    <Chip
+                                        key={genre.Id}
+                                        size="small"
+                                        label={genre.Name}
+                                        className={classes.chip}
+                                    />
+                                ))}
                             <h4 style={{ marginTop: '50px' }}>
                                 Featured Crew (주요 제작진)
                             </h4>
                             <Grid
                                 container
-                                direction="row"
-                                justify="flex-start"
-                                alignItems="flex-start"
-                                spacing={5}
+                                // direction="row"
+                                // justify="flex-start"
+                                // alignItems="flex-start"
+                                spacing={2}
                             >
                                 {crews &&
                                     crews.map(crew => (
-                                        <Grid item key={crew.CreditId}>
+                                        <Grid
+                                            item
+                                            key={crew.CreditId}
+                                            xs={6}
+                                            sm={4}
+                                            md={3}
+                                        >
                                             <b>{crew.Name}</b>
                                             <br />
                                             {crew.Job}
                                         </Grid>
                                     ))}
                             </Grid>
-                            <h4 style={{ marginTop: '50px' }}>
-                                {movieType === 1
-                                    ? 'Top Billed Cast (주요 출연진)'
-                                    : 'Series Cast (시리즈 출연진)'}
-                            </h4>
-                            <Grid
-                                container
-                                spacing={2}
-                                className={classes.cardGrid}
-                            >
-                                {casts.map(cast => (
-                                    <Grid
-                                        item
-                                        key={cast.CreditId}
-                                        xs={12}
-                                        sm={6}
-                                        md={4}
-                                    >
-                                        <Card className={classes.card}>
-                                            {cast.ProfilePath && (
-                                                <CardMedia
-                                                    className={
-                                                        classes.cardMedia
-                                                    }
-                                                    image={CustomUtil.getMovieProfileImageUrl(
-                                                        cast.ProfilePath
-                                                    )}
-                                                />
-                                            )}
-                                            <CardContent
-                                                className={classes.cardContent}
-                                            >
-                                                <b>{cast.Name}</b>
-                                                <br />
-                                                {cast.Character || '-'}
-                                            </CardContent>
-                                        </Card>
-                                    </Grid>
-                                ))}
-                            </Grid>
                         </Grid>
                     </Grid>
+                    <h4 style={{ marginTop: '50px' }}>
+                        {movieType === 1
+                            ? 'Top Billed Cast (주요 출연진)'
+                            : 'Series Cast (시리즈 출연진)'}
+                    </h4>
+                    <Grid container spacing={2} className={classes.cardGrid}>
+                        {casts.map(cast => (
+                            <Grid item key={cast.CreditId} xs={4} sm={3} md={2}>
+                                <Card className={classes.cardCast}>
+                                    {cast.ProfilePath && (
+                                        <CardMedia
+                                            className={classes.cardCastMedia}
+                                            image={CustomUtil.getMovieProfileImageUrl(
+                                                cast.ProfilePath
+                                            )}
+                                        />
+                                    )}
+                                    <CardContent
+                                        className={classes.cardContent}
+                                    >
+                                        <b>{cast.Name}</b>
+                                        <br />
+                                        {cast.Character || '-'}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <h4 style={{ marginTop: '50px' }}>Reviews</h4>
                     {movie.Posts != null ? (
                         <Grid
                             container

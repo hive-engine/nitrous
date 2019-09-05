@@ -133,7 +133,7 @@ export function getMovieTopCrews(movieDetails) {
         return [];
     }
 
-    return movieDetails.Credits.Crew.slice(0, 5);
+    return movieDetails.Credits.Crew.slice(0, 6);
 }
 
 export function getMovieTopCasts(movieDetails) {
@@ -141,5 +141,5 @@ export function getMovieTopCasts(movieDetails) {
         return [];
     }
 
-    return movieDetails.Credits.Cast.slice(0, 5);
+    return movieDetails.Credits.Cast.slice(0, 6);
 }
