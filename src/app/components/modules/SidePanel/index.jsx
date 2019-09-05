@@ -179,8 +179,28 @@ const SidePanel = ({
                         </a>
                     </li>
                     <li>
-                        <a href="https://reggaetube.io">
+                        <a href="https://www.reggaetube.io/upload">
                             Upload Video <Icon name="extlink" /> 
+                        </a>
+                    </li>
+                    <li>
+                        <a className="menu-section">
+                            Redeem {LIQUID_TOKEN_UPPERCASE}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.reggaesteem.com/artists">
+                            Artists <Icon name="extlink" /> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.reggaesteem.com/tourism">
+                            Tourism <Icon name="extlink" /> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.reggaesteem.com/advertise">
+                            Advertise <Icon name="extlink" /> 
                         </a>
                     </li>
                     <li>
