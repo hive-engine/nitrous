@@ -13,6 +13,12 @@
   margin-bottom: 2.5em;
 }
 
+@media screen and (max-width: 800px) {
+  .articles__content-block--ad {
+    display: none;
+  }
+}
+
 .Post_footer__ad {
   max-width: 50rem;
   margin-right: auto;
