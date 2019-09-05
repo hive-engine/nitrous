@@ -165,6 +165,7 @@ const SidePanel = ({
         ],
     };
 
+// TODO: fix links to work with above 
     return (
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
@@ -183,7 +184,7 @@ const SidePanel = ({
                             Upload Video <Icon name="extlink" /> 
                         </a>
                     </li>
-                    <li>
+                    <li> 
                         <a className="menu-section">
                             Redeem {LIQUID_TOKEN_UPPERCASE}
                         </a>
@@ -203,13 +204,7 @@ const SidePanel = ({
                             Advertise <Icon name="extlink" /> 
                         </a>
                     </li>
-                    <li>
-                        <a className="menu-section">
-                            Trade {LIQUID_TOKEN_UPPERCASE}
-                        </a>
-                    </li>
-                    {sidePanelLinks['internal'].map(makeLink)}
-                    <li>
+                     <li>
                         <a className="menu-section">
                             Help
                         </a>
@@ -224,6 +219,13 @@ const SidePanel = ({
                             Discord Support <Icon name="extlink" /> 
                         </a>
                     </li> 
+                    <li>
+                        <a className="menu-section">
+                            Trade {LIQUID_TOKEN_UPPERCASE}
+                        </a>
+                    </li>
+                    {sidePanelLinks['internal'].map(makeLink)}
+                  
                 </ul>
             </div>
         </div>
