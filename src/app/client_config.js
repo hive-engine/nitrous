@@ -21,7 +21,7 @@ export const TAG_LIST = fromJSOrdered([
     'crypto',
     'life',
     'photography',
-    'news'
+    'news',
     'spt',
     'palnet',
     'neoxian'
