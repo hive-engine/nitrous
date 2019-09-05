@@ -174,7 +174,7 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section" href="https://reggaetube.io">
+                        <a className="menu-section" href="https://reggaetube.io" style="cursor: pointer;">
                             ReggaeTube
                         </a>
                     </li>
@@ -189,17 +189,17 @@ const SidePanel = ({
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/artists">
+                        <a href="https://www.reggaesteem.com/artists" target="_blank">
                             Artists <Icon name="extlink" /> 
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/tourism">
+                        <a href="https://www.reggaesteem.com/tourism" target="_blank">
                             Tourism <Icon name="extlink" /> 
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/advertise">
+                        <a href="https://www.reggaesteem.com/advertise" target="_blank">
                             Advertise <Icon name="extlink" /> 
                         </a>
                     </li>
@@ -209,6 +209,21 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
+                    <li>
+                        <a className="menu-section">
+                            Help
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=-fSu4gWk5rY&list=PL2GAL5HEcoFVVSzFV1ayTGVzuc0jLFx14" target="_blank">
+                            How-to Videos <Icon name="extlink" /> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/sZCXZ9K" target="_blank">
+                            Discord Support <Icon name="extlink" /> 
+                        </a>
+                    </li> 
                 </ul>
             </div>
         </div>
