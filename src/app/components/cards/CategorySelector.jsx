@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
-import { APP_MAX_TAG } from 'app/client_config';
+import {
+    APP_MAX_TAG,
+    SCOT_TAG,
+    MAIN_TAG_LIST,
+    LANG_TAG_LIST,
+    TOPIC_TAG_LIST,
+} from 'app/client_config';
 
 const MAX_TAG = APP_MAX_TAG || 10;
 
@@ -54,9 +60,32 @@ class CategorySelector extends React.Component {
                 }, 300);
             } else this.props.onChange(e);
         };
+        this.categoryTag = (category, impProps) => {
+            return category.map((c, idx) => {
+                return (
+                    <span>
+                        <a
+                            key={idx}
+                            value={c}
+                            onClick={() => {
+                                if (!impProps.value.includes(c)) {
+                                    impProps.onChange(
+                                        `${impProps.value} ${c}`.trim()
+                                    );
+                                }
+                            }}
+                        >
+                            #{c}
+                        </a>{' '}
+                        &nbsp;
+                    </span>
+                );
+            });
+        };
     }
     render() {
         const { trending, tabIndex, disabled } = this.props;
+
         const categories = trending
             //.slice(0, 11)
             .filterNot(c => validateCategory(c));
@@ -70,36 +99,29 @@ class CategorySelector extends React.Component {
 
         const impProps = { ...this.props };
         const categoryInput = (
-            <span>
-                <input
-                    type="text"
-                    {...cleanReduxInput(impProps)}
-                    ref="categoryRef"
-                    tabIndex={tabIndex}
-                    disabled={disabled}
-                    autoCapitalize="none"
-                />
-                {categories.map((c, idx) => {
-                    return (
-                        <span>
-                            <a
-                                key={idx}
-                                value={c}
-                                onClick={() => {
-                                    if (!impProps.value.includes(c)) {
-                                        impProps.onChange(
-                                            `${impProps.value} ${c}`.trim()
-                                        );
-                                    }
-                                }}
-                            >
-                                #{c}
-                            </a>{' '}
-                            &nbsp;
-                        </span>
-                    );
-                })}
-            </span>
+            <div>
+                <span>
+                    <input
+                        type="text"
+                        {...cleanReduxInput(impProps)}
+                        ref="categoryRef"
+                        tabIndex={tabIndex}
+                        disabled={disabled}
+                        autoCapitalize="none"
+                    />
+                </span>
+                Main Tag(Required)
+                <br />
+                {this.categoryTag(MAIN_TAG_LIST, impProps)}
+                <br />
+                Language Tag(Required)
+                <br />
+                {this.categoryTag(LANG_TAG_LIST, impProps)}
+                <br />
+                Topic Tag(Required)
+                <br />
+                {this.categoryTag(TOPIC_TAG_LIST, impProps)}
+            </div>
         );
 
         const categorySelect = (
@@ -131,22 +153,20 @@ export function validateCategory(category, required = true) {
                   amount: MAX_TAG,
               })
             : cats.find(c => c.length > 24)
-              ? tt('category_selector_jsx.maximum_tag_length_is_24_characters')
-              : cats.find(c => c.split('-').length > 2)
-                ? tt('category_selector_jsx.use_one_dash')
-                : cats.find(c => c.indexOf(',') >= 0)
-                  ? tt('category_selector_jsx.use_spaces_to_separate_tags')
-                  : cats.find(c => /[A-Z]/.test(c))
-                    ? tt('category_selector_jsx.use_only_lowercase_letters')
-                    : cats.find(c => !/^[a-z0-9-#]+$/.test(c))
-                      ? tt('category_selector_jsx.use_only_allowed_characters')
-                      : cats.find(c => !/^[a-z-#]/.test(c))
-                        ? tt('category_selector_jsx.must_start_with_a_letter')
-                        : cats.find(c => !/[a-z0-9]$/.test(c))
-                          ? tt(
-                                'category_selector_jsx.must_end_with_a_letter_or_number'
-                            )
-                          : null
+            ? tt('category_selector_jsx.maximum_tag_length_is_24_characters')
+            : cats.find(c => c.split('-').length > 2)
+            ? tt('category_selector_jsx.use_one_dash')
+            : cats.find(c => c.indexOf(',') >= 0)
+            ? tt('category_selector_jsx.use_spaces_to_separate_tags')
+            : cats.find(c => /[A-Z]/.test(c))
+            ? tt('category_selector_jsx.use_only_lowercase_letters')
+            : cats.find(c => !/^[a-z0-9-#]+$/.test(c))
+            ? tt('category_selector_jsx.use_only_allowed_characters')
+            : cats.find(c => !/^[a-z-#]/.test(c))
+            ? tt('category_selector_jsx.must_start_with_a_letter')
+            : cats.find(c => !/[a-z0-9]$/.test(c))
+            ? tt('category_selector_jsx.must_end_with_a_letter_or_number')
+            : null
     );
 }
 export default connect((state, ownProps) => {
