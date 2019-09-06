@@ -3,7 +3,11 @@ import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
-import { getConfig } from 'app/utils/SctApi';
+import {
+    getConfig,
+    getThumbupReceiveTopList,
+    getThumbupSendTopList,
+} from 'app/utils/SctApi';
 
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -90,11 +94,19 @@ ScotConfig.prototype.refresh = async function() {
             .split(':')[0]
             .replace(/\W/g, '');
 
+        // sidebar thumbsup summary
+        scotConfig.thumbsup = {};
+        const date = new Date();
+        const year = date.getFullYear();
+        const mon = (date.getMonth() + 1 + '').padStart(2, '0');
+
         const [
             totalTokenBalance,
             tokenBurnBalance,
             totalTokenMinerBalance,
             tokenMinerBurnBalance,
+            thumbsUpReceiveList,
+            thumbsUpSendList,
         ] = await Promise.all([
             ssc.findOne('tokens', 'tokens', {
                 symbol: scotConfig.burn.scotToken,
@@ -110,6 +122,8 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.burn.scotMinerToken,
             }),
+            getThumbupReceiveTopList(year + mon),
+            getThumbupSendTopList(year + mon),
         ]);
 
         if (totalTokenBalance) {
@@ -123,6 +137,14 @@ ScotConfig.prototype.refresh = async function() {
         }
         if (tokenMinerBurnBalance) {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
+        }
+
+        if (thumbsUpReceiveList) {
+            scotConfig.thumbsup.receiveList = thumbsUpReceiveList.data[0];
+        }
+
+        if (thumbsUpSendList) {
+            scotConfig.thumbsup.sendList = thumbsUpSendList.data[0];
         }
 
         const allPrice = await getSteemPriceInfo();

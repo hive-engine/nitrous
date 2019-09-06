@@ -5,9 +5,19 @@ const API_SERVER_URL = 'https://apisct.cloud';
 const THUMBUP_LIST = '/thumbups/list';
 const CONFIG = '/thumbups/config';
 const DIVIDE = '/thumbups/divide';
+const RECEIVE_TOPLIST = '/thumbups/receiveThumbupList';
+const SEND_TOPLIST = '/thumbups/sendThumbupList';
 
 export function getThumbUpList(author, permlink) {
     return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
+}
+
+export function getThumbupReceiveTopList(month) {
+    return axios.get(`${API_SERVER_URL}${RECEIVE_TOPLIST}/${month}`);
+}
+
+export function getThumbupSendTopList(month) {
+    return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/${month}}`);
 }
 
 export async function getConfig() {

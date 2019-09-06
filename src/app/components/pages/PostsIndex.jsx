@@ -26,6 +26,7 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
+import SidebarThumbsup from 'app/components/elements/SidebarThumbsup';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -65,8 +66,8 @@ class PostsIndex extends React.Component {
         const pinned = this.props.pinned;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
-              ? pinned.get('pinned_posts').toJS()
-              : []
+                ? pinned.get('pinned_posts').toJS()
+                : []
             : [];
         const notices = this.props.notices || [];
         let topic_discussions = null;
@@ -361,7 +362,7 @@ class PostsIndex extends React.Component {
 
                 <aside className="c-sidebar c-sidebar--right">
                     <Notices notices={this.props.notices} />
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotInfo && (
                         <div>
                             <SidebarInfo
                                 sct_to_steemp={this.props.scotInfo.getIn([
@@ -376,7 +377,7 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotBurn && (
                         <div>
                             <SidebarBurn
                                 scotToken={this.props.scotBurn.getIn([
@@ -396,7 +397,7 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotBurn && (
                         <div>
                             <SidebarBurn
                                 scotToken={this.props.scotBurn.getIn([
@@ -419,6 +420,18 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
+                    {this.props.isBrowser && this.props.scotThumbsup && (
+                        <div>
+                            <SidebarThumbsup
+                                thumbsUpReceiveList={this.props.scotThumbsup.getIn(
+                                    ['receiveList']
+                                )}
+                                thumbsUpSendList={this.props.scotThumbsup.getIn(
+                                    ['sendList']
+                                )}
+                            />
+                        </div>
+                    )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
@@ -430,7 +443,6 @@ class PostsIndex extends React.Component {
                         </div>
                     ) : null}
                 </aside>
-
                 <aside className="c-sidebar c-sidebar--left">
                     <Topics
                         order={topics_order}
@@ -509,6 +521,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 scotBurn: scotConfig.getIn(['config', 'burn']),
                 scotInfo: scotConfig.getIn(['config', 'info']),
+                scotThumbsup: scotConfig.getIn(['config', 'thumbsup']),
                 reviveEnabled: state.app.get('reviveEnabled'),
             };
         },
