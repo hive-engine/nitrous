@@ -55,6 +55,8 @@ const map = {
     rapunzzel: 'Verified Creator',
     hiddenblade: 'Verified Creator',
     ebonysex: 'Verified Creator',
+    shind: 'Verified Creator',
+    'shamy.ver': 'Verified Creator',
   
     
 };
