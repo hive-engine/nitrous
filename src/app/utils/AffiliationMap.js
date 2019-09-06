@@ -57,6 +57,7 @@ const map = {
     ebonysex: 'Verified Creator',
     shind: 'Verified Creator',
     'shamy.ver': 'Verified Creator',
+    eveuncovered: 'Verified Creator',
   
     
 };
