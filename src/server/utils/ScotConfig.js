@@ -119,8 +119,8 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.burn.scotMinerToken,
             }),
-            getThumbupReceiveTopList('201909'),
-            getThumbupSendTopList('201909'),
+            getThumbupReceiveTopList(),
+            getThumbupSendTopList(),
         ]);
 
         if (totalTokenBalance) {

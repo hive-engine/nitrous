@@ -18,6 +18,7 @@ import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
@@ -65,8 +66,8 @@ class PostsIndex extends React.Component {
         const pinned = this.props.pinned;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
-              ? pinned.get('pinned_posts').toJS()
-              : []
+                ? pinned.get('pinned_posts').toJS()
+                : []
             : [];
         const notices = this.props.notices || [];
         let topic_discussions = null;
@@ -442,6 +443,11 @@ class PostsIndex extends React.Component {
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled ? (
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_right" />
+                        </div>
+                    ) : null}
                 </aside>
 
                 <aside className="c-sidebar c-sidebar--left">
@@ -483,6 +489,11 @@ class PostsIndex extends React.Component {
                             </div>
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled ? (
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_left" />
+                        </div>
+                    ) : null}
                 </aside>
             </div>
         );
@@ -518,6 +529,7 @@ module.exports = {
                 scotBurn: scotConfig.getIn(['config', 'burn']),
                 scotInfo: scotConfig.getIn(['config', 'info']),
                 scotThumbsup: scotConfig.getIn(['config', 'thumbsup']),
+                reviveEnabled: state.app.get('reviveEnabled'),
             };
         },
         dispatch => {
