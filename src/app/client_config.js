@@ -12,7 +12,7 @@ export const APP_ICON = 'steemleo';
 export const APP_URL = 'https://www.steemleo.com';
 export const APP_DOMAIN = 'www.steemleo.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 10;
+export const APP_MAX_TAG = 12;
 export const SCOT_TAG = 'steemleo';
 export const TAG_LIST = fromJSOrdered({
     steemleo: ['dailyleo', 'learnleo', 'leowritingcontest', 'syndication'],
@@ -36,10 +36,10 @@ export const DEBT_TOKEN = 'STEEM DOLLAR';
 export const DEBT_TOKENS = 'STEEM DOLLARS';
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
-export const LANDING_PAGE_URL = 'https://steem.io/';
+export const LANDING_PAGE_URL = 'https://steemleo.com/welcome';
 export const TERMS_OF_SERVICE_URL = 'https://' + APP_DOMAIN + '/tos.html';
 export const PRIVACY_POLICY_URL = 'https://' + APP_DOMAIN + '/privacy.html';
-export const WHITEPAPER_URL = 'https://steem.io/SteemWhitePaper.pdf';
+export const WHITEPAPER_URL = 'https://steemleo.com/about.html';
 
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
 export const LIQUID_TICKER = 'STEEM';
