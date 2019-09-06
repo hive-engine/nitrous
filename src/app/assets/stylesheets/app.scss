@@ -415,6 +415,10 @@ a[rel="nofollow noopener"]:after {
 }
 
 .ant-list-vertical .ant-list-item-extra-wrap {
+    @media screen and (max-width: 480px) {
+        flex-wrap: wrap-reverse;
+    }
+
     display: flex;
 }
 
@@ -447,9 +451,19 @@ a[rel="nofollow noopener"]:after {
 
 .ant-list-vertical .ant-list-item-extra {
     margin-left: 58px;
+
+    @media screen and (max-width: 480px) {
+        margin-left: 0px;
+    }
 }
 
 .antContent {
     margin-bottom: 10px;
     margin-top: 10px
+}
+
+.ant-list-item {
+    @media screen and (max-width: 480px) {
+        flex-wrap: wrap;
+    }
 }
