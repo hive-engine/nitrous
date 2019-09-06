@@ -257,12 +257,6 @@ class PostsIndex extends React.Component {
             }
         }
 
-        if (this.props.thumbsup) {
-            debugger;
-            const test = this.props.thumbsup.getIn(['receiveList']);
-            const test2 = this.props.thumbsup.getIn(['receiveList', 'data']);
-        }
-
         const status = this.props.status
             ? this.props.status.getIn([category || '', order])
             : null;
@@ -368,7 +362,7 @@ class PostsIndex extends React.Component {
 
                 <aside className="c-sidebar c-sidebar--right">
                     <Notices notices={this.props.notices} />
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotInfo && (
                         <div>
                             <SidebarInfo
                                 sct_to_steemp={this.props.scotInfo.getIn([
@@ -383,7 +377,7 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotBurn && (
                         <div>
                             <SidebarBurn
                                 scotToken={this.props.scotBurn.getIn([
@@ -403,7 +397,7 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotBurn && (
                         <div>
                             <SidebarBurn
                                 scotToken={this.props.scotBurn.getIn([
@@ -426,7 +420,7 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                     )}
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.scotThumbsup && (
                         <div>
                             <SidebarThumbsup
                                 thumbsUpReceiveList={this.props.scotThumbsup.getIn(
@@ -449,7 +443,6 @@ class PostsIndex extends React.Component {
                         </div>
                     ) : null}
                 </aside>
-
                 <aside className="c-sidebar c-sidebar--left">
                     <Topics
                         order={topics_order}

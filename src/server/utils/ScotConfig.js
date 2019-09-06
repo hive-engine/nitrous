@@ -96,6 +96,9 @@ ScotConfig.prototype.refresh = async function() {
 
         // sidebar thumbsup summary
         scotConfig.thumbsup = {};
+        const date = new Date();
+        const year = date.getFullYear();
+        const mon = (date.getMonth() + 1 + '').padStart(2, '0');
 
         const [
             totalTokenBalance,
@@ -119,8 +122,8 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.burn.scotMinerToken,
             }),
-            getThumbupReceiveTopList(),
-            getThumbupSendTopList(),
+            getThumbupReceiveTopList(year + mon),
+            getThumbupSendTopList(year + mon),
         ]);
 
         if (totalTokenBalance) {
