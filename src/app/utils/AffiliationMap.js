@@ -22,7 +22,8 @@ const map = {
     derangedvisions: 'Photo Nerd',
     gerber: 'Helper Baby',
     thekittygirl: 'Fabulous Feline',
-    dylanhobalart: 'Maker of Shinny Metal Things'
+    dylanhobalart: 'Maker of Shinny Metal Things',
+    neoxian: 'Dragon',
 };
 
 export default map;
