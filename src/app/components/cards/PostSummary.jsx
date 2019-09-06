@@ -216,7 +216,7 @@ class PostSummary extends React.Component {
                             {app_name.startsWith('steemleo/') && (
                                 <span
                                     className="articles__icon-100"
-                                    title="Written From SteemLeo"
+                                    title="Written From SteemLeo.com"
                                 >
                                     <Icon name="steemleo" />
                                 </span>
