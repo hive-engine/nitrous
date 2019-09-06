@@ -183,6 +183,11 @@ class Post extends React.Component {
                             <ReviveAd adKey="post_footer_betweencomments" />
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled ? (
+                        <div className="Post_footer__ad_small">
+                            <ReviveAd adKey="feed_small" />
+                        </div>
+                    ) : null}
                 </div>
             );
         });
@@ -263,7 +268,14 @@ class Post extends React.Component {
                     </div>
                 ) : null}
                 {this.props.reviveEnabled ? (
-                    <ReviveAd adKey="post_footer_abovecomments" />
+                    <div className="Post_footer__ad">
+                        <ReviveAd adKey="post_footer_abovecomments" />
+                    </div>
+                ) : null}
+                {this.props.reviveEnabled ? (
+                    <div className="Post_footer__ad_small">
+                        <ReviveAd adKey="feed_small" />
+                    </div>
                 ) : null}
 
                 <div id="#comments" className="Post_comments row hfeed">
