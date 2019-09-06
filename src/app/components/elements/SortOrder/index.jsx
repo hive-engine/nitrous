@@ -75,8 +75,8 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                     </li>
                 );
             })}
-            <li key='verify' className='nav__block-list-item nav__block-list-item--active'>
-              <a href='https://www.dpornstudios.com/sign-up'>Verify Here</a>
+            <li key="verify" className="nav__block-list-item">
+                <a href="https://www.dpornstudios.com/sign-up">Verify</a>
             </li>
         </ul>
     ) : (
