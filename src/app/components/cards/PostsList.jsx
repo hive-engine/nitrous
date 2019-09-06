@@ -248,6 +248,12 @@ class PostsList extends React.Component {
                                     id={`feed_${Math.floor(i / every)}`}
                                 />
                             </div>
+                            <div className="articles__content-block--ad_small">
+                                <ReviveAd
+                                    adKey="feed_small"
+                                    id={`feed_small_${Math.floor(i / every)}`}
+                                />
+                            </div>
                         </div>
                     );
                 }
