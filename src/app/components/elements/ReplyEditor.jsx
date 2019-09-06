@@ -184,14 +184,14 @@ class ReplyEditor extends React.Component {
                     (!values.title || values.title.trim() === ''
                         ? tt('g.required')
                         : values.title.length > 255
-                          ? tt('reply_editor.shorten_title')
-                          : null),
+                        ? tt('reply_editor.shorten_title')
+                        : null),
                 category: isStory && validateCategory(values.category, !isEdit),
                 body: !values.body
                     ? tt('g.required')
                     : values.body.length > maxKb * 1024
-                      ? tt('reply_editor.exceeds_maximum_length', { maxKb })
-                      : null,
+                    ? tt('reply_editor.exceeds_maximum_length', { maxKb })
+                    : null,
             }),
         });
     }
@@ -470,15 +470,14 @@ class ReplyEditor extends React.Component {
                                                     : 'Markdown'}
                                             </a>
                                         )}
-                                        {!rte &&
-                                            (isHtml || !body.value) && (
-                                                <a
-                                                    href="#"
-                                                    onClick={this.toggleRte}
-                                                >
-                                                    {tt('reply_editor.editor')}
-                                                </a>
-                                            )}
+                                        {!rte && (isHtml || !body.value) && (
+                                            <a
+                                                href="#"
+                                                onClick={this.toggleRte}
+                                            >
+                                                {tt('reply_editor.editor')}
+                                            </a>
+                                        )}
                                     </div>
                                     {titleError}
                                 </span>
@@ -550,7 +549,8 @@ class ReplyEditor extends React.Component {
                                         {tt('reply_editor.or_by')}{' '}
                                         <a onClick={this.onOpenClick}>
                                             {tt('reply_editor.selecting_them')}
-                                        </a>.
+                                        </a>
+                                        .
                                     </p>
                                     {progress.message && (
                                         <div className="info">
@@ -590,69 +590,59 @@ class ReplyEditor extends React.Component {
                                     />
                                     <div className="error">
                                         {(category.touched || category.value) &&
-                                            category.error}&nbsp;
+                                            category.error}
+                                        &nbsp;
                                     </div>
                                 </span>
                             )}
                         </div>
                         <div className={vframe_section_shrink_class}>
-                            {isStory &&
-                                !isEdit && (
-                                    <div className="ReplyEditor__options">
+                            {isStory && !isEdit && (
+                                <div className="ReplyEditor__options">
+                                    <div>
                                         <div>
-                                            <div>
-                                                {tt('g.rewards')}
-                                                {': '}
-                                                {this.props.payoutType ==
-                                                    '0%' &&
-                                                    tt(
-                                                        'reply_editor.decline_payout'
-                                                    )}
-                                                {this.props.payoutType ==
-                                                    '50%' &&
-                                                    tt(
-                                                        'reply_editor.default_50_50'
-                                                    )}
-                                                {this.props.payoutType ==
-                                                    '100%' &&
-                                                    tt(
-                                                        'reply_editor.power_up_100'
-                                                    )}
-                                            </div>
-                                            <div>
-                                                {beneficiaries &&
-                                                    beneficiaries.length >
-                                                        0 && (
-                                                        <span>
-                                                            {tt(
-                                                                'g.beneficiaries'
-                                                            )}
-                                                            {': '}
-                                                            {tt(
-                                                                'reply_editor.beneficiaries_set',
-                                                                {
-                                                                    count:
-                                                                        beneficiaries.length,
-                                                                }
-                                                            )}
-                                                        </span>
-                                                    )}
-                                            </div>
-                                            <a
-                                                href="#"
-                                                onClick={
-                                                    this.showAdvancedSettings
-                                                }
-                                            >
-                                                {tt(
-                                                    'reply_editor.advanced_settings'
+                                            {tt('g.rewards')}
+                                            {': '}
+                                            {this.props.payoutType == '0%' &&
+                                                tt(
+                                                    'reply_editor.decline_payout'
                                                 )}
-                                            </a>{' '}
-                                            <br />
-                                            &nbsp;
+                                            {this.props.payoutType == '50%' &&
+                                                tt(
+                                                    'reply_editor.default_50_50'
+                                                )}
+                                            {this.props.payoutType == '100%' &&
+                                                tt('reply_editor.power_up_100')}
                                         </div>
+                                        <div>
+                                            {beneficiaries &&
+                                                beneficiaries.length > 0 && (
+                                                    <span>
+                                                        {tt('g.beneficiaries')}
+                                                        {': '}
+                                                        {tt(
+                                                            'reply_editor.beneficiaries_set',
+                                                            {
+                                                                count:
+                                                                    beneficiaries.length,
+                                                            }
+                                                        )}
+                                                    </span>
+                                                )}
+                                        </div>
+                                        <a
+                                            href="#"
+                                            onClick={this.showAdvancedSettings}
+                                        >
+                                            {tt(
+                                                'reply_editor.advanced_settings'
+                                            )}
+                                        </a>{' '}
+                                        <br />
+                                        &nbsp;
                                     </div>
-                                )}
+                                </div>
+                            )}
                         </div>
                         <div className={vframe_section_shrink_class}>
                             {postError && (
@@ -679,28 +669,26 @@ class ReplyEditor extends React.Component {
                                 </span>
                             )}
                             &nbsp;{' '}
-                            {!loading &&
-                                this.props.onCancel && (
-                                    <button
-                                        type="button"
-                                        className="secondary hollow button no-border"
-                                        tabIndex={5}
-                                        onClick={onCancel}
-                                    >
-                                        {tt('g.cancel')}
-                                    </button>
-                                )}
-                            {!loading &&
-                                !this.props.onCancel && (
-                                    <button
-                                        className="button hollow no-border"
-                                        tabIndex={5}
-                                        disabled={submitting}
-                                        onClick={onCancel}
-                                    >
-                                        {tt('g.clear')}
-                                    </button>
-                                )}
+                            {!loading && this.props.onCancel && (
+                                <button
+                                    type="button"
+                                    className="secondary hollow button no-border"
+                                    tabIndex={5}
+                                    onClick={onCancel}
+                                >
+                                    {tt('g.cancel')}
+                                </button>
+                            )}
+                            {!loading && !this.props.onCancel && (
+                                <button
+                                    className="button hollow no-border"
+                                    tabIndex={5}
+                                    disabled={submitting}
+                                    onClick={onCancel}
+                                >
+                                    {tt('g.clear')}
+                                </button>
+                            )}
                             {!isStory &&
                                 !isEdit &&
                                 this.props.payoutType != '50%' && (
@@ -719,36 +707,32 @@ class ReplyEditor extends React.Component {
                                 )}
                         </div>
                     </form>
-                    {!loading &&
-                        !rte &&
-                        body.value && (
-                            <div
-                                className={
-                                    'Preview ' + vframe_section_shrink_class
-                                }
-                            >
-                                {!isHtml && (
-                                    <div className="float-right">
-                                        <a
-                                            target="_blank"
-                                            href="https://guides.github.com/features/mastering-markdown/"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {tt(
-                                                'reply_editor.markdown_styling_guide'
-                                            )}
-                                        </a>
-                                    </div>
-                                )}
-                                <h6>{tt('g.preview')}</h6>
-                                <MarkdownViewer
-                                    text={body.value}
-                                    jsonMetadata={jsonMetadata}
-                                    large={isStory}
-                                    noImage={noImage}
-                                />
-                            </div>
-                        )}
+                    {!loading && !rte && body.value && (
+                        <div
+                            className={'Preview ' + vframe_section_shrink_class}
+                        >
+                            {!isHtml && (
+                                <div className="float-right">
+                                    <a
+                                        target="_blank"
+                                        href="https://guides.github.com/features/mastering-markdown/"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {tt(
+                                            'reply_editor.markdown_styling_guide'
+                                        )}
+                                    </a>
+                                </div>
+                            )}
+                            <h6>{tt('g.preview')}</h6>
+                            <MarkdownViewer
+                                text={body.value}
+                                jsonMetadata={jsonMetadata}
+                                large={isStory}
+                                noImage={noImage}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -928,9 +912,9 @@ export default formId =>
                           // permlink,  assigned in TransactionSaga
                       }
                     : // edit existing
-                      isEdit
-                      ? { author, permlink, parent_author, parent_permlink }
-                      : null;
+                    isEdit
+                    ? { author, permlink, parent_author, parent_permlink }
+                    : null;
 
                 if (!linkProps) throw new Error('Unknown type: ' + type);
 
@@ -973,7 +957,9 @@ export default formId =>
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
+                        : SCOT_TAG_FIRST
+                        ? SCOT_TAG
+                        : formCategories.first();
                 let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
@@ -1058,13 +1044,12 @@ export default formId =>
                                 0,
                                 {
                                     beneficiaries: beneficiaries
-                                        .sort(
-                                            (a, b) =>
-                                                a.username < b.username
-                                                    ? -1
-                                                    : a.username > b.username
-                                                      ? 1
-                                                      : 0
+                                        .sort((a, b) =>
+                                            a.username < b.username
+                                                ? -1
+                                                : a.username > b.username
+                                                ? 1
+                                                : 0
                                         )
                                         .map(elt => ({
                                             account: elt.username,
