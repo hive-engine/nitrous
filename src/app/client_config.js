@@ -60,8 +60,8 @@ export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
     'SteemLeo is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called LEO, that ' +
-    'supports real value for digital rewards through market price discovery and liquidity';
+    'creating and curating content related to investing. By leveraging blockchain technology, SteemLeo ' +
+    'supports content creators, curators and users for creating content & interacting on the blockchain. ';
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
