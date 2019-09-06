@@ -183,7 +183,7 @@ class Post extends React.Component {
                             <ReviveAd adKey="post_footer_betweencomments" />
                         </div>
                     ) : null}
-                    {this.props.reviveEnabled ? (
+                    {this.props.reviveEnabled && showAd ? (
                         <div className="Post_footer__ad_small">
                             <ReviveAd adKey="feed_small" />
                         </div>
