@@ -39,3 +39,23 @@
   margin-bottom: 1.5rem;
   margin-top: 1.5rem;
 }
+
+@media screen and (max-width: 799px) {
+  .Post_footer__ad {
+    display: none;
+  }
+}
+
+.Post_footer__ad_small {
+  max-width: 50rem;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media screen and (min-width: 800px) {
+  .Post_footer__ad_small {
+    display: none;
+  }
+}
