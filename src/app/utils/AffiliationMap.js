@@ -14,8 +14,8 @@ const map = {
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
 
-alchemage: 'Alchemist',
-nateonsteemit: 'Forest Person',
+    alchemage: 'Alchemist',
+    nateonsteemit: 'Forest Person',
   
 }; 
 export default map;
