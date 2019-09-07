@@ -60,6 +60,7 @@ const map = {
     eveuncovered: 'Verified Creator',
     axeman: 'Verified Creator',
     'cimaron.passion': 'Verified Creator',
+    oldviking: 'Verified Creator',
   
     
 };
