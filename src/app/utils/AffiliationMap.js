@@ -59,6 +59,7 @@ const map = {
     'shamy.ver': 'Verified Creator',
     eveuncovered: 'Verified Creator',
     axeman: 'Verified Creator',
+    'cimaron.passion': 'Verified Creator',
   
     
 };
