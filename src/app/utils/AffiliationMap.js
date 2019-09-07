@@ -58,6 +58,7 @@ const map = {
     shind: 'Verified Creator',
     'shamy.ver': 'Verified Creator',
     eveuncovered: 'Verified Creator',
+    axeman: 'Verified Creator',
   
     
 };
