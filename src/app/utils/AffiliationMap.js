@@ -16,3 +16,4 @@ const map = {
 };
 
 export default map;
+ alchemage: 'Alchemist',
