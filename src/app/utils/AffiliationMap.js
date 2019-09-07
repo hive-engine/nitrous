@@ -16,7 +16,7 @@ const map = {
 
     alchemage: 'Alchemist',
     nateonsteemit: 'Forest Person',
-    riverflows: 'Walk As If You Kiss the Earth With Your Feet'
+    riverflows: 'Walk As If You Kiss the Earth With Your Feet',
   
 }; 
 export default map;
