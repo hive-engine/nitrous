@@ -16,4 +16,5 @@ const map = {
 };
 
 export default map;
- alchemage: 'Alchemist',
+alchemage: 'Alchemist',
+nateonsteemit: 'Forest Person',
