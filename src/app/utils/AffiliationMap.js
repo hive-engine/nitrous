@@ -25,7 +25,7 @@ const map = {
     dylanhobalart: 'Maker of Shinny Metal Things',
     neoxian: 'Dragon',
     mattclarke: 'Coasting by on his looks',
-    paintingangels: 'Sweet Southern Charm',
+    paintingangels: 'Eat my cookies or burn in Hell',
     meno: 'Fakenews',
 };
 
