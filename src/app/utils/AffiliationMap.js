@@ -24,6 +24,7 @@ const map = {
     thekittygirl: 'Fabulous Feline',
     dylanhobalart: 'Maker of Shinny Metal Things',
     neoxian: 'Dragon',
+    mattclarke: 'Coasting by on his looks',
 };
 
 export default map;
