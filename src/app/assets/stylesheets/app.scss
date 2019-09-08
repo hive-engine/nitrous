@@ -238,7 +238,7 @@ a[rel="nofollow noopener"]:after {
 }
 
 .broproCards {
-    margin: 10px -13px 0;    
+    margin: 10px -13px 0;
 }
 
 .bro-card-wrapper {
@@ -254,7 +254,7 @@ a[rel="nofollow noopener"]:after {
     border-radius: 10px;
     text-align: center;
     margin-bottom: 25px;
-    height: 460px;
+    height: auto;
     width: 300px;
 }
 
@@ -297,7 +297,9 @@ a[rel="nofollow noopener"]:after {
 }
 
 .bro-card img {
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .ant-collapse h3 {

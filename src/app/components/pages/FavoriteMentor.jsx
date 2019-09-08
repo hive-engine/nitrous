@@ -32,7 +32,7 @@ class FavoriteMentor extends React.Component {
                                 <hr />
                                 <button
                                     type="button"
-                                    className="btn btn-light"
+                                    className="button slim hollow secondary "
                                     onClick={e => handleClose()}
                                 >
                                     Cancel
@@ -43,7 +43,7 @@ class FavoriteMentor extends React.Component {
                                 >
                                     <button
                                         type="button"
-                                        className="btn btn-light"
+                                        className="button slim hollow secondary "
                                     >
                                         Go To Market
                                     </button>
@@ -86,7 +86,6 @@ class FavoriteMentor extends React.Component {
                                             src="https://steemitimages.com/u/surpassinggoogle/avatar"
                                             className="card-img-top rounded-circle mx-auto"
                                             alt="..."
-                                            style={{ width: '9rem' }}
                                         />
                                     </a>
                                     <a href="https://steemgigs.org/@surpassinggoogle">
@@ -119,7 +118,6 @@ class FavoriteMentor extends React.Component {
                                             src="https://steemitimages.com/u/tobias-g/avatar"
                                             className="card-img-top rounded-circle mx-auto"
                                             alt="..."
-                                            style={{ width: '9rem' }}
                                         />
                                     </a>
                                     <a href="https://steemgigs.org/@tobias-g">
@@ -151,7 +149,6 @@ class FavoriteMentor extends React.Component {
                                             src="https://steemitimages.com/u/ankarlie/avatar"
                                             className="card-img-top rounded-circle mx-auto"
                                             alt="..."
-                                            style={{ width: '9rem' }}
                                         />
                                     </a>
                                     <a href="https://steemgigs.org/@ankarlie">
