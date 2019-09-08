@@ -26,6 +26,7 @@ const map = {
     neoxian: 'Dragon',
     mattclarke: 'Coasting by on his looks',
     paintingangels: 'Sweet Southern Charm',
+    meno: 'Fakenews',
 };
 
 export default map;
