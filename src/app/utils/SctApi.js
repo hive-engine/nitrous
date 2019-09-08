@@ -17,7 +17,7 @@ export function getThumbupReceiveTopList(month) {
 }
 
 export function getThumbupSendTopList(month) {
-    return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/${month}`);
+    return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/${month}}`);
 }
 
 export async function getConfig() {

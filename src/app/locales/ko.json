@@ -260,8 +260,9 @@
         "circulating": "Circulating",
         "burn": "Burn",
         "staking": "Staking",
+        "written_from": "%(app_name)s에서 작성되었습니다.",
         "krw": "원",
-        "thumbsup": "%(count)s 따봉"
+        "thumbsup": "따봉"
     },
     "navigation": {
         "about": "스팀이란?",
