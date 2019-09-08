@@ -37,6 +37,7 @@ import {
     updatePostRewardingRecords,
 } from 'app/utils/CommentUtil';
 import ThumbUp from 'app/components/elements/ThumbUp';
+import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -637,6 +638,10 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
+                        <AuthorRecentPosts
+                            author={author}
+                            permlink={permlink}
+                        />
                     </span>
                 )}
 
