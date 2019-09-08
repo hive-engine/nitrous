@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import Icon from 'app/components/elements/Icon';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, APP_NAME } from 'app/client_config';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Dropdown from 'app/components/elements/Dropdown';
 import CloseButton from 'app/components/elements/CloseButton';
@@ -12,6 +12,7 @@ import { getThumbUpList } from 'app/utils/SctApi';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
+import { clean_permlink } from 'app/utils/CommentUtil';
 
 const MAX_THUMBUP_DISPLAY = 20;
 
@@ -495,9 +496,14 @@ export default connect(
             permlink,
             username,
             errorCallback,
+            successCallback,
         }) => {
             errorCallback = err => {
                 console.log(err);
+            };
+
+            successCallback = s => {
+                console.log(`success comment ${s}`);
             };
 
             const confirm = () => {
@@ -531,6 +537,52 @@ export default connect(
                     confirm,
                     // successCallback,
                     errorCallback,
+                })
+            );
+
+            const get_metadata = () => {
+                // add root category
+                // const rootCategory = category;
+                // let allCategories = Set([]);
+                // if (/^[-a-z\d]+$/.test(rootCategory))
+                //     allCategories = allCategories.add(rootCategory);
+
+                // // Add scot tag
+                // allCategories = allCategories.add(SCOT_TAG);
+
+                // merge
+                const meta = {};
+                // if (allCategories.size) meta.tags = allCategories.toJS();
+                meta.app = `${APP_NAME.toLowerCase()}/0.1`;
+                meta.format = 'markdown';
+                return meta;
+            };
+
+            const __config = {};
+
+            debugger;
+            const operationComment = {
+                parent_author: author,
+                parent_permlink: permlink,
+                author: username,
+                permlink: clean_permlink(
+                    `thumbsup-comment-${author}-${permlink}`
+                ), // only one
+                category: '',
+                title: '',
+                body: `${username}님이 ${author}님의 포스팅에 ${
+                    amount
+                }만큼의 따봉을 선사하였습니다. `,
+                json_metadata: get_metadata(),
+                __config,
+            };
+
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'comment',
+                    operationComment,
+                    errorCallback,
+                    successCallback,
                 })
             );
         },

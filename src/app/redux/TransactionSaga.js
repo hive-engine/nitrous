@@ -515,6 +515,7 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
 }
 
 export function* preBroadcast_comment({ operation, username }) {
+    debugger;
     if (!operation.author) operation.author = username;
     let permlink = operation.permlink;
     const { author, __config: { originalBody, comment_options } } = operation;
