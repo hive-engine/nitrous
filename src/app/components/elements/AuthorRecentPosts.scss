@@ -1,0 +1,45 @@
+.AuthorRecentPosts {
+    padding: 10px 10px 5px;
+    margin: 10px auto;
+    max-width: 40rem;
+    clear: both;
+    color: #909090 !important;
+
+    h6 {
+        margin: 0 !important;
+        padding: 2px 0 6px !important;
+        border-bottom: 1px solid #e5e5e5 !important;
+        color: #737373 !important;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+
+    tr {
+        @include themify($themes) {
+            background-color: themed('highlightBackgroundColor');
+        }
+    }
+
+    th,
+    td {
+        padding: 0 0 4px !important;
+    }
+
+    th {
+        text-align: left;
+        font-weight: normal;
+        word-break: break-all;
+        overflow: hidden;
+        line-height: 1.5;
+    }
+
+    td {
+        width: 80px;
+        text-align: right;
+        color: #909090 !important;
+    }
+}
