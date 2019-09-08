@@ -324,7 +324,7 @@ class ThumbUp extends React.Component {
 
             thumbs_list = (
                 <DropdownMenu
-                    selected={tt('g.thumbsup', { count: thumbCnt })}
+                    selected={tt('g.thumbsup')}
                     className="Thumbsup__list"
                     items={thumbs}
                     el="div"
