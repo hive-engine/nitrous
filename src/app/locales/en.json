@@ -254,7 +254,6 @@
         "circulating": "Circulating",
         "burn": "Burn",
         "staking": "Staking",
-        "written_from": "written from %(app_name)s",
         "thumbsup": "ThumbsUp",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
