@@ -61,6 +61,7 @@ const map = {
     axeman: 'Verified Creator',
     'cimaron.passion': 'Verified Creator',
     oldviking: 'Verified Creator',
+    jullyette:   'Verified Creator',
   
     
 };
