@@ -14,6 +14,8 @@ const map = {
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
     
+    reggaesteem: 'Official',
+    beachfrontcrypto: 'ReggaeSteem',
     'donald.porter': 'ReggaeSteem',
     miyard: 'ReggaeSteem',
     dmilliz: 'ReggaeSteem',
