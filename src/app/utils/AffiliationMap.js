@@ -21,6 +21,11 @@ const map = {
     dmilliz: 'ReggaeSteem',
     crypticat: 'ReggaeSteem',
     
+    mistakili: 'Ambassador',
+    'roger.remix': 'Ambassador',
+    joseacabrerav: 'Ambassador',
+    'bahagia-arbi': 'Ambassador',
+    
 };
 
 export default map;
