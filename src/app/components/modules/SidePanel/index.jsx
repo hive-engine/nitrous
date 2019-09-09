@@ -115,7 +115,7 @@ const SidePanel = ({
             {
                 value: 'discord',
                 label: 'Discord',
-                link: 'https://discord.gg/MbPWR8s',
+                link: 'https://discord.gg/A4NVCrP',
             },
         ],
         legal: [
@@ -158,9 +158,7 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Community
-                        </a>
+                        <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
