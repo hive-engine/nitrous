@@ -20,6 +20,8 @@ class ServerError extends Component {
                 >
                     <h4>Sorry.</h4>
                     <p>Looks like something went wrong on our end.</p>
+                    <p>We have ragga-muffin rasta code ninjas attacking the problem now (:</p>
+                    <br>
                     <p>
                         Head back to <a href="/">{APP_NAME}</a> homepage.
                     </p>
