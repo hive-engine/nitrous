@@ -8,6 +8,7 @@ const map = {
     'leo.curation': 'Official SteemLeo',
     'leo.bounties': 'Official SteemLeo',
     'leo.syndication': 'Official SteemLeo',
+    'leo.stats': 'Official Stats',
 
     //SteemLeo Curators
     gerber: 'SteemLeo Curator',
