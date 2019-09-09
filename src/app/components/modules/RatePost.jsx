@@ -172,7 +172,7 @@ export default connect(
                 parent_permlink: permlink,
                 author: username,
                 permlink: clean_permlink(`re-rating-${author}-${permlink}`), // only one
-                category: category,
+                // category: '',
                 title: '',
                 body: rate_template(
                     username,

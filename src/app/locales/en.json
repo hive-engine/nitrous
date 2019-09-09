@@ -255,6 +255,8 @@
         "burn": "Burn",
         "staking": "Staking",
         "thumbsup": "ThumbsUp",
+        "thumbsup_comment":
+            "%(username)s gave %(author)s gifts(%(amount)s %(LIQUID_TOKEN)s).",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",

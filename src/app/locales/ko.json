@@ -261,7 +261,9 @@
         "staking": "Staking",
         "written_from": "%(app_name)s에서 작성되었습니다.",
         "krw": "원",
-        "thumbsup": "따봉"
+        "thumbsup": "따봉",
+        "thumbsup_comment":
+            "%(username)s님이 %(author)s님의 이 포스팅에 따봉(%(amount)s %(LIQUID_TOKEN)s)을 하였습니다."
     },
     "navigation": {
         "about": "스팀이란?",

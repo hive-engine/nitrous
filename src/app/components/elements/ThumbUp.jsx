@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
 import Icon from 'app/components/elements/Icon';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, APP_NAME } from 'app/client_config';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Dropdown from 'app/components/elements/Dropdown';
 import CloseButton from 'app/components/elements/CloseButton';
@@ -12,6 +12,7 @@ import { getThumbUpList } from 'app/utils/SctApi';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
+import { clean_permlink } from 'app/utils/CommentUtil';
 
 const MAX_THUMBUP_DISPLAY = 20;
 
@@ -487,52 +488,87 @@ export default connect(
     },
 
     dispatch => ({
-        dispatchSubmit: ({
-            to,
-            amount,
-            memo,
-            author,
-            permlink,
-            username,
-            errorCallback,
-        }) => {
-            errorCallback = err => {
-                console.log(err);
+      dispatchSubmit: ({
+          to,
+          amount,
+          memo,
+          author,
+          permlink,
+          username,
+          errorCallback,
+          successCallback,
+      }) => {
+          const transferOperation = {
+              contractName: 'tokens',
+              contractAction: 'transfer', // for test, transfer 로 변경
+              contractPayload: {
+                  symbol: LIQUID_TOKEN_UPPERCASE,
+                  to: to,
+                  quantity: amount,
+                  memo: memo ? memo : '',
+                  type: 'scot-thumbup',
+                  author: author,
+                  permlink: permlink,
+                  sender: username,
+              },
+          };
+          let operation = {
+              id: 'ssc-mainnet1',
+              required_auths: [username],
+              json: JSON.stringify(transferOperation),
+          };
+          
+          errorCallback = err => {
+              console.log(err);
+          };
+
+          successCallback = s => {
+            console.log(s);
+            const get_metadata = () => {
+                const meta = {};
+                meta.app = `${APP_NAME.toLowerCase()}/0.1`;
+                meta.format = 'markdown';
+                return meta;
             };
 
-            const confirm = () => {
-                return null;
-            };
+            const __config = {};
 
-            const transferOperation = {
-                contractName: 'tokens',
-                contractAction: 'transfer', // for test, transfer 로 변경
-                contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
-                    to: to,
-                    quantity: amount,
-                    memo: memo ? memo : '',
-                    type: 'scot-thumbup',
-                    author: author,
-                    permlink: permlink,
-                    sender: username,
-                },
-            };
-            const operation = {
-                id: 'ssc-mainnet1',
-                required_auths: [username],
-                json: JSON.stringify(transferOperation),
+            operation = {
+                parent_author: author,
+                parent_permlink: permlink,
+                author: username,
+                permlink: clean_permlink(
+                    `thumbsup-comment-${author}-${permlink}`
+                ), // only one
+                category: '',
+                title: '',
+                body: tt('g.thumbsup_comment', 
+                            { username: username, 
+                              author:author, 
+                              amount:amount, 
+                              LIQUID_TOKEN:LIQUID_TOKEN_UPPERCASE 
+                            }),
+                json_metadata: get_metadata(),
+                __config,
             };
 
             dispatch(
                 transactionActions.broadcastOperation({
-                    type: 'custom_json',
+                    type: 'comment',
                     operation,
-                    confirm,
-                    // successCallback,
                     errorCallback,
                 })
             );
-        },
-    })
+          };
+
+          dispatch(
+              transactionActions.broadcastOperation({
+                  type: 'custom_json',
+                  operation,
+                  errorCallback,
+                  successCallback,
+              })
+          );
+      },
+  })
 )(ThumbUp);
