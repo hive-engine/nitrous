@@ -488,71 +488,44 @@ export default connect(
     },
 
     dispatch => ({
-        dispatchSubmit: ({
-            to,
-            amount,
-            memo,
-            author,
-            permlink,
-            username,
-            errorCallback,
-            successCallback,
-        }) => {
-            errorCallback = err => {
-                console.log(err);
-            };
+      dispatchSubmit: ({
+          to,
+          amount,
+          memo,
+          author,
+          permlink,
+          username,
+          errorCallback,
+          successCallback,
+      }) => {
+          const transferOperation = {
+              contractName: 'tokens',
+              contractAction: 'transfer', // for test, transfer 로 변경
+              contractPayload: {
+                  symbol: LIQUID_TOKEN_UPPERCASE,
+                  to: to,
+                  quantity: amount,
+                  memo: memo ? memo : '',
+                  type: 'scot-thumbup',
+                  author: author,
+                  permlink: permlink,
+                  sender: username,
+              },
+          };
+          let operation = {
+              id: 'ssc-mainnet1',
+              required_auths: [username],
+              json: JSON.stringify(transferOperation),
+          };
+          
+          errorCallback = err => {
+              console.log(err);
+          };
 
-            successCallback = s => {
-                console.log(`success comment ${s}`);
-            };
-
-            const confirm = () => {
-                return null;
-            };
-
-            const transferOperation = {
-                contractName: 'tokens',
-                contractAction: 'transfer', // for test, transfer 로 변경
-                contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
-                    to: to,
-                    quantity: amount,
-                    memo: memo ? memo : '',
-                    type: 'scot-thumbup',
-                    author: author,
-                    permlink: permlink,
-                    sender: username,
-                },
-            };
-            const operation = {
-                id: 'ssc-mainnet1',
-                required_auths: [username],
-                json: JSON.stringify(transferOperation),
-            };
-
-            dispatch(
-                transactionActions.broadcastOperation({
-                    type: 'custom_json',
-                    operation,
-                    confirm,
-                    // successCallback,
-                    errorCallback,
-                })
-            );
-
+          successCallback = s => {
+            console.log(s);
             const get_metadata = () => {
-                // add root category
-                // const rootCategory = category;
-                // let allCategories = Set([]);
-                // if (/^[-a-z\d]+$/.test(rootCategory))
-                //     allCategories = allCategories.add(rootCategory);
-
-                // // Add scot tag
-                // allCategories = allCategories.add(SCOT_TAG);
-
-                // merge
                 const meta = {};
-                // if (allCategories.size) meta.tags = allCategories.toJS();
                 meta.app = `${APP_NAME.toLowerCase()}/0.1`;
                 meta.format = 'markdown';
                 return meta;
@@ -560,8 +533,7 @@ export default connect(
 
             const __config = {};
 
-            debugger;
-            const operationComment = {
+            operation = {
                 parent_author: author,
                 parent_permlink: permlink,
                 author: username,
@@ -570,9 +542,12 @@ export default connect(
                 ), // only one
                 category: '',
                 title: '',
-                body: `${username}님이 ${author}님의 포스팅에 ${
-                    amount
-                }만큼의 따봉을 선사하였습니다. `,
+                body: tt('g.thumbsup_comment', 
+                            { username: username, 
+                              author:author, 
+                              amount:amount, 
+                              LIQUID_TOKEN:LIQUID_TOKEN_UPPERCASE 
+                            }),
                 json_metadata: get_metadata(),
                 __config,
             };
@@ -580,11 +555,20 @@ export default connect(
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'comment',
-                    operationComment,
+                    operation,
                     errorCallback,
-                    successCallback,
                 })
             );
-        },
-    })
+          };
+
+          dispatch(
+              transactionActions.broadcastOperation({
+                  type: 'custom_json',
+                  operation,
+                  errorCallback,
+                  successCallback,
+              })
+          );
+      },
+  })
 )(ThumbUp);
