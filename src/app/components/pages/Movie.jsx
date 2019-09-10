@@ -61,6 +61,8 @@ const useStyles = makeStyles(theme => ({
     cardDate: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
+        color: 'white',
+        opacity: 0.5,
     },
     cardMedia: {
         width: 160,
@@ -121,100 +123,95 @@ export default function Movie(props) {
             <CssBaseline />
             <Container maxWidth="lg">
                 <main className={classes.root}>
-                    <Grid
-                        container
-                        spacing={3}
-                        style={{ position: 'relative' }}
+                    <div
+                        id="movie-detail-frame"
+                        style={{
+                            backgroundImage: `url(${CustomUtil.getMovieBackdropUrl(
+                                movie.BackdropPath
+                            )})`,
+                        }}
                     >
-                        <div
-                            style={{
-                                backgroundImage: `url(${CustomUtil.getMovieBackdropUrl(
-                                    movie.BackdropPath
-                                )})`,
-                                backgroundSize: 'cover',
-                                position: 'absolute',
-                                opacity: 0.1,
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        />
-                        {movie.PosterPath && (
-                            <Grid item xs={12} sm={4}>
-                                <img
-                                    src={CustomUtil.getMoviePosterUrl(
-                                        movie.PosterPath
-                                    )}
-                                    width="100%"
-                                />
-                            </Grid>
-                        )}
-                        <Grid item xs={12} sm={8}>
-                            <h3>
-                                <b>{movie.Title}</b>
-                            </h3>
-                            <Typography
-                                className={classes.cardDate}
-                                variant="subtitle1"
-                                color="textSecondary"
-                            >
-                                {CustomUtil.convertUnixTimestampToDate(
-                                    movie.ReleaseDate
+                        <div className="gradient-bg">
+                            <Grid container spacing={3}>
+                                {movie.PosterPath && (
+                                    <Grid item xs={12} sm={4}>
+                                        <img
+                                            src={CustomUtil.getMoviePosterUrl(
+                                                movie.PosterPath
+                                            )}
+                                            width="100%"
+                                        />
+                                    </Grid>
                                 )}
-                            </Typography>
-                            {movie.Overview}
-                            {movieType === 1 && (
-                                <Typography
-                                    className={classes.cardDate}
-                                    variant="subtitle1"
-                                    color="textSecondary"
-                                >
-                                    Runtime:{' '}
-                                    {CustomUtil.getRuntimeString(
-                                        movieDetails !== null
-                                            ? movieDetails.Runtime
-                                            : null,
-                                        locale
-                                    )}
-                                </Typography>
-                            )}
-                            {movie.Genres &&
-                                CustomUtil.getDistinctGenres(
-                                    JSON.parse(movie.Genres)
-                                ).map(genre => (
-                                    <Chip
-                                        key={genre.Id}
-                                        size="small"
-                                        label={genre.Name}
-                                        className={classes.chip}
-                                    />
-                                ))}
-                            <h4 style={{ marginTop: '50px' }}>
-                                Featured Crew (주요 제작진)
-                            </h4>
-                            <Grid
-                                container
-                                // direction="row"
-                                // justify="flex-start"
-                                // alignItems="flex-start"
-                                spacing={2}
-                            >
-                                {crews &&
-                                    crews.map(crew => (
-                                        <Grid
-                                            item
-                                            key={crew.CreditId}
-                                            xs={6}
-                                            sm={4}
-                                            md={3}
+                                <Grid item xs={12} sm={8}>
+                                    <h2 className="movie-title">
+                                        {movie.Title}
+                                    </h2>
+                                    <Typography
+                                        className={classes.cardDate}
+                                        variant="subtitle1"
+                                        color="textSecondary"
+                                    >
+                                        {CustomUtil.convertUnixTimestampToDate(
+                                            movie.ReleaseDate
+                                        )}
+                                    </Typography>
+                                    {movie.Overview}
+                                    {movieType === 1 && (
+                                        <Typography
+                                            className={classes.cardDate}
+                                            variant="subtitle1"
+                                            color="textSecondary"
                                         >
-                                            <b>{crew.Name}</b>
-                                            <br />
-                                            {crew.Job}
-                                        </Grid>
-                                    ))}
+                                            Runtime:{' '}
+                                            {CustomUtil.getRuntimeString(
+                                                movieDetails !== null
+                                                    ? movieDetails.Runtime
+                                                    : null,
+                                                locale
+                                            )}
+                                        </Typography>
+                                    )}
+                                    {movie.Genres &&
+                                        CustomUtil.getDistinctGenres(
+                                            JSON.parse(movie.Genres)
+                                        ).map(genre => (
+                                            <Chip
+                                                key={genre.Id}
+                                                size="small"
+                                                label={genre.Name}
+                                                className={classes.chip}
+                                            />
+                                        ))}
+                                    <h4 style={{ marginTop: '50px' }}>
+                                        Featured Crew (주요 제작진)
+                                    </h4>
+                                    <Grid
+                                        container
+                                        // direction="row"
+                                        // justify="flex-start"
+                                        // alignItems="flex-start"
+                                        spacing={2}
+                                    >
+                                        {crews &&
+                                            crews.map(crew => (
+                                                <Grid
+                                                    item
+                                                    key={crew.CreditId}
+                                                    xs={6}
+                                                    sm={4}
+                                                    md={3}
+                                                >
+                                                    <b>{crew.Name}</b>
+                                                    <br />
+                                                    {crew.Job}
+                                                </Grid>
+                                            ))}
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
+                        </div>
+                    </div>
                     <h4 style={{ marginTop: '50px' }}>
                         {movieType === 1
                             ? 'Top Billed Cast (주요 출연진)'
