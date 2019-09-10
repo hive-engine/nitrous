@@ -15,8 +15,14 @@ const map = {
     // 'robot.pay' : 'Robot',
 
     //battlegames
-    agr8buzz: 'Verified Creator',
-    battletoken: 'Tip Bot'
+    battlegames: 'Tribe Account',
+    agr8buzz: 'Sparklepuff',
+    battletoken: 'Tip Bot',
+    rentmoney: 'Verified Creator',
+    wiriwiri: 'Verified Creator',
+    dkid14: 'Verified Creator',
+    'anouk.nox.spt': 'Verified Creator',
+    kaelci: 'Verified Creator'
 };
 
 export default map;
