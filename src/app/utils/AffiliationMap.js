@@ -168,6 +168,7 @@ const map = {
     emdesan: 'Certified Ulogger',
     ecoinstant: 'Certified Ulogger',
     chrisrice: 'Certified Ulogger',
+    botefarm: 'Certified Ulogger',
 };
 
 export default map;
