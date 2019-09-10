@@ -1,5 +1,6 @@
 const map = {
     //steemit
+    agr8buzz: 'Verified Creator',
     ned: 'Steemit',
     justinw: 'Steemit',
     elipowell: 'Steemit',
