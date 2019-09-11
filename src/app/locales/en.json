@@ -898,7 +898,8 @@
             { "id": 53, "name": "Thriller" },
             { "id": 10770, "name": "TV Movie" },
             { "id": 10752, "name": "War" },
-            { "id": 37, "name": "Western" }
+            { "id": 37, "name": "Western" },
+            { "id": 0, "name": "Undefined" }
         ],
         "tv": [
             { "id": -1, "name": "All Genres" },
@@ -919,7 +920,8 @@
             { "id": 10765, "name": "Sci-Fi & Fantasy" },
             { "id": 53, "name": "Thriller" },
             { "id": 10768, "name": "War & Politics" },
-            { "id": 37, "name": "Western" }
+            { "id": 37, "name": "Western" },
+            { "id": 0, "name": "Undefined" }
         ]
     }
 }

@@ -161,7 +161,7 @@ export default function Movies(props) {
                         >
                             {genres.map(genre => (
                                 <MenuItem value={genre.id} key={genre.id}>
-                                    {genre.id > 0 ? (
+                                    {genre.id >= 0 ? (
                                         genre.name
                                     ) : (
                                         <em>{genre.name}</em>
