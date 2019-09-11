@@ -13,6 +13,7 @@ const map = {
     //SteemLeo Curators
     gerber: 'SteemLeo Curator',
     leothecat: 'SteemLeo Curator',
+    nealmcspadden: 'SteemLeo Curator',
     'neal.leo': 'SteemLeo Curator',
     scaredycatcurate: 'SteemLeo Curator',
     scaredycatguide: 'SteemLeo Curator',
