@@ -22,7 +22,10 @@ const map = {
     wiriwiri: 'Verified Creator',
     dkid14: 'Verified Creator',
     'anouk.nox.spt': 'Verified Creator',
-    kaelci: 'Verified Creator'
+    kaelci: 'Verified Creator',
+    mickvir: 'Verified Creator',
+    thegoliath: 'Verified Creator',
+    freddbrito: 'Verified Creator'
 };
 
 export default map;
