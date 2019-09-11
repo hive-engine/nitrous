@@ -18,7 +18,6 @@ const map = {
     nateonsteemit: 'Forest Person',
     riverflows: 'Walk As If You Kiss the Earth With Your Feet',
     porters: 'Believe in Kindness',
-    naineztengra: 'Unlimited Abundance Blissful Happiness and Unconditional Love',
     artemislives: 'Pure Thai Natural Products',
 
   
