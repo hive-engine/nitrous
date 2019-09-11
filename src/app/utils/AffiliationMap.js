@@ -19,8 +19,8 @@ const map = {
     riverflows: 'Walk As If You Kiss the Earth With Your Feet',
     porters: 'Believe in Kindness',
     artemislives: 'Pure Thai Natural Products',
-    'nainez''tengra': 'Unlimited Abundance Blissful Happiness and Unconditional Love'
-    'nainez''tengra': 'May Crystals Give You Power!'
+    naineztengra: 'Unlimited Abundance Blissful Happiness and Unconditional Love'
+    
 
   
 }; 
