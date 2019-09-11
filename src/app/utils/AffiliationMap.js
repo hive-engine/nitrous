@@ -25,7 +25,13 @@ const map = {
     kaelci: 'Verified Creator',
     mickvir: 'Verified Creator',
     thegoliath: 'Verified Creator',
-    freddbrito: 'Verified Creator'
+    freddbrito: 'Verified Creator',
+    philippekiene: 'Verified Creator',
+    atnazo: 'Verified Creator',
+    'zaku-spt': 'Verified Creator',
+    radaquest: 'Verified Creator',
+    jodipamungkas: 'Verified Creator',
+    sharmlock: 'Verified Creator'
 };
 
 export default map;
