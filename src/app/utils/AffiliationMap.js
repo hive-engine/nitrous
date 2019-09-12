@@ -40,7 +40,8 @@ const map = {
     bwar: 'Bwar',
     neobooster: 'Syed Shakil',
     raymondspeaks: 'City Patriot',
-    'neoxag-tip': 'Tip Bot'
+    'neoxag-tip': 'Tip Bot',
+    gerber: 'Babyboy'
 };
 
 export default map;
