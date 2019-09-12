@@ -31,7 +31,8 @@ const map = {
     'zaku-spt': 'Verified Creator',
     radaquest: 'Verified Creator',
     jodipamungkas: 'Verified Creator',
-    sharmlock: 'Verified Creator'
+    sharmlock: 'Verified Creator',
+    dirapa: 'Verified Creator'
 };
 
 export default map;
