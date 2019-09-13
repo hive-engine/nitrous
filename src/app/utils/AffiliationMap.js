@@ -32,7 +32,10 @@ const map = {
     radaquest: 'Verified Creator',
     jodipamungkas: 'Verified Creator',
     sharmlock: 'Verified Creator',
-    dirapa: 'Verified Creator'
+    dirapa: 'Verified Creator',
+    julisavio: 'Verified Creator',
+    voxmortis: 'Verified Creator',
+    rehan12: 'Verified Creator'
 };
 
 export default map;
