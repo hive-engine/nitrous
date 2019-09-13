@@ -87,9 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Movie(props) {
     const classes = useStyles();
-    const { movie, type, id, locale, loading, requestMovie } = props;
-
-    const movieType = type === 'movie' ? 1 : 2;
+    const { movie, type, movieType, id, locale, loading, requestMovie } = props;
 
     const movieDetails = movie.Result ? JSON.parse(movie.Result) : null;
     const crews = CustomUtil.getMovieTopCrews(movieDetails);
@@ -174,17 +172,19 @@ export default function Movie(props) {
                                             )}
                                         </Typography>
                                     )}
-                                    {movie.Genres &&
-                                        CustomUtil.getDistinctGenres(
-                                            JSON.parse(movie.Genres)
-                                        ).map(genre => (
-                                            <Chip
-                                                key={genre.Id}
-                                                size="small"
-                                                label={genre.Name}
-                                                className={classes.chip}
-                                            />
-                                        ))}
+                                    <div>
+                                        {movie.Genres &&
+                                            CustomUtil.getDistinctGenres(
+                                                JSON.parse(movie.Genres)
+                                            ).map(genre => (
+                                                <Chip
+                                                    key={genre.Id}
+                                                    size="small"
+                                                    label={genre.Name}
+                                                    className={classes.chip}
+                                                />
+                                            ))}
+                                    </div>
                                     <h4 style={{ marginTop: '50px' }}>
                                         Featured Crew (주요 제작진)
                                     </h4>
@@ -352,14 +352,16 @@ module.exports = {
     component: connect(
         (state, ownProps) => {
             const type = ownProps.params.type;
+            const movieType = type === 'movie' ? 1 : 2;
             const id = parseInt(ownProps.params.id);
             const movie = state.movie
-                .get(CustomUtil.getMovieListName(type))
+                .get(CustomUtil.getMovieListName(movieType))
                 .toJS()
                 .find(o => o.MovieId === id);
 
             return {
                 type,
+                movieType,
                 id,
                 movie,
                 loading: state.movie.get('loading'),
@@ -393,8 +395,9 @@ Movie.propTypes = {
     loading: PropTypes.bool,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
-    type: PropTypes.string,
-    id: PropTypes.number,
     categories: PropTypes.object,
+    type: PropTypes.string.isRequired,
+    movieType: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     movie: PropTypes.object.isRequired,
 };
