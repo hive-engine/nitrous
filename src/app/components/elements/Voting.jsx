@@ -317,7 +317,7 @@ class Voting extends React.Component {
         const votingDownActive = voting && votingDown;
         const btnGroupStyle = { 'text-align': 'center' };
 
-         // Steem Payout Calculation
+         // STU Payout Calculation
         const steem_cashout_time = post_obj.get('cashout_time');
 
         const max_payout = parsePayoutAmount(
@@ -523,10 +523,10 @@ class Voting extends React.Component {
             });
         }
         
-        // Steem Payout Infomation
+        // STU Payout Infomation
         if (steem_cashout_active) {
             payoutItems.push({
-                value: `Steem Payout $${formatDecimal(pending_payout).join(
+                value: `STU Payout $${formatDecimal(pending_payout).join(
                     ''
                 )}`,
             });
