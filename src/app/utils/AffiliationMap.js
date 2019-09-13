@@ -62,6 +62,7 @@ const map = {
     'cimaron.passion': 'Verified Creator',
     oldviking: 'Verified Creator',
     jullyette: 'Verified Creator',
+    slutconfessions: 'Verified Creator',
   
     
 };
