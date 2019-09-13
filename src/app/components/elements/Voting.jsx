@@ -315,6 +315,67 @@ class Voting extends React.Component {
 
         const votingUpActive = voting && votingUp;
         const votingDownActive = voting && votingDown;
+        const btnGroupStyle = { 'text-align': 'center' };
+
+        // Steem Payout Calculation
+        const steem_cashout_time = post_obj.get('cashout_time');
+
+        const max_payout = parsePayoutAmount(
+            post_obj.get('max_accepted_payout')
+        );
+        const pending_payout = parsePayoutAmount(
+            post_obj.get('pending_payout_value')
+        );
+        // const percent_steem_dollars =
+        //     post_obj.get('percent_steem_dollars') / 20000;
+        // const pending_payout_sbd = pending_payout * percent_steem_dollars;
+        // const pending_payout_sp =
+        //     (pending_payout - pending_payout_sbd) / price_per_steem;
+        // const pending_payout_printed_sbd =
+        //     pending_payout_sbd * (sbd_print_rate / SBD_PRINT_RATE_MAX);
+        // const pending_payout_printed_steem =
+        //     (pending_payout_sbd - pending_payout_printed_sbd) / price_per_steem;
+
+        // const steem_promoted = parsePayoutAmount(post_obj.get('promoted'));
+        const total_author_payout = parsePayoutAmount(
+            post_obj.get('total_payout_value')
+        );
+        const total_curator_payout = parsePayoutAmount(
+            post_obj.get('curator_payout_value')
+        );
+
+        let steem_payout =
+            pending_payout + total_author_payout + total_curator_payout;
+        if (steem_payout < 0.0) steem_payout = 0.0;
+        if (steem_payout > max_payout) steem_payout = max_payout;
+        const payout_limit_hit = steem_payout >= max_payout;
+        // Show pending payout amount for declined payment posts
+        // if (max_payout === 0) steem_payout = pending_payout;
+        // const up = (
+        //     <Icon
+        //         name={votingUpActive ? 'empty' : 'chevron-up-circle'}
+        //         className="upvote"
+        //     />
+        // );
+        // const classUp =
+        //     'Voting__button Voting__button-up' +
+        //     (myVote > 0 ? ' Voting__button--upvoted' : '') +
+        //     (votingUpActive ? ' votingUp' : '');
+
+        // There is an "active cashout" if: (a) there is a pending payout, OR (b) there is a valid cashout_time AND it's NOT a comment with 0 votes.
+        const steem_cashout_active =
+            pending_payout > 0 ||
+            (steem_cashout_time.indexOf('1969') !== 0 &&
+                !(is_comment && total_votes == 0));
+        // const steem_payoutItems = [];
+
+        // const minimumAmountForPayout = 0.02;
+        // let warnZeroPayout = '';
+        // if (pending_payout > 0 && pending_payout < minimumAmountForPayout) {
+        //     warnZeroPayout = tt('voting_jsx.must_reached_minimum_payout');
+        // }
+
+        //////////////////////////////////////////////////////////////////
 
         const slider = up => {
             const b = up
@@ -500,6 +561,42 @@ class Voting extends React.Component {
                 value: `- Curator ${scot_total_curator_payout.toFixed(
                     scotPrecision
                 )} ${LIQUID_TOKEN_UPPERCASE}`,
+            });
+        }
+        
+        // Steem Payout Infomation
+        if (steem_cashout_active) {
+            const payoutDate = (
+                <span>
+                    {tt('voting_jsx.payout')}{' '}
+                    <TimeAgoWrapper date={cashout_time} />
+                </span>
+            );
+            payoutItems.push({
+                value: `Steem Payout $${formatDecimal(pending_payout).join(
+                    ''
+                )}`,
+            });
+            payoutItems.push({ value: payoutDate });
+        }
+
+        if (!steem_cashout_active && steem_payout > 0) {
+            payoutItems.push({
+                value: tt('voting_jsx.past_payouts', {
+                    value: formatDecimal(
+                        total_author_payout + total_curator_payout
+                    ).join(''),
+                }),
+            });
+            payoutItems.push({
+                value: tt('voting_jsx.past_payouts_author', {
+                    value: formatDecimal(total_author_payout).join(''),
+                }),
+            });
+            payoutItems.push({
+                value: tt('voting_jsx.past_payouts_curators', {
+                    value: formatDecimal(total_curator_payout).join(''),
+                }),
             });
         }
 
