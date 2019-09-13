@@ -21,7 +21,7 @@ function* requestMovie(action) {
             movieId
         );
 
-        yield put(movieReducer.actions.receiveMovie({ data }));
+        yield put(movieReducer.actions.receiveMovie({ movieType, data }));
     } catch (error) {
         console.error(action.payload, error);
     }
@@ -49,9 +49,11 @@ function* requestMovies(action) {
         );
 
         if (action.type === movieReducer.REQUEST_MOVIES) {
-            yield put(movieReducer.actions.receiveMovies({ data }));
+            yield put(movieReducer.actions.receiveMovies({ movieType, data }));
         } else {
-            yield put(movieReducer.actions.receiveUpdateMovies({ data }));
+            yield put(
+                movieReducer.actions.receiveUpdateMovies({ movieType, data })
+            );
         }
     } catch (error) {
         console.error(action.payload, error);

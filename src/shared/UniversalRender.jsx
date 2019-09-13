@@ -36,6 +36,7 @@ import ScrollBehavior from 'scroll-behavior';
 import { getStateAsync } from 'app/utils/steemApi';
 import * as movieApi from 'app/utils/MovieApi';
 import { LIST_MAX_SIZE } from 'shared/constants';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 let get_state_perf,
     get_content_perf = false;
@@ -346,12 +347,12 @@ export async function serverRender(
                 'release_date'
             );
 
-            movie.movies = movies;
+            movie[CustomUtil.getMovieListName(movieType)] = movies;
 
             if (movies.length == LIST_MAX_SIZE) {
-                movie.hasNextList = true;
+                movie[CustomUtil.getNextListConditionName(movieType)] = true;
             } else {
-                movie.hasNextList = false;
+                movie[CustomUtil.getNextListConditionName(movieType)] = false;
             }
         } else if (url.match(routeRegex.Movie)) {
             let movieType;
@@ -370,16 +371,16 @@ export async function serverRender(
                 movieId
             );
 
-            movie.movies = List([movieResult]);
+            movie[CustomUtil.getMovieListName(movieType)] = List([movieResult]);
         } else if (url.match(routeRegex.Reviews)) {
             const reviews = await movieApi.getReviews(0, -1, '', '', '', '');
 
             movie.reviews = reviews;
 
             if (reviews.length == LIST_MAX_SIZE) {
-                movie.hasNextList = true;
+                movie.hasNextReviews = true;
             } else {
-                movie.hasNextList = false;
+                movie.hasNextReviews = false;
             }
         }
 

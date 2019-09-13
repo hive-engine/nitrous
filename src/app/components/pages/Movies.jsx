@@ -26,12 +26,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
-
 import TextField from '@material-ui/core/TextField';
-
 import Chip from '@material-ui/core/Chip';
-
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -80,6 +78,7 @@ export default function Movies(props) {
     const {
         movies,
         type,
+        movieType,
         locale,
         loading,
         hasNextList,
@@ -89,10 +88,6 @@ export default function Movies(props) {
 
     const genres = tt(`genre.${type}`);
 
-    const movieType = type === 'movie' ? 1 : 2;
-    const lastMovieId =
-        movies.length === 0 ? 0 : movies[movies.length - 1].MovieId;
-
     const [values, setValues] = React.useState({
         languageCode: locale,
         movieType,
@@ -100,6 +95,17 @@ export default function Movies(props) {
         genreId: -1,
         sortBy: 'release_date',
     });
+
+    const isMoviesUndefined = typeof movies === 'undefined';
+
+    if (isMoviesUndefined && !loading) {
+        requestMovies(values);
+    }
+
+    const lastMovieId =
+        isMoviesUndefined || movies.length === 0
+            ? 0
+            : movies[movies.length - 1].MovieId;
 
     const inputLabel = React.useRef(null);
     const [labelWidth, setLabelWidth] = React.useState(0);
@@ -212,108 +218,129 @@ export default function Movies(props) {
                         }}
                     /> */}
                 </form>
-                <main>
-                    <Grid container spacing={4} className={classes.cardGrid}>
-                        {movies.map(movie => (
-                            <Grid
-                                item
-                                key={movie.MovieId}
-                                xs={12}
-                                sm={6}
-                                md={4}
-                            >
-                                <CardActionArea
-                                    component={Link}
-                                    to={`/${type}/${movie.MovieId}`}
+                {isMoviesUndefined ? (
+                    <LoadingIndicator
+                        style={{ marginBottom: '2rem' }}
+                        type="circle"
+                    />
+                ) : movies.length > 0 ? (
+                    <main style={{ width: '100%' }}>
+                        <Grid
+                            container
+                            spacing={4}
+                            className={classes.cardGrid}
+                        >
+                            {movies.map(movie => (
+                                <Grid
+                                    item
+                                    key={movie.MovieId}
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
                                 >
-                                    <Card className={classes.card}>
-                                        {movie.PosterPath && (
-                                            <CardMedia
-                                                className={classes.cardMedia}
-                                                image={CustomUtil.getMoviePosterUrl(
-                                                    movie.PosterPath
-                                                )}
-                                            />
-                                        )}
-                                        <CardContent
-                                            className={classes.cardContent}
-                                        >
-                                            <Typography
-                                                gutterBottom
-                                                variant="h5"
-                                                component="h2"
+                                    <CardActionArea
+                                        component={Link}
+                                        to={`/${type}/${movie.MovieId}`}
+                                    >
+                                        <Card className={classes.card}>
+                                            {movie.PosterPath && (
+                                                <CardMedia
+                                                    className={
+                                                        classes.cardMedia
+                                                    }
+                                                    image={CustomUtil.getMoviePosterUrl(
+                                                        movie.PosterPath
+                                                    )}
+                                                />
+                                            )}
+                                            <CardContent
+                                                className={classes.cardContent}
                                             >
-                                                {movie.Title}
-                                            </Typography>
-                                            <Typography
-                                                className={classes.cardDate}
-                                                variant="subtitle1"
-                                                color="textSecondary"
-                                            >
-                                                {CustomUtil.convertUnixTimestampToDate(
-                                                    movie.ReleaseDate
-                                                )}
-                                            </Typography>
-                                            <Typography>
-                                                {CustomUtil.getSummary(
-                                                    movie.Overview
-                                                )}
-                                            </Typography>
-                                            <div>
-                                                {movie.Genres &&
-                                                    CustomUtil.getDistinctGenres(
-                                                        JSON.parse(movie.Genres)
-                                                    ).map(genre => (
-                                                        <Chip
-                                                            key={genre.Id}
-                                                            size="small"
-                                                            label={genre.Name}
-                                                            className={
-                                                                classes.chip
-                                                            }
-                                                            // onClick={e =>
-                                                            //     setGenre(
-                                                            //         e,
-                                                            //         genre.Id
-                                                            //     )
-                                                            // }
-                                                        />
-                                                    ))}
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </CardActionArea>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    {hasNextList ? (
-                        loading ? (
-                            <center>
-                                <LoadingIndicator
-                                    style={{ marginBottom: '2rem' }}
-                                    type="circle"
-                                />
-                            </center>
-                        ) : (
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.button}
-                                onClick={() => {
-                                    requestMovies({
-                                        languageCode: locale,
-                                        movieType,
-                                        genreId: values.genreId,
-                                        lastMovieId,
-                                        sortBy: values.sortBy,
-                                    });
-                                }}
-                            >
-                                LOAD MORE MOVIES
-                            </Button>
-                        )
-                    ) : null}
-                </main>
+                                                <Typography
+                                                    gutterBottom
+                                                    variant="h5"
+                                                    component="h2"
+                                                >
+                                                    {movie.Title}
+                                                </Typography>
+                                                <Typography
+                                                    className={classes.cardDate}
+                                                    variant="subtitle1"
+                                                    color="textSecondary"
+                                                >
+                                                    {CustomUtil.convertUnixTimestampToDate(
+                                                        movie.ReleaseDate
+                                                    )}
+                                                </Typography>
+                                                <Typography>
+                                                    {CustomUtil.getSummary(
+                                                        movie.Overview
+                                                    )}
+                                                </Typography>
+                                                <div>
+                                                    {movie.Genres &&
+                                                        CustomUtil.getDistinctGenres(
+                                                            JSON.parse(
+                                                                movie.Genres
+                                                            )
+                                                        ).map(genre => (
+                                                            <Chip
+                                                                key={genre.Id}
+                                                                size="small"
+                                                                label={
+                                                                    genre.Name
+                                                                }
+                                                                className={
+                                                                    classes.chip
+                                                                }
+                                                                // onClick={e =>
+                                                                //     setGenre(
+                                                                //         e,
+                                                                //         genre.Id
+                                                                //     )
+                                                                // }
+                                                            />
+                                                        ))}
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </CardActionArea>
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <center>
+                            {hasNextList ? (
+                                loading ? (
+                                    <LoadingIndicator
+                                        style={{ marginBottom: '2rem' }}
+                                        type="circle"
+                                    />
+                                ) : (
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => {
+                                            requestMovies({
+                                                languageCode: locale,
+                                                movieType,
+                                                genreId: values.genreId,
+                                                lastMovieId,
+                                                sortBy: values.sortBy,
+                                            });
+                                        }}
+                                    >
+                                        LOAD MORE MOVIES
+                                    </Button>
+                                )
+                            ) : null}
+                        </center>
+                    </main>
+                ) : (
+                    <main style={{ width: '100%', marginTop: '20px' }}>
+                        <h4>No result was found in these options.</h4>
+                    </main>
+                )}
             </Container>
         </React.Fragment>
     );
@@ -323,23 +350,38 @@ module.exports = {
     path: ':type',
     component: connect(
         (state, ownProps) => {
+            const type = ownProps.params.type;
+            const movieType = type === 'movie' ? 1 : 2;
+
+            let movies = state.movie.get(
+                CustomUtil.getMovieListName(movieType)
+            );
+
+            if (movies) {
+                movies = movies.toJS();
+            }
+
             return {
+                type,
+                movieType,
+                movies,
+                hasNextList:
+                    state.movie.get(
+                        CustomUtil.getNextListConditionName(movieType)
+                    ) || false,
+                loading: state.movie.get('loading') || false,
                 status: state.global.get('status'),
-                loading: state.movie.get('loading'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
-                type: ownProps.params.type,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 locale:
                     state.app.getIn(['user_preferences', 'locale']) ||
                     DEFAULT_LANGUAGE,
-                movies: state.movie.get('movies').toJS(),
-                hasNextList: state.movie.get('hasNextList'),
             };
         },
         dispatch => ({
@@ -359,7 +401,8 @@ Movies.propTypes = {
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     type: PropTypes.string.isRequired,
+    movieType: PropTypes.number.isRequired,
     locale: PropTypes.string.isRequired,
-    movies: PropTypes.array.isRequired,
+    movies: PropTypes.array,
     hasNextList: PropTypes.bool.isRequired,
 };

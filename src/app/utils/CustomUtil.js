@@ -143,3 +143,11 @@ export function getMovieTopCasts(movieDetails) {
 
     return movieDetails.Credits.Cast.slice(0, 6);
 }
+
+export function getMovieListName(movieType) {
+    return movieType === 1 ? 'movies' : 'tvs';
+}
+
+export function getNextListConditionName(movieType) {
+    return movieType === 1 ? 'hasNextMovies' : 'hasNextTvs';
+}

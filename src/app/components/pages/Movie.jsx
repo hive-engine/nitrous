@@ -61,8 +61,6 @@ const useStyles = makeStyles(theme => ({
     cardDate: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        color: 'white',
-        opacity: 0.5,
     },
     cardMedia: {
         width: 160,
@@ -148,7 +146,9 @@ export default function Movie(props) {
                                         {movie.Title}
                                     </h2>
                                     <Typography
-                                        className={classes.cardDate}
+                                        className={`${
+                                            classes.cardDate
+                                        } light-color`}
                                         variant="subtitle1"
                                         color="textSecondary"
                                     >
@@ -159,7 +159,9 @@ export default function Movie(props) {
                                     {movie.Overview}
                                     {movieType === 1 && (
                                         <Typography
-                                            className={classes.cardDate}
+                                            className={`${
+                                                classes.cardDate
+                                            } light-color`}
                                             variant="subtitle1"
                                             color="textSecondary"
                                         >
@@ -349,17 +351,19 @@ module.exports = {
     path: ':type/:id',
     component: connect(
         (state, ownProps) => {
+            const type = ownProps.params.type;
             const id = parseInt(ownProps.params.id);
             const movie = state.movie
-                .get('movies')
+                .get(CustomUtil.getMovieListName(type))
                 .toJS()
                 .find(o => o.MovieId === id);
 
             return {
+                type,
                 id,
                 movie,
-                status: state.global.get('status'),
                 loading: state.movie.get('loading'),
+                status: state.global.get('status'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||
@@ -368,7 +372,6 @@ module.exports = {
                     state.app.getIn(['user_preferences', 'locale']) ||
                     DEFAULT_LANGUAGE,
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
-                type: ownProps.params.type,
                 categories: TAG_LIST,
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,

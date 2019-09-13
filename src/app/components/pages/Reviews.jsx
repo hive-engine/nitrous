@@ -88,14 +88,6 @@ export default function Reviews(props) {
         updateReviews,
     } = props;
 
-    let lastAuthor = '';
-    let lastPermlink = '';
-
-    if (reviews.length > 0) {
-        lastAuthor = reviews[reviews.length - 1].Author;
-        lastPermlink = reviews[reviews.length - 1].Permlink;
-    }
-
     const [values, setValues] = React.useState({
         movieType: 0,
         genreId: -1,
@@ -104,6 +96,20 @@ export default function Reviews(props) {
         lastPermlink: '',
         sortBy: 'created',
     });
+
+    const isReviewsUndefined = typeof reviews === 'undefined';
+
+    if (isReviewsUndefined && !loading) {
+        requestReviews(values);
+    }
+
+    let lastAuthor = '';
+    let lastPermlink = '';
+
+    if (!isReviewsUndefined && reviews.length > 0) {
+        lastAuthor = reviews[reviews.length - 1].Author;
+        lastPermlink = reviews[reviews.length - 1].Permlink;
+    }
 
     const inputLabel = React.useRef(null);
     const [labelWidth, setLabelWidth] = React.useState(0);
@@ -229,120 +235,144 @@ export default function Reviews(props) {
                         }}
                     /> */}
                 </form>
-                <main>
-                    <Grid container spacing={4} className={classes.cardGrid}>
-                        {reviews.map(post => (
-                            <Grid
-                                item
-                                key={`${post.Author}/${post.Permlink}`}
-                                xs={12}
-                                md={6}
-                            >
-                                <CardActionArea
-                                    component={Link}
-                                    to={`/@${post.Author}/${post.Permlink}`}
+                {isReviewsUndefined ? (
+                    <LoadingIndicator
+                        style={{ marginBottom: '2rem' }}
+                        type="circle"
+                    />
+                ) : reviews.length > 0 ? (
+                    <main style={{ width: '100%' }}>
+                        <Grid
+                            container
+                            spacing={4}
+                            className={classes.cardGrid}
+                        >
+                            {reviews.map(post => (
+                                <Grid
+                                    item
+                                    key={`${post.Author}/${post.Permlink}`}
+                                    xs={12}
+                                    md={6}
                                 >
-                                    <Card className={classes.card}>
-                                        <div className={classes.cardDetails}>
-                                            <CardContent>
-                                                <Typography
-                                                    component="h2"
-                                                    variant="h5"
-                                                >
-                                                    {post.Title}
-                                                </Typography>
-                                                <Typography
-                                                    className={classes.cardDate}
-                                                    variant="subtitle1"
-                                                    color="textSecondary"
-                                                >
-                                                    <Grid
-                                                        container
-                                                        alignItems="center"
+                                    <CardActionArea
+                                        component={Link}
+                                        to={`/@${post.Author}/${post.Permlink}`}
+                                    >
+                                        <Card className={classes.card}>
+                                            <div
+                                                className={classes.cardDetails}
+                                            >
+                                                <CardContent>
+                                                    <Typography
+                                                        component="h2"
+                                                        variant="h5"
                                                     >
-                                                        <TimeAgoWrapper
-                                                            date={post.AddDate}
+                                                        {post.Title}
+                                                    </Typography>
+                                                    <Typography
+                                                        className={
+                                                            classes.cardDate
+                                                        }
+                                                        variant="subtitle1"
+                                                        color="textSecondary"
+                                                    >
+                                                        <Grid
+                                                            container
+                                                            alignItems="center"
+                                                        >
+                                                            <TimeAgoWrapper
+                                                                date={
+                                                                    post.AddDate
+                                                                }
+                                                            />
+                                                            <Avatar
+                                                                alt={
+                                                                    post.Author
+                                                                }
+                                                                src={`https://steemitimages.com/u/${
+                                                                    post.Author
+                                                                }/avatar`}
+                                                                className={
+                                                                    classes.avatar
+                                                                }
+                                                            />
+                                                            @{post.Author}
+                                                        </Grid>
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="subtitle1"
+                                                        paragraph
+                                                    >
+                                                        {CustomUtil.getSummary(
+                                                            post.Summary
+                                                        )}
+                                                    </Typography>
+                                                    <Box
+                                                        component="fieldset"
+                                                        mb={3}
+                                                        borderColor="transparent"
+                                                        className={
+                                                            classes.ratingBox
+                                                        }
+                                                    >
+                                                        <Rating
+                                                            value={post.Rating}
+                                                            max={3}
+                                                            readOnly
                                                         />
-                                                        <Avatar
-                                                            alt={post.Author}
-                                                            src={`https://steemitimages.com/u/${
-                                                                post.Author
-                                                            }/avatar`}
-                                                            className={
-                                                                classes.avatar
-                                                            }
-                                                        />
-                                                        @{post.Author}
-                                                    </Grid>
-                                                </Typography>
-                                                <Typography
-                                                    variant="subtitle1"
-                                                    paragraph
-                                                >
-                                                    {CustomUtil.getSummary(
-                                                        post.Summary
-                                                    )}
-                                                </Typography>
-                                                <Box
-                                                    component="fieldset"
-                                                    mb={3}
-                                                    borderColor="transparent"
-                                                    className={
-                                                        classes.ratingBox
-                                                    }
-                                                >
-                                                    <Rating
-                                                        value={post.Rating}
-                                                        max={3}
-                                                        readOnly
+                                                    </Box>
+                                                </CardContent>
+                                            </div>
+                                            {post.CoverImgUrl && (
+                                                <Hidden xsDown>
+                                                    <CardMedia
+                                                        className={
+                                                            classes.cardMedia
+                                                        }
+                                                        image={post.CoverImgUrl}
                                                     />
-                                                </Box>
-                                            </CardContent>
-                                        </div>
-                                        {post.CoverImgUrl && (
-                                            <Hidden xsDown>
-                                                <CardMedia
-                                                    className={
-                                                        classes.cardMedia
-                                                    }
-                                                    image={post.CoverImgUrl}
-                                                />
-                                            </Hidden>
-                                        )}
-                                    </Card>
-                                </CardActionArea>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    {hasNextList ? (
-                        loading ? (
-                            <center>
-                                <LoadingIndicator
-                                    style={{ marginBottom: '2rem' }}
-                                    type="circle"
-                                />
-                            </center>
-                        ) : (
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.button}
-                                onClick={() => {
-                                    requestReviews({
-                                        movieType: values.movieType,
-                                        genreId: values.genreId,
-                                        languageCode: values.languageCode,
-                                        lastAuthor,
-                                        lastPermlink,
-                                        sortBy: values.sortBy,
-                                    });
-                                }}
-                            >
-                                LOAD MORE REVIEWS
-                            </Button>
-                        )
-                    ) : null}
-                </main>
+                                                </Hidden>
+                                            )}
+                                        </Card>
+                                    </CardActionArea>
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <center>
+                            {hasNextList ? (
+                                loading ? (
+                                    <LoadingIndicator
+                                        style={{ marginBottom: '2rem' }}
+                                        type="circle"
+                                    />
+                                ) : (
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => {
+                                            requestReviews({
+                                                movieType: values.movieType,
+                                                genreId: values.genreId,
+                                                languageCode:
+                                                    values.languageCode,
+                                                lastAuthor,
+                                                lastPermlink,
+                                                sortBy: values.sortBy,
+                                            });
+                                        }}
+                                    >
+                                        LOAD MORE REVIEWS
+                                    </Button>
+                                )
+                            ) : null}
+                        </center>
+                    </main>
+                ) : (
+                    <main style={{ width: '100%', marginTop: '20px' }}>
+                        <h4>No result was found in these options.</h4>
+                    </main>
+                )}
             </Container>
         </React.Fragment>
     );
@@ -352,9 +382,17 @@ module.exports = {
     path: '/review',
     component: connect(
         (state, ownProps) => {
+            let reviews = state.movie.get('reviews');
+
+            if (reviews) {
+                reviews = reviews.toJS();
+            }
+
             return {
+                reviews,
+                hasNextList: state.movie.get('hasNextReviews') || false,
+                loading: state.movie.get('loading') || false,
                 status: state.global.get('status'),
-                loading: state.movie.get('loading'),
                 accounts: state.global.get('accounts'),
                 username:
                     state.user.getIn(['current', 'username']) ||
@@ -364,8 +402,6 @@ module.exports = {
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                reviews: state.movie.get('reviews').toJS(),
-                hasNextList: state.movie.get('hasNextList'),
             };
         },
         dispatch => ({
@@ -386,6 +422,6 @@ Reviews.propTypes = {
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     categories: PropTypes.object,
-    reviews: PropTypes.array.isRequired,
+    reviews: PropTypes.array,
     hasNextList: PropTypes.bool.isRequired,
 };

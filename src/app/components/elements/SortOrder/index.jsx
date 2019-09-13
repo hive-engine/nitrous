@@ -37,24 +37,25 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     const sorts = tag => {
         return [
             {
-                value: 'trending',
-                label: tt('main_menu.trending'),
-                link: `/trending/${tag}`,
+                value: 'movie',
+                label: 'MOVIES',
+                //link: `/trending/${tag}`,
+                link: `/movie`,
+            },
+            {
+                value: 'tv',
+                label: 'TV SHOWS',
+                link: `/tv`,
+            },
+            {
+                value: 'review',
+                label: 'REVIEWS',
+                link: `/review`,
             },
             {
                 value: 'created',
                 label: tt('g.new'),
                 link: `/created/${tag}`,
-            },
-            {
-                value: 'hot',
-                label: tt('main_menu.hot'),
-                link: `/hot/${tag}`,
-            },
-            {
-                value: 'promoted',
-                label: tt('g.promoted'),
-                link: `/promoted/${tag}`,
             },
         ];
     };

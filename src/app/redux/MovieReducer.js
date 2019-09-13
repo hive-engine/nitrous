@@ -1,4 +1,4 @@
-import { List, fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 import { LIST_MAX_SIZE } from 'shared/constants';
 import * as CustomUtil from 'app/utils/CustomUtil';
 
@@ -20,7 +20,7 @@ const REQUEST_REVIEWS_END = 'movie/REQUEST_REVIEWS_END';
 export const UPDATE_REVIEWS = 'movie/UPDATE_REVIEWS';
 const RECEIVE_UPDATE_REVIEWS = 'movie/RECEIVE_UPDATE_REVIEWS';
 
-export const defaultState = { loading: false, hasNextList: false };
+export const defaultState = {};
 
 export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
@@ -31,25 +31,47 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_REVIEWS:
             return state.set('loading', true);
         case RECEIVE_MOVIE:
-            return state.update('movies', list =>
-                getUpdatedMovieList(list, payload.data)
+            return state.update(
+                CustomUtil.getMovieListName(payload.movieType),
+                list => getUpdatedMovieList(list, payload.data)
             );
         case RECEIVE_MOVIES:
             return state
-                .update('movies', list => list.concat(fromJS(payload.data)))
-                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
+                .update(
+                    CustomUtil.getMovieListName(payload.movieType),
+                    list =>
+                        list
+                            ? list.concat(fromJS(payload.data))
+                            : fromJS(payload.data)
+                )
+                .set(
+                    CustomUtil.getNextListConditionName(payload.movieType),
+                    payload.data.length == LIST_MAX_SIZE
+                );
         case RECEIVE_UPDATE_MOVIES:
             return state
-                .set('movies', fromJS(payload.data))
-                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
+                .set(
+                    CustomUtil.getMovieListName(payload.movieType),
+                    fromJS(payload.data)
+                )
+                .set(
+                    CustomUtil.getNextListConditionName(payload.movieType),
+                    payload.data.length == LIST_MAX_SIZE
+                );
         case RECEIVE_REVIEWS:
             return state
-                .update('reviews', list => list.concat(fromJS(payload.data)))
-                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
+                .update(
+                    'reviews',
+                    list =>
+                        list
+                            ? list.concat(fromJS(payload.data))
+                            : fromJS(payload.data)
+                )
+                .set('hasNextReviews', payload.data.length == LIST_MAX_SIZE);
         case RECEIVE_UPDATE_REVIEWS:
             return state
                 .set('reviews', fromJS(payload.data))
-                .set('hasNextList', payload.data.length == LIST_MAX_SIZE);
+                .set('hasNextReviews', payload.data.length == LIST_MAX_SIZE);
         case REQUEST_MOVIE_END:
         case REQUEST_MOVIES_END:
         case REQUEST_REVIEWS_END:
