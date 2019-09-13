@@ -1,12 +1,12 @@
 const map = {
  //SteemLeo Team
-    khaleelkazi: 'SteemLeo Founder',
+    khaleelkazi: 'Founder',
     'steem.leo': 'Official SteemLeo',
     'learn.leo': 'Official SteemLeo',
     'leo.voter': 'Official SteemLeo',
     noleo4u: 'SteemLeo Moderator',
     'leo.curation': 'Official SteemLeo',
-    'leo.bounties': 'Official SteemLeo',
+    'leo.bounties': 'Official Bounties',
     'leo.syndication': 'Official SteemLeo',
     'leo.stats': 'Official Stats',
 
