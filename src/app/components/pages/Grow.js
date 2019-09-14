@@ -209,7 +209,7 @@ class Grow extends React.Component {
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
-                                                        href="#"
+                                                        href="/popular-community"
                                                     >
                                                         <span>Click Here</span>
                                                     </a>
@@ -253,7 +253,7 @@ class Grow extends React.Component {
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
-                                                        href="#"
+                                                        href="/extra-clout"
                                                     >
                                                         <span>Click Here</span>
                                                     </a>
@@ -387,7 +387,7 @@ class Grow extends React.Component {
                                                     </div>
                                                     <a
                                                         className="ant-btn ant-btn-primary"
-                                                        href="#"
+                                                        href="/send-us"
                                                     >
                                                         <span>Click Here</span>
                                                     </a>

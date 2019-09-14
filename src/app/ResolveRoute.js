@@ -26,6 +26,15 @@ export default function resolveRoute(path) {
     if (path === '/favorite-mentor') {
         return { page: 'FavoriteMentor' };
     }
+    if (path === '/popular-community') {
+        return { page: 'PopularCommunity' };
+    }
+    if (path === '/send-us') {
+        return { page: 'SendUs' };
+    }
+    if (path === '/extra-clout') {
+        return { page: 'ExtraClout' };
+    }
     if (path === '/grow') {
         return { page: 'Grow' };
     }

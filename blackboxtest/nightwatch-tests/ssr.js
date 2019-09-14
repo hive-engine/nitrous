@@ -23,6 +23,9 @@ module.exports = {
             '/recover_account_step_1',
             '/market',
             '/favorite-mentor',
+            '/popular-community',
+            '/extra-clout',
+            '/send-us',
             '/grow',
             '/submit.html',
         ].forEach(path => testHttpGet('localhost', 8080, path, browser));
