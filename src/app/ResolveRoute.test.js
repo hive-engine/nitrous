@@ -13,7 +13,7 @@ describe('routeRegex', () => {
             ['UserProfile3', /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/],
             [
                 'CategoryFilters',
-                /^\/(hot|trending|promoted|payout|payout_comments|created|certified)\/?$/gi,
+                /^\/(hot|trending|promoted|payout|payout_comments|created|certified|ulogs|steemgigs|via-marlians)\/?$/gi,
             ],
             ['PostNoCategory', /^\/(@[\w\.\d-]+)\/([\w\d-]+)/],
             ['Post', /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)\/?($|\?)/],

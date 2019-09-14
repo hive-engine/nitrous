@@ -145,7 +145,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted|certified)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|certified|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
@@ -164,6 +164,9 @@ export async function attachScotData(url, state) {
         if (feedType == 'certified') {
             path = `get_feed`;
             discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+        } else if (feedType == 'ulogs' || feedType == 'steemgigs') {
+            path = `get_discussions_by_created`;
+            discussionQuery.tag = feedType;
         }
 
         // first call feed.
@@ -299,7 +302,7 @@ export async function getStateAsync(url) {
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted|certified|grow|favorite-mentor)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|certified|grow|favorite-mentor|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
     );
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -335,7 +338,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted|Certified)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Certified|Ulogs|Steemgigs|Via-marlians)Async/
     );
     if (callNameMatch) {
         let order = callNameMatch[1].toLowerCase();
@@ -350,6 +353,9 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             path = `get_feed`;
             discussionQuery.account = CERTIFIED_POST_ACCOUNT;
             discussionQuery.start_entry_id = asyncCounter * fetchSize;
+        } else if (order == 'ulogs' || order == 'steemgigs') {
+            path = `get_discussions_by_created`;
+            discussionQuery.tag = order;
         }
 
         if (!discussionQuery.tag) {

@@ -47,20 +47,35 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 link: `/created/${tag}`,
             },
             {
-                value: 'hot',
-                label: tt('main_menu.hot'),
-                link: `/hot/${tag}`,
+                value: 'ulogs',
+                label: tt('main_menu.ulogs'),
+                link: `/ulogs`,
             },
+            //{
+            //    value: 'hot',
+            //    label: tt('main_menu.hot'),
+            //    link: `/hot/${tag}`,
+            //},
             {
                 value: 'promoted',
                 label: tt('g.promoted'),
                 link: `/promoted/${tag}`,
             },
             {
+                value: 'steemgigs',
+                label: tt('main_menu.steemgigs'),
+                link: `/steemgigs`,
+            },
+            {
                 value: 'certified',
                 label: tt('main_menu.certified'),
                 link: `/certified/${tag}`,
             },
+            //{
+            //    value: 'via-marlians',
+            //    label: tt('main_menu.viamarlians'),
+            //    link: `/via-marlians`,
+            //},
         ];
     };
 

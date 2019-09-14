@@ -5,7 +5,7 @@ export const routeRegex = {
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
     UserProfile2: /^\/(@[\w\.\d-]+)\/(blog|posts|comments|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)\/?$/,
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
-    CategoryFilters: /^\/(hot|trending|promoted|payout|payout_comments|created|certified)\/?$/gi,
+    CategoryFilters: /^\/(hot|trending|promoted|payout|payout_comments|created|certified|ulogs|steemgigs|via-marlians)\/?$/gi,
     PostNoCategory: /^\/(@[\w\.\d-]+)\/([\w\d-]+)/,
     Post: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)\/?($|\?)/,
     PostJson: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)(\.json)$/,
@@ -101,10 +101,10 @@ export default function resolveRoute(path) {
     }
     match =
         path.match(
-            /^\/(hot|trending|promoted|payout|payout_comments|created|certified)\/?$/
+            /^\/(hot|trending|promoted|payout|payout_comments|created|certified|ulogs|steemgigs|via-marlians)\/?$/
         ) ||
         path.match(
-            /^\/(hot|trending|promoted|payout|payout_comments|created|certified)\/([\w\d-]+)\/?$/
+            /^\/(hot|trending|promoted|payout|payout_comments|created|certified|ulogs|steemgigs|via-marlians)\/([\w\d-]+)\/?$/
         );
     if (match) {
         return { page: 'PostsIndex', params: match.slice(1) };
