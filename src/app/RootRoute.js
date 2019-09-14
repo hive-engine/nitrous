@@ -27,6 +27,18 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/FavoriteMentor')]);
             //});
+        } else if (route.page === 'PopularCommunity') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/PopularCommunity')]);
+            //});
+        } else if (route.page === 'ExtraClout') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/ExtraClout')]);
+            //});
+        } else if (route.page === 'SendUs') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SendUs')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
