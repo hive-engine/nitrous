@@ -214,7 +214,7 @@ class Grow extends React.Component {
                                                 source={growSections.extraClout}
                                             />
                                         </div>
-                                        <a>
+                                        <a href="/extra-clout">
                                             <Button type="primary">
                                                 Click Here
                                             </Button>
