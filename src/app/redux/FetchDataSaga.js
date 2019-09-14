@@ -296,6 +296,17 @@ export function* fetchData(action) {
                 limit: constants.FETCH_DATA_BATCH_SIZE,
             },
         ];
+    } else if (order === 'ulogs' || order === 'steemgigs') {
+        call_name = `getDiscussionsBy${order.charAt(0).toUpperCase() +
+            order.slice(1)}Async`;
+        args = [
+            {
+                tag: category,
+                limit: constants.FETCH_DATA_BATCH_SIZE,
+                start_author: author,
+                start_permlink: permlink,
+            },
+        ];
     } else {
         // this should never happen. undefined behavior
         call_name = 'getDiscussionsByTrendingAsync';

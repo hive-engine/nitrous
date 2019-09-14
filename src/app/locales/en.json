@@ -289,7 +289,10 @@
     "main_menu": {
         "hot": "Hot",
         "trending": "Trending",
-        "certified": "Certified"
+        "certified": "Certified",
+        "ulogs": "Ulogs",
+        "steemgigs": "SteemGigs",
+        "viamarlians": "via-Marlians"
     },
     "reply_editor": {
         "shorten_title": "Shorten title",
