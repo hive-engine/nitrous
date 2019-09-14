@@ -71,11 +71,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 label: tt('main_menu.certified'),
                 link: `/certified/${tag}`,
             },
-            //{
-            //    value: 'via-marlians',
-            //    label: tt('main_menu.viamarlians'),
-            //    link: `/via-marlians`,
-            //},
+            {
+                value: 'via-marlians',
+                label: tt('main_menu.viamarlians'),
+                link: `/via-marlians`,
+            },
         ];
     };
 
