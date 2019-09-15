@@ -38,13 +38,13 @@ const map = {
            "locale": "en"
         }
            </script>
-        </div>",
+        </div>
 
 </body>
-</html>
+</html>",
 
     trending:
-        "trending test",
+        "trending test 2",
     hot:
         "hot test",
 };
