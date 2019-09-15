@@ -1,40 +1,21 @@
 const map = {
     // default
     '':
-        "<div class="tradingview-widget-container">
+        "<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
   <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Ticker Tape</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/FX-EURUSD/" rel="noopener" target="_blank"><span class="blue-text">EURUSD Rates</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
   {
-  "symbols": [
-    {
-      "title": "S&P 500",
-      "proName": "OANDA:SPX500USD"
-    },
-    {
-      "title": "Nasdaq 100",
-      "proName": "OANDA:NAS100USD"
-    },
-    {
-      "title": "EUR/USD",
-      "proName": "FX_IDC:EURUSD"
-    },
-    {
-      "title": "BTC/USD",
-      "proName": "BITSTAMP:BTCUSD"
-    },
-    {
-      "title": "ETH/USD",
-      "proName": "BITSTAMP:ETHUSD"
-    }
-  ],
+  "symbol": "FX:EURUSD",
+  "width": 350,
   "colorTheme": "light",
   "isTransparent": false,
-  "displayMode": "adaptive",
   "locale": "en"
 }
   </script>
-</div>",
+</div>
+<!-- TradingView Widget END -->"
 
     trending:
         "trending test",
