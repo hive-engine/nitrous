@@ -22,6 +22,8 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
+import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
 import SidebarToken from 'app/components/elements/SidebarToken';
 
@@ -338,6 +340,11 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
+                    {category !== 'feed' && (
+                        <MarkdownViewer
+                            text={tagHeaderMap[category] || tagHeaderMap['']}
+                        />
+                    )}
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
