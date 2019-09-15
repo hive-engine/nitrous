@@ -73,6 +73,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+let isMoviesLoadingTried = false;
+
 export default function Movies(props) {
     const classes = useStyles();
     const {
@@ -88,18 +90,22 @@ export default function Movies(props) {
 
     const genres = tt(`genre.${type}`);
 
-    const [values, setValues] = React.useState({
+    const initState = {
         languageCode: locale,
         movieType,
         lastMovieId: 0,
         genreId: -1,
         sortBy: 'release_date',
-    });
+    };
+
+    const [values, setValues] = React.useState(initState);
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
-    if (isMoviesUndefined && !loading) {
-        requestMovies(values);
+    if (isMoviesUndefined && !isMoviesLoadingTried) {
+        isMoviesLoadingTried = true;
+        // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
+        setTimeout(() => requestMovies(initState));
     }
 
     const lastMovieId =
@@ -350,7 +356,11 @@ module.exports = {
     path: ':type',
     component: connect(
         (state, ownProps) => {
-            const type = ownProps.params.type;
+            let type = state.app.get('location').pathname.substring(1);
+            if (type !== 'movie' && type !== 'tv') {
+                type = 'movie';
+            }
+
             const movieType = type === 'movie' ? 1 : 2;
 
             let movies = state.movie.get(
