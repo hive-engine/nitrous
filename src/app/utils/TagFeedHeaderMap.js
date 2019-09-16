@@ -1,12 +1,12 @@
 const map = {
     // default
     '':
-        "test5",
+        "test6",
 
     dailyleo:
-        "TESTthedailyleo2",
+        "test6",
     learnleo:
-        "TESTthedailyleo1",
+        "test6",
 };
 
 export default map;
