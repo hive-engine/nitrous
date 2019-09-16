@@ -3,19 +3,20 @@
     margin: 10px auto;
     max-width: 40rem;
     clear: both;
-    color: #000000 !important;
+    color: #ffffff !important;
 
     h6 {
         margin: 0 !important;
         padding: 2px 0 6px !important;
         border-bottom: 1px solid #ff7a33 !important;
-        color: #000000 !important;
+        color: #ffffff !important;
     }
 
     table {
         table-layout: fixed;
         width: 100% !important;
-        margin-top: 7px !important;
+        margin-top: 5px !important;
+        margin-bottom: 5px !important;
     }
 
     tr {
@@ -40,6 +41,6 @@
     td {
         width: 80px;
         text-align: right;
-        color: #757474 !important;
+        color: #ffb861 !important;
     }
 } 
