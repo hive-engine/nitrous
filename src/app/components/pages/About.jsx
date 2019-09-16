@@ -22,22 +22,29 @@ class About extends React.Component {
                                     with financial inclusion.
                                 </span>
                             </p>
-
-                            <div className="AboutMission__square AboutMission__square--2" />
-                            <h2 className="AboutMission__heading">Vision</h2>
-                            <p className="AboutMission__text">
-                                Our vision is that steemit.com is a vibrant
-                                communities web app, expanding the boundaries of
-                                community coordination and online discussion by
-                                incorporating cryptocurrency as incentives. The
-                                company focuses on sustainability and
-                                decentralization by lowering running costs and
-                                increasing revenues, while increasing stickiness
-                                by providing better homepage and community
-                                tools, and is always demanding a secure and
-                                safe, client-side signing experience.
-                            </p>
-                        </div>
+                            <div class="tradingview-widget-container">
+                              <div id="tradingview_6446d"></div>
+                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL Chart</span></a> by TradingView</div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                              <script type="text/javascript">
+                              new TradingView.widget(
+                              {
+                              "width": 980,
+                              "height": 610,
+                              "symbol": "NASDAQ:AAPL",
+                              "interval": "D",
+                              "timezone": "Etc/UTC",
+                              "theme": "Light",
+                              "style": "1",
+                              "locale": "en",
+                              "toolbar_bg": "#f1f3f6",
+                              "enable_publishing": false,
+                              "allow_symbol_change": true,
+                              "container_id": "tradingview_6446d"
+                            }
+                              );
+                                </script>
+                            </div>
                         <div className="AboutMission__image-container">
                             <img
                                 className="AboutMission__img"
