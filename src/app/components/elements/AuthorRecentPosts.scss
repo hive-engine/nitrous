@@ -16,18 +16,18 @@
         table-layout: fixed;
         width: 100% !important;
         margin-top: 5px !important;
-        margin-bottom: 25px !important;
+        margin-bottom: 5px !important;
     }
 
     tr {
         @include themify($themes) {
-            background-color: themed('highlightBackgroundColor');
+            background-color: themed('highlightBackgroundColor2');
         }
     }
 
     th,
     td {
-        padding: 0 0 4px !important;
+        padding: 5px 5px 5px !important;
     }
 
     th {
@@ -36,6 +36,7 @@
         word-break: break-all;
         overflow: hidden;
         line-height: 1.5;
+        background-color: black;
     }
 
     td {
