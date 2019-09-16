@@ -1,10 +1,7 @@
 const map = {
     // default
     '':
-        "<div style="background-color:lightblue">
-            <h3>test</h3>
-            <p>ptest</p>
-        </div>",
+        "test5",
 
     dailyleo:
         "TESTthedailyleo2",
