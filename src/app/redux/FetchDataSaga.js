@@ -25,6 +25,7 @@ const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 const FETCH_SCOT_INFO = 'fetchDataSaga/FETCH_SCOT_INFO';
+const FETCH_AUTHOR_RECENT_POSTS = 'fetchDataSaga/FETCH_AUTHOR_RECENT_POSTS';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -33,6 +34,7 @@ export const fetchDataWatches = [
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
     takeLatest(FETCH_SCOT_INFO, fetchScotInfo),
+    takeLatest(FETCH_AUTHOR_RECENT_POSTS, fetchAuthorRecentPosts),
 ];
 
 export function* getContentCaller(action) {
@@ -432,6 +434,82 @@ function* fetchScotInfo() {
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }
 
+function* fetchAuthorRecentPosts(action) {
+    const {
+        order,
+        category,
+        author,
+        permlink,
+        accountname,
+        postFilter,
+        limit,
+    } = action.payload;
+
+    const call_name = 'get_discussions_by_blog';
+    yield put(globalActions.fetchingData({ category, order }));
+    const args = [
+        {
+            tag: accountname,
+            token: LIQUID_TOKEN_UPPERCASE,
+            limit: limit + 1,
+        },
+    ];
+    yield put(appActions.fetchDataBegin());
+    try {
+        const firstPermlink = permlink;
+        let fetched = 0;
+        let fetchLimitReached = false;
+        let fetchDone = false;
+        let batch = 0;
+        let lastValue;
+        let endOfData;
+        while (!fetchDone) {
+            const feedData = yield call(getScotDataAsync, call_name, ...args);
+
+            endOfData = feedData.length < limit;
+            lastValue =
+                feedData.length > 0 ? feedData[feedData.length - 1] : null;
+
+            // Set next arg.
+            args[0].start_author = lastValue.author;
+            args[0].start_permlink = lastValue.permlink;
+
+            batch += 1;
+            fetchLimitReached = batch >= constants.MAX_BATCHES;
+
+            // Still return all data but only count ones matching the filter.
+            // Rely on UI to actually hide the posts.
+            fetched += postFilter
+                ? feedData.filter(postFilter).length
+                : feedData.length;
+
+            fetchDone = fetchLimitReached || fetched >= limit;
+
+            let data = feedData.filter(postFilter);
+            if (fetchDone && fetched > limit) {
+                data = data.slice(0, limit - (fetched - data.length));
+            }
+
+            yield put(
+                globalActions.receiveAuthorRecentPosts({
+                    data,
+                    order,
+                    category,
+                    author,
+                    firstPermlink,
+                    accountname,
+                    fetching: !fetchDone,
+                    endOfData,
+                })
+            );
+        }
+    } catch (error) {
+        console.error('~~ Saga fetchData error ~~>', call_name, args, error);
+        yield put(appActions.steemApiError(error.message));
+    }
+    yield put(appActions.fetchDataEnd());
+}
+
 // Action creators
 export const actions = {
     requestData: payload => ({
@@ -451,6 +529,11 @@ export const actions = {
 
     fetchScotInfo: payload => ({
         type: FETCH_SCOT_INFO,
+        payload,
+    }),
+    
+        fetchAuthorRecentPosts: payload => ({
+        type: FETCH_AUTHOR_RECENT_POSTS,
         payload,
     }),
 };
