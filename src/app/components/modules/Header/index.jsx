@@ -313,14 +313,14 @@ class Header extends React.Component {
                     </div>
 
                     <nav className="row Header__nav">
-                        <div className="small-5 large-3 columns Header__logotype">
+                        <div className="small-5 large-2 columns Header__logotype">
                             {/*LOGO*/}
                             <a href="/">
                                 <AppLogo />
                             </a>
                         </div>
 
-                        <div className="large-5 columns show-for-large large-centered Header__sort">
+                        <div className="large-6 columns show-for-large large-centered Header__sort">
                             {/*SORT*/}
                             <SortOrder
                                 sortOrder={order}

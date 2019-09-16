@@ -166,7 +166,9 @@ export async function attachScotData(url, state) {
             discussionQuery.account = CERTIFIED_POST_ACCOUNT;
         } else if (feedType == 'ulogs' || feedType == 'steemgigs') {
             path = `get_discussions_by_created`;
-            discussionQuery.tag = feedType;
+
+            if (feedType == 'ulogs') discussionQuery.tag = 'ulog';
+            else discussionQuery.tag = feedType;
         }
 
         // first call feed.
@@ -355,7 +357,9 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             discussionQuery.start_entry_id = asyncCounter * fetchSize;
         } else if (order == 'ulogs' || order == 'steemgigs') {
             path = `get_discussions_by_created`;
-            discussionQuery.tag = order;
+
+            if (order == 'ulogs') discussionQuery.tag = 'ulog';
+            else discussionQuery.tag = order;
         }
 
         if (!discussionQuery.tag) {
