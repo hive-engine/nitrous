@@ -24,6 +24,7 @@ const VOTED = 'global/VOTED';
 const FETCHING_DATA = 'global/FETCHING_DATA';
 const RECEIVE_DATA = 'global/RECEIVE_DATA';
 const RECEIVE_RECENT_POSTS = 'global/RECEIVE_RECENT_POSTS';
+const RECEIVE_AUTHOR_RECENT_POSTS = 'global/RECEIVE_AUTHOR_RECENT_POSTS';
 const REQUEST_META = 'global/REQUEST_META';
 const RECEIVE_META = 'global/RECEIVE_META';
 const SET = 'global/SET';
@@ -381,6 +382,33 @@ export default function reducer(state = defaultState, action = {}) {
             });
             return new_state;
         }
+            
+        case RECEIVE_AUTHOR_RECENT_POSTS: {
+            const { data, order, category } = payload;
+            let new_state = state.updateIn(
+                ['discussion_idx', category || '', order],
+                List(),
+                list => {
+                    return list.withMutations(posts => {
+                        data.forEach(value => {
+                            const entry = `${value.author}/${value.permlink}`;
+                            if (!posts.includes(entry)) posts.push(entry);
+                        });
+                    });
+                }
+            );
+            new_state = new_state.updateIn(['content'], content => {
+                return content.withMutations(map => {
+                    data.forEach(value => {
+                        const key = `${value.author}/${value.permlink}`;
+                        value = fromJS(value);
+                        value = value.set('stats', fromJS(contentStats(value)));
+                        map.set(key, value);
+                    });
+                });
+            });
+            return new_state;
+        }
 
         case REQUEST_META: {
             const { id, link } = payload;
@@ -517,6 +545,11 @@ export const receiveData = payload => ({
 
 export const receiveRecentPosts = payload => ({
     type: RECEIVE_RECENT_POSTS,
+    payload,
+});
+
+export const receiveAuthorRecentPosts = payload => ({
+    type: RECEIVE_AUTHOR_RECENT_POSTS,
     payload,
 });
 
