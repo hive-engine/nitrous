@@ -21,6 +21,8 @@ const map = {
     artemislives: 'Pure Thai Natural Products',
     nainaztengra: 'Unlimited Abundance Blissful Happiness and Unconditional Love',
     ravenlotus: 'Lotus Curator',
+    riverlotus: 'Lotus Curator',
+    
     
 
   
