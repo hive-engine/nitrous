@@ -20,7 +20,8 @@
     }
 
     tr {
-            background-color: blue;
+        @include themify($themes) {
+            background-color: themed('highlightBackgroundColor2');
         }
     }
 
@@ -35,7 +36,7 @@
         word-break: break-all;
         overflow: hidden;
         line-height: 1.5;
-        background-color: white;
+        background-color: themed('tableRowEvenBackgroundColor');
     }
 
     td {
