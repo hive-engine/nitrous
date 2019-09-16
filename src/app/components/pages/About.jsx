@@ -9,7 +9,7 @@ class About extends React.Component {
                 <section className="AboutMission">
                     <div className="AboutMission__heading-container">
                         <h1 className="AboutMission__heading">
-                            The SteemLeo Mission
+                            Steemit, Inc. Mission, Vision and Values
                         </h1>
                     </div>
                     <div className="AboutMission__section">
@@ -22,6 +22,22 @@ class About extends React.Component {
                                     with financial inclusion.
                                 </span>
                             </p>
+
+                            <div className="AboutMission__square AboutMission__square--2" />
+                            <h2 className="AboutMission__heading">Vision</h2>
+                            <p className="AboutMission__text">
+                                Our vision is that steemit.com is a vibrant
+                                communities web app, expanding the boundaries of
+                                community coordination and online discussion by
+                                incorporating cryptocurrency as incentives. The
+                                company focuses on sustainability and
+                                decentralization by lowering running costs and
+                                increasing revenues, while increasing stickiness
+                                by providing better homepage and community
+                                tools, and is always demanding a secure and
+                                safe, client-side signing experience.
+                            </p>
+                        </div>
                         <div className="AboutMission__image-container">
                             <img
                                 className="AboutMission__img"
