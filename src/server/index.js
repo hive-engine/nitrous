@@ -29,7 +29,7 @@ global.$STM_Config = {
     upload_image: config.get('upload_image'),
     site_domain: config.get('site_domain'),
     google_analytics_id: config.get('google_analytics_id'),
-    gtag_measurement_id: config.get('gtag_measurement_id'),
+    gtag_measurement_id: config.get('UA-80714823-3'),
     wallet_url: config.get('wallet_url'),
 };
 
