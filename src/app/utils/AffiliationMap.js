@@ -20,7 +20,7 @@ const map = {
     porters: 'Believe in Kindness',
     artemislives: 'Pure Thai Natural Products',
     nainaztengra: 'Unlimited Abundance Blissful Happiness and Unconditional Love',
-    metametheus: 'Lotus Curator',
+    ravenlotus: 'Lotus Curator',
     
 
   
