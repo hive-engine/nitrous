@@ -383,7 +383,7 @@ class ThumbUp extends React.Component {
                         });
                         this.readSliderWeight();
                     }}
-                    title={<Icon name={'thumbup'} className="upthumb" />}
+                    title={<Icon name={'gift2'} className="upthumb" />}
                 >
                     <div className="ThumbUp__adjust_weight">
                         <a
@@ -392,7 +392,7 @@ class ThumbUp extends React.Component {
                             className="thumbup_confirm_weight"
                             title={tt('g.thumbsup')}
                         >
-                            <Icon size="2x" name={'thumbup'} />
+                            <Icon size="2x" name={'gift2'} />
                         </a>
                         {slider(true)}
                         <CloseButton
@@ -403,7 +403,7 @@ class ThumbUp extends React.Component {
                 </Dropdown>
             );
         } else {
-            thumbUpIcon = <Icon name={'thumbup_fill'} className="upthumb" />;
+            thumbUpIcon = <Icon name={'gift2'} className="upthumb" />;
         }
 
         const classUp = 'ThumbUp__button ThumbUp__button-up';
@@ -488,87 +488,87 @@ export default connect(
     },
 
     dispatch => ({
-      dispatchSubmit: ({
-          to,
-          amount,
-          memo,
-          author,
-          permlink,
-          username,
-          errorCallback,
-          successCallback,
-      }) => {
-          const transferOperation = {
-              contractName: 'tokens',
-              contractAction: 'transfer', // for test, transfer 로 변경
-              contractPayload: {
-                  symbol: LIQUID_TOKEN_UPPERCASE,
-                  to: to,
-                  quantity: amount,
-                  memo: memo ? memo : '',
-                  type: 'scot-thumbup',
-                  author: author,
-                  permlink: permlink,
-                  sender: username,
-              },
-          };
-          let operation = {
-              id: 'ssc-mainnet1',
-              required_auths: [username],
-              json: JSON.stringify(transferOperation),
-          };
-          
-          errorCallback = err => {
-              console.log(err);
-          };
-
-          successCallback = s => {
-            console.log(s);
-            const get_metadata = () => {
-                const meta = {};
-                meta.app = `${APP_NAME.toLowerCase()}/0.1`;
-                meta.format = 'markdown';
-                return meta;
+        dispatchSubmit: ({
+            to,
+            amount,
+            memo,
+            author,
+            permlink,
+            username,
+            errorCallback,
+            successCallback,
+        }) => {
+            const transferOperation = {
+                contractName: 'tokens',
+                contractAction: 'transfer', // for test, transfer 로 변경
+                contractPayload: {
+                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    to: to,
+                    quantity: amount,
+                    memo: memo ? memo : '',
+                    type: 'scot-thumbup',
+                    author: author,
+                    permlink: permlink,
+                    sender: username,
+                },
+            };
+            let operation = {
+                id: 'ssc-mainnet1',
+                required_auths: [username],
+                json: JSON.stringify(transferOperation),
             };
 
-            const __config = {};
+            errorCallback = err => {
+                console.log(err);
+            };
 
-            operation = {
-                parent_author: author,
-                parent_permlink: permlink,
-                author: username,
-                permlink: clean_permlink(
-                    `thumbsup-comment-${author}-${permlink}`
-                ), // only one
-                category: '',
-                title: '',
-                body: tt('g.thumbsup_comment', 
-                            { username: username, 
-                              author:author, 
-                              amount:amount, 
-                              LIQUID_TOKEN:LIQUID_TOKEN_UPPERCASE 
-                            }),
-                json_metadata: get_metadata(),
-                __config,
+            successCallback = s => {
+                console.log(s);
+                const get_metadata = () => {
+                    const meta = {};
+                    meta.app = `${APP_NAME.toLowerCase()}/0.1`;
+                    meta.format = 'markdown';
+                    return meta;
+                };
+
+                const __config = {};
+
+                operation = {
+                    parent_author: author,
+                    parent_permlink: permlink,
+                    author: username,
+                    permlink: clean_permlink(
+                        `thumbsup-comment-${author}-${permlink}`
+                    ), // only one
+                    category: '',
+                    title: '',
+                    body: tt('g.thumbsup_comment', {
+                        username: username,
+                        author: author,
+                        amount: amount,
+                        LIQUID_TOKEN: LIQUID_TOKEN_UPPERCASE,
+                    }),
+                    json_metadata: get_metadata(),
+                    __config,
+                };
+
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'comment',
+                        operation,
+                        errorCallback,
+                    })
+                );
             };
 
             dispatch(
                 transactionActions.broadcastOperation({
-                    type: 'comment',
+                    type: 'custom_json',
                     operation,
                     errorCallback,
+                    successCallback,
                 })
             );
-          };
-
-          dispatch(
-              transactionActions.broadcastOperation({
-                  type: 'custom_json',
-                  operation,
-                  errorCallback,
-                  successCallback,
-              })
-          );
-      },
-  })
+        },
+    })
 )(ThumbUp);
