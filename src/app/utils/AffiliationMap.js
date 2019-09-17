@@ -63,6 +63,7 @@ const map = {
     oldviking: 'Verified Creator',
     jullyette: 'Verified Creator',
     slutconfessions: 'Verified Creator',
+    pdaa: 'Verified Creator',
   
     
 };
