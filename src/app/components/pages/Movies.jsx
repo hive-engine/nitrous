@@ -90,22 +90,24 @@ export default function Movies(props) {
 
     const genres = tt(`genre.${type}`);
 
-    const initState = {
+    const initialState = {
         languageCode: locale,
-        movieType,
         lastMovieId: 0,
         genreId: -1,
         sortBy: 'release_date',
     };
 
-    const [values, setValues] = React.useState(initState);
+    const [state, setState] = React.useState({
+        movie: { ...initialState, movieType: 1 },
+        tv: { ...initialState, movieType: 2 },
+    });
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
     if (isMoviesUndefined && !isMoviesLoadingTried) {
         isMoviesLoadingTried = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
-        setTimeout(() => requestMovies(initState));
+        setTimeout(() => requestMovies({ ...initialState, movieType }));
     }
 
     const lastMovieId =
@@ -119,30 +121,27 @@ export default function Movies(props) {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
-    function handleChange(event) {
-        const newValues = {
-            ...values,
-            [event.target.name]: event.target.value,
+    function setNewState(name, value) {
+        const newState = {
+            ...state,
+            ...{ [type]: { ...state[type], [name]: value } },
         };
 
-        setValues(newValues);
-        updateMovies(newValues);
+        setState(newState);
+        updateMovies(newState[type]);
+    }
+
+    function handleChange(event) {
+        setNewState(event.target.name, event.target.value);
     }
 
     function setGenre(e, genreId) {
         e.stopPropagation();
-
-        const newValues = {
-            ...values,
-            ['genreId']: genreId,
-        };
-
-        setValues(newValues);
-        updateMovies(newValues);
+        setNewState('genreId', genreId);
     }
 
     const handleSearch = name => event => {
-        setValues({ ...values, [name]: event.target.value });
+        setNewState(name, event.target.value);
     };
 
     return (
@@ -161,7 +160,7 @@ export default function Movies(props) {
                             Genre
                         </InputLabel>
                         <Select
-                            value={values.genreId}
+                            value={state[type].genreId}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -190,7 +189,7 @@ export default function Movies(props) {
                             Sort by
                         </InputLabel>
                         <Select
-                            value={values.sortBy}
+                            value={state[type].sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -330,9 +329,9 @@ export default function Movies(props) {
                                             requestMovies({
                                                 languageCode: locale,
                                                 movieType,
-                                                genreId: values.genreId,
+                                                genreId: state[type].genreId,
                                                 lastMovieId,
-                                                sortBy: values.sortBy,
+                                                sortBy: state[type].sortBy,
                                             });
                                         }}
                                     >
@@ -356,11 +355,7 @@ module.exports = {
     path: ':type',
     component: connect(
         (state, ownProps) => {
-            let type = state.app.get('location').pathname.substring(1);
-            if (type !== 'movie' && type !== 'tv') {
-                type = 'movie';
-            }
-
+            const type = CustomUtil.getMovieTypeName(state);
             const movieType = type === 'movie' ? 1 : 2;
 
             let movies = state.movie.get(

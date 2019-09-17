@@ -101,19 +101,6 @@ export default function Movie(props) {
         });
     }
 
-    const [values, setValues] = React.useState({});
-
-    function handleChange(event) {
-        setValues(oldValues => ({
-            ...oldValues,
-            [event.target.name]: event.target.value,
-        }));
-    }
-
-    const handleSearch = name => event => {
-        setValues({ ...values, [name]: event.target.value });
-    };
-
     return (
         <React.Fragment>
             <CssBaseline />
@@ -351,7 +338,7 @@ module.exports = {
     path: ':type/:id',
     component: connect(
         (state, ownProps) => {
-            const type = ownProps.params.type;
+            const type = CustomUtil.getMovieTypeName(state);
             const movieType = type === 'movie' ? 1 : 2;
             const id = parseInt(ownProps.params.id);
             const movie = state.movie

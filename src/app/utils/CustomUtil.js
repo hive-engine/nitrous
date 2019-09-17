@@ -151,3 +151,15 @@ export function getMovieListName(movieType) {
 export function getNextListConditionName(movieType) {
     return movieType === 1 ? 'hasNextMovies' : 'hasNextTvs';
 }
+
+export function getMovieTypeName(state) {
+    let type = state.app.get('location').pathname;
+
+    if (type.indexOf('/movie') === 0) {
+        type = 'movie';
+    } else {
+        type = 'tv';
+    }
+
+    return type;
+}

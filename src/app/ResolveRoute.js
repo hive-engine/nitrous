@@ -11,7 +11,8 @@ export const routeRegex = {
     PostJson: /^\/([\w\d\-\/]+)\/(\@[\w\d\.-]+)\/([\w\d-]+)(\.json)$/,
     UserJson: /^\/(@[\w\.\d-]+)(\.json)$/,
     UserNameJson: /^.*(?=(\.json))/,
-    Movies: /^\/(movie|tv)\/?$/,
+    Movies: /^\/movie\/?$/,
+    Tvs: /^\/tv\/?$/,
     Movie: /^\/(movie|tv)\/(\d+)(?:-[^\/]+)?\/?$/,
     Reviews: /^\/review\/?$/,
 };
@@ -125,6 +126,12 @@ export default function resolveRoute(path) {
     if (match) {
         return {
             page: 'Movies',
+        };
+    }
+    match = path.match(routeRegex.Tvs);
+    if (match) {
+        return {
+            page: 'TVs',
         };
     }
     match = path.match(routeRegex.Movie);

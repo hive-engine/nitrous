@@ -100,6 +100,8 @@ export default {
             //});
         } else if (route.page === 'Movies') {
             cb(null, [Movies]);
+        } else if (route.page === 'TVs') {
+            cb(null, [Movies]);
         } else if (route.page === 'Movie') {
             cb(null, [Movie]);
         } else if (route.page === 'Reviews') {

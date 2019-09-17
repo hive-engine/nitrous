@@ -88,7 +88,7 @@ export default function Reviews(props) {
         updateReviews,
     } = props;
 
-    const [values, setValues] = React.useState({
+    const [state, setState] = React.useState({
         movieType: 0,
         genreId: -1,
         languageCode: ' ',
@@ -100,7 +100,7 @@ export default function Reviews(props) {
     const isReviewsUndefined = typeof reviews === 'undefined';
 
     if (isReviewsUndefined && !loading) {
-        requestReviews(values);
+        requestReviews(state);
     }
 
     let lastAuthor = '';
@@ -118,17 +118,17 @@ export default function Reviews(props) {
     }, []);
 
     function handleChange(event) {
-        const newValues = {
-            ...values,
+        const newState = {
+            ...state,
             [event.target.name]: event.target.value,
         };
 
-        setValues(newValues);
-        updateReviews(newValues);
+        setState(newState);
+        updateReviews(newState);
     }
 
     const handleSearch = name => event => {
-        setValues({ ...values, [name]: event.target.value });
+        setState({ ...state, [name]: event.target.value });
     };
 
     return (
@@ -147,7 +147,7 @@ export default function Reviews(props) {
                             Type
                         </InputLabel>
                         <Select
-                            value={values.movieType}
+                            value={state.movieType}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -175,7 +175,7 @@ export default function Reviews(props) {
                             Language
                         </InputLabel>
                         <Select
-                            value={values.languageCode}
+                            value={state.languageCode}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -201,7 +201,7 @@ export default function Reviews(props) {
                             Sort by
                         </InputLabel>
                         <Select
-                            value={values.sortBy}
+                            value={state.sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -352,13 +352,13 @@ export default function Reviews(props) {
                                         className={classes.button}
                                         onClick={() => {
                                             requestReviews({
-                                                movieType: values.movieType,
-                                                genreId: values.genreId,
+                                                movieType: state.movieType,
+                                                genreId: state.genreId,
                                                 languageCode:
-                                                    values.languageCode,
+                                                    state.languageCode,
                                                 lastAuthor,
                                                 lastPermlink,
-                                                sortBy: values.sortBy,
+                                                sortBy: state.sortBy,
                                             });
                                         }}
                                     >
