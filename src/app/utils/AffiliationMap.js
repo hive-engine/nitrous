@@ -65,6 +65,7 @@ const map = {
     slutconfessions: 'Verified Creator',
     pdaa: 'Verified Creator',
     allhailcandy: 'Verified Creator',
+    arenkeman: 'Verified Creator',
     
 };
 
