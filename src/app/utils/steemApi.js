@@ -324,7 +324,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     // if (callNameMatch) {
     const callNameMatch = call_name.match(/getDiscussionsBy(.*)Async/);
     const order = callNameMatch && callNameMatch[1].toLowerCase();
-    if (order && (scotOnly || order.match(/Trending|Hot|Created|Promoted/))) {
+    if (order && order.match(/Trending|Hot|Created|Promoted/)) {
         const order = callNameMatch[1].toLowerCase();
         const discussionQuery = {
             ...args[0],
