@@ -123,7 +123,6 @@ const SidePanel = ({
                 link: '/learn',
                 internal: true,
             },
-
             {
                 value: 'leotube',
                 label: 'LeoTube',
