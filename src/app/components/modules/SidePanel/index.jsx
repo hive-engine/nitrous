@@ -118,6 +118,13 @@ const SidePanel = ({
                 link: 'https://steemleo.com/welcome',
             },
             {
+                value: 'learn',
+                label: 'LEARN',
+                link: '/learn',
+                internal: true,
+            },
+
+            {
                 value: 'leotube',
                 label: 'LeoTube',
                 link: 'https://tube.steemleo.com',
