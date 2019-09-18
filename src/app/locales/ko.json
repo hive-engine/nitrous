@@ -325,7 +325,7 @@
         "title": "제목",
         "update_post": "저장",
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
-        "advanced_settings": "고급 설정",
+        "advanced_settings": "고급 설정(베니피셔리)",
         "beneficiaries_set": "%(count)s set"
     },
     "beneficiary_selector_jsx": {
