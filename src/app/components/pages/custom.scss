@@ -1,0 +1,119 @@
+// Start with assigning color names to specific hex values.
+$white: #fff;
+$white-shadow: rgba(0, 0, 0, 0.05);
+$white-darker: #f9f9f9;
+$white-gainsboro: #e9e7e7;
+$white-ghostWhite: #fafbfc;
+$white-smoke: #f2f2f2;
+$black: #000;
+$black-text: rgba(0, 0, 0, 0.84);
+$red: #d9534f;
+$orange: #f6a623;
+$green: #54d2a0;
+$blue-dodgerBlue: #2088ff;
+$blue-navyBlue: #79b8ff;
+$blue-botticelli: #99aab5;
+$blue-hawkesBlue: #e7e9f5;
+$blue-linkWater: #c2ccd3;
+$blue-baliHai: #8798a4;
+$blue-heather: #a1afba;
+$blue-solitude: #f5f6f9;
+$blue-deepSkyBlue: #00aced;
+$blue-pattensBlue: #f3f6fa;
+$teal: #5bc0de;
+$normal-grey: #4f545c;
+$grey-mortar: #595959;
+$grey-nightRider: #303030;
+$grey-darkGrey: #9d9d9d;
+$grey-gondola: #353535;
+$grey-nero: #24292e;
+$grey-empress: #777676;
+
+$primary-color: $blue-dodgerBlue;
+$secondary-color: $blue-navyBlue;
+$tertiary-color: $blue-botticelli;
+$quaternary-color: $grey-mortar;
+
+$font-family-sans-serif: Whitney, 'Source Sans Pro', 'Helvetica Neue', Helvetica,
+    Arial, 'Lucida Grande', sans-serif;
+$font-family-monospace: 'Source Sans Pro', monospace;
+$font-family-base: $font-family-sans-serif;
+
+$font-family: $font-family-base;
+
+$body-background: $white-ghostWhite;
+$component-background: $white;
+$font-size-base: 16px;
+$font-size-lg: $font-size-base;
+
+// Buttons
+$btn-height-base: 30px;
+$btn-height-lg: 46px;
+$btn-height-sm: 25px;
+$primary-button-border: darken($primary-color, 20%);
+
+$topic-button-color: $grey-empress;
+$topic-button-background-color: $white-gainsboro;
+$topic-button-border: 0;
+
+// Tooltip
+$tooltip-bg: $grey-nero;
+$tooltip-arrow-color: $grey-nero;
+
+// Layout
+$layout-body-background: transparent;
+$layout-header-background: $layout-body-background;
+$layout-header-height: 64px;
+$layout-header-padding: 0px;
+$layout-footer-padding: 24px 50px;
+$layout-sider-background: $layout-header-background;
+$layout-trigger-height: 48px;
+$layout-zero-trigger-width: 36px;
+$layout-zero-trigger-height: 42px;
+
+// Comments
+$comment-text-left-margin: 12px;
+$comment-avatar-size-default: 40px;
+$comment-text-offset-default: $comment-avatar-size-default +
+    $comment-text-left-margin;
+$comment-avatar-size-small: 32px;
+$comment-text-offset-small: $comment-avatar-size-small +
+    $comment-text-left-margin;
+
+$table-border: 1px solid rgba(34, 36, 38, 0.15);
+
+// Share Buttons
+$facebook-background-color: #3b5998;
+$twitter-background-color: hsl(206, 82%, 63%);
+$email-background-color: #777777;
+
+$twitter-link-color: $blue-deepSkyBlue;
+
+$modal-background-color: rgba(242, 242, 242, 0.97);
+
+// z-indexs
+$backtop-z-index: 1500;
+$react-modal-z-index: 1400; // used for post image gallery
+$ant-message-z-index: $react-modal-z-index + 5;
+$ant-layout-header-z-index: 1050;
+$ant-popup-z-index: 1030;
+$ant-tooltip-z-index: $ant-popup-z-index;
+$ant-popover-z-index: $ant-popup-z-index;
+$ant-popover-mobile-z-index: $ant-popup-z-index + 300;
+$ant-modal-z-index: 1260;
+$ant-modal-tooltip-z-index: $ant-modal-z-index + 5;
+$ant-modal-popover-z-index: $ant-modal-z-index + 5;
+$ant-popover-notifications-z-index: $ant-layout-header-z-index + 5;
+
+$border-color-base: $white-gainsboro;
+$base-border: $border-width-base $border-style-base $border-color-base;
+
+// Content Blocks
+$content-margin: 12px;
+
+// Notifications
+$notification-unread-background-color: $blue-pattensBlue;
+$notification-read-background-color: $white-ghostWhite;
+
+// Post
+$post-table-background-color: rgba(128, 128, 128, 0.05);
