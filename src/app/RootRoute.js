@@ -19,6 +19,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Learn') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Learn')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
