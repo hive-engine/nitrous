@@ -60,6 +60,8 @@ export const icons = [
     'steemcoinpan',
     'thumbup',
     'thumbup_fill',
+    'gift',
+    'gift_fill',
 ];
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);
