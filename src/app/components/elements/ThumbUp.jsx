@@ -383,7 +383,7 @@ class ThumbUp extends React.Component {
                         });
                         this.readSliderWeight();
                     }}
-                    title={<Icon name={'gift2'} className="upthumb" />}
+                    title={<Icon name={'gift'} className="upthumb" />}
                 >
                     <div className="ThumbUp__adjust_weight">
                         <a
@@ -392,7 +392,7 @@ class ThumbUp extends React.Component {
                             className="thumbup_confirm_weight"
                             title={tt('g.thumbsup')}
                         >
-                            <Icon size="2x" name={'gift2'} />
+                            <Icon size="2x" name={'gift'} />
                         </a>
                         {slider(true)}
                         <CloseButton
@@ -403,7 +403,7 @@ class ThumbUp extends React.Component {
                 </Dropdown>
             );
         } else {
-            thumbUpIcon = <Icon name={'gift2'} className="upthumb" />;
+            thumbUpIcon = <Icon name={'gift_fill'} className="upthumb" />;
         }
 
         const classUp = 'ThumbUp__button ThumbUp__button-up';
