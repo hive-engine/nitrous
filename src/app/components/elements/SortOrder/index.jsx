@@ -38,18 +38,18 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         return [
             {
                 value: 'movie',
-                label: 'MOVIES',
+                label: tt('review.top_menu.movies'),
                 //link: `/trending/${tag}`,
                 link: `/movie`,
             },
             {
                 value: 'tv',
-                label: 'TV SHOWS',
+                label: tt('review.top_menu.tvs'),
                 link: `/tv`,
             },
             {
                 value: 'review',
-                label: 'REVIEWS',
+                label: tt('review.top_menu.reviews'),
                 link: `/review`,
             },
             {

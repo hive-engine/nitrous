@@ -88,7 +88,7 @@ export default function Movies(props) {
         updateMovies,
     } = props;
 
-    const genres = tt(`genre.${type}`);
+    const genres = tt(`review.genre.${type}`);
 
     const initialState = {
         languageCode: locale,
