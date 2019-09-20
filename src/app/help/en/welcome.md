@@ -265,7 +265,7 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 - [Lotus for Homesteaders](https://www.naturalmedicine.io/naturalmedicine/@nateonsteemit/lotus-coin-for-homesteaders) by @nateonsteemit
 
 <a href="#Table_of_Contents">^</a>
-## <span id="Other_Resources">Other Resources - Natural Medicine</span>
+## <span id="Other_Resources">Other Resources</span>
 
 #### Steem Resources
 
