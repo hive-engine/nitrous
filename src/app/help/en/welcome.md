@@ -9,11 +9,8 @@ Below that is a section of "Helpful Posts", which contains a collection of posts
 
 ## <span id="Getting_Started">Getting Started</span>
 <span id="disable_router_nav_history_direction_check"></span>
-## Welcome to Natural Medicine!
 
-This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page.
-
-Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. These are helpful for getting started. 
+This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate.
 
 <p align="center"><img width="120" height="75" src="https://i.imgur.com/RnOom11.png/240/150"></p>
 
