@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  SCT_API_BASE_URL,
+} from 'app/client_config';
 import tt from 'counterpart';
 
 const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
@@ -19,6 +22,7 @@ const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
 
     const styleToken = { color: 'rgb(0, 120, 167)' };
     const styleBurn = { color: 'red' };
+    const thumbsUpViewPageUrl = `${SCT_API_BASE_URL}/manager`;
 
     return (
         <div className="c-sidebar__module">
@@ -78,6 +82,14 @@ const SidebarThumbsup = ({ thumbsUpReceiveList, thumbsUpSendList }) => {
                         );
                     })}
                 </ul>
+            </div>
+
+            <div style={{ 
+              textAlign: 'right', 
+              paddingTop:'0.5rem', 
+              fontSize:'0.9rem' 
+            }}>
+              <a target="_blank" href={thumbsUpViewPageUrl}>more...</a>
             </div>
         </div>
     );
