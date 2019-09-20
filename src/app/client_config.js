@@ -14,6 +14,7 @@ export const APP_DOMAIN = 'www.steemcoinpan.com';
 export const SCOT_TAG = 'sct';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
+export const SCT_API_BASE_URL = 'https://apisct.cloud';
 export const TAG_LIST = fromJSOrdered([
     'sct',
     'sct-kr',
