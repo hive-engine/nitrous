@@ -983,6 +983,37 @@
             "tvs": "TV 프로그램",
             "reviews": "리뷰"
         },
+        "label": {
+            "genre": "장르",
+            "sort_by": "정렬",
+            "type": "종류",
+            "language": "언어"
+        },
+        "option": {
+            "release_date": "개봉일",
+            "review_date": "리뷰작성일",
+            "movie_tv": "영화/TV",
+            "movie": "영화",
+            "tv": "TV",
+            "languages": [
+                { "code": " ", "name": "전체언어" },
+                { "code": "en", "name": "영어" },
+                { "code": "ko", "name": "한국어" },
+                { "code": "zh", "name": "중국어" }
+            ]
+        },
+        "load_more_list": {
+            "movie": "더 많은 영화 보기",
+            "tv": "더 많은 TV 프로그램 보기",
+            "review": "더 많은 리뷰 보기"
+        },
+        "movie_detail": {
+            "runtime": "상영시간",
+            "featured_crew": "주요 제작진",
+            "top_billed_cast": "주요 출연진",
+            "series_cast": "시리즈 출연진",
+            "reviews": "리뷰"
+        },
         "other_reviews_for_same_movie": "같은 영화, 다른 리뷰",
         "genre": {
             "movie": [

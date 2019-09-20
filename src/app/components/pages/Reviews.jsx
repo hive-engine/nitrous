@@ -88,6 +88,8 @@ export default function Reviews(props) {
         updateReviews,
     } = props;
 
+    const languages = tt('review.option.languages');
+
     const [state, setState] = React.useState({
         movieType: 0,
         genreId: -1,
@@ -144,7 +146,7 @@ export default function Reviews(props) {
                             ref={inputLabel}
                             htmlFor="outlined-movie-type"
                         >
-                            Type
+                            {tt('review.label.type')}
                         </InputLabel>
                         <Select
                             value={state.movieType}
@@ -158,10 +160,14 @@ export default function Reviews(props) {
                             }
                         >
                             <MenuItem value={0}>
-                                <em>Movie/TV</em>
+                                <em>{tt('review.option.movie_tv')}</em>
                             </MenuItem>
-                            <MenuItem value={1}>Movie</MenuItem>
-                            <MenuItem value={2}>TV</MenuItem>
+                            <MenuItem value={1}>
+                                {tt('review.option.movie')}
+                            </MenuItem>
+                            <MenuItem value={2}>
+                                {tt('review.option.tv')}
+                            </MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl
@@ -172,7 +178,7 @@ export default function Reviews(props) {
                             ref={inputLabel}
                             htmlFor="outlined-language-code"
                         >
-                            Language
+                            {tt('review.label.language')}
                         </InputLabel>
                         <Select
                             value={state.languageCode}
@@ -185,12 +191,18 @@ export default function Reviews(props) {
                                 />
                             }
                         >
-                            <MenuItem value={' '}>
-                                <em>All Languages</em>
-                            </MenuItem>
-                            <MenuItem value={'en'}>English</MenuItem>
-                            <MenuItem value={'ko'}>Korean</MenuItem>
-                            <MenuItem value={'zh'}>Chinese</MenuItem>
+                            {languages.map(language => (
+                                <MenuItem
+                                    value={language.code}
+                                    key={language.code}
+                                >
+                                    {language.code !== ' ' ? (
+                                        language.name
+                                    ) : (
+                                        <em>{language.name}</em>
+                                    )}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     {/* <FormControl
@@ -362,7 +374,7 @@ export default function Reviews(props) {
                                             });
                                         }}
                                     >
-                                        LOAD MORE REVIEWS
+                                        {tt('review.load_more_list.review')}
                                     </Button>
                                 )
                             ) : null}

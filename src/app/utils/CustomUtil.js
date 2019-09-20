@@ -1,9 +1,15 @@
 const movieImageBaseUrl = 'https://image.tmdb.org/t/p';
 
 export function convertUnixTimestampToDate(value) {
-    return new Date(Number(value.replace('/Date(', '').replace(')/', '')))
+    const date = new Date(Number(value.replace('/Date(', '').replace(')/', '')))
         .toISOString()
         .substring(0, 10);
+
+    if (date !== '0001-01-01') {
+        return date;
+    } else {
+        return '';
+    }
 }
 
 export function getSummary(value) {

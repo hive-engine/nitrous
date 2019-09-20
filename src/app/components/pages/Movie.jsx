@@ -150,7 +150,7 @@ export default function Movie(props) {
                                             variant="subtitle1"
                                             color="textSecondary"
                                         >
-                                            Runtime:{' '}
+                                            {tt('review.movie_detail.runtime')}:{' '}
                                             {CustomUtil.getRuntimeString(
                                                 movieDetails !== null
                                                     ? movieDetails.Runtime
@@ -173,7 +173,9 @@ export default function Movie(props) {
                                             ))}
                                     </div>
                                     <h4 style={{ marginTop: '50px' }}>
-                                        Featured Crew (주요 제작진)
+                                        {tt(
+                                            'review.movie_detail.featured_crew'
+                                        )}
                                     </h4>
                                     <Grid
                                         container
@@ -203,8 +205,8 @@ export default function Movie(props) {
                     </div>
                     <h4 style={{ marginTop: '50px' }}>
                         {movieType === 1
-                            ? 'Top Billed Cast (주요 출연진)'
-                            : 'Series Cast (시리즈 출연진)'}
+                            ? tt('review.movie_detail.top_billed_cast')
+                            : tt('review.movie_detail.series_cast')}
                     </h4>
                     <Grid container spacing={2} className={classes.cardGrid}>
                         {casts.map(cast => (
@@ -229,7 +231,9 @@ export default function Movie(props) {
                             </Grid>
                         ))}
                     </Grid>
-                    <h4 style={{ marginTop: '50px' }}>Reviews</h4>
+                    <h4 style={{ marginTop: '50px' }}>
+                        {tt('review.movie_detail.reviews')}
+                    </h4>
                     {movie.Posts != null ? (
                         <Grid
                             container

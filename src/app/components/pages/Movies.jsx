@@ -157,7 +157,7 @@ export default function Movies(props) {
                             ref={inputLabel}
                             htmlFor="outlined-genre-id"
                         >
-                            Genre
+                            {tt('review.label.genre')}
                         </InputLabel>
                         <Select
                             value={state[type].genreId}
@@ -186,7 +186,7 @@ export default function Movies(props) {
                         className={classes.formControl}
                     >
                         <InputLabel ref={inputLabel} htmlFor="outlined-sort-by">
-                            Sort by
+                            {tt('review.label.sort_by')}
                         </InputLabel>
                         <Select
                             value={state[type].sortBy}
@@ -200,10 +200,10 @@ export default function Movies(props) {
                             }
                         >
                             <MenuItem value={'release_date'}>
-                                Release Date
+                                {tt('review.option.release_date')}
                             </MenuItem>
                             <MenuItem value={'created'}>
-                                Review Created
+                                {tt('review.option.review_date')}
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -335,7 +335,7 @@ export default function Movies(props) {
                                             });
                                         }}
                                     >
-                                        LOAD MORE MOVIES
+                                        {tt(`review.load_more_list.${type}`)}
                                     </Button>
                                 )
                             ) : null}
