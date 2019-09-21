@@ -22,6 +22,7 @@ const map = {
     nainaztengra: 'Unlimited Abundance Blissful Happiness and Unconditional Love',
     ravenlotus: 'Lotus Curator',
     riverlotus: 'Lotus Curator',
+    bynarikode: 'Helpie Curator',
     
     
 
