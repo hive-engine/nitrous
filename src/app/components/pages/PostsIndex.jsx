@@ -224,6 +224,10 @@ class PostsIndex extends React.Component {
                             {tt('posts_index.empty_feed_3')}
                         </Link>
                         <br />
+                        <Link to="/welcome">
+                            {tt('posts_index.empty_feed_4')}
+                        </Link>
+                        <br />
                     </div>
                 );
             } else {
