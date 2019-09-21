@@ -158,6 +158,10 @@ export function getNextListConditionName(movieType) {
     return movieType === 1 ? 'hasNextMovies' : 'hasNextTvs';
 }
 
+export function getListLoadedConditionName(movieType) {
+    return movieType === 1 ? 'isMoviesLoaded' : 'isTvsLoaded';
+}
+
 export function getMovieTypeName(state) {
     let type = state.app.get('location').pathname;
 

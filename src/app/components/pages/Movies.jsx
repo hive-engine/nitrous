@@ -84,6 +84,7 @@ export default function Movies(props) {
         locale,
         loading,
         hasNextList,
+        isListLoaded,
         requestMovies,
         updateMovies,
     } = props;
@@ -104,7 +105,7 @@ export default function Movies(props) {
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
-    if (isMoviesUndefined && !isMoviesLoadingTried) {
+    if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried) {
         isMoviesLoadingTried = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
         setTimeout(() => requestMovies({ ...initialState, movieType }));
@@ -223,7 +224,7 @@ export default function Movies(props) {
                         }}
                     /> */}
                 </form>
-                {isMoviesUndefined ? (
+                {isMoviesUndefined || !isListLoaded ? (
                     <LoadingIndicator
                         style={{ marginBottom: '2rem' }}
                         type="circle"
@@ -343,7 +344,7 @@ export default function Movies(props) {
                     </main>
                 ) : (
                     <main style={{ width: '100%', marginTop: '20px' }}>
-                        <h4>No result was found in these options.</h4>
+                        <h4>{tt('review.no_list')}</h4>
                     </main>
                 )}
             </Container>
@@ -373,6 +374,10 @@ module.exports = {
                 hasNextList:
                     state.movie.get(
                         CustomUtil.getNextListConditionName(movieType)
+                    ) || false,
+                isListLoaded:
+                    state.movie.get(
+                        CustomUtil.getListLoadedConditionName(movieType)
                     ) || false,
                 loading: state.movie.get('loading') || false,
                 status: state.global.get('status'),
@@ -410,4 +415,5 @@ Movies.propTypes = {
     locale: PropTypes.string.isRequired,
     movies: PropTypes.array,
     hasNextList: PropTypes.bool.isRequired,
+    isListLoaded: PropTypes.bool.isRequired,
 };

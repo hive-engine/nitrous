@@ -382,7 +382,7 @@ export default function Reviews(props) {
                     </main>
                 ) : (
                     <main style={{ width: '100%', marginTop: '20px' }}>
-                        <h4>No result was found in these options.</h4>
+                        <h4>{tt('review.no_list')}</h4>
                     </main>
                 )}
             </Container>

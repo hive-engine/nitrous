@@ -911,7 +911,6 @@
             "series_cast": "Series Cast",
             "reviews": "Reviews"
         },
-        "other_reviews_for_same_movie": "Other reviews of the same movie",
         "genre": {
             "movie": [
                 { "id": -1, "name": "All Genres" },
@@ -958,6 +957,8 @@
                 { "id": 37, "name": "Western" },
                 { "id": 0, "name": "Undefined" }
             ]
-        }
+        },
+        "no_list": "No result was found in these options.",
+        "other_reviews_for_same_movie": "Other reviews of the same movie"
     }
 }

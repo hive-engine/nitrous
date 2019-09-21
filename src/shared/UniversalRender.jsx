@@ -351,8 +351,7 @@ export async function serverRender(
 
             if (movies.length == LIST_MAX_SIZE) {
                 movie[CustomUtil.getNextListConditionName(movieType)] = true;
-            } else {
-                movie[CustomUtil.getNextListConditionName(movieType)] = false;
+                movie[CustomUtil.getListLoadedConditionName(movieType)] = true;
             }
         } else if (url.match(routeRegex.Movie)) {
             let movieType;
@@ -372,6 +371,7 @@ export async function serverRender(
             );
 
             movie[CustomUtil.getMovieListName(movieType)] = List([movieResult]);
+            movie[CustomUtil.getListLoadedConditionName(movieType)] = false;
         } else if (url.match(routeRegex.Reviews)) {
             const reviews = await movieApi.getReviews(0, -1, '', '', '', '');
 
@@ -379,8 +379,6 @@ export async function serverRender(
 
             if (reviews.length == LIST_MAX_SIZE) {
                 movie.hasNextReviews = true;
-            } else {
-                movie.hasNextReviews = false;
             }
         }
 

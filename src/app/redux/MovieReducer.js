@@ -40,13 +40,22 @@ export default function reducer(state = defaultState, action = {}) {
                 .update(
                     CustomUtil.getMovieListName(payload.movieType),
                     list =>
-                        list
+                        list &&
+                        state.get(
+                            CustomUtil.getListLoadedConditionName(
+                                payload.movieType
+                            )
+                        )
                             ? list.concat(fromJS(payload.data))
                             : fromJS(payload.data)
                 )
                 .set(
                     CustomUtil.getNextListConditionName(payload.movieType),
                     payload.data.length == LIST_MAX_SIZE
+                )
+                .set(
+                    CustomUtil.getListLoadedConditionName(payload.movieType),
+                    true
                 );
         case RECEIVE_UPDATE_MOVIES:
             return state
@@ -57,6 +66,10 @@ export default function reducer(state = defaultState, action = {}) {
                 .set(
                     CustomUtil.getNextListConditionName(payload.movieType),
                     payload.data.length == LIST_MAX_SIZE
+                )
+                .set(
+                    CustomUtil.getListLoadedConditionName(payload.movieType),
+                    true
                 );
         case RECEIVE_REVIEWS:
             return state

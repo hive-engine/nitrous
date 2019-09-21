@@ -1014,7 +1014,6 @@
             "series_cast": "시리즈 출연진",
             "reviews": "리뷰"
         },
-        "other_reviews_for_same_movie": "같은 영화, 다른 리뷰",
         "genre": {
             "movie": [
                 { "id": -1, "name": "전체 장르" },
@@ -1061,6 +1060,8 @@
                 { "id": 14, "name": "판타지" },
                 { "id": 0, "name": "장르 미정" }
             ]
-        }
+        },
+        "no_list": "목록이 존재하지 않습니다. 다른 조건을 선택하세요.",
+        "other_reviews_for_same_movie": "같은 영화, 다른 리뷰"
     }
 }
