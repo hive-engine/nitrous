@@ -23,6 +23,8 @@ const map = {
     ravenlotus: 'Lotus Curator',
     riverlotus: 'Lotus Curator',
     bynarikode: 'Helpie Curator',
+    naturalmedicine: 'Natural Medicine Official',
+    riverflows: 'Natural Medicine Founder',
     
     
 
