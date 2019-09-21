@@ -113,6 +113,11 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'welcome',
+                label: tt('navigation.welcome'),
+                link: `/welcome`,
+            },
+            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/AfQSqMb',
