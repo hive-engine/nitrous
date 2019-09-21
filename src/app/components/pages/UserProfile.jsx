@@ -296,6 +296,10 @@ export default class UserProfile extends React.Component {
                             {tt('user_profile.explore_trending_articles')}
                         </Link>
                         <br />
+                        <Link to="/welcome">
+                            {tt('user_profile.read_the_quick_start_guide')}
+                        </Link>
+                        <br />
                     </div>
                 ) : (
                     tt('user_profile.user_hasnt_started_bloggin_yet', {
