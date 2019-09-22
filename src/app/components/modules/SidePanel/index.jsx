@@ -118,10 +118,9 @@ const SidePanel = ({
                 link: 'https://steemleo.com/welcome',
             },
             {
-                value: 'learn',
-                label: 'LEARN',
-                link: '/learn',
-                internal: true,
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/KgcVDKQ',
             },
             {
                 value: 'leotube',
