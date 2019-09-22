@@ -35,11 +35,11 @@ class Learn extends React.Component {
                 <div className="container">
                     <div className="center" style={{ marginBottom: '50px' }}>
                         <h2 style={{ color: 'purple', textAlign: 'center' }}>
-                            GROW
+                            GRO.grW
                         </h2>
                         <Collapse defaultActiveKey={['1']}>
                             <Collapse.Panel
-                                header="About GROW"
+                                header="About LEARN"
                                 key="1"
                                 style={customPanelStyle}
                             >
@@ -61,7 +61,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Submit A Video To One Of Our TV(s)"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -79,7 +79,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.submitAVideo
+                                                    learnSections.submitAVideo
                                                 }
                                             />
                                         </div>
@@ -94,7 +94,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Write To Ulogs.org"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -110,7 +110,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.writeToUlogs
+                                                    learnSections.writeToUlogs
                                                 }
                                             />
                                         </div>
@@ -125,7 +125,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="15 Mins Session With Your Favorite Mentor"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -144,7 +144,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.fifteenMinuteMentor
+                                                    learnSections.fifteenMinuteMentor
                                                 }
                                             />
                                         </div>
@@ -158,7 +158,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Apply To Give A 30 Mins Symposium About Your Project On A Popular Steem Community"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -178,7 +178,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.thirtyMinuteSymposium
+                                                    learnSections.thirtyMinuteSymposium
                                                 }
                                             />
                                         </div>
@@ -192,7 +192,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="How About Extra Clout On Steem Or Outside Steem"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -210,7 +210,7 @@ class Learn extends React.Component {
                                         </h3>
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
-                                                source={growSections.extraClout}
+                                                source={learnSections.extraClout}
                                             />
                                         </div>
                                         <a>
@@ -223,7 +223,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Do You Need Extra Confidence To Make A Life-Changing Move?"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -242,7 +242,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.extraConfidence
+                                                    learnSections.extraConfidence
                                                 }
                                             />
                                         </div>
@@ -257,7 +257,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Are You Dealing With Hard-To-Explain Ailment e.g Depression?"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -276,7 +276,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.hardToExplainAilment
+                                                    learnSections.hardToExplainAilment
                                                 }
                                             />
                                         </div>
@@ -291,7 +291,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Send Us A Letter, Gift Or Mail"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
@@ -307,7 +307,7 @@ class Learn extends React.Component {
                                         <div style={customCardStyle}>
                                             <ReactMarkdown
                                                 source={
-                                                    growSections.sendUsSomething
+                                                    learnSections.sendUsSomething
                                                 }
                                             />
                                         </div>
@@ -321,7 +321,7 @@ class Learn extends React.Component {
                                     <List.Item
                                         key="Inspire Us"
                                         extra={
-                                            <GrowVideoEmbed
+                                            <LearnVideoEmbed
                                                 key="embed"
                                                 embed={{
                                                     provider_name: 'YouTube',
