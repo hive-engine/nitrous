@@ -21,6 +21,8 @@ const map = {
     dmilliz: 'ReggaeSteem',
     crypticat: 'ReggaeSteem',
     
+    nojahm4u: 'Moderator',
+    
     mistakili: 'Ambassador',
     'roger.remix': 'Ambassador',
     joseacabrerav: 'Ambassador',
