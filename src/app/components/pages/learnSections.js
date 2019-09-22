@@ -1,4 +1,4 @@
-export const aboutGrow = `
+export const aboutLearn = `
 On Ulogs.org, it is **"true celebrity-hood for everyone, once and for all"**. We measure our success in terms of **'real human growth'**. We want to create **more value for 'humans'** in a world were cryptokitties, superman, millionaire-cats, human-clones etc is beginning to garner more value than 'humans'.
 &nbsp;
 &nbsp;
