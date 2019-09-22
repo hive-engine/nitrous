@@ -113,6 +113,11 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'sandiegocoinweb',
+                label: 'San Diego Coin Website',
+                link: 'https://sandiegocoin.org/',
+            },
+            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/MbPWR8s',
