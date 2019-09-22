@@ -35,6 +35,8 @@ describe('resolveRoute', () => {
     const test_cases = [
         ['/', { page: 'PostsIndex', params: ['trending'] }],
         ['/about.html', { page: 'About' }],
+        ['/learn', { page: 'Learn' }],
+        ['/favorite-mentor', { page: 'FavoriteMentor' }],
         ['/faq.html', { page: 'Faq' }],
         ['/login.html', { page: 'Login' }],
         ['/privacy.html', { page: 'Privacy' }],
