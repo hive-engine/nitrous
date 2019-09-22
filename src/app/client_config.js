@@ -18,7 +18,7 @@ export const TAG_LIST = fromJSOrdered({
     steemleo: ['dailyleo', 'learnleo', 'leowritingcontest', 'syndication'],
     crypto: ['blockchain', 'defi', 'steem', 'bitcoin'],
     investing: ['news', 'politics', 'personalfinance'],
-    spanish:,
+    trading: ['analysis'],
 });
 export const LIQUID_TOKEN = 'Leo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
