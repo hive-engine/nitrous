@@ -304,8 +304,8 @@ class Header extends React.Component {
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
                     <div style={showAd ? {} : { display: 'none' }}>
                         <GptAd
-                            type="Freestar"
-                            id="steemit_728x90_970x90_970x250_320x50_ATF"
+                            type="Coinzilla"
+                            id="/21784675435/steemit_top-navi"
                         />
                     </div>
                     <div style={showReviveAd ? {} : { display: 'none' }}>
