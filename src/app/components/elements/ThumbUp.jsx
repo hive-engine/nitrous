@@ -10,6 +10,7 @@ import CloseButton from 'app/components/elements/CloseButton';
 import Slider from 'react-rangeslider';
 import { getThumbUpList } from 'app/utils/SctApi';
 import * as transactionActions from 'app/redux/TransactionReducer';
+import * as appActions from 'app/redux/AppReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { clean_permlink } from 'app/utils/CommentUtil';
@@ -523,7 +524,6 @@ export default connect(
             };
 
             successCallback = s => {
-                console.log(s);
                 const get_metadata = () => {
                     const meta = {};
                     meta.app = `${APP_NAME.toLowerCase()}/0.1`;
@@ -552,14 +552,36 @@ export default connect(
                     __config,
                 };
 
+                const successCallback = () => {
+                  dispatch(
+                    appActions.addNotification({
+                        key: 'trx_' + Date.now(),
+                        message:tt('g.thumbsup_completed'),
+                        dismissAfter: 5000,
+                    })
+                  );
+                };
+
                 dispatch(
                     transactionActions.broadcastOperation({
                         type: 'comment',
                         operation,
                         errorCallback,
+                        successCallback,
                     })
                 );
             };
+            
+            dispatch(
+              appActions.addNotification({
+                  key: 'trx_' + Date.now(),
+                  message:tt('g.thumbsup_information', {
+                    amount:amount,
+                    LIQUID_TOKEN:LIQUID_TOKEN_UPPERCASE
+                  }),
+                  dismissAfter: 10000,
+              })
+            );
 
             dispatch(
                 transactionActions.broadcastOperation({
