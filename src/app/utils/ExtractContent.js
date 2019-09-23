@@ -63,21 +63,26 @@ export default function extractContent(get, content) {
 
     // If nothing found in json metadata, parse body and check images/links
     if (!image_link) {
-        let rtags;
-        {
-            const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
-            const htmlText = isHtml
-                ? body
-                : remarkable.render(
-                      body.replace(
-                          /<!--([\s\S]+?)(-->|$)/g,
-                          '(html comment removed: $1)'
-                      )
-                  );
-            rtags = HtmlReady(htmlText, { mutate: false });
-        }
+        try {
+            let rtags;
+            {
+                const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
 
-        [image_link] = Array.from(rtags.images);
+                const htmlText = isHtml
+                    ? body
+                    : remarkable.render(
+                          body.replace(
+                              /<!--([\s\S]+?)(-->|$)/g,
+                              '(html comment removed: $1)'
+                          )
+                      );
+                rtags = HtmlReady(htmlText, { mutate: false });
+            }
+
+            [image_link] = Array.from(rtags.images);
+        } catch (e) {
+            console.log(`image_link replace failed`);
+        }
     }
 
     // Was causing broken thumnails.  IPFS was not finding images uploaded to another server until a restart.
