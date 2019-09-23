@@ -1,6 +1,8 @@
 <span id="disable_router_nav_history_direction_check"></span>
 ## Welcome to Natural Medicine!
 
+LOTUS is a social coin for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices. Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow food and plants as medicine. Earn LOTUS by publishing or interacting with others on the platform. 
+
 This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page.
 
 Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. These are helpful for getting started. 
@@ -12,7 +14,7 @@ Below that is a section of "Helpful Posts", which contains a collection of posts
 
 This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate.
 
-<p align="center"><img width="120" height="75" src="https://i.imgur.com/RnOom11.png/240/150"></p>
+<p align="center"><img width="60" height="36" src="https://i.imgur.com/RnOom11.png/240/150"></p>
 
 ## <span id="Getting_Started">Getting Started</span>
 
@@ -23,7 +25,7 @@ This page is full of information to help you learn about how to use our platform
 - <a href="#Sign_Up_for_Discord">Signing Up for Discord & Getting Help</a>
 - <a href="#Create_your_introduceyourself_post">Create your "Introduceyourself" Post</a>
 
-<p align="center"><img width="120" height="75" src="https://i.imgur.com/RnOom11.png/240/150"></p>
+<p align="center"><img width="60 height="36" src="https://i.imgur.com/RnOom11.png/240/150"></p>
 
 ## Diving Deeper
 
@@ -246,12 +248,15 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 
 - [Introducing Lotus Coin for the Natural Medicine Community](https://steempeak.com/naturalmedicine/@naturalmedicine/introducing-lotus-coin-for-the-natural-medicine-community)
 - [How To Power Up or Stake Your Lotus](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)
-- [The Natural Medicine Manifesto]()
+- [Content Guidelines](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
+- [The Natural Medicine Manifesto](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
 - [Introduction Post for Uplotus Voting Account](https://www.naturalmedicine.io/introduceyourself/@uplotus/introducing-the-curation-account-for-lotus-token)
 - [The Natural Medicine Manifesto](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
 - [Standards for Content](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
-- [Frequently Asked Questions]()
+- [Frequently Asked Questions](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq)
+- [How to Buy Lotus on SteemEngine]()
 - [Natural Medicine Greenpaper]() - Explanation of how the platform works (COMING SOON!)
+
 
 <a href="#Table_of_Contents">^</a>
 ## <span id="Posts by Users"> Posts by Users </span>
@@ -260,6 +265,7 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 - [Lotus for Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
 - [Lotus for Herbalists](https://www.naturalmedicine.io/naturalmedicine/@riverflows/a-token-for-herb-lovers-why-i-m-in-love-with-lotus) by @riverflows
 - [Lotus for Homesteaders](https://www.naturalmedicine.io/naturalmedicine/@nateonsteemit/lotus-coin-for-homesteaders) by @nateonsteemit
+- [Lotus for Scientists](https://steemit.com/naturalmedicine/@alchemage/lotus-token-for-scientists-a-call-for-more-science-in-the-natural-medicine-community) by @alchemage
 
 <a href="#Table_of_Contents">^</a>
 ## <span id="Other_Resources">Other Resources</span>
@@ -282,9 +288,6 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 
 Need help or advice? Feel free to ask any questions in our [Discord channel](https://discord.gg/ZfH5kwk). There’s plenty of people willing to help. We’ve all been new users too, so we’re really understanding of any questions, no matter how silly they may seem!
 
-You might find some of the following links useful too. We can't claim to have written them, but there's a lot of helpful people on the Steem blockchain willing to help new users out in all kinds of ways!
- 
-
 ## <span id="Disclaimer">Disclaimer</span>
 
 It's important to note that any third party apps we've referenced here, or the content that might appear on NaturalMedicine.io, is not necessarily endorsed by Natural Medicine as a whole. 
@@ -294,7 +297,7 @@ We encourage everyone who might be reading any medical advice based on content t
 
 <a href="#Getting_Started">^</a>
 
-<p align="center"><img width="300" height="300" src="https://i.imgur.com/vEDggD8.png/300/300"></p>
+<p align="center"><img width="150" height="150" src="https://i.imgur.com/vEDggD8.png/300/300"></p>
 
 
 
