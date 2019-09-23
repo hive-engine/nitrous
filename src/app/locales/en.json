@@ -254,13 +254,16 @@
         "circulating": "Circulating",
         "burn": "Burn",
         "staking": "Staking",
-        "thumbsup": "ThumbsUp",
-        "thumbsup_comment":
-            "%(username)s gave %(author)s gifts(%(amount)s %(LIQUID_TOKEN)s).",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
-        "all_claim_completed": "Claims completed!"
+        "all_claim_completed": "Claims completed!",
+        "thumbsup": "ThumbsUp",
+        "thumbsup_comment":
+            "%(username)s gave %(author)s gifts(%(amount)s %(LIQUID_TOKEN)s).",
+        "thumbsup_completed":"Processing is complete.",
+        "thumbsup_information":
+            "Do you want to give this account %(amount)s %(LIQUID_TOKEN)s for this article? Click 'Confirm' to proceed."
     },
     "navigation": {
         "about": "About Steemit, Inc.",
