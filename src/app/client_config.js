@@ -69,10 +69,10 @@ export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 // Revive Ads
 export const NO_ADS_STAKE_THRESHOLD = 2000;
 export const REVIVE_ADS = {
-    //header_banner: {
-    //    zoneId: '1699',
-    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //},
+    header_banner: {
+        zoneId: '2045',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
     //sidebar_left: {
     //    zoneId: '1767',
     //    reviveId: '727bec5e09208690b050ccfc6a45d384',
@@ -81,22 +81,22 @@ export const REVIVE_ADS = {
     //    zoneId: '1761',
     //    reviveId: '727bec5e09208690b050ccfc6a45d384',
     //},
-    //post_footer_abovecomments: {
-    //    zoneId: '1768',
-    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //},
-    //post_footer_betweencomments: {
-    //    zoneId: '1769',
-    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //},
-    //feed: {
-    //    zoneId: '1777',
-    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //},
-    //feed_small: {
-    //    zoneId: '',
-    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //},
+    post_footer_abovecomments: {
+        zoneId: '2046',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+    post_footer_betweencomments: {
+        zoneId: '2047',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+    feed: {
+        zoneId: '2048',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+    feed_small: {
+        zoneId: '2049',
+        reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
 };
 
 // Other configurations
