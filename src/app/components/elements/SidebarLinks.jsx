@@ -27,6 +27,18 @@ const SidebarLinks = ({ username }) => (
                         {tt('g.my_wallet')}
                     </a>
                 </li>
+                <li className="c-sidebar__list-item">
+                    <a
+                        className="c-sidebar__link"
+                        href={'https://video.dporn.co/'}
+                        target="_blank"
+                    >
+                        <span>
+                            DPorn Tube
+                            <Icon name="dtube" size="2x" />
+                        </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
