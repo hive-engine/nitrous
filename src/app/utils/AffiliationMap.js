@@ -17,7 +17,6 @@ const map = {
     //neoxag
     neoxian: 'Founder',
     zaku: 'Tribe Team',
-    'news-today': 'Tribe Team',
     reazuliqbal: 'Tribe Team',
     bala41288: 'Tribe Team',
     thereikiforest: 'Pope',
