@@ -376,6 +376,14 @@ export async function serverRender(
             const reviews = await movieApi.getReviews(0, -1, '', '', '', '');
 
             movie.reviews = reviews;
+            movie.options.reviews = {
+                movieType: 0,
+                genreId: -1,
+                languageCode: ' ',
+                lastAuthor: '',
+                lastPermlink: '',
+                sortBy: 'created',
+            };
 
             if (reviews.length == LIST_MAX_SIZE) {
                 movie.hasNextReviews = true;

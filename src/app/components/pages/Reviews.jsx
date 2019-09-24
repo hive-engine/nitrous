@@ -86,6 +86,7 @@ export default function Reviews(props) {
         hasNextList,
         requestReviews,
         updateReviews,
+        options,
     } = props;
 
     const languages = tt('review.option.languages');
@@ -404,6 +405,7 @@ module.exports = {
                 reviews,
                 hasNextList: state.movie.get('hasNextReviews') || false,
                 loading: state.movie.get('loading') || false,
+                options: state.movie.getIn(['options', 'reviews']).toJS(),
                 status: state.global.get('status'),
                 accounts: state.global.get('accounts'),
                 username:
@@ -436,4 +438,5 @@ Reviews.propTypes = {
     categories: PropTypes.object,
     reviews: PropTypes.array,
     hasNextList: PropTypes.bool.isRequired,
+    options: PropTypes.object.isRequired,
 };

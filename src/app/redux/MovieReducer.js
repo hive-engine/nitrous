@@ -20,7 +20,13 @@ const REQUEST_REVIEWS_END = 'movie/REQUEST_REVIEWS_END';
 export const UPDATE_REVIEWS = 'movie/UPDATE_REVIEWS';
 const RECEIVE_UPDATE_REVIEWS = 'movie/RECEIVE_UPDATE_REVIEWS';
 
-export const defaultState = {};
+export const defaultState = {
+    options: {
+        movies: {},
+        tvs: {},
+        reviews: {},
+    },
+};
 
 export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
