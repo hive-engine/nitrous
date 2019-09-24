@@ -247,9 +247,8 @@ class Voting extends React.Component {
         const currentVp = votingData
             ? Math.min(
                   votingData.get('voting_power') +
-                      ((new Date() -
-                          getDate(votingData.get('last_vote_time'))) *
-                          10000) /
+                      (new Date() - getDate(votingData.get('last_vote_time'))) *
+                          10000 /
                           (1000 * voteRegenSec),
                   10000
               ) / 100
@@ -275,8 +274,8 @@ class Voting extends React.Component {
                 scot_pending_token > 0);
 
         const applyRewardsCurve = r =>
-            (Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
-                rewardData.reward_pool) /
+            Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
+            rewardData.reward_pool /
             rewardData.pending_rshares;
 
         const rsharesTotal = active_votes
@@ -354,10 +353,10 @@ class Voting extends React.Component {
                 );
                 // need computation for VP. Start with rough estimate.
                 const rshares =
-                    ((up ? 1 : -1) *
-                        stakedTokens *
-                        Math.min(multiplier * b, 10000) *
-                        currentVp) /
+                    (up ? 1 : -1) *
+                    stakedTokens *
+                    Math.min(multiplier * b, 10000) *
+                    currentVp /
                     (10000 * 100);
                 const newValue = applyRewardsCurve(rsharesTotal + rshares);
                 valueEst = (newValue / scotDenom - scot_pending_token).toFixed(
@@ -508,11 +507,12 @@ class Voting extends React.Component {
                     position={'center'}
                 >
                     <div className="Voting__adjust_weight_down">
-                        {(myVote == null || myVote === 0) && enable_slider && (
-                            <div className="weight-container">
-                                {slider(false)}
-                            </div>
-                        )}
+                        {(myVote == null || myVote === 0) &&
+                            enable_slider && (
+                                <div className="weight-container">
+                                    {slider(false)}
+                                </div>
+                            )}
                         <CloseButton
                             onClick={() => this.setState({ showWeight: false })}
                         />
@@ -554,46 +554,58 @@ class Voting extends React.Component {
 
         if (promoted > 0) {
             payoutItems.push({
-                value: `Promotion Cost ${promoted.toFixed(
-                    scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: tt('voting_jsx.promotion_cost', {
+                    value: `${promoted.toFixed(scotPrecision)} ${
+                        LIQUID_TOKEN_UPPERCASE
+                    }`,
+                }),
             });
         }
 
         if (cashout_active) {
-            payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
-                value: `${scot_pending_token.toFixed(
-                    scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: tt('voting_jsx.pending_payout', {
+                    value: `${scot_pending_token.toFixed(scotPrecision)} ${
+                        LIQUID_TOKEN_UPPERCASE
+                    }`,
+                }),
             });
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
+            // payoutItems.push({
+            //     value: `${cashout_time}`,
+            // });
         } else if (scot_total_author_payout) {
             payoutItems.push({
-                value: `Past Token Payouts ${payout.toFixed(
-                    scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: tt('voting_jsx.past_token_payouts', {
+                    value: `${payout.toFixed(scotPrecision)} ${
+                        LIQUID_TOKEN_UPPERCASE
+                    }`,
+                }),
             });
             payoutItems.push({
-                value: `- Author ${scot_total_author_payout.toFixed(
-                    scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: tt('voting_jsx.past_payouts_author', {
+                    value: `${scot_total_author_payout.toFixed(
+                        scotPrecision
+                    )} ${LIQUID_TOKEN_UPPERCASE}`,
+                }),
             });
             payoutItems.push({
-                value: `- Curator ${scot_total_curator_payout.toFixed(
-                    scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                value: tt('voting_jsx.past_payouts_curators', {
+                    value: `${scot_total_curator_payout.toFixed(
+                        scotPrecision
+                    )} ${LIQUID_TOKEN_UPPERCASE}`,
+                }),
             });
         }
 
         // Steem Payout Infomation
         if (steem_cashout_active) {
             payoutItems.push({
-                value: `Steem Payout $${formatDecimal(pending_payout).join(
-                    ''
-                )}`,
+                value: tt('voting_jsx.steem_payouts', {
+                    value: `$${formatDecimal(pending_payout).join('')}`,
+                }),
             });
         }
 
@@ -652,8 +664,9 @@ class Voting extends React.Component {
             // Votes are in order of recent votes first.
             const avotes = active_votes
                 .toJS()
-                .sort((a, b) =>
-                    new Date(a.timestamp) < new Date(b.timestamp) ? -1 : 1
+                .sort(
+                    (a, b) =>
+                        new Date(a.timestamp) < new Date(b.timestamp) ? -1 : 1
                 );
 
             // Compute estimates given current order without rearrangement first,
@@ -670,20 +683,21 @@ class Voting extends React.Component {
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (
-                        (pot *
-                            (applyRewardsCurve(currRshares + vote.rshares) -
-                                applyRewardsCurve(currRshares))) /
+                        pot *
+                        (applyRewardsCurve(currRshares + vote.rshares) -
+                            applyRewardsCurve(currRshares)) /
                         denom
                     ).toFixed(scotPrecision);
                     currRshares += vote.rshares;
                 }
             }
 
-            avotes.sort((a, b) =>
-                Math.abs(parseFloat(a.estimate)) >
-                Math.abs(parseFloat(b.estimate))
-                    ? -1
-                    : 1
+            avotes.sort(
+                (a, b) =>
+                    Math.abs(parseFloat(a.estimate)) >
+                    Math.abs(parseFloat(b.estimate))
+                        ? -1
+                        : 1
             );
             let voters = [];
             for (
