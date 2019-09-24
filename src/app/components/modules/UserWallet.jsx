@@ -560,7 +560,7 @@ class UserWallet extends React.Component {
                                     className="button hollow ghost slim tiny float-right"
                                     onClick={this.handleClaimAllTokensRewards}
                                 >
-                                    All in one claim
+                                    {tt('g.all_token_claim')}
                                 </button>
                             </div>
                         )}
