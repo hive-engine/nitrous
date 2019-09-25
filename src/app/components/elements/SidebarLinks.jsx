@@ -42,10 +42,9 @@ const SidebarLinks = ({ username }) => (
                 </li>
             </ul>
         </div>
-    </div>
-    
-    <div>
-        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle} allowtransparency="true"></iframe>
+        <div>
+            <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle} allowtransparency="true"></iframe>
+        </div>
     </div>
 );
 
