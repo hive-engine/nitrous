@@ -96,6 +96,10 @@ export const REVIVE_ADS = {
     //    zoneId: '1777',
     //    reviveId: '727bec5e09208690b050ccfc6a45d384',
     //},
+    //feed_small: {
+    //    zoneId: '',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
 };
 
 // Other configurations
