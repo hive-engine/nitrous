@@ -41,7 +41,7 @@ export const TAG_LIST = fromJSOrdered([
     'reviews',
     'ska',
     'sports',
-    'travel',  
+    'travel',
 ]);
 export const LIQUID_TOKEN = 'Jahm';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
@@ -114,6 +114,10 @@ export const REVIVE_ADS = {
     //},
     //feed: {
     //    zoneId: '1777',
+    //    reviveId: '727bec5e09208690b050ccfc6a45d384',
+    //},
+    //feed_small: {
+    //    zoneId: '',
     //    reviveId: '727bec5e09208690b050ccfc6a45d384',
     //},
 };

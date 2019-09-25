@@ -14,6 +14,7 @@ export default function ServerHTML({
     gptBidding,
     fomoId,
     pathname,
+    reviveEnabled,
     shouldSeeCookieConsent,
     cookieConsentApiKey,
 }) {
@@ -213,6 +214,12 @@ export default function ServerHTML({
                     />
                 ) : null}
                 <script src="https://kit.fontawesome.com/c2c7de72e5.js" />
+                {reviveEnabled ? (
+                    <script
+                        async
+                        src="//servedby.revive-adserver.net/asyncjs.php"
+                    />
+                ) : null}
                 <title>{page_title}</title>
             </head>
             <body>
