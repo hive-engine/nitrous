@@ -5,7 +5,7 @@ import { REVIVE_ADS, NO_ADS_STAKE_THRESHOLD } from 'app/client_config';
 class ReviveAd extends React.Component {
     componentDidMount() {
         const { showAd, reviveId } = this.props;
-        if (showAd) {
+        if (showAd && typeof reviveAsync !== 'undefined') {
             reviveAsync[reviveId].refresh();
         }
     }
