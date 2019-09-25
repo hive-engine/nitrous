@@ -14,6 +14,7 @@ export default function ServerHTML({
     gptBidding,
     fomoId,
     pathname,
+    reviveEnabled,
     shouldSeeCookieConsent,
     cookieConsentApiKey,
 }) {
@@ -194,6 +195,12 @@ export default function ServerHTML({
                         async
                         type="text/javascript"
                         src={`https://load.fomo.com/ads/load.js?id=${fomoId}`}
+                    />
+                ) : null}
+                {reviveEnabled ? (
+                    <script
+                        async
+                        src="//servedby.revive-adserver.net/asyncjs.php"
                     />
                 ) : null}
                 <title>{page_title}</title>
