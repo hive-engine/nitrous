@@ -1,5 +1,6 @@
 import React from 'react';
 import tt from 'counterpart';
+import Icon from 'app/components/elements/Icon';
 
 const SidebarLinks = ({ username }) => (
     <div className="c-sidebar__module">
