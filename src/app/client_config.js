@@ -15,21 +15,20 @@ export const APP_DOMAIN = 'www.battlegames.io';
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'battle';
 export const TAG_LIST = fromJSOrdered([
+    'radaquest',
     'splinterlands',
     'nextcolony',
-    'drugwars',
-    'radaquest',
-    'roadofrich',
     'skyweaver',
+    'godsunchained',
+    'steemknights',
+    'hanshkings',
     'ibt',
+    'robotwars',
+    'drugwars',
     'gamereview',
     'gaming',
     'dtube',
     'vimmtv',
-    'pc',
-    'xbox',
-    'ps4',
-    'vr',
     'battle',
 ]);
 export const LIQUID_TOKEN = 'Battle';
