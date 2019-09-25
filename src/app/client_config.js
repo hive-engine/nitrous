@@ -29,6 +29,7 @@ export const TAG_LIST = fromJSOrdered([
     'gaming',
     'dtube',
     'vimmtv',
+    'threespeak',
     'battle',
 ]);
 export const LIQUID_TOKEN = 'Battle';
