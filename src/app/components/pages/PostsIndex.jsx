@@ -320,11 +320,11 @@ class PostsIndex extends React.Component {
             : ' layout-list';
         return (
             
-            {this.props.isBrowser && (
+            {this.props.isBrowser ? (
                 <div className="articles__content-block--ad">
                     <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
                 </div>
-            )}
+            ) : null}
             
             <div
                 className={
@@ -382,12 +382,12 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
-                    {this.props.isBrowser && (
+                    {this.props.isBrowser && this.props.username ? (
                         <div>
                             {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
                             <SidebarLinks username={this.props.username} />
                         </div>
-                    )}
+                    ) : null}
                     <div className="sidebar-ad">
                         <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
                     </div>
