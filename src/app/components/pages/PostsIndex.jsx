@@ -259,9 +259,19 @@ class PostsIndex extends React.Component {
 
         const topicDiscussions = discussions.get(category || '');
         
-        const adStyle = {
+        // A-ads styles
+        
+        const adStyle_200x200 = {
             width: '200px',
             height: '200px',
+            border: '0',
+            padding: '0', 
+            overflow:'hidden'
+        };
+        
+         const adStyle_728x90 = {
+            width: '728px',
+            height: '90px',
             border: '0',
             padding: '0', 
             overflow:'hidden'
@@ -309,6 +319,13 @@ class PostsIndex extends React.Component {
             ? ' layout-block'
             : ' layout-list';
         return (
+            
+            {this.props.isBrowser && (
+                <div className="articles__content-block--ad">
+                    <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
+                </div>
+            )}
+            
             <div
                 className={
                     'PostsIndex row' +
@@ -372,7 +389,7 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <div className="sidebar-ad">
-                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle} allowtransparency="true"></iframe>
+                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
                     </div>
                     <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
