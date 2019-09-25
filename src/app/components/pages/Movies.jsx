@@ -80,6 +80,7 @@ export default function Movies(props) {
     const {
         movies,
         type,
+        listName,
         movieType,
         locale,
         loading,
@@ -87,28 +88,16 @@ export default function Movies(props) {
         isListLoaded,
         requestMovies,
         updateMovies,
+        updateOptions,
+        options,
     } = props;
-
-    const genres = tt(`review.genre.${type}`);
-
-    const initialState = {
-        languageCode: locale,
-        lastMovieId: 0,
-        genreId: -1,
-        sortBy: 'release_date',
-    };
-
-    const [state, setState] = React.useState({
-        movie: { ...initialState, movieType: 1 },
-        tv: { ...initialState, movieType: 2 },
-    });
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
     if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried) {
         isMoviesLoadingTried = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
-        setTimeout(() => requestMovies({ ...initialState, movieType }));
+        setTimeout(() => requestMovies({ ...options }));
     }
 
     const lastMovieId =
@@ -122,27 +111,27 @@ export default function Movies(props) {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
-    function setNewState(name, value) {
-        const newState = {
-            ...state,
-            ...{ [type]: { ...state[type], [name]: value } },
+    function updateList(name, value) {
+        const newOptions = {
+            ...options,
+            [name]: value,
         };
 
-        setState(newState);
-        updateMovies(newState[type]);
+        updateOptions({ type: listName, data: newOptions });
+        updateMovies(newOptions);
     }
 
     function handleChange(event) {
-        setNewState(event.target.name, event.target.value);
+        updateList(event.target.name, event.target.value);
     }
 
     function setGenre(e, genreId) {
         e.stopPropagation();
-        setNewState('genreId', genreId);
+        updateList('genreId', genreId);
     }
 
     const handleSearch = name => event => {
-        setNewState(name, event.target.value);
+        updateList(name, event.target.value);
     };
 
     return (
@@ -161,7 +150,7 @@ export default function Movies(props) {
                             {tt('review.label.genre')}
                         </InputLabel>
                         <Select
-                            value={state[type].genreId}
+                            value={options.genreId}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -171,7 +160,7 @@ export default function Movies(props) {
                                 />
                             }
                         >
-                            {genres.map(genre => (
+                            {tt(`review.genre.${type}`).map(genre => (
                                 <MenuItem value={genre.id} key={genre.id}>
                                     {genre.id >= 0 ? (
                                         genre.name
@@ -190,7 +179,7 @@ export default function Movies(props) {
                             {tt('review.label.sort_by')}
                         </InputLabel>
                         <Select
-                            value={state[type].sortBy}
+                            value={options.sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -330,9 +319,9 @@ export default function Movies(props) {
                                             requestMovies({
                                                 languageCode: locale,
                                                 movieType,
-                                                genreId: state[type].genreId,
+                                                genreId: options.genreId,
                                                 lastMovieId,
-                                                sortBy: state[type].sortBy,
+                                                sortBy: options.sortBy,
                                             });
                                         }}
                                     >
@@ -358,18 +347,22 @@ module.exports = {
         (state, ownProps) => {
             const type = CustomUtil.getMovieTypeName(state);
             const movieType = type === 'movie' ? 1 : 2;
+            const listName = CustomUtil.getMovieListName(movieType);
 
-            let movies = state.movie.get(
-                CustomUtil.getMovieListName(movieType)
-            );
+            let movies = state.movie.get(listName);
 
             if (movies) {
                 movies = movies.toJS();
             }
 
+            const locale =
+                state.app.getIn(['user_preferences', 'locale']) ||
+                DEFAULT_LANGUAGE;
+
             return {
                 type,
                 movieType,
+                listName,
                 movies,
                 hasNextList:
                     state.movie.get(
@@ -380,6 +373,10 @@ module.exports = {
                         CustomUtil.getListLoadedConditionName(movieType)
                     ) || false,
                 loading: state.movie.get('loading') || false,
+                options: {
+                    ...state.movie.getIn(['options', listName]).toJS(),
+                    languageCode: locale,
+                },
                 status: state.global.get('status'),
                 accounts: state.global.get('accounts'),
                 username:
@@ -389,14 +386,13 @@ module.exports = {
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                locale:
-                    state.app.getIn(['user_preferences', 'locale']) ||
-                    DEFAULT_LANGUAGE,
+                locale,
             };
         },
         dispatch => ({
             requestMovies: args => dispatch(movieActions.requestMovies(args)),
             updateMovies: args => dispatch(movieActions.updateMovies(args)),
+            updateOptions: args => dispatch(movieActions.updateOptions(args)),
         })
     )(Movies),
 };
@@ -407,13 +403,16 @@ Movies.propTypes = {
     routeParams: PropTypes.object,
     requestMovies: PropTypes.func.isRequired,
     updateMovies: PropTypes.func.isRequired,
+    updateOptions: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     type: PropTypes.string.isRequired,
+    listName: PropTypes.string.isRequired,
     movieType: PropTypes.number.isRequired,
     locale: PropTypes.string.isRequired,
     movies: PropTypes.array,
     hasNextList: PropTypes.bool.isRequired,
     isListLoaded: PropTypes.bool.isRequired,
+    options: PropTypes.object.isRequired,
 };

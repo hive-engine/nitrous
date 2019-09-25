@@ -20,11 +20,30 @@ const REQUEST_REVIEWS_END = 'movie/REQUEST_REVIEWS_END';
 export const UPDATE_REVIEWS = 'movie/UPDATE_REVIEWS';
 const RECEIVE_UPDATE_REVIEWS = 'movie/RECEIVE_UPDATE_REVIEWS';
 
+const UPDATE_OPTIONS = 'movie/UPDATE_OPTIONS';
+
 export const defaultState = {
     options: {
-        movies: {},
-        tvs: {},
-        reviews: {},
+        movies: {
+            movieType: 1,
+            lastMovieId: 0,
+            genreId: -1,
+            sortBy: 'release_date',
+        },
+        tvs: {
+            movieType: 2,
+            lastMovieId: 0,
+            genreId: -1,
+            sortBy: 'release_date',
+        },
+        reviews: {
+            movieType: 0,
+            genreId: -1,
+            languageCode: ' ',
+            lastAuthor: '',
+            lastPermlink: '',
+            sortBy: 'created',
+        },
     },
 };
 
@@ -95,6 +114,8 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_MOVIES_END:
         case REQUEST_REVIEWS_END:
             return state.set('loading', false);
+        case UPDATE_OPTIONS:
+            return state.setIn(['options', payload.type], fromJS(payload.data));
         default:
             return state;
     }
@@ -160,6 +181,11 @@ export const actions = {
 
     receiveUpdateReviews: payload => ({
         type: RECEIVE_UPDATE_REVIEWS,
+        payload,
+    }),
+
+    updateOptions: payload => ({
+        type: UPDATE_OPTIONS,
         payload,
     }),
 };

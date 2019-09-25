@@ -86,24 +86,14 @@ export default function Reviews(props) {
         hasNextList,
         requestReviews,
         updateReviews,
+        updateOptions,
         options,
     } = props;
-
-    const languages = tt('review.option.languages');
-
-    const [state, setState] = React.useState({
-        movieType: 0,
-        genreId: -1,
-        languageCode: ' ',
-        lastAuthor: '',
-        lastPermlink: '',
-        sortBy: 'created',
-    });
 
     const isReviewsUndefined = typeof reviews === 'undefined';
 
     if (isReviewsUndefined && !loading) {
-        requestReviews(state);
+        requestReviews(options);
     }
 
     let lastAuthor = '';
@@ -120,18 +110,22 @@ export default function Reviews(props) {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
-    function handleChange(event) {
-        const newState = {
-            ...state,
-            [event.target.name]: event.target.value,
+    function updateList(name, value) {
+        const newOptions = {
+            ...options,
+            [name]: value,
         };
 
-        setState(newState);
-        updateReviews(newState);
+        updateOptions({ type: 'reviews', data: newOptions });
+        updateReviews(newOptions);
+    }
+
+    function handleChange(event) {
+        updateList(event.target.name, event.target.value);
     }
 
     const handleSearch = name => event => {
-        setState({ ...state, [name]: event.target.value });
+        updateList(name, event.target.value);
     };
 
     return (
@@ -150,7 +144,7 @@ export default function Reviews(props) {
                             {tt('review.label.type')}
                         </InputLabel>
                         <Select
-                            value={state.movieType}
+                            value={options.movieType}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -182,7 +176,7 @@ export default function Reviews(props) {
                             {tt('review.label.language')}
                         </InputLabel>
                         <Select
-                            value={state.languageCode}
+                            value={options.languageCode}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -192,7 +186,7 @@ export default function Reviews(props) {
                                 />
                             }
                         >
-                            {languages.map(language => (
+                            {tt('review.option.languages').map(language => (
                                 <MenuItem
                                     value={language.code}
                                     key={language.code}
@@ -214,7 +208,7 @@ export default function Reviews(props) {
                             Sort by
                         </InputLabel>
                         <Select
-                            value={state.sortBy}
+                            value={options.sortBy}
                             onChange={handleChange}
                             input={
                                 <OutlinedInput
@@ -365,13 +359,13 @@ export default function Reviews(props) {
                                         className={classes.button}
                                         onClick={() => {
                                             requestReviews({
-                                                movieType: state.movieType,
-                                                genreId: state.genreId,
+                                                movieType: options.movieType,
+                                                genreId: options.genreId,
                                                 languageCode:
-                                                    state.languageCode,
+                                                    options.languageCode,
                                                 lastAuthor,
                                                 lastPermlink,
-                                                sortBy: state.sortBy,
+                                                sortBy: options.sortBy,
                                             });
                                         }}
                                     >
@@ -421,6 +415,7 @@ module.exports = {
         dispatch => ({
             requestReviews: args => dispatch(movieActions.requestReviews(args)),
             updateReviews: args => dispatch(movieActions.updateReviews(args)),
+            updateOptions: args => dispatch(movieActions.updateOptions(args)),
         })
     )(Reviews),
 };
@@ -432,6 +427,7 @@ Reviews.propTypes = {
     routeParams: PropTypes.object,
     requestReviews: PropTypes.func.isRequired,
     updateReviews: PropTypes.func.isRequired,
+    updateOptions: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,

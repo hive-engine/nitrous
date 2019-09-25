@@ -373,17 +373,16 @@ export async function serverRender(
             movie[CustomUtil.getMovieListName(movieType)] = List([movieResult]);
             movie[CustomUtil.getListLoadedConditionName(movieType)] = false;
         } else if (url.match(routeRegex.Reviews)) {
-            const reviews = await movieApi.getReviews(0, -1, '', '', '', '');
+            const reviews = await movieApi.getReviews(
+                0,
+                -1,
+                '',
+                '',
+                '',
+                'created'
+            );
 
             movie.reviews = reviews;
-            movie.options.reviews = {
-                movieType: 0,
-                genreId: -1,
-                languageCode: ' ',
-                lastAuthor: '',
-                lastPermlink: '',
-                sortBy: 'created',
-            };
 
             if (reviews.length == LIST_MAX_SIZE) {
                 movie.hasNextReviews = true;
