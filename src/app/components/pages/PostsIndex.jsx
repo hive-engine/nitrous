@@ -258,6 +258,14 @@ class PostsIndex extends React.Component {
         const { showSpam } = this.state;
 
         const topicDiscussions = discussions.get(category || '');
+        
+        const adStyle = {
+            width: '200px',
+            height: '200px',
+            border: '0',
+            padding: '0', 
+            overflow:'hidden'
+        };
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -363,6 +371,9 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
+                    <div className="sidebar-ad">
+                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200" scrolling="no" style={adStyle} allowtransparency="true"></iframe>
+                    </div>
                     <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
