@@ -280,8 +280,9 @@ export async function attachScotData(url, state) {
         Object.entries(state.content)
             .filter(
                 entry =>
-                    entry[1].scotData &&
-                    entry[1].scotData[LIQUID_TOKEN_UPPERCASE]
+                    (entry[1].scotData &&
+                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
+                    (entry[1].parent_author && entry[1].parent_permlink)
             )
             .forEach(entry => {
                 filteredContent[entry[0]] = entry[1];
