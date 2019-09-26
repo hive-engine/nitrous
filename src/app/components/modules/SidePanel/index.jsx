@@ -113,6 +113,11 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'signup',
+                label: 'Free Same Day Signup for SD residents',
+                link: 'https://chat.steemsandiego.com',
+            },
+            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/A4NVCrP',
