@@ -185,12 +185,7 @@ class Post extends React.Component {
                         </div>
                     ) : null}
                     {this.props.reviveEnabled && showAd ? (
-                        <div className="Post_footer__ad show-for-mq-large">
-                            <ReviveAd adKey="post_footer_betweencomments" />
-                        </div>
-                    ) : null}
-                    {this.props.reviveEnabled && showAd ? (
-                        <div className="Post_footer__ad hide-for-mq-large">
+                        <div className="Post_footer__ad">
                             <ReviveAd adKey="feed_small" />
                         </div>
                     ) : null}
@@ -274,12 +269,7 @@ class Post extends React.Component {
                     </div>
                 ) : null}
                 {this.props.reviveEnabled ? (
-                    <div className="Post_footer__ad show-for-mq-large">
-                        <ReviveAd adKey="post_footer_abovecomments" />
-                    </div>
-                ) : null}
-                {this.props.reviveEnabled ? (
-                    <div className="Post_footer__ad hide-for-mq-large">
+                    <div className="Post_footer__ad">
                         <ReviveAd adKey="feed_small" />
                     </div>
                 ) : null}
