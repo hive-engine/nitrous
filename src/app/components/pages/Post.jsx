@@ -318,12 +318,12 @@ class Post extends React.Component {
                             id="steemit_728x90_468x60_300x250_BelowComments"
                         />
                     </div>
-                ) : null}
-                    
-                <div className="Post_footer__ad">
-                    <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
-                </div>   
-               
+                ) : null} 
+                <div style={{ textAlign: 'center' }}>
+                    <div className="Post_footer__ad">
+                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                    </div>
+                </div>
             </div>
         );
     }
