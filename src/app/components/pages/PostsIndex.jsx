@@ -431,7 +431,7 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small>
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: 'center', marginTop: 20 }}>
                         <div class="sidebar-ad">
                             <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
                         </div>
