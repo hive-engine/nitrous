@@ -1,4 +1,7 @@
 <span id="disable_router_nav_history_direction_check"></span>
+# NOBEL FAQ
+(comming soon)
+
 # Steemit FAQ
 
 ## <span id="Table_of_Contents">Table of Contents</span>
