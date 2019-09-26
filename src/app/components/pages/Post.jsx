@@ -62,6 +62,16 @@ class Post extends React.Component {
         }
         const dis = content.get(post);
 
+        
+        // A-ads styles
+        const adStyle_300x250 = {
+            width: '300px',
+            height: '250px',
+            border: '0',
+            padding: '0', 
+            overflow:'hidden'
+        };
+        
         // check if the post doesn't exist
         // !dis may be enough but keep 'created' & 'body' test for potential compatibility
         const emptyPost =
@@ -101,6 +111,10 @@ class Post extends React.Component {
                             </li>
                         </ul>
                     </div>
+                    <div>
+                        <br />
+                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                    </div>    
                 </div>
             );
 
@@ -305,6 +319,11 @@ class Post extends React.Component {
                         />
                     </div>
                 ) : null}
+                    
+                <div className="Post_footer__ad">
+                    <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                </div>   
+               
             </div>
         );
     }
