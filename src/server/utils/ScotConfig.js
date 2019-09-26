@@ -7,6 +7,8 @@ import {
     getConfig,
     getThumbupReceiveTopList,
     getThumbupSendTopList,
+    getBadgeList,
+    getTagList,
 } from 'app/utils/SctApi';
 
 import SSC from 'sscjs';
@@ -96,6 +98,8 @@ ScotConfig.prototype.refresh = async function() {
 
         // sidebar thumbsup summary
         scotConfig.thumbsup = {};
+        scotConfig.info = {};
+
         const date = new Date();
         const year = date.getFullYear();
         const mon = (date.getMonth() + 1 + '').padStart(2, '0');
@@ -107,6 +111,9 @@ ScotConfig.prototype.refresh = async function() {
             tokenMinerBurnBalance,
             thumbsUpReceiveList,
             thumbsUpSendList,
+            badgeList,
+            tagList,
+            allPrice,
         ] = await Promise.all([
             ssc.findOne('tokens', 'tokens', {
                 symbol: scotConfig.burn.scotToken,
@@ -124,6 +131,9 @@ ScotConfig.prototype.refresh = async function() {
             }),
             getThumbupReceiveTopList(year + mon),
             getThumbupSendTopList(year + mon),
+            getBadgeList(),
+            getTagList(),
+            getSteemPriceInfo(),
         ]);
 
         if (totalTokenBalance) {
@@ -138,21 +148,24 @@ ScotConfig.prototype.refresh = async function() {
         if (tokenMinerBurnBalance) {
             scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
         }
-
         if (thumbsUpReceiveList) {
             scotConfig.thumbsup.receiveList = thumbsUpReceiveList.data[0];
         }
-
         if (thumbsUpSendList) {
             scotConfig.thumbsup.sendList = thumbsUpSendList.data[0];
         }
-
-        const allPrice = await getSteemPriceInfo();
-        scotConfig.info = {};
-        scotConfig.info.scotToken = scotConfig.token;
-        scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
-        scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
-        scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
+        if (tagList) {
+            scotConfig.info.tagList = tagList.data[0];
+        }
+        if (badgeList) {
+            scotConfig.info.affiliation = badgeList.data;
+        }
+        if (allPrice) {
+            scotConfig.info.scotToken = scotConfig.token;
+            scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
+            scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
+            scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
+        }
 
         // get SCT thumbup config
         scotConfig.thumbupConfig = await getConfig();
