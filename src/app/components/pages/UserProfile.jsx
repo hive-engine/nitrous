@@ -620,7 +620,7 @@ export default class UserProfile extends React.Component {
                 <div>{tab_content}</div>
                 <div style={{ textAlign: 'center', marginTop: 20 }}>
                     <div className="Post_footer__ad">
-                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250&title_color=3e8f3e&title_hover_color=2cd11d&link_color=3e8f3e&link_hover_color=2cd11d" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250&title_color=000000&title_hover_color=3e8f3e&link_color=3e8f3e&link_hover_color=2cd11d" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
                     </div>
                 </div>
             </div>
