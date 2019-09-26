@@ -9,7 +9,7 @@ import { authorNameAndRep } from 'app/utils/ComponentFormatters';
 import AuthorDropdown from '../AuthorDropdown';
 import Reputation from 'app/components/elements/Reputation';
 import normalizeProfile from 'app/utils/NormalizeProfile';
-import AffiliationMap from 'app/utils/AffiliationMap';
+// import AffiliationMap from 'app/utils/AffiliationMap';
 import tt from 'counterpart';
 import Overlay from 'react-overlays/lib/Overlay';
 import { findDOMNode } from 'react-dom';
@@ -97,11 +97,21 @@ class Author extends React.Component {
             mute,
             authorRepLog10,
             showAffiliation,
+            affiliationDb,
         } = this.props; // html
         const { username } = this.props; // redux
         const { name, about } = this.props.account
             ? normalizeProfile(this.props.account.toJS())
             : {};
+
+        const AffiliationMap = {};
+        if (affiliationDb) {
+            for (let i = 0; i < affiliationDb.size; i++) {
+                AffiliationMap[
+                    affiliationDb.get(i).get('account')
+                ] = affiliationDb.get(i).get('title');
+            }
+        }
 
         if (!(follow || mute) || username === author) {
             return (
@@ -178,6 +188,18 @@ export default connect((state, ownProps) => {
     const { author, follow, mute, authorRepLog10 } = ownProps;
     const username = state.user.getIn(['current', 'username']);
     const account = state.global.getIn(['accounts', author]);
+
+    const scotConfig = state.app.get('scotConfig');
+
+    let info;
+    let affiliationDb;
+    if (scotConfig) {
+        info = scotConfig.getIn(['config', 'info']);
+        if (info) {
+            affiliationDb = info.get('affiliation');
+        }
+    }
+
     return {
         author,
         follow,
@@ -185,5 +207,6 @@ export default connect((state, ownProps) => {
         authorRepLog10,
         username,
         account,
+        affiliationDb,
     };
 })(Author);

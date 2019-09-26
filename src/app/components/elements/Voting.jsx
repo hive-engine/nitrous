@@ -316,7 +316,7 @@ class Voting extends React.Component {
 
         const votingUpActive = voting && votingUp;
         const votingDownActive = voting && votingDown;
-        const btnGroupStyle = { 'text-align': 'center' };
+        const btnGroupStyle = { textAlign: 'center' };
 
         // Steem Payout Calculation
         const steem_cashout_time = post_obj.get('cashout_time');

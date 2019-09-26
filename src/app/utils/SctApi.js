@@ -7,6 +7,8 @@ const CONFIG = '/thumbups/config';
 const DIVIDE = '/thumbups/divide';
 const RECEIVE_TOPLIST = '/thumbups/receiveThumbupList';
 const SEND_TOPLIST = '/thumbups/sendThumbupList';
+const BADGE_LIST = '/badge/list';
+const TAG_LIST = '/tagmanager/list';
 
 export function getThumbUpList(author, permlink) {
     return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
@@ -18,6 +20,14 @@ export function getThumbupReceiveTopList(month) {
 
 export function getThumbupSendTopList(month) {
     return axios.get(`${API_SERVER_URL}${SEND_TOPLIST}/${month}`);
+}
+
+export function getBadgeList() {
+    return axios.get(`${API_SERVER_URL}${BADGE_LIST}`);
+}
+
+export function getTagList() {
+    return axios.get(`${API_SERVER_URL}${TAG_LIST}`);
 }
 
 export async function getConfig() {
