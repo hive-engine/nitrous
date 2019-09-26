@@ -242,13 +242,7 @@ class PostsList extends React.Component {
                                     promoted={promoted}
                                 />
                             </li>
-                            <div className="articles__content-block--ad show-for-mq-large">
-                                <ReviveAd
-                                    adKey="feed"
-                                    id={`feed_${Math.floor(i / every)}`}
-                                />
-                            </div>
-                            <div className="articles__content-block--ad hide-for-mq-large">
+                            <div className="articles__content-block--ad">
                                 <ReviveAd
                                     adKey="feed_small"
                                     id={`feed_small_${Math.floor(i / every)}`}
