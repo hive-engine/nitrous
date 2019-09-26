@@ -157,7 +157,7 @@ class Post extends React.Component {
             replies = replies.slice(0, commentLimit);
         }
         let commentCount = 0;
-        const positiveComments = replies.map(reply => {
+        const positiveComments = replies.map((reply, index) => {
             commentCount++;
             let showAd =
                 commentCount % 5 == 0 &&
@@ -165,7 +165,7 @@ class Post extends React.Component {
                 commentCount != commentLimit;
 
             return (
-                <div>
+                <div key={index}>
                     <Comment
                         root
                         key={post + reply}
@@ -179,6 +179,7 @@ class Post extends React.Component {
                     {this.props.gptEnabled && showAd ? (
                         <div className="Post_footer__ad">
                             <GptAd
+                                key={index}
                                 type="Freestar"
                                 id="steemit_728x90_468x60_300x250_BetweenComments"
                             />
