@@ -260,16 +260,21 @@ class PostsIndex extends React.Component {
         const topicDiscussions = discussions.get(category || '');
         
         // A-ads styles
-        
-        const adStyle_200x200 = {
+       const adStyle_200x200 = {
             width: '200px',
             height: '200px',
             border: '0',
             padding: '0', 
             overflow:'hidden'
         };
-        
-         const adStyle_728x90 = {
+        const adStyle_200x90 = {
+            width: '200px',
+            height: '90px',
+            border: '0',
+            padding: '0', 
+            overflow:'hidden'
+        };
+        const adStyle_728x90 = {
             width: '728px',
             height: '90px',
             border: '0',
@@ -320,11 +325,13 @@ class PostsIndex extends React.Component {
             : ' layout-list';
         return (
             
+            /* trying ad between header bar and content
             {this.props.isBrowser ? (
                 <div className="articles__content-block--ad">
                     <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
                 </div>
-            ) : null}
+            ) : null} 
+            */
             
             <div
                 className={
@@ -424,6 +431,11 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small>
+                    <div>
+                        <div class="sidebar-ad">
+                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
+                        </div>
+                    </div>
                     {this.props.gptEnabled ? (
                         <div>
                             <div className="sidebar-ad">
