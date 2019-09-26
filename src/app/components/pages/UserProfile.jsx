@@ -518,7 +518,16 @@ export default class UserProfile extends React.Component {
                     'url(' + proxifyImageUrl(cover_image, '2048x512') + ')',
             };
         }
-
+        
+        // A-ads styles
+        const adStyle_300x250 = {
+            width: '300px',
+            height: '250px',
+            border: '0',
+            padding: '0', 
+            overflow:'hidden'
+        };
+        
         return (
             <div className="UserProfile">
                 <div className="UserProfile__banner row expanded">
@@ -609,6 +618,11 @@ export default class UserProfile extends React.Component {
                     {top_menu}
                 </div>
                 <div>{tab_content}</div>
+                <div style={{ textAlign: 'center', marginTop: 20 }}>
+                    <div className="Post_footer__ad">
+                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250&title_color=3e8f3e&title_hover_color=2cd11d&link_color=3e8f3e&link_hover_color=2cd11d" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                    </div>
+                </div>
             </div>
         );
     }
