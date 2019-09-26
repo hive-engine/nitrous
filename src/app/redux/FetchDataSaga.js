@@ -29,6 +29,7 @@ const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 const FETCH_SCOT_INFO = 'fetchDataSaga/FETCH_SCOT_INFO';
+const FETCH_FOLLOWS = 'fetchDataSaga/FETCH_FOLLOWS';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -37,6 +38,7 @@ export const fetchDataWatches = [
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
     takeLatest(FETCH_SCOT_INFO, fetchScotInfo),
+    takeEvery(FETCH_FOLLOWS, fetchFollows),
 ];
 
 export function* getContentCaller(action) {
@@ -437,6 +439,14 @@ function* fetchScotInfo() {
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }
 
+function* fetchFollows(action) {
+    yield loadFollows(
+        action.payload.method,
+        action.payload.account,
+        action.payload.type
+    );
+}
+
 // Action creators
 export const actions = {
     requestData: payload => ({
@@ -456,6 +466,11 @@ export const actions = {
 
     fetchScotInfo: payload => ({
         type: FETCH_SCOT_INFO,
+        payload,
+    }),
+
+    fetchFollows: payload => ({
+        type: FETCH_FOLLOWS,
         payload,
     }),
 };
