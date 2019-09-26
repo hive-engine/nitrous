@@ -26,7 +26,6 @@ const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 const FETCH_SCOT_INFO = 'fetchDataSaga/FETCH_SCOT_INFO';
 const FETCH_AUTHOR_RECENT_POSTS = 'fetchDataSaga/FETCH_AUTHOR_RECENT_POSTS';
-const FETCH_FOLLOWS = 'fetchDataSaga/FETCH_FOLLOWS';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -36,7 +35,6 @@ export const fetchDataWatches = [
     takeEvery('global/FETCH_JSON', fetchJson),
     takeLatest(FETCH_SCOT_INFO, fetchScotInfo),
     takeLatest(FETCH_AUTHOR_RECENT_POSTS, fetchAuthorRecentPosts),
-    takeEvery(FETCH_FOLLOWS, fetchFollows),
 ];
 
 export function* getContentCaller(action) {
@@ -512,14 +510,6 @@ function* fetchAuthorRecentPosts(action) {
     yield put(appActions.fetchDataEnd());
 }
 
-function* fetchFollows(action) {
-    yield loadFollows(
-        action.payload.method,
-        action.payload.account,
-        action.payload.type
-    );
-}
-
 // Action creators
 export const actions = {
     requestData: payload => ({
@@ -544,10 +534,6 @@ export const actions = {
 
     fetchAuthorRecentPosts: payload => ({
         type: FETCH_AUTHOR_RECENT_POSTS,
-    }),
-
-    fetchFollows: payload => ({
-        type: FETCH_FOLLOWS,
         payload,
     }),
 };
