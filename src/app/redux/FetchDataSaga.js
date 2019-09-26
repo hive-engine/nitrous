@@ -551,6 +551,7 @@ export const actions = {
 
     fetchAuthorRecentPosts: payload => ({
         type: FETCH_AUTHOR_RECENT_POSTS,
+        payload,
     }),
 
     fetchFollows: payload => ({
