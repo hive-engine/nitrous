@@ -11,7 +11,6 @@ import * as userActions from 'app/redux/UserReducer';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Userpic from 'app/components/elements/Userpic';
 import * as transactionActions from 'app/redux/TransactionReducer';
-import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import tt from 'counterpart';
 import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
@@ -187,12 +186,6 @@ class CommentImpl extends React.Component {
         if (window.location.hash == this.props.anchor_link) {
             this.setState({ highlight: true }); // eslint-disable-line react/no-did-mount-set-state
         }
-
-        // Client-side only when using componentDidMount
-        const { tribeMuteAccount, tribeIgnoreList, fetchFollows } = this.props;
-        if (tribeMuteAccount && !tribeIgnoreList) {
-            fetchFollows(tribeMuteAccount);
-        }
     }
 
     /**
@@ -277,7 +270,6 @@ class CommentImpl extends React.Component {
             anchor_link,
             showNegativeComments,
             ignore_list,
-            tribeIgnoreList,
             noImage,
         } = this.props;
         const { onShowReply, onShowEdit, onDeletePost } = this;
@@ -299,9 +291,7 @@ class CommentImpl extends React.Component {
         const comment_link = `/${comment.category}/@${rootComment}#@${
             comment.author
         }/${comment.permlink}`;
-        const ignore =
-            (ignore_list && ignore_list.has(comment.author)) ||
-            (tribeIgnoreList && tribeIgnoreList.has(comment.author));
+        const ignore = ignore_list && ignore_list.has(comment.author);
 
         if (!showNegativeComments && (hide || ignore)) {
             return null;
@@ -518,18 +508,6 @@ const Comment = connect(
         const { content } = ownProps;
 
         const username = state.user.getIn(['current', 'username']);
-        const tribeMuteAccount = state.app.getIn(
-            ['scotConfig', 'config', 'muting_account'],
-            null
-        );
-        const tribeIgnoreList = tribeMuteAccount
-            ? state.global.getIn([
-                  'follow',
-                  'getFollowingAsync',
-                  tribeMuteAccount,
-                  'ignore_result',
-              ])
-            : null;
         const ignore_list = username
             ? state.global.getIn([
                   'follow',
@@ -544,8 +522,6 @@ const Comment = connect(
             anchor_link: '#@' + content, // Using a hash here is not standard but intentional; see issue #124 for details
             username,
             ignore_list,
-            tribeMuteAccount,
-            tribeIgnoreList,
         };
     },
 
@@ -560,15 +536,6 @@ const Comment = connect(
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
-                })
-            );
-        },
-        fetchFollows: account => {
-            dispatch(
-                fetchDataSagaActions.fetchFollows({
-                    method: 'getFollowingAsync',
-                    account,
-                    type: 'ignore',
                 })
             );
         },
