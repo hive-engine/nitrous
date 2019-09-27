@@ -12,9 +12,9 @@ const SidebarLinks = ({ username }) => (
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href=/"faq.html"
-                    >
+                        href="/faq.html"
                         NOBEL FAQ
+                    >
                     </a>
                 </li>
                 
