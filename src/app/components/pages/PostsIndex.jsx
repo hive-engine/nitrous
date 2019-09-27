@@ -300,6 +300,10 @@ class PostsIndex extends React.Component {
         const layoutClass = this.props.blogmode
             ? ' layout-block'
             : ' layout-list';
+
+        const mqLarge =
+            process.env.BROWSER &&
+            window.matchMedia('screen and (min-width: 75em)').matches;
         return (
             <div
                 className={
@@ -369,7 +373,7 @@ class PostsIndex extends React.Component {
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
                         </div>
                     ) : null}
-                    {this.props.reviveEnabled ? (
+                    {this.props.reviveEnabled && mqLarge ? (
                         <div className="sidebar-ad">
                             <ReviveAd adKey="sidebar_right" />
                         </div>
@@ -415,7 +419,7 @@ class PostsIndex extends React.Component {
                             </div>
                         </div>
                     ) : null}
-                    {this.props.reviveEnabled ? (
+                    {this.props.reviveEnabled && mqLarge ? (
                         <div className="sidebar-ad">
                             <ReviveAd adKey="sidebar_left" />
                         </div>
