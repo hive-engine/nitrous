@@ -12,7 +12,7 @@ const SidebarLinks = ({ username }) => (
                  <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href="/nobel_faq.html"
+                        href="/FAQ_nobel.html"
                     >
                         NOBEL FAQ
                     </a>
