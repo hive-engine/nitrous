@@ -66,8 +66,8 @@ class PostsIndex extends React.Component {
         const pinned = this.props.pinned;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
-                ? pinned.get('pinned_posts').toJS()
-                : []
+              ? pinned.get('pinned_posts').toJS()
+              : []
             : [];
         const notices = this.props.notices || [];
         let topic_discussions = null;
@@ -304,6 +304,9 @@ class PostsIndex extends React.Component {
             ? ' layout-block'
             : ' layout-list';
 
+        const mqLarge =
+            process.env.BROWSER &&
+            window.matchMedia('screen and (min-width: 75em)').matches;
         return (
             <div
                 className={
@@ -362,82 +365,90 @@ class PostsIndex extends React.Component {
 
                 <aside className="c-sidebar c-sidebar--right">
                     <Notices notices={this.props.notices} />
-                    {this.props.isBrowser && this.props.scotInfo && (
-                        <div>
-                            <SidebarInfo
-                                sct_to_steemp={this.props.scotInfo.getIn([
-                                    'sct_to_steemp',
-                                ])}
-                                steem_to_dollor={this.props.scotInfo.getIn([
-                                    'steem_to_dollor',
-                                ])}
-                                steem_to_krw={this.props.scotInfo.getIn([
-                                    'steem_to_krw',
-                                ])}
-                            />
-                        </div>
-                    )}
-                    {this.props.isBrowser && this.props.scotBurn && (
-                        <div>
-                            <SidebarBurn
-                                scotToken={this.props.scotBurn.getIn([
-                                    'scotToken',
-                                ])}
-                                scotTokenCirculating={this.props.scotBurn.getIn(
-                                    ['total_token_balance', 'circulatingSupply']
-                                )}
-                                scotTokenBurn={this.props.scotBurn.getIn([
-                                    'token_burn_balance',
-                                    'balance',
-                                ])}
-                                scotTokenStaking={this.props.scotBurn.getIn([
-                                    'total_token_balance',
-                                    'totalStaked',
-                                ])}
-                            />
-                        </div>
-                    )}
-                    {this.props.isBrowser && this.props.scotBurn && (
-                        <div>
-                            <SidebarBurn
-                                scotToken={this.props.scotBurn.getIn([
-                                    'scotMinerToken',
-                                ])}
-                                scotTokenCirculating={this.props.scotBurn.getIn(
-                                    [
-                                        'total_token_miner_balances',
-                                        'circulatingSupply',
-                                    ]
-                                )}
-                                scotTokenBurn={this.props.scotBurn.getIn([
-                                    'token_miner_burn_balances',
-                                    'balance',
-                                ])}
-                                scotTokenStaking={this.props.scotBurn.getIn([
-                                    'total_token_miner_balances',
-                                    'totalStaked',
-                                ])}
-                            />
-                        </div>
-                    )}
-                    {this.props.isBrowser && this.props.scotThumbsup && (
-                        <div>
-                            <SidebarThumbsup
-                                thumbsUpReceiveList={this.props.scotThumbsup.getIn(
-                                    ['receiveList']
-                                )}
-                                thumbsUpSendList={this.props.scotThumbsup.getIn(
-                                    ['sendList']
-                                )}
-                            />
-                        </div>
-                    )}
+                    {this.props.isBrowser &&
+                        this.props.scotInfo && (
+                            <div>
+                                <SidebarInfo
+                                    sct_to_steemp={this.props.scotInfo.getIn([
+                                        'sct_to_steemp',
+                                    ])}
+                                    steem_to_dollor={this.props.scotInfo.getIn([
+                                        'steem_to_dollor',
+                                    ])}
+                                    steem_to_krw={this.props.scotInfo.getIn([
+                                        'steem_to_krw',
+                                    ])}
+                                />
+                            </div>
+                        )}
+                    {this.props.isBrowser &&
+                        this.props.scotBurn && (
+                            <div>
+                                <SidebarBurn
+                                    scotToken={this.props.scotBurn.getIn([
+                                        'scotToken',
+                                    ])}
+                                    scotTokenCirculating={this.props.scotBurn.getIn(
+                                        [
+                                            'total_token_balance',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={this.props.scotBurn.getIn([
+                                        'token_burn_balance',
+                                        'balance',
+                                    ])}
+                                    scotTokenStaking={this.props.scotBurn.getIn(
+                                        ['total_token_balance', 'totalStaked']
+                                    )}
+                                />
+                            </div>
+                        )}
+                    {this.props.isBrowser &&
+                        this.props.scotBurn && (
+                            <div>
+                                <SidebarBurn
+                                    scotToken={this.props.scotBurn.getIn([
+                                        'scotMinerToken',
+                                    ])}
+                                    scotTokenCirculating={this.props.scotBurn.getIn(
+                                        [
+                                            'total_token_miner_balances',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={this.props.scotBurn.getIn([
+                                        'token_miner_burn_balances',
+                                        'balance',
+                                    ])}
+                                    scotTokenStaking={this.props.scotBurn.getIn(
+                                        [
+                                            'total_token_miner_balances',
+                                            'totalStaked',
+                                        ]
+                                    )}
+                                />
+                            </div>
+                        )}
+                    {this.props.isBrowser &&
+                        this.props.scotThumbsup && (
+                            <div>
+                                <SidebarThumbsup
+                                    thumbsUpReceiveList={this.props.scotThumbsup.getIn(
+                                        ['receiveList']
+                                    )}
+                                    thumbsUpSendList={this.props.scotThumbsup.getIn(
+                                        ['sendList']
+                                    )}
+                                />
+                            </div>
+                        )}
                     {this.props.gptEnabled ? (
                         <div className="sidebar-ad">
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
                         </div>
                     ) : null}
-                    {this.props.reviveEnabled ? (
+                    {this.props.reviveEnabled && mqLarge ? (
                         <div className="sidebar-ad">
                             <ReviveAd adKey="sidebar_right" />
                         </div>
@@ -482,7 +493,7 @@ class PostsIndex extends React.Component {
                             </div>
                         </div>
                     ) : null}
-                    {this.props.reviveEnabled ? (
+                    {this.props.reviveEnabled && mqLarge ? (
                         <div className="sidebar-ad">
                             <ReviveAd adKey="sidebar_left" />
                         </div>

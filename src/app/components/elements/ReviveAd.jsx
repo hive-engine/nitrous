@@ -25,7 +25,8 @@ export default connect((state, ownProps) => {
     const tokenBalances = current_account
         ? current_account.get('token_balances')
         : null;
-    let showAd = true;
+    // Do not show if server side.
+    let showAd = Boolean(process.env.BROWSER);
 
     if (tokenBalances) {
         const tokenBalancesJs = tokenBalances.toJS();
