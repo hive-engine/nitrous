@@ -66,6 +66,11 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }freex`,
             },
+                {
+                value: 'nobel_whitepaper',
+                label: 'NOBEL Whitepaper',
+                link: `https://greensniper.wordpress.com/der-nobel-token/`,
+            },
         ],
         exchanges: [
             {
