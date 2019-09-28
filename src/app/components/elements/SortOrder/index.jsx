@@ -27,6 +27,12 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'hot';
     }
 
+    if (pathname === '/created/sct-consumer') {
+        sort = 'review';
+    } else if (pathname === '/created/sct-producer') {
+        sort = 'market';
+    }
+
     const makeRoute = (tag, sort) =>
         tag ? `/${sort.value}/${tag}` : `/${sort.value}`;
 
@@ -39,17 +45,27 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
             {
                 value: 'hot',
                 label: tt('main_menu.hot'),
-                link: `/hot/${tag}`,
+                link: `/hot/`,
             },
             {
                 value: 'created',
                 label: tt('g.new'),
-                link: `/created/${tag}`,
+                link: `/created/`,
             },
             {
                 value: 'promoted',
                 label: tt('g.promoted'),
-                link: `/promoted/${tag}`,
+                link: `/promoted/`,
+            },
+            {
+                value: 'market',
+                label: tt('g.market'),
+                link: `/created/sct-producer`,
+            },
+            {
+                value: 'review',
+                label: tt('g.review'),
+                link: `/created/sct-consumer`,
             },
         ];
     };

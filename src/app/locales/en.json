@@ -77,6 +77,8 @@
         "print": "Print",
         "promote": "Promote",
         "promoted": "Promoted",
+        "market": "Market(Producer)",
+        "review": "Market(Consumer)",
         "re": "RE",
         "re_to": "RE: %(topic)s",
         "read_offical_blog": "Steemit Blog",
