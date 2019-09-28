@@ -177,15 +177,9 @@ export default function Movie(props) {
                                             'review.movie_detail.featured_crew'
                                         )}
                                     </h4>
-                                    <Grid
-                                        container
-                                        // direction="row"
-                                        // justify="flex-start"
-                                        // alignItems="flex-start"
-                                        spacing={2}
-                                    >
-                                        {crews &&
-                                            crews.map(crew => (
+                                    {crews.length > 0 ? (
+                                        <Grid container spacing={2}>
+                                            {crews.map(crew => (
                                                 <Grid
                                                     item
                                                     key={crew.CreditId}
@@ -198,7 +192,12 @@ export default function Movie(props) {
                                                     {crew.Job}
                                                 </Grid>
                                             ))}
-                                    </Grid>
+                                        </Grid>
+                                    ) : (
+                                        <p className="light-color">
+                                            {tt('review.no_info')}
+                                        </p>
+                                    )}
                                 </Grid>
                             </Grid>
                         </div>
@@ -208,29 +207,41 @@ export default function Movie(props) {
                             ? tt('review.movie_detail.top_billed_cast')
                             : tt('review.movie_detail.series_cast')}
                     </h4>
-                    <Grid container spacing={2} className={classes.cardGrid}>
-                        {casts.map(cast => (
-                            <Grid item key={cast.CreditId} xs={4} sm={3} md={2}>
-                                <Card className={classes.cardCast}>
-                                    {cast.ProfilePath && (
+                    {casts.length > 0 ? (
+                        <Grid
+                            container
+                            spacing={2}
+                            className={classes.cardGrid}
+                        >
+                            {casts.map(cast => (
+                                <Grid
+                                    item
+                                    key={cast.CreditId}
+                                    xs={4}
+                                    sm={3}
+                                    md={2}
+                                >
+                                    <Card className={classes.cardCast}>
                                         <CardMedia
                                             className={classes.cardCastMedia}
                                             image={CustomUtil.getMovieProfileImageUrl(
                                                 cast.ProfilePath
                                             )}
                                         />
-                                    )}
-                                    <CardContent
-                                        className={classes.cardContent}
-                                    >
-                                        <b>{cast.Name}</b>
-                                        <br />
-                                        {cast.Character || '-'}
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
+                                        <CardContent
+                                            className={classes.cardContent}
+                                        >
+                                            <b>{cast.Name}</b>
+                                            <br />
+                                            {cast.Character || '-'}
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    ) : (
+                        <p style={{ width: '100%' }}>{tt('review.no_info')}</p>
+                    )}
                     <h4 style={{ marginTop: '50px' }}>
                         {tt('review.movie_detail.reviews')}
                     </h4>

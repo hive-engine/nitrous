@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-let isMoviesLoadingTried = false;
+const isMoviesLoadingTried = { movie: false, tv: false };
 
 export default function Movies(props) {
     const classes = useStyles();
@@ -94,8 +94,8 @@ export default function Movies(props) {
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
-    if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried) {
-        isMoviesLoadingTried = true;
+    if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried[type]) {
+        isMoviesLoadingTried[type] = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
         setTimeout(() => requestMovies({ ...options }));
     }
@@ -215,7 +215,7 @@ export default function Movies(props) {
                 </form>
                 {isMoviesUndefined || !isListLoaded ? (
                     <LoadingIndicator
-                        style={{ marginBottom: '2rem' }}
+                        style={{ marginTop: '2rem', width: '100%' }}
                         type="circle"
                     />
                 ) : movies.length > 0 ? (

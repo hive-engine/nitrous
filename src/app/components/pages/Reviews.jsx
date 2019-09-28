@@ -244,7 +244,7 @@ export default function Reviews(props) {
                 </form>
                 {isReviewsUndefined ? (
                     <LoadingIndicator
-                        style={{ marginBottom: '2rem' }}
+                        style={{ marginTop: '2rem', width: '100%' }}
                         type="circle"
                     />
                 ) : reviews.length > 0 ? (

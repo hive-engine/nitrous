@@ -130,7 +130,8 @@ export function getMovieProfileImageUrl(imagePath) {
     if (imagePath) {
         return `${movieImageBaseUrl}/w185${imagePath}`;
     } else {
-        return null;
+        //https://www.flaticon.com/free-icon/actor_1909819
+        return '/images/actor.svg';
     }
 }
 
