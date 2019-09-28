@@ -17,11 +17,11 @@ export const SCOT_TAG = 'jahm';
 export const TAG_LIST = fromJSOrdered([
     'jahm',
     'reggaesteem',
+    'reggaetube',
     'afrobeats',
     'albums',
     'art',
     'calypso',
-    'classical',
     'culture',
     'dance',
     'dancehall',
