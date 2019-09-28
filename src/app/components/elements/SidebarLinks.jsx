@@ -8,22 +8,13 @@ const SidebarLinks = ({ username }) => (
         </div>
         <div className="c-sidebar__content">
             <ul className="c-sidebar__list">
-
-                 <li className="c-sidebar__list-item">
-                    <a
-                        className="c-sidebar__link"
-                        href="/FAQ_nobel.html"
-                    >
-                        NOBEL FAQ
-                    </a>
-                </li>
                 
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
                         href="/faq.html"
                     >
-                        STEEM FAQ
+                        FAQ
                     </a>
                 </li>
                 
