@@ -89,6 +89,7 @@ export default function Movie(props) {
     const classes = useStyles();
     const { movie, type, movieType, id, locale, loading, requestMovie } = props;
 
+    const genres = tt(`review.genre.${type}`);
     const movieDetails = movie.Result ? JSON.parse(movie.Result) : null;
     const crews = CustomUtil.getMovieTopCrews(movieDetails);
     const casts = CustomUtil.getMovieTopCasts(movieDetails);
@@ -160,17 +161,17 @@ export default function Movie(props) {
                                         </Typography>
                                     )}
                                     <div>
-                                        {movie.Genres &&
-                                            CustomUtil.getDistinctGenres(
-                                                JSON.parse(movie.Genres)
-                                            ).map(genre => (
-                                                <Chip
-                                                    key={genre.Id}
-                                                    size="small"
-                                                    label={genre.Name}
-                                                    className={classes.chip}
-                                                />
-                                            ))}
+                                        {CustomUtil.getMovieGenres(
+                                            movie.Genres,
+                                            genres
+                                        ).map(genre => (
+                                            <Chip
+                                                key={genre.id}
+                                                size="small"
+                                                label={genre.name}
+                                                className={classes.chip}
+                                            />
+                                        ))}
                                     </div>
                                     <h4 style={{ marginTop: '50px' }}>
                                         {tt(
@@ -195,7 +196,9 @@ export default function Movie(props) {
                                         </Grid>
                                     ) : (
                                         <p className="light-color">
-                                            {tt('review.no_info')}
+                                            {movie.Posts
+                                                ? tt('review.no_info')
+                                                : '-'}
                                         </p>
                                     )}
                                 </Grid>
@@ -240,12 +243,14 @@ export default function Movie(props) {
                             ))}
                         </Grid>
                     ) : (
-                        <p style={{ width: '100%' }}>{tt('review.no_info')}</p>
+                        <p style={{ width: '100%' }}>
+                            {movie.Posts ? tt('review.no_info') : '-'}
+                        </p>
                     )}
                     <h4 style={{ marginTop: '50px' }}>
                         {tt('review.movie_detail.reviews')}
                     </h4>
-                    {movie.Posts != null ? (
+                    {movie.Posts ? (
                         <Grid
                             container
                             spacing={4}
@@ -342,7 +347,9 @@ export default function Movie(props) {
                                 </Grid>
                             ))}
                         </Grid>
-                    ) : null}
+                    ) : (
+                        <p style={{ width: '100%' }}>-</p>
+                    )}
                 </main>
             </Container>
         </React.Fragment>

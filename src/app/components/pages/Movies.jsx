@@ -100,6 +100,8 @@ export default function Movies(props) {
         setTimeout(() => requestMovies({ ...options }));
     }
 
+    const genres = tt(`review.genre.${type}`);
+
     const lastMovieId =
         isMoviesUndefined || movies.length === 0
             ? 0
@@ -160,7 +162,7 @@ export default function Movies(props) {
                                 />
                             }
                         >
-                            {tt(`review.genre.${type}`).map(genre => (
+                            {genres.map(genre => (
                                 <MenuItem value={genre.id} key={genre.id}>
                                     {genre.id >= 0 ? (
                                         genre.name
@@ -273,29 +275,25 @@ export default function Movies(props) {
                                                     )}
                                                 </Typography>
                                                 <div>
-                                                    {movie.Genres &&
-                                                        CustomUtil.getDistinctGenres(
-                                                            JSON.parse(
-                                                                movie.Genres
-                                                            )
-                                                        ).map(genre => (
-                                                            <Chip
-                                                                key={genre.Id}
-                                                                size="small"
-                                                                label={
-                                                                    genre.Name
-                                                                }
-                                                                className={
-                                                                    classes.chip
-                                                                }
-                                                                // onClick={e =>
-                                                                //     setGenre(
-                                                                //         e,
-                                                                //         genre.Id
-                                                                //     )
-                                                                // }
-                                                            />
-                                                        ))}
+                                                    {CustomUtil.getMovieGenres(
+                                                        movie.Genres,
+                                                        genres
+                                                    ).map(genre => (
+                                                        <Chip
+                                                            key={genre.id}
+                                                            size="small"
+                                                            label={genre.name}
+                                                            className={
+                                                                classes.chip
+                                                            }
+                                                            // onClick={e =>
+                                                            //     setGenre(
+                                                            //         e,
+                                                            //         genre.Id
+                                                            //     )
+                                                            // }
+                                                        />
+                                                    ))}
                                                 </div>
                                             </CardContent>
                                         </Card>

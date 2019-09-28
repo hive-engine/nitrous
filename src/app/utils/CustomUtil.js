@@ -43,13 +43,18 @@ export function getRuntimeString(value, locale) {
     }
 }
 
-export function getDistinctGenres(genres) {
-    const result = [];
-    const map = new Map();
+export function getMovieGenres(genreIdsString, allGenres) {
+    if (!genreIdsString) {
+        return [];
+    }
 
-    for (const genre of genres) {
-        if (!map.has(genre.Id)) {
-            map.set(genre.Id, true);
+    const result = [];
+    const genreIds = genreIdsString.split(',');
+
+    for (const i in allGenres) {
+        const genre = allGenres[i];
+
+        if (genreIds.indexOf(genre.id.toString()) > -1) {
             result.push(genre);
         }
     }
