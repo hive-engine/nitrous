@@ -332,7 +332,7 @@ class PostsIndex extends React.Component {
             /* trying ad between header bar and content
             {this.props.isBrowser ? (
                 <div className="articles__content-block--ad">
-                    <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
+                    <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
                 </div>
             ) : null} 
             */
@@ -400,7 +400,7 @@ class PostsIndex extends React.Component {
                         </div>
                     ) : null}
                     <div className="sidebar-ad">
-                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
+                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
                     </div>
                     <Notices notices={this.props.notices} />
                     {this.props.gptEnabled ? (
@@ -437,7 +437,7 @@ class PostsIndex extends React.Component {
                     </small>
                     <div style={{ textAlign: 'center', marginTop: 20 }}>
                         <div class="sidebar-ad">
-                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
+                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
                         </div>
                     </div>
                     {this.props.gptEnabled ? (
