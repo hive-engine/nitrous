@@ -1,6 +1,6 @@
 <span id="disable_router_nav_history_direction_check"></span>
 # NOBEL FAQ
-(comming soon)
+(comming here soon. Until then please see https://greensniper.wordpress.com/der-nobel-token/)
 
 # Steemit FAQ
 
