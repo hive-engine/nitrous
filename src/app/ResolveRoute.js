@@ -23,6 +23,9 @@ export default function resolveRoute(path) {
     if (path === '/welcome') {
         return { page: 'Welcome' };
     }
+    if (path === '/syndication') {
+        return { page: 'Syndication' };
+    }
     if (path === '/learn') {
         return { page: 'Learn' };
     }
