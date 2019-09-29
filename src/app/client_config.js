@@ -17,7 +17,17 @@ export const TAG_LIST = fromJSOrdered({
     gaming: ['gamereview', 'gamenews'],
     roadofrich: ['ror-guide', 'patchnotes'],
     cryptogames: ['splinterlands', 'nextcolony', 'drugwars'],
-    language: ['kr', 'spanish', 'cn', 'deutsch', 'japanese', 'tr'],
+    language: [
+        'kr',
+        'spanish',
+        'cn',
+        'deutsch',
+        'japanese',
+        'tr',
+        'fr',
+        'indonesia',
+    ],
+    iv: ['iv-qna', 'iv-notice', 'iv-event', 'iv-freeboard'],
 });
 
 export const LIQUID_TOKEN = 'IV';
