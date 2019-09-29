@@ -15,6 +15,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/About')]);
             //});
+        if (route.page === 'Delegate') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Delegate')]);
+            //});
         } else if (route.page === 'Welcome') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
