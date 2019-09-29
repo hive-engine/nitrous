@@ -290,7 +290,7 @@ export async function getStateAsync(url) {
             
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|syndication)($|\/$|\/([^\/]+)\/?$)/
     );
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -325,12 +325,15 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     // To indicate last fetched value from API.
     let lastValue;
 
-    const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted|Syndication)Async/
-    );
-    if (callNameMatch) {
-        let order = callNameMatch[1].toLowerCase();
-        let discussionQuery = {
+    // const callNameMatch = call_name.match(
+    //     /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+    // );
+    // if (callNameMatch) {
+    const callNameMatch = call_name.match(/getDiscussionsBy(.*)Async/);
+    const order = callNameMatch && callNameMatch[1].toLowerCase();
+    if (order && order.match(/trending|hot|created|promoted/)) {
+        const order = callNameMatch[1].toLowerCase();
+        const discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
         };
