@@ -6,7 +6,7 @@ class Welcome extends React.Component {
         return (
             <div className="row">
                 <div className="column large-8 medium-10 small-12">
-                    <HelpContent path="syndication" />
+                    <HelpContent path="welcome" />
                 </div>
             </div>
         );
@@ -14,6 +14,6 @@ class Welcome extends React.Component {
 }
 
 module.exports = {
-    path: 'syndication',
-    component: Syndication,
+    path: 'welcome',
+    component: Welcome,
 };
