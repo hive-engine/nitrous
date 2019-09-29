@@ -287,7 +287,7 @@ export async function getStateAsync(url) {
 
     console.log('path');
     console.log(path);
-    
+            
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
@@ -298,12 +298,6 @@ export async function getStateAsync(url) {
               accounts: {},
               content: {},
           };
-    if (raw.error && (path === '/favorite-mentor' || path === 'grow')) {
-        raw = {
-            accounts: {},
-            content: {},
-        };
-    }
     if (!raw) {
         raw = {};
     }
@@ -314,7 +308,7 @@ export async function getStateAsync(url) {
         raw.content = {};
     }
     await attachScotData(url, raw);
-    
+
     console.log('raw');
     console.log(raw);
 
@@ -329,7 +323,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     // To indicate if there are no further pages in feed.
     let endOfData;
     // To indicate last fetched value from API.
-    let lastValue;
+    let lastValue; 
 
     // const callNameMatch = call_name.match(
     //     /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
