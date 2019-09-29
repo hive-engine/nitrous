@@ -123,6 +123,7 @@ class PostSummary extends React.Component {
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
+        const app_name = content.get('app') || '';
 
         let post_url;
         let title_text;
@@ -210,6 +211,15 @@ class PostSummary extends React.Component {
                                     className="updated"
                                 />
                             </span>
+
+                            {app_name.startsWith('steeminventory/') && (
+                                <span
+                                    className="articles__icon-100"
+                                    title="Written From steeminven.com"
+                                >
+                                    <Icon name="iv" />
+                                </span>
+                            )}
 
                             {full_power && (
                                 <span

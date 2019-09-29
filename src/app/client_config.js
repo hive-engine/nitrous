@@ -16,7 +16,7 @@ export const SCOT_TAG = 'iv';
 export const TAG_LIST = fromJSOrdered({
     gaming: ['gamereview', 'gamenews'],
     roadofrich: ['ror-guide', 'patchnotes'],
-    cryptogames: ['roadofrich', 'splinterlands', 'nextcolony', 'drugwars'],
+    cryptogames: ['splinterlands', 'nextcolony', 'drugwars'],
     language: ['kr', 'spanish', 'cn', 'deutsch', 'japanese', 'tr'],
 });
 
