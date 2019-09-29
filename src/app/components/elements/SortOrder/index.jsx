@@ -33,8 +33,16 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'market';
     }
 
-    const makeRoute = (tag, sort) =>
-        tag ? `/${sort.value}/${tag}` : `/${sort.value}`;
+    const makeRoute = (tag, sort) => {
+        console.log(`tag:${tag}, sort.value:${sort.value}`);
+        if (sort.value === 'market') {
+            return '/created/sct-producer';
+        } else if (sort.value === 'review') {
+            return '/created/sct-consumer';
+        } else {
+            return `/${sort.value}`;
+        }
+    };
 
     const handleChange = tag => sort => {
         browserHistory.replace(makeRoute(tag, sort));
