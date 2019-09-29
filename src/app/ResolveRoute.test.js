@@ -39,6 +39,7 @@ describe('resolveRoute', () => {
         ['/login.html', { page: 'Login' }],
         ['/privacy.html', { page: 'Privacy' }],
         ['/support.html', { page: 'Support' }],
+        ['/tos.html', { page: 'Tos' }],
         ['/submit.html', { page: 'SubmitPost' }],
         [
             '/@maitland/feed',
