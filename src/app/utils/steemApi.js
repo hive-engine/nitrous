@@ -326,7 +326,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Syndication)Async/
     );
     if (callNameMatch) {
         let order = callNameMatch[1].toLowerCase();
