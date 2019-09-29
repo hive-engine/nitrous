@@ -1,7 +1,7 @@
 import React from 'react';
 import HelpContent from 'app/components/elements/HelpContent';
 
-class Welcome extends React.Component {
+class Syndication extends React.Component {
     render() {
         return (
             <div className="row">
