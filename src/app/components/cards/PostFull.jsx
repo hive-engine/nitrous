@@ -260,6 +260,7 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = p.json_metadata.app || '';
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -373,6 +374,11 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {app_info.startsWith('steeminventory/') && (
+                    <span title={tt('g.written_from', { app_name: APP_NAME })}>
+                        <Icon name="iv" />
+                    </span>
+                )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />

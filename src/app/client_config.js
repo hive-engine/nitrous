@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
@@ -14,7 +15,23 @@ export const APP_DOMAIN = 'www.steeminven.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'iv';
-export const TAG_LIST = fromJSOrdered(['iv']);
+export const TAG_LIST = fromJSOrdered({
+    gaming: ['gamereview', 'gamenews'],
+    roadofrich: ['ror-guide', 'patchnotes'],
+    cryptogames: ['splinterlands', 'nextcolony', 'drugwars'],
+    language: [
+        'kr',
+        'spanish',
+        'cn',
+        'deutsch',
+        'japanese',
+        'tr',
+        'fr',
+        'indonesia',
+    ],
+    iv: ['iv-qna', 'iv-notice', 'iv-event', 'iv-freeboard'],
+});
+
 export const LIQUID_TOKEN = 'IV';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'IV';
