@@ -1,6 +1,6 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
-## Welcome to SteemLeo!
+## SteemLeo Syndication
 
 Steemleo is a next-generation social community that is powered by blockchain technology. Content creators can join Steemleo and create blog posts or even upload videos and earn rewards paid out in LEO tokens, which are tradable on the [Steem-Engine Exchange](https://steem-engine.com/?p=market&t=LEO).
 
