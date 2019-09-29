@@ -19,6 +19,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Syndication') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Syndication')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
