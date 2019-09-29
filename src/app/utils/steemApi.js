@@ -323,17 +323,14 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     // To indicate if there are no further pages in feed.
     let endOfData;
     // To indicate last fetched value from API.
-    let lastValue; 
+    let lastValue;
 
-    // const callNameMatch = call_name.match(
-    //     /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
-    // );
-    // if (callNameMatch) {
-    const callNameMatch = call_name.match(/getDiscussionsBy(.*)Async/);
-    const order = callNameMatch && callNameMatch[1].toLowerCase();
-    if (order && order.match(/trending|hot|created|promoted/)) {
-        const order = callNameMatch[1].toLowerCase();
-        const discussionQuery = {
+    const callNameMatch = call_name.match(
+        /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+    );
+    if (callNameMatch) {
+        let order = callNameMatch[1].toLowerCase();
+        let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
         };
