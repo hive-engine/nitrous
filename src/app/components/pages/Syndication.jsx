@@ -14,6 +14,6 @@ class Welcome extends React.Component {
 }
 
 module.exports = {
-    path: 'Syndication',
+    path: '/syndication',
     component: Syndication,
 };
