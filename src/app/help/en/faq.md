@@ -12,6 +12,102 @@ The purpose of the NOBEL-token is to honour the people that Alfred Nobel would a
 _(Sketch of Alfred Nobel by Achim Mertens)_ 
 
 
+# Content:
+
+*   The Problem
+*   The Solution
+*   Four Winning Participants With NOBEL
+*   Some Rules
+*   The Whales
+*   NOBEL FAQ
+*   Further Information About NOBEL
+*   Disclaimer
+*   Contact
+
+The Problem:
+============
+
+A lot of people in the world work on charity projects or help their neighbors or do other good things to people. They don’t get rewarded for this and therefore they cannot help effectively nor do they have money for themselves (and need to have another job). On the other hand there are people willing to support needy people, but they don't know how to hand over the money to them. With NGOs the donators don't see really what happens with their money. Also there is a loss due to transaction costs and middlemen. This is the targetgroup for the NOBEL world:
+
+*   People, who need help.
+*   People, who want to do something that counts to someone.
+*   Donators, that don't want to spent 20% of their money to administration.
+*   Donators, that want to gift directly to needy people.
+*   Donators, that want to leave the decision, who shell get the money, to a trustworthy selfcontrolling community.
+*   Donators, that want to see concrete results.
+*   Curators, that want to upvote good content to bring the donated money to the right places.
+*   Charity helpers, that want to get publicity and/or support.
+
+[![Nobel Community](https://greensniper.files.wordpress.com/2019/09/nobel_community.jpg)](https://greensniper.files.wordpress.com/2019/09/nobel_community.jpg)                          
+
+The Solution:
+=============
+
+With the NOBEL coin everyone can help to support the supporters. Everyone who has a STEEM-account (you can register [here](https://steemit.com)) can buy NOBEL coins on [Steem-Engine-com](https://steem-engine.com). That money stabilizes the price. The coin can then be gifted to people working on charity projects or can be staked and the upvote-power can be used to support the charity helpers. <br>
+![Nobel_40px](https://greensniper.files.wordpress.com/2019/09/nobel_40px.png)
+
+Approach:
+---------
+
+*   *   NOBEL offers a blockchain based donating system, that eliminates the middlemen.
+    *   NOBEL offers a good hearded community, that brings together charity givers and takers.
+    *   NOBEL offers a sense in this chaotic world and the feeling to be important.
+    *   The main goal with the NOBEL token is to appreciate humanity.
+    *   The actors:
+        *   A donator
+            *   can buy NOBEL. This money backs the system.
+            *   can use the NOBEL to donate them directly to charity helpers.
+            *   can stake the NOBEL and with that she can curate good Proof of Charity.
+        *   An Investor
+            *   can buy NOBEL token and wait until it raises in value.
+            *   knows, that his money is placed in a good humanitarian environment.
+            *   owns parts of the NOBEL system. The coins are also shares.
+        *   A charity helper
+            *   gets support and thanks for his work.
+            *   needs to write good posts about his work (Proof of Charity).
+        *   A curator
+            *   should get some NOBEL token and stake them. This gives her higher weighted voting power.
+            *   With her upvotes she gives posts with hashtag #nobel a value, that is appreciated by the Scotbot.
+        *   The Scotbot
+            *   This bot has a lot of NOBEL token in his backpack (total amount of NOBEL in the system is one billion).
+            *   The bot checks each post on the STEEM blockchain, that is tagged with #nobel.
+            *   The bot gives the author and the curators a small amount of NOBEL, depending on the number and power of upvotes.
+        *   The needy people
+            *   They just receive attention and a bit hope.
+            *   They should be willing to get out of their situation.
+    *   The NOBEL token is an automated system, based on the STEEM blockchain, that warranties, that all these actors find together and that their interactions are fullfilled trustworthy.
+    *   There have been 1,000,000,000 (10 ^ 9) NOBEL coins created initially on July 19. 2019 by Achim Mertens.
+    *   The authors, curators and the token creator earn STEEM also with each post they write or curate. This is their salary. They can also sell the NOBEL token, but at least for the whales this should not be the first option to keep the price high and trust into that system.
+
+ Benefits:
+----------
+
+*   Value for the participants:
+    *   We have created a system that is self-amplifying. The more people join, the more stable gets the system. With the next steps the token creator wants to establish an own webpage with a look and feel like a discrete social media platform (one could name it a "charity facebook"). The owner of NOBEL tokens are the owner of this system. With their voting power they can influence the next steps.
+
+*   Measurements:
+    *   There are some tools to see what is going on:
+        *   [https://steemit.com/created/nobel](https://steemit.com/created/nobel)
+            *   This page is the basic entry to the system. There one can see all posts with the hashtag #nobel. It is based on the STEEM platform. To join you need a STEEM account.
+        *   [https://steem-engine.com/?p=sign\_in](https://steem-engine.com/?p=sign_in)
+            *   Here you can exchange STEEM into NOBEL and backwards. You can claim your NOBEL tokens there.
+        *   [https://steem-engine.rocks/transactions?symbol=nobel](https://steem-engine.rocks/transactions?symbol=nobel)
+            *   Here you can see who and how many people are transacting NOBEL. Also you can observe the Scotbot and check out, if it does what it should do.
+        *   [http://scot-api.steem-engine.com/get\_account\_history?account=achimmertens&type=curation\_reward&token=NOBEL&limit=100](http://scot-api.steem-engine.com/get_account_history?account=achimmertens&type=curation_reward&token=NOBEL&limit=100) Or [http://scot-api.steem-engine.com/get\_account\_history?account=achimmertens&type=curation\_reward&token=NOBEL&limit=100&author=ireneblessing](http://scot-api.steem-engine.com/get_account_history?account=achimmertens&type=curation_reward&token=NOBEL&limit=100&author=ireneblessing)
+            *   Here you can see what a curator (in this example @ireneblessing) has earned.
+        *   [http://scot-api.steem-engine.com/get\_account\_history?account=achimmertens&type=author\_reward&token=NOBEL&limit=100](http://scot-api.steem-engine.com/get_account_history?account=achimmertens&type=author_reward&token=NOBEL&limit=100)
+            *   Here you can see what an author has earned (in this example @achimmertens).
+
+*   Monetizing:
+    *   When you have a STEEM account, you can see the total of all STEEM and subcoins like NOBEL in your wallet. This amount is shown in your local currency, depending on the current market value. You can send STEEM to a crypto exchange and there you can receive the money in your local currency.
+        *   Example of the wallet from @achimmertens: https://steempeak.com/@achimmertens/transfers
+
+
+
+
+
+
+
 more coming soon
 ...
 
