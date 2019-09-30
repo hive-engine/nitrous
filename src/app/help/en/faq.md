@@ -1,6 +1,6 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
-# The NOBEL Whitepapaer
+# The NOBEL Whitepaper
 written by Achim Mertens
 
 
@@ -114,64 +114,6 @@ Competition:
 Four Winning Participants With NOBEL:
 =====================================
 
-## 1. Needy People
-----------------
-
-They get help without delivering something. But they should try to get out of the needy situation.
-
-## 2. Charity Helpers
--------------------
-
-Now they get rewarded for the job they do. They can (and should) sell (or stake) the NOBEL coins. The only thing they have to do additional is to write and post about their work to create Proof of Charity and therefore trust into the coin. This is important to increase the value. Please use the hashtags #nobel and #steem. People, that do charity, should note how much time and how much money they have spend. That gives us a guess how many NOBEL this person should get. Example (originally taken from [@yohanon](https://steempeak.com/@yohan2on)):
-
-> Yohan has bought 12 pairs of shoes for needy children and payed 35 US-Dollars for it. This is worth (with 1 NOBEL=1 STEEM = 0,35 US Dollar/STEEM) = 100 NOBEL for the shoes + further 100 (or whatever he guesses) NOBEL for the effort. He shall write it in his blog (#nobel), what the costs are and then he shall sell 200 NOBEL from his account. After that the supporter can buy 200 Nobel with his FIAT Money to keep the prize stable. ![](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)(https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)
-
-                 
-
-## 3. The Investors
------------------
-
-The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can gift some NOBEL directly to the workers. They can stake the coin and hope in a price raise. They can upvote blogs with the hashtag [#nobel](https://steempeak.com/created/nobel) to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system.
-
-## 4. The System Itself And The Market Members
---------------------------------------------
-
-New members have an ability to invest their money into a system that helps people. So they can win value, if the price rises. And they know, that the money is good invested (even if the price falls). Everyone can write blogs about NOBEL (with #nobel) and when the quality is good they can get gifts (later: upvotes) and therefore earn these tokens also. ![NOBEL_Circles](https://greensniper.files.wordpress.com/2019/07/nobel_circles.jpeg)
-
-Some Rules To Handle The NOBEL Token:
-=====================================
-
-*   **Humanity is more important than greed!!!** It is more important to support needy people than to get rich with the token. Please live this to get trust to the coin.
-*   Give the token (or stake it and upvote ) to people, that have done good things to other people.
-*   When you have done good things,
-    *   please write about it and use the #nobel tag. It is important that others get aware of it to find supporters, that buy the token.
-    *   sell some of your tokens for a good price. This is necessary to create an economic circle and give the token a value.
-*   When you misuse the #nobel tag for posts, that have nothing to do with charity or promoting NOBEL, you will get a nice comment, a warning or a downvote (that also effects your STEEM reputation).
-
-You may think "I want to do good things without knowing others about it". Of course this is also ok, but then you cannot find supporters. Your work would get much more effect, when you have a strong team behind you. Therefore it is necessary to get awareness and to give a good proof that you do a good work by writing blogs about it on the STEEM-platform.
-
-The Whales (Big Investors)
-==========================
-
-A smal group of people has got 100,000.00 token in the beginning. They have some additional duties in their own interest:
-
-*   They shall not sell the initial coins for the next 5 years. Therefore all of them have staked their coins.
-*   They should do some advertising and influencing to get value and money into the system.
-
-How do they get value into NOBEL?
----------------------------------
-
-It's all about: Find more buyers than sellers. The coin itself has no value at all. The price will drop drastically, when we sell without having buyers. We need to establich a working system, that has value and then the money will follow. ![](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)       _(left: initial status of NOBEL, right: healthy status of another coin)_ Achim (the creator of this token) is going to buy,
-
-*   When people do charity (see example above)
-*   max. 80 US Dollar/Month (status 2019/07)
-
-If we find more people, that follow the example of Achim, then the budget is higher. We need to sell our "idea", not the token. Each tokenbuyer has to be handled like a customer.
-
-What to upvote?
----------------
-
-With the upvotes from the whales they further incentivise people that are bringing value into our NOBEL system. This can be advertising/influencing or writing about projects, where the NOBEL coin is involved. ![image.png](https://steemitimages.com/0x0/https://files.steempeak.com/file/steempeak/achimmertens/VXn8ovGd-image.png) _(Sketch by Achim Mertens)_ For details about the configuration of the scotbot see [here](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now).
 
 
 
