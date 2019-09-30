@@ -161,7 +161,7 @@ A smal group of people has got 100,000.00 token in the beginning. They have some
 How do they get value into NOBEL?
 ---------------------------------
 
-It's all about: Find more buyers than sellers. The coin itself has no value at all. The price will drop drastically, when we sell without having buyers. We need to establich a working system, that has value and then the money will follow. [![](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)       _(left: initial status of NOBEL, right: healthy status of another coin)_ Achim (the creator of this token) is going to buy,
+It's all about: Find more buyers than sellers. The coin itself has no value at all. The price will drop drastically, when we sell without having buyers. We need to establich a working system, that has value and then the money will follow. ![](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)       _(left: initial status of NOBEL, right: healthy status of another coin)_ Achim (the creator of this token) is going to buy,
 
 *   When people do charity (see example above)
 *   max. 80 US Dollar/Month (status 2019/07)
