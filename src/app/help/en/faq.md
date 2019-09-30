@@ -114,12 +114,12 @@ Competition:
 Four Winning Participants With NOBEL:
 =====================================
 
-1\. Needy People
+## 1. Needy People
 ----------------
 
 They get help without delivering something. But they should try to get out of the needy situation.
 
-2\. Charity Helpers
+## 2. Charity Helpers
 -------------------
 
 Now they get rewarded for the job they do. They can (and should) sell (or stake) the NOBEL coins. The only thing they have to do additional is to write and post about their work to create Proof of Charity and therefore trust into the coin. This is important to increase the value. Please use the hashtags #nobel and #steem. People, that do charity, should note how much time and how much money they have spend. That gives us a guess how many NOBEL this person should get. Example (originally taken from [@yohanon](https://steempeak.com/@yohan2on)):
@@ -128,12 +128,12 @@ Now they get rewarded for the job they do. They can (and should) sell (or stake)
 
                  
 
-3\. The Investors
+## 3. The Investors
 -----------------
 
 The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can gift some NOBEL directly to the workers. They can stake the coin and hope in a price raise. They can upvote blogs with the hashtag [#nobel](https://steempeak.com/created/nobel) to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system.
 
-4\. The System Itself And The Market Members
+## 4. The System Itself And The Market Members
 --------------------------------------------
 
 New members have an ability to invest their money into a system that helps people. So they can win value, if the price rises. And they know, that the money is good invested (even if the price falls). Everyone can write blogs about NOBEL (with #nobel) and when the quality is good they can get gifts (later: upvotes) and therefore earn these tokens also. ![NOBEL_Circles](https://greensniper.files.wordpress.com/2019/07/nobel_circles.jpeg)
