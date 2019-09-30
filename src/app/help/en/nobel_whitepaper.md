@@ -2,7 +2,8 @@
 written by Achim Mertens
 
 
-The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an effective charity distribution tool, where the donators either directly support their favorite beneficence helpers or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. There have been 1,000,000,000 (10 ^ 9) NOBEL coins created initially on July 19. 2019 by Achim Mertens. [![](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)    <br>
+The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either directly support their favorite beneficence helpers or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
+[![](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)    <br>
 _(Sketch of Alfred Nobel by Achim Mertens)_ 
 
 # Content:
@@ -69,7 +70,7 @@ Approach:
             *   They just receive attention and a bit hope.
             *   They should be willing to get out of their situation.
     *   The NOBEL token is an automated system, based on the STEEM blockchain, that warranties, that all these actors find together and that their interactions are fullfilled trustworthy.
-    *   The NOBEL token was created by Achim Mertens from Germany (@achimmertens).
+    *   There have been 1,000,000,000 (10 ^ 9) NOBEL coins created initially on July 19. 2019 by Achim Mertens.
     *   The authors, curators and the token creator earn STEEM also with each post they write or curate. This is their salary. They can also sell the NOBEL token, but at least for the whales this should not be the first option to keep the price high and trust into that system.
 
  Benefits:
@@ -220,7 +221,7 @@ Everyone who is convinced of the NOBEL or thinks it should be given a try. There
 The NOBEL is a free coin on the market, so everyone can sell it. But the aim of this token is, that mainly the people sell it, that have done charity. You can sell (or change) NOBEL here: [https://steem-engine.com/?p=market&t=NOBEL](https://steem-engine.com/?p=market&t=NOBEL) 
 
 **What makes the NOBEL unique?**
-> The NOBEL is an effective charity distribution tool, where the donators either directly support their favorite charity workers or leave it up to the community to care about, that the money goes to the right places. The charity workers do “Proof of Charity” by writing blogs about their work. STEEM (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people.
+> The NOBEL is an high effective charity distribution tool, where the donators either directly support their favorite charity workers or leave it up to the community to care about, that the money goes to the right places. The charity workers do “Proof of Charity” by writing blogs about their work. STEEM (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
 
 The aim of the token is not mainly to get rich of it or to create financial value (when the price rises and you have staked NOBEL, you can also profit from it monetary), it is more a cashflow: With buying NOBEL, money comes in, with spending money by the charity helpers, money goes out. 
 
