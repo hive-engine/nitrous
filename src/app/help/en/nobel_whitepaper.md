@@ -36,7 +36,8 @@ A lot of people in the world work on charity projects or help their neighbors or
 The Solution:
 =============
 
-With the NOBEL coin everyone can help to support the supporters. Everyone who has a STEEM-account (you can register [here](https://steemit.com)) can buy NOBEL coins on [Steem-Engine-com](https://steem-engine.com). That money stabilizes the price. The coin can then be gifted to people working on charity projects or can be staked and the upvote-power can be used to support the charity helpers.
+With the NOBEL coin everyone can help to support the supporters. Everyone who has a STEEM-account (you can register [here](https://steemit.com)) can buy NOBEL coins on [Steem-Engine-com](https://steem-engine.com). That money stabilizes the price. The coin can then be gifted to people working on charity projects or can be staked and the upvote-power can be used to support the charity helpers. <br>
+![Nobel_40px](https://greensniper.files.wordpress.com/2019/09/nobel_40px.png)
 
 Approach:
 ---------
@@ -188,7 +189,8 @@ FAQ:
 Everyone can do that. The target group is people, that want to do good things, but don't know how. With buying NOBEL you support charity workers. 
 
 **How do I get NOBEL?** 
-You need to have an account on the STEEM blockchain. i.e. you can register here: [https://steemit.com](https://steemit.com). Then you need some STEEM. This you can earn by posting and upvoting or you can exchange it on a bank like [Bitpanda](https://www.bitpanda.com) or [coinmerce](https://coinmerce.io/). With this STEEM you can buy tokens like NOBEL here: [https://steem-engine.com/?p=market&t=NOBEL](https://steem-engine.com/?p=market&t=NOBEL) You can also join our contests or airdrops to earn NOBEL (and STEEM at the same time). \[caption id="attachment\_2536" align="alignleft" width="640"\][![](https://greensniper.files.wordpress.com/2019/08/howtobuynobeltoken.jpg)](https://greensniper.files.wordpress.com/2019/08/howtobuynobeltoken.jpg) How to do charity with the NOBEL Token\[/caption\] 
+You need to have an account on the STEEM blockchain. i.e. you can register here: [https://steemit.com](https://steemit.com). Then you need some STEEM. This you can earn by posting and upvoting or you can exchange it on a bank like [Bitpanda](https://www.bitpanda.com) or [coinmerce](https://coinmerce.io/). With this STEEM you can buy tokens like NOBEL here: [https://steem-engine.com/?p=market&t=NOBEL](https://steem-engine.com/?p=market&t=NOBEL) You can also join our contests or airdrops to earn NOBEL (and STEEM at the same time). 
+[](https://greensniper.files.wordpress.com/2019/08/howtobuynobeltoken.jpg)
 
 **How does the NOBEL increase in value?** 
 Sometimes, when you put things together something magic happens: Emergence. For example wind + sand -> wind + sand + dunes. The dunes are the emergence of this system. So it is with tokens that are used by people. The NOBEL was mainly built to create a cash flow from financial supporters to charity supporters . This means, I prognose the following phases (with the precondition, that our marketing works):
@@ -287,4 +289,4 @@ mail: achim_mertens@gmx.de (use "#nobel" in the mail header)
 
 Achim Mertens
 
-![Nobel_40px](https://greensniper.files.wordpress.com/2019/09/nobel_40px.png)
+
