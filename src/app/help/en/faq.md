@@ -7,6 +7,39 @@ written by Achim Mertens
 The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either directly support their favorite beneficence helpers or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
 
 
+
+[![](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)    <br>
+_(Sketch of Alfred Nobel by Achim Mertens)_ 
+
+
+more coming soon
+...
+
+
+
+Disclaimer
+===========
+
+I am not responsible for your invests. The NOBEL and STEEM tokens are cryptocurrencies and underly the laws of the market, which I am not responsible for. </br>
+
+Contact
+===========
+
+Achim Mertens </br>
+https://nobel.charity/@achimmertens </br>
+https://steempeak.com/@achimmertens </br>
+twitter: @greensniper </br>
+mail: achim_mertens@gmx.de (use "#nobel" in the mail header) 
+
+
+
+Achim Mertens
+
+
+--------------------------------------------
+--------------------------------------------
+--------------------------------------------
+
 # Steemit FAQ
 
 ## <span id="Table_of_Contents">Table of Contents</span>
