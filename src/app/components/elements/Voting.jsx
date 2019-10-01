@@ -316,6 +316,25 @@ class Voting extends React.Component {
         const votingUpActive = voting && votingUp;
         const votingDownActive = voting && votingDown;
 
+        // Steem Payout Calculation
+        const steem_cashout_time = post_obj.get('cashout_time');
+
+        const max_payout = parsePayoutAmount(
+            post_obj.get('max_accepted_payout')
+        );
+        const pending_payout = parsePayoutAmount(
+            post_obj.get('pending_payout_value')
+        );
+        let steem_payout = pending_payout;
+        if (steem_payout < 0.0) steem_payout = 0.0;
+        if (steem_payout > max_payout) steem_payout = max_payout;
+
+        const steem_cashout_active =
+            pending_payout > 0 ||
+            (steem_cashout_time.indexOf('1970') === 0 &&
+                !(is_comment && total_votes == 0));
+        //////////////////////////////////////////////////////////////////
+        
         const slider = up => {
             const b = up
                 ? this.state.sliderWeight.up
@@ -500,6 +519,15 @@ class Voting extends React.Component {
                 value: `- Curator ${scot_total_curator_payout.toFixed(
                     scotPrecision
                 )} ${LIQUID_TOKEN_UPPERCASE}`,
+            });
+        }
+        
+        // Steem Payout Infomation
+        if (steem_cashout_active) {
+            payoutItems.push({
+                value: `Steem Payout $${formatDecimal(pending_payout).join(
+                    ''
+                )}`,
             });
         }
 
