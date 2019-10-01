@@ -14,7 +14,7 @@ export const APP_DOMAIN = 'www.one-life.io';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'lifestyle';
-export const TAG_LIST = fromJSOrdered(['lifestyle']);
+export const TAG_LIST = fromJSOrdered(['lifestyle', 'food', 'blog', 'photography', 'travel', 'review']);
 export const LIQUID_TOKEN = 'Lifestyle';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LIFESTYLE';
