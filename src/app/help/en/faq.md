@@ -114,7 +114,10 @@ Competition:
 Four Winning Participants With NOBEL:
 =====================================
 
+1\. Needy People
+----------------
 
+They get help without delivering something. But they should try to get out of the needy situation.
 
 
 
