@@ -1,18 +1,22 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
 ## SteemLeo Syndication
+<hr>
 
 Are you a content creator who has had your content cross-posted to the SteemLeo platform? Get in touch with us and claim your Steem account and the pending rewards in it. The best ways to get a hold of us are through [Twitter](https://twitter.com/steemleo) or [Discord](https://discord.gg/KgcVDKQ).
 
 ![](https://i.imgur.com/Q3hjNbR.png)  
 
 ## What is SteemLeo Content Syndication?
+<hr>
 
 Content syndication is just a fancy way of saying: we're curating financial content from other websites and posting it onto SteemLeo while creating an escrow account for the authors of that content. 
 
 The official syndication account is @leo.syndication. If you want to see the strategy in action, head over there and check out some of the content and authors that we are syndicating. 
 
 ## TLDR;
+<hr>
+
 1. The goal of syndication is to get our foot in the door with content creators from across the internet and onboard them to SteemLeo and Steem
 2. We create an escrow account for the authors which is set as the 55% beneficiary to the rewards from content that is cross-posted from their current platform to the SteemLeo website
 3. Null is also set as a 5% beneficiary. This means that some LEO and some STEEM is also getting burned from each post to support the economics behind the tokenized rewards that authors are earning 
@@ -25,6 +29,7 @@ If you want to learn more about the Syndication Strategy, then feel free to keep
 <hr>
 
 ## <span id="Table_of_Contents">Table of Contents</span>
+<hr>
 
 ### <a href="#section1">1). Why Syndicate Content?</a>
 ### <a href="#section2">2). The Syndication Process</a>
