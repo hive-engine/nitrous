@@ -138,7 +138,7 @@ By buying NOBEL and staking it, the donator gets an investor and curator<br>
 
 The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can stake the coin and hope in a price raise. With staked NOBEL they can also curate.
 
-5.\ The Curators
+5\. The Curators
 ----------------
 Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators. 5% of the distributed NOBEL go to the curators, 95% to the authors.
 They can upvote blogs with the hashtag #nobel to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system. They own a part of the NOBEL system.
@@ -179,7 +179,7 @@ It's all about: Find more buyers than sellers. The coin itself has no value at a
 
 If we find more people, that follow the example of Achim, then the budget is higher. We need to sell our "idea", not the token. Each tokenbuyer has to be handled like a customer.
 
-What to upvote?
+What should they upvote?
 ---------------
 
 With the upvotes from the whales they further incentivise people that are bringing value into our NOBEL system. This can be advertising/influencing or writing about projects, where the NOBEL coin is involved. ![image.png](https://steemitimages.com/0x0/https://files.steempeak.com/file/steempeak/achimmertens/VXn8ovGd-image.png) _(Sketch by Achim Mertens)_ For details about the configuration of the scotbot see [here](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now).
