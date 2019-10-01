@@ -69,7 +69,7 @@ const SidePanel = ({
                 {
                 value: 'nobel_whitepaper',
                 label: 'NOBEL Whitepaper',
-                link: `https://greensniper.wordpress.com/der-nobel-token/`,
+                link: `https://nobel.charity/faq.html/`,
             },
         ],
         exchanges: [
