@@ -171,8 +171,7 @@ What to upvote?
 
 With the upvotes from the whales they further incentivise people that are bringing value into our NOBEL system. This can be advertising/influencing or writing about projects, where the NOBEL coin is involved. ![image.png](https://steemitimages.com/0x0/https://files.steempeak.com/file/steempeak/achimmertens/VXn8ovGd-image.png) _(Sketch by Achim Mertens)_ For details about the configuration of the scotbot see [here](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now).
 
-FAQ:
-====
+# NOBEL_FAQ:
 
 **Why should I buy NOBEL?**
 *   Every time you buy NOBEL, money flows into the system. This money is mentioned for people that do good things. So by buying NOBEL you contribute to "save the world" ;-).
@@ -303,7 +302,7 @@ Achim Mertens
 --------------------------------------------
 --------------------------------------------
 
-# Steemit FAQ
+# Steemit_FAQ
 
 ## <span id="Table_of_Contents">Table of Contents</span>
 
