@@ -1,0 +1,24 @@
+#movie-detail-frame {
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#movie-detail-frame:before {
+    filter: opacity(100) grayscale(100%) contrast(130%);
+}
+
+#movie-detail-frame .gradient-bg {
+    background-image: radial-gradient(circle at 20% 50%, rgba(16.47%, 16.86%, 25.49%, 0.98) 0%, rgba(24.71%, 25.10%, 31.37%, 0.88) 100%);
+    padding: 15px;
+    color: white !important;
+}
+
+.movie-title {
+    font-weight: 700 !important;
+}
+
+.gradient-bg .light-color {
+    color: white;
+    opacity: 0.5;
+}

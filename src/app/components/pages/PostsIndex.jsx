@@ -67,7 +67,9 @@ class PostsIndex extends React.Component {
               : []
             : [];
         const notices = this.props.notices || [];
-        const topic_discussions = this.props.discussions.get(category || '');
+        const topic_discussions = this.props.discussions
+            ? this.props.discussions.get(category || '')
+            : '';
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
@@ -258,8 +260,6 @@ class PostsIndex extends React.Component {
             : null;
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
-
-        const topicDiscussions = discussions.get(category || '');
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"

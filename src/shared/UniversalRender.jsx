@@ -3,6 +3,7 @@
 // https://github.com/eslint/eslint/issues/4442
 import Iso from 'iso';
 import React from 'react';
+import { List } from 'immutable';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import {
@@ -24,6 +25,7 @@ import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { syncHistoryWithStore } from 'react-router-redux';
 import rootReducer from 'app/redux/RootReducer';
+import { defaultState as movieDefaultState } from 'app/redux/MovieReducer';
 import rootSaga from 'shared/RootSaga';
 import { component as NotFound } from 'app/components/pages/NotFound';
 import extractMeta from 'app/utils/ExtractMeta';
@@ -32,6 +34,9 @@ import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
 import { getStateAsync } from 'app/utils/steemApi';
+import * as movieApi from 'app/utils/MovieApi';
+import { LIST_MAX_SIZE } from 'shared/constants';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 let get_state_perf,
     get_content_perf = false;
@@ -324,10 +329,71 @@ export async function serverRender(
             ] = pinnedPost;
         });
 
+        const movie = movieDefaultState;
+
+        if (url.match(routeRegex.Movies)) {
+            let movieType;
+            if (url.indexOf('/movie') === 0) {
+                movieType = 1;
+            } else {
+                movieType = 2;
+            }
+
+            const movies = await movieApi.getMovies(
+                userPreferences.locale,
+                movieType,
+                -1,
+                0,
+                'release_date'
+            );
+
+            movie[CustomUtil.getMovieListName(movieType)] = movies;
+
+            if (movies.length == LIST_MAX_SIZE) {
+                movie[CustomUtil.getNextListConditionName(movieType)] = true;
+                movie[CustomUtil.getListLoadedConditionName(movieType)] = true;
+            }
+        } else if (url.match(routeRegex.Movie)) {
+            let movieType;
+            if (url.indexOf('/movie') === 0) {
+                movieType = 1;
+            } else {
+                movieType = 2;
+            }
+
+            const params = url.split('/');
+            var movieId = parseInt(params[2]);
+
+            const movieResult = await movieApi.getMovie(
+                userPreferences.locale,
+                movieType,
+                movieId
+            );
+
+            movie[CustomUtil.getMovieListName(movieType)] = List([movieResult]);
+            movie[CustomUtil.getListLoadedConditionName(movieType)] = false;
+        } else if (url.match(routeRegex.Reviews)) {
+            const reviews = await movieApi.getReviews(
+                0,
+                -1,
+                '',
+                '',
+                '',
+                'created'
+            );
+
+            movie.reviews = reviews;
+
+            if (reviews.length == LIST_MAX_SIZE) {
+                movie.hasNextReviews = true;
+            }
+        }
+
         server_store = createStore(rootReducer, {
             app: initialState.app,
             global: onchain,
             offchain,
+            movie,
         });
         server_store.dispatch({
             type: '@@router/LOCATION_CHANGE',

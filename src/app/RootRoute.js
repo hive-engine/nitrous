@@ -1,6 +1,9 @@
 import App from 'app/components/App';
 import Benchmark from 'app/components/pages/Benchmark';
 import PostsIndex from 'app/components/pages/PostsIndex';
+import Movies from 'app/components/pages/Movies';
+import Movie from 'app/components/pages/Movie';
+import Reviews from 'app/components/pages/Reviews';
 import resolveRoute from './ResolveRoute';
 
 // polyfill webpack require.ensure
@@ -95,6 +98,14 @@ export default {
             //cb(null, [require('app/components/pages/PostsIndex')]);
             cb(null, [PostsIndex]);
             //});
+        } else if (route.page === 'Movies') {
+            cb(null, [Movies]);
+        } else if (route.page === 'TVs') {
+            cb(null, [Movies]);
+        } else if (route.page === 'Movie') {
+            cb(null, [Movie]);
+        } else if (route.page === 'Reviews') {
+            cb(null, [Reviews]);
         } else {
             //require.ensure([], (require) => {
             cb(process.env.BROWSER ? null : Error(404), [

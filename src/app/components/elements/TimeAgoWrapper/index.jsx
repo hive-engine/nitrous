@@ -9,7 +9,10 @@ class TimeAgoWrapper extends React.Component {
         let { date, className } = this.props;
         if (date && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(date)) {
             date = date + 'Z'; // Firefox really wants this Z (Zulu)
+        } else if (/^\/Date/.test(date)) {
+            date = Number(date.replace('/Date(', '').replace(')/', ''));
         }
+
         const dt = new Date(date);
         const date_time = `${this.props.intl.formatDate(
             dt
