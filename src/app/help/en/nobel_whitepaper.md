@@ -104,7 +104,7 @@ Competition:
     *   [https://community.coinsence.org/dashboard](https://community.coinsence.org/dashboard) -> They have small working groups with own currencies (partly via blockchain)
     *   [https://Fundition.io](https://Fundition.io) They also do charity projects on the STEEM platform. One can support them directly there by donating STEEM. The difference is, that there is no own token system behind it, that accelerates the circulation of donating and spending. Their focus is on funding projects, our focus is on spending attention and hope also to small charity occasions. One can also combine fundition and NOBEL just by using the hashtag #nobel in the fundition posts.
 
-Five Winning Participants With NOBEL:
+Six Winning Participants With NOBEL:
 =====================================
 
 1\. Needy People
@@ -120,35 +120,28 @@ Now they get rewarded for the job they do. They can (and should) sell (or stake)
 > Yohan has bought 12 pairs of shoes for needy children and payed 35 US-Dollars for it. This is worth (with 1 NOBEL=1 STEEM = 0,35 US Dollar/STEEM) = 100 NOBEL for the shoes + further 100 (or whatever he guesses) NOBEL for the effort. He shall write it in his blog (#nobel), what the costs are and then he shall sell 200 NOBEL from his account. After that the supporter can buy 200 Nobel with his FIAT Money to keep the prize stable. [![](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)
 
 
-3.\ The Donators
+3\. The Donators
 -----------------
-Donators have with nobel.charity a tool to donate in three ways:
-1. Directly with maximal efficience
-This means, there is no man in the middle. There are only banking exchange fees (that every NGO has to handle with also). When a donator knows who to support, he can give the NOBEL or STEEM token directly to the recipient.
-2. Supporting The Community
-By buying NOBEL and sending it to the distribution bot @anobel, a donator keeps the price high. He puts money into the system. The community distributes NOBEL by upvoting, so the "best" charity helpers get the most token, which they can exchange now for a good value on the market.
-3. Gaining influence power
-By buying NOBEL and staking it, the donator gets an investor and curator
-
-![](https://steemitimages.com/640x0/https://files.steempeak.com/file/steempeak/achimmertens/SNfXOTzs-3ways_to_donate_with_nobel.jpg)
+Donators have with nobel.charity a tool to gift in three ways: <br>
+1. Directly with maximal efficience: <br>
+This means, there is no man in the middle. There are only banking exchange fees (that every NGO has to handle with also). When a donator knows who to support, he can give the NOBEL or STEEM token directly to the recipient. <br>
+2. Supporting The Community: <br>
+By buying NOBEL and sending it to the distribution bot @anobel, a donator keeps the price high. He puts money into the system. The community distributes NOBEL by upvoting, so the "best" charity helpers get the most token, which they can exchange now for a good value on the market. <br>
+3. Gaining influence power:<br>
+By buying NOBEL and staking it, the donator gets an investor and curator<br>
+![](https://steemitimages.com/640x0/https://files.steempeak.com/file/steempeak/achimmertens/SNfXOTzs-3ways_to_donate_with_nobel.jpg)<br>
 *Flyer made with canvas by Achim Mertens*
 
 
 4\. The Investors
 -----------------
 
-The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can stake the coin and hope in a price raise. They can upvote blogs with the hashtag #nobel to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system. They own a part of the NOBEL system.
+The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can stake the coin and hope in a price raise. With staked NOBEL they can also curate.
 
 5.\ The Curators
 ----------------
-Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators. 5 percent 
-
-
-
-.... more coming soon
-
-
-
+Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators. 5% of the distributed NOBEL go to the curators, 95% to the authors.
+They can upvote blogs with the hashtag #nobel to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system. They own a part of the NOBEL system.
 
 
 6\. The System Itself And The Market Members
