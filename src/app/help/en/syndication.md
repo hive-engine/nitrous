@@ -26,245 +26,84 @@ If you want to learn more about the Syndication Strategy, then feel free to keep
 
 ## <span id="Table_of_Contents">Table of Contents</span>
 
-### Get Started
-
-- <a href="#Free_to_Participate">Free to Participate</a>
-- <a href="#Votes">Votes</a>
-- <a href="#Comments">Comments</a>
-- <a href="#Creating_Posts">Creating Posts</a>
-- <a href="#Followers_and_Feeds">Followers and Feeds</a>
-- <a href="#Resteem">Resteem</a>
-- <a href="#Digital_Currencies">Digital Currencies</a>
-- <a href="#Curation">Curation</a>
-- <a href="#Payments">Payments</a>
-- <a href="#Plagiarism">Content & Community Rules</a>
-- <a href="#Earning_on_SteemLeo">Earning on SteemLeo</a>
-
-### <a href="#what_is_the_leo_token">What is The LEO Token?</a>
-### <a href="#official_accounts">Official SteemLeo Accounts & Curators</a>
-### <a href="#Other_Resources">Other Resources</a>
-### <a href="#Get_Help">Get Help</a>
-### <a href="#steem_tools">Steem Tools & Resources</a>
+### <a href="#section1">1). Why Syndicate Content?</a>
+### <a href="#section2">2). The Syndication Process</a>
+### <a href="#section3">3). See Syndication in Action</a>
+### <a href="#section4">4). Results of the Strategy</a>
+### <a href="#section5">5). Scaling</a>
+### <a href="#section6">6). Cross-Posting Service</a>
+### <a href="#section7">7). We Need Your Help</a>
 
 &nbsp;
 ![](https://i.imgur.com/ZmF0k0b.png)
 &nbsp;
 
-## <span id="Quick_Start_Guide">Get Started </span>
-
-### <span id="Free_to_Participate">Free to Participate</span>
-
-SteemLeo is built on the Steem blockchain which boasts features such as 3 second block times and free transactions.
-
-That means that it's free to post, comment and vote on steemleo.com. You'll even earn cryptocurrency rewards for doing so!
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Votes">Votes</span>
-
-#### Upvotes:
-
-Upvotes are how you "like" someone's post or comment... but these are no ordinary "likes". When an upvote is given, it draws on the user's LEO POWER (staked LEO tokens) and distributes newly minted LEO tokens to the author of the post/comment and some to the one who upvoted (curated) the content (50% to the author and 50% to the curator).
-
-The more LEO POWER a user has, the more their upvote will distribute from the total rewards pool.
-
-To upvote, click on the <Icon name="chevron-up-circle" /> *Upvote* icon at the bottom of the post/comment.
-
+## <span id="section1">1). Why Syndicate Content?</span>
 &nbsp;
 
+Why would we spend any time/resources syndicating content? 
 
-| Upvote | Downvote (Flag) |
-| -------- | -------- |
-| <Icon name="chevron-up-circle" /> | <Icon name="flag1" /> |
+The benefit of syndicating content from a variety of high-quality investment authors is that we can onboard new users and content creators who are already posting about investment-related topics, but who haven't yet discovered the Steem blockchain and the SteemLeo community.
 
+The core mission of SteemLeo is to create an online community for financial authors and investment enthusiasts to gather and discuss the most important topics, news and analyses related to finance. Creating a decentralized platform for users to gather, earn rewards and post their content on an immutable blockchain is great, but we need ways to bring in new content creators who put out amazing works of art. 
+
+Syndication is our answer to the growing need of creating a diverse ecosystem of users and bringing more attention and creators to the SteemLeo platform. 
+
+## <span id="section2">2). The Syndication Process:</span>
 &nbsp;
 
+1. Find a high-quality investment author on a "traditional" social media site (i.e. Seeking Alpha or Linkedin)
+2. Create a Steem account in escrow for this author
+3. Syndicate content from this author's blog onto the official syndication account we have created: @leo.syndication
+4. Set the author as the beneficiary to the rewards receieved from their syndicated content
+5. Unleash the power of the community by continually reaching out to the author, linking the account we've created in their name and showing them the benefits of the SteemLeo platform such as censorship-resistant content on the blockchain and tokenization which allows for rewarding both authors for their content and users for their attention and engagement on the platform
+6. The author reaches out to the Steemleo team via [Twitter](https://twitter.com/steemleo) or [Discord](https://discord.gg/KgcVDKQ). To verify their identity and claim the account
+7. We show them the ropes (if they're interested) of how Steem & SteemLeo work and how they can directly publish their content on the blockchain and earn rewards
+8. New content creators flood the platform and potentially bring some of their core audience with them as well. Now they are able to earn rewards and distribute rewards to fans who engage with their content regularly
 
-#### Downvotes (flags):
+## <span id="section3"> 3). See Syndication in Action</span>
 
-Downvotes (flags) are how you "dislike" someone's post or comment. downvotes work inversely to upvotes. So if you downvote someone's post/comment, then you will remove rewards from their content which puts them back into the rewards pool to be redistributed to better content. 
+You can see this strategy in action on the @leo.syndication account, where syndicated content is posted.
 
-To downvote (flag), click on the <Icon name="flag1" /> *Flag* icon at the bottom of the post/comment.
+## <span id="section4"> 4). Results of the Strategy</span>
 
-<a href="#Table_of_Contents">^</a>
-### <span id="Comments">Comments</span>
+As of the writing of this page (9/23/19), our Syndication strategy is just about 1 month old.
 
-Similar to any other social media website, commenting is a great way to build brand awareness for your account. It's a great way to get out there, meet like-minded people and have great discussions.
+Thanks to one of our syndicators, @shanghaipreneur, we've gotten 1 well-known investment author to claim the Steem account that we were holding on their behalf in Escrow.
 
-You'll quickly learn that on SteemLeo, people love interacting and debating ideas related to investing. You will never find a shortage of passionate investors here on SteemLeo!
+This author has over 32,000 followers on their Linkedin blog and we see this as 1 step forward in our grand plan to onboard tens of thousands of new users and content creators to SteemLeo and the Steem blockchain.
 
-Comments are also eligible for upvotes. So participating in the community actually means something! Not only can you have great conversations with like-minded investors, but you can also earn rewards when they upvote your comments! 
+As the strategy matures, we'll post regular updates here and on the @leo.syndication account with onboarding statistics.
 
-To comment on a post, or reply to an existing comment, click on the "Reply" button.
+## <span id="section5"> 5). Scaling</span>
 
-<a href="#Table_of_Contents">^</a>
-### <span id="Creating_Posts">Creating Posts</span>
+Right now, we are syndicating about 2 articles a day and we have just about 20 authors on the regular syndication list.
 
-To create a post, click on the "Pencil" icon in the upper right corner next to your profile image (note: you need to be signed in before creating a post).
+This is just the very beginning of this strategy and there is plenty of room to grow. We think that it is entirely possible to onboard hundreds and even thousands of content creators given enough time and persistance. This will have a massive impact on the growth of SteemLeo as a platform and Steem as a blockchain ecosystem.
 
-![](https://i.imgur.com/xsbZtK3.png)
+## <span id="section6"> 6). Cross-Posting Service</span>
 
-Posts have four main parts: Title, Content, Tags and Advanced Settings.
+After getting about a month into the syndication strategy, we realized that it might be a good idea to offer cross-posting as a service to authors. 
 
-![](https://i.imgur.com/xxxGfOZ.png)
+The idea is that many authors don't have the time to learn how every new platform works. After creating a great piece of content, the grunt work of having to post and reformat that content to fit all the various platforms is a brutal workload. 
 
-Be sure to make a relevant and attractive title for your content. Just like any other social platform, your title and thumbnail often dictate the flow of traffic to your content. The first image that you submit on your post will be the thumbnail.
+Ideally, we will get some big authors to join the Steem blockchain through this syndication strategy and have them spend some signifcant time learning about Steem and it's potential. 
 
-You can insert images by either dragging & dropping, pasting from the clipboard, or by selecting them.
+One of the amazing things about Steem is its versatility. We can use the beneficiary rewards function on the https://steemleo.com website to set the author as a benefactor to the majority of the rewards from a post, and then set a specified syndicator (a.k.a. the Steemian who does the grunt work of reformatting and cross-posting the content to SteemLeo) as another beneficiary to a portion of the rewards.
 
-Tags are extremely important. This is how content is organized both on SteemLeo and on the Steem blockchain. On the homepage of Steemleo.com, you'll notice some tags on the left-hand side. These are the most used tags for the SteemLeo community. Also note that you can use the tags of other communities (including "steemleo") to cross-post to those communities and earn tokens as well.
+This makes it easy to essentially help authors "hire" someone to be their official ambassador to SteemLeo and the Steem blockchain. An easy win-win for both parties.
 
-Using relevant tags is very important, so be sure to do a little research before dropping niche tags on your content. 
+## <span id="section7"> 7). We Need Your Help</span>
 
-<a href="#Table_of_Contents">^</a>
-### <span id="Followers_and_Feeds">Followers and Feeds</span>
+The community is the true power of the syndication strategy. As we continue to expand the list of authors and the rewards flowing to their Steem accounts in escrow, the community can reach out to the authors on various social media platforms and tell them about their account on Steem.
 
-To follow another user, click on their username and click the "Follow" button. This will follow the user on the Steem blockchain which means that you can view their posts in your feed on any Steem interface.
+From there, we can get in touch with the authors and teach them about SteemLeo and the Steem blockchain. We can explain the benefits of SteemLeo and why they might want to consider posting their content here. We can also offer the aforementioned cross-posting service to the authors and allow them to sit back, post content as they usually do and have a Steemian assigned to their account who will reformat and cross-post their content to the blockchain with a beneficiary rewards structure.
 
-Once you follow someone, all of their posts will show up in your "Feed" on the SteemLeo homepage when you login.
+If you're an author and you'd like to have a Steem user cross-post content on your behalf, get in touch with the SteemLeo team via [Twitter](https://twitter.com/steemleo) or [Discord](https://discord.gg/KgcVDKQ).
 
-As you grow on SteemLeo and post content consistently, you'll see your follower count increase. You can track your followers (and who you're following) on your profile page: steemleo.com/@username (replace username with your username).
+If you're a Steem user and you'd like to syndicate/cross-post content, consider joining our syndication team by getting in touch with us on [Twitter](https://twitter.com/steemleo) or [Discord](https://discord.gg/KgcVDKQ).
 
-<a href="#Table_of_Contents">^</a>
-### <span id="Resteem">Resteem</span>
 
-If you want to share someone else's post with all of your followers, click on the <Icon name="reblog" /> *resteem* icon. Resteems cannot be undone. 
 
-Resteeming a post is just like "retweeting" on Twitter. It posts straight into your blog feed and allows your followers to see it as well. 
 
-<a href="#Table_of_Contents">^</a>
-### <span id="Digital_Currencies">Digital Currencies</span>
 
-As mentioned previously, posting on SteemLeo will directly post to the Steem Blockchain. This means that your content is eligble for LEO token rewards as well as STEEM/SBD and other digital currencies when relevant tags are used. 
-
-Note: We'll make a more in-depth section for digital currencies, relevant tag use, etc. and update this guide when it's ready.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Curation">Curation</span>
-
-Up to 50% of the reward for each post goes to the people who upvoted on it. These users are called Curators.
-
-The more LEO POWER you have in your wallet, the more your votes will be worth. If your vote is more valuable, you will earn higher curation rewards and simultaneously be able to distribute more rewards to the author as well. 
-
-Curating is almost like a game because curating a post before other curators will increase your curation rewards as you'll earn a sort of "royalty" on any votes that follow yours. Thus, digging up posts by unknown authors and being the first to curate them can lead to greater rewards.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Payments">Payouts</span>
-
-Payouts are made 7 days after the post/comment is created. You can claim your rewards in your wallet after 7 days. 
-
-Projected payouts are shown right next to the upvote/flag buttons in terms of LEO currency. 
-
-![](https://i.imgur.com/I036JVO.png)
-
-Note: projected payout figures may fluctuate based on several factors before the final payout is reached.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Plagiarism">Content & Community Rules</span>
-
-Content posted on Steemleo should be original content (made by you) that is relevant to our community -- Investing/financial content.
-
-We are reworking our community guidelines at the moment and will have this section updated with a link to those guidelines as soon as it is available.
-
-Additionally, we'll make a separate post with content "tips" that will guide you in creating content that is likely to perform well on SteemLeo in terms of attention as well as rewards.
-
-<a href="#Table_of_Contents">^</a>
-### <span id="Earning_on_SteemLeo">Earning on SteemLeo</span>
-
-Everyone's earnings are different. Have fun. Get involved. Meet new friends. 
-
-The amount of money a user earns depends on their content, following, level of investment and many, many other factors. 
-
-Don't get discouraged if you don't earn much at first. Keep up the good work!
-
-<a href="#Table_of_Contents">^</a>
-
-***
-
-## <span id="what_is_the_leo_token">What is the LEO Token?</span>
-
-LEO tokens are the native currency of the SteemLeo platform. These tokens are automatically distributed from the rewards pool to SteemLeo content creators, curators and users.
-
-Earning LEO tokens can be done in a myriad of ways. The primary distribution of LEO tokens occurs when a post is *upvoted* by someone with staked LEO tokens.
-
-Staking LEO tokens means that you're vesting them in your account. Vested LEO stake is also called "LEO POWER". Your LEO POWER determines the amount of tokens that you can distribute from the rewards pool with your upvote. 
-
-For example, someone with 1,000 LEO POWER will be able to distribute more LEO with their upvote than someone with 100 LEO POWER.
-
-### Wallet Page:
-
-Go to your wallet page to see your balances and stake LEO tokens. You can also view the various other tokens available on the Steem blockchain, such as STEEM and other community tokens like PAL.
-
-https://steemleo.com/@username/wallet
-
-*replace "username" with your Steem username*.
-
-### Trade LEO:
-
-You can trade LEO tokens for other cryptocurrencies on the [Steem-Engine Exchange](https://steem-engine.com/?p=market&t=LEO).
-
-
-
-<a href="#Table_of_Contents">^</a>
-## <span id="official_accounts">Official SteemLeo Accounts & Curators</span>
-
-Official accounts are marked by an orange badge next to their name on Steemleo.com. If you see an account with a name that appears to be an official account, simply check for the orange badge to confirm. If there's no badge, then it isn't an official SteemLeo account.
-
-- [@steem.leo](https://steemleo.com/@steem.leo)
-- [@noleo4u](https://steemleo.com/@noleo4u)
-- [leo.syndication](https://steemleo.com/@leo.syndication)
-- [learn.leo](https://steemleo.com/@learn.leo)
-- [leo.curation](https://steemleo.com/@leo.curation)
-- [leo.bounties](https://steemleo.com/@leo.bounties)
-- [leo.voter](https://steemleo.com/@leo.voter)
-
-We also have a team of official curators who are always browsing & curating Steemleo content. When you're on Steemleo.com, you'll see an orange badge next to their names, similar to the official accounts.
-
-- [@leothecat](https://steemleo.com/@leothecat) managed by [@gerber](https://steemleo.com/@gerber) 
-- [@neal.leo](https://steemleo.com/@neal.leo) managed by [@nealmcspadden](https://steemleo.com/@nealmcspadden)
-- [@scaredycatcurate](https://steemleo.com/@scaredycatcurate) managed by [@scaredycatguide](https://steemleo.com/@scaredycatguide)
-- [@vxc.leo](https://steemleo.com/@vxc.leo) managed by [@vxc](https://steemleo.com/@vxc)
-- [@schubes](https://steemleo.com/@schubes) managed by [@schubes](https://steemleo.com/@schubes)
-- [@mindtrap-leo](https://steemleo.com/@mindtrap-leo) managed by [@mindtrap](https://steemleo.com/@mindtrap)
-- [@rollandthomas](https://steemleo.com/@rollandthomas) managed by [@rollandthomas](https://steemleo.com/@rollandthomas)
-
-<a href="#Table_of_Contents">^</a>
-## <span id="Other_Resources">What is the Steem Blockchain</span>
-
-The SteemLeo Community is a second-layer community that is built on a foundation called the Steem Blockchain. 
-
-The Steem Blockchain acts as a database for everything we do on SteemLeo. Casting a vote, for example, will ultimately broadcast to the base-layer (Steem) and be stored in the blockchain forever as an immutable transaction.
-
-This means that when you make a blog post on SteemLeo, your content is being stored on the Steem Blockchain and is viewable on other Steem interfaces as well. 
-
-Steem provides a lot of powerful tools and features such as:
-1. 3 second transactions
-2. Free transactions
-3. Immutable blockchain
-
-We'll post a more in-depth guide for the Steem blockchain here when it is available.
-
-<a href="#Table_of_Contents">^</a>
-## <span id="Get_Help">Get Help</span>
-
-Whether you've got some general questions or account-specific questions, feel free to hop in our [Discord](https://discord.gg/KgcVDKQ) and we'll help you out. There are various channels in there for different resources, or you could ask for help in general chat and someone will point you in the right direction.
-
-[![](https://i.imgur.com/zoZVqyb.gif)](https://discord.gg/KgcVDKQ)
-
-<a href="#Table_of_Contents">^</a>
-## <span id="steem_tools">Steem Tools & Resources</span>
-
-The following is a collection of tools and apps to enhance your Steem blockchain experience.
-
-https://Blocktrades.us --> Blocktrades is an exchange service that allows you to easily send & convert various currencies including STEEM.
-
-https://Steem-Engine.com --> Steem-Engine is both an exchange and a service provider for the Steem blockchain, allowing anyone to create/launch their own tokens and immediately list them on the exchange.
-
-https://steemrewarding.com --> Steemrewarding is a tool created by Steem witness & community developer @holger80. It allows you to automate various voting patterns on Steem. I.e. autovote your favorite authors at a specific time.
-
-https://dlease.io --> Dlease is a tool for peer-to-peer leases. For example, you could lease 1,000 STEEM POWER for 30 days from another Steem user in exchange for a pre-determined lease price.
-
-https://steemworld.org --> Created by @steemchiller, Steemworld is an incredible tool that simply has too many features to write about here. You can claim all your rewards, monitor your account's blockchain operations, trade the internal market and about a thousand other features with more that are added on a regular basis.
-
-https://steemapps.com --> view a list of apps built on the Steem blockchain as well as performance statistics.
-
-<a href="#Table_of_Contents">^</a>
