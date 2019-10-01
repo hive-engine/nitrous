@@ -25,8 +25,11 @@ export const TAG_LIST = fromJSOrdered([
     'ibt',
     'robotwars',
     'drugwars',
+    'roadofrich',
+    
     'gamereview',
     'gaming',
+    
     'dtube',
     'vimmtv',
     'threespeak',
