@@ -34,12 +34,10 @@ If you want to learn more about the Syndication Strategy, then feel free to keep
 ### <a href="#section6">6). Cross-Posting Service</a>
 ### <a href="#section7">7). We Need Your Help</a>
 
-&nbsp;
-![](https://i.imgur.com/ZmF0k0b.png)
-&nbsp;
+<hr>
 
 ## <span id="section1">1). Why Syndicate Content?</span>
-&nbsp;
+<hr>
 
 Why would we spend any time/resources syndicating content? 
 
@@ -50,7 +48,7 @@ The core mission of SteemLeo is to create an online community for financial auth
 Syndication is our answer to the growing need of creating a diverse ecosystem of users and bringing more attention and creators to the SteemLeo platform. 
 
 ## <span id="section2">2). The Syndication Process:</span>
-&nbsp;
+<hr>
 
 1. Find a high-quality investment author on a "traditional" social media site (i.e. Seeking Alpha or Linkedin)
 2. Create a Steem account in escrow for this author
@@ -62,10 +60,12 @@ Syndication is our answer to the growing need of creating a diverse ecosystem of
 8. New content creators flood the platform and potentially bring some of their core audience with them as well. Now they are able to earn rewards and distribute rewards to fans who engage with their content regularly
 
 ## <span id="section3"> 3). See Syndication in Action</span>
+<hr>
 
 You can see this strategy in action on the @leo.syndication account, where syndicated content is posted.
 
 ## <span id="section4"> 4). Results of the Strategy</span>
+<hr>
 
 As of the writing of this page (9/23/19), our Syndication strategy is just about 1 month old.
 
@@ -76,12 +76,14 @@ This author has over 32,000 followers on their Linkedin blog and we see this as 
 As the strategy matures, we'll post regular updates here and on the @leo.syndication account with onboarding statistics.
 
 ## <span id="section5"> 5). Scaling</span>
+<hr>
 
 Right now, we are syndicating about 2 articles a day and we have just about 20 authors on the regular syndication list.
 
 This is just the very beginning of this strategy and there is plenty of room to grow. We think that it is entirely possible to onboard hundreds and even thousands of content creators given enough time and persistance. This will have a massive impact on the growth of SteemLeo as a platform and Steem as a blockchain ecosystem.
 
 ## <span id="section6"> 6). Cross-Posting Service</span>
+<hr>
 
 After getting about a month into the syndication strategy, we realized that it might be a good idea to offer cross-posting as a service to authors. 
 
@@ -94,6 +96,7 @@ One of the amazing things about Steem is its versatility. We can use the benefic
 This makes it easy to essentially help authors "hire" someone to be their official ambassador to SteemLeo and the Steem blockchain. An easy win-win for both parties.
 
 ## <span id="section7"> 7). We Need Your Help</span>
+<hr>
 
 The community is the true power of the syndication strategy. As we continue to expand the list of authors and the rewards flowing to their Steem accounts in escrow, the community can reach out to the authors on various social media platforms and tell them about their account on Steem.
 
