@@ -129,7 +129,7 @@ Now they get rewarded for the job they do. They can (and should) sell (or stake)
 3\. The Investors
 -----------------
 
-The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can gift some NOBEL directly to the workers. They can stake the coin and hope in a price raise. They can upvote blogs with the hashtag [#nobel](https://steempeak.com/created/nobel) to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system.
+The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can gift some NOBEL directly to the workers. They can stake the coin and hope in a price raise. They can upvote blogs with the hashtag [nobel](https://steempeak.com/created/nobel) to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system.
 
 
 
