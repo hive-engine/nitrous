@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { REVIVE_ADS, NO_ADS_STAKE_THRESHOLD } from 'app/client_config';
+import { Map } from 'immutable';
 
 class ReviveAd extends React.Component {
     componentDidMount() {
@@ -25,6 +25,13 @@ export default connect((state, ownProps) => {
     const tokenBalances = current_account
         ? current_account.get('token_balances')
         : null;
+    const noAdsStakeThreshold = state.app.getIn([
+        'hostConfig',
+        'NO_ADS_STAKE_THRESHOLD',
+    ]);
+    const reviveAdsConfig = state.app
+        .getIn(['hostConfig', 'REVIVE_ADS'], Map())
+        .toJS();
     // Do not show if server side.
     let showAd = Boolean(process.env.BROWSER);
 
@@ -33,7 +40,7 @@ export default connect((state, ownProps) => {
         const delegatedStake = tokenBalancesJs.delegationsOut || '0';
         const stakeBalance =
             parseFloat(tokenBalancesJs.stake) + parseFloat(delegatedStake);
-        if (stakeBalance >= NO_ADS_STAKE_THRESHOLD) {
+        if (stakeBalance >= noAdsStakeThreshold) {
             showAd = false;
         }
     }
@@ -41,9 +48,9 @@ export default connect((state, ownProps) => {
     const adKey = ownProps.adKey;
     let zoneId = '';
     let reviveId = '';
-    if (REVIVE_ADS[adKey]) {
-        zoneId = REVIVE_ADS[adKey].zoneId;
-        reviveId = REVIVE_ADS[adKey].reviveId;
+    if (reviveAdsConfig[adKey]) {
+        zoneId = reviveAdsConfig[adKey].zoneId;
+        reviveId = reviveAdsConfig[adKey].reviveId;
     } else {
         showAd = false;
     }

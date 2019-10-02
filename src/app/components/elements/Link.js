@@ -4,16 +4,18 @@ import links from 'app/utils/Links';
 import { browserHistory } from 'react-router';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
-export default class Link extends React.Component {
+class Link extends React.Component {
     static propTypes = {
         // HTML properties
         href: PropTypes.string,
+        // Redux properties
+        appDomain: PropTypes.string,
     };
     constructor(props) {
         super();
-        const { href } = props;
+        const { href, appDomain } = props;
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'Link');
-        this.localLink = href && links.local.test(href);
+        this.localLink = href && links.local(appDomain).test(href);
         this.onLocalClick = e => {
             e.preventDefault();
             browserHistory.push(this.props.href);
@@ -29,3 +31,16 @@ export default class Link extends React.Component {
         );
     }
 }
+
+import { connect } from 'react-redux';
+
+export default connect(
+    // mapStateToProps
+    (state, ownProps) => {
+        const appDomain = state.app.getIn(['hostConfig', 'APP_DOMAIN']);
+        return {
+            ...ownProps,
+            appDomain,
+        };
+    }
+)(Link);

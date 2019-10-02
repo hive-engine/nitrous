@@ -19,7 +19,6 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -52,13 +51,17 @@ export function* fetchState(location_change_action) {
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
     }
 
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
+
     if (
         pathname === '/' ||
         pathname === '' ||
         pathname.indexOf('trending') !== -1 ||
         pathname.indexOf('hot') !== -1
     ) {
-        yield fork(getPromotedState, pathname);
+        yield fork(getPromotedState, pathname, scotTokenSymbol);
     }
 
     // `ignore_fetch` case should only trigger on initial page load. No need to call
@@ -86,7 +89,7 @@ export function* fetchState(location_change_action) {
     yield put(appActions.fetchDataBegin());
     try {
         // handle trending/hot/promoted feeds differently.
-        const state = yield call(getStateAsync, url);
+        const state = yield call(getStateAsync, url, scotTokenSymbol);
 
         yield put(globalActions.receiveState(state));
         yield call(fetchScotInfo);
@@ -106,7 +109,7 @@ export function* fetchState(location_change_action) {
  *
  * @param {String} pathname
  */
-export function* getPromotedState(pathname) {
+export function* getPromotedState(pathname, scotTokenSymbol) {
     const m = pathname.match(/^\/[a-z]*\/(.*)\/?/);
     const tag = m ? m[1] : '';
 
@@ -118,7 +121,11 @@ export function* getPromotedState(pathname) {
         return;
     }
 
-    const state = yield call(getStateAsync, `/promoted/${tag}`);
+    const state = yield call(
+        getStateAsync,
+        `/promoted/${tag}`,
+        scotTokenSymbol
+    );
     yield put(globalActions.receiveState(state));
 }
 
@@ -154,9 +161,12 @@ function* syncPinnedPosts() {
     // Bail if we're rendering serverside since there is no localStorage
     if (!process.env.BROWSER) return null;
 
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     // Get pinned posts from the store.
     const pinnedPosts = yield select(state =>
-        state.offchain.get('pinned_posts')
+        state.offchain.getIn(['pinned_posts', scotTokenSymbol])
     );
 
     // Mark seen posts.
@@ -196,6 +206,9 @@ export function* fetchData(action) {
     if (!category) category = '';
     category = category.toLowerCase();
 
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     yield put(globalActions.fetchingData({ order, category }));
     let call_name, args;
     if (order === 'trending') {
@@ -308,6 +321,7 @@ export function* fetchData(action) {
             let { feedData, endOfData, lastValue } = yield call(
                 fetchFeedDataAsync,
                 call_name,
+                scotTokenSymbol,
                 ...args
             );
 
@@ -428,8 +442,11 @@ function* fetchJson({
 }
 
 function* fetchScotInfo() {
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     const scotInfo = yield call(getScotDataAsync, 'info', {
-        token: LIQUID_TOKEN_UPPERCASE,
+        token: scotTokenSymbol,
     });
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }

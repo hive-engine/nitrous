@@ -55,8 +55,11 @@ export function* getAccount(username, force = false) {
 
 /** Manual refreshes.  The router is in FetchDataSaga. */
 export function* getState({ payload: { url } }) {
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     try {
-        const state = yield call(getStateAsync, url);
+        const state = yield call(getStateAsync, url, scotTokenSymbol);
         yield put(globalActions.receiveState(state));
     } catch (error) {
         console.error('~~ Saga getState error ~~>', url, error);
@@ -76,9 +79,17 @@ function* showTransactionErrorNotification() {
 }
 
 export function* getContent({ author, permlink, resolve, reject }) {
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     let content;
     while (!content) {
-        content = yield call(getContentAsync, author, permlink);
+        content = yield call(
+            getContentAsync,
+            author,
+            permlink,
+            scotTokenSymbol
+        );
         if (content['author'] == '') {
             // retry if content not found. #1870
             content = null;

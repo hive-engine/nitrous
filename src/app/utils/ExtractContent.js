@@ -16,7 +16,7 @@ const getValidImage = array => {
         : null;
 };
 
-export default function extractContent(get, content) {
+export default function extractContent(get, content, appDomain) {
     const {
         author,
         permlink,
@@ -74,7 +74,7 @@ export default function extractContent(get, content) {
                           '(html comment removed: $1)'
                       )
                   );
-            rtags = HtmlReady(htmlText, { mutate: false });
+            rtags = HtmlReady(htmlText, { mutate: false, appDomain });
         }
 
         [image_link] = Array.from(rtags.images);

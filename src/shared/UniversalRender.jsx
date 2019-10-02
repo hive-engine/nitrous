@@ -15,7 +15,6 @@ import {
 import { Provider } from 'react-redux';
 import { api } from '@steemit/steem-js';
 
-import { APP_NAME } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -231,6 +230,9 @@ export async function serverRender(
     requestTimer
 ) {
     let error, redirect, renderProps;
+    const hostConfig = initialState.app.hostConfig;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const APP_NAME = hostConfig['APP_NAME'];
 
     try {
         [error, redirect, renderProps] = await runRouter(location, RootRoute);
@@ -250,7 +252,7 @@ export async function serverRender(
         return {
             title: `Page Not Found - ${APP_NAME}`,
             statusCode: 404,
-            body: renderToString(<NotFound />),
+            body: renderToString(<NotFound hostConfig={hostConfig} />),
         };
     }
 
@@ -259,7 +261,7 @@ export async function serverRender(
         const url = getUrlFromLocation(location);
 
         requestTimer.startTimer('apiGetState_ms');
-        onchain = await apiGetState(url);
+        onchain = await apiGetState(url, scotTokenSymbol);
         requestTimer.stopTimer('apiGetState_ms');
 
         // If a user profile URL is requested but no profile information is
@@ -273,7 +275,7 @@ export async function serverRender(
             return {
                 title: `User Not Found - ${APP_NAME}`,
                 statusCode: 404,
-                body: renderToString(<NotFound />),
+                body: renderToString(<NotFound hostConfig={hostConfig} />),
             };
         }
 
@@ -311,18 +313,20 @@ export async function serverRender(
                 return {
                     title: `Page Not Found - ${APP_NAME}`,
                     statusCode: 404,
-                    body: renderToString(<NotFound />),
+                    body: renderToString(<NotFound hostConfig={hostConfig} />),
                 };
             }
         }
 
         // Insert the pinned posts into the list of posts, so there is no
         // jumping of content.
-        offchain.pinned_posts.pinned_posts.forEach(pinnedPost => {
-            onchain.content[
-                `${pinnedPost.author}/${pinnedPost.permlink}`
-            ] = pinnedPost;
-        });
+        offchain.pinned_posts[scotTokenSymbol].pinned_posts.forEach(
+            pinnedPost => {
+                onchain.content[
+                    `${pinnedPost.author}/${pinnedPost.permlink}`
+                ] = pinnedPost;
+            }
+        );
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
@@ -341,7 +345,7 @@ export async function serverRender(
             return {
                 title: `Page Not Found - ${APP_NAME}`,
                 statusCode: 404,
-                body: renderToString(<NotFound />),
+                body: renderToString(<NotFound hostConfig={hostConfig} />),
             };
             // Ensure error page on state exception
         } else {
@@ -367,7 +371,11 @@ export async function serverRender(
             </Provider>
         );
         requestTimer.stopTimer('ssr_ms');
-        meta = extractMeta(onchain, renderProps.params);
+        meta = extractMeta(
+            onchain,
+            renderProps.params,
+            initialState.app.hostConfig
+        );
         status = 200;
     } catch (re) {
         console.error('Rendering error: ', re, re.stack);
@@ -475,14 +483,14 @@ function getUrlFromLocation(location) {
     return url;
 }
 
-async function apiGetState(url) {
+async function apiGetState(url, scotTokenSymbol) {
     let offchain;
 
     if (process.env.OFFLINE_SSR_TEST) {
         offchain = get_state_perf;
     }
 
-    offchain = await getStateAsync(url);
+    offchain = await getStateAsync(url, scotTokenSymbol);
 
     return offchain;
 }

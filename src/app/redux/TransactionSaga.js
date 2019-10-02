@@ -13,7 +13,7 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { APP_URL, POST_FOOTER, DEBT_TICKER } from 'app/client_config';
+import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
@@ -489,9 +489,12 @@ export function* preBroadcast_comment({ operation, username }) {
 
     if (!permlink) permlink = yield createPermlink(title, author);
 
-    const postUrl = `${APP_URL}/@${author}/${permlink}`;
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+    const postUrl = `${hostConfig['APP_URL']}/@${author}/${permlink}`;
     // Add footer
-    const footer = POST_FOOTER.replace('${POST_URL}', postUrl);
+    const footer = hostConfig['POST_FOOTER'].replace('${POST_URL}', postUrl);
     if (footer && !body.endsWith(footer)) {
         body += '\n\n' + footer;
     }

@@ -13,21 +13,14 @@ import sanitizeConfig, { allowedTags } from 'app/utils/SanitizeConfig';
 import sanitize from 'sanitize-html';
 import HtmlReady from 'shared/HtmlReady';
 import * as globalActions from 'app/redux/GlobalReducer';
-import { fromJS, OrderedSet } from 'immutable';
+import { fromJS, Map, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
-import {
-    APP_NAME,
-    SCOT_TAG,
-    SCOT_TAG_FIRST,
-    APP_MAX_TAG,
-} from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
 const RTE_DEFAULT = false;
-const MAX_TAG = APP_MAX_TAG || 10;
 
 class ReplyEditor extends React.Component {
     static propTypes = {
@@ -48,6 +41,7 @@ class ReplyEditor extends React.Component {
         richTextEditor: PropTypes.func,
         defaultPayoutType: PropTypes.string,
         payoutType: PropTypes.string,
+        hostConfig: PropTypes.object,
     };
 
     static defaultProps = {
@@ -169,7 +163,7 @@ class ReplyEditor extends React.Component {
     }
 
     initForm(props) {
-        const { isStory, type, fields } = props;
+        const { isStory, type, fields, hostConfig } = props;
         const isEdit = type === 'edit';
         const maxKb = isStory ? 65 : 16;
         reactForm({
@@ -185,7 +179,13 @@ class ReplyEditor extends React.Component {
                         : values.title.length > 255
                           ? tt('reply_editor.shorten_title')
                           : null),
-                category: isStory && validateCategory(values.category, !isEdit),
+                category:
+                    isStory &&
+                    validateCategory(
+                        values.category,
+                        hostConfig['APP_MAX_TAG'],
+                        !isEdit
+                    ),
                 body: !values.body
                     ? tt('g.required')
                     : values.body.length > maxKb * 1024
@@ -239,12 +239,18 @@ class ReplyEditor extends React.Component {
 
     toggleRte = e => {
         e.preventDefault();
+        const hostConfig = this.props.hostConfig;
+        const appDomain = hostConfig['APP_DOMAIN'];
         const state = { rte: !this.state.rte };
         if (state.rte) {
             const { body } = this.state;
             state.rte_value = isHtmlTest(body.value)
                 ? stateFromHtml(this.props.richTextEditor, body.value)
-                : stateFromMarkdown(this.props.richTextEditor, body.value);
+                : stateFromMarkdown(
+                      this.props.richTextEditor,
+                      body.value,
+                      appDomain
+                  );
         }
         this.setState(state);
         localStorage.setItem('replyEditorData-rte', !this.state.rte);
@@ -781,11 +787,11 @@ function stateFromHtml(RichTextEditor, html = null) {
         : RichTextEditor.createEmptyValue();
 }
 
-function stateFromMarkdown(RichTextEditor, markdown) {
+function stateFromMarkdown(RichTextEditor, markdown, appDomain) {
     let html;
     if (markdown && markdown.trim() !== '') {
         html = remarkable.render(markdown);
-        html = HtmlReady(html).html; // TODO: option to disable youtube conversion, @-links, img proxy
+        html = HtmlReady(html, { appDomain }).html; // TODO: option to disable youtube conversion, @-links, img proxy
         //html = htmlclean(html) // normalize whitespace
         console.log('markdown converted to:', html);
     }
@@ -842,6 +848,8 @@ export default formId =>
             ]);
             beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
 
+            const hostConfig = state.app.get('hostConfig', Map()).toJS();
+
             const ret = {
                 ...ownProps,
                 fields,
@@ -854,6 +862,7 @@ export default formId =>
                 state,
                 formId,
                 richTextEditor,
+                hostConfig,
             };
             return ret;
         },
@@ -911,6 +920,7 @@ export default formId =>
             }) => {
                 // const post = state.global.getIn(['content', author + '/' + permlink])
                 const username = state.user.getIn(['current', 'username']);
+                const appDomain = state.app.getIn(['hostConfig', 'APP_DOMAIN']);
 
                 const isEdit = type === 'edit';
                 const isNew = /^submit_/.test(type);
@@ -943,7 +953,7 @@ export default formId =>
                 let rtags;
                 {
                     const html = isHtml ? body : remarkable.render(body);
-                    rtags = HtmlReady(html, { mutate: false });
+                    rtags = HtmlReady(html, { mutate: false, appDomain });
                 }
 
                 allowedTags.forEach(tag => {
@@ -968,10 +978,20 @@ export default formId =>
                               .split(/ +/)
                         : []
                 );
+                const scotTag = state.app.getIn(['hostConfig', 'SCOT_TAG']);
+                const maxTag = state.app.getIn(
+                    ['hostConfig', 'APP_MAX_TAG'],
+                    10
+                );
                 const rootCategory =
                     originalPost && originalPost.category
                         ? originalPost.category
-                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
+                        : state.app.getIn(
+                              ['hostConfig', 'SCOT_TAG_FIRST'],
+                              false
+                          )
+                          ? scotTag
+                          : formCategories.first();
                 let allCategories = OrderedSet([...formCategories.toJS()]);
                 if (/^[-a-z\d]+$/.test(rootCategory))
                     allCategories = allCategories.add(rootCategory);
@@ -980,14 +1000,14 @@ export default formId =>
                 // "- allCategories.includes(SCOT_TAG) ? 0 : 1" to save the last tag space for SCOT_TAG
                 while (
                     allCategories.size <
-                    MAX_TAG - allCategories.includes(SCOT_TAG)
+                    maxTag - allCategories.includes(scotTag)
                         ? 0
                         : 1 && postHashtags.length > 0
                 ) {
                     allCategories = allCategories.add(postHashtags.shift());
                 }
                 // Add scot tag
-                allCategories = allCategories.add(SCOT_TAG);
+                allCategories = allCategories.add(scotTag);
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
@@ -1000,20 +1020,22 @@ export default formId =>
                 if (rtags.links.size) meta.links = rtags.links;
                 else delete meta.links;
 
-                meta.app = `${APP_NAME.toLowerCase()}/0.1`;
+                meta.app = `${state.app
+                    .getIn(['hostConfig', 'APP_NAME'])
+                    .toLowerCase()}/0.1`;
                 if (isStory) {
                     meta.format = isHtml ? 'html' : 'markdown';
                 }
 
                 // if(Object.keys(json_metadata.steem).length === 0) json_metadata = {}// keep json_metadata minimal
                 const sanitizeErrors = [];
-                sanitize(body, sanitizeConfig({ sanitizeErrors }));
+                sanitize(body, sanitizeConfig({ appDomain, sanitizeErrors }));
                 if (sanitizeErrors.length) {
                     errorCallback(sanitizeErrors.join('.  '));
                     return;
                 }
 
-                if (meta.tags.length > MAX_TAG) {
+                if (meta.tags.length > maxTag) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
                               rootCategory,

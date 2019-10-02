@@ -3,7 +3,6 @@ import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
-import { ALLOW_MASTER_PW, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -92,7 +91,10 @@ function* shouldShowLoginWarning({ username, password }) {
     }
 
     // If it's a master key, show the warning.
-    if (!ALLOW_MASTER_PW && !auth.isWif(password)) {
+    const allowMasterPassword = yield select(state =>
+        state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
+    );
+    if (!allowMasterPassword && !auth.isWif(password)) {
         const accounts = yield api.getAccountsAsync([username]);
         const account = accounts[0];
         const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
@@ -238,13 +240,16 @@ function* usernamePasswordLogin2({
         return;
     }
     // fetch SCOT stake
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     const token_balances = yield call(
         [ssc, ssc.findOne],
         'tokens',
         'balances',
         {
             account: username,
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         }
     );
     // return if already logged in using steem keychain
@@ -322,7 +327,10 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        if (!ALLOW_MASTER_PW && hasOwnerAuth) {
+        const allowMasterPassword = yield select(state =>
+            state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
+        );
+        if (!allowMasterPassword && hasOwnerAuth) {
             console.log('Rejecting due to detected owner auth');
             yield put(userActions.loginError({ error: 'owner_login_blocked' }));
             return;
@@ -338,7 +346,7 @@ function* usernamePasswordLogin2({
             localStorage.removeItem('autopost2');
             const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
             if (
-                !ALLOW_MASTER_PW &&
+                !allowMasterPassword &&
                 (login_owner_pubkey === owner_pub_key ||
                     login_wif_owner_pubkey === owner_pub_key)
             ) {
@@ -602,8 +610,11 @@ function* saveLogin_localStorage() {
     }
 
     // Save the lowest security key, or owner if allowed
+    const allowMasterPassword = yield select(state =>
+        state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
+    );
     let posting_private = private_keys && private_keys.get('posting_private');
-    if (private_keys && !posting_private && ALLOW_MASTER_PW) {
+    if (private_keys && !posting_private && allowMasterPassword) {
         posting_private = private_keys.get('owner_private');
     }
 
@@ -626,7 +637,7 @@ function* saveLogin_localStorage() {
             if (auth.get(0) === postingPubkey)
                 throw 'Login will not be saved, posting key is the same as active key';
         });
-        if (!ALLOW_MASTER_PW) {
+        if (!allowMasterPassword) {
             account.getIn(['owner', 'key_auths']).forEach(auth => {
                 if (auth.get(0) === postingPubkey)
                     throw 'Login will not be saved, posting key is the same as owner key';
@@ -835,10 +846,13 @@ function* uploadImage({
 
 function* lookupVotingPower({ payload: { account } }) {
     const accountData = yield call(getScotAccountDataAsync, account);
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData[LIQUID_TOKEN_UPPERCASE],
+            ...accountData[scotTokenSymbol],
         })
     );
 }

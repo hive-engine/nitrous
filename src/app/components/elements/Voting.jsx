@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,13 +7,6 @@ import tt from 'counterpart';
 import CloseButton from 'app/components/elements/CloseButton';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import Icon from 'app/components/elements/Icon';
-import {
-    DEBT_TOKEN_SHORT,
-    LIQUID_TOKEN_UPPERCASE,
-    INVEST_TOKEN_SHORT,
-    VOTE_WEIGHT_DROPDOWN_THRESHOLD,
-    SCOT_DENOM,
-} from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -42,7 +35,6 @@ const ABOUT_FLAG = (
 );
 
 const MAX_VOTES_DISPLAY = 20;
-const VOTE_WEIGHT_DROPDOWN_THRESHOLD_RSHARES = 1.0 * 1000.0 * 1000.0;
 const MAX_WEIGHT = 10000;
 
 class Voting extends React.Component {
@@ -232,6 +224,7 @@ class Voting extends React.Component {
             scotPrecision,
             voteRegenSec,
             rewardData,
+            hostConfig,
         } = this.props;
         const {
             votingUp,
@@ -471,7 +464,7 @@ class Voting extends React.Component {
         if (promoted > 0) {
             payoutItems.push({
                 value: `Promotion Cost ${promoted.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
         }
@@ -479,7 +472,7 @@ class Voting extends React.Component {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
                 value: `${scot_pending_token.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
             payoutItems.push({
@@ -488,18 +481,18 @@ class Voting extends React.Component {
         } else if (scot_total_author_payout) {
             payoutItems.push({
                 value: `Past Token Payouts ${payout.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
             payoutItems.push({
                 value: `- Author ${scot_total_author_payout.toFixed(
                     scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                )} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`,
             });
             payoutItems.push({
                 value: `- Curator ${scot_total_curator_payout.toFixed(
                     scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                )} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`,
             });
         }
 
@@ -546,7 +539,7 @@ class Voting extends React.Component {
                 <span>
                     <FormattedAsset
                         amount={payout}
-                        asset={LIQUID_TOKEN_UPPERCASE}
+                        asset={hostConfig['LIQUID_TOKEN_UPPERCASE']}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
@@ -711,10 +704,14 @@ class Voting extends React.Component {
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const hostConfig = state.app.get('hostConfig', Map()).toJS();
         const post = state.global.getIn(['content', ownProps.post]);
         if (!post) return ownProps;
         const scotConfig = state.app.get('scotConfig');
-        const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const scotData = post.getIn([
+            'scotData',
+            hostConfig['LIQUID_TOKEN_UPPERCASE'],
+        ]);
         const commentPool =
             post.get('parent_author') &&
             scotConfig.getIn(['info', 'enable_comment_reward_pool'], false);
@@ -782,15 +779,13 @@ export default connect(
             voting,
             votingData,
             scotData,
-            scotPrecision: scotConfig.getIn(
-                ['info', 'precision'],
-                Math.log10(SCOT_DENOM)
-            ),
+            scotPrecision: scotConfig.getIn(['info', 'precision']),
             voteRegenSec: scotConfig.getIn(
                 ['config', 'vote_regeneration_seconds'],
                 5 * 24 * 60 * 60
             ),
             rewardData,
+            hostConfig,
         };
     },
 

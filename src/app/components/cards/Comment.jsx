@@ -16,7 +16,6 @@ import tt from 'counterpart';
 import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 
 // returns true if the comment has a 'hide' flag AND has no descendants w/ positive payout
@@ -35,13 +34,13 @@ function hasPositivePayout(cont, c) {
     return false;
 }
 
-export function sortComments(cont, comments, sort_order) {
+export function sortComments(cont, comments, sort_order, scotTokenSymbol) {
     function netNegative(a) {
         // Expected to be merged from SCOT data.
         return a.get('vote_rshares') < 0;
     }
     function totalPayout(a) {
-        const scotData = a.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const scotData = a.getIn(['scotData', scotTokenSymbol]);
         return scotData
             ? parseInt(scotData.get('pending_token')) +
                   parseInt(scotData.get('total_payout_value')) +
@@ -127,6 +126,7 @@ class CommentImpl extends React.Component {
         rootComment: PropTypes.string,
         anchor_link: PropTypes.string.isRequired,
         deletePost: PropTypes.func.isRequired,
+        scotTokenSymbol: PropTypes.string,
     };
     static defaultProps = {
         depth: 1,
@@ -279,6 +279,7 @@ class CommentImpl extends React.Component {
             ignore_list,
             tribeIgnoreList,
             noImage,
+            scotTokenSymbol,
         } = this.props;
         const { onShowReply, onShowEdit, onDeletePost } = this;
         const post = comment.author + '/' + comment.permlink;
@@ -370,7 +371,12 @@ class CommentImpl extends React.Component {
                 );
             } else {
                 replies = comment.replies.filter(c => cont.get(c));
-                sortComments(cont, replies, this.props.sort_order);
+                sortComments(
+                    cont,
+                    replies,
+                    this.props.sort_order,
+                    scotTokenSymbol
+                );
                 // When a comment has hidden replies and is collapsed, the reply count is off
                 //console.log("replies:", replies.length, "num_visible:", replies.filter( reply => !cont.get(reply).getIn(['stats', 'hide'])).length)
                 replies = replies.map((reply, idx) => (
@@ -539,6 +545,11 @@ const Comment = connect(
               ])
             : null;
 
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+
         return {
             ...ownProps,
             anchor_link: '#@' + content, // Using a hash here is not standard but intentional; see issue #124 for details
@@ -546,6 +557,7 @@ const Comment = connect(
             ignore_list,
             tribeMuteAccount,
             tribeIgnoreList,
+            scotTokenSymbol,
         };
     },
 

@@ -1,5 +1,4 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -21,13 +20,13 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account) {
+async function getSteemEngineAccountHistoryAsync(account, symbol) {
     return callApi('https://api.steem-engine.com/accounts/history', {
         account,
         limit: 100,
         offset: 0,
         type: 'user',
-        symbol: LIQUID_TOKEN_UPPERCASE,
+        symbol,
         v: new Date().getTime(),
     });
 }
@@ -61,7 +60,7 @@ async function getAuthorRep(feedData) {
     return authorRep;
 }
 
-function mergeContent(content, scotData) {
+function mergeContent(content, scotData, scotTokenSymbol) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
     const voted = content.active_votes;
@@ -92,10 +91,16 @@ function mergeContent(content, scotData) {
     content.parent_permlink = parentPermlink;
 
     content.scotData = {};
-    content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
+    content.scotData[scotTokenSymbol] = scotData;
 }
 
-async function fetchMissingData(tag, feedType, state, feedData) {
+async function fetchMissingData(
+    tag,
+    feedType,
+    state,
+    feedData,
+    scotTokenSymbol
+) {
     if (!state.content) {
         state.content = {};
     }
@@ -135,7 +140,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         } else {
             filteredContent[key] = state.content[key];
         }
-        mergeContent(filteredContent[key], d);
+        mergeContent(filteredContent[key], d, scotTokenSymbol);
         discussionIndex.push(key);
     });
     state.content = filteredContent;
@@ -145,7 +150,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
     state.discussion_idx[tag][feedType] = discussionIndex;
 }
 
-export async function attachScotData(url, state) {
+export async function attachScotData(url, state, scotTokenSymbol) {
     let urlParts = url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
@@ -153,7 +158,7 @@ export async function attachScotData(url, state) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
         const discussionQuery = {
-            token: LIQUID_TOKEN_UPPERCASE,
+            token: scotTokenSymbol,
             limit: 20,
         };
         if (tag) {
@@ -164,7 +169,7 @@ export async function attachScotData(url, state) {
             `get_discussions_by_${feedType}`,
             discussionQuery
         );
-        await fetchMissingData(tag, feedType, state, feedData);
+        await fetchMissingData(tag, feedType, state, feedData, scotTokenSymbol);
         return;
     }
 
@@ -185,13 +190,13 @@ export async function attachScotData(url, state) {
             }),
             ssc.findOne('tokens', 'pendingUnstakes', {
                 account,
-                symbol: LIQUID_TOKEN_UPPERCASE,
+                symbol: scotTokenSymbol,
             }),
             getScotAccountDataAsync(account),
-            getSteemEngineAccountHistoryAsync(account),
+            getSteemEngineAccountHistoryAsync(account, scotTokenSymbol),
             ssc.find('tokens', 'delegations', {
                 $or: [{ from: account }, { to: account }],
-                symbol: LIQUID_TOKEN_UPPERCASE,
+                symbol: scotTokenSymbol,
             }),
             fetchSnaxBalanceAsync(account),
         ]);
@@ -211,9 +216,9 @@ export async function attachScotData(url, state) {
         if (tokenUnstakes) {
             state.accounts[account].token_unstakes = tokenUnstakes;
         }
-        if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
+        if (tokenStatuses && tokenStatuses[scotTokenSymbol]) {
             state.accounts[account].token_status =
-                tokenStatuses[LIQUID_TOKEN_UPPERCASE];
+                tokenStatuses[scotTokenSymbol];
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
@@ -238,12 +243,12 @@ export async function attachScotData(url, state) {
         let feedData = await getScotDataAsync(
             'get_feed',
             {
-                token: LIQUID_TOKEN_UPPERCASE,
+                token: scotTokenSymbol,
                 account,
                 limit: 20,
             }
         );
-        await fetchMissingData(account, '', state, feedData);
+        await fetchMissingData(account, '', state, feedData, scotTokenSymbol);
         return;
     }
     */
@@ -261,7 +266,8 @@ export async function attachScotData(url, state) {
                     const scotData = await getScotDataAsync(`@${k}`);
                     mergeContent(
                         state.content[k],
-                        scotData[LIQUID_TOKEN_UPPERCASE]
+                        scotData[scotTokenSymbol],
+                        scotTokenSymbol
                     );
                 })
         );
@@ -269,8 +275,7 @@ export async function attachScotData(url, state) {
         Object.entries(state.content)
             .filter(
                 entry =>
-                    (entry[1].scotData &&
-                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
+                    (entry[1].scotData && entry[1].scotData[scotTokenSymbol]) ||
                     (entry[1].parent_author && entry[1].parent_permlink)
             )
             .forEach(entry => {
@@ -280,14 +285,14 @@ export async function attachScotData(url, state) {
     }
 }
 
-export async function getContentAsync(author, permlink) {
+export async function getContentAsync(author, permlink, scotTokenSymbol) {
     const content = await api.getContentAsync(author, permlink);
     const scotData = await getScotDataAsync(`@${author}/${permlink}`);
-    mergeContent(content, scotData[LIQUID_TOKEN_UPPERCASE]);
+    mergeContent(content, scotData[scotTokenSymbol], scotTokenSymbol);
     return content;
 }
 
-export async function getStateAsync(url) {
+export async function getStateAsync(url, scotTokenSymbol) {
     // strip off query string
     const path = url.split('?')[0];
 
@@ -310,14 +315,14 @@ export async function getStateAsync(url) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(url, raw);
+    await attachScotData(url, raw, scotTokenSymbol);
 
     const cleansed = stateCleaner(raw);
 
     return cleansed;
 }
 
-export async function fetchFeedDataAsync(call_name, ...args) {
+export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
     const fetchSize = args[0].limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -332,7 +337,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         const order = callNameMatch[1].toLowerCase();
         const discussionQuery = {
             ...args[0],
-            token: LIQUID_TOKEN_UPPERCASE,
+            token: scotTokenSymbol,
         };
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
@@ -361,7 +366,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                         replies: [], // intentional
                     };
                 }
-                mergeContent(content, scotData);
+                mergeContent(content, scotData, scotTokenSymbol);
                 return content;
             })
         );
@@ -380,7 +385,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             feedData.map(async post => {
                 const k = `${post.author}/${post.permlink}`;
                 const scotData = await getScotDataAsync(`@${k}`);
-                mergeContent(post, scotData[LIQUID_TOKEN_UPPERCASE]);
+                mergeContent(post, scotData[scotTokenSymbol], scotTokenSymbol);
                 return post;
             })
         );
@@ -388,7 +393,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         endOfData = feedData.length < fetchSize;
         lastValue = feedData.length > 0 ? feedData[feedData.length - 1] : null;
         feedData = feedData.filter(
-            post => post.scotData && post.scotData[LIQUID_TOKEN_UPPERCASE]
+            post => post.scotData && post.scotData[scotTokenSymbol]
         );
     }
     return { feedData, endOfData, lastValue };

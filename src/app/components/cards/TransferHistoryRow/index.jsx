@@ -7,11 +7,10 @@ import Memo from 'app/components/elements/Memo';
 import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 class TransferHistoryRow extends React.Component {
     render() {
-        const { op, context } = this.props;
+        const { op, context, scotTokenSymbol } = this.props;
         // context -> account perspective
 
         /*  all transfers involve up to 2 accounts, context and 1 other. */
@@ -32,7 +31,7 @@ class TransferHistoryRow extends React.Component {
                             'from_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.to)}
                 </span>
@@ -47,7 +46,7 @@ class TransferHistoryRow extends React.Component {
                             'to_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.from)}
                 </span>
@@ -89,6 +88,10 @@ export default connect(
     (state, ownProps) => {
         return {
             ...ownProps,
+            scotTokenSymbol: state.app.getIn([
+                'hostConfig',
+                'LIQUID_TOKEN_UPPERCASE',
+            ]),
         };
     }
 )(TransferHistoryRow);

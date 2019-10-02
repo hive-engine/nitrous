@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { List, OrderedMap } from 'immutable';
+import { List, Map, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -34,6 +33,7 @@ class PostsIndex extends React.Component {
         username: PropTypes.string,
         blogmode: PropTypes.bool,
         categories: PropTypes.object,
+        interleavePromoted: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -68,7 +68,8 @@ class PostsIndex extends React.Component {
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
-        if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
+        const interleavePromoted = this.props.interleavePromoted;
+        if (interleavePromoted && (order === 'trending' || order === 'hot')) {
             let promotedDiscussions = topic_discussions.get('promoted');
             if (
                 promotedDiscussions &&
@@ -343,7 +344,7 @@ class PostsIndex extends React.Component {
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
-                    (pinned && !pinned.size) ? (
+                    (pinned && !pinned.get('pinned_posts', List()).size) ? (
                         <Callout>{emptyText}</Callout>
                     ) : (
                         <PostsList
@@ -434,6 +435,8 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const hostConfig = state.app.get('hostConfig', Map());
+            const scotTokenSymbol = hostConfig.get('LIQUID_TOKEN_UPPERCASE');
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
@@ -445,16 +448,19 @@ module.exports = {
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 sortOrder: ownProps.params.order,
                 topic: ownProps.params.category,
-                categories: TAG_LIST,
-                pinned: state.offchain.get('pinned_posts'),
+                categories: hostConfig.get('TAG_LIST', List()),
+                pinned: state.offchain.getIn(['pinned_posts', scotTokenSymbol]),
                 maybeLoggedIn: state.user.get('maybeLoggedIn'),
                 isBrowser: process.env.BROWSER,
                 notices: state.offchain
-                    .get('pinned_posts')
-                    .get('notices')
+                    .getIn(['pinned_posts', scotTokenSymbol, 'notices'])
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviveEnabled: state.app.get('reviveEnabled'),
+                interleavePromoted: hostConfig.get(
+                    'INTERLEAVE_PROMOTED',
+                    false
+                ),
             };
         },
         dispatch => {

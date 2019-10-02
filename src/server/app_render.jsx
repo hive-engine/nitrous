@@ -8,6 +8,7 @@ import secureRandom from 'secure-random';
 import ErrorPage from 'server/server-error';
 import { determineViewMode } from '../app/utils/Links';
 import { getSupportedLocales } from './utils/misc';
+import { CONFIG_MAP } from 'app/client_config';
 
 const path = require('path');
 const ROOT = path.join(__dirname, '../..');
@@ -70,8 +71,12 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             api_key: config.cookie_consent_api_key,
         };
         // ... and that's the end of user-session-related SSR
+        const host = ctx.request.headers.host;
+        console.log(`Using config for host ${host}`);
         const initial_state = {
             app: {
+                host,
+                hostConfig: CONFIG_MAP[host],
                 viewMode: determineViewMode(ctx.request.search),
                 googleAds: googleAds,
                 env: process.env.NODE_ENV,
