@@ -326,14 +326,13 @@ class Header extends React.Component {
                     </div>
 
                     <nav className="row Header__nav">
-                        <div className="small-5 large-4 columns Header__logotype">
+                        <div className="medium-2 large-1 columns show-for-medium Header__logotype">
                             {/*LOGO*/}
                             <Link to={logo_link}>
                                 <AppLogo />
                             </Link>
                         </div>
-
-                        <div className="large-4 columns show-for-large large-centered Header__sort">
+                        <div className="small-9 medium-7 large-7 columns Header__sort">
                             {/*SORT*/}
                             <SortOrder
                                 sortOrder={order}
@@ -342,10 +341,10 @@ class Header extends React.Component {
                                 pathname={pathname}
                             />
                         </div>
-                        <div className="small-7 large-4 columns Header__buttons">
+                        <div className="small-3 medium-3 large-4 columns Header__buttons">
                             {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                             {!loggedIn && (
-                                <span className="Header__user-signup show-for-medium">
+                                <span className="Header__user-signup show-for-large">
                                     <a
                                         className="Header__login-link"
                                         href="/login.html"

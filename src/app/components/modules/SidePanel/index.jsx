@@ -20,9 +20,7 @@ const SidePanel = ({
     }
 
     const loggedIn =
-        username === undefined
-            ? 'show-for-small-only'
-            : 'SidePanel__hide-signup';
+        username === undefined ? 'hide-for-large' : 'SidePanel__hide-signup';
 
     const makeLink = (i, ix, arr) => {
         // A link is internal if it begins with a slash

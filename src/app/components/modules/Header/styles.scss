@@ -26,6 +26,7 @@
 .Header__logotype {
   transition: 0.2s all ease-in-out;
   height: 37px;
+  margin-top: -12px;
   display: flex;
   align-items: baseline;
   .icon-svg {
@@ -43,7 +44,7 @@
 
 .Header__sort {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
 }
 
 .Header__search {
