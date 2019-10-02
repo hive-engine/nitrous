@@ -12,7 +12,6 @@ import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
-import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
@@ -118,6 +117,7 @@ class LoginForm extends Component {
     };
 
     render() {
+        const appUrl = this.props.appUrl;
         if (!process.env.BROWSER) {
             return (
                 <div className="row">
@@ -147,7 +147,7 @@ class LoginForm extends Component {
                                 </a>{' '}
                                 {tt(
                                     'loginform_jsx.are_well_tested_and_known_to_work_with',
-                                    { APP_URL }
+                                    { appUrl }
                                 )}
                             </p>
                         </div>
@@ -507,6 +507,7 @@ export default connect(
     // mapStateToProps
     state => {
         const walletUrl = state.app.get('walletUrl');
+        const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
         const showLoginWarning = state.user.get('show_login_warning');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
@@ -547,6 +548,7 @@ export default connect(
             initialValues,
             initialUsername,
             msg,
+            appUrl,
             offchain_user: state.offchain.get('user'),
         };
     },

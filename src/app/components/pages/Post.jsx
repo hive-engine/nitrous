@@ -24,6 +24,7 @@ class Post extends React.Component {
         post: PropTypes.string,
         routeParams: PropTypes.object,
         sortOrder: PropTypes.string,
+        scotTokenSymbol: PropTypes.string,
     };
     constructor() {
         super();
@@ -53,7 +54,7 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder } = this.props;
+        const { content, sortOrder, scotTokenSymbol } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
         let post = this.props.post;
         if (!post) {
@@ -140,7 +141,7 @@ class Post extends React.Component {
             .toJS()
             .filter(c => content.get(c));
 
-        sortComments(content, replies, sortOrder);
+        sortComments(content, replies, sortOrder, scotTokenSymbol);
 
         // Don't render too many comments on server-side
         const commentLimit = 100;
@@ -321,5 +322,9 @@ export default connect((state, ownProps) => {
             ownProps.router.getCurrentLocation().query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
         reviveEnabled: state.app.get('reviveEnabled'),
+        scotTokenSymbol: state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]),
     };
 })(Post);

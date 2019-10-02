@@ -2,7 +2,6 @@ import {
     getPhishingWarningMessage,
     getExternalLinkWarningMessage,
 } from 'shared/HtmlReady'; // the only allowable title attributes for div and a tags
-import { APP_DOMAIN } from 'app/client_config';
 
 const iframeWhitelist = [
     {
@@ -68,6 +67,7 @@ export default ({
     large = true,
     highQualityPost = true,
     noImage = false,
+    appDomain = '',
     sanitizeErrors = [],
 }) => ({
     allowedTags,
@@ -190,9 +190,7 @@ export default ({
             href = href.trim();
             const attys = { href };
             // If it's not a (relative or absolute) app URL...
-            if (
-                !href.match(new RegExp(`^(\/(?!\/)|https:\/\/${APP_DOMAIN})`))
-            ) {
+            if (!href.match(new RegExp(`^(\/(?!\/)|https:\/\/${appDomain})`))) {
                 // attys.target = '_blank' // pending iframe impl https://mathiasbynens.github.io/rel-noopener/
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();

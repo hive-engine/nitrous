@@ -2,7 +2,6 @@ import assert from 'assert';
 import secureRandom from 'secure-random';
 import links, * as linksRe from 'app/utils/Links';
 import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
-import { APP_DOMAIN } from 'app/client_config';
 
 describe('Links', () => {
     it('all', () => {
@@ -43,15 +42,13 @@ describe('Links', () => {
     it('by domain', () => {
         const locals = [
             'https://localhost/',
-            `http://${APP_DOMAIN}`,
-            `http://${APP_DOMAIN}/group`,
+            `http://appdomain`,
+            `http://appdomain/group`,
         ];
-        match(linksRe.local(), locals);
-        matchNot(linksRe.remote(), locals);
+        match(linksRe.local()('appdomain'), locals);
 
         const remotes = ['https://example.com/', 'http://abc.co'];
-        match(linksRe.remote(), remotes);
-        matchNot(linksRe.local(), remotes);
+        matchNot(linksRe.local()('appdomain'), remotes);
     });
     it('by image', () => {
         match(linksRe.image(), 'https://example.com/a.jpeg');
@@ -229,15 +226,6 @@ describe('Performance', () => {
             );
             assert(match, 'no match');
             assert(match[0] === 'https://example.com/img.jpeg', 'no match');
-        }
-    });
-    it('remote, ' + largeData.length + ' bytes x 10,000', () => {
-        for (let i = 0; i < 10000; i++) {
-            const match = (largeData + 'https://example.com').match(
-                linksRe.remote()
-            );
-            assert(match, 'no match');
-            assert(match[0] === 'https://example.com', 'no match');
         }
     });
     it('youTube', () => {

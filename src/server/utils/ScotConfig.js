@@ -1,7 +1,6 @@
 import * as config from 'config';
 import NodeCache from 'node-cache';
 
-import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 
 export function ScotConfig() {
@@ -25,18 +24,10 @@ export function ScotConfig() {
 ScotConfig.prototype.storeEmpty = function() {
     const key = config.scot_config_cache.key;
     return new Promise((res, rej) => {
-        this.cache.set(
-            key,
-            {
-                info: {
-                    precision: Math.log10(SCOT_DENOM),
-                },
-            },
-            (err, success) => {
-                console.info('Storing empty Scot Config data...');
-                res();
-            }
-        );
+        this.cache.set(key, {}, (err, success) => {
+            console.info('Storing empty Scot Config data...');
+            res();
+        });
     });
 };
 
@@ -59,21 +50,11 @@ ScotConfig.prototype.refresh = async function() {
 
     const key = config.scot_config_cache.key;
     try {
-        const scotConfig = await getScotDataAsync('config', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
-        const scotInfo = await getScotDataAsync('info', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
-        // Use client config info as backup
-        if (!scotInfo.precision == null) {
-            console.info('Info not found, falling back to client config');
-            scotInfo.precision = Math.log10(SCOT_DENOM);
-        }
+        const scotConfig = await getScotDataAsync('config', {});
+        const scotInfo = await getScotDataAsync('info', {});
         this.cache.set(key, { info: scotInfo, config: scotConfig });
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);
-        return this.storeEmpty();
     }
 };

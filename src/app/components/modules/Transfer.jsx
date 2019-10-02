@@ -17,12 +17,6 @@ import {
     validate_memo_field,
 } from 'app/utils/ChainValidation';
 import { countDecimals } from 'app/utils/ParsersAndFormatters';
-import {
-    APP_NAME,
-    LIQUID_TOKEN,
-    LIQUID_TOKEN_UPPERCASE,
-    VESTING_TOKEN,
-} from 'app/client_config';
 
 /** Warning .. This is used for Power UP too. */
 
@@ -33,6 +27,7 @@ class TransferForm extends Component {
         toVesting: PropTypes.bool.isRequired,
         currentAccount: PropTypes.object.isRequired,
         following: PropTypes.object.isRequired,
+        hostConfig: PropTypes.object,
     };
 
     constructor(props) {
@@ -186,13 +181,13 @@ class TransferForm extends Component {
 
     balanceValue() {
         const { transferType } = this.props.initialValues;
-        const { currentAccount, tokenBalances } = this.props;
+        const { currentAccount, tokenBalances, hostConfig } = this.props;
         const { asset } = this.state;
         const tokenBalance = tokenBalances.find(
-            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+            ({ symbol }) => symbol === hostConfig['LIQUID_TOKEN_UPPERCASE']
         );
-        return !asset || asset.value === LIQUID_TOKEN_UPPERCASE
-            ? `${tokenBalance.balance} ${LIQUID_TOKEN_UPPERCASE}`
+        return !asset || asset.value === hostConfig['LIQUID_TOKEN_UPPERCASE']
+            ? `${tokenBalance.balance} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`
             : null;
     }
 
@@ -210,6 +205,20 @@ class TransferForm extends Component {
     };
 
     render() {
+        const {
+            currentUser,
+            currentAccount,
+            tokenBalances,
+            hostConfig,
+            toVesting,
+            transferToSelf,
+            dispatchSubmit,
+        } = this.props;
+
+        const APP_NAME = hostConfig['APP_NAME'];
+        const LIQUID_TOKEN = hostConfig['LIQUID_TOKEN'];
+        const LIQUID_TOKEN_UPPERCASE = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+        const VESTING_TOKEN = hostConfig['VESTING_TOKEN'];
         const transferTips = {
             'Transfer to Account': tt(
                 'transfer_jsx.move_funds_to_another_account',
@@ -222,14 +231,7 @@ class TransferForm extends Component {
         );
         const { to, amount, asset, memo } = this.state;
         const { loading, trxError, advanced } = this.state;
-        const {
-            currentUser,
-            currentAccount,
-            tokenBalances,
-            toVesting,
-            transferToSelf,
-            dispatchSubmit,
-        } = this.props;
+
         const { transferType } = this.props.initialValues;
         const { submitting, valid, handleSubmit } = this.state.transfer;
         // const isMemoPrivate = memo && /^#/.test(memo.value); -- private memos are not supported yet
@@ -245,6 +247,7 @@ class TransferForm extends Component {
                         currentUser,
                         toVesting,
                         transferType,
+                        symbol: LIQUID_TOKEN_UPPERCASE,
                     });
                 })}
                 onChange={this.clearError}
@@ -537,8 +540,9 @@ import { connect } from 'react-redux';
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const hostConfig = state.app.get('hostConfig', Map()).toJS();
         const initialValues = state.user.get('transfer_defaults', Map()).toJS();
-        const toVesting = initialValues.asset === VESTING_TOKEN;
+        const toVesting = initialValues.asset === hostConfig['VESTING_TOKEN'];
         const currentUser = state.user.getIn(['current']);
         const currentAccount = state.global.getIn([
             'accounts',
@@ -580,6 +584,7 @@ export default connect(
                 'blog_result',
             ]),
             initialValues,
+            hostConfig,
         };
     },
 
@@ -592,6 +597,7 @@ export default connect(
             memo,
             transferType,
             toVesting,
+            symbol,
             currentUser,
             errorCallback,
         }) => {
@@ -615,7 +621,7 @@ export default connect(
                       contractName: 'tokens',
                       contractAction: 'stake',
                       contractPayload: {
-                          symbol: LIQUID_TOKEN_UPPERCASE,
+                          symbol,
                           to,
                           quantity: amount,
                       },
@@ -624,7 +630,7 @@ export default connect(
                       contractName: 'tokens',
                       contractAction: 'transfer',
                       contractPayload: {
-                          symbol: LIQUID_TOKEN_UPPERCASE,
+                          symbol,
                           to,
                           quantity: amount,
                           memo: memo ? memo : '',

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
@@ -13,6 +12,7 @@ const SidePanel = ({
     hideSidePanel,
     username,
     walletUrl,
+    scotTokenSymbol,
 }) => {
     if (process.env.BROWSER) {
         visible && document.addEventListener('click', hideSidePanel);
@@ -55,16 +55,12 @@ const SidePanel = ({
             {
                 value: 'steemengine',
                 label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                link: `https://steem-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
                 value: 'freedomx',
                 label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
+                link: `https://freedomex.io/trading/${scotTokenSymbol}freex`,
             },
         ],
         exchanges: [
@@ -174,9 +170,7 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Trade {LIQUID_TOKEN_UPPERCASE}
-                        </a>
+                        <a className="menu-section">Trade {scotTokenSymbol}</a>
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
                 </ul>
@@ -190,6 +184,7 @@ SidePanel.propTypes = {
     visible: PropTypes.bool.isRequired,
     hideSidePanel: PropTypes.func.isRequired,
     username: PropTypes.string,
+    scotTokenSymbol: PropTypes.string,
 };
 
 SidePanel.defaultProps = {
@@ -199,8 +194,13 @@ SidePanel.defaultProps = {
 export default connect(
     (state, ownProps) => {
         const walletUrl = state.app.get('walletUrl');
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
         return {
             walletUrl,
+            scotTokenSymbol,
             ...ownProps,
         };
     },

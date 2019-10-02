@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -21,7 +22,6 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
@@ -84,6 +84,7 @@ class PostFull extends React.Component {
 
         // connector props
         username: PropTypes.string,
+        hostConfig: PropTypes.object,
         unlock: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
@@ -196,6 +197,7 @@ class PostFull extends React.Component {
     }
 
     linkedInShare(e) {
+        const { hostConfig } = this.props;
         serverApiRecordEvent('LinkedInShare', this.share_params.link);
         e.preventDefault();
         const winWidth = 720;
@@ -208,7 +210,7 @@ class PostFull extends React.Component {
             encodeURIComponent(s.title) +
             '&url=' +
             encodeURIComponent(s.url) +
-            `&source=${APP_NAME}&mini=true`;
+            `&source=${hostConfig['APP_NAME']}&mini=true`;
         window.open(
             'https://www.linkedin.com/shareArticle?' + q,
             'Share',
@@ -239,7 +241,7 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post },
+            props: { username, post, hostConfig },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -253,7 +255,11 @@ class PostFull extends React.Component {
         } = this;
         const post_content = this.props.cont.get(this.props.post);
         if (!post_content) return null;
-        const p = extractContent(immutableAccessor, post_content);
+        const p = extractContent(
+            immutableAccessor,
+            post_content,
+            hostConfig['APP_DOMAIN']
+        );
         const content = post_content.toJS();
         const { author, permlink, parent_author, parent_permlink } = content;
         const jsonMetadata = this.state.showReply ? null : p.json_metadata;
@@ -263,7 +269,7 @@ class PostFull extends React.Component {
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
-            document.title = title + ' — ' + APP_NAME;
+            document.title = title + ' — ' + hostConfig['APP_NAME'];
 
         let content_body = content.body;
         const url = `/${category}/@${author}/${permlink}`;
@@ -299,9 +305,9 @@ class PostFull extends React.Component {
 
         this.share_params = {
             link,
-            url: 'https://' + APP_DOMAIN + link,
+            url: 'https://' + hostConfig['APP_DOMAIN'] + link,
             rawtitle: title,
-            title: title + ' — ' + APP_NAME,
+            title: title + ' — ' + hostConfig['APP_NAME'],
             desc: p.desc,
         };
 
@@ -555,6 +561,7 @@ export default connect(
     (state, ownProps) => ({
         ...ownProps,
         username: state.user.getIn(['current', 'username']),
+        hostConfig: state.app.get('hostConfig', Map()).toJS(),
     }),
 
     // mapDispatchToProps

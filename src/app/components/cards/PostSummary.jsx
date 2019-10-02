@@ -33,6 +33,8 @@ class PostSummary extends React.Component {
         thumbSize: PropTypes.string,
         nsfwPref: PropTypes.string,
         promoted: PropTypes.object,
+        appDomain: PropTypes.string,
+        interleavePromoted: PropTypes.bool,
     };
 
     constructor() {
@@ -67,6 +69,8 @@ class PostSummary extends React.Component {
             content,
             featured,
             featuredOnClose,
+            appDomain,
+            interleavePromoted,
         } = this.props;
         const { account } = this.props;
         if (!content) return null;
@@ -113,12 +117,12 @@ class PostSummary extends React.Component {
         const pinned = content.get('pinned');
 
         const isPromoted =
-            INTERLEAVE_PROMOTED &&
+            interleavePromoted &&
             promoted &&
             promoted.contains(
                 `${content.get('author')}/${content.get('permlink')}`
             );
-        const p = extractContent(immutableAccessor, content);
+        const p = extractContent(immutableAccessor, content, appDomain);
         const desc = p.desc;
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
@@ -432,6 +436,11 @@ export default connect(
                 state.user.getIn(['current', 'username']) ||
                 state.offchain.get('account'),
             blogmode: state.app.getIn(['user_preferences', 'blogmode']),
+            appDomain: state.app.getIn(['hostConfig', 'APP_DOMAIN']),
+            interleavePromoted: state.app.getIn(
+                ['hostConfig', 'INTERLEAVE_PROMOTED'],
+                false
+            ),
         };
     },
 

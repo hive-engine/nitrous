@@ -305,9 +305,12 @@ export default connect(
         ]);
         const userPreferences = state.app.get('user_preferences').toJS();
         const nsfwPref = userPreferences.nsfwPref || 'warn';
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
         const pinned = state.offchain
-            .get('pinned_posts')
-            .get('pinned_posts')
+            .getIn(['pinned_posts', scotTokenSymbol, 'pinned_posts'])
             .toJS();
         const shouldSeeAds = state.app.get('reviveEnabled');
         const adSlots = state.app.getIn(['googleAds', 'adSlots']).toJS();

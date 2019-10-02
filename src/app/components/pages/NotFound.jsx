@@ -1,19 +1,29 @@
 import React from 'react';
-import Icon from 'app/components/elements/Icon';
-import AppLogo from 'app/components/elements/AppLogo';
-import { APP_ICON } from 'app/client_config';
+import PropTypes from 'prop-types';
+import SvgImage from 'app/components/elements/SvgImage';
 
 class NotFound extends React.Component {
+    static propTypes = {
+        hostConfig: PropTypes.object.isRequired,
+    };
+
     render() {
+        const { hostConfig } = this.props;
         return (
             <div>
-                <div className="row Header__nav">
-                    <div className="small-5 large-4 columns Header__logotype">
-                        <a href="/">
-                            <AppLogo />
-                        </a>
+                {hostConfig && (
+                    <div className="row Header__nav">
+                        <div className="small-5 large-4 columns Header__logotype">
+                            <a href="/">
+                                <SvgImage
+                                    name={hostConfig['APP_ICON']}
+                                    width={hostConfig['APP_ICON_WIDTH']}
+                                    height={hostConfig['APP_ICON_HEIGHT']}
+                                />
+                            </a>
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className="NotFound float-center">
                     <div>
                         <h4 className="NotFound__header">

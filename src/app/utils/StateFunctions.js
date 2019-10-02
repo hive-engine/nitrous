@@ -2,7 +2,7 @@ import assert from 'assert';
 import constants from 'app/redux/constants';
 import { parsePayoutAmount, repLog10 } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
-import { VEST_TICKER, LIQUID_TICKER, SCOT_DENOM } from 'app/client_config';
+import { VEST_TICKER, LIQUID_TICKER } from 'app/client_config';
 import { fromJS } from 'immutable';
 import { formatter } from '@steemit/steem-js';
 
@@ -57,6 +57,9 @@ export function spToVests(state, vesting_shares) {
 }
 
 export function vestingSteem(account, gprops) {
+    if (!account.vesting_shares || !account.total_vesting_shares) {
+        return 0;
+    }
     const vests = parseFloat(account.vesting_shares.split(' ')[0]);
     const total_vests = parseFloat(gprops.total_vesting_shares.split(' ')[0]);
     const total_vest_steem = parseFloat(
@@ -68,6 +71,14 @@ export function vestingSteem(account, gprops) {
 
 // How much STEEM this account has delegated out (minus received).
 export function delegatedSteem(account, gprops) {
+    if (
+        !account.delegated_vesting_shares ||
+        !account.received_vesting_shares ||
+        !gprops.total_vesting_shares ||
+        !gprops.total_vesting_fund_steem
+    ) {
+        return 0;
+    }
     const delegated_vests = parseFloat(
         account.delegated_vesting_shares.split(' ')[0]
     );
@@ -113,7 +124,7 @@ export function isFetchingOrRecentlyUpdated(global_status, order, category) {
     return false;
 }
 
-export function contentStats(content, precision) {
+export function contentStats(content) {
     if (!content) return {};
     if (!(content instanceof Map)) content = fromJS(content);
 
@@ -122,9 +133,7 @@ export function contentStats(content, precision) {
     let total_votes = 0;
     let up_votes = 0;
 
-    const minDigits = precision
-        ? Math.max(0, precision - 2)
-        : Math.log10(SCOT_DENOM) - 2;
+    const minDigits = Math.max(0, content.get('precision', 2) - 2);
 
     // TODO: breaks if content has no active_votes attribute.
 

@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -6,7 +7,6 @@ import Headroom from 'react-headroom';
 import Icon from 'app/components/elements/Icon';
 import resolveRoute from 'app/ResolveRoute';
 import tt from 'counterpart';
-import { APP_NAME } from 'app/client_config';
 import SortOrder from 'app/components/elements/SortOrder';
 import SearchInput from 'app/components/elements/SearchInput';
 import IconButton from 'app/components/elements/IconButton';
@@ -16,7 +16,6 @@ import * as appActions from 'app/redux/AppReducer';
 import Userpic from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
 import AppLogo from 'app/components/elements/AppLogo';
-import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
@@ -29,6 +28,7 @@ class Header extends React.Component {
         category: PropTypes.string,
         order: PropTypes.string,
         pathname: PropTypes.string,
+        appName: PropTypes.string,
     };
 
     constructor(props) {
@@ -121,6 +121,7 @@ class Header extends React.Component {
             navigate,
             account_meta,
             walletUrl,
+            appName,
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
@@ -217,7 +218,7 @@ class Header extends React.Component {
             process.env.BROWSER &&
             (route.page !== 'Post' && route.page !== 'PostNoCategory')
         )
-            document.title = page_title + ' — ' + APP_NAME;
+            document.title = page_title + ' — ' + appName;
 
         const logo_link =
             resolveRoute(pathname).params &&
@@ -423,6 +424,7 @@ const mapStateToProps = (state, ownProps) => {
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
         walletUrl,
+        appName: state.app.getIn(['hostConfig', 'APP_NAME']),
         ...ownProps,
     };
 };

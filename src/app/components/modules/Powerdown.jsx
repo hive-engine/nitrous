@@ -6,7 +6,6 @@ import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { LIQUID_TOKEN_UPPERCASE, VESTING_TOKEN } from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
@@ -27,6 +26,7 @@ class Powerdown extends React.Component {
             stakeBalance,
             delegatedStake,
             scotPrecision,
+            scotTokenSymbol,
         } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
@@ -59,6 +59,7 @@ class Powerdown extends React.Component {
             }
             const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
+                scotTokenSymbol,
                 account,
                 unstakeAmount,
                 errorCallback,
@@ -76,7 +77,7 @@ class Powerdown extends React.Component {
                 <li key="delegating">
                     {tt('powerdown_jsx.delegating', {
                         AMOUNT,
-                        LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
+                        LIQUID_TICKER: scotTokenSymbol,
                     })}
                 </li>
             );
@@ -116,7 +117,7 @@ class Powerdown extends React.Component {
                         onChange={inputChange}
                         autoCorrect={false}
                     />
-                    {LIQUID_TOKEN_UPPERCASE}
+                    {scotTokenSymbol}
                 </p>
                 <ul className="powerdown-notes">{notes}</ul>
                 <button
@@ -140,6 +141,10 @@ export default connect(
         const stakeBalance = parseFloat(values.get('stakeBalance'));
         const delegatedStake = parseFloat(values.get('delegatedStake'));
         const scotConfig = state.app.get('scotConfig');
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
 
         return {
             ...ownProps,
@@ -148,6 +153,7 @@ export default connect(
             delegatedStake,
             state,
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            scotTokenSymbol,
         };
     },
     // mapDispatchToProps
@@ -161,6 +167,7 @@ export default connect(
             dispatch(globalActions.showDialog({ name }));
         },
         withdrawVesting: ({
+            scotTokenSymbol,
             account,
             unstakeAmount,
             errorCallback,
@@ -176,7 +183,7 @@ export default connect(
                 contractName: 'tokens',
                 contractAction: 'unstake',
                 contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    symbol: scotTokenSymbol,
                     quantity: unstakeAmount,
                 },
             };
