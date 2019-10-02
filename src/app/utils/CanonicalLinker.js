@@ -1,7 +1,7 @@
 import Apps from 'steemscript/apps.json';
 
-export function makeCanonicalLink(d, hostConfig) {
-    let canonicalUrl = hostConfig['APP_URL'] + d.link;
+export function makeCanonicalLink(d) {
+    let canonicalUrl = 'https://steemit.com' + d.link;
 
     if (d.json_metadata) {
         if (

@@ -1,9 +1,23 @@
 language: node_js
 
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
 install: true
 
 script:
-  - yarn run test
+  - docker build -t registry.heroku.com/frozen-retreat-15997/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: scotty_weedcash
 
 # safelist
 branches:

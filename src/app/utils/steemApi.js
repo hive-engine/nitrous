@@ -61,6 +61,8 @@ async function getAuthorRep(feedData) {
 }
 
 function mergeContent(content, scotData, scotTokenSymbol) {
+    const parentAuthor = content.parent_author;
+    const parentPermlink = content.parent_permlink;
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
     const title = content.title;
@@ -84,6 +86,10 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     if (title) {
         content.title = title;
     }
+    // Prefer parent author / permlink of content
+    content.parent_author = parentAuthor;
+    content.parent_permlink = parentPermlink;
+
     content.scotData = {};
     content.scotData[scotTokenSymbol] = scotData;
 }

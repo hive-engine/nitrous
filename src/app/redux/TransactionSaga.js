@@ -492,16 +492,16 @@ export function* preBroadcast_comment({ operation, username }) {
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
     );
+    const postUrl = `${hostConfig['APP_URL']}/@${author}/${permlink}`;
     // Add footer
-    const footer = hostConfig['POST_FOOTER'].replace(
-        '${POST_URL}',
-        `${hostConfig['APP_URL']}/@${author}/${permlink}`
-    );
+    const footer = hostConfig['POST_FOOTER'].replace('${POST_URL}', postUrl);
     if (footer && !body.endsWith(footer)) {
         body += '\n\n' + footer;
     }
 
     // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
+
+    const md = operation.json_metadata;
 
     let body2;
     if (originalBody) {
@@ -509,10 +509,12 @@ export function* preBroadcast_comment({ operation, username }) {
         // Putting body into buffer will expand Unicode characters into their true length
         if (patch && patch.length < new Buffer(body, 'utf-8').length)
             body2 = patch;
+    } else if (typeof md !== 'string' && !md.canonical_url) {
+        // Creation - set up canonical url
+        md.canonical_url = postUrl;
     }
     if (!body2) body2 = body;
 
-    const md = operation.json_metadata;
     const json_metadata = typeof md === 'string' ? md : JSON.stringify(md);
     const op = {
         ...operation,
