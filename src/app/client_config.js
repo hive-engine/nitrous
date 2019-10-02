@@ -1,7 +1,41 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    'localhost:8080': {
+    '144.202.1.72:8080': {
+        APP_NAME: 'WeedCash',
+        APP_ICON: 'weedcash',
+        APP_ICON_WIDTH: '150px',
+        APP_ICON_HEIGHT: '40px',
+        APP_URL: 'https://www.weedcash.network',
+        APP_DOMAIN: 'www.weedcash.network',
+        LIQUID_TOKEN: 'Weed',
+        LIQUID_TOKEN_UPPERCASE: 'WEED',
+        APP_MAX_TAG: 10,
+        SCOT_TAG: 'weedcash',
+        TAG_LIST: fromJSOrdered([
+            'weedcash',
+            'weed',
+            'cannabis',
+            'psychedelic',
+        ]),
+        INTERLEAVE_PROMOTED: true,
+        PROMOTED_POST_ACCOUNT: 'null',
+        VESTING_TOKEN: 'WEED POWER',
+        SITE_DESCRIPTION:
+            'Weedcash is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+            'supports real value for digital rewards through market price discovery and liquidity',
+        // Revive Ads
+        NO_ADS_STAKE_THRESHOLD: 9999999999,
+        REVIVE_ADS: {},
+        ALLOW_MASTER_PW: false,
+        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+        POST_FOOTER: '',
+        SCOT_TAG_FIRST: false,
+        PINNED_POSTS_URL: null,
+        SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
+    },
+    'weedcash.network': {
         APP_NAME: 'WeedCash',
         APP_ICON: 'weedcash',
         APP_ICON_WIDTH: '150px',
