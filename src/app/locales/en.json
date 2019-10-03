@@ -809,12 +809,12 @@
     "rate_post_jsx": {
         "rate_post": "Rate the Post",
         "rate_post_and_get_vote":
-            "A comment that contains your rating will be generated. To gratitude your raintg, your rating comment will be voted automatically by SCT team.",
+            "A comment that contains your rating will be generated. Thank you.",
         "confirm_rate_post": "Your rating for this post is %(rating)s",
         "rating_comment":
-            "@%(username)s selected @%(author)s's post in search.\n@%(author)s will be given %(reward)s %(DEBT_TOKEN)s\n@%(username)s's search satisfaction score is %(rating)s point.",
+            "@%(username)s selected @%(author)s's post in search.\n@%(username)s's search satisfaction score is %(rating)s point.",
         "rating_reminder":
-            "Please rate this post.\nAfter rating, a comment that contains the rating score will be generated, and SCT team will vote your comment later.",
+            "Please rate this post.\nAfter rating, a comment that contains the rating score will be generated.\nThank you.",
         "please_rate": "Please rate",
         "your_rating": "Your rating",
         "average_rating": "Average rating: %(average_rating)s",

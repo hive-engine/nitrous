@@ -36,13 +36,13 @@ class PaidSearch extends React.Component {
                             events
                             delay={{ show: 300, hide: 500 }}
                         />
-                        <ReactHint
+                        {/* <ReactHint
                             persist
                             attribute="data-search"
                             events={{ hover: true }}
                             onRenderContent={this.onRenderPreview}
                             ref={ref => (this.instance = ref)}
-                        />
+                        /> */}
                         <div className="columns">
                             {/* <gcse:search linktarget="_self"></gcse:search> */}
                             <div
@@ -166,6 +166,17 @@ class PaidSearch extends React.Component {
             return null;
         }
         return null;
+    }
+
+    openPage(element) {
+        const res = this.parsePost(element, 'gs-url');
+        if (res) {
+            const { author, permlink, key } = res;
+            const username = this.props.currentUser.get('username');
+            setPostRewardedByUser(author, permlink, username);
+            element.setAttribute('href', element.getAttribute('gs-url'));
+            // element.click();
+        }
     }
 
     showRewardPost(element) {
@@ -336,7 +347,8 @@ class PaidSearch extends React.Component {
                             href === null ||
                             href === false
                         ) {
-                            this.showRewardPost(e);
+                            // this.showRewardPost(e);
+                            this.openPage(e);
                         }
                     });
                 }
@@ -375,14 +387,14 @@ const Search = connect(
 
     // mapDispatchToProps
     dispatch => ({
-        showRewardPost: (author, permlink, onSuccess) => {
-            dispatch(
-                globalActions.showDialog({
-                    name: 'rewardPost',
-                    params: { author, permlink, onSuccess },
-                })
-            );
-        },
+        // showRewardPost: (author, permlink, onSuccess) => {
+        //     dispatch(
+        //         globalActions.showDialog({
+        //             name: 'rewardPost',
+        //             params: { author, permlink, onSuccess },
+        //         })
+        //     );
+        // },
     })
 )(PaidSearch);
 
