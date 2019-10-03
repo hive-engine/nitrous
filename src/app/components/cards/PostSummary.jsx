@@ -323,7 +323,7 @@ class PostSummary extends React.Component {
                                     )}.
                                 </span>
                             )}
-                            {summary_footer}
+                            {/* {summary_footer} */}
                         </div>
                     </article>
                 );
@@ -403,9 +403,9 @@ class PostSummary extends React.Component {
                     <div className="articles__content-block articles__content-block--text">
                         {content_title}
                         {content_body}
-                        {this.props.blogmode ? null : summary_footer}
+                        {/* {this.props.blogmode ? null : summary_footer} */}
                     </div>
-                    {this.props.blogmode ? summary_footer : null}
+                    {/* {this.props.blogmode ? summary_footer : null} */}
                 </div>
             </div>
         );

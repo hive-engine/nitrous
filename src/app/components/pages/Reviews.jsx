@@ -83,8 +83,10 @@ export default function Reviews(props) {
     const {
         reviews,
         loading,
+        loadsNewList,
         hasNextList,
         requestReviews,
+        requestReviewsForNewList,
         updateReviews,
         updateOptions,
         options,
@@ -93,7 +95,23 @@ export default function Reviews(props) {
     const isReviewsUndefined = typeof reviews === 'undefined';
 
     if (isReviewsUndefined && !loading) {
-        requestReviews(options);
+        // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
+        setTimeout(() => requestReviews(options));
+    } else {
+        setTimeout(
+            () => {
+                if (!isReviewsUndefined && loadsNewList && reviews.length > 0) {
+                    const firstAuthor = reviews[0].Author;
+                    const firstPermlink = reviews[0].Permlink;
+                    requestReviewsForNewList({
+                        ...options,
+                        firstAuthor: firstAuthor,
+                        firstPermlink: firstPermlink,
+                    });
+                }
+            },
+            1000 // Must match to delay in requestReviewsForNewList() to avoid duplicate requests
+        );
     }
 
     let lastAuthor = '';
@@ -401,6 +419,7 @@ module.exports = {
                 reviews,
                 hasNextList: state.movie.get('hasNextReviews') || false,
                 loading: state.movie.get('loading') || false,
+                loadsNewList: state.movie.get('loadsNewList') || false,
                 options: state.movie.getIn(['options', 'reviews']).toJS(),
                 status: state.global.get('status'),
                 accounts: state.global.get('accounts'),
@@ -416,6 +435,8 @@ module.exports = {
         },
         dispatch => ({
             requestReviews: args => dispatch(movieActions.requestReviews(args)),
+            requestReviewsForNewList: args =>
+                dispatch(movieActions.requestReviewsForNewList(args)),
             updateReviews: args => dispatch(movieActions.updateReviews(args)),
             updateOptions: args => dispatch(movieActions.updateOptions(args)),
         })
@@ -428,9 +449,11 @@ Reviews.propTypes = {
     status: PropTypes.object,
     routeParams: PropTypes.object,
     requestReviews: PropTypes.func.isRequired,
+    requestReviewsForNewList: PropTypes.func.isRequired,
     updateReviews: PropTypes.func.isRequired,
     updateOptions: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    loadsNewList: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     categories: PropTypes.object,

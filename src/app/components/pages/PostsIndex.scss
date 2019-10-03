@@ -740,14 +740,14 @@ a#changeLayout:focus {
       &__summary {
         border: transparent;
         box-shadow: none;
-        padding-bottom: 0px;
+        padding-bottom: 1.4em;
         margin: 0 0 1.4em;
         @include themify($themes) {
           border-bottom: themed('borderLight');
         }
-        @include MQ(M) {
-          padding-bottom: 6px;
-        }
+        // @include MQ(M) {
+        //   padding-bottom: 6px;
+        // }
       }
       &__summary.promoted {
         border: 1px solid $color-teal;
@@ -767,8 +767,8 @@ a#changeLayout:focus {
       }
       &__feature-img-container {
         overflow: hidden;
-        width: 130px;
-        height: 77px;
+        width: 65px;
+        height: 42px;
         position: relative;
         display: inline-block;
       }

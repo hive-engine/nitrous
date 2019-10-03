@@ -98,11 +98,9 @@ export default {
             //cb(null, [require('app/components/pages/PostsIndex')]);
             cb(null, [PostsIndex]);
             //});
-        } else if (route.page === 'Movies') {
+        } else if (route.page === 'Movies' || route.page === 'TVs') {
             cb(null, [Movies]);
-        } else if (route.page === 'TVs') {
-            cb(null, [Movies]);
-        } else if (route.page === 'Movie') {
+        } else if (route.page === 'Movie' || route.page === 'TV') {
             cb(null, [Movie]);
         } else if (route.page === 'Reviews') {
             cb(null, [Reviews]);

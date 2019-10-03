@@ -84,9 +84,11 @@ export default function Movies(props) {
         movieType,
         locale,
         loading,
+        loadsNewList,
         hasNextList,
         isListLoaded,
         requestMovies,
+        requestMoviesForNewList,
         updateMovies,
         updateOptions,
         options,
@@ -98,6 +100,19 @@ export default function Movies(props) {
         isMoviesLoadingTried[type] = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
         setTimeout(() => requestMovies({ ...options }));
+    } else {
+        setTimeout(
+            () => {
+                if (!isMoviesUndefined && loadsNewList && movies.length > 0) {
+                    const firstMovieId = movies[0].MovieId;
+                    requestMoviesForNewList({
+                        ...options,
+                        firstMovieId: firstMovieId,
+                    });
+                }
+            },
+            1000 // Must match to delay in requestMoviesForNewList() to avoid duplicate requests
+        );
     }
 
     const genres = tt(`review.genre.${type}`);
@@ -371,6 +386,7 @@ module.exports = {
                         CustomUtil.getListLoadedConditionName(movieType)
                     ) || false,
                 loading: state.movie.get('loading') || false,
+                loadsNewList: state.movie.get('loadsNewList') || false,
                 options: {
                     ...state.movie.getIn(['options', listName]).toJS(),
                     languageCode: locale,
@@ -389,6 +405,8 @@ module.exports = {
         },
         dispatch => ({
             requestMovies: args => dispatch(movieActions.requestMovies(args)),
+            requestMoviesForNewList: args =>
+                dispatch(movieActions.requestMoviesForNewList(args)),
             updateMovies: args => dispatch(movieActions.updateMovies(args)),
             updateOptions: args => dispatch(movieActions.updateOptions(args)),
         })
@@ -400,9 +418,11 @@ Movies.propTypes = {
     status: PropTypes.object,
     routeParams: PropTypes.object,
     requestMovies: PropTypes.func.isRequired,
+    requestMoviesForNewList: PropTypes.func.isRequired,
     updateMovies: PropTypes.func.isRequired,
     updateOptions: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    loadsNewList: PropTypes.bool.isRequired,
     username: PropTypes.string,
     blogmode: PropTypes.bool,
     type: PropTypes.string.isRequired,

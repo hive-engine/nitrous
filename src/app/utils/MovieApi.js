@@ -29,6 +29,35 @@ export async function getMovies(
     }
 }
 
+export async function getMoviesForNewList(
+    languageCode,
+    movieType,
+    genreId,
+    firstMovieId,
+    sortBy
+) {
+    let apiName = 'GetMoviesForNewList';
+
+    if (sortBy === 'created') {
+        apiName = 'GetMoviesOrderedByLastPostAddDateForNewList';
+    }
+
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/${apiName}?languageCode=${
+                languageCode
+            }&movieType=${movieType}&genreId=${genreId}&firstMovieId=${
+                firstMovieId
+            }`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
 export async function getMovie(languageCode, movieType, movieId) {
     try {
         const response = await axios.get(
@@ -59,6 +88,30 @@ export async function getReviews(
             }&genreId=${genreId}&languageCode=${languageCode}&lastAuthor=${
                 lastAuthor
             }&lastPermlink=${lastPermlink}`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+export async function getReviewsForNewList(
+    movieType,
+    genreId,
+    languageCode,
+    firstAuthor,
+    firstPermlink,
+    sortBy
+) {
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetPostsByGenreForNewList?movieType=${
+                movieType
+            }&genreId=${genreId}&languageCode=${languageCode}&firstAuthor=${
+                firstAuthor
+            }&firstPermlink=${firstPermlink}`
         );
 
         return response.data;

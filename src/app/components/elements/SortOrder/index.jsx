@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import NativeSelect from 'app/components/elements/NativeSelect';
+import { actions as movieActions } from 'app/redux/MovieReducer';
 
-const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
+const SortOrder = ({
+    topic,
+    sortOrder,
+    horizontal,
+    pathname,
+    requestNewList,
+}) => {
     /*
      * We do not sort the user feed by anything other than 'new'.
      * So don't make links to it from the SortOrder component.
@@ -39,23 +47,26 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
             {
                 value: 'movie',
                 label: tt('review.top_menu.movies'),
-                //link: `/trending/${tag}`,
                 link: `/movie`,
+                onClick: () => requestNewList(),
             },
             {
                 value: 'tv',
                 label: tt('review.top_menu.tvs'),
                 link: `/tv`,
+                onClick: () => requestNewList(),
             },
             {
                 value: 'review',
                 label: tt('review.top_menu.reviews'),
                 link: `/review`,
+                onClick: () => requestNewList(),
             },
             {
                 value: 'created',
                 label: tt('g.new').toUpperCase(),
                 link: `/created/${tag}`,
+                onClick: null,
             },
         ];
     };
@@ -72,7 +83,9 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                                 : ''
                         }`}
                     >
-                        <Link to={i.link}>{i.label}</Link>
+                        <Link to={i.link} onClick={i.onClick}>
+                            {i.label}
+                        </Link>
                     </li>
                 );
             })}
@@ -91,6 +104,7 @@ SortOrder.propTypes = {
     sortOrder: PropTypes.string,
     horizontal: PropTypes.bool,
     pathname: PropTypes.string,
+    requestNewList: PropTypes.func,
 };
 
 SortOrder.defaultProps = {
@@ -100,4 +114,11 @@ SortOrder.defaultProps = {
     pathname: '',
 };
 
-export default SortOrder;
+export default connect(
+    (state, ownProps) => {
+        return {};
+    },
+    dispatch => ({
+        requestNewList: args => dispatch(movieActions.requestNewList(args)),
+    })
+)(SortOrder);

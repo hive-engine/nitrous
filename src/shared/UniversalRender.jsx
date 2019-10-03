@@ -331,7 +331,7 @@ export async function serverRender(
 
         const movie = movieDefaultState;
 
-        if (url.match(routeRegex.Movies)) {
+        if (url.match(routeRegex.Movies) || url.match(routeRegex.Tvs)) {
             let movieType;
             if (url.indexOf('/movie') === 0) {
                 movieType = 1;
@@ -353,7 +353,7 @@ export async function serverRender(
                 movie[CustomUtil.getNextListConditionName(movieType)] = true;
                 movie[CustomUtil.getListLoadedConditionName(movieType)] = true;
             }
-        } else if (url.match(routeRegex.Movie)) {
+        } else if (url.match(routeRegex.Movie) || url.match(routeRegex.Tv)) {
             let movieType;
             if (url.indexOf('/movie') === 0) {
                 movieType = 1;
