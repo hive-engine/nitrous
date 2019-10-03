@@ -1,7 +1,6 @@
 import React from 'react';
 import tt from 'counterpart';
 import { connect } from 'react-redux';
-// import ReactDOM from 'react-dom';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GOOGLE_CUSTOM_SEARCH_ID } from 'app/client_config';
@@ -61,7 +60,6 @@ class PaidSearch extends React.Component {
     }
 
     insertCSE() {
-        // (function() {
         const cx = GOOGLE_CUSTOM_SEARCH_ID;
         let gcse = document.createElement('script');
         gcse.type = 'text/javascript';
@@ -69,7 +67,6 @@ class PaidSearch extends React.Component {
         gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
         let s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(gcse, s);
-        // })();
     }
 
     renderCSE() {

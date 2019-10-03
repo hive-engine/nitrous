@@ -5,6 +5,76 @@
     line-height: 1.6;
     background-color: #fcfcfc;
 
+    // Header
+    .gsc-input-box {
+      border:0px;
+
+      input{
+        color:#777;
+        border-radius:12px;
+        font-size:1.2rem;
+        font-weight:bold;
+        height:40px!important;
+        background-color:#eee;
+        padding:5px!important;
+      }
+    }
+
+    .gsib_b{
+      display:none!important;
+    }
+
+    .gsc-result-info{
+      font-size:1rem;
+    }
+
+    .gsc-search-button button{
+      height:30px;
+      margin-bottom:16px;
+      border-radius:50px;
+    }
+
+    .gsc-orderby-label .gsc-inline-block{
+      font-size:1rem;
+    }
+
+    .gsc-selected-option-container .gsc-inline-block{
+      width:100px;
+      font-size:1rem;
+    }
+    // Header end
+
+    // Search Result
+    .gsc-webResult .gsc-result{
+      border-bottom:1px solid #E9E9E9;
+    }
+
+    .gs-title{
+      font-weight:bold;
+    }
+
+    .gs-title b{
+      background-color:#62f259;
+    }
+
+    .gs-bidi-start-align.gs-snippet b{
+      background-color:#62f259;
+    }
+
+    // .gs-image-box.gs-web-image-box.gs-web-image-box-landscape{
+    //   width:120px;
+
+    //   .gs-image{
+    //     max-width:120px;
+    //     max-height:80px;
+    //   }
+    // }
+    // Search Result End
+
+    .gsc-adBlock{
+      display:none!important;
+    }
+
     div.top-bar {
         padding: 0;
     }
