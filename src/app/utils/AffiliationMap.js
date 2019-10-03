@@ -69,6 +69,7 @@ const map = {
     'best-teens.com': 'Verified Creator',
     'queenofwhiteice': 'Verified Creator',
     'ashlynmay':'Verified Creator',
+    'moneymisstress': 'Verified Creator',
 };
 
 export default map;
