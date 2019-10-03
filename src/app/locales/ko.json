@@ -857,16 +857,16 @@
     "rate_post_jsx": {
         "rate_post": "글 평가하기",
         "rate_post_and_get_vote":
-            "평점을 작성하면 당신의 평점이 담긴 댓글이 생성될 것입니다. SCT 팀에서는 이 댓글에 대한 업보팅을 지원할 것입니다",
+            "평점을 작성하면 당신의 평점이 담긴 댓글이 생성될 것입니다. 감사합니다",
         "confirm_rate_post": "이 글에 대한 당신의 평점은 %(rating)s 입니다.",
         "rating_comment":
-            "@%(username)s 님이 스판 유료검색을 통해 @%(author)s 님의 글을 선택했습니다.\n유료 검색에서 선택된 글을 작성한 @%(author)s 님에게는 %(reward)s %(DEBT_TOKEN)s를 보상으로 지급되었습니다.\n@%(username)s 님의 검색 만족도 평가 점수는 %(rating)s 입니다.",
+            "@%(username)s 님이 스판검색을 통해 @%(author)s 님의 글을 선택했습니다.\n@%(username)s 님의 검색 만족도 평가 점수는 %(rating)s 입니다.",
         "please_rate": "평가 바랍니다",
         "your_rating": "당신의 순위",
         "average_rating": "평균 등급: %(average_rating)s",
         "people_rated": "%(num)s 명 평가",
         "rating_reminder":
-            "이 글에 대한 평점을 남겨주세요.\n 평점 작성을 완료하시면, 평점이 포함된 댓글이 생성되며 SCT 팀은 이 댓글에 대해 업보팅을 지원할 것입니다."
+            "이 글에 대한 평점을 남겨주세요.\n평점 작성을 완료하시면, 평점이 포함된 댓글이 생성됩니다.\n 감사합니다."
     },
     "reward_post_jsx": {
         "reward_post": "글 저자 보상",
@@ -875,7 +875,7 @@
         "confirm_reward_post":
             "이 글을 작성한 @%(author)s 님에 대한 보상으로 %(amount)s %(DEBT_TOKEN)s 를 지급할 것이며 해당 금액은 지갑 잔액에서 차감됩니다. 보상 금액 %(amount)s %(DEBT_TOKEN)s는 다음과 같이 분배됩니다: 저자 @%(author)s - %(reward_amount)s, 소각 - %(burn_amount)s(소각 수량은 @null 계정으로 전송됨).",
         "rating_reminder":
-            "이 글에 대한 평점을 남겨주세요.\n 평점 작성을 완료하시면, 평점이 포함된 댓글이 생성되며 SCT 팀은 이 댓글에 대해 업보팅을 지원할 것입니다."
+            "이 글에 대한 평점을 남겨주세요.\n 평점 작성을 완료하시면, 평점이 포함된 댓글이 생성됩니다.\n 감사합니다."
     },
     "userwallet_jsx": {
         "transfer": "Transfer",

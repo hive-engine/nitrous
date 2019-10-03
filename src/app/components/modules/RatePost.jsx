@@ -78,7 +78,6 @@ class RatePost extends Component {
                             {' '}
                             {tt('rate_post_jsx.confirm_rate_post', { rating })}
                         </p>
-                        <hr />
                         <p>{tt('rate_post_jsx.rate_post_and_get_vote')}.</p>
                         <br />
                         {loading && (
