@@ -257,7 +257,11 @@
         "all_claim_completed": "Claims completed!",
         "post_as": "Napisz jako",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "głos oddany, użytkownik musi wskazać powód odrzucenia delegata"
+            "głos oddany, użytkownik musi wskazać powód odrzucenia delegata",
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking"
     },
     "navigation": {
         "about": "O Steem",

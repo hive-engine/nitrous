@@ -2,7 +2,10 @@ import * as config from 'config';
 import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
-import { getScotDataAsync } from 'app/utils/steemApi';
+import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
+
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
@@ -59,9 +62,17 @@ ScotConfig.prototype.refresh = async function() {
 
     const key = config.scot_config_cache.key;
     try {
-        const scotConfig = await getScotDataAsync('config', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
+        const scotConfigs = await getScotDataAsync('config');
+        const [scotConfig] = scotConfigs.filter(
+            item => item.token === LIQUID_TOKEN_UPPERCASE
+        );
+        scotConfig.scotTokens = scotConfigs.map(item => ({
+            ...item,
+            json_metadata_value: item
+                ? item.json_metadata_value.split(',')
+                : [],
+        }));
+
         const scotInfo = await getScotDataAsync('info', {
             token: LIQUID_TOKEN_UPPERCASE,
         });
@@ -70,6 +81,93 @@ ScotConfig.prototype.refresh = async function() {
             console.info('Info not found, falling back to client config');
             scotInfo.precision = Math.log10(SCOT_DENOM);
         }
+
+        scotConfig.burn = {};
+        scotConfig.burn.rorsToken = 'RORS';
+        scotConfig.burn.scotToken = scotConfig.token;
+        scotConfig.burn.scotMinerToken = scotConfig.miner_tokens
+            .split(':')[0]
+            .replace(/\W/g, '');
+        scotConfig.info = {};
+
+        const [
+            totalRorsTokenBalance,
+            tokenRorsBurnBalance,
+            totalTokenBalance,
+            tokenBurnBalance,
+            totalTokenMinerBalance,
+            tokenMinerBurnBalance,
+            allPrice,
+            rorsPrice,
+            ivPrice,
+            ivmPrice,
+        ] = await Promise.all([
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.burn.rorsToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.burn.rorsToken,
+            }),
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.burn.scotToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.burn.scotToken,
+            }),
+            ssc.findOne('tokens', 'tokens', {
+                symbol: scotConfig.burn.scotMinerToken,
+            }),
+            ssc.findOne('tokens', 'balances', {
+                account: 'null',
+                symbol: scotConfig.burn.scotMinerToken,
+            }),
+            getSteemPriceInfo(),
+            ssc.find('market', 'tradesHistory', { symbol: 'RORS' }, 1, 0, [
+                { index: 'timestamp', descending: false },
+            ]),
+            ssc.find('market', 'tradesHistory', { symbol: 'IV' }, 1, 0, [
+                { index: 'timestamp', descending: false },
+            ]),
+            ssc.find('market', 'tradesHistory', { symbol: 'IVM' }, 1, 0, [
+                { index: 'timestamp', descending: false },
+            ]),
+        ]);
+
+        if (totalRorsTokenBalance) {
+            scotConfig.burn.total_rors_token_balance = totalRorsTokenBalance;
+        }
+        if (tokenRorsBurnBalance) {
+            scotConfig.burn.token_rors_burn_balance = tokenRorsBurnBalance;
+        }
+        if (totalTokenBalance) {
+            scotConfig.burn.total_token_balance = totalTokenBalance;
+        }
+        if (tokenBurnBalance) {
+            scotConfig.burn.token_burn_balance = tokenBurnBalance;
+        }
+        if (totalTokenMinerBalance) {
+            scotConfig.burn.total_token_miner_balances = totalTokenMinerBalance;
+        }
+        if (tokenMinerBurnBalance) {
+            scotConfig.burn.token_miner_burn_balances = tokenMinerBurnBalance;
+        }
+        if (allPrice) {
+            scotConfig.info.scotToken = scotConfig.token;
+            scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
+            scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
+        }
+        if (rorsPrice) {
+            scotConfig.info.rors_to_steemp = parseFloat(rorsPrice[0].price);
+        }
+        if (ivPrice) {
+            scotConfig.info.iv_to_steemp = parseFloat(ivPrice[0].price);
+        }
+        if (ivmPrice) {
+            scotConfig.info.ivm_to_steemp = parseFloat(ivmPrice[0].price);
+        }
+
         this.cache.set(key, { info: scotInfo, config: scotConfig });
         console.info('Scot Config refreshed...');
     } catch (err) {

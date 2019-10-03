@@ -405,3 +405,12 @@ export async function fetchSnaxBalanceAsync(account) {
             return [];
         });
 }
+
+export async function getSteemPriceInfo() {
+    var steemPrice = callApi('https://postpromoter.net/api/prices');
+    var steemPriceOnUpbit = callApi(
+        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    );
+    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return allInfo;
+}
