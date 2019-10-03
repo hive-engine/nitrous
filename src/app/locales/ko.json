@@ -249,6 +249,11 @@
             "checkbox": "네 이해합니다."
         },
         "written_from": "%(app_name)s에서 작성되었습니다.",
+        "total": "총",
+        "circulating": "유통",
+        "burn": "소각",
+        "staking": "스테이킹",
+        "krw": "원",
         "all_claim_started":
             "전체 토큰의 클레임 요청을 시작합니다. 약 %(seconds)s 초 후에 완료됩니다.",
         "all_claim_completed":
