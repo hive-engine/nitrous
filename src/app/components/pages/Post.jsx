@@ -231,10 +231,9 @@ class Post extends React.Component {
                 commentCount != commentLimit;
 
             return (
-                <div>
+                <div key={post + reply}>
                     <Comment
                         root
-                        key={post + reply}
                         content={reply}
                         cont={content}
                         sort_order={sortOrder}
