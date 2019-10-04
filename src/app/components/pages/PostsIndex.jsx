@@ -316,27 +316,10 @@ class PostsIndex extends React.Component {
             >
                 <article className="articles">
                     <div className="articles__header row">
-                        <div className="small-6 medium-6 large-6 column">
-                            <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
+                        <div className="small-12 medium-11 column">
+                            <h1 className="articles__h1 articles__h1--no-wrap">
                                 {page_title}
                             </h1>
-                            <span className="hide-for-mq-large articles__header-select">
-                                <Topics
-                                    username={this.props.username}
-                                    order={topics_order}
-                                    current={category}
-                                    categories={categories}
-                                    compact={true}
-                                    levels={max_levels}
-                                />
-                            </span>
-                        </div>
-                        <div className="small-6 medium-5 large-5 column hide-for-large articles__header-select">
-                            <SortOrder
-                                sortOrder={this.props.sortOrder}
-                                topic={this.props.topic}
-                                horizontal={false}
-                            />
                         </div>
                         <div className="medium-1 show-for-mq-medium column">
                             <ArticleLayoutSelector />
