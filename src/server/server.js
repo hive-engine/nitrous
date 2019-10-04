@@ -46,6 +46,12 @@ const adstxt = fs.readFileSync(
     'utf8'
 );
 
+// import brave-rewards-verification.txt to be served statically
+const bravetxt = fs.readFileSync(
+    path.join(__dirname, '../app/assets/brave-rewards-verification.txt'),
+    'utf8'
+);
+
 // Serve static assets without fanfare
 app.use(
     favicon(path.join(__dirname, '../app/assets/images/favicons/favicon.ico'))
@@ -82,6 +88,13 @@ app.use(
     mount('/ads.txt', function*() {
         this.type = 'text/plain';
         this.body = adstxt;
+    })
+);
+
+app.use(
+    mount('/.well-known/brave-rewards-verification.txt', function*() {
+        this.type = 'text/plain';
+        this.body = bravetxt;
     })
 );
 
