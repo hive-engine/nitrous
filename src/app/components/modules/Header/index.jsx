@@ -20,6 +20,8 @@ import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
+import axios from 'axios';
+import { DEFAULT_LANGUAGE } from 'app/client_config';
 import ReviveAd from 'app/components/elements/ReviveAd';
 
 class Header extends React.Component {
@@ -40,6 +42,8 @@ class Header extends React.Component {
             showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
+
+        getAnnouncement(this, props.locale);
     }
 
     componentDidMount() {
@@ -98,9 +102,9 @@ class Header extends React.Component {
         this.setState({ showAd: true, gptAdRendered: true });
     }
 
-    hideAnnouncement() {
+    hideAnnouncement(e, id) {
         this.setState({ showAnnouncement: false });
-        this.props.hideAnnouncement();
+        this.props.hideAnnouncement(id);
     }
 
     render() {
@@ -298,15 +302,24 @@ class Header extends React.Component {
                 onUnfix={e => this.headroomOnUnfix(e)}
             >
                 <header className="Header">
-                    {showAnnouncement && (
-                        <Announcement onClose={e => this.hideAnnouncement(e)} />
-                    )}
+                    {this.state.announcement &&
+                        this.props.showAnnouncement &&
+                        shouldShowAnnouncement(this.state.announcement.id) && (
+                            <Announcement
+                                onClose={e =>
+                                    this.hideAnnouncement(
+                                        e,
+                                        this.state.announcement.id
+                                    )
+                                }
+                                id={this.state.announcement.id}
+                                title={this.state.announcement.title}
+                                link={this.state.announcement.link}
+                            />
+                        )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
-                    <div style={showAd ? {} : { display: 'none' }}>
-                        <GptAd
-                            type="Freestar"
-                            id="steemit_728x90_970x90_970x250_320x50_ATF"
-                        />
+                    <div>
+                        <GptAd type="Basic" slotName="top_nav" />
                     </div>
                     <div style={showReviveAd ? {} : { display: 'none' }}>
                         <ReviveAd adKey="header_banner" />
@@ -348,6 +361,16 @@ class Header extends React.Component {
                                     </a>
                                 </span>
                             )}
+
+                            {/*CUSTOM SEARCH*/}
+                            <span className="Header__search--desktop">
+                                <SearchInput />
+                            </span>
+                            <span className="Header__search">
+                                <a href="/static/search.html">
+                                    <IconButton icon="magnifyingGlass" />
+                                </a>
+                            </span>
 
                             {/*SUBMIT STORY*/}
                             {submit_story}
@@ -417,7 +440,9 @@ const mapStateToProps = (state, ownProps) => {
         username,
         loggedIn,
         userPath,
-        nightmodeEnabled: state.user.getIn(['user_preferences', 'nightmode']),
+        nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
+        locale:
+            state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,
         account_meta: user_profile,
         current_account_name,
         showAnnouncement: state.user.get('showAnnouncement'),
@@ -446,9 +471,58 @@ const mapDispatchToProps = dispatch => ({
     hideSidePanel: () => {
         dispatch(userActions.hideSidePanel());
     },
-    hideAnnouncement: () => dispatch(userActions.hideAnnouncement()),
+    hideAnnouncement: id => dispatch(userActions.hideAnnouncement({ id })),
 });
 
 const connectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
+
+function shouldShowAnnouncement(id) {
+    if (
+        typeof id !== 'undefined' &&
+        (typeof localStorage === 'undefined' ||
+            (typeof localStorage !== 'undefined' &&
+                localStorage.getItem('hideAnnouncement') !== id.toString()))
+    )
+        return true;
+    else return false;
+}
+
+async function getAnnouncement(component, locale) {
+    try {
+        // Announcement JSON Feed from Google Spreadsheet
+        // Sheet1: ko
+        // Sheet2: en
+
+        const jsonLocale = locale === 'ko' ? '1' : '2';
+        const googleDocId = '105NBygkZgrzKEiZsCO7KDRN4Foi36ldkFQBlCUgTifE';
+
+        const response = await axios.get(
+            `https://spreadsheets.google.com/feeds/cells/${googleDocId}/${
+                jsonLocale
+            }/public/full?alt=json`
+        );
+
+        if (
+            !response ||
+            !response.data ||
+            !response.data.feed ||
+            !response.data.feed.entry
+        )
+            return;
+        if (response.data.feed.entry.length < 3) return;
+
+        const annId = parseInt(response.data.feed.entry[0].content.$t);
+        const annTitle = response.data.feed.entry[1].content.$t;
+        const annLink = response.data.feed.entry[2].content.$t;
+
+        component.setState({
+            announcement: {
+                id: annId,
+                title: annTitle,
+                link: annLink,
+            },
+        });
+    } catch (e) {}
+}
 
 export default connectedHeader;
