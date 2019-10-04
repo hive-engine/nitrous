@@ -1,7 +1,7 @@
 import React from 'react';
 import reactForm from 'app/utils/ReactForm';
 import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 
 import {
     BeneficiarySelector,
