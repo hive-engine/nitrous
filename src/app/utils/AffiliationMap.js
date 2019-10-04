@@ -70,6 +70,7 @@ const map = {
     'queenofwhiteice': 'Verified Creator',
     'ashlynmay':'Verified Creator',
     'moneymisstress': 'Verified Creator',
+    'amymatters': 'Verified Creator',
 };
 
 export default map;
