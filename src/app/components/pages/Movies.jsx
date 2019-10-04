@@ -99,7 +99,7 @@ export default function Movies(props) {
     if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried[type]) {
         isMoviesLoadingTried[type] = true;
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
-        setTimeout(() => requestMovies({ ...options }));
+        setTimeout(() => requestMovies({ ...options }), 100);
     } else {
         setTimeout(
             () => {

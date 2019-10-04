@@ -95,11 +95,16 @@ export default function Movie(props) {
     const casts = CustomUtil.getMovieTopCasts(movieDetails);
 
     if (movieDetails === null && !loading) {
-        requestMovie({
-            languageCode: locale,
-            movieType,
-            movieId: id,
-        });
+        // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
+        setTimeout(
+            () =>
+                requestMovie({
+                    languageCode: locale,
+                    movieType,
+                    movieId: id,
+                }),
+            100
+        );
     }
 
     return (
@@ -363,10 +368,15 @@ module.exports = {
             const type = CustomUtil.getMovieTypeName(state);
             const movieType = type === 'movie' ? 1 : 2;
             const id = parseInt(ownProps.params.id);
-            const movie = state.movie
-                .get(CustomUtil.getMovieListName(movieType))
-                .toJS()
-                .find(o => o.MovieId === id);
+            let movie = state.movie.get(CustomUtil.getMovieListName(movieType));
+
+            if (movie) {
+                movie = movie.toJS().find(o => o.MovieId === id);
+            }
+
+            if (!movie) {
+                movie = state.movie.get('single_movie').toJS();
+            }
 
             return {
                 type,

@@ -23,6 +23,8 @@ function* requestMovie(action) {
     const { languageCode, movieType, movieId } = action.payload;
 
     try {
+        yield call(delay, 100);
+
         let data = yield call(
             movieApi.getMovie,
             languageCode,
@@ -48,6 +50,8 @@ function* requestMovies(action) {
     } = action.payload;
 
     try {
+        yield call(delay, 100);
+
         let data = yield call(
             movieApi.getMovies,
             languageCode,
@@ -113,6 +117,8 @@ function* requestReviews(action) {
     } = action.payload;
 
     try {
+        yield call(delay, 100);
+
         let data = yield call(
             movieApi.getReviews,
             movieType,

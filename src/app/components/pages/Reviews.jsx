@@ -96,7 +96,7 @@ export default function Reviews(props) {
 
     if (isReviewsUndefined && !loading) {
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
-        setTimeout(() => requestReviews(options));
+        setTimeout(() => requestReviews(options), 100);
     } else {
         setTimeout(
             () => {

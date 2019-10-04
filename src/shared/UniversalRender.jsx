@@ -370,7 +370,7 @@ export async function serverRender(
                 movieId
             );
 
-            movie[CustomUtil.getMovieListName(movieType)] = List([movieResult]);
+            movie.single_movie = movieResult;
             movie[CustomUtil.getListLoadedConditionName(movieType)] = false;
         } else if (url.match(routeRegex.Reviews)) {
             const reviews = await movieApi.getReviews(
