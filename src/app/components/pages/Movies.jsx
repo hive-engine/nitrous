@@ -6,6 +6,7 @@ import tt from 'counterpart';
 import { actions as movieActions } from 'app/redux/MovieReducer';
 import { TAG_LIST, DEFAULT_LANGUAGE } from 'app/client_config';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
+import getSlug from 'speakingurl';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -252,7 +253,9 @@ export default function Movies(props) {
                                 >
                                     <CardActionArea
                                         component={Link}
-                                        to={`/${type}/${movie.MovieId}`}
+                                        to={`/${type}/${getSlug(
+                                            movie.MovieId + ' ' + movie.Title
+                                        )}`}
                                     >
                                         <Card className={classes.card}>
                                             {movie.PosterPath && (
