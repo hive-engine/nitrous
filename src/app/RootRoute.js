@@ -113,6 +113,6 @@ export default {
         }
     },
     indexRoute: {
-        component: PostsIndex.component,
+        component: Movies.component,
     },
 };

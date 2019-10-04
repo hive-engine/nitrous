@@ -20,7 +20,7 @@ export const routeRegex = {
 
 export default function resolveRoute(path) {
     if (path === '/') {
-        return { page: 'PostsIndex', params: ['trending'] };
+        return { page: 'Movies' };
     }
     if (path === '/about.html') {
         return { page: 'About' };
