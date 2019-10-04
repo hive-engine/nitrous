@@ -24,15 +24,18 @@ const SortOrder = ({
     let tag = topic;
     let sort = sortOrder;
 
-    if (topic === 'feed') {
-        tag = '';
-        sort = 'created';
-    }
-
     // If we are at the homepage, the sort order is 'trending'
     if (pathname === '/') {
         tag = '';
-        sort = 'trending';
+        sort = 'movie';
+    } else if (topic === 'feed') {
+        tag = '';
+        sort = 'created';
+    } else {
+        const match = /^\/[a-z]+/i.exec(pathname);
+        if (match) {
+            sort = match[0].substr(1).toLowerCase();
+        }
     }
 
     const makeRoute = (tag, sort) =>

@@ -169,7 +169,7 @@ export function getListLoadedConditionName(movieType) {
 }
 
 export function getMovieTypeName(state) {
-    let type = state.app.get('location').pathname;
+    let type = state.app.get('location').pathname.toLowerCase();
 
     if (type.indexOf('/movie') === 0) {
         type = 'movie';

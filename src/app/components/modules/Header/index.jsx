@@ -328,7 +328,7 @@ class Header extends React.Component {
                     <nav className="row Header__nav">
                         <div className="medium-2 large-1 columns show-for-medium Header__logotype">
                             {/*LOGO*/}
-                            <Link to={logo_link}>
+                            <Link to="/movie">
                                 <AppLogo />
                             </Link>
                         </div>
