@@ -28,8 +28,8 @@ export const UPDATE_REVIEWS = 'movie/UPDATE_REVIEWS';
 const RECEIVE_UPDATE_REVIEWS = 'movie/RECEIVE_UPDATE_REVIEWS';
 
 const UPDATE_OPTIONS = 'movie/UPDATE_OPTIONS';
-
 const REQUEST_NEW_LIST = 'movie/REQUEST_NEW_LIST';
+const CLEAR_MOVIE_LIST = 'movie/CLEAR_MOVIE_LIST';
 
 export const defaultState = {
     options: {
@@ -149,6 +149,14 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_MOVIES_FOR_NEW_LIST:
         case REQUEST_REVIEWS_FOR_NEW_LIST:
             return state.set('loadsNewList', false);
+        case CLEAR_MOVIE_LIST:
+            return state
+                .set('isMoviesLoaded', false)
+                .set('isTvsLoaded', false)
+                .set('hasNextMovies', false)
+                .set('hasNextTvs', false)
+                .set('movies', undefined)
+                .set('tvs', undefined);
         default:
             return state;
     }
@@ -244,6 +252,11 @@ export const actions = {
 
     requestNewList: payload => ({
         type: REQUEST_NEW_LIST,
+        payload,
+    }),
+
+    clearMovies: payload => ({
+        type: CLEAR_MOVIE_LIST,
         payload,
     }),
 };

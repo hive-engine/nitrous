@@ -4,6 +4,7 @@ import tt from 'counterpart';
 import * as userActions from 'app/redux/UserReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as appActions from 'app/redux/AppReducer';
+import { actions as movieActions } from 'app/redux/MovieReducer';
 import o2j from 'shared/clash/object2json';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import reactForm from 'app/utils/ReactForm';
@@ -214,6 +215,7 @@ class Settings extends React.Component {
         const locale = event.target.value;
         const userPreferences = { ...this.props.user_preferences, locale };
         this.props.setUserPreferences(userPreferences);
+        this.props.clearMovies();
     };
 
     render() {
@@ -549,6 +551,9 @@ export default connect(
         },
         setUserPreferences: payload => {
             dispatch(appActions.setUserPreferences(payload));
+        },
+        clearMovies: () => {
+            dispatch(movieActions.clearMovies());
         },
     })
 )(Settings);

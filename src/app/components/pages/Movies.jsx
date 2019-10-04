@@ -74,8 +74,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const isMoviesLoadingTried = { movie: false, tv: false };
-
 export default function Movies(props) {
     const classes = useStyles();
     const {
@@ -97,8 +95,7 @@ export default function Movies(props) {
 
     const isMoviesUndefined = typeof movies === 'undefined';
 
-    if ((isMoviesUndefined || !isListLoaded) && !isMoviesLoadingTried[type]) {
-        isMoviesLoadingTried[type] = true;
+    if (isMoviesUndefined || !isListLoaded) {
         // https://stackoverflow.com/questions/26556436/react-after-render-code#comment57775173_26559473
         setTimeout(() => requestMovies({ ...options }), 100);
     } else {
