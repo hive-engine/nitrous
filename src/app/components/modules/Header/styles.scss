@@ -142,8 +142,8 @@ span.Header__hamburger.toggle-menu {
 .annoucement-banner {
   text-align: left;
   position: relative;
-  background: #171FC9;
-  color: #fff;
+  background: #000000;
+  color: #D2AE63;
   @include themify($themes) {
       border-bottom: themed('borderLight');
   }  
@@ -171,6 +171,6 @@ span.Header__hamburger.toggle-menu {
  }
 
 .announcement-banner__link {
-   color: #fafafa !important;
+   color: #D2AE63 !important;
    text-decoration: underline;
 }
