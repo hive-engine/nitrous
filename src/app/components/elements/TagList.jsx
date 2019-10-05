@@ -4,7 +4,7 @@ import { filterTags } from 'app/utils/StateFunctions';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 
 export default ({ post, horizontal, single }) => {
-    let sort_order = 'trending';
+    let sort_order = 'created';
     if (process.env.BROWSER && window.last_sort_order)
         sort_order = window.last_sort_order;
 

@@ -5,6 +5,7 @@ import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
 import { APP_MAX_TAG } from 'app/client_config';
+import { List } from 'immutable';
 
 const MAX_TAG = APP_MAX_TAG || 10;
 
@@ -128,7 +129,8 @@ export function validateCategory(category, required = true) {
     );
 }
 export default connect((state, ownProps) => {
-    const trending = state.global.getIn(['tag_idx', 'trending']);
+    const trending = state.global.getIn(['tag_idx', 'trending']) || List();
+
     // apply translations
     // they are used here because default prop can't acces intl property
     const placeholder = tt('category_selector_jsx.tag_your_story');

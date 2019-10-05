@@ -214,7 +214,7 @@ class PostsIndex extends React.Component {
         if (category === 'feed') {
             account_name = order.slice(1);
             order = 'by_feed';
-            topics_order = 'trending';
+            topics_order = 'created';
             posts = this.props.accounts.getIn([account_name, 'feed']) || List();
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {

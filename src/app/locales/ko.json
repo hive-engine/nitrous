@@ -54,7 +54,7 @@
         "my_blog": "내 블로그",
         "my_comments": "내가 쓴 댓글",
         "my_replies": "받은 댓글",
-        "new": "최신글",
+        "new": "새글",
         "newer": "최근",
         "next": "다음",
         "no": "No",
@@ -100,7 +100,7 @@
         "rewards": "보상",
         "save": "Save",
         "saved": "Saved",
-        "search": "Search",
+        "search": "게시글 검색",
         "sell": "판매",
         "settings": "설정",
         "share_this_post": "이 포스트 공유하기",
@@ -993,7 +993,7 @@
     "review": {
         "top_menu": {
             "movies": "영화",
-            "tvs": "TV 프로그램",
+            "tvs": "TV",
             "reviews": "리뷰"
         },
         "label": {

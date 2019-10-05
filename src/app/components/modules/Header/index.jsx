@@ -326,13 +326,13 @@ class Header extends React.Component {
                     </div>
 
                     <nav className="row Header__nav">
-                        <div className="medium-2 large-1 columns show-for-medium Header__logotype">
+                        <div className="shrink columns show-for-medium Header__logotype">
                             {/*LOGO*/}
                             <Link to="/movie">
                                 <AppLogo />
                             </Link>
                         </div>
-                        <div className="small-9 medium-7 large-7 columns Header__sort">
+                        <div className="columns Header__sort">
                             {/*SORT*/}
                             <SortOrder
                                 sortOrder={order}
@@ -363,16 +363,22 @@ class Header extends React.Component {
 
                             {/*CUSTOM SEARCH*/}
                             <span className="Header__search--desktop">
-                                <SearchInput />
+                                {loggedIn ? (
+                                    <SearchInput />
+                                ) : (
+                                    <a href="/static/search.html">
+                                        <IconButton icon="magnifyingGlass" />
+                                    </a>
+                                )}
                             </span>
-                            <span className="Header__search">
+                            {/* <span className="Header__search">
                                 <a href="/static/search.html">
                                     <IconButton icon="magnifyingGlass" />
                                 </a>
-                            </span>
+                            </span> */}
 
                             {/*SUBMIT STORY*/}
-                            {submit_story}
+                            {loggedIn && submit_story}
                             {/*USER AVATAR */}
                             {loggedIn && (
                                 <DropdownMenu

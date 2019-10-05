@@ -409,8 +409,7 @@ export default connect((state, ownProps) => {
     return {
         content: state.global.get('content'),
         ignoring,
-        sortOrder:
-            ownProps.router.getCurrentLocation().query.sort || 'trending',
+        sortOrder: ownProps.router.getCurrentLocation().query.sort || 'created',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
         locale:
             state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,

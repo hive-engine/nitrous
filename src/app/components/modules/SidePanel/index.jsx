@@ -42,7 +42,11 @@ const SidePanel = ({
             const cn = ix === arr.length - 1 ? 'last' : null;
             return (
                 <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
+                    {i.usesAlink ? (
+                        <a href={i.link}>{i.label}</a>
+                    ) : (
+                        <Link to={i.link}>{i.label}</Link>
+                    )}
                 </li>
             );
         }
@@ -155,6 +159,16 @@ const SidePanel = ({
                 label: tt('g.sign_up'),
                 link: 'https://signup.steemit.com',
             },
+        ],
+        extras_sticky: [
+            {
+                value: 'search',
+                label: tt('g.search'),
+                link: '/static/search.html',
+                usesAlink: true,
+            },
+        ],
+        extras_loggedIn: [
             {
                 value: 'post',
                 label: tt('g.post'),
@@ -169,8 +183,11 @@ const SidePanel = ({
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
+                    {!!username &&
+                        sidePanelLinks['extras_loggedIn'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
+                    {sidePanelLinks['extras_sticky'].map(makeLink)}
                     <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}

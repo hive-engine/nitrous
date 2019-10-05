@@ -2,6 +2,6 @@ export default {
     FETCH_DATA_BATCH_SIZE: 20,
     MAX_BATCHES: 3,
     FETCH_DATA_EXPIRE_SEC: 30,
-    DEFAULT_SORT_ORDER: 'trending',
+    DEFAULT_SORT_ORDER: 'created',
     JULY_14_HACK: new Date('2016-07-14T00:00:00Z').getTime(),
 };

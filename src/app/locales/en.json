@@ -885,9 +885,9 @@
     },
     "review": {
         "top_menu": {
-            "movies": "MOVIES",
-            "tvs": "TV SHOWS",
-            "reviews": "REVIEWS"
+            "movies": "MOVIE",
+            "tvs": "TV",
+            "reviews": "REVIEW"
         },
         "label": {
             "genre": "GENRE",
