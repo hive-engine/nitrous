@@ -119,6 +119,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             reviveEnabled: config.revive_enabled,
             shouldSeeCookieConsent: cookieConsent.enabled,
             cookieConsentApiKey: cookieConsent.api_key,
+            hostConfig: CONFIG_MAP[host],
         };
         ctx.status = statusCode;
         ctx.body =

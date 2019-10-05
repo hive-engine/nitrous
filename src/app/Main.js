@@ -88,7 +88,7 @@ function runApp(initial_state) {
     steem.config.set('address_prefix', config.address_prefix);
     steem.config.set('chain_id', config.chain_id);
     window.$STM_Config = config;
-    plugins(config);
+    plugins(config, initial_state.app.hostConfig);
     if (initial_state.offchain.serverBusy) {
         window.$STM_ServerBusy = true;
     }

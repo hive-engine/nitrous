@@ -1,6 +1,6 @@
 // 3rd party plugins
 
-export default function init(config) {
+export default function init(config, hostConfig) {
     // Google Analytics
     if (config.google_analytics_id) {
         (function(i, s, o, g, r, a, m) {
@@ -29,14 +29,18 @@ export default function init(config) {
         });
     }
     // Google Site Tag
-    if (config.gtag_measurement_id) {
+    let gtagMeasurementId = hostConfig.SDC_GTAG_MEASUREMENT_ID;
+    if (!gtagMeasurementId) {
+        gtagMeasurementId = config.gtag_measurement_id;
+    }
+    if (gtagMeasurementId) {
         (function(i, s, o, g, r, a, m) {
             i[r] = i[r] || [];
             function gtag() {
                 dataLayer.push(arguments);
             }
             gtag('js', new Date());
-            gtag('config', config.gtag_measurement_id);
+            gtag('config', gtagMeasurementId);
             (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
             a.async = 1;
             a.src = g;
@@ -45,9 +49,7 @@ export default function init(config) {
             window,
             document,
             'script',
-            `https://www.googletagmanager.com/gtag/js?id=${
-                config.gtag_measurement_id
-            }`,
+            `https://www.googletagmanager.com/gtag/js?id=${gtagMeasurementId}`,
             'dataLayer'
         );
     }
