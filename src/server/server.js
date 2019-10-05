@@ -10,7 +10,7 @@ import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';
 import prod_logger from './prod_logger';
-import favicon from 'koa-favicon';
+//import favicon from 'koa-favicon';
 import staticCache from 'koa-static-cache';
 import useRedirects from './redirects';
 import useGeneralApi from './api/general';
@@ -28,6 +28,7 @@ import koaLocale from 'koa-locale';
 import { getSupportedLocales } from './utils/misc';
 import { pinnedPosts } from './utils/PinnedPosts';
 import fs from 'fs';
+import { CONFIG_MAP } from 'app/client_config';
 
 if (cluster.isMaster) console.log('application server starting, please wait.');
 
@@ -45,10 +46,38 @@ const adstxt = fs.readFileSync(
     'utf8'
 );
 
+const icon = {};
+async function favicon(ctx) {
+    if ('GET' !== ctx.method && 'HEAD' !== ctx.method) {
+        ctx.status = 'OPTIONS' == ctx.method ? 200 : 405;
+        ctx.set('Allow', 'GET, HEAD, OPTIONS');
+    } else {
+        // lazily read the icon
+        const hostConfig = CONFIG_MAP[ctx.request.headers.host];
+        const symbol = hostConfig['LIQUID_TOKEN_UPPERCASE'].toLowerCase();
+        const faviconPath = path.resolve(
+            path.join(
+                __dirname,
+                hostConfig
+                    ? `../app/assets/images/favicons/${symbol}/favicon.ico`
+                    : '../app/assets/images/favicon.ico'
+            )
+        );
+        if (!icon[symbol]) icon[symbol] = fs.readFileSync(faviconPath);
+        ctx.set('Cache-Control', 'public, max-age=86400');
+        ctx.type = 'image/x-icon';
+        ctx.body = icon[symbol];
+    }
+}
+
 // Serve static assets without fanfare
-app.use(
-    favicon(path.join(__dirname, '../app/assets/images/favicons/favicon.ico'))
-);
+app.use(function*(next) {
+    if ('/favicon.ico' !== this.path) {
+        yield next;
+    } else {
+        yield favicon(this);
+    }
+});
 
 app.use(
     mount(

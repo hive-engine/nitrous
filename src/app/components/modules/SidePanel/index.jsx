@@ -102,7 +102,7 @@ const SidePanel = ({
                 link: 'https://developers.steem.io/',
             },
         ],
-        organizational: [
+        organizational_WEED: [
             {
                 value: 'discord',
                 label: 'Discord',
@@ -157,7 +157,9 @@ const SidePanel = ({
                     <li>
                         <a className="menu-section">Community</a>
                     </li>
-                    {sidePanelLinks['organizational'].map(makeLink)}
+                    {sidePanelLinks['organizational_' + scotTokenSymbol].map(
+                        makeLink
+                    )}
                 </ul>
 
                 <ul className="vertical menu">

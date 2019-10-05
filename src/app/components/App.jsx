@@ -29,12 +29,17 @@ class App extends React.Component {
     }
 
     toggleBodyNightmode(nightmodeEnabled) {
+        const { scotTokenSymbolLower } = this.props;
         if (nightmodeEnabled) {
-            document.body.classList.remove('theme-light');
-            document.body.classList.add('theme-dark');
+            document.body.classList.remove(
+                `theme-${scotTokenSymbolLower}-light`
+            );
+            document.body.classList.add(`theme-${scotTokenSymbolLower}-dark`);
         } else {
-            document.body.classList.remove('theme-dark');
-            document.body.classList.add('theme-light');
+            document.body.classList.remove(
+                `theme-${scotTokenSymbolLower}-dark`
+            );
+            document.body.classList.add(`theme-${scotTokenSymbolLower}-light`);
         }
     }
 
@@ -221,6 +226,9 @@ export default connect(
         const current_account_name = current_user
             ? current_user.get('username')
             : state.offchain.get('account');
+        const scotTokenSymbolLower = state.app
+            .getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+            .toLowerCase();
 
         return {
             viewMode: state.app.get('viewMode'),
@@ -239,6 +247,7 @@ export default connect(
             order: ownProps.params.order,
             category: ownProps.params.category,
             showAnnouncement: state.user.get('showAnnouncement'),
+            scotTokenSymbolLower,
         };
     },
     dispatch => ({
