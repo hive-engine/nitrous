@@ -57,11 +57,6 @@ const SidePanel = ({
                 label: 'Steem Engine',
                 link: `https://steem-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${scotTokenSymbol}freex`,
-            },
         ],
         exchanges: [
             {
