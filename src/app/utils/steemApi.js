@@ -216,9 +216,11 @@ export async function attachScotData(url, state, scotTokenSymbol) {
         if (tokenUnstakes) {
             state.accounts[account].token_unstakes = tokenUnstakes;
         }
-        if (tokenStatuses && tokenStatuses[scotTokenSymbol]) {
-            state.accounts[account].token_status =
-                tokenStatuses[scotTokenSymbol];
+        if (tokenStatuses) {
+            if (tokenStatuses[scotTokenSymbol]) {
+                state.accounts[account].token_status =
+                    tokenStatuses[scotTokenSymbol];
+            }
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {

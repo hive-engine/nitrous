@@ -157,9 +157,10 @@ const SidePanel = ({
                     <li>
                         <a className="menu-section">Community</a>
                     </li>
-                    {sidePanelLinks['organizational_' + scotTokenSymbol].map(
-                        makeLink
-                    )}
+                    {sidePanelLinks['organizational_' + scotTokenSymbol] &&
+                        sidePanelLinks['organizational_' + scotTokenSymbol].map(
+                            makeLink
+                        )}
                 </ul>
 
                 <ul className="vertical menu">

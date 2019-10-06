@@ -1,40 +1,24 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    '144.202.1.72:8080': {
-        APP_NAME: 'WeedCash',
-        APP_ICON: 'weedcash',
+    'dblog.io': {
+        APP_NAME: 'DBlog',
+        APP_ICON: 'dblog',
         APP_ICON_WIDTH: '150px',
         APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://www.weedcash.network',
-        APP_DOMAIN: 'www.weedcash.network',
-        LIQUID_TOKEN: 'Weed',
-        LIQUID_TOKEN_UPPERCASE: 'WEED',
+        APP_URL: 'https://dblog.io',
+        APP_DOMAIN: 'dblog.io',
+        LIQUID_TOKEN: 'DBLOG',
+        LIQUID_TOKEN_UPPERCASE: 'DBLOG',
         APP_MAX_TAG: 10,
-        SCOT_TAG: 'weedcash',
-        TAG_LIST: fromJSOrdered([
-            'weedcash',
-            'weed',
-            'cannabis',
-            'hemp',
-            'psychedelic',
-            'review',
-            'naturalmedicine',
-            'concentrate',
-            'edibles',
-            'breeding',
-            'glass',
-            'canna-curate',
-            'hash',
-            'cbd',
-            'news',
-        ]),
+        SCOT_TAG: 'dblog',
+        TAG_LIST: fromJSOrdered(['dblog']),
         INTERLEAVE_PROMOTED: true,
-        PROMOTED_POST_ACCOUNT: 'weedcash',
-        VESTING_TOKEN: 'WEED POWER',
+        PROMOTED_POST_ACCOUNT: 'dblog.promo',
+        VESTING_TOKEN: 'DBLOG POWER',
         SITE_DESCRIPTION:
-            'Weedcash is a social media platform where everyone gets paid for ' +
-            'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+            'DBlog is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called DBLOG, that ' +
             'supports real value for digital rewards through market price discovery and liquidity',
         // Revive Ads
         NO_ADS_STAKE_THRESHOLD: 9999999999,
@@ -44,7 +28,7 @@ export const CONFIG_MAP = {
         POST_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
-        SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
+        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
     },
     'weedcash.network': {
         APP_NAME: 'WeedCash',

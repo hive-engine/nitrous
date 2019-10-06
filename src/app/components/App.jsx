@@ -90,6 +90,7 @@ class App extends React.Component {
             pathname,
             category,
             order,
+            scotTokenSymbolLower,
         } = this.props;
 
         const whistleView = viewMode === VIEW_MODE_WHISTLE;
@@ -170,7 +171,9 @@ class App extends React.Component {
             );
         }
 
-        const themeClass = nightmodeEnabled ? ' theme-dark' : ' theme-light';
+        const themeClass = nightmodeEnabled
+            ? ` theme-${scotTokenSymbolLower}-dark`
+            : ` theme-${scotTokenSymbolLower}-light`;
 
         return (
             <div

@@ -57,7 +57,7 @@ export function spToVests(state, vesting_shares) {
 }
 
 export function vestingSteem(account, gprops) {
-    if (!account.vesting_shares || !account.total_vesting_shares) {
+    if (!account.vesting_shares || !gprops.total_vesting_shares) {
         return 0;
     }
     const vests = parseFloat(account.vesting_shares.split(' ')[0]);
