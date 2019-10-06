@@ -6,9 +6,7 @@
 
 LOTUS is a social coin for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices. Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow food and plants as medicine. Earn LOTUS by publishing or interacting with others on the platform. 
 
-This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page.
-
-Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. These are helpful for getting started. 
+This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page. Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. 
 
 ![](https://i.imgur.com/hplLJle.png)
 
