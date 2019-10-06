@@ -7,7 +7,7 @@
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
       "connectSrc": "https://servedby.revive-adserver.net https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us https://tool.steem.world",
       "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com",
-      "fontSrc": "data: fonts.gstatic.com kit-free.fontawesome.com",
+      "fontSrc": "'self' data: fonts.gstatic.com kit-free.fontawesome.com",
       "frameAncestors": "'none'",
       "frameSrc": "'self' googleads.g.doubleclick.net https:",
       "imgSrc": "* data:",
