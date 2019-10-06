@@ -1,4 +1,7 @@
 <span id="disable_router_nav_history_direction_check"></span>
+
+![](https://i.imgur.com/LIL9PTL.png)
+
 ## Welcome to Natural Medicine!
 
 LOTUS is a social coin for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices. Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow food and plants as medicine. Earn LOTUS by publishing or interacting with others on the platform. 
@@ -7,14 +10,14 @@ This page is full of information to help you learn about how to use our platform
 
 Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. These are helpful for getting started. 
 
-<p align="center"><img width="120" height="75" src="https://i.imgur.com/RnOom11.png/240/150"></p>
+![](https://i.imgur.com/hplLJle.png)
 
 ## <span id="Getting_Started">Getting Started</span>
 <span id="disable_router_nav_history_direction_check"></span>
 
 This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate.
 
-<p align="center"><img width="60" height="36" src="https://i.imgur.com/RnOom11.png/240/150"></p>
+![](https://i.imgur.com/hplLJle.png)
 
 ## <span id="Getting_Started">Getting Started</span>
 
@@ -25,7 +28,7 @@ This page is full of information to help you learn about how to use our platform
 - <a href="#Sign_Up_for_Discord">Signing Up for Discord & Getting Help</a>
 - <a href="#Create_your_introduceyourself_post">Create your "Introduceyourself" Post</a>
 
-<p align="center"><img width="60 height="36" src="https://i.imgur.com/RnOom11.png/240/150"></p>
+![](https://i.imgur.com/hplLJle.png)
 
 ## Diving Deeper
 
@@ -255,6 +258,7 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 - [Standards for Content](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
 - [Frequently Asked Questions](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq)
 - [How to Buy Lotus on SteemEngine]()
+- [Some Formatting Tips](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
 - [Natural Medicine Greenpaper]() - Explanation of how the platform works (COMING SOON!)
 
 
@@ -294,11 +298,5 @@ It's important to note that any third party apps we've referenced here, or the c
 
 We encourage everyone who might be reading any medical advice based on content that appears on Natural Medicine to exercise caution, do their own research, and consult a medical professional. 
 
-
-<a href="#Getting_Started">^</a>
-
-<p align="center"><img width="150" height="150" src="https://i.imgur.com/vEDggD8.png/300/300"></p>
-
-
-
+![](https://i.imgur.com/1VUQm9l.png)
 
