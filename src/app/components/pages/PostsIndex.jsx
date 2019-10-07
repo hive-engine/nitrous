@@ -378,6 +378,7 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
+                    <SteemMarket />
                     {this.props.isBrowser && (
                         <div>
                             <SidebarToken
@@ -484,7 +485,6 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small>
-                    <SteemMarket />
                     {this.props.gptEnabled ? (
                         <div>
                             <div className="sidebar-ad">
