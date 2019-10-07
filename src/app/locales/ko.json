@@ -12,7 +12,7 @@
         "blog": "블로그",
         "browse": "Browse",
         "buy": "구매",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_steem_power": "스팀 파워 구매",
         "buy_or_sell": "구입/판매",
         "by": "by",
         "cancel": "취소",
@@ -36,7 +36,7 @@
         "follow": "팔로우",
         "for": " for ",
         "from": " from ",
-        "go_back": "Back",
+        "go_back": "뒤로",
         "hide": "숨기기",
         "in": "in",
         "in_reply_to": "in reply to",
@@ -100,13 +100,13 @@
         "request": "request",
         "required": "Required",
         "rewards": "보상",
-        "save": "Save",
-        "saved": "Saved",
-        "search": "Search",
+        "save": "저장",
+        "saved": "저장됨",
+        "search": "검색",
         "sell": "판매",
         "settings": "설정",
         "share_this_post": "이 포스트 공유하기",
-        "show": "Show",
+        "show": "표시",
         "sign_in": "로그인",
         "sign_up": "회원가입",
         "since": "since",
@@ -115,17 +115,17 @@
         "submit_a_story": "글쓰기",
         "tag": "태그",
         "to": " to ",
-        "topics": "Topics",
+        "topics": "제목들",
         "toggle_nightmode": "야간모드",
         "all_tags": "전체 태그",
-        "all_tags_mobile": "All content",
+        "all_tags_mobile": "모든 글",
         "transfer": "전송 ",
         "trending_topics": "Trending Topics",
-        "try_again": "Try Again",
+        "try_again": "다시 시도해 주세요.",
         "type": "Type",
         "unfollow": "언팔로우",
         "unmute": "차단 해제",
-        "unknown": "Unknown",
+        "unknown": "알 수 없음",
         "upvote": "보팅",
         "upvote_post": "이 글에 보팅하기",
         "username": "사용자 이름",
@@ -193,7 +193,7 @@
             "Payout 전 마지막 순간에 게시물에 대한 보상을 늘릴 수 없습니다.",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
             "매 10 분마다 IP 주소 당 단 하나의 Steem 계정만 허용됩니다.",
-        "resteem_this_post": "Resteem This Post",
+        "resteem_this_post": "이 글 리스팀",
         "reblog": "리스팀",
         "write_your_story": "내용을 입력하세요",
         "remember_voting_and_posting_key": "Remember voting & posting key",
@@ -269,7 +269,8 @@
             "%(username)s님이 %(author)s님의 이 포스팅에 따봉(%(amount)s %(LIQUID_TOKEN)s)을 하였습니다.",
         "thumbsup_completed": "따봉처리가 모두 완료되었습니다.",
         "thumbsup_information":
-            "이 포스팅에 %(amount)s %(LIQUID_TOKEN)s 만큼 따봉을 드립니다. 확인처리시 진행됩니다. 따봉이 처리 완료되기 전까지 댓글 작성을 사용하지 마십시오."
+            "이 포스팅에 %(amount)s %(LIQUID_TOKEN)s 만큼 따봉을 드립니다. 확인처리시 진행됩니다. 따봉이 처리 완료되기 전까지 댓글 작성을 사용하지 마십시오.",
+        "edited": "수정됨"
     },
     "navigation": {
         "about": "스팀이란?",
@@ -385,7 +386,7 @@
         "view_the_full_context": "전체 글 보기",
         "view_the_direct_parent": "상위 댓글 보기",
         "you_are_viewing_a_single_comments_thread_from":
-            "You are viewing a single comment's thread from",
+            "현재 이글의 댓글을 보는 중입니다",
         "recent_posts_by_author": "%(author)s님의 최근 게시글"
     },
     "recoveraccountstep1_jsx": {
@@ -451,8 +452,8 @@
             "one": "하나의 게시글",
             "other": "%(count)s 게시글"
         },
-        "hide_resteems": "Hide Resteems",
-        "show_all": "Show All"
+        "hide_resteems": "리스팀 글 숨기기",
+        "show_all": "모든 글 보이기"
     },
     "post_jsx": {
         "now_showing_comments_with_low_ratings":
@@ -808,19 +809,19 @@
         "always_hide": "항상 숨기기",
         "always_warn": "항상 경고하기",
         "always_show": "항상 보이기",
-        "choose_default_blog_payout": "Blog post rewards",
-        "choose_default_comment_payout": "Comment post rewards",
+        "choose_default_blog_payout": "포스팅 보상 선택",
+        "choose_default_comment_payout": "댓글 보상 선택",
         "muted_users": "내가 차단한 사용자",
         "update": "저장",
-        "upload_image": "Upload an image",
-        "uploading_image": "Uploading image",
+        "upload_image": "이미지 업로드",
+        "uploading_image": "이미지 업로딩 중",
         "profile_image_url": "프로파일 사진 경로",
         "cover_image_url": "커버이미지 사진 경로",
         "profile_name": "닉네임",
         "profile_about": "한 줄 소개",
         "profile_location": "지역",
         "profile_website": "웹사이트",
-        "saved": "Saved!"
+        "saved": "저장완료!"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",
@@ -899,7 +900,8 @@
             "현재 일시적인 이유로 전송이 불가능합니다.",
         "history": "거래 내역",
         "redeem_rewards": "내 지갑으로 입금하기",
-        "buy_steem_or_steem_power": "STEEM, STEEM POWER 구입"
+        "buy_steem_or_steem_power": "STEEM, STEEM POWER 구입",
+        "your_current_rewards": "현재 보상"
     },
     "powerdown_jsx": {
         "power_down": "파워 다운",

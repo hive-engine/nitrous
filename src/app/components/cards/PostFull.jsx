@@ -570,8 +570,7 @@ class PostFull extends React.Component {
                     <h5>
                         {tt(
                             'postfull_jsx.you_are_viewing_a_single_comments_thread_from'
-                        )}
-                        :
+                        )}:
                     </h5>
                     <p>{content.root_title}</p>
                     <ul>
