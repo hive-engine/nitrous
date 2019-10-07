@@ -78,6 +78,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
                 walletUrl: config.wallet_url,
                 scotConfig: ctx.scotConfigData,
                 reviveEnabled: config.revive_enabled,
+                steemMarket: ctx.steemMarketData,
             },
         };
 
