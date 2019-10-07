@@ -14,7 +14,6 @@ import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
-import SteemMarket from 'app/components/elements/SteemMarket';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
 import GptAd from 'app/components/elements/GptAd';
@@ -378,7 +377,6 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
-                    <SteemMarket />
                     {this.props.isBrowser && (
                         <div>
                             <SidebarToken
