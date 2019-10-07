@@ -73,6 +73,7 @@ const map = {
     'amymatters': 'Verified Creator',
     'thanatoss': 'Verified Creator',
     'ananke': 'Verified Creator',
+    'perfectpussy': 'Verified Creator',
 };
 
 export default map;
