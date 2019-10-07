@@ -11,13 +11,6 @@ const SidebarBurn = ({
     scotTokenBurn,
     scotTokenStaking,
 }) => {
-    console.log(
-        'SidebarBurn',
-        scotToken,
-        scotTokenCirculating,
-        scotTokenBurn,
-        scotTokenStaking
-    );
     if (scotTokenCirculating && typeof scotTokenCirculating === 'string') {
         scotTokenCirculating = parsePayoutAmount(scotTokenCirculating);
     }
