@@ -469,7 +469,7 @@ class PostsIndex extends React.Component {
                         categories={categories}
                         levels={max_levels}
                     />
-                    <small>
+                    {/* <small>
                         <a
                             className="c-sidebar__more-link"
                             onClick={this.onShowSpam}
@@ -479,7 +479,7 @@ class PostsIndex extends React.Component {
                                 : tt('g.next_3_strings_together.show_more')}
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
-                    </small>
+                    </small> */}
                     {this.props.gptEnabled ? (
                         <div>
                             <div className="sidebar-ad">

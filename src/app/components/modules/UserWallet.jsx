@@ -250,7 +250,7 @@ class UserWallet extends React.Component {
                     <div className="columns small-12">
                         <div className="UserWallet__claimbox">
                             <span className="UserWallet__claimbox-text">
-                                Your current rewards: {rewards_str}
+                              {tt('userwallet_jsx.your_current_rewards')}: {rewards_str}
                             </span>
                             <button
                                 disabled={this.state.claimInProgress}
@@ -483,14 +483,14 @@ class UserWallet extends React.Component {
                             className="secondary"
                             id="tips_js.influence_token"
                         />
-                        {delegated_steem != 0 ? (
+                        {/* {delegated_steem != 0 ? (
                             <span className="secondary">
                                 {tt(
                                     'tips_js.part_of_your_steem_power_is_currently_delegated',
                                     { user_name: account.get('name') }
                                 )}
                             </span>
-                        ) : null}
+                        ) : null} */}
                     </div>
                     <div className="column small-12 medium-4">
                         {isMyAccount ? (
