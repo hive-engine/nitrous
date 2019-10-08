@@ -15,7 +15,7 @@ export const APP_DOMAIN = 'www.steemleo.com';
 export const APP_MAX_TAG = 12;
 export const SCOT_TAG = 'steemleo';
 export const TAG_LIST = fromJSOrdered({
-    steemleo: ['dailyleo', 'learnleo', 'leowritingcontest', 'syndication'],
+    steemleo: ['leostats', 'dailyleo', 'learnleo', 'leowritingcontest', 'syndication'],
     crypto: ['blockchain', 'defi', 'steem', 'bitcoin', 'spanish'],
     investing: ['news', 'politics', 'personalfinance'],
     trading: ['analysis'],
