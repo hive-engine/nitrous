@@ -15,7 +15,13 @@ export const APP_DOMAIN = 'www.steemleo.com';
 export const APP_MAX_TAG = 12;
 export const SCOT_TAG = 'steemleo';
 export const TAG_LIST = fromJSOrdered({
-    steemleo: ['leostats', 'dailyleo', 'learnleo', 'leowritingcontest', 'syndication'],
+    steemleo: [
+        'leostats',
+        'dailyleo',
+        'learnleo',
+        'leowritingcontest',
+        'syndication',
+    ],
     crypto: ['blockchain', 'defi', 'steem', 'bitcoin', 'spanish'],
     investing: ['news', 'politics', 'personalfinance'],
     trading: ['analysis'],
@@ -96,6 +102,190 @@ export const REVIVE_ADS = {
     feed_small: {
         zoneId: '2049',
         reviveId: '727bec5e09208690b050ccfc6a45d384',
+    },
+};
+
+// TradingView configurations
+
+export const TRADING_VIEW_CONFIG = {
+    TICKER_TAPE: {
+        colorTheme: 'light',
+        autosize: true,
+        symbols: [
+            {
+                "title": "S&P 500",
+                "proName": "OANDA:SPX500USD"
+            },
+            {
+                "description": "Nasdaq",
+                "proName": "NASDAQ:NDAQ"
+            },
+            {
+                "description": "Bitcoin",
+                "proName": "COINBASE:BTCUSD"
+            },
+            {
+                "description": "Ethereum",
+                "proName": "COINBASE:ETHUSD"
+            },
+            {
+                "description": "Steem",
+                "proName": "BITTREX:STEEMUSD"
+            },
+            {
+                "description": "SBD",
+                "proName": "BITTREX:SBDUSD"
+            },
+            {
+                "description": "Litecoin",
+                "proName": "COINBASE:LTCUSD"
+            },
+            {
+                "description": "Binance Coin",
+                "proName": "BINANCE:BNBUSD"
+            },
+            {
+                "description": "Basic Attention Token",
+                "proName": "BINANCE:BATUSD"
+            },
+            {
+                "description": "Monero",
+                "proName": "BITTREX:XMRUSD"
+            },
+            {
+                "description": "Eos",
+                "proName": "COINBASE:EOSUSD"
+            },
+        ],
+    },
+    MARKET_OVERVIEW: {
+        colorTheme: 'light',
+        autosize: true,
+        showChart: true,
+        tabs: [
+            {
+                "title": "Overview",
+                "symbols": [
+                    {
+                        "s": "OANDA:SPX500USD",
+                        "d": "S&P 500"
+                    },
+                    {
+                        "s": "NASDAQ:NDAQ",
+                        "d": "Nasdaq"
+                    },
+                    {
+                        "s": "DJCFD:DJI",
+                        "d": "Dow Jones"
+                    },
+                    {
+                        "s": "COINBASE:BTCUSD",
+                        "d": "Bitcoin"
+                    },
+                    {
+                        "s": "COINBASE:ETHUSD",
+                        "d": "Ethereum"
+                    },
+                    {
+                        "s": "BITTREX:STEEMUSD",
+                        "d": "Steem"
+                    },
+                    {
+                        "s": "TVC:GOLD",
+                        "d": "Gold"
+                    },
+                    {
+                        "s": "NYMEX:CL1!",
+                        "d": "Crude Oil"
+                    }
+                    ],
+                "originalTitle": "Indices"
+            },
+            {
+                "title": "Crypto",
+                "symbols": [
+                    {
+                        "s": "COINBASE:BTCUSD",
+                        "d": "BTC"
+                    },
+                    {
+                        "s": "COINBASE:ETHUSD",
+                        "d": "ETH"
+                    },
+                    {
+                        "s": "BINANCE:STEEMUSD",
+                        "d": "STEEM"
+                    },
+                    {
+                        "s": "BITTREX:SBDUSD",
+                        "d": "Steem-Backed Dollars"
+                    },
+                    {
+                        "s": "COINBASE:LTCUSD",
+                        "d": "Litecoin"
+                    },
+                    {
+                        "s": "BINANCE:BNBUSD",
+                        "d": "BNB"
+                    },
+                    {
+                        "s": "BINANCE:BATUSD",
+                        "d": "Basic Attention Token"
+                    },
+                    {
+                        "s": "BINANCE:XMRUSD",
+                        "d": "Monero"
+                    },
+                    {
+                        "s": "COINBASE:EOSUSD",
+                        "d": "Eos"
+                    },
+                ],
+                originalTitle: 'Bonds',
+            },
+            {
+                "title": "Stocks",
+                "symbols": [
+                    {
+                        "s": "NASDAQ:TSLA",
+                        "d": "Tesla"
+                    },
+                    {
+                        "s": "NASDAQ:AAPL",
+                        "d": "AAPL"
+                    },
+                    {
+                        "s": "NYSE:BRK.B",
+                        "d": "Berkshire Hathaway"
+                    },
+                    {
+                        "s": "NYSE:KO",
+                        "d": "Coca Cola"
+                    },
+                    {
+                        "s": "NYSE:TWTR",
+                        "d": "Twitter"
+                    },
+                    {
+                        "s": "NASDAQ:AMZN",
+                        "d": "Amazon"
+                    },
+                    {
+                        "s": "NYSE:F",
+                        "d": "Ford"
+                    },
+                    {
+                        "s": "NASDAQ:FB",
+                        "d": "Facebook"
+                    },
+                    {
+                        "s": "NYSE:BABA",
+                        "d": "Alibaba"
+                    },
+                ],
+                originalTitle: 'Forex',
+            },
+        ],
     },
 };
 
