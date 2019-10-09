@@ -35,15 +35,17 @@ form.search-input {
             color: transparent
         }
         &:hover {
-            background-color: $color-teal;
+          @include themify($themes) {
+            background-color: themed('colorAccent');
+          }
         }
         &:focus {
             width: 180px;
             background-color: $color-white;
             @include themify($themes) {
                 border: themed('moduleBackgroundColor');
+                border-color: themed('colorAccent');
             }
-            border-color: $color-teal;
             box-shadow: 0 0 5px rgba(109,207,246,.5);
             width: 180px;
             padding-left: 2.5rem;

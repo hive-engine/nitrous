@@ -27,7 +27,9 @@
       }
     }
     &.icon-button__svg--green {
-      fill: $color-teal;
+      @include themify($themes) {
+        background-color: themed('colorAccent');
+      }
     }
     &.icon-button__svg--transparent {
       fill: transparent;
@@ -42,7 +44,7 @@
         }
         &.icon-button__border--green{
             @include themify($themes) {
-                stroke: $color-teal;
+                stroke: themed('colorAccent');
             }
         }
         &.icon-button--transparent {

@@ -28,10 +28,14 @@ $menu-width: 250px;
       }
       > a:hover, &:focus {
         background-color:  $color-blue-black;
-        border-bottom: 1px solid $color-teal;
+        @include themify($themes) {
+          border-bottom: 1px solid themed('colorAccent');
+        }
 
         path {
-          fill: $color-teal;
+          @include themify($themes) {
+            fill: themed('colorAccent');
+          }
         }
       }
       path {

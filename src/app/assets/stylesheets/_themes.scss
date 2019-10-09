@@ -177,26 +177,6 @@ $themes: (
 }
 
 
-  .theme-original {
-    background-color: $white;
-    color: $color-text-dark;
-    @include MQ(M) {
-      background-color: $color-background-off-white;
-    }
-  }
-  .theme-light {
-    background-color: $white;
-    color: $color-text-dark;
-    @include MQ(M) {
-      background-color: $color-background-off-white;
-    }
-  }
-  .theme-dark {
-    background-color: $color-background-dark;
-    color: $color-text-white;
-  }
-
-
 // Utility classes to be used with @extend
 
 .link {
@@ -368,7 +348,17 @@ $themes: (
   }
 }
 
+.theme-dblog-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
 .theme-dblog-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
   .button.hollow {
     &:hover, &:focus {
       border-color: $color-dblog;
@@ -377,7 +367,18 @@ $themes: (
     }
   }
 }
+
+.theme-weed-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
 .theme-weed-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
   .button.hollow {
     &:hover, &:focus {
       border-color: $color-weed;
