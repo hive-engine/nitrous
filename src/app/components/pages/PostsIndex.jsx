@@ -198,7 +198,7 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { discussions, pinned } = this.props;
+        const { discussions, pinned, nightmodeEnabled } = this.props;
         const { par, cats, found } = this.searchCategories(
             category,
             null,
@@ -309,6 +309,12 @@ class PostsIndex extends React.Component {
         const mqLarge =
             process.env.BROWSER &&
             window.matchMedia('screen and (min-width: 75em)').matches;
+
+        let tvWidgetConfigMarketOverview = TRADING_VIEW_CONFIG.MARKET_OVERVIEW;
+        tvWidgetConfigMarketOverview.colorTheme = nightmodeEnabled
+            ? 'dark'
+            : 'light';
+
         return (
             <div
                 className={
@@ -475,7 +481,7 @@ class PostsIndex extends React.Component {
                     />
                     <TradingViewEmbed
                         widgetType={widgetType.MARKET_OVERVIEW}
-                        widgetConfig={TRADING_VIEW_CONFIG.MARKET_OVERVIEW}
+                        widgetConfig={tvWidgetConfigMarketOverview}
                     />
                     <small>
                         <a
@@ -546,6 +552,10 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
                 reviveEnabled: state.app.get('reviveEnabled'),
+                nightmodeEnabled: state.app.getIn([
+                    'user_preferences',
+                    'nightmode',
+                ]),
             };
         },
         dispatch => {

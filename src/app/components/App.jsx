@@ -168,6 +168,10 @@ class App extends React.Component {
         }
 
         const themeClass = nightmodeEnabled ? ' theme-dark' : ' theme-light';
+        let tvWidgetConfigTickerTape = TRADING_VIEW_CONFIG.TICKER_TAPE;
+        tvWidgetConfigTickerTape.colorTheme = nightmodeEnabled
+            ? 'dark'
+            : 'light';
 
         return (
             <div
@@ -189,7 +193,7 @@ class App extends React.Component {
                         />
                         <TradingViewEmbed
                             widgetType={widgetType.TICKER_TAPE}
-                            widgetConfig={TRADING_VIEW_CONFIG.TICKER_TAPE}
+                            widgetConfig={tvWidgetConfigTickerTape}
                             copyrightLink={false}
                         />
                     </div>
