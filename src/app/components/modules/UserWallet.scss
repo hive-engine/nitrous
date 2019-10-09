@@ -8,19 +8,49 @@
         margin-top: 1rem;
         padding-left: 1rem;
     }
+    
+    @include themify($themes) {
+      a.external-link {
+        color: themed('textColorAccent')
+      }
+      a.external-link:hover {
+        color: themed('textColorAccentHover')
+      }
+    }
 }
 
 .UserWallet__balance {
   padding-bottom: 1rem;
   padding-top: 1rem;
 
-  &.UserWallet__balance.zebra {
+  &.UserWallet__balance:nth-child(even) {
       @include themify($themes) {
         background-color: themed('tableRowEvenBackgroundColor');
         color: themed('textColorPrimary');
       }
   }
+  
+  .Delegations__view {
+
+    a {
+      margin-left: 0.2rem;
+      padding-bottom: 0.1rem;
+    }
+
+    .Delegations__view-icon {
+      @include themify($themes) {
+        fill: themed('iconColorSecondary');
+      }
+    }
+
+    .Delegations__view-icon:hover {
+      @include themify($themes) {
+        fill: themed('textColorPrimary');
+      }
+    }
+  }
 }
+
 .UserWallet__buysp {  
   margin-right: 0 !important; 
   margin-top: 1rem; 

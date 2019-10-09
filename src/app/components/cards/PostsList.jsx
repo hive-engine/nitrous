@@ -11,6 +11,7 @@ import debounce from 'lodash.debounce';
 import { findParent } from 'app/utils/DomUtils';
 import Icon from 'app/components/elements/Icon';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
@@ -184,7 +185,10 @@ class PostsList extends React.Component {
         // Helper functions for determining whether to show pinned posts.
         const isLoggedInOnFeed = username && pathname === `/@${username}/feed`;
         const isLoggedOutOnTrending =
-            !username && (pathname === '/' || pathname === '/trending');
+            !username &&
+            (pathname === '/' ||
+                pathname === '/trending' ||
+                pathname === '/trending/');
         const arePinnedPostsVisible =
             showPinned && (isLoggedInOnFeed || isLoggedOutOnTrending);
         const arePinnedPostsReady = isLoggedInOnFeed
@@ -238,11 +242,10 @@ class PostsList extends React.Component {
                                     promoted={promoted}
                                 />
                             </li>
-
                             <div className="articles__content-block--ad">
-                                <GptAd
-                                    type="Freestar"
-                                    id="steemit_728x90_468x60_300x250_InFeed"
+                                <ReviveAd
+                                    adKey="feed_small"
+                                    id={`feed_small_${Math.floor(i / every)}`}
                                 />
                             </div>
                         </div>
@@ -306,7 +309,7 @@ export default connect(
             .get('pinned_posts')
             .get('pinned_posts')
             .toJS();
-        const shouldSeeAds = state.app.getIn(['googleAds', 'enabled']);
+        const shouldSeeAds = state.app.get('reviveEnabled');
         const adSlots = state.app.getIn(['googleAds', 'adSlots']).toJS();
 
         return {

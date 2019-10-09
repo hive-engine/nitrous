@@ -123,7 +123,7 @@ class PostSummary extends React.Component {
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
-
+        const app_name = content.get('app') || '';
         let post_url;
         let title_text;
         let comments_url;
@@ -168,6 +168,7 @@ class PostSummary extends React.Component {
                     authorRepLog10={authorRepLog10}
                     follow={false}
                     mute={false}
+                    showAffiliation
                 />
                 {} {tt('g.in')} <TagList post={p} single />&nbsp;•&nbsp;
                 <Link to={post_url}>
@@ -197,6 +198,7 @@ class PostSummary extends React.Component {
                                 authorRepLog10={authorRepLog10}
                                 follow={false}
                                 mute={false}
+                                showAffiliation
                             />
                         </span>
 
@@ -210,7 +212,16 @@ class PostSummary extends React.Component {
                                     className="updated"
                                 />
                             </span>
-
+                            
+                            {app_name.startsWith('steemleo/') && (
+                                <span
+                                    className="articles__icon-100"
+                                    title="Written From SteemLeo.com"
+                                >
+                                    <Icon name="steemleo" />
+                                </span>
+                            )}
+                            
                             {full_power && (
                                 <span
                                     className="articles__icon-100"
@@ -243,7 +254,11 @@ class PostSummary extends React.Component {
         const content_footer = (
             <div className="PostSummary__footer">
                 <Voting post={post} showList={false} />
-                <VotesAndComments post={post} commentsLink={comments_url} />
+                <VotesAndComments
+                    post={post}
+                    commentsLink={comments_url}
+                    showVotes={false}
+                />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog
@@ -260,7 +275,11 @@ class PostSummary extends React.Component {
         const summary_footer = (
             <div className="articles__summary-footer">
                 <Voting post={post} showList={false} />
-                <VotesAndComments post={post} commentsLink={comments_url} />
+                <VotesAndComments
+                    post={post}
+                    commentsLink={comments_url}
+                    showVotes={false}
+                />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog

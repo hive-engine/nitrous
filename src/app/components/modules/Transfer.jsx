@@ -188,8 +188,11 @@ class TransferForm extends Component {
         const { transferType } = this.props.initialValues;
         const { currentAccount, tokenBalances } = this.props;
         const { asset } = this.state;
+        const tokenBalance = tokenBalances.find(
+            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+        );
         return !asset || asset.value === LIQUID_TOKEN_UPPERCASE
-            ? `${tokenBalances.balance} ${LIQUID_TOKEN_UPPERCASE}`
+            ? `${tokenBalance.balance} ${LIQUID_TOKEN_UPPERCASE}`
             : null;
     }
 
@@ -632,17 +635,19 @@ export default connect(
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
             };
-            const confirm = toVesting
-                ? null
-                : () => (
-                      <ConfirmTransfer
-                          operation={{
-                              contractName: transferOperation.contractName,
-                              contractAction: transferOperation.contractAction,
-                              ...transferOperation.contractPayload,
-                          }}
-                      />
-                  );
+            const confirm =
+                toVesting && username === to
+                    ? null
+                    : () => (
+                          <ConfirmTransfer
+                              operation={{
+                                  contractName: transferOperation.contractName,
+                                  contractAction:
+                                      transferOperation.contractAction,
+                                  ...transferOperation.contractPayload,
+                              }}
+                          />
+                      );
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',

@@ -7,6 +7,7 @@
         "ask": "Продажа",
         "balance": "Баланс",
         "balances": "Балансы",
+        "beneficiaries": "Beneficiaries",
         "bid": "Покупка",
         "blog": "Блог",
         "browse": "Посмотреть",
@@ -95,6 +96,7 @@
         },
         "reputation": "Репутация",
         "reveal_comment": "Показать комментарий",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "запрос",
         "required": "Обязательно",
         "rewards": "вознаграждение",
@@ -254,6 +256,10 @@
                 "Если кто-то попросил вас опубликовать или показать ваш приватный ключ, это возможно злоумышленник, который пытается украсть ваши токены.",
             "checkbox": "Я понял"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "Запостить как",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "голос уже существует, пользователь должен обозначить желание убрать делегата",
@@ -323,11 +329,22 @@
         "title": "Заголовок",
         "update_post": "Update Post",
         "markdown_not_supported": "Markdown здесь не поддерживается",
-        "advanced_settings": "Advanced settings"
+        "advanced_settings": "Advanced settings",
+        "beneficiaries_set": "%(count)s set"
+    },
+    "beneficiary_selector_jsx": {
+        "header": "Who should receive any rewards?",
+        "add": "Add account",
+        "exceeds_max_beneficiaries": "Can have at most 8 beneficiaries",
+        "beneficiary_cannot_be_self": "Cannot specify self as beneficiary",
+        "beneficiary_cannot_be_duplicate": "Beneficiary cannot be duplicate",
+        "beneficiary_percent_invalid":
+            "Beneficiary percentage must be from 1-100",
+        "beneficiary_percent_total_invalid":
+            "Beneficiary total percentage must be less than 100"
     },
     "category_selector_jsx": {
-        "tag_your_story":
-            "Добавь теги (до 5 штук), первый тег станет основной категорией.",
+        "tag_your_story": "Добавь теги: первый тег станет основной категорией.",
         "select_a_tag": "Выбрать тег",
         "maximum_tag_length_is_24_characters":
             "Максимальная длина категории 24 знака",
@@ -555,7 +572,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Конвертированные %(VESTING_TOKEN)s токены могут быть отправлены себе или кому-либо еще, но не могут быть переданы вновь без конвертации в %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Часть STEEM POWER вам делегирована, это увеличивает ваше влияние на платформе. Количество делегированных токенов со временем может изменяться."
+            "Часть STEEM POWER вам делегирована, это увеличивает ваше влияние на платформе. Количество делегированных токенов со временем может изменяться.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Продвинуть пост",
@@ -845,6 +866,7 @@
         "power_up": "Усилить силу голоса",
         "power_down": "Уменьшить силу голоса",
         "market": "Биржа",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Перевести в %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Снять %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Снять %(DEBT_TOKENS)s",
@@ -912,6 +934,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "Действие",

@@ -13,6 +13,7 @@ export default function ServerHTML({
     gptEnabled,
     gptBidding,
     fomoId,
+    reviveEnabled,
     shouldSeeCookieConsent,
     cookieConsentApiKey,
 }) {
@@ -59,6 +60,13 @@ export default function ServerHTML({
                     })}
                 <link rel="manifest" href="/static/manifest.json" />
                 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" />
+                <link
+                    rel="stylesheet"
+                    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                />
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" />
                 <link
                     rel="apple-touch-icon"
                     sizes="57x57"
@@ -186,11 +194,35 @@ export default function ServerHTML({
                         async
                     />
                 ) : null}
+                {adClient ? (
+                    <script
+                        async
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                    />
+                ) : null}
+                {adClient ? (
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                      (adsbygoogle = window.adsbygoogle || []).push({
+                          google_ad_client: "${adClient}",
+                          enable_page_level_ads: true
+                      });
+                  `,
+                        }}
+                    />
+                ) : null}
                 {fomoId ? (
                     <script
                         async
                         type="text/javascript"
                         src={`https://load.fomo.com/ads/load.js?id=${fomoId}`}
+                    />
+                ) : null}
+                {reviveEnabled ? (
+                    <script
+                        async
+                        src="//servedby.revive-adserver.net/asyncjs.php"
                     />
                 ) : null}
                 <title>{page_title}</title>

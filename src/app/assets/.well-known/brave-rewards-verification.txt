@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: steemleo.com
+Token: fdcdbbf626080320f835517f3d32b3773e37992f37e0169a03bd62df585b4e1b

@@ -31,14 +31,16 @@
 @import "./elements/SearchInput/styles";
 @import "./elements/IconButton/styles";
 @import "./elements/NativeSelect/styles";
-@import "./elements/SteemLogo/styles";
 @import "./elements/SteemMarket";
 @import "./elements/SanitizedLink/styles";
 @import "./elements/HelpTip/styles";
 @import "./elements/Dropdown";
 @import "./elements/Notices";
 @import "./elements/GoogleAd";
+@import "./elements/ReviveAd";
 @import "./elements/GptAd";
+@import "./elements/FormattedAssetTokens";
+@import "./elements/AuthorRecentPosts";
 
 // modules
 @import "./modules/Header/styles";
@@ -50,6 +52,7 @@
 @import "./modules/Powerdown";
 @import "./modules/ConfirmTransactionForm";
 @import "./modules/Transfer";
+@import "./modules/Delegations";
 
 // pages
 @import "./pages/PostsIndex";
@@ -60,4 +63,5 @@
 @import "./pages/UserProfile";
 @import "./pages/TagsIndex";
 @import "./pages/Welcome";
+@import "./pages/Syndication";
 @import "./pages/About";

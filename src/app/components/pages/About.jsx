@@ -9,7 +9,7 @@ class About extends React.Component {
                 <section className="AboutMission">
                     <div className="AboutMission__heading-container">
                         <h1 className="AboutMission__heading">
-                            Steemit, Inc. Mission, Vision and Values
+                            SteemLeo -- Mission, Vision and Values
                         </h1>
                     </div>
                     <div className="AboutMission__section">

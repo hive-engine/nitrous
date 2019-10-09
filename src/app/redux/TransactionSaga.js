@@ -13,7 +13,7 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { DEBT_TICKER } from 'app/client_config';
+import { APP_URL, POST_FOOTER, DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
@@ -487,7 +487,18 @@ export function* preBroadcast_comment({ operation, username }) {
 
     body = body.trim();
 
+    if (!permlink) permlink = yield createPermlink(title, author);
+
+    const postUrl = `${APP_URL}/@${author}/${permlink}`;
+    // Add footer
+    const footer = POST_FOOTER.replace('${POST_URL}', postUrl);
+    if (footer && !body.endsWith(footer)) {
+        body += '\n\n' + footer;
+    }
+
     // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
+
+    const md = operation.json_metadata;
 
     let body2;
     if (originalBody) {
@@ -495,11 +506,12 @@ export function* preBroadcast_comment({ operation, username }) {
         // Putting body into buffer will expand Unicode characters into their true length
         if (patch && patch.length < new Buffer(body, 'utf-8').length)
             body2 = patch;
+    } else if (typeof md !== 'string' && !md.canonical_url) {
+        // Creation - set up canonical url
+        md.canonical_url = postUrl;
     }
     if (!body2) body2 = body;
-    if (!permlink) permlink = yield createPermlink(title, author);
 
-    const md = operation.json_metadata;
     const json_metadata = typeof md === 'string' ? md : JSON.stringify(md);
     const op = {
         ...operation,

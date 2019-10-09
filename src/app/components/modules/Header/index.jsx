@@ -15,11 +15,12 @@ import * as userActions from 'app/redux/UserReducer';
 import * as appActions from 'app/redux/AppReducer';
 import Userpic from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import SvgImage from 'app/components/elements/SvgImage';
+import AppLogo from 'app/components/elements/AppLogo';
 import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 
 class Header extends React.Component {
     static propTypes = {
@@ -36,6 +37,7 @@ class Header extends React.Component {
         this.state = {
             gptAdRendered: false,
             showAd: false,
+            showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
     }
@@ -85,11 +87,11 @@ class Header extends React.Component {
     }
 
     headroomOnUnpin() {
-        this.setState({ showAd: false });
+        this.setState({ showAd: false, showReviveAd: false });
     }
 
     headroomOnUnfix() {
-        this.setState({ showAd: true });
+        this.setState({ showAd: true, showReviveAd: true });
     }
 
     gptAdRendered() {
@@ -121,7 +123,7 @@ class Header extends React.Component {
             walletUrl,
         } = this.props;
 
-        const { showAd, showAnnouncement } = this.state;
+        const { showAd, showReviveAd, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
@@ -290,7 +292,6 @@ class Header extends React.Component {
                   }
                 : { link: '#', onClick: showLogin, value: tt('g.login') },
         ];
-
         return (
             <Headroom
                 onUnpin={e => this.headroomOnUnpin(e)}
@@ -303,20 +304,19 @@ class Header extends React.Component {
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
                     <div style={showAd ? {} : { display: 'none' }}>
                         <GptAd
-                            type="Freestar"
-                            id="steemit_728x90_970x90_970x250_320x50_ATF"
+                            type="Coinzilla"
+                            id="/21784675435/steemit_top-navi"
                         />
+                    </div>
+                    <div style={showReviveAd ? {} : { display: 'none' }}>
+                        <ReviveAd adKey="header_banner" />
                     </div>
 
                     <nav className="row Header__nav">
                         <div className="small-5 large-4 columns Header__logotype">
                             {/*LOGO*/}
                             <Link to={logo_link}>
-                                <SvgImage
-                                    name={APP_ICON}
-                                    width="150px"
-                                    height="40px"
-                                />
+                                <AppLogo />
                             </Link>
                         </div>
 

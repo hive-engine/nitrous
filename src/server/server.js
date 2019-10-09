@@ -6,6 +6,7 @@ import koa_logger from 'koa-logger';
 import requestTime from './requesttimings';
 import StatsLoggerClient from './utils/StatsLoggerClient';
 import { ScotConfig } from './utils/ScotConfig';
+import { SteemMarket } from './utils/SteemMarket';
 import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';

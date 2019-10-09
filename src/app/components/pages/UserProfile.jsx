@@ -212,6 +212,7 @@ export default class UserProfile extends React.Component {
                         showTransfer={this.props.showTransfer}
                         showPowerdown={this.props.showPowerdown}
                         cancelUnstake={this.props.cancelUnstake}
+                        showDelegations={this.props.showDelegations}
                     />
                 </div>
             );
@@ -545,10 +546,7 @@ export default class UserProfile extends React.Component {
                             </Tooltip>
                             {AffiliationMap[accountname] ? (
                                 <span className="affiliation">
-                                    {tt(
-                                        'g.affiliation_' +
-                                            AffiliationMap[accountname]
-                                    )}
+                                    {AffiliationMap[accountname]}
                                 </span>
                             ) : null}
                         </h1>
@@ -684,6 +682,10 @@ module.exports = {
             },
             requestData: args =>
                 dispatch(fetchDataSagaActions.requestData(args)),
+            showDelegations: delegations => {
+                dispatch(userActions.setDelegations(delegations));
+                dispatch(userActions.showDelegations());
+            },
         })
     )(UserProfile),
 };

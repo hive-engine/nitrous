@@ -113,6 +113,16 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'welcome',
+                label: 'Guide to SteemLeo',
+                link: 'https://steemleo.com/welcome',
+            },
+            {
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/KgcVDKQ',
+            },
+            {
                 value: 'leotube',
                 label: 'LeoTube',
                 link: 'https://tube.steemleo.com',

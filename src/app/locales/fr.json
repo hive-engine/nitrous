@@ -7,6 +7,7 @@
         "ask": "Demande",
         "balance": "Solde",
         "balances": "Soldes",
+        "beneficiaries": "Beneficiaries",
         "bid": "Offre",
         "blog": "Blog",
         "browse": "Naviguer",
@@ -93,6 +94,7 @@
         },
         "reputation": "Réputation",
         "reveal_comment": "Révéler le commentaire",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "requête",
         "required": "Requis",
         "rewards": "Gains",
@@ -256,6 +258,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "Poster en tant que",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "un vote existe actuellement; l'utilisateur doit indiquer une raison pour rejeter le témoin",
@@ -326,11 +332,23 @@
         "title": "Titre",
         "update_post": "Mettre l'article à jour",
         "markdown_not_supported": "Le format Markdown n'est pas supporté ici",
-        "advanced_settings": "Advanced settings"
+        "advanced_settings": "Advanced settings",
+        "beneficiaries_set": "%(count)s set"
+    },
+    "beneficiary_selector_jsx": {
+        "header": "Who should receive any rewards?",
+        "add": "Add account",
+        "exceeds_max_beneficiaries": "Can have at most 8 beneficiaries",
+        "beneficiary_cannot_be_self": "Cannot specify self as beneficiary",
+        "beneficiary_cannot_be_duplicate": "Beneficiary cannot be duplicate",
+        "beneficiary_percent_invalid":
+            "Beneficiary percentage must be from 1-100",
+        "beneficiary_percent_total_invalid":
+            "Beneficiary total percentage must be less than 100"
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "Mots clés (jusqu'à 5 mots clés), le premier d'entre eux étant votre catégorie principale.",
+            "Mots clés: le premier d'entre eux étant votre catégorie principale.",
         "select_a_tag": "Sélectionner un mot clé",
         "maximum_tag_length_is_24_characters":
             "La longueur d'un mot clé est d'au maximum 24 caractères",
@@ -545,7 +563,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Les %(VESTING_TOKEN)s convertis peuvent être envoyés soit à vous, soit à quelqu'un d'autre, mais ne peuvent pas être transférés à nouveau sans être convertis en %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Une partie de votre influence, ou STEEM POWER, est actuellement déléguée. La délégation est un don pour augmenter l'influence ou pour encourager les nouveaux utilisateurs à effectuer des actions sur Steemit. Le montant délégué peut varier."
+            "Une partie de votre influence, ou STEEM POWER, est actuellement déléguée. La délégation est un don pour augmenter l'influence ou pour encourager les nouveaux utilisateurs à effectuer des actions sur Steemit. Le montant délégué peut varier.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Promouvoir un article",
@@ -839,6 +861,7 @@
         "power_up": "Augmenter son influence",
         "power_down": "Diminuer son influence",
         "market": "Marché",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Convertir en %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Retirer %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Retirer %(DEBT_TOKENS)s",
@@ -909,6 +932,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "Action",

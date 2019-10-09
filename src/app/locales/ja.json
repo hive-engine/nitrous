@@ -7,6 +7,7 @@
         "ask": "買値",
         "balance": "残高",
         "balances": "残高",
+        "beneficiaries": "Beneficiaries",
         "bid": "売値",
         "blog": "ブログ",
         "browse": "ブラウズ",
@@ -93,6 +94,7 @@
         },
         "reputation": "評価",
         "reveal_comment": "コメントを表示する",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "リクエスト",
         "required": "必須です",
         "rewards": "報酬",
@@ -250,6 +252,10 @@
                 "Steemit Inc.の従業員を含む正当なユーザーは秘密キーまたはマスターパスワードを要求することはありません。",
             "checkbox": "理解しました。"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "投稿します:",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります",
@@ -320,11 +326,23 @@
         "update_post": "投稿を更新",
         "markdown_not_supported":
             "ここではマークダウンはサポートされていません",
-        "advanced_settings": "Advanced settings"
+        "advanced_settings": "Advanced settings",
+        "beneficiaries_set": "%(count)s set"
+    },
+    "beneficiary_selector_jsx": {
+        "header": "Who should receive any rewards?",
+        "add": "Add account",
+        "exceeds_max_beneficiaries": "Can have at most 8 beneficiaries",
+        "beneficiary_cannot_be_self": "Cannot specify self as beneficiary",
+        "beneficiary_cannot_be_duplicate": "Beneficiary cannot be duplicate",
+        "beneficiary_percent_invalid":
+            "Beneficiary percentage must be from 1-100",
+        "beneficiary_percent_total_invalid":
+            "Beneficiary total percentage must be less than 100"
     },
     "category_selector_jsx": {
         "tag_your_story":
-            "タグ(最大5つ)。1つ目のタグはメインカテゴリです。日本語の投稿には japanese を含めてください。",
+            "タグ。1つ目のタグはメインカテゴリです。日本語の投稿には japanese を含めてください。",
         "select_a_tag": "タグを選択してください",
         "maximum_tag_length_is_24_characters": "タグの最大長は24文字です。",
         "use_limited_amount_of_categories":
@@ -535,7 +553,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "変換した%(VESTING_TOKEN)sは、自分自身や他の人に送ることが可能ですが、もう一度送るには%(LIQUID_TOKEN)sに変換する必要があります。",
         "part_of_your_steem_power_is_currently_delegated":
-            "現在のSTEEM POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがSteemitでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。"
+            "現在のSTEEM POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがSteemitでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "投稿をプロモートする",
@@ -825,6 +847,7 @@
         "power_up": "パワーアップ",
         "power_down": "パワーダウン",
         "market": "取引所",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)sに変換",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)sを引き出す",
         "withdraw_DEBT_TOKENS": "%(DEBT_TOKENS)sを引き出す",
@@ -893,6 +916,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "操作",

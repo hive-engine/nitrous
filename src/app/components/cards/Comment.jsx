@@ -11,6 +11,7 @@ import * as userActions from 'app/redux/UserReducer';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Userpic from 'app/components/elements/Userpic';
 import * as transactionActions from 'app/redux/TransactionReducer';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import tt from 'counterpart';
 import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
@@ -186,6 +187,12 @@ class CommentImpl extends React.Component {
         if (window.location.hash == this.props.anchor_link) {
             this.setState({ highlight: true }); // eslint-disable-line react/no-did-mount-set-state
         }
+
+        // Client-side only when using componentDidMount
+        const { tribeMuteAccount, tribeIgnoreList, fetchFollows } = this.props;
+        if (tribeMuteAccount && !tribeIgnoreList) {
+            fetchFollows(tribeMuteAccount);
+        }
     }
 
     /**
@@ -198,12 +205,17 @@ class CommentImpl extends React.Component {
         if (content) {
             const hide = hideSubtree(props.cont, props.content);
             const gray = content.getIn(['stats', 'gray']);
+
+            const author = content.get('author');
+            const { username } = this.props;
+            const notOwn = username !== author;
+
             if (hide) {
                 const { onHide } = this.props;
                 // console.log('Comment --> onHide')
                 if (onHide) onHide();
             }
-            this.setState({ hide, hide_body: hide || gray });
+            this.setState({ hide, hide_body: notOwn && (hide || gray) });
         }
     }
 
@@ -265,6 +277,7 @@ class CommentImpl extends React.Component {
             anchor_link,
             showNegativeComments,
             ignore_list,
+            tribeIgnoreList,
             noImage,
         } = this.props;
         const { onShowReply, onShowEdit, onDeletePost } = this;
@@ -286,7 +299,9 @@ class CommentImpl extends React.Component {
         const comment_link = `/${comment.category}/@${rootComment}#@${
             comment.author
         }/${comment.permlink}`;
-        const ignore = ignore_list && ignore_list.has(comment.author);
+        const ignore =
+            (ignore_list && ignore_list.has(comment.author)) ||
+            (tribeIgnoreList && tribeIgnoreList.has(comment.author));
 
         if (!showNegativeComments && (hide || ignore)) {
             return null;
@@ -376,9 +391,15 @@ class CommentImpl extends React.Component {
         const commentClasses = ['hentry'];
         commentClasses.push('Comment');
         commentClasses.push(this.props.root ? 'root' : 'reply');
-        if (hide_body || this.state.collapsed) commentClasses.push('collapsed');
+        if (this.state.collapsed) commentClasses.push('collapsed');
 
-        let innerCommentClass = ignore || gray ? 'downvoted clearfix' : '';
+        let innerCommentClass = 'Comment__block';
+        if (ignore || gray) {
+            innerCommentClass += ' downvoted clearfix';
+            if (!hide_body) {
+                innerCommentClass += ' revealed';
+            }
+        }
         if (this.state.highlight) innerCommentClass += ' highlighted';
 
         //console.log(comment);
@@ -409,17 +430,6 @@ class CommentImpl extends React.Component {
             );
         }
 
-        const depth_indicator = [];
-        if (depth > 1) {
-            for (let i = 1; i < depth; ++i) {
-                depth_indicator.push(
-                    <div key={i} className={`depth di-${i}`}>
-                        &middot;
-                    </div>
-                );
-            }
-        }
-
         return (
             <div
                 className={commentClasses.join(' ')}
@@ -427,7 +437,6 @@ class CommentImpl extends React.Component {
                 itemScope
                 itemType="http://schema.org/comment"
             >
-                {depth_indicator}
                 <div className={innerCommentClass}>
                     <div className="Comment__Userpic show-for-medium">
                         <Userpic account={comment.author} />
@@ -480,6 +489,14 @@ class CommentImpl extends React.Component {
                                     {tt('g.reveal_comment')}
                                 </a>
                             )}
+                        {!this.state.collapsed &&
+                            !hide_body &&
+                            (ignore || gray) && (
+                                <span>
+                                    &nbsp; &middot; &nbsp;{' '}
+                                    {tt('g.will_be_hidden_due_to_low_rating')}
+                                </span>
+                            )}
                     </div>
                     <div className="Comment__body entry-content">
                         {showEdit ? renderedEditor : body}
@@ -501,6 +518,18 @@ const Comment = connect(
         const { content } = ownProps;
 
         const username = state.user.getIn(['current', 'username']);
+        const tribeMuteAccount = state.app.getIn(
+            ['scotConfig', 'config', 'muting_account'],
+            null
+        );
+        const tribeIgnoreList = tribeMuteAccount
+            ? state.global.getIn([
+                  'follow',
+                  'getFollowingAsync',
+                  tribeMuteAccount,
+                  'ignore_result',
+              ])
+            : null;
         const ignore_list = username
             ? state.global.getIn([
                   'follow',
@@ -515,6 +544,8 @@ const Comment = connect(
             anchor_link: '#@' + content, // Using a hash here is not standard but intentional; see issue #124 for details
             username,
             ignore_list,
+            tribeMuteAccount,
+            tribeIgnoreList,
         };
     },
 
@@ -529,6 +560,15 @@ const Comment = connect(
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
+                })
+            );
+        },
+        fetchFollows: account => {
+            dispatch(
+                fetchDataSagaActions.fetchFollows({
+                    method: 'getFollowingAsync',
+                    account,
+                    type: 'ignore',
                 })
             );
         },

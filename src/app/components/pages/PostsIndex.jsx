@@ -17,10 +17,13 @@ import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
 import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
 import GptAd from 'app/components/elements/GptAd';
+import ReviveAd from 'app/components/elements/ReviveAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
+import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
 import SidebarToken from 'app/components/elements/SidebarToken';
 
@@ -59,6 +62,13 @@ class PostsIndex extends React.Component {
     }
 
     getPosts(order, category) {
+        const pinned = this.props.pinned;
+        const pinnedPosts = pinned
+            ? pinned.has('pinned_posts')
+              ? pinned.get('pinned_posts').toJS()
+              : []
+            : [];
+        const notices = this.props.notices || [];
         const topic_discussions = this.props.discussions.get(category || '');
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
@@ -69,7 +79,9 @@ class PostsIndex extends React.Component {
                 promotedDiscussions.size > 0 &&
                 mainDiscussions
             ) {
-                const processed = new Set(); // mutable
+                const processed = new Set(
+                    pinnedPosts.map(p => `${p.author}/${p.permlink}`)
+                ); // mutable
                 const interleaved = [];
                 const promoted = [];
                 let promotedIndex = 0;
@@ -292,6 +304,10 @@ class PostsIndex extends React.Component {
         const layoutClass = this.props.blogmode
             ? ' layout-block'
             : ' layout-list';
+
+        const mqLarge =
+            process.env.BROWSER &&
+            window.matchMedia('screen and (min-width: 75em)').matches;
         return (
             <div
                 className={
@@ -328,6 +344,11 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
+                    {category !== 'feed' && (
+                        <MarkdownViewer
+                            text={tagHeaderMap[category] || tagHeaderMap['']}
+                        />
+                    )}
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
@@ -435,6 +456,11 @@ class PostsIndex extends React.Component {
                             <GptAd type="Freestar" id="steemit_160x600_Right" />
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled && mqLarge ? (
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_right" />
+                        </div>
+                    ) : null}
                 </aside>
 
                 <aside className="c-sidebar c-sidebar--left">
@@ -476,6 +502,11 @@ class PostsIndex extends React.Component {
                             </div>
                         </div>
                     ) : null}
+                    {this.props.reviveEnabled && mqLarge ? (
+                        <div className="sidebar-ad">
+                            <ReviveAd adKey="sidebar_left" />
+                        </div>
+                    ) : null}
                 </aside>
             </div>
         );
@@ -509,6 +540,7 @@ module.exports = {
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+                reviveEnabled: state.app.get('reviveEnabled'),
             };
         },
         dispatch => {

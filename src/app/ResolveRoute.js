@@ -20,8 +20,17 @@ export default function resolveRoute(path) {
     if (path === '/about.html') {
         return { page: 'About' };
     }
+    if (path === '/delegate.html') {
+        return { page: 'Delegate' };
+    }
     if (path === '/welcome') {
         return { page: 'Welcome' };
+    }
+    if (path === '/syndication') {
+        return { page: 'Syndication' };
+    }
+    if (path === '/learn') {
+        return { page: 'Learn' };
     }
     if (path === '/faq.html') {
         return { page: 'Faq' };
