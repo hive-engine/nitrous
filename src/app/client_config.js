@@ -113,24 +113,48 @@ export const TRADING_VIEW_CONFIG = {
         autosize: true,
         symbols: [
             {
-                title: 'S&P 500',
-                proName: 'OANDA:SPX500USD',
+                "title": "S&P 500",
+                "proName": "OANDA:SPX500USD"
             },
             {
-                title: 'Nasdaq 100',
-                proName: 'OANDA:NAS100USD',
+                "description": "Nasdaq",
+                "proName": "NASDAQ:NDAQ"
             },
             {
-                title: 'EUR/USD',
-                proName: 'FX_IDC:EURUSD',
+                "description": "Bitcoin",
+                "proName": "COINBASE:BTCUSD"
             },
             {
-                title: 'BTC/USD',
-                proName: 'BITSTAMP:BTCUSD',
+                "description": "Ethereum",
+                "proName": "COINBASE:ETHUSD"
             },
             {
-                title: 'ETH/USD',
-                proName: 'BITSTAMP:ETHUSD',
+                "description": "Steem",
+                "proName": "BITTREX:STEEMUSD"
+            },
+            {
+                "description": "SBD",
+                "proName": "BITTREX:SBDUSD"
+            },
+            {
+                "description": "Litecoin",
+                "proName": "COINBASE:LTCUSD"
+            },
+            {
+                "description": "Binance Coin",
+                "proName": "BINANCE:BNBUSD"
+            },
+            {
+                "description": "Basic Attention Token",
+                "proName": "BINANCE:BATUSD"
+            },
+            {
+                "description": "Monero",
+                "proName": "BITTREX:XMRUSD"
+            },
+            {
+                "description": "Eos",
+                "proName": "COINBASE:EOSUSD"
             },
         ],
     },
@@ -140,115 +164,123 @@ export const TRADING_VIEW_CONFIG = {
         showChart: true,
         tabs: [
             {
-                title: 'Indices',
-                symbols: [
+                "title": "Overview",
+                "symbols": [
                     {
-                        s: 'OANDA:SPX500USD',
-                        d: 'S&P 500',
+                        "s": "OANDA:SPX500USD",
+                        "d": "S&P 500"
                     },
                     {
-                        s: 'OANDA:NAS100USD',
-                        d: 'Nasdaq 100',
+                        "s": "NASDAQ:NDAQ",
+                        "d": "Nasdaq"
                     },
                     {
-                        s: 'FOREXCOM:DJI',
-                        d: 'Dow 30',
+                        "s": "DJCFD:DJI",
+                        "d": "Dow Jones"
                     },
                     {
-                        s: 'INDEX:NKY',
-                        d: 'Nikkei 225',
+                        "s": "COINBASE:BTCUSD",
+                        "d": "Bitcoin"
                     },
                     {
-                        s: 'INDEX:DEU30',
-                        d: 'DAX Index',
+                        "s": "COINBASE:ETHUSD",
+                        "d": "Ethereum"
                     },
                     {
-                        s: 'OANDA:UK100GBP',
-                        d: 'FTSE 100',
+                        "s": "BITTREX:STEEMUSD",
+                        "d": "Steem"
                     },
-                ],
-                originalTitle: 'Indices',
+                    {
+                        "s": "TVC:GOLD",
+                        "d": "Gold"
+                    },
+                    {
+                        "s": "NYMEX:CL1!",
+                        "d": "Crude Oil"
+                    }
+                    ],
+                "originalTitle": "Indices"
             },
             {
-                title: 'Commodities',
-                symbols: [
+                "title": "Crypto",
+                "symbols": [
                     {
-                        s: 'CME_MINI:ES1!',
-                        d: 'E-Mini S&P',
+                        "s": "COINBASE:BTCUSD",
+                        "d": "BTC"
                     },
                     {
-                        s: 'CME:6E1!',
-                        d: 'Euro',
+                        "s": "COINBASE:ETHUSD",
+                        "d": "ETH"
                     },
                     {
-                        s: 'COMEX:GC1!',
-                        d: 'Gold',
+                        "s": "BINANCE:STEEMUSD",
+                        "d": "STEEM"
                     },
                     {
-                        s: 'NYMEX:CL1!',
-                        d: 'Crude Oil',
+                        "s": "BITTREX:SBDUSD",
+                        "d": "Steem-Backed Dollars"
                     },
                     {
-                        s: 'NYMEX:NG1!',
-                        d: 'Natural Gas',
+                        "s": "COINBASE:LTCUSD",
+                        "d": "Litecoin"
                     },
                     {
-                        s: 'CBOT:ZC1!',
-                        d: 'Corn',
-                    },
-                ],
-                originalTitle: 'Commodities',
-            },
-            {
-                title: 'Bonds',
-                symbols: [
-                    {
-                        s: 'CME:GE1!',
-                        d: 'Eurodollar',
+                        "s": "BINANCE:BNBUSD",
+                        "d": "BNB"
                     },
                     {
-                        s: 'CBOT:ZB1!',
-                        d: 'T-Bond',
+                        "s": "BINANCE:BATUSD",
+                        "d": "Basic Attention Token"
                     },
                     {
-                        s: 'CBOT:UB1!',
-                        d: 'Ultra T-Bond',
+                        "s": "BINANCE:XMRUSD",
+                        "d": "Monero"
                     },
                     {
-                        s: 'EUREX:FGBL1!',
-                        d: 'Euro Bund',
-                    },
-                    {
-                        s: 'EUREX:FBTP1!',
-                        d: 'Euro BTP',
-                    },
-                    {
-                        s: 'EUREX:FGBM1!',
-                        d: 'Euro BOBL',
+                        "s": "COINBASE:EOSUSD",
+                        "d": "Eos"
                     },
                 ],
                 originalTitle: 'Bonds',
             },
             {
-                title: 'Forex',
-                symbols: [
+                "title": "Stocks",
+                "symbols": [
                     {
-                        s: 'FX:EURUSD',
+                        "s": "NASDAQ:TSLA",
+                        "d": "Tesla"
                     },
                     {
-                        s: 'FX:GBPUSD',
+                        "s": "NASDAQ:AAPL",
+                        "d": "AAPL"
                     },
                     {
-                        s: 'FX:USDJPY',
+                        "s": "NYSE:BRK.B",
+                        "d": "Berkshire Hathaway"
                     },
                     {
-                        s: 'FX:USDCHF',
+                        "s": "NYSE:KO",
+                        "d": "Coca Cola"
                     },
                     {
-                        s: 'FX:AUDUSD',
+                        "s": "NYSE:TWTR",
+                        "d": "Twitter"
                     },
                     {
-                        s: 'FX:USDCAD',
+                        "s": "NASDAQ:AMZN",
+                        "d": "Amazon"
+                    },
+                    {
+                        "s": "NYSE:F",
+                        "d": "Ford"
+                    },
+                    {
+                        "s": "NASDAQ:FB",
+                        "d": "Facebook"
+                    },
+                    {
+                        "s": "NYSE:BABA",
+                        "d": "Alibaba"
                     },
                 ],
                 originalTitle: 'Forex',
