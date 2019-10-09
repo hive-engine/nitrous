@@ -159,10 +159,22 @@ export const TRADING_VIEW_CONFIG = {
         ],
     },
     MARKET_OVERVIEW: {
-        colorTheme: 'light',
-        autosize: true,
-        showChart: true,
-        tabs: [
+        "colorTheme": "light",
+        "dateRange": "12m",
+        "showChart": true,
+        "locale": "en",
+        "largeChartUrl": "",
+        "isTransparent": false,
+        "width": "270",
+        "height": "670",
+        "plotLineColorGrowing": "rgba(255, 152, 0, 1)",
+        "plotLineColorFalling": "rgba(255, 0, 0, 1)",
+        "gridLineColor": "rgba(203, 203, 203, 1)",
+        "scaleFontColor": "rgba(66, 66, 66, 1)",
+        "belowLineFillColorGrowing": "rgba(255, 152, 0, 0.12)",
+        "belowLineFillColorFalling": "rgba(255, 0, 0, 0.12)",
+        "symbolActiveColor": "rgba(255, 152, 0, 0.12)",
+        "tabs" [
             {
                 "title": "Overview",
                 "symbols": [
