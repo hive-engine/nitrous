@@ -24,8 +24,9 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-
 import SidebarToken from 'app/components/elements/SidebarToken';
+import { TradingViewEmbed, widgetType } from 'react-tradingview-embed';
+import { TRADING_VIEW_CONFIG } from 'app/client_config';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -471,6 +472,10 @@ class PostsIndex extends React.Component {
                         username={this.props.username}
                         categories={categories}
                         levels={max_levels}
+                    />
+                    <TradingViewEmbed
+                        widgetType={widgetType.MARKET_OVERVIEW}
+                        widgetConfig={TRADING_VIEW_CONFIG.MARKET_OVERVIEW}
                     />
                     <small>
                         <a

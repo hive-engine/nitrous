@@ -8894,6 +8894,11 @@ react-timeago@3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"
 
+react-tradingview-embed@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/react-tradingview-embed/download/react-tradingview-embed-1.0.2.tgz#5fc8a3f48aff16877bc2484760da910ccd46c2ac"
+  integrity sha1-X8ij9Ir/Fod7wkhHYNqRDM1Gwqw=
+
 react-transform-catch-errors@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-transform-catch-errors/-/react-transform-catch-errors-1.0.2.tgz#1b4d4a76e97271896fc16fe3086c793ec88a9eeb"

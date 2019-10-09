@@ -16,6 +16,8 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { key_utils } from '@steemit/steem-js/lib/auth/ecc';
 import resolveRoute from 'app/ResolveRoute';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
+import { TradingViewEmbed, widgetType } from 'react-tradingview-embed';
+import { TRADING_VIEW_CONFIG } from 'app/client_config';
 
 class App extends React.Component {
     constructor(props) {
@@ -179,11 +181,18 @@ class App extends React.Component {
                 <ConnectedSidePanel alignment="right" />
 
                 {headerHidden ? null : (
-                    <Header
-                        pathname={pathname}
-                        category={category}
-                        order={order}
-                    />
+                    <div>
+                        <Header
+                            pathname={pathname}
+                            category={category}
+                            order={order}
+                        />
+                        <TradingViewEmbed
+                            widgetType={widgetType.TICKER_TAPE}
+                            widgetConfig={TRADING_VIEW_CONFIG.TICKER_TAPE}
+                            copyrightLink={false}
+                        />
+                    </div>
                 )}
 
                 <div className="App__content">
