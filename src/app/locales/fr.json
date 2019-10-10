@@ -673,6 +673,8 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
         "request_id": "Request ID: %(request_id)s"
     },
     "savingswithdrawhistory_jsx": {
