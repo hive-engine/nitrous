@@ -609,8 +609,6 @@
             "open_owner_filled_my_order":
                 "Paid %(current_pays)s for %(open_pays)s"
         },
-        "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
                 "no_to": "Transfer %(amount)s to STEEM POWER",
