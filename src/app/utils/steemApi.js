@@ -21,14 +21,26 @@ async function callApi(url, params) {
 }
 
 async function getSteemEngineAccountHistoryAsync(account, symbol) {
-    return callApi('https://api.steem-engine.com/accounts/history', {
+    const transfers = await callApi(
+        'https://api.steem-engine.com/accounts/history',
+        {
+            account,
+            limit: 50,
+            offset: 0,
+            type: 'user',
+            symbol,
+            v: new Date().getTime(),
+        }
+    );
+    const history = await getScotDataAsync('get_account_history', {
         account,
-        limit: 100,
-        offset: 0,
-        type: 'user',
-        symbol,
-        v: new Date().getTime(),
+        token: symbol,
+        limit: 50,
+        startTime: new Date().getTime(),
     });
+    return transfers
+        .concat(history)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
 export async function getScotDataAsync(path, params) {
@@ -41,13 +53,11 @@ export async function getScotAccountDataAsync(account) {
 
 async function getAccount(account) {
     const accounts = await api.getAccountsAsync([account]);
-    console.log(accounts);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
 async function getGlobalProps() {
     const gprops = await api.getDynamicGlobalPropertiesAsync();
-    console.log(gprops);
     return gprops;
 }
 
@@ -224,10 +234,7 @@ export async function attachScotData(url, state, scotTokenSymbol) {
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
-            // Reverse to show recent activity first
-            state.accounts[
-                account
-            ].transfer_history = transferHistory.reverse();
+            state.accounts[account].transfer_history = transferHistory;
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;

@@ -8,9 +8,19 @@ import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
 
+function formatScotAmount(quantity, precision) {
+    return (quantity / Math.pow(10, precision)).toFixed(precision);
+}
+
+const postLink = (socialUrl, author, permlink) => (
+    <a href={`${socialUrl}/@${author}/${permlink}`} target="_blank">
+        {author}/{permlink}
+    </a>
+);
+
 class TransferHistoryRow extends React.Component {
     render() {
-        const { op, context, scotTokenSymbol } = this.props;
+        const { op, context, scotTokenSymbol, appUrl } = this.props;
         // context -> account perspective
 
         /*  all transfers involve up to 2 accounts, context and 1 other. */
@@ -49,6 +59,34 @@ class TransferHistoryRow extends React.Component {
                         { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.from)}
+                </span>
+            );
+        } else if (op.type === 'staking_reward') {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'staking_reward'], {
+                        amount: `${formatScotAmount(
+                            op.int_amount,
+                            op.precision
+                        )} ${scotTokenSymbol}`,
+                    })}
+                </span>
+            );
+        } else if (
+            op.type === 'author_reward' ||
+            op.type === 'curation_reward' ||
+            op.type === 'comment_benefactor_reward' ||
+            op.type === 'mining_reward'
+        ) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', op.type], {
+                        amount: `${formatScotAmount(
+                            op.int_amount,
+                            op.precision
+                        )} ${scotTokenSymbol}`,
+                    })}
+                    {postLink(appUrl, op.author, op.permlink)}
                 </span>
             );
         } else {
@@ -92,6 +130,7 @@ export default connect(
                 'hostConfig',
                 'LIQUID_TOKEN_UPPERCASE',
             ]),
+            appUrl: state.app.getIn(['hostConfig', 'APP_URL']),
         };
     }
 )(TransferHistoryRow);
