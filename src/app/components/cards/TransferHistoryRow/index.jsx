@@ -7,7 +7,17 @@ import Memo from 'app/components/elements/Memo';
 import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { APP_URL, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+
+function formatScotAmount(quantity, precision) {
+    return (quantity / Math.pow(10, precision)).toFixed(precision);
+}
+
+const postLink = (socialUrl, author, permlink) => (
+    <a href={`${socialUrl}/@${author}/${permlink}`} target="_blank">
+        {author}/{permlink}
+    </a>
+);
 
 class TransferHistoryRow extends React.Component {
     render() {
@@ -50,6 +60,34 @@ class TransferHistoryRow extends React.Component {
                         { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
                     )}
                     {otherAccountLink(op.from)}
+                </span>
+            );
+        } else if (op.type === 'staking_reward') {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'staking_reward'], {
+                        amount: `${formatScotAmount(
+                            op.int_amount,
+                            op.precision
+                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                    })}
+                </span>
+            );
+        } else if (
+            op.type === 'author_reward' ||
+            op.type === 'curation_reward' ||
+            op.type === 'comment_benefactor_reward' ||
+            op.type === 'mining_reward'
+        ) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', op.type], {
+                        amount: `${formatScotAmount(
+                            op.int_amount,
+                            op.precision
+                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                    })}
+                    {postLink(APP_URL, op.author, op.permlink)}
                 </span>
             );
         } else {

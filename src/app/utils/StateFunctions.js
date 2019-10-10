@@ -57,6 +57,9 @@ export function spToVests(state, vesting_shares) {
 }
 
 export function vestingSteem(account, gprops) {
+    if (!account.vesting_shares || !gprops.total_vesting_shares) {
+        return 0;
+    }
     const vests = parseFloat(account.vesting_shares.split(' ')[0]);
     const total_vests = parseFloat(gprops.total_vesting_shares.split(' ')[0]);
     const total_vest_steem = parseFloat(
@@ -68,6 +71,14 @@ export function vestingSteem(account, gprops) {
 
 // How much STEEM this account has delegated out (minus received).
 export function delegatedSteem(account, gprops) {
+    if (
+        !account.delegated_vesting_shares ||
+        !account.received_vesting_shares ||
+        !gprops.total_vesting_shares ||
+        !gprops.total_vesting_fund_steem
+    ) {
+        return 0;
+    }
     const delegated_vests = parseFloat(
         account.delegated_vesting_shares.split(' ')[0]
     );
