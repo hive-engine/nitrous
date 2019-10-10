@@ -613,9 +613,6 @@
             "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
         "from_negative_rep_user_reveal_memo":
             "I understand the risk; show anyway.",
-        "curation_reward": "%(curation_reward)s STEEM POWER for ",
-        "author_reward":
-            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
         "claim_reward_balance": {
             "three_rewards":
                 "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
@@ -662,6 +659,8 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
         "staking_reward": "Staking reward: %(amount)s",
         "mining_reward": "Mining reward: %(amount)s",
         "request_id": "Request ID: %(request_id)s"
