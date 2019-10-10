@@ -97,6 +97,7 @@
         },
         "reputation": "Reputación",
         "reveal_comment": "Mostrar Comentario",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "solicitud",
         "required": "Requerido",
         "rewards": "Recompensa",
@@ -257,6 +258,10 @@
                 "Los usuarios legítimos, incluidos los empleados de Steemit Inc., nunca le pedirán una clave privada o contraseña maestra.",
             "checkbox": "Entiendo"
         },
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
         "post_as": "Publicar como",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "Este voto ya existe, el usuario tiene que quitar el voto al witness"
@@ -553,7 +558,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Los %(VESTING_TOKEN)s convertidos pueden ser enviados a ti mismo o a otras personas pero no pueden ser transferidos de nuevo sin convertirlos de vuelta a %(LIQUID_TOKEN)s.",
         "part_of_your_steem_power_is_currently_delegated":
-            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate."
+            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Promociona el Post",
@@ -627,8 +636,6 @@
             "open_owner_filled_my_order":
                 "Paid %(current_pays)s for %(open_pays)s"
         },
-        "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
                 "no_to": "Transfer %(amount)s to STEEM POWER",
@@ -657,6 +664,12 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
         "request_id": "Request ID: %(request_id)s"
     },
     "savingswithdrawhistory_jsx": {
@@ -835,6 +848,7 @@
         "power_up": "Power up",
         "power_down": "Power down",
         "market": "Mercado",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Convertir a %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Retirar %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Retirar %(DEBT_TOKENS)s",
@@ -902,6 +916,9 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
     },
     "market_jsx": {
         "action": "Acción",

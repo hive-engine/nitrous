@@ -649,8 +649,6 @@
             "open_owner_filled_my_order":
                 "Paid %(current_pays)s for %(open_pays)s"
         },
-        "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
                 "no_to": "Transfer %(amount)s to STEEM POWER",
@@ -681,6 +679,8 @@
         },
         "author_reward": "Author reward: %(amount)s for ",
         "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
         "staking_reward": "Staking reward: %(amount)s",
         "mining_reward": "Mining reward: %(amount)s",
         "request_id": "Request ID: %(request_id)s"
