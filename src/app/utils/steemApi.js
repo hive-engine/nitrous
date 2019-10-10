@@ -33,6 +33,29 @@ export async function getSteemEngineAccountHistoryAsync(account, limit) {
     });
 }
 
+async function getFullScotAccountHistoryAsync(account) {
+    const transfers = await callApi(
+        'https://api.steem-engine.com/accounts/history',
+        {
+            account,
+            limit: 50,
+            offset: 0,
+            type: 'user',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+            v: new Date().getTime(),
+        }
+    );
+    const history = await getScotDataAsync('get_account_history', {
+        account,
+        token: LIQUID_TOKEN_UPPERCASE,
+        limit: 50,
+        startTime: new Date().getTime(),
+    });
+    return transfers
+        .concat(history)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+}
+
 export async function getScotDataAsync(path, params) {
     return callApi(`https://scot-api.steem-engine.com/${path}`, params);
 }
@@ -43,13 +66,11 @@ export async function getScotAccountDataAsync(account) {
 
 async function getAccount(account) {
     const accounts = await api.getAccountsAsync([account]);
-    console.log(accounts);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
 async function getGlobalProps() {
     const gprops = await api.getDynamicGlobalPropertiesAsync();
-    console.log(gprops);
     return gprops;
 }
 
@@ -192,7 +213,7 @@ export async function attachScotData(url, state) {
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
             getScotAccountDataAsync(account),
-            getSteemEngineAccountHistoryAsync(account),
+            getFullScotAccountHistoryAsync(account),
             ssc.find('tokens', 'balances', {
                 account,
             }),
@@ -225,10 +246,7 @@ export async function attachScotData(url, state) {
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
-            // Reverse to show recent activity first
-            state.accounts[
-                account
-            ].transfer_history = transferHistory.reverse();
+            state.accounts[account].transfer_history = transferHistory;
         }
 
         if (allTokenBalances) {
