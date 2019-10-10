@@ -625,6 +625,12 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
         "request_id": "Request ID: %(request_id)s"
     },
     "savingswithdrawhistory_jsx": {
