@@ -27,7 +27,7 @@ const map = {
     riverflows: 'Natural Medicine Founder',
     metametheus: 'And if you listen very hard...',
     tryskele: 'Be The Change',
-    'a1''shroom''spores': 'Hemp token owner',
+    'a1-shroom-spores': 'Hemp token owner',
     
     
 
