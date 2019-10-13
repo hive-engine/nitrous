@@ -27,7 +27,7 @@ const SortOrder = ({
     // If we are at the homepage, the sort order is 'trending'
     if (pathname === '/') {
         tag = '';
-        sort = 'movie';
+        sort = '';
     } else if (topic === 'feed') {
         tag = '';
         sort = 'created';

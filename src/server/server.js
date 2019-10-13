@@ -171,7 +171,7 @@ app.use(function*(next) {
     // redirect to home page/feed if known account
     if (this.method === 'GET' && this.url === '/') {
         this.status = 302;
-        this.redirect('/movie');
+        this.redirect('/home');
         return;
     }
     // normalize user name url from cased params

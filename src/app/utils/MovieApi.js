@@ -1,5 +1,20 @@
 import axios from 'axios';
 
+export async function getSummary(languageCode) {
+    try {
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetSummary?languageCode=${
+                languageCode
+            }`
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
 export async function getMovies(
     languageCode,
     movieType,

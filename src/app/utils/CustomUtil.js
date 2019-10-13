@@ -179,3 +179,15 @@ export function getMovieTypeName(state) {
 
     return type;
 }
+
+export function getRecentMovies(movieType, summary) {
+    return summary.RecentMovies.filter(o => o.Type === movieType).sort(
+        (o, n) => n.ReleaseDate - o.ReleaseDate || n.Id - o.Id
+    );
+}
+
+export function getRecentReviews(movieType, summary) {
+    return summary.RecentReviews.filter(o => o.MovieType === movieType).sort(
+        (o, n) => n.AddDate - o.AddDate
+    );
+}

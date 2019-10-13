@@ -33,7 +33,7 @@ describe('routeRegex', () => {
 
 describe('resolveRoute', () => {
     const test_cases = [
-        ['/', { page: 'Movies' }],
+        ['/', { page: 'Home' }],
         ['/about.html', { page: 'About' }],
         ['/faq.html', { page: 'Faq' }],
         ['/login.html', { page: 'Login' }],

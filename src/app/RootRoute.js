@@ -1,5 +1,6 @@
 import App from 'app/components/App';
 import Benchmark from 'app/components/pages/Benchmark';
+import Home from 'app/components/pages/Home';
 import PostsIndex from 'app/components/pages/PostsIndex';
 import Movies from 'app/components/pages/Movies';
 import Movie from 'app/components/pages/Movie';
@@ -104,6 +105,8 @@ export default {
             cb(null, [Movie]);
         } else if (route.page === 'Reviews') {
             cb(null, [Reviews]);
+        } else if (route.page === 'Home') {
+            cb(null, [Home]);
         } else {
             //require.ensure([], (require) => {
             cb(process.env.BROWSER ? null : Error(404), [
@@ -113,6 +116,6 @@ export default {
         }
     },
     indexRoute: {
-        component: Movies.component,
+        component: Home.component,
     },
 };

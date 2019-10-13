@@ -20,7 +20,10 @@ export const routeRegex = {
 
 export default function resolveRoute(path) {
     if (path === '/') {
-        return { page: 'Movies' };
+        return { page: 'Home' };
+    }
+    if (path === '/home') {
+        return { page: 'Home' };
     }
     if (path === '/about.html') {
         return { page: 'About' };

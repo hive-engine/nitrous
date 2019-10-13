@@ -9,7 +9,7 @@ class NotFound extends React.Component {
             <div>
                 <div className="row Header__nav">
                     <div className="small-5 large-4 columns Header__logotype">
-                        <a href="/movie">
+                        <a href="/home">
                             <AppLogo />
                         </a>
                     </div>
