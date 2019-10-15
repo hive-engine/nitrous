@@ -296,6 +296,8 @@ export function* fetchData(action) {
         args = [
             {
                 limit: constants.FETCH_DATA_BATCH_SIZE,
+                start_author: author,
+                start_permlink: permlink,
             },
         ];
     } else if (order === 'ulogs' || order === 'steemgigs') {

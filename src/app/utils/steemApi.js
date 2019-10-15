@@ -187,7 +187,8 @@ export async function attachScotData(url, state) {
 
         if (feedType == 'certified') {
             path = `get_feed`;
-            discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+            discussionQuery.tag = CERTIFIED_POST_ACCOUNT;
+            discussionQuery.include_reblogs = '';
         } else if (feedType == 'ulogs' || feedType == 'steemgigs') {
             path = `get_discussions_by_created`;
 
@@ -376,9 +377,6 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     if (callNameMatch) {
         const order = callNameMatch[1].toLowerCase();
         let callName = `get_discussions_by_${order}`;
-        if (order == 'feed') {
-            callName = 'get_feed';
-        }
         let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
@@ -387,15 +385,17 @@ export async function fetchFeedDataAsync(call_name, ...args) {
         if (order == 'certified') {
             asyncCounter = asyncCounter + 1;
             callName = `get_feed`;
-            discussionQuery.account = CERTIFIED_POST_ACCOUNT;
+            discussionQuery.tag = CERTIFIED_POST_ACCOUNT;
             discussionQuery.start_entry_id = asyncCounter * fetchSize;
+            discussionQuery.include_reblogs = '';
         } else if (order == 'ulogs' || order == 'steemgigs') {
             callName = `get_discussions_by_created`;
 
             if (order == 'ulogs') discussionQuery.tag = 'ulog';
             else discussionQuery.tag = order;
-        }
-        if (order == 'blog') {
+        } else if (order == 'feed') {
+            callName = 'get_feed';
+        } else if (order == 'blog') {
             discussionQuery.include_reblogs = true;
         }
         if (!discussionQuery.tag) {
