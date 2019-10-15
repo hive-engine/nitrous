@@ -115,6 +115,22 @@ export function dictToArray(o) {
     return result;
 }
 
+export function getPostCoverThumbnailUrl(url) {
+    if (url) {
+        return `https://steemitimages.com/19x28/${url}`;
+    } else {
+        return null;
+    }
+}
+
+export function getMoviePosterThumbnailUrl(imagePath) {
+    if (imagePath) {
+        return `${movieImageBaseUrl}/w92${imagePath}`;
+    } else {
+        return null;
+    }
+}
+
 export function getMoviePosterUrl(imagePath) {
     if (imagePath) {
         return `${movieImageBaseUrl}/w500${imagePath}`;
@@ -156,6 +172,10 @@ export function getMovieTopCasts(movieDetails) {
     return movieDetails.Credits.Cast.slice(0, 6);
 }
 
+export function getMovieTypeName(movieType) {
+    return movieType === 1 ? 'movie' : 'tv';
+}
+
 export function getMovieListName(movieType) {
     return movieType === 1 ? 'movies' : 'tvs';
 }
@@ -168,7 +188,7 @@ export function getListLoadedConditionName(movieType) {
     return movieType === 1 ? 'isMoviesLoaded' : 'isTvsLoaded';
 }
 
-export function getMovieTypeName(state) {
+export function getMovieTypeNameByState(state) {
     let type = state.app.get('location').pathname.toLowerCase();
 
     if (type.indexOf('/movie') === 0) {
@@ -180,14 +200,14 @@ export function getMovieTypeName(state) {
     return type;
 }
 
-export function getRecentMovies(movieType, summary) {
-    return summary.RecentMovies.filter(o => o.Type === movieType).sort(
-        (o, n) => n.ReleaseDate - o.ReleaseDate || n.Id - o.Id
-    );
+export function getRecentMovies(movieType, list) {
+    return list
+        .filter(o => o.Type === movieType)
+        .sort((o, n) => n.ReleaseDate - o.ReleaseDate || n.Id - o.Id);
 }
 
-export function getRecentReviews(movieType, summary) {
-    return summary.RecentReviews.filter(o => o.MovieType === movieType).sort(
-        (o, n) => n.AddDate - o.AddDate
-    );
+export function getRecentReviews(movieType, list) {
+    return list
+        .filter(o => o.MovieType === movieType)
+        .sort((o, n) => n.AddDate - o.AddDate);
 }

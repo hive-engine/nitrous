@@ -1003,6 +1003,14 @@
             "type": "종류",
             "language": "언어"
         },
+        "summary": {
+            "recent_movies": "최근 영화",
+            "recent_tvs": "최근 TV",
+            "recent_movie_reviews": "최근 영화 리뷰",
+            "recent_tv_reviews": "최근 TV 리뷰",
+            "title": "제목",
+            "created": "등록일"
+        },
         "option": {
             "release_date": "개봉일",
             "review_date": "리뷰작성일",

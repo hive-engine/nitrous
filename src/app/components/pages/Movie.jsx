@@ -365,7 +365,7 @@ module.exports = {
     path: ':type/:id',
     component: connect(
         (state, ownProps) => {
-            const type = CustomUtil.getMovieTypeName(state);
+            const type = CustomUtil.getMovieTypeNameByState(state);
             const movieType = type === 'movie' ? 1 : 2;
             const id = parseInt(ownProps.params.id);
             let movie = state.movie.get(CustomUtil.getMovieListName(movieType));

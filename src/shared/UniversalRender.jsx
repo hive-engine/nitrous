@@ -331,7 +331,9 @@ export async function serverRender(
 
         const movie = movieDefaultState;
 
-        if (url.match(routeRegex.Movies) || url.match(routeRegex.Tvs)) {
+        if (url === '/home') {
+            movie.summary = await movieApi.getSummary(userPreferences.locale);
+        } else if (url.match(routeRegex.Movies) || url.match(routeRegex.Tvs)) {
             let movieType;
             if (url.indexOf('/movie') === 0) {
                 movieType = 1;

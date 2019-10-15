@@ -896,6 +896,14 @@
             "type": "TYPE",
             "language": "LANGUAGE"
         },
+        "summary": {
+            "recent_movies": "Recent Movies",
+            "recent_tvs": "Recent TVs",
+            "recent_movie_reviews": "Recent Reviews (Movie)",
+            "recent_tv_reviews": "Recent Reviews (TV)",
+            "title": "Title",
+            "created": "Created"
+        },
         "option": {
             "release_date": "Release Date",
             "review_date": "Review Created",
