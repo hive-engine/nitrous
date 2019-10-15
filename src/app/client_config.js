@@ -1,6 +1,35 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
+    'vit.global': {
+        APP_NAME: 'VisionIndustry',
+        APP_ICON: 'vitp',
+        APP_ICON_WIDTH: '125px',
+        APP_ICON_HEIGHT: '40px',
+        APP_URL: 'https://vit.global',
+        APP_DOMAIN: 'vit.global',
+        LIQUID_TOKEN: 'VIT',
+        LIQUID_TOKEN_UPPERCASE: 'VITP',
+        APP_MAX_TAG: 10,
+        SCOT_TAG: 'vit',
+        TAG_LIST: fromJSOrdered(['vit']),
+        INTERLEAVE_PROMOTED: true,
+        PROMOTED_POST_ACCOUNT: 'null',
+        VESTING_TOKEN: 'VIT POWER',
+        SITE_DESCRIPTION:
+            'VisionIndustry is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called VIT, that ' +
+            'supports real value for digital rewards through market price discovery and liquidity',
+        // Revive Ads
+        NO_ADS_STAKE_THRESHOLD: 9999999999,
+        REVIVE_ADS: {},
+        ALLOW_MASTER_PW: false,
+        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+        POST_FOOTER: '',
+        SCOT_TAG_FIRST: false,
+        PINNED_POSTS_URL: null,
+        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-26',
+    },
     'dblog.io': {
         APP_NAME: 'DBlog',
         APP_ICON: 'dblog',
