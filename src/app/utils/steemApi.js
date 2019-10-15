@@ -154,10 +154,18 @@ async function fetchMissingData(
         discussionIndex.push(key);
     });
     state.content = filteredContent;
-    if (!state.discussion_idx[tag]) {
-        state.discussion_idx[tag] = {};
+    if (feedType == 'blog' || feedType == 'feed') {
+        // author feeds
+        if (!state.accounts[tag]) {
+            state.accounts[tag] = {};
+        }
+        state.accounts[tag][feedType] = discussionIndex;
+    } else {
+        if (!state.discussion_idx[tag]) {
+            state.discussion_idx[tag] = {};
+        }
+        state.discussion_idx[tag][feedType] = discussionIndex;
     }
-    state.discussion_idx[tag][feedType] = discussionIndex;
 }
 
 export async function attachScotData(url, state, scotTokenSymbol) {
@@ -245,22 +253,42 @@ export async function attachScotData(url, state, scotTokenSymbol) {
         return;
     }
 
-    /* Not yet robust (no resteems here, will yield inconsistent behavior?). also need to add to authors[..]/feed.
     urlParts = url.match(/^[\/]?@([^\/]+)\/feed[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync(
-            'get_feed',
-            {
-                token: scotTokenSymbol,
-                account,
-                limit: 20,
-            }
+        let feedData = await getScotDataAsync('get_feed', {
+            token: scotTokenSymbol,
+            tag: account,
+            limit: 20,
+        });
+        await fetchMissingData(
+            account,
+            'feed',
+            state,
+            feedData,
+            scotTokenSymbol
         );
-        await fetchMissingData(account, '', state, feedData, scotTokenSymbol);
         return;
     }
-    */
+
+    urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        let feedData = await getScotDataAsync('get_discussions_by_blog', {
+            token: scotTokenSymbol,
+            tag: account,
+            limit: 20,
+            include_reblogs: true,
+        });
+        await fetchMissingData(
+            account,
+            'blog',
+            state,
+            feedData,
+            scotTokenSymbol
+        );
+        return;
+    }
 
     if (state.content) {
         await Promise.all(
@@ -309,6 +337,7 @@ export async function getStateAsync(url, scotTokenSymbol) {
     const steemitApiStateNeeded = !url.match(
         /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
     );
+
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
         : {
@@ -340,22 +369,26 @@ export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
     );
     if (callNameMatch) {
         const order = callNameMatch[1].toLowerCase();
-        const discussionQuery = {
+        let callName = `get_discussions_by_${order}`;
+        if (order == 'feed') {
+            callName = 'get_feed';
+        }
+        let discussionQuery = {
             ...args[0],
             token: scotTokenSymbol,
         };
+        if (order == 'blog') {
+            discussionQuery.include_reblogs = true;
+        }
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(
-            `get_discussions_by_${order}`,
-            discussionQuery
-        );
+        feedData = await getScotDataAsync(callName, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
