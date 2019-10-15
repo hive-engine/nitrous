@@ -74,6 +74,7 @@ const map = {
     'thanatoss': 'Verified Creator',
     'ananke': 'Verified Creator',
     'perfectpussy': 'Verified Creator',
+    'japanhd': 'Verified Creator',
 };
 
 export default map;
