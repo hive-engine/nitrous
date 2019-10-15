@@ -450,6 +450,7 @@ class UserWallet extends React.Component {
                         </div>
                     </div>
                 )}
+                <hr />
                 {/* STEEM */}
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
@@ -540,6 +541,7 @@ class UserWallet extends React.Component {
                         )}
                     </div>
                 </div>
+                <hr />
                 {/* Steem Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div
