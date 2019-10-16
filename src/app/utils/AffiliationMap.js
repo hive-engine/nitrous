@@ -13,6 +13,9 @@ const map = {
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
+    
+    // Adminstrator
+    dporn: 'Admin',
 
     // Verified Creator
     thescarletletter: 'Verified Creator',
