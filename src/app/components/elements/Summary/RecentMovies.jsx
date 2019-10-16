@@ -52,6 +52,7 @@ export default function RecentMovies(props) {
                                 </Link>
                             </TableCell>
                             <TableCell
+                                nowrap="true"
                                 align="right"
                                 className="hide-for-small-only"
                             >

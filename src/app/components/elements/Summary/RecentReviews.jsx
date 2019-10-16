@@ -37,7 +37,10 @@ export default function RecentReviews(props) {
                     {CustomUtil.getRecentReviews(type, list).map(e => (
                         <TableRow key={e.Author + e.Permlink}>
                             <TableCell>
-                                <Link to={`/@${e.Author}/${e.Permlink}`}>
+                                <Link
+                                    to={`/@${e.Author}/${e.Permlink}`}
+                                    className={classes.link}
+                                >
                                     {e.CoverImgUrl && (
                                         <img
                                             className={classes.thumbnail}
@@ -50,6 +53,7 @@ export default function RecentReviews(props) {
                                 </Link>
                             </TableCell>
                             <TableCell
+                                nowrap="true"
                                 align="right"
                                 className="hide-for-small-only"
                             >

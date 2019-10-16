@@ -902,7 +902,8 @@
             "recent_movie_reviews": "Recent Reviews (Movie)",
             "recent_tv_reviews": "Recent Reviews (TV)",
             "title": "Title",
-            "created": "Created"
+            "created": "Created",
+            "featured_reviews": "Featured Reviews"
         },
         "option": {
             "release_date": "Release Date",

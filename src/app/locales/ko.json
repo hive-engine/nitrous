@@ -1009,7 +1009,8 @@
             "recent_movie_reviews": "최근 영화 리뷰",
             "recent_tv_reviews": "최근 TV 리뷰",
             "title": "제목",
-            "created": "등록일"
+            "created": "등록일",
+            "featured_reviews": "추천 리뷰"
         },
         "option": {
             "release_date": "개봉일",
