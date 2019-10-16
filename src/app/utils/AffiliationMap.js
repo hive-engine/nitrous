@@ -76,6 +76,7 @@ const map = {
     'perfectpussy': 'Verified Creator',
     'japanhd': 'Verified Creator',
     'effema': 'Verified Creator',
+    'badbradley': 'Verified Creator',
 };
 
 export default map;
