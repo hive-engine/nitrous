@@ -4,7 +4,7 @@
 written by Achim Mertens
 
 
-The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either directly support their favorite beneficence helpers or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
+The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either support their favorite beneficence helpers directly or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
 
 
 
@@ -16,18 +16,19 @@ _(Sketch of Alfred Nobel by Achim Mertens)_
 
 *   The Problem
 *   The Solution
-*   Four Winning Participants With NOBEL
+*   Six Winning Participants With NOBEL
 *   Some Rules
 *   The Whales
 *   NOBEL FAQ
 *   Further Information About NOBEL
 *   Disclaimer
 *   Contact
+*   Steem FAQ
 
 The Problem:
 ============
 
-A lot of people in the world work on charity projects or help their neighbors or do other good things to people. They don’t get rewarded for this and therefore they cannot help effectively nor do they have money for themselves (and need to have another job). On the other hand there are people willing to support needy people, but they don't know how to hand over the money to them. With NGOs the donators don't see really what happens with their money. Also there is a loss due to transaction costs and middlemen. This is the targetgroup for the NOBEL world:
+A lot of people in the world work on charity projects or help their neighbors or do other good things to people. They don’t get rewarded for this and therefore they cannot help effectively nor do they have money for themselves (and need to have another job). On the other hand there are people willing to support people in need, but they don't know how to hand over the money to them. With NGOs the donators don't see really what happens with their money. Also there is a loss due to transaction costs and middlemen. This is the targetgroup for the NOBEL world:
 
 *   People, who need help.
 *   People, who want to do something that counts to someone.
@@ -53,7 +54,7 @@ Approach:
     *   NOBEL offers a good hearded community, that brings together charity givers and takers.
     *   NOBEL offers a sense in this chaotic world and the feeling to be important.
     *   The main goal with the NOBEL token is to appreciate humanity.
-    *   The actors:
+    *   The actors (more details see below "6 winning participants"):
         *   A donator
             *   can buy NOBEL. This money backs the system.
             *   can use the NOBEL to donate them directly to charity helpers.
@@ -69,7 +70,7 @@ Approach:
             *   should get some NOBEL token and stake them. This gives her higher weighted voting power.
             *   With her upvotes she gives posts with hashtag #nobel a value, that is appreciated by the Scotbot.
         *   The Scotbot
-            *   This bot has a lot of NOBEL token in his backpack (total amount of NOBEL in the system is one billion).
+            *   This bot has a lot of NOBEL token in his backpack.
             *   The bot checks each post on the STEEM blockchain, that is tagged with #nobel.
             *   The bot gives the author and the curators a small amount of NOBEL, depending on the number and power of upvotes.
         *   The needy people
@@ -78,16 +79,18 @@ Approach:
     *   The NOBEL token is an automated system, based on the STEEM blockchain, that warranties, that all these actors find together and that their interactions are fullfilled trustworthy.
     *   There have been 1,000,000,000 (10 ^ 9) NOBEL coins created initially on July 19. 2019 by Achim Mertens.
     *   The authors, curators and the token creator earn STEEM also with each post they write or curate. This is their salary. They can also sell the NOBEL token, but at least for the whales this should not be the first option to keep the price high and trust into that system.
+    *   The frontend is http://nobel.charity. This has the look and feel like other social medias, except that there is a "price" for each post, that shows the value of NOBEL. Other Steem-frontends like steemit.com or steempeak.com or busy.org do also work, then you need some filters to find the NOBEL community (i.e. .../created/nobel).
 
  Benefits:
 ----------
 
 *   Value for the participants:
-    *   We have created a system that is self-amplifying. The more people join, the more stable gets the system. With the next steps the token creator wants to establish an own webpage with a look and feel like a discrete social media platform (one could name it a "charity facebook"). The owner of NOBEL tokens are the owner of this system. With their voting power they can influence the next steps.
+    *   The NOBEL-System was created to be self-amplifying. The more people join, the more stable gets the system. 
+    *   The owner of NOBEL tokens are the owner of this system. With their voting power they can influence the next steps.
 
 *   Measurements:
     *   There are some tools to see what is going on:
-        *   [https://steemit.com/created/nobel](https://steemit.com/created/nobel)
+        *   [https://nobel.charity](https://nobel.charity) (or [https://steemit.com/created/nobel](https://steemit.com/created/nobel))
             *   This page is the basic entry to the system. There one can see all posts with the hashtag #nobel. It is based on the STEEM platform. To join you need a STEEM account.
         *   [https://steem-engine.com/?p=sign\_in](https://steem-engine.com/?p=sign_in)
             *   Here you can exchange STEEM into NOBEL and backwards. You can claim your NOBEL tokens there.
@@ -124,7 +127,8 @@ They get help without delivering something. But they should try to get out of th
 
 Now they get rewarded for the job they do. They can (and should) sell (or stake) the NOBEL coins. The only thing they have to do additional is to write and post about their work to create Proof of Charity and therefore trust into the coin. This is important to increase the value. Please use the hashtags #nobel and #steem. People, that do charity, should note how much time and how much money they have spend. That gives us a guess how many NOBEL this person should get. Example (originally taken from [@yohanon](https://steempeak.com/@yohan2on)):
 
-> Yohan has bought 12 pairs of shoes for needy children and payed 35 US-Dollars for it. This is worth (with 1 NOBEL=1 STEEM = 0,35 US Dollar/STEEM) = 100 NOBEL for the shoes + further 100 (or whatever he guesses) NOBEL for the effort. He shall write it in his blog (#nobel), what the costs are and then he shall sell 200 NOBEL from his account. After that the supporter can buy 200 Nobel with his FIAT Money to keep the prize stable. [![](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)
+> Yohan has bought 12 pairs of shoes for needy children and payed 35 US-Dollars for it. This is worth (with 1 NOBEL=1 STEEM = 0,35 US Dollar/STEEM) = 100 NOBEL for the shoes + further 100 (or whatever he guesses) NOBEL for the effort. He shall write it in his blog (#nobel), what the costs are and then he shall sell 200 NOBEL from his account. After that the supporter can buy 200 Nobel with his FIAT Money to keep the prize stable. 
+> [![](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)](https://greensniper.files.wordpress.com/2019/07/shoes_for_needy_kids.png)
 
 
 3\. The Donators
@@ -145,7 +149,7 @@ By buying NOBEL and staking it, the donator gets an investor and curator<br>
 
 The investors can buy new NOBEL and therefore give "real" money to the charity helpers. They can stake the coin and hope in a price raise. With staked NOBEL they can also curate.
 
-5.\ The Curators
+5\. The Curators
 ----------------
 Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators. 5% of the distributed NOBEL go to the curators, 95% to the authors.
 They can upvote blogs with the hashtag #nobel to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system. They own a part of the NOBEL system.
