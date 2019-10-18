@@ -143,6 +143,14 @@ const SidePanel = ({
                 link: '/submit.html',
             },
         ],
+        extras_WEED: [
+            {
+                value: 'whitepaper',
+                label: 'White Paper',
+                internal: true,
+                link: '/@coffeebuds/weedcash-network-white-paper',
+            },
+        ],
     };
 
     return (
@@ -152,6 +160,14 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
                 </ul>
+
+                {sidePanelLinks['extras_' + scotTokenSymbol] && (
+                    <ul className={'vertical menu'}>
+                        {sidePanelLinks['extras_' + scotTokenSymbol].map(
+                            makeLink
+                        )}
+                    </ul>
+                )}
 
                 <ul className="vertical menu">
                     <li>
