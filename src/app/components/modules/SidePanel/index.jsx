@@ -119,6 +119,7 @@ const SidePanel = ({
                 value: 'lassediscord',
                 label: 'Discord',
                 link: 'https://discord.gg/5JW2w9t',
+            },
             {
                 value: 'lassefaq',
                 label: 'FAQ',
