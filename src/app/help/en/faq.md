@@ -151,20 +151,20 @@ The investors can buy new NOBEL and therefore give "real" money to the charity h
 
 5\. The Curators
 ----------------
-Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators. 5% of the distributed NOBEL go to the curators, 95% to the authors.
+Curators are people that have staked NOBEL. They either got it by writing blogs with hashtag #nobel and getting upvotes from other NOBEL-staker or they have been gifted some NOBEL or they have bought it. The more NOBEL they have staked, the more NOBEL are send from the distribution bot to the author and curators (the staked NOBEL are untouched). 5% of the distributed NOBEL go to the curators, 95% to the authors.
 They can upvote blogs with the hashtag #nobel to support the helpers without losing own coins. They can upvote blogs to influence the direction for future steps with the NOBEL system. They own a part of the NOBEL system.
 
 
 6\. The System Itself And The Market Members
 --------------------------------------------
 
-New members have an ability to invest their money into a system that helps people. So they can win value, if the price rises. And they know, that the money is good invested (even if the price falls). Everyone can write blogs about NOBEL (with #nobel) and when the quality is good they can get gifts (later: upvotes) and therefore earn these tokens also. ![NOBEL_Circles](https://greensniper.files.wordpress.com/2019/07/nobel_circles.jpeg)
+New members have an ability to invest their money into a system that helps people. So they can win value, if the price rises. And they know, that the money is good invested (even if the price falls). Everyone can write blogs about NOBEL (with #nobel) and when the quality is good they can get upvotes and therefore earn these tokens also. ![NOBEL_Circles](https://greensniper.files.wordpress.com/2019/07/nobel_circles.jpeg)
 
 
 Some Rules To Handle The NOBEL Token:
 =====================================
 
-*   **Humanity is more important than greed!!!** It is more important to support needy people than to get rich with the token. Please live this to get trust to the coin.
+*   **Humanity is more important than greed!!!** It is more important to support charity helpers and needy people than to get rich with the token. Please live this to get trust to the coin.
 *   Give the token (or stake it and upvote ) to people, that have done good things to other people.
 *   When you have done good things,
     *   please write about it and use the #nobel tag. It is important that others get aware of it to find supporters, that buy the token.
@@ -184,8 +184,11 @@ A smal group of people has got 100,000.00 token in the beginning. They have some
 How do they get value into NOBEL?
 ---------------------------------
 
-It's all about: Find more buyers than sellers. The coin itself has no value at all. The price will drop drastically, when we sell without having buyers. We need to establich a working system, that has value and then the money will follow. [![](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)       _(left: initial status of NOBEL, right: healthy status of another coin)_ Achim (the creator of this token) is going to buy,
+It's all about: Find more buyers than sellers. The coin itself has no value at all. The price will drop drastically, when we sell without having buyers. We need to establich a working system, that has value and then the money will follow.
+[![](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)](https://greensniper.files.wordpress.com/2019/07/nobel-value.png)       
+_(left: initial status of NOBEL, right: healthy status of another coin)_ 
 
+Achim (the creator of this token) is going to buy,
 *   When people do charity (see example above)
 *   max. 80 US Dollar/Month (status 2019/07)
 
@@ -194,7 +197,10 @@ If we find more people, that follow the example of Achim, then the budget is hig
 What should they upvote?
 ---------------
 
-With the upvotes from the whales they further incentivise people that are bringing value into our NOBEL system. This can be advertising/influencing or writing about projects, where the NOBEL coin is involved. ![image.png](https://steemitimages.com/0x0/https://files.steempeak.com/file/steempeak/achimmertens/VXn8ovGd-image.png) _(Sketch by Achim Mertens)_ For details about the configuration of the scotbot see [here](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now).
+With the upvotes from the whales they further incentivise people that are bringing value into our NOBEL system. This can be advertising/influencing or writing about projects, where the NOBEL coin is involved. 
+![image.png](https://steemitimages.com/0x0/https://files.steempeak.com/file/steempeak/achimmertens/VXn8ovGd-image.png) 
+_(Sketch by Achim Mertens)_ 
+For details about the configuration of the scotbot see [here](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now).
 
 # NOBEL_FAQ:
 
@@ -208,12 +214,14 @@ With the upvotes from the whales they further incentivise people that are bringi
 
 **What can I do with the NOBEL (use cases)?**
 *   You can gift it to people, that do charity. (See also: "To whom can I gift the NOBEL?")
+*   You can send it to @anobel, the Scotbotaccount. This money is used to be distributed, depending on the upvotes. With this you trust the community to decide, who shall get the most.
 *   You can stake it, to spend it later, when it has (hopefully) more value.
 *   You can sell it (for hopefully a better price).
 *   You can gift NOBEL as a (birthday) present
 *   You can use NOBEL instead of gaming coins (and gift the pot)
 *   You can pay helpers (when they accept it)
 *   ... (more ideas welcome)
+
 
 **Who shall buy the NOBEL?** 
 Everyone can do that. The target group is people, that want to do good things, but don't know how. With buying NOBEL you support charity workers. 
@@ -227,6 +235,7 @@ Sometimes, when you put things together something magic happens: Emergence. For 
 1.  The price has to find its value (Launch phase July-October 2019)
 2.  The price will rise
 3.  The price will stabilize
+
 
 **How big is the risk when I buy NOBEL?** 
 In that moment you buy, the price increases, which is good for the charity workers. When you gift the coin, then there is a (normal) risk for you, that the recipient do something other with your money. But with the Proof of Charity concept this risk is minimalized. When you keep it, then there is the normal market risk with every coin. The charity helpers sell the coins as soon as they need money. This keeps the risk of market effects for them low. There is a risk, that people get NOBLE coins by misusing the #noble tag, getting upvoted by others and then selling the coin. This is not the best idea for these people, because they can also get downvotes, which decreases the value of their posts and their (STEEM-) reputation. Especially, when a whale downvotes. But nevertheless, there is a small risk, that people get this coin without deserving it. Let's see in the future how big this effect is. One can observe the NOBEL market here: https://steem-engine.rocks/transactions?symbol=NOBEL 
@@ -278,8 +287,8 @@ In the beginning it is [@Yohan2on](https://steempeak.com/@yohan2on) (I met him 
 Then you should hopefully get some of the coins. 
 
 ## Further Information About NOBEL:
-Meeting Protocol Jul/22/2019 "[next-steps-for-teamuganda-with-the-nobel-coin](https://steempeak.com/nobel/@achimmertens/next-steps-for-teamuganda-with-the-nobel-coin)" </br>
-Status Report Jul/24/2019 "[nobel-project-status-report-2019-07-24](https://steempeak.com/nobel/@achimmertens/nobel-project-status-report-2019-07-24)" </br>
+Meeting Protocol Jul/22/2019 "[next-steps-for-teamuganda-with-the-nobel-coin](https://steempeak.com/nobel/@achimmertens/next-steps-for-teamuganda-with-the-nobel-coin)" <br>
+Status Report Jul/24/2019 "[nobel-project-status-report-2019-07-24](https://steempeak.com/nobel/@achimmertens/nobel-project-status-report-2019-07-24)" <br>
 Scotbot: "[the-scotbot-distributes-the-nobel-token-now"](https://steempeak.com/nobel/@achimmertens/the-scotbot-distributes-the-nobel-token-now)
 
 ## Some Voices From NOBEL Participants
@@ -313,9 +322,9 @@ Contact
 ===========
 
 Achim Mertens </br>
-https://nobel.charity/@achimmertens </br>
-https://steempeak.com/@achimmertens </br>
-twitter: @greensniper </br>
+https://nobel.charity/@achimmertens <br>
+https://steempeak.com/@achimmertens <br>
+twitter: @greensniper <br>
 mail: achim_mertens@gmx.de (use "#nobel" in the mail header) 
 
 
