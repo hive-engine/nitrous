@@ -1,5 +1,5 @@
 <span id="disable_router_nav_history_direction_check"></span>
-# Steemit FAQ
+# LASSECASH FAQ
 
 ## <span id="Table_of_Contents">Table of Contents</span>
 
