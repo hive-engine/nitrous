@@ -122,6 +122,21 @@ const SidePanel = ({
                 label: 'Discord',
                 link: 'https://discord.gg/A4NVCrP',
             },
+            {
+                value: 'telegram',
+                label: 'Telegram',
+                link: 'https://t.me/sandiegocoin',
+            },
+            {
+                value: 'sandiegoeos',
+                label: 'San Diego EOS',
+                link: 'http://sandiegoeos.com',
+            },
+            {
+                value: 'challengedapp',
+                label: 'challengedapp.io',
+                link: 'https://challengedapp.io',
+            },
         ],
         legal: [
             {
