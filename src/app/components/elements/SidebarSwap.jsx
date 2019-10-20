@@ -6,6 +6,10 @@ import {
 } from 'app/utils/ParsersAndFormatters';
 
 const SelectToken = props => {
+    var options = props.input_token_type.map(function(token_name, index) {
+        return <option value={index}>{token_name}</option>;
+    });
+
     return (
         <div
             className="input-group"
@@ -16,16 +20,17 @@ const SelectToken = props => {
                 type="text"
                 placeholder={tt('g.amount')}
                 value={props.amount}
-                ref="amount"
+                // ref="amount"
                 autoComplete="off"
                 onChange={props.amountChange}
             />
             <div className="pd-0 bg-x">
-                <select>
+                <select onChange={props.selectedChange}>{options}</select>
+                {/* <select>
                     {props.input_token_type.map((token_name, i) => {
                         return <option>{token_name}</option>;
                     })}
-                </select>
+                </select> */}
             </div>
         </div>
     );
@@ -39,12 +44,27 @@ export default class SidebarSwap extends Component {
         this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
         this.swap_fee = 1.0;
 
+        this.selected_token = [0, 0];
+
         this.state = {
             amount: 0,
             output_amount: 0,
+            selectedValue: '',
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.amountChange = this.amountChange.bind(this);
+        this.inputSelected = this.inputSelected.bind(this);
+        this.outputSelected = this.outputSelected.bind(this);
+    }
+
+    inputSelected(e) {
+        console.log('-- PromotePost.inputSelected -->', e.target.value);
+        this.selected_token[0] = e.target.value * 1;
+    }
+
+    outputSelected(e) {
+        console.log('-- PromotePost.outputSelected -->', e.target.value);
+        this.selected_token[1] = e.target.value * 1;
     }
 
     componentDidMount() {}
@@ -94,6 +114,8 @@ export default class SidebarSwap extends Component {
                             <SelectToken
                                 amount={amount}
                                 amountChange={this.amountChange}
+                                selectedChange={this.inputSelected}
+                                selectedValue={this.state.selectedValue}
                                 input_token_type={this.input_token_type}
                                 marginBottom={0}
                             />
@@ -106,6 +128,8 @@ export default class SidebarSwap extends Component {
                             <SelectToken
                                 amount={output_amount}
                                 amountChange={this.amountChange}
+                                selectedChange={this.outputSelected}
+                                selectedValue={this.state.selectedValue}
                                 input_token_type={this.output_token_type}
                                 marginBottom={10}
                             />
