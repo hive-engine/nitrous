@@ -6,7 +6,9 @@
 
 LOTUS is a social coin for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices. Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow food and plants as medicine. Earn LOTUS by publishing or interacting with others on the platform. 
 
-This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate the page. Below that is a section of "Helpful Posts", which contains a collection of posts from both the community itself as well as users. 
+This page is full of information to help you learn about how to use our platform. 
+
+Once you have signed up, we recommend the 'Learn Lotus' posts which are particularly helpful to learn about how to to trade and buy LOTUS, how to format posts, what it means to delegate, and many other useful posts besides! 
 
 ![](https://i.imgur.com/hplLJle.png)
 
@@ -42,7 +44,7 @@ This page is full of information to help you learn about how to use our platform
 - <a href="#Digital_Currencies">Digital Currencies</a>
 - <a href="#Cashing_out_or_Spending_LOTUS">Cashing out or Spending LOTUS</a>
 - <a href="#Frequently_Asked_Questions">Frequently Asked Questions</a>
-- <a href="#Helpful_Posts">Helpful Posts & Other Resources</a>
+- <a href="#Lotus_Tips">Lotus Tips</a>
 
 
 ***
@@ -244,7 +246,9 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 
 ***
 
-## <span id="Helpful_Posts_from_Natural Medicine_Users">Helpful Posts from Natural Medicine</span>
+## <span id="Lotus_Tips">Lotus Tips</span>
+
+Below you'll find a heap of posts that are really helpful in learning to navigate the platform, from how to buy and trade LOTUS, to formatting tips. 
 
 
 - [Introducing Lotus Coin for the Natural Medicine Community](https://steempeak.com/naturalmedicine/@naturalmedicine/introducing-lotus-coin-for-the-natural-medicine-community)
@@ -255,13 +259,15 @@ This is a great way to connect to others and learn. Keep an eye on the @naturalm
 - [The Natural Medicine Manifesto](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
 - [Standards for Content](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
 - [Frequently Asked Questions](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq)
-- [How to Buy Lotus on SteemEngine]()
+- [How to Buy Lotus on SteemEngine](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
 - [Some Formatting Tips](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
 - [Natural Medicine Greenpaper]() - Explanation of how the platform works (COMING SOON!)
 
 
 <a href="#Table_of_Contents">^</a>
 ## <span id="Posts by Users"> Posts by Users </span>
+
+Natural Medicine embraces many of the following aspects of alternative medicine. Each of the posts below outlines a little of how LOTUS might reward the communities, and topics, you might choose to post under. 
 
 - [Lotus for Vegans](https://steempeak.com/naturalmedicine/@plantstoplanks/lotus-coin-for-vegans-communities-coming-together) by @plantstoplanks
 - [Lotus for Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
