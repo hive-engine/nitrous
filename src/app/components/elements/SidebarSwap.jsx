@@ -5,33 +5,43 @@ import {
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
 
-import Icon from 'app/components/elements/Icon';
-
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
-
-const ShowPriceToken = props => {
+const SelectToken = props => {
     return (
-        <li className="c-sidebar__list-item">
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <div>{props.symbol}</div>
-                <div>
-                    <span>{props.price_steem.toFixed(3) + ' STEEM'}</span>
-                </div>
+        <div
+            className="input-group"
+            style={{ marginBottom: props.marginBottom }}
+        >
+            <input
+                className="input-group-field"
+                type="text"
+                placeholder={tt('g.amount')}
+                value={props.amount}
+                ref="amount"
+                autoComplete="off"
+                onChange={props.amountChange}
+            />
+            <div className="pd-0 bg-x">
+                <select>
+                    {props.input_token_type.map((token_name, i) => {
+                        return <option>{token_name}</option>;
+                    })}
+                </select>
             </div>
-        </li>
+        </div>
     );
 };
 
 export default class SidebarSwap extends Component {
     constructor(props) {
         super(props);
+
+        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
+        this.swap_fee = 1.0;
+
         this.state = {
             amount: 0,
+            output_amount: 0,
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.amountChange = this.amountChange.bind(this);
@@ -42,7 +52,9 @@ export default class SidebarSwap extends Component {
     amountChange(e) {
         const amount = e.target.value;
         console.log('-- PromotePost.amountChange -->', amount);
-        this.setState({ amount });
+        /// update value
+        var output_amount = amount * 2;
+        this.setState({ amount, output_amount });
     }
 
     onSubmit(e) {
@@ -50,7 +62,13 @@ export default class SidebarSwap extends Component {
     }
 
     render() {
-        const { amount, loading, amountError, trxError } = this.state;
+        const {
+            amount,
+            output_amount,
+            loading,
+            amountError,
+            trxError,
+        } = this.state;
 
         const { sct_to_steemp, steem_to_dollor, steem_to_krw } = this.props;
         const styleToken = { color: 'rgb(0, 120, 167)' };
@@ -72,61 +90,36 @@ export default class SidebarSwap extends Component {
                 <div className="c-sidebar__content">
                     <div className="swap-form">
                         <div className="swap-input">
-                            <div
-                                className="input-group"
-                                style={{ marginBottom: 0 }}
-                            >
-                                <input
-                                    className="input-group-field"
-                                    type="text"
-                                    placeholder={tt('g.amount')}
-                                    value={amount}
-                                    ref="amount"
-                                    autoComplete="off"
-                                    onChange={this.amountChange}
-                                />
-                                <div className="pd-0 bg-x">
-                                    <select>
-                                        <option>
-                                            {LIQUID_TOKEN_UPPERCASE}
-                                        </option>
-                                        <option>{'STEEM'}</option>
-                                    </select>
-                                </div>
-                                <div className="error">{amountError}</div>
-                            </div>
+                            {/* input component */}
+                            <SelectToken
+                                amount={amount}
+                                amountChange={this.amountChange}
+                                input_token_type={this.input_token_type}
+                                marginBottom={0}
+                            />
+
                             <div className="text-center">
                                 {/* <Icon name="dropdown-arrow" /> */}
-                                <span
-                                    className="articles__icon-100"
-                                    title={'수수료는 1%입니다.'}
-                                >
-                                    <Icon name="dropdown-arrow" />
-                                </span>
+                                {'▼'}
+                            </div>
 
-                                {/* {'▼'} */}
-                            </div>
-                            <div className="input-group">
-                                <input
-                                    className="input-group-field"
-                                    type="text"
-                                    placeholder={tt('g.amount')}
-                                    value={amount / 2}
-                                    ref="amount"
-                                    autoComplete="off"
-                                    onChange={this.amountChange}
-                                    disabled={true}
-                                />
-                                <div className="pd-0 bg-x">
-                                    <select>
-                                        <option>{'STEEM'}</option>
-                                        <option selected>{'SCTM'}</option>
-                                    </select>
-                                </div>
-                                <div className="error">{amountError}</div>
-                            </div>
+                            <SelectToken
+                                amount={output_amount}
+                                amountChange={this.amountChange}
+                                input_token_type={this.output_token_type}
+                                marginBottom={10}
+                            />
                         </div>
                         <div className="text-right">
+                            <span
+                                className="articles__icon-100"
+                                title={`수수료는 ${this.swap_fee}%입니다.`}
+                            >
+                                <button className="button" disabled={true}>
+                                    {'수수료 책정'}
+                                </button>
+                            </span>
+
                             <button type="button" className="button">
                                 {'Swap'}
                             </button>
