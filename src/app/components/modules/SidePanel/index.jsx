@@ -55,7 +55,7 @@ const SidePanel = ({
             {
                 value: 'steemleodex',
                 label: 'SteemLeo DEX',
-                link: `https://dex.steemleo.com/${
+                link: `https://dex.steemleo.com/?token=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
