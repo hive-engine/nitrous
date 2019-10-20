@@ -125,13 +125,13 @@ ScotConfig.prototype.refresh = async function() {
             }),
             getSteemPriceInfo(),
             ssc.find('market', 'tradesHistory', { symbol: 'RORS' }, 1, 0, [
-                { index: 'timestamp', descending: false },
+                { index: '_id', descending: false },
             ]),
             ssc.find('market', 'tradesHistory', { symbol: 'IV' }, 1, 0, [
-                { index: 'timestamp', descending: false },
+                { index: '_id', descending: false },
             ]),
             ssc.find('market', 'tradesHistory', { symbol: 'IVM' }, 1, 0, [
-                { index: 'timestamp', descending: false },
+                { index: '_id', descending: false },
             ]),
         ]);
 
