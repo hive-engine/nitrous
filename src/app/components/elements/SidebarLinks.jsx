@@ -32,7 +32,7 @@ const SidebarLinks = ({ username }) => (
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href="https://dex.steemleo.com"
+                        href="https://dex.steemleo.com/?token=LEO"
                     >
                         SteemLeo DEX
                     </a>
