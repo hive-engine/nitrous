@@ -60,11 +60,11 @@ const SidePanel = ({
                 }`,
             },
             {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
+                value: 'leodex',
+                label: 'SteemLeo Dex',
+                link: `https://dex.steemleo.com/?token={
                     LIQUID_TOKEN_UPPERCASE
-                }freex`,
+                }`,
             },
         ],
         exchanges: [
