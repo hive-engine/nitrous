@@ -160,12 +160,18 @@ ScotConfig.prototype.refresh = async function() {
         }
         if (rorsPrice) {
             scotConfig.info.rors_to_steemp = parseFloat(rorsPrice[0].price);
+        } else {
+            scotConfig.info.rors_to_steemp = 0;
         }
         if (ivPrice) {
             scotConfig.info.iv_to_steemp = parseFloat(ivPrice[0].price);
+        } else {
+            scotConfig.info.iv_to_steemp = 0;
         }
         if (ivmPrice) {
             scotConfig.info.ivm_to_steemp = parseFloat(ivmPrice[0].price);
+        } else {
+            scotConfig.info.ivm_to_steemp = 0;
         }
 
         this.cache.set(key, { info: scotInfo, config: scotConfig });
