@@ -27,12 +27,27 @@ export default class WelcomePanel extends React.Component {
                         <div className="large-1 show-for-large" />
                         <div className="small-12 medium-6 large-5 welcomePitch">
                             <h2 className="fade-in--1">
-                                Get Paid to live in San Diego
+                                {tt('navigation.intro_tagline')}
                             </h2>
                             <h4 className="fade-in--3">
-                                Post and Upvote Articles about San Diego to get your share of the daily rewards pool.
+                                {tt('navigation.intro_paragraph')}
                             </h4>
-                            
+                            <div className="row buttonWrapper">
+                                <a
+                                    className="button button--primary fade-in--5"
+                                    href={SIGNUP_URL}
+                                >
+                                    {' '}
+                                    <b>{tt('navigation.sign_up')}</b>{' '}
+                                </a>
+
+                                <Link
+                                    href="/faq.html"
+                                    className="button ghost fade-in--7"
+                                >
+                                    <b>{tt('navigation.learn_more')}</b>
+                                </Link>
+                            </div>
                         </div>
                         <div className="text-center welcomeImage medium-6 large-5 show-for-medium">
                             <img
