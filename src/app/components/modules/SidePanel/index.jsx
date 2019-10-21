@@ -122,6 +122,16 @@ const SidePanel = ({
                 label: 'Discord',
                 link: 'https://discord.gg/AfQSqMb',
             },
+            {
+                value: 'faq',
+                label: 'FAQ',
+                link: 'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq',
+            },
+            {
+                value: 'manifesto',
+                label: 'Manifesto',
+                link: 'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary',
+            },
         ],
         legal: [
             {
