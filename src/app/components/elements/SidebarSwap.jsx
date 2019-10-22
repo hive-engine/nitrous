@@ -4,10 +4,15 @@ import {
     formatDecimal,
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
+import SSC from 'sscjs';
 
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
-        return <option value={index}>{token_name}</option>;
+        return (
+            <option value={index} key={index}>
+                {token_name}
+            </option>
+        );
     });
 
     return (
@@ -44,22 +49,22 @@ export default class SidebarSwap extends Component {
             amount: 0,
             output_amount: 0,
             selectedValue: '',
+            loadToken: false,
         };
-
-        const { sct_to_steemp, steem_to_dollor, steem_to_krw } = this.props;
+        const { sbd_to_dollor, steem_to_dollor } = this.props;
+        console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
-        const sctm_to_steemp = 9.999;
-        const krwp_to_steemp = 6.47;
-        const steem_to_steemp = 1.0;
-        const sbd_to_steemp = 6.47;
+        this.ratio_toke_by_steem = [1, 1, 1, 1, 1];
 
-        this.ratio_toke_by_steem = [
-            sct_to_steemp,
-            sctm_to_steemp,
-            krwp_to_steemp,
-            steem_to_steemp,
-            sbd_to_steemp,
-        ];
+        var that = this;
+        this.getAllTokenInfo().then(allPrice => {
+            that.ratio_toke_by_steem[0] = allPrice[0] * 1; //SCT
+            that.ratio_toke_by_steem[1] = allPrice[1] * 1; //SCTM
+            that.ratio_toke_by_steem[2] = allPrice[2] * 1; //KRWP
+            that.ratio_toke_by_steem[4] = sbd_to_dollor / steem_to_dollor * 1; //SBD
+            console.log(that.ratio_toke_by_steem);
+            that.setState({ loadToken: true });
+        });
 
         this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
         this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
@@ -78,14 +83,14 @@ export default class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
-        /// update value  amount * a/b
+        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
     outputSelected(e) {
         console.log('-- PromotePost.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
-        /// update value  amount * a/b
+        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
@@ -94,7 +99,7 @@ export default class SidebarSwap extends Component {
     amountChange(e) {
         const amount = e.target.value;
         this.input_amount = amount;
-        /// update value  amount * a/b
+        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
@@ -103,33 +108,19 @@ export default class SidebarSwap extends Component {
     }
 
     calculateOutput() {
+        // update value = amount * (100-swap_fee)/100 * a/b
         const amount = this.input_amount;
         const a = this.ratio_toke_by_steem[this.selected_token[0]];
         const b = this.ratio_toke_by_steem[this.selected_token[1]];
-        var output_amount = amount * ((100 - this.swap_fee) / 100.0) * a / b;
+        var output_amount =
+            amount * ((100 - this.swap_fee) / 100.0) * (1 * a / b);
+        output_amount = output_amount.toFixed(3);
         this.setState({ amount, output_amount });
     }
 
     render() {
-        const {
-            amount,
-            output_amount,
-            loading,
-            amountError,
-            trxError,
-        } = this.state;
-
-        const { sct_to_steemp, steem_to_dollor, steem_to_krw } = this.props;
+        const { amount, output_amount } = this.state;
         const styleToken = { color: 'rgb(0, 120, 167)' };
-        const krwp_to_steem =
-            sct_to_steemp * 1000.0 / (sct_to_steemp * steem_to_krw);
-        const krwp_to_sct = formatDecimal(
-            1000.0 / (sct_to_steemp * steem_to_krw)
-        );
-        const steem_price = formatDecimal(steem_to_dollor);
-        const sct_price = formatDecimal(sct_to_steemp * steem_to_dollor);
-        const sct_price_with_krw = formatDecimal(sct_to_steemp * steem_to_krw);
-        const locale = tt.getLocale();
 
         return (
             <div className="c-sidebar__module">
@@ -147,7 +138,7 @@ export default class SidebarSwap extends Component {
                                 selectedValue={this.state.selectedValue}
                                 input_token_type={this.input_token_type}
                                 marginBottom={0}
-                                inputDisabled={false}
+                                inputDisabled={!this.state.loadToken}
                             />
 
                             <div className="text-center">
@@ -183,5 +174,34 @@ export default class SidebarSwap extends Component {
                 </div>
             </div>
         );
+    }
+
+    async getAllTokenInfo() {
+        var allInfo = await Promise.all([
+            this.getTokenPrice('SCT'),
+            this.getTokenPrice('SCTM'),
+            this.getTokenPrice('KRWP'),
+        ]);
+        console.log(allInfo);
+        return allInfo;
+    }
+
+    getTokenPrice(symbol) {
+        return new Promise((resolve, reject) => {
+            const ssc = new SSC('https://api.steem-engine.com/rpc');
+
+            ssc.find(
+                'market',
+                'metrics',
+                { symbol: symbol },
+                1000,
+                0,
+                [],
+                (err, result) => {
+                    if (err) reject(err);
+                    resolve(result[0].lastPrice);
+                }
+            );
+        });
     }
 }

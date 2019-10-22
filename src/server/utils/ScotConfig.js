@@ -164,6 +164,7 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.scotToken = scotConfig.token;
             scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
             scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
+            scotConfig.info.sbd_to_dollor = allPrice[0].sbd_price;
             scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
         }
 
