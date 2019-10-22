@@ -161,7 +161,7 @@ export const TRADING_VIEW_CONFIG = {
     MARKET_OVERVIEW: {
         colorTheme: 'light',
         autosize: true,
-        showChart: true,
+        showChart: false,
         tabs: [
             {
                 "title": "Overview",

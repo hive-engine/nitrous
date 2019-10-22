@@ -53,18 +53,18 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
+                value: 'steemleodex',
+                label: 'SteemLeo DEX',
+                link: `https://dex.steemleo.com/?token=${
+                    LIQUID_TOKEN_UPPERCASE
+                }`,
+            },
+            {
                 value: 'steemengine',
                 label: 'Steem Engine',
                 link: `https://steem-engine.com/?p=market&t=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
-            },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
             },
         ],
         exchanges: [

@@ -22,14 +22,26 @@ async function callApi(url, params) {
 }
 
 async function getSteemEngineAccountHistoryAsync(account) {
-    return callApi('https://api.steem-engine.com/accounts/history', {
+    const transfers = await callApi(
+        'https://api.steem-engine.com/accounts/history',
+        {
+            account,
+            limit: 50,
+            offset: 0,
+            type: 'user',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+            v: new Date().getTime(),
+        }
+    );
+    const history = await getScotDataAsync('get_account_history', {
         account,
-        limit: 100,
-        offset: 0,
-        type: 'user',
-        symbol: LIQUID_TOKEN_UPPERCASE,
-        v: new Date().getTime(),
+        token: LIQUID_TOKEN_UPPERCASE,
+        limit: 50,
+        startTime: new Date().getTime(),
     });
+    return transfers
+        .concat(history)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
 export async function getScotDataAsync(path, params) {
@@ -42,13 +54,11 @@ export async function getScotAccountDataAsync(account) {
 
 async function getAccount(account) {
     const accounts = await api.getAccountsAsync([account]);
-    console.log(accounts);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
 async function getGlobalProps() {
     const gprops = await api.getDynamicGlobalPropertiesAsync();
-    console.log(gprops);
     return gprops;
 }
 
@@ -139,10 +149,18 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         discussionIndex.push(key);
     });
     state.content = filteredContent;
-    if (!state.discussion_idx[tag]) {
-        state.discussion_idx[tag] = {};
+    if (feedType == 'blog' || feedType == 'feed') {
+        // author feeds
+        if (!state.accounts[tag]) {
+            state.accounts[tag] = {};
+        }
+        state.accounts[tag][feedType] = discussionIndex;
+    } else {
+        if (!state.discussion_idx[tag]) {
+            state.discussion_idx[tag] = {};
+        }
+        state.discussion_idx[tag][feedType] = discussionIndex;
     }
-    state.discussion_idx[tag][feedType] = discussionIndex;
 }
 
 export async function attachScotData(url, state) {
@@ -217,10 +235,7 @@ export async function attachScotData(url, state) {
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
-            // Reverse to show recent activity first
-            state.accounts[
-                account
-            ].transfer_history = transferHistory.reverse();
+            state.accounts[account].transfer_history = transferHistory;
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
@@ -231,22 +246,30 @@ export async function attachScotData(url, state) {
         return;
     }
 
-    /* Not yet robust (no resteems here, will yield inconsistent behavior?). also need to add to authors[..]/feed.
     urlParts = url.match(/^[\/]?@([^\/]+)\/feed[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync(
-            'get_feed',
-            {
-                token: LIQUID_TOKEN_UPPERCASE,
-                account,
-                limit: 20,
-            }
-        );
-        await fetchMissingData(account, '', state, feedData);
+        let feedData = await getScotDataAsync('get_feed', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'feed', state, feedData);
         return;
     }
-    */
+
+    urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        let feedData = await getScotDataAsync('get_discussions_by_blog', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+            include_reblogs: true,
+        });
+        await fetchMissingData(account, 'blog', state, feedData);
+        return;
+    }
 
     if (state.content) {
         await Promise.all(
@@ -293,11 +316,12 @@ export async function getStateAsync(url) {
 
     console.log('path');
     console.log(path);
-            
+
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded = !url.match(
         /^[\/]?(trending|hot|created|promoted|syndication)($|\/$|\/([^\/]+)\/?$)/
     );
+
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
         : {
@@ -331,26 +355,27 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     // To indicate last fetched value from API.
     let lastValue;
 
-    // const callNameMatch = call_name.match(
-    //     /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
-    // );
-    // if (callNameMatch) {
-    const callNameMatch = call_name.match(/getDiscussionsBy(.*)Async/);
-    const order = callNameMatch && callNameMatch[1].toLowerCase();
-    if (order && order.match(/trending|hot|created|promoted/)) {
+    const callNameMatch = call_name.match(
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
+    );
+    if (callNameMatch) {
         const order = callNameMatch[1].toLowerCase();
-        const discussionQuery = {
+        let callName = `get_discussions_by_${order}`;
+        if (order == 'feed') {
+            callName = 'get_feed';
+        }
+        let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
         };
+        if (order == 'blog') {
+            discussionQuery.include_reblogs = true;
+        }
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(
-            `get_discussions_by_${order}`,
-            discussionQuery
-        );
+        feedData = await getScotDataAsync(callName, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
