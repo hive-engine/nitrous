@@ -127,6 +127,14 @@ class SidebarSwap extends Component {
         );
         if (this.selected_token[0] > 2) {
             //3,4
+            this.props.dispatchTransfer({
+                amount: this.input_amount,
+                asset: this.input_token_type[this.selected_token[0]],
+                outputasset: this.input_token_type[this.selected_token[1]],
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+            });
         } else {
             this.props.dispatchSubmit({
                 amount: this.input_amount,
@@ -265,6 +273,41 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        dispatchTransfer: ({
+            amount,
+            asset,
+            outputasset,
+            currentUser,
+            onClose,
+            errorCallback,
+        }) => {
+            const username = currentUser.get('username');
+
+            const successCallback = () => {
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                ); // refresh transfer history
+                onClose();
+            };
+
+            const operation = {
+                from: username,
+                to: SWAP_ACCOUNT,
+                amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
+                memo: `@${username}:${asset}:${outputasset}`,
+                __config: {
+                    successMessage: '토큰을 전송했습니다.' + '.',
+                },
+            };
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'transfer',
+                    operation,
+                    successCallback,
+                    errorCallback,
+                })
+            );
+        },
         dispatchSubmit: ({
             amount,
             asset,
