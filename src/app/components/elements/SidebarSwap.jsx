@@ -112,10 +112,21 @@ export default class SidebarSwap extends Component {
         const amount = this.input_amount;
         const a = this.ratio_toke_by_steem[this.selected_token[0]];
         const b = this.ratio_toke_by_steem[this.selected_token[1]];
-        var output_amount =
-            amount * ((100 - this.swap_fee) / 100.0) * (1 * a / b);
-        output_amount = output_amount.toFixed(3);
-        this.setState({ amount, output_amount });
+
+        // token pair가 krwp and sbd라면, 1:1로 한다.
+        if (
+            (this.selected_token[0] == 2 && this.selected_token[1] == 4) ||
+            (this.selected_token[0] == 4 && this.selected_token[1] == 2)
+        ) {
+            var output_amount = amount * ((100 - this.swap_fee) / 100.0) * 1;
+            output_amount = output_amount.toFixed(3);
+            this.setState({ amount, output_amount });
+        } else {
+            var output_amount =
+                amount * ((100 - this.swap_fee) / 100.0) * (1 * a / b);
+            output_amount = output_amount.toFixed(3);
+            this.setState({ amount, output_amount });
+        }
     }
 
     render() {
