@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import tt from 'counterpart';
-import {
-    formatDecimal,
-    parsePayoutAmount,
-} from 'app/utils/ParsersAndFormatters';
 import SSC from 'sscjs';
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as transactionActions from 'app/redux/TransactionReducer';
+import * as globalActions from 'app/redux/GlobalReducer';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+
+const SWAP_ACCOUNT = 'sct.jcob';
 
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
@@ -42,7 +46,7 @@ const SelectToken = props => {
     );
 };
 
-export default class SidebarSwap extends Component {
+class SidebarSwap extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,10 +78,12 @@ export default class SidebarSwap extends Component {
         this.input_amount = 0;
 
         // Functions
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onClickSwap = this.onClickSwap.bind(this);
         this.amountChange = this.amountChange.bind(this);
         this.inputSelected = this.inputSelected.bind(this);
         this.outputSelected = this.outputSelected.bind(this);
+        this.errorCallback = this.errorCallback.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     inputSelected(e) {
@@ -103,8 +109,34 @@ export default class SidebarSwap extends Component {
         this.calculateOutput();
     }
 
-    onSubmit(e) {
-        console.log(e);
+    errorCallback(estr) {
+        console.log('errorCallback');
+    }
+
+    onClose() {
+        console.log('onClose');
+    }
+
+    onClickSwap(e) {
+        const username = this.props.currentUser.get('username');
+
+        console.log(
+            'onClickSwap',
+            username,
+            this.input_token_type[this.selected_token[0]]
+        );
+        if (this.selected_token[0] > 2) {
+            //3,4
+        } else {
+            this.props.dispatchSubmit({
+                amount: this.input_amount,
+                asset: this.input_token_type[this.selected_token[0]],
+                outputasset: this.input_token_type[this.selected_token[1]],
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+            });
+        }
     }
 
     calculateOutput() {
@@ -113,6 +145,9 @@ export default class SidebarSwap extends Component {
         const a = this.ratio_toke_by_steem[this.selected_token[0]];
         const b = this.ratio_toke_by_steem[this.selected_token[1]];
 
+        console.log('calculateOutput');
+        console.log(this.selected_token[0]);
+        console.log(this.selected_token[1]);
         // token pair가 krwp and sbd라면, 1:1로 한다.
         if (
             (this.selected_token[0] == 2 && this.selected_token[1] == 4) ||
@@ -177,7 +212,11 @@ export default class SidebarSwap extends Component {
                                 </button>
                             </span>
 
-                            <button type="button" className="button">
+                            <button
+                                type="button"
+                                className="button"
+                                onClick={this.onClickSwap}
+                            >
                                 {'Swap'}
                             </button>
                         </div>
@@ -216,3 +255,58 @@ export default class SidebarSwap extends Component {
         });
     }
 }
+
+export default connect(
+    (state, ownProps) => {
+        const currentUser = state.user.getIn(['current']);
+        const username = currentUser.get('username');
+        return { ...ownProps, currentUser };
+    },
+
+    // mapDispatchToProps
+    dispatch => ({
+        dispatchSubmit: ({
+            amount,
+            asset,
+            outputasset,
+            currentUser,
+            onClose,
+            errorCallback,
+        }) => {
+            const username = currentUser.get('username');
+
+            const successCallback = () => {
+                dispatch(
+                    globalActions.getState({ url: `@${username}/transfers` })
+                ); // refresh transfer history
+                onClose();
+            };
+            const transferOperation = {
+                contractName: 'tokens',
+                contractAction: 'transfer',
+                contractPayload: {
+                    symbol: asset,
+                    to: SWAP_ACCOUNT,
+                    quantity: amount,
+                    memo: `@${username}:${asset}:${outputasset}`,
+                },
+            };
+            const operation = {
+                id: 'ssc-mainnet1',
+                required_auths: [username],
+                json: JSON.stringify(transferOperation),
+                __config: {
+                    successMessage: '토큰을 전송했습니다.' + '.',
+                },
+            };
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                    errorCallback,
+                })
+            );
+        },
+    })
+)(SidebarSwap);
