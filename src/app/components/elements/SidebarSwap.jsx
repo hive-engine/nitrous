@@ -23,6 +23,7 @@ const SelectToken = props => {
                 // ref="amount"
                 autoComplete="off"
                 onChange={props.amountChange}
+                disabled={props.inputDisabled}
             />
             <div className="pd-0 bg-x">
                 <select onChange={props.selectedChange}>{options}</select>
@@ -39,18 +40,35 @@ const SelectToken = props => {
 export default class SidebarSwap extends Component {
     constructor(props) {
         super(props);
-
-        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
-        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
-        this.swap_fee = 1.0;
-
-        this.selected_token = [0, 0];
-
         this.state = {
             amount: 0,
             output_amount: 0,
             selectedValue: '',
         };
+
+        const { sct_to_steemp, steem_to_dollor, steem_to_krw } = this.props;
+        // I should get ratio between tokens from .. api.
+        const sctm_to_steemp = 9.999;
+        const krwp_to_steemp = 6.47;
+        const steem_to_steemp = 1.0;
+        const sbd_to_steemp = 6.47;
+
+        this.ratio_toke_by_steem = [
+            sct_to_steemp,
+            sctm_to_steemp,
+            krwp_to_steemp,
+            steem_to_steemp,
+            sbd_to_steemp,
+        ];
+
+        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
+
+        this.swap_fee = 1.0;
+        this.selected_token = [0, 0];
+        this.input_amount = 0;
+
+        // Functions
         this.onSubmit = this.onSubmit.bind(this);
         this.amountChange = this.amountChange.bind(this);
         this.inputSelected = this.inputSelected.bind(this);
@@ -60,25 +78,36 @@ export default class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
+        /// update value  amount * a/b
+        this.calculateOutput();
     }
 
     outputSelected(e) {
         console.log('-- PromotePost.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
+        /// update value  amount * a/b
+        this.calculateOutput();
     }
 
     componentDidMount() {}
 
     amountChange(e) {
         const amount = e.target.value;
-        console.log('-- PromotePost.amountChange -->', amount);
-        /// update value
-        var output_amount = amount * 2;
-        this.setState({ amount, output_amount });
+        this.input_amount = amount;
+        /// update value  amount * a/b
+        this.calculateOutput();
     }
 
     onSubmit(e) {
         console.log(e);
+    }
+
+    calculateOutput() {
+        const amount = this.input_amount;
+        const a = this.ratio_toke_by_steem[this.selected_token[0]];
+        const b = this.ratio_toke_by_steem[this.selected_token[1]];
+        var output_amount = amount * ((100 - this.swap_fee) / 100.0) * a / b;
+        this.setState({ amount, output_amount });
     }
 
     render() {
@@ -118,6 +147,7 @@ export default class SidebarSwap extends Component {
                                 selectedValue={this.state.selectedValue}
                                 input_token_type={this.input_token_type}
                                 marginBottom={0}
+                                inputDisabled={false}
                             />
 
                             <div className="text-center">
@@ -132,6 +162,7 @@ export default class SidebarSwap extends Component {
                                 selectedValue={this.state.selectedValue}
                                 input_token_type={this.output_token_type}
                                 marginBottom={10}
+                                inputDisabled={true}
                             />
                         </div>
                         <div className="text-right">
@@ -140,7 +171,7 @@ export default class SidebarSwap extends Component {
                                 title={`수수료는 ${this.swap_fee}%입니다.`}
                             >
                                 <button className="button" disabled={true}>
-                                    {'수수료 책정'}
+                                    {'수수료'}
                                 </button>
                             </span>
 
