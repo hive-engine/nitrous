@@ -10,7 +10,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
      * We do not sort the user feed by anything other than 'new'.
      * So don't make links to it from the SortOrder component.
      * Instead fall back to the 'all tags' route when a user attempts to sort from a feed page.
-     * If a user lands on the 'feed' page and the sort order is displayed (e.g. a mobile user) 
+     * If a user lands on the 'feed' page and the sort order is displayed (e.g. a mobile user)
      * display the active sort as 'new'.
      */
     let tag = topic;
@@ -19,6 +19,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     if (topic === 'feed') {
         tag = '';
         sort = 'created';
+    }
+
+    if (topic == 'dashboard') {
+        tag = '';
+        sort = 'dashboard';
     }
 
     // If we are at the homepage, the sort order is 'trending'
@@ -52,9 +57,9 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 link: `/hot/${tag}`,
             },
             {
-                value: 'promoted',
-                label: tt('g.promoted'),
-                link: `/promoted/${tag}`,
+                value: 'dashboard',
+                label: tt('g.dashboard'),
+                link: `/dashboard/${tag}`,
             },
         ];
     };
