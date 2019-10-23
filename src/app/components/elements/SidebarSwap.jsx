@@ -118,8 +118,10 @@ class SidebarSwap extends Component {
     }
 
     onClickSwap(e) {
-        const username = this.props.currentUser.get('username');
+        console.log('onClickSwap', this.props.currentUser);
+        if (this.props.currentUser == null) return;
 
+        const username = this.props.currentUser.get('username');
         console.log(
             'onClickSwap',
             username,
@@ -213,10 +215,12 @@ class SidebarSwap extends Component {
                         <div className="text-right">
                             <span
                                 className="articles__icon-100"
-                                title={`수수료는 ${this.swap_fee}%입니다.`}
+                                title={`수수료는 ${
+                                    this.swap_fee
+                                }%입니다.\n0.25% -소각\n0.25% - 스왑 기금\n0.25% - 유동성 공급자 기금\n0.25% - 운영 기금`}
                             >
                                 <button className="button" disabled={true}>
-                                    {'수수료'}
+                                    {'Fees'}
                                 </button>
                             </span>
 
@@ -266,9 +270,13 @@ class SidebarSwap extends Component {
 
 export default connect(
     (state, ownProps) => {
-        const currentUser = state.user.getIn(['current']);
-        const username = currentUser.get('username');
-        return { ...ownProps, currentUser };
+        try {
+            const currentUser = state.user.getIn(['current']);
+            return { ...ownProps, currentUser };
+        } catch (error) {
+            console.log('connect', error);
+            return { ...ownProps, undefined };
+        }
     },
 
     // mapDispatchToProps
