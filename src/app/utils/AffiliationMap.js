@@ -16,6 +16,9 @@ const map = {
     
     // Adminstrator
     dporn: 'Admin',
+    
+    // Ambassador
+    natalissa: 'Dporn Ambassador',
 
     // Verified Creator
     thescarletletter: 'Verified Creator',
