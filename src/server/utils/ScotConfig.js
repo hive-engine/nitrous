@@ -114,6 +114,9 @@ ScotConfig.prototype.refresh = async function() {
             badgeList,
             tagList,
             allPrice,
+            sctmburnBalance,
+            sctmPrice,
+            // sctmburnList,
         ] = await Promise.all([
             ssc.findOne('tokens', 'tokens', {
                 symbol: scotConfig.burn.scotToken,
@@ -127,13 +130,18 @@ ScotConfig.prototype.refresh = async function() {
             }),
             ssc.findOne('tokens', 'balances', {
                 account: 'null',
-                symbol: scotConfig.burn.scotMinerToken,
+                symbol: 'KRWP',
             }),
             getThumbupReceiveTopList(year + mon),
             getThumbupSendTopList(year + mon),
             getBadgeList(),
             getTagList(),
             getSteemPriceInfo(),
+            ssc.findOne('tokens', 'balances', {
+                account: 'sctm.burn',
+                symbol: scotConfig.burn.scotMinerToken,
+            }),
+            getSctmPrice(),
         ]);
 
         if (totalTokenBalance) {
@@ -165,6 +173,7 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
             scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
             scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
+            scotConfig.info.sctm_price = sctmPrice.sctmprice;
         }
 
         // get SCT thumbup config
