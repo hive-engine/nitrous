@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import tt from 'counterpart';
 import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
+
+import { api } from '@steemit/steem-js';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
-
 const SWAP_ACCOUNT = 'sct.jcob';
 
 const SelectToken = props => {
@@ -48,15 +49,17 @@ const SelectToken = props => {
 
 class SidebarSwap extends Component {
     constructor(props) {
+        // console.log(props);
         super(props);
         this.state = {
             amount: 0,
             output_amount: 0,
             selectedValue: '',
             loadToken: false,
+            providerBalance: ['', '', '', '', ''],
         };
         const { sbd_to_dollor, steem_to_dollor } = this.props;
-        console.log(sbd_to_dollor, steem_to_dollor);
+        // console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
         this.ratio_toke_by_steem = [1, 1, 1, 1, 1];
 
@@ -66,8 +69,19 @@ class SidebarSwap extends Component {
             that.ratio_toke_by_steem[1] = allPrice[1] * 1; //SCTM
             that.ratio_toke_by_steem[2] = allPrice[2] * 1; //KRWP
             that.ratio_toke_by_steem[4] = sbd_to_dollor / steem_to_dollor * 1; //SBD
-            console.log(that.ratio_toke_by_steem);
+            // console.log(that.ratio_toke_by_steem);
             that.setState({ loadToken: true });
+        });
+
+        this.getSwapAccountInfo(SWAP_ACCOUNT).then(allInfo => {
+            var providerBalance = [
+                allInfo[0] + ' ' + 'SCT',
+                allInfo[1] + ' ' + 'SCTM',
+                allInfo[2] + ' ' + 'KRWP',
+                allInfo[3][0].balance,
+                allInfo[3][0].sbd_balance,
+            ];
+            that.setState({ providerBalance });
         });
 
         this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
@@ -232,10 +246,48 @@ class SidebarSwap extends Component {
                                 {'Swap'}
                             </button>
                         </div>
+                        <div className="text-center">
+                            {`Provider balance : ${
+                                this.state.providerBalance[
+                                    this.selected_token[1]
+                                ]
+                            }`}
+                        </div>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    async getSwapAccountInfo(account) {
+        var allInfo = await Promise.all([
+            this.getTokenBalance(SWAP_ACCOUNT, 'SCT'),
+            this.getTokenBalance(SWAP_ACCOUNT, 'SCTM'),
+            this.getTokenBalance(SWAP_ACCOUNT, 'KRWP'),
+            new Promise((resolve, reject) => {
+                api.getAccounts([account], function(err, response) {
+                    if (err) reject(err);
+                    resolve(response);
+                });
+            }),
+        ]);
+        return allInfo;
+    }
+
+    getTokenBalance(account, symbol) {
+        return new Promise((resolve, reject) => {
+            ssc.findOne(
+                'tokens',
+                'balances',
+                { account, symbol },
+                (err, result) => {
+                    if (err) reject(err);
+                    // console.log(result)
+                    if (result == null) resolve('0.0');
+                    else resolve(result.balance);
+                }
+            );
+        });
     }
 
     async getAllTokenInfo() {
@@ -244,14 +296,12 @@ class SidebarSwap extends Component {
             this.getTokenPrice('SCTM'),
             this.getTokenPrice('KRWP'),
         ]);
-        console.log(allInfo);
+        // console.log(allInfo);
         return allInfo;
     }
 
     getTokenPrice(symbol) {
         return new Promise((resolve, reject) => {
-            const ssc = new SSC('https://api.steem-engine.com/rpc');
-
             ssc.find(
                 'market',
                 'metrics',
@@ -270,6 +320,7 @@ class SidebarSwap extends Component {
 
 export default connect(
     (state, ownProps) => {
+        // console.log('connect',state,ownProps)
         try {
             const currentUser = state.user.getIn(['current']);
             return { ...ownProps, currentUser };
