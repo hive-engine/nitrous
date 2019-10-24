@@ -84,6 +84,7 @@ const map = {
     'effema': 'Verified Creator',
     'badbradley': 'Verified Creator',
     'edouard': 'Verified Creator',
+    'kommienezuspadt': 'Verified Creator',
 };
 
 export default map;
