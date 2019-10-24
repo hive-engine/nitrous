@@ -169,7 +169,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted|certified|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|payout|payout_comments|certified|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
@@ -182,22 +182,21 @@ export async function attachScotData(url, state) {
         if (tag) {
             discussionQuery.tag = tag;
         }
-
-        let path = `get_discussions_by_${feedType}`;
-
-        if (feedType == 'certified') {
-            path = `get_feed`;
+        let callName = `get_discussions_by_${feedType}`;
+        if (feedType === 'payout_comments') {
+            callName = 'get_comment_discussions_by_payout';
+        } else if (feedType == 'certified') {
+            callName = `get_feed`;
             discussionQuery.tag = CERTIFIED_POST_ACCOUNT;
             discussionQuery.include_reblogs = '';
         } else if (feedType == 'ulogs' || feedType == 'steemgigs') {
-            path = `get_discussions_by_created`;
+            callName = `get_discussions_by_created`;
 
             if (feedType == 'ulogs') discussionQuery.tag = 'ulog';
             else discussionQuery.tag = feedType;
         }
-
         // first call feed.
-        let feedData = await getScotDataAsync(path, discussionQuery);
+        let feedData = await getScotDataAsync(callName, discussionQuery);
         await fetchMissingData(tag, feedType, state, feedData);
         return;
     }
@@ -330,13 +329,11 @@ export async function getStateAsync(url) {
     // strip off query string
     const path = url.split('?')[0];
 
-    console.log('path');
-    console.log(path);
-
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted|certified|grow|favorite-mentor|popular-community|extra-clout|send-us|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
-    );
+    const steemitApiStateNeeded =
+        !url.match(
+            /^[\/]?(trending|hot|created|promoted|payout|payout_comments|certified|grow|favorite-mentor|popular-community|extra-clout|send-us|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
+        ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -374,9 +371,21 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     const callNameMatch = call_name.match(
         /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed|Certified|Ulogs|Steemgigs|Via-marlians)Async/
     );
+    let order;
+    let callName;
     if (callNameMatch) {
-        const order = callNameMatch[1].toLowerCase();
-        let callName = `get_discussions_by_${order}`;
+        order = callNameMatch[1].toLowerCase();
+        if (order == 'feed') {
+            callName = 'get_feed';
+        } else {
+            callName = `get_discussions_by_${order}`;
+        }
+    } else if (call_name === 'getPostDiscussionsByPayoutAsync') {
+        callName = 'get_discussions_by_payout';
+    } else if (call_name === 'getCommentDiscussionsByPayoutAsync') {
+        callName = 'get_comment_discussions_by_payout';
+    }
+    if (callName) {
         let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
