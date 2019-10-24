@@ -83,7 +83,6 @@ const map = {
     'japanhd': 'Verified Creator',
     'effema': 'Verified Creator',
     'badbradley': 'Verified Creator',
-    'natalissa': 'Verified Creator',
     'edouard': 'Verified Creator',
 };
 
