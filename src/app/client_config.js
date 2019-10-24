@@ -58,6 +58,7 @@ export const CONFIG_MAP = {
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
+        GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
     },
     'weedcash.network': {
         APP_NAME: 'WeedCash',

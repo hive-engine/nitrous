@@ -219,18 +219,18 @@ export default function ServerHTML({
                         async
                     />
                 ) : null}
-                {adClient ? (
+                {hostConfig['GOOGLE_AD_CLIENT'] ? (
                     <script
                         async
                         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
                     />
                 ) : null}
-                {adClient ? (
+                {hostConfig['GOOGLE_AD_CLIENT'] ? (
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `
                       (adsbygoogle = window.adsbygoogle || []).push({
-                          google_ad_client: "${adClient}",
+                          google_ad_client: "${hostConfig['GOOGLE_AD_CLIENT']}",
                           enable_page_level_ads: true
                       });
                   `,
