@@ -5,6 +5,10 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 import reactForm from 'app/utils/ReactForm';
 import { List, Set } from 'immutable';
 import tt from 'counterpart';
+import {
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
+    SCOT_DEFAULT_BENEFICIARY_PERCENT,
+} from 'app/client_config';
 
 export class BeneficiarySelector extends React.Component {
     static propTypes = {
@@ -83,6 +87,7 @@ export class BeneficiarySelector extends React.Component {
         const beneficiaries = this.props.value;
         const remainingPercent =
             100 -
+            SCOT_DEFAULT_BENEFICIARY_PERCENT -
             beneficiaries
                 .map(b => (b.percent ? parseInt(b.percent) : 0))
                 .reduce((sum, elt) => sum + elt, 0);
@@ -120,6 +125,39 @@ export class BeneficiarySelector extends React.Component {
                         </div>
                     </div>
                 </div>
+                {SCOT_DEFAULT_BENEFICIARY_ACCOUNT && (
+                    <div className="row">
+                        <div className="column small-2">
+                            <div className="input-group">
+                                <input
+                                    id="remainingPercent"
+                                    type="text"
+                                    pattern="[0-9]*"
+                                    value={SCOT_DEFAULT_BENEFICIARY_PERCENT}
+                                    disabled
+                                    style={{
+                                        maxWidth: '2.6rem',
+                                    }}
+                                />
+                                <span style={{ paddingTop: '5px' }}>%</span>
+                            </div>
+                        </div>
+                        <div className="column small-5">
+                            <div
+                                className="input-group"
+                                style={{ marginBottom: '1.25rem' }}
+                            >
+                                <span className="input-group-label">@</span>
+                                <input
+                                    className="input-group-field bold"
+                                    type="text"
+                                    disabled
+                                    value={SCOT_DEFAULT_BENEFICIARY_ACCOUNT}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
                 {beneficiaries.map((beneficiary, idx) => (
                     <div className="row" key={idx}>
                         <div className="column small-2">
@@ -255,7 +293,7 @@ export function validateBeneficiaries(
         }
         totalPercent += parseInt(beneficiary.percent);
     }
-    if (totalPercent > 100) {
+    if (totalPercent > 100 - SCOT_DEFAULT_BENEFICIARY_PERCENT) {
         return tt('beneficiary_selector_jsx.beneficiary_percent_total_invalid');
     }
 }
