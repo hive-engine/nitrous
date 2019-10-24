@@ -170,7 +170,7 @@ async function fetchMissingData(
 
 export async function attachScotData(url, state, scotTokenSymbol) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
@@ -182,11 +182,12 @@ export async function attachScotData(url, state, scotTokenSymbol) {
         if (tag) {
             discussionQuery.tag = tag;
         }
+        let callName = `get_discussions_by_${feedType}`;
+        if (feedType === 'payout_comments') {
+            callName = 'get_comment_discussions_by_payout';
+        }
         // first call feed.
-        let feedData = await getScotDataAsync(
-            `get_discussions_by_${feedType}`,
-            discussionQuery
-        );
+        let feedData = await getScotDataAsync(callName, discussionQuery);
         await fetchMissingData(tag, feedType, state, feedData, scotTokenSymbol);
         return;
     }
@@ -334,9 +335,10 @@ export async function getStateAsync(url, scotTokenSymbol) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
-    );
+    const steemitApiStateNeeded =
+        !url.match(
+            /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
+        ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -371,12 +373,21 @@ export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
     const callNameMatch = call_name.match(
         /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
     );
+    let order;
+    let callName;
     if (callNameMatch) {
-        const order = callNameMatch[1].toLowerCase();
-        let callName = `get_discussions_by_${order}`;
+        order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {
             callName = 'get_feed';
+        } else {
+            callName = `get_discussions_by_${order}`;
         }
+    } else if (call_name === 'getPostDiscussionsByPayoutAsync') {
+        callName = 'get_discussions_by_payout';
+    } else if (call_name === 'getCommentDiscussionsByPayoutAsync') {
+        callName = 'get_comment_discussions_by_payout';
+    }
+    if (callName) {
         let discussionQuery = {
             ...args[0],
             token: scotTokenSymbol,
