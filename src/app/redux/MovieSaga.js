@@ -4,6 +4,7 @@ import * as movieReducer from './MovieReducer';
 import * as movieApi from 'app/utils/MovieApi';
 
 export const movieWatches = [
+    takeLatest(movieReducer.REQUEST_SUMMARY, requestSummary),
     takeLatest(movieReducer.REQUEST_MOVIE, requestMovie),
     takeLatest(movieReducer.REQUEST_MOVIES, requestMovies),
     takeLatest(
@@ -18,6 +19,22 @@ export const movieWatches = [
     ),
     takeLatest(movieReducer.UPDATE_REVIEWS, requestReviews),
 ];
+
+function* requestSummary(action) {
+    const { languageCode } = action.payload;
+
+    try {
+        yield call(delay, 100);
+
+        let data = yield call(movieApi.getSummary, languageCode);
+
+        yield put(movieReducer.actions.receiveSummary({ data }));
+    } catch (error) {
+        console.error(action.payload, error);
+    }
+
+    yield put(movieReducer.actions.requestSummaryEnd());
+}
 
 function* requestMovie(action) {
     const { languageCode, movieType, movieId } = action.payload;

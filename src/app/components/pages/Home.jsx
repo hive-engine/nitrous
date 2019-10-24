@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
+import { actions as movieActions } from 'app/redux/MovieReducer';
 
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import RecentMovies from 'app/components/elements/Summary/RecentMovies';
@@ -66,9 +67,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home(props) {
     const classes = useStyles();
-    const { locale, summary } = props;
+    const { locale, summary, requestSummary } = props;
 
-    React.useEffect(() => {}, []);
+    React.useEffect(() => {
+        requestSummary({ languageCode: locale });
+    }, []);
 
     const topReviews = [
         {
@@ -207,7 +210,11 @@ module.exports = {
     path: 'home',
     component: connect(
         (state, ownProps) => {
-            const summary = state.movie.get('summary').toJS();
+            let summary = state.movie.get('summary');
+
+            if (summary) {
+                summary = summary.toJS();
+            }
 
             return {
                 summary,
@@ -216,11 +223,14 @@ module.exports = {
                     DEFAULT_LANGUAGE,
             };
         },
-        dispatch => ({})
+        dispatch => ({
+            requestSummary: args => dispatch(movieActions.requestSummary(args)),
+        })
     )(Home),
 };
 
 Home.propTypes = {
     locale: PropTypes.string.isRequired,
+    requestSummary: PropTypes.func.isRequired,
     summary: PropTypes.object,
 };

@@ -2,6 +2,10 @@ import { fromJS, List } from 'immutable';
 import { LIST_MAX_SIZE } from 'shared/constants';
 import * as CustomUtil from 'app/utils/CustomUtil';
 
+export const REQUEST_SUMMARY = 'movie/REQUEST_SUMMARY';
+const RECEIVE_SUMMARY = 'movie/RECEIVE_SUMMARY';
+const REQUEST_SUMMARY_END = 'movie/REQUEST_SUMMARY_END';
+
 export const REQUEST_MOVIES = 'movie/REQUEST_MOVIES';
 const RECEIVE_MOVIES = 'movie/RECEIVE_MOVIES';
 const REQUEST_MOVIES_END = 'movie/REQUEST_MOVIES_END';
@@ -60,10 +64,13 @@ export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
 
     switch (action.type) {
+        case REQUEST_SUMMARY:
         case REQUEST_MOVIE:
         case REQUEST_MOVIES:
         case REQUEST_REVIEWS:
             return state.set('loading', true);
+        case RECEIVE_SUMMARY:
+            return state.set('summary', fromJS(payload.data));
         case RECEIVE_MOVIE:
             return state.update(
                 CustomUtil.getMovieListName(payload.movieType),
@@ -138,6 +145,7 @@ export default function reducer(state = defaultState, action = {}) {
             return state
                 .set('reviews', fromJS(payload.data))
                 .set('hasNextReviews', payload.data.length == LIST_MAX_SIZE);
+        case REQUEST_SUMMARY_END:
         case REQUEST_MOVIE_END:
         case REQUEST_MOVIES_END:
         case REQUEST_REVIEWS_END:
@@ -163,6 +171,20 @@ export default function reducer(state = defaultState, action = {}) {
 }
 
 export const actions = {
+    requestSummary: payload => ({
+        type: REQUEST_SUMMARY,
+        payload,
+    }),
+
+    receiveSummary: payload => ({
+        type: RECEIVE_SUMMARY,
+        payload,
+    }),
+
+    requestSummaryEnd: () => ({
+        type: REQUEST_SUMMARY_END,
+    }),
+
     requestMovie: payload => ({
         type: REQUEST_MOVIE,
         payload,
