@@ -104,7 +104,7 @@ export const CONFIG_MAP = {
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
         SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'coffeebuds',
-        SCOT_DEFAULT_BENEFICIARY_PERCENT: 4, // between 0 amd 100
+        SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
     },
 };
 

@@ -1105,7 +1105,9 @@ export default formId =>
                                         )
                                         .map(elt => ({
                                             account: elt.username,
-                                            weight: parseInt(elt.percent) * 100,
+                                            weight: Math.round(
+                                                parseFloat(elt.percent) * 100
+                                            ),
                                         })),
                                 },
                             ],
