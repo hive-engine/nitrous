@@ -1069,6 +1069,23 @@ export default formId =>
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
+                    if (
+                        state.app.getIn(
+                            ['hostConfig', 'SCOT_DEFAULT_BENEFICIARY_ACCOUNT'],
+                            false
+                        )
+                    ) {
+                        beneficiaries.push({
+                            username: state.app.getIn([
+                                'hostConfig',
+                                'SCOT_DEFAULT_BENEFICIARY_ACCOUNT',
+                            ]),
+                            percent: state.app.getIn([
+                                'hostConfig',
+                                'SCOT_DEFAULT_BENEFICIARY_PERCENT',
+                            ]),
+                        });
+                    }
                     if (beneficiaries && beneficiaries.length > 0) {
                         if (!__config.comment_options) {
                             __config.comment_options = {};

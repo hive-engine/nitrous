@@ -79,10 +79,17 @@ export class BeneficiarySelector extends React.Component {
     };
 
     render() {
-        const { username, following, tabIndex } = this.props;
+        const {
+            username,
+            following,
+            tabIndex,
+            defaultBeneficiaryAccount,
+            defaultBeneficiaryPercent,
+        } = this.props;
         const beneficiaries = this.props.value;
         const remainingPercent =
             100 -
+            defaultBeneficiaryPercent -
             beneficiaries
                 .map(b => (b.percent ? parseInt(b.percent) : 0))
                 .reduce((sum, elt) => sum + elt, 0);
@@ -120,6 +127,39 @@ export class BeneficiarySelector extends React.Component {
                         </div>
                     </div>
                 </div>
+                {defaultBeneficiaryAccount && (
+                    <div className="row">
+                        <div className="column small-2">
+                            <div className="input-group">
+                                <input
+                                    id="benePercent"
+                                    type="text"
+                                    pattern="[0-9]*"
+                                    value={defaultBeneficiaryPercent}
+                                    disabled
+                                    style={{
+                                        maxWidth: '2.6rem',
+                                    }}
+                                />
+                                <span style={{ paddingTop: '5px' }}>%</span>
+                            </div>
+                        </div>
+                        <div className="column small-5">
+                            <div
+                                className="input-group"
+                                style={{ marginBottom: '1.25rem' }}
+                            >
+                                <span className="input-group-label">@</span>
+                                <input
+                                    className="input-group-field bold"
+                                    type="text"
+                                    disabled
+                                    value={defaultBeneficiaryAccount}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
                 {beneficiaries.map((beneficiary, idx) => (
                     <div className="row" key={idx}>
                         <div className="column small-2">
@@ -223,7 +263,8 @@ export class BeneficiarySelector extends React.Component {
 export function validateBeneficiaries(
     username,
     beneficiaries,
-    required = true
+    required = true,
+    defaultBeneficiaryPercent = 0
 ) {
     if (beneficiaries.length > 8) {
         return tt('beneficiary_selector_jsx.exceeds_max_beneficiaries');
@@ -255,7 +296,7 @@ export function validateBeneficiaries(
         }
         totalPercent += parseInt(beneficiary.percent);
     }
-    if (totalPercent > 100) {
+    if (totalPercent > 100 - defaultBeneficiaryPercent) {
         return tt('beneficiary_selector_jsx.beneficiary_percent_total_invalid');
     }
 }
@@ -266,6 +307,15 @@ export default connect((state, ownProps) => {
     var following = List();
     const username = state.user.getIn(['current', 'username']);
     const follow = state.global.get('follow');
+    const defaultBeneficiaryAccount = state.app.getIn([
+        'hostConfig',
+        'SCOT_DEFAULT_BENEFICIARY_ACCOUNT',
+    ]);
+    const defaultBeneficiaryPercent = state.app.getIn(
+        ['hostConfig', 'SCOT_DEFAULT_BENEFICIARY_PERCENT'],
+        0
+    );
+
     if (follow) {
         const followingData = follow.getIn([
             'getFollowingAsync',
@@ -278,5 +328,7 @@ export default connect((state, ownProps) => {
         ...ownProps,
         username,
         following,
+        defaultBeneficiaryAccount,
+        defaultBeneficiaryPercent,
     };
 })(BeneficiarySelector);
