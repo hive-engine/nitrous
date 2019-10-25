@@ -130,7 +130,7 @@ export class BeneficiarySelector extends React.Component {
                         <div className="column small-2">
                             <div className="input-group">
                                 <input
-                                    id="remainingPercent"
+                                    id="benePercent"
                                     type="text"
                                     pattern="[0-9]*"
                                     value={SCOT_DEFAULT_BENEFICIARY_PERCENT}
