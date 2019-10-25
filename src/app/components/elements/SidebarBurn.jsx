@@ -10,6 +10,12 @@ const SidebarBurn = ({
     scotTokenCirculating,
     scotTokenBurn,
     scotTokenStaking,
+    sct_to_steemp,
+    steem_to_krw,
+    sctm_price,
+    received_sctm,
+    received_list,
+    krwp_balance,
 }) => {
     if (scotTokenCirculating && typeof scotTokenCirculating === 'string') {
         scotTokenCirculating = parsePayoutAmount(scotTokenCirculating);
@@ -39,6 +45,13 @@ const SidebarBurn = ({
 
     const styleToken = { color: 'rgb(0, 120, 167)' };
     const styleBurn = { color: 'red' };
+
+    const krwpValue = krwp_balance * 1000;
+    const sctmValue = sctm_price * steem_to_krw * received_sctm;
+    const currRate = sctmValue / krwpValue;
+    const gap = krwpValue - sctmValue;
+    const maxAmount = krwpValue / (sctm_price * steem_to_krw);
+    const swapRate = krwp_balance / maxAmount;
 
     return (
         <div className="c-sidebar__module">
@@ -138,6 +151,98 @@ const SidebarBurn = ({
                     </li>
                 </ul>
             </div>
+            {sct_to_steemp && (
+                <div>
+                    <br />
+                    <div className="c-sidebar__header" style={styleToken}>
+                        <h3 className="c-sidebar__h3">SWAP(SCTM⇋KRWP)</h3>
+                    </div>
+                    <div className="c-sidebar__content">
+                        <ul className="c-sidebar__list-small">
+                            <li className="c-sidebar__list-item">
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <div>SCTM Price(Steem)</div>
+                                    <div>
+                                        <span className="decimal">
+                                            {parseFloat(sctm_price).toFixed(3)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="c-sidebar__list-item">
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <div>Swap Rate(per 1SCTM)</div>
+                                    <div>
+                                        <span className="decimal">
+                                            {parseFloat(swapRate).toFixed(3)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="c-sidebar__list-item">
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <div>Owned KRWP</div>
+                                    <div>
+                                        <span className="decimal">
+                                            {parseFloat(krwp_balance).toFixed(
+                                                3
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li
+                                className="c-sidebar__list-item"
+                                style={styleBurn}
+                            >
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <div>Joined SCTM</div>
+                                    <div>
+                                        <span className="decimal">
+                                            {received_sctm.toFixed(3)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="c-sidebar__list-item">
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <div>Max Amount SCTM</div>
+                                    <div>
+                                        <span className="decimal">
+                                            {maxAmount.toFixed(3)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -9,6 +9,7 @@ const RECEIVE_TOPLIST = '/thumbups/receiveThumbupList';
 const SEND_TOPLIST = '/thumbups/sendThumbupList';
 const BADGE_LIST = '/badge/list';
 const TAG_LIST = '/tagmanager/list';
+const INFO = '/info';
 
 export function getThumbUpList(author, permlink) {
     return axios.get(`${API_SERVER_URL}${THUMBUP_LIST}/${author}/${permlink}`);
@@ -28,6 +29,14 @@ export function getBadgeList() {
 
 export function getTagList() {
     return axios.get(`${API_SERVER_URL}${TAG_LIST}`);
+}
+
+export function getSctmPrice() {
+    return axios.get(`${API_SERVER_URL}${INFO}/sctmprice`);
+}
+
+export function getReceivedSctm() {
+    return axios.get(`${API_SERVER_URL}${INFO}/receivedSctm`);
 }
 
 export async function getConfig() {
