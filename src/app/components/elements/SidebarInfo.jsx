@@ -23,12 +23,7 @@ const ShowPriceToken = props => {
     );
 };
 
-const SidebarInfo = ({
-    sct_to_steemp,
-    steem_to_dollor,
-    steem_to_krw,
-    sctmprice,
-}) => {
+const SidebarInfo = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
     const styleToken = { color: 'rgb(0, 120, 167)' };
     const krwp_to_steem =
         sct_to_steemp * 1000.0 / (sct_to_steemp * steem_to_krw);
@@ -125,29 +120,6 @@ const SidebarInfo = ({
                                     {krwp_to_sct[1]}
                                 </span>
                                 <span>{' SCT'}</span>
-                                {locale === 'ko' && <span>{')'}</span>}
-                            </div>
-                        </div>
-                    </li>
-
-                    <ShowPriceToken symbol={'SCTM'} price_steem={sctmprice} />
-
-                    <li className="c-sidebar__list-item">
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <div>{''}</div>
-                            <div>
-                                {locale === 'ko' && (
-                                    <span className="integer">
-                                        {1000 + tt('g.krw') + ' ('}
-                                    </span>
-                                )}
-
-                                <span className="integer">{sctmprice}</span>
                                 {locale === 'ko' && <span>{')'}</span>}
                             </div>
                         </div>

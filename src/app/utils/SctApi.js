@@ -35,6 +35,10 @@ export function getSctmPrice() {
     return axios.get(`${API_SERVER_URL}${INFO}/sctmprice`);
 }
 
+export function getReceivedSctm() {
+    return axios.get(`${API_SERVER_URL}${INFO}/receivedSctm`);
+}
+
 export async function getConfig() {
     try {
         const config = await axios.get(`${API_SERVER_URL}${CONFIG}`);

@@ -9,6 +9,8 @@ import {
     getThumbupSendTopList,
     getBadgeList,
     getTagList,
+    getSctmPrice,
+    getReceivedSctm,
 } from 'app/utils/SctApi';
 
 import SSC from 'sscjs';
@@ -116,7 +118,7 @@ ScotConfig.prototype.refresh = async function() {
             allPrice,
             sctmburnBalance,
             sctmPrice,
-            // sctmburnList,
+            receivedSCTM,
         ] = await Promise.all([
             ssc.findOne('tokens', 'tokens', {
                 symbol: scotConfig.burn.scotToken,
@@ -139,9 +141,10 @@ ScotConfig.prototype.refresh = async function() {
             getSteemPriceInfo(),
             ssc.findOne('tokens', 'balances', {
                 account: 'sctm.burn',
-                symbol: scotConfig.burn.scotMinerToken,
+                symbol: 'KRWP',
             }),
             getSctmPrice(),
+            getReceivedSctm(),
         ]);
 
         if (totalTokenBalance) {
@@ -170,10 +173,32 @@ ScotConfig.prototype.refresh = async function() {
         }
         if (allPrice) {
             scotConfig.info.scotToken = scotConfig.token;
-            scotConfig.info.sct_to_steemp = allPrice[0].se_token_prices.SCT;
-            scotConfig.info.steem_to_dollor = allPrice[0].steem_price;
-            scotConfig.info.steem_to_krw = allPrice[1].candles[0].tradePrice;
-            scotConfig.info.sctm_price = sctmPrice.sctmprice;
+            scotConfig.info.sct_to_steemp = allPrice.find(
+                data => data.symbol === 'SCT'
+            ).price_average;
+            scotConfig.info.steem_to_dollor = allPrice.find(
+                data => data.symbol === 'STEEM'
+            ).price_average;
+            scotConfig.info.steem_to_krw = allPrice.find(
+                data => data.symbol === 'STEEM_KRW'
+            ).price_average;
+            scotConfig.info.sctm_price = sctmPrice.data.sctmprice;
+            scotConfig.info.received_sctm = receivedSCTM.data.amount;
+            scotConfig.info.received_list = receivedSCTM.data.list;
+            scotConfig.info.krwp_balance = sctmburnBalance.balance;
+
+            // console.log('SCTM burn info:', sctmPrice.data.sctmprice, receivedSCTM.data.amount, receivedSCTM.data.list, sctmburnBalance.balance);
+
+            console.log(
+                'Price list:',
+                scotConfig.info.sct_to_steemp,
+                scotConfig.info.steem_to_dollor,
+                scotConfig.info.steem_to_krw,
+                scotConfig.info.sctm_price,
+                scotConfig.info.received_sctm,
+                scotConfig.info.received_list,
+                scotConfig.info.krwp_balance
+            );
         }
 
         // get SCT thumbup config
