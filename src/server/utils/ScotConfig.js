@@ -132,7 +132,7 @@ ScotConfig.prototype.refresh = async function() {
             }),
             ssc.findOne('tokens', 'balances', {
                 account: 'null',
-                symbol: 'KRWP',
+                symbol: scotConfig.burn.scotMinerToken,
             }),
             getThumbupReceiveTopList(year + mon),
             getThumbupSendTopList(year + mon),
@@ -186,19 +186,6 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.received_sctm = receivedSCTM.data.amount;
             scotConfig.info.received_list = receivedSCTM.data.list;
             scotConfig.info.krwp_balance = sctmburnBalance.balance;
-
-            // console.log('SCTM burn info:', sctmPrice.data.sctmprice, receivedSCTM.data.amount, receivedSCTM.data.list, sctmburnBalance.balance);
-
-            console.log(
-                'Price list:',
-                scotConfig.info.sct_to_steemp,
-                scotConfig.info.steem_to_dollor,
-                scotConfig.info.steem_to_krw,
-                scotConfig.info.sctm_price,
-                scotConfig.info.received_sctm,
-                scotConfig.info.received_list,
-                scotConfig.info.krwp_balance
-            );
         }
 
         // get SCT thumbup config
