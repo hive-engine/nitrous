@@ -459,10 +459,6 @@ export default connect(
 
         const thumbupConfig = scotConfig.getIn(['config', 'thumbupConfig']);
 
-        if (thumbupConfig) {
-            console.log(`success load thumbsup config`);
-        }
-
         return {
             post: ownProps.post,
             author,
@@ -553,13 +549,13 @@ export default connect(
                 };
 
                 const successCallback = () => {
-                  dispatch(
-                    appActions.addNotification({
-                        key: 'trx_' + Date.now(),
-                        message:tt('g.thumbsup_completed'),
-                        dismissAfter: 5000,
-                    })
-                  );
+                    dispatch(
+                        appActions.addNotification({
+                            key: 'trx_' + Date.now(),
+                            message: tt('g.thumbsup_completed'),
+                            dismissAfter: 5000,
+                        })
+                    );
                 };
 
                 dispatch(
@@ -571,16 +567,16 @@ export default connect(
                     })
                 );
             };
-            
+
             dispatch(
-              appActions.addNotification({
-                  key: 'trx_' + Date.now(),
-                  message:tt('g.thumbsup_information', {
-                    amount:amount,
-                    LIQUID_TOKEN:LIQUID_TOKEN_UPPERCASE
-                  }),
-                  dismissAfter: 10000,
-              })
+                appActions.addNotification({
+                    key: 'trx_' + Date.now(),
+                    message: tt('g.thumbsup_information', {
+                        amount: amount,
+                        LIQUID_TOKEN: LIQUID_TOKEN_UPPERCASE,
+                    }),
+                    dismissAfter: 10000,
+                })
             );
 
             dispatch(
