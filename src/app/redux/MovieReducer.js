@@ -72,10 +72,27 @@ export default function reducer(state = defaultState, action = {}) {
         case RECEIVE_SUMMARY:
             return state.set('summary', fromJS(payload.data));
         case RECEIVE_MOVIE:
-            return state.update(
-                CustomUtil.getMovieListName(payload.movieType),
-                list => getUpdatedMovieList(list, payload.data)
+            const movie = state.get(
+                CustomUtil.getMovieListName(payload.movieType)
             );
+
+            if (
+                movie &&
+                movie.toJS().find(e => e.MovieId == payload.data.MovieId)
+            ) {
+                return state.update(
+                    CustomUtil.getMovieListName(payload.movieType),
+                    list => getUpdatedMovieList(list, payload.data)
+                );
+            } else {
+                return state.updateIn(['summary', 'RecentMovies'], list =>
+                    getUpdatedMovieSummaries(
+                        payload.movieType,
+                        list,
+                        payload.data
+                    )
+                );
+            }
         case RECEIVE_MOVIES:
             return state
                 .update(
@@ -286,8 +303,18 @@ export const actions = {
 function getUpdatedMovieList(list, jsonToUpdate) {
     return list.map(
         o =>
-            o.get('MovieId') !== jsonToUpdate.MovieId
-                ? o
-                : o.merge(jsonToUpdate)
+            o.get('MovieId') === jsonToUpdate.MovieId
+                ? o.merge(jsonToUpdate)
+                : o
+    );
+}
+
+function getUpdatedMovieSummaries(movieType, list, jsonToUpdate) {
+    return list.map(
+        o =>
+            o.get('MovieId') === jsonToUpdate.MovieId &&
+            o.get('Type') === movieType
+                ? o.merge(jsonToUpdate)
+                : o
     );
 }

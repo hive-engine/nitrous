@@ -18,19 +18,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
-
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
-
-import TextField from '@material-ui/core/TextField';
-
 import Chip from '@material-ui/core/Chip';
-
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
@@ -114,11 +102,13 @@ export default function Movie(props) {
                 <main className={classes.root}>
                     <div
                         id="movie-detail-frame"
-                        style={{
-                            backgroundImage: `url(${CustomUtil.getMovieBackdropUrl(
-                                movie.BackdropPath
-                            )})`,
-                        }}
+                        style={
+                            movie.BackdropPath && {
+                                backgroundImage: `url(${CustomUtil.getMovieBackdropUrl(
+                                    movie.BackdropPath
+                                )})`,
+                            }
+                        }
                     >
                         <div className="gradient-bg">
                             <Grid container spacing={3}>
@@ -375,7 +365,25 @@ module.exports = {
             }
 
             if (!movie) {
-                movie = state.movie.get('single_movie').toJS();
+                const summary = state.movie.getIn(['summary', 'RecentMovies']);
+
+                if (summary) {
+                    movie = summary
+                        .toJS()
+                        .find(o => o.Type === movieType && o.MovieId === id);
+                }
+
+                if (!movie) {
+                    movie = state.movie.get('single_movie');
+
+                    if (movie) {
+                        movie = movie.toJS();
+
+                        if (movie.Type !== movieType || movie.MovieId !== id) {
+                            movie = undefined;
+                        }
+                    }
+                }
             }
 
             return {

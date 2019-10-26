@@ -6,6 +6,7 @@ import tt from 'counterpart';
 import { actions as movieActions } from 'app/redux/MovieReducer';
 
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import RecentMovies from 'app/components/elements/Summary/RecentMovies';
 import RecentReviews from 'app/components/elements/Summary/RecentReviews';
 
@@ -70,7 +71,9 @@ export default function Home(props) {
     const { locale, summary, requestSummary } = props;
 
     React.useEffect(() => {
-        requestSummary({ languageCode: locale });
+        if (!summary) {
+            requestSummary({ languageCode: locale });
+        }
     }, []);
 
     const topReviews = [
@@ -111,97 +114,109 @@ export default function Home(props) {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="lg" className={classes.root}>
-                <h3>
-                    <ThumbUpIcon /> {tt('review.summary.featured_reviews')}
-                </h3>
-                <Grid container spacing={4} className={classes.cardGrid}>
-                    {topReviews.map(e => (
-                        <Grid
-                            item
-                            key={e.Author + e.Permlink}
-                            xs={6}
-                            sm={4}
-                            md={3}
-                        >
-                            <CardActionArea
-                                component={Link}
-                                to={`/@${e.Author}/${e.Permlink}`}
+            {summary ? (
+                <Container maxWidth="lg" className={classes.root}>
+                    <h3>
+                        <ThumbUpIcon /> {tt('review.summary.featured_reviews')}
+                    </h3>
+                    <Grid container spacing={4} className={classes.cardGrid}>
+                        {topReviews.map(e => (
+                            <Grid
+                                item
+                                key={e.Author + e.Permlink}
+                                xs={6}
+                                sm={4}
+                                md={3}
                             >
-                                <Card className={classes.card}>
-                                    {e.CoverImgUrl && (
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={e.CoverImgUrl}
-                                        />
-                                    )}
-                                    <CardContent
-                                        className={classes.cardContent}
-                                    >
-                                        <h5>{e.Title}</h5>
-                                        <Typography
-                                            className={classes.cardDate}
-                                            variant="subtitle1"
-                                            color="textSecondary"
+                                <CardActionArea
+                                    component={Link}
+                                    to={`/@${e.Author}/${e.Permlink}`}
+                                >
+                                    <Card className={classes.card}>
+                                        {e.CoverImgUrl && (
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={e.CoverImgUrl}
+                                            />
+                                        )}
+                                        <CardContent
+                                            className={classes.cardContent}
                                         >
-                                            <Grid container alignItems="center">
-                                                <TimeAgoWrapper
-                                                    date={e.AddDate}
-                                                />
-                                                <Avatar
-                                                    alt={e.Author}
-                                                    src={`https://steemitimages.com/u/${
-                                                        e.Author
-                                                    }/avatar`}
-                                                    className={classes.avatar}
-                                                />
-                                                @{e.Author}
-                                            </Grid>
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </CardActionArea>
-                        </Grid>
-                    ))}
-                </Grid>
-                <br />
-                <h3>
-                    <MovieFilterIcon /> {tt('review.summary.recent_movies')}
-                </h3>
-                <RecentMovies
-                    type={1}
-                    list={summary.RecentMovies}
-                    classes={classes}
-                />
-                <br />
-                <h3>
-                    <TvIcon /> {tt('review.summary.recent_tvs')}
-                </h3>
-                <RecentMovies
-                    type={2}
-                    list={summary.RecentMovies}
-                    classes={classes}
-                />
-                <br />
-                <h3>
-                    <RateReviewIcon />{' '}
-                    {tt('review.summary.recent_movie_reviews')}
-                </h3>
-                <RecentReviews
-                    type={1}
-                    list={summary.RecentReviews}
-                    classes={classes}
-                />
-                <br />
-                <h3>
-                    <RateReviewIcon /> {tt('review.summary.recent_tv_reviews')}
-                </h3>
-                <RecentReviews
-                    type={2}
-                    list={summary.RecentReviews}
-                    classes={classes}
-                />
-            </Container>
+                                            <h5>{e.Title}</h5>
+                                            <Typography
+                                                className={classes.cardDate}
+                                                variant="subtitle1"
+                                                color="textSecondary"
+                                            >
+                                                <Grid
+                                                    container
+                                                    alignItems="center"
+                                                >
+                                                    <TimeAgoWrapper
+                                                        date={e.AddDate}
+                                                    />
+                                                    <Avatar
+                                                        alt={e.Author}
+                                                        src={`https://steemitimages.com/u/${
+                                                            e.Author
+                                                        }/avatar`}
+                                                        className={
+                                                            classes.avatar
+                                                        }
+                                                    />
+                                                    @{e.Author}
+                                                </Grid>
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </CardActionArea>
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <br />
+                    <h3>
+                        <MovieFilterIcon /> {tt('review.summary.recent_movies')}
+                    </h3>
+                    <RecentMovies
+                        type={1}
+                        list={summary.RecentMovies}
+                        classes={classes}
+                    />
+                    <br />
+                    <h3>
+                        <TvIcon /> {tt('review.summary.recent_tvs')}
+                    </h3>
+                    <RecentMovies
+                        type={2}
+                        list={summary.RecentMovies}
+                        classes={classes}
+                    />
+                    <br />
+                    <h3>
+                        <RateReviewIcon />{' '}
+                        {tt('review.summary.recent_movie_reviews')}
+                    </h3>
+                    <RecentReviews
+                        type={1}
+                        list={summary.RecentReviews}
+                        classes={classes}
+                    />
+                    <br />
+                    <h3>
+                        <RateReviewIcon />{' '}
+                        {tt('review.summary.recent_tv_reviews')}
+                    </h3>
+                    <RecentReviews
+                        type={2}
+                        list={summary.RecentReviews}
+                        classes={classes}
+                    />
+                </Container>
+            ) : (
+                <center>
+                    <LoadingIndicator type="circle" />
+                </center>
+            )}
         </React.Fragment>
     );
 }

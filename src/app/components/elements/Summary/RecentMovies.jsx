@@ -33,12 +33,12 @@ export default function RecentMovies(props) {
                 </TableHead>
                 <TableBody>
                     {CustomUtil.getRecentMovies(type, list).map(e => (
-                        <TableRow key={e.Id}>
+                        <TableRow key={e.MovieId}>
                             <TableCell>
                                 <Link
                                     to={`/${CustomUtil.getMovieTypeName(
                                         e.Type
-                                    )}/${getSlug(e.Id + ' ' + e.Title)}`}
+                                    )}/${getSlug(e.MovieId + ' ' + e.Title)}`}
                                 >
                                     {e.PosterPath && (
                                         <img
