@@ -15,7 +15,7 @@ export const APP_DOMAIN = 'www.naturalmedicine.io';
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalmedicine';
 export const TAG_LIST = fromJSOrdered({
-    lotusstore: ['naturaltherapists''lotusproducts'],
+    lotusstore: ['naturaltherapists''lotusproducts''workshops',],
     plantmedicine: [
         'herbs',
         'cannabis',
@@ -28,6 +28,7 @@ export const TAG_LIST = fromJSOrdered({
     foodismedicine: ['healthyeating', 'vegan'],
     spirituality: ['mindfulness', 'meditation'],
     somaticarts: ['yoga', 'taichi'],
+    education: ['homeschooling'],
 });
 export const LIQUID_TOKEN = 'Lotus';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
