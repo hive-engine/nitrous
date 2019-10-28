@@ -14,7 +14,21 @@ export const APP_DOMAIN = 'www.naturalmedicine.io';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalmedicine';
-export const TAG_LIST = fromJSOrdered(['lotusstore', 'naturalmedicine', 'herbs', 'cannabis', 'vegan', 'homesteading', 'homeschooling', 'essentialoils', 'yoga', 'cbd', 'crystals', 'foodismedicine', 'mushrooms', 'wildcrafting', 'foraging', 'mindfullife', 'ecotrain', 'spirituality', 'meditation', 'permaculture', 'mindfulness', 'wellness', 'plantmedicine', 'herbalmedicine']);
+export const TAG_LIST = fromJSOrdered({
+    lotusstore: ['naturaltherapists''lotusproducts'],
+    plantmedicine: [
+        'herbs',
+        'cannabis',
+        'foraging',
+        'mushrooms',
+        'wildcrafting',
+        'herbalism',
+    ],
+    earthmedicine: ['sustainability', 'environment', 'permaculture', 'homesteading', 'ecotrain'],
+    foodismedicine: ['healthyeating', 'vegan'],
+    spirituality: ['mindfulness', 'meditation'],
+    somaticarts: ['yoga', 'taichi'],
+});
 export const LIQUID_TOKEN = 'Lotus';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LOTUS';
