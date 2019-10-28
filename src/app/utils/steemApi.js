@@ -272,7 +272,8 @@ export async function attachScotData(url, state) {
         return;
     }
 
-    if (state.content) {
+    // Do not do this merging except on client side.
+    if (state.content && process.env.BROWSER) {
         await Promise.all(
             Object.entries(state.content)
                 .filter(entry => {
