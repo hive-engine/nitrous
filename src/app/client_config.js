@@ -122,3 +122,5 @@ export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
+export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
+export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100

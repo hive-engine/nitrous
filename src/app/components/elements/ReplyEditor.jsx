@@ -24,6 +24,8 @@ import {
     SCOT_TAG_FIRST,
     APP_MAX_TAG,
     TAG_LIST,
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
+    SCOT_DEFAULT_BENEFICIARY_PERCENT,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -1048,6 +1050,12 @@ export default formId =>
                             };
                             break;
                         default: // 50% steem power, 50% sd+steem
+                    }
+                    if (SCOT_DEFAULT_BENEFICIARY_ACCOUNT) {
+                        beneficiaries.push({
+                            username: SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
+                            percent: SCOT_DEFAULT_BENEFICIARY_PERCENT,
+                        });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
                         if (!__config.comment_options) {
