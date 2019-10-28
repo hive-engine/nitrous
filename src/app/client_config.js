@@ -102,3 +102,5 @@ export const ALLOW_MASTER_PW = false;
 export const POST_FOOTER =
     '<hr><center>Posted on <a href="${POST_URL}">RealityHubs - Rewarding Reviewers</a></center>';
 export const SCOT_TAG_FIRST = true;
+export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
+export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
