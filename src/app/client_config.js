@@ -87,6 +87,8 @@ export const CONFIG_MAP = {
             'hash',
             'cbd',
             'news',
+            'props4crops',
+            'ganja',
         ]),
         INTERLEAVE_PROMOTED: true,
         PROMOTED_POST_ACCOUNT: 'weedcash',
