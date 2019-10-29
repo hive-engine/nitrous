@@ -94,6 +94,10 @@ export default {
             //});
         } else if (route.page === 'PostNoCategory') {
             cb(null, [require('app/components/pages/PostPageNoCategory')]);
+        } else if (route.page === 'Dashboard') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Dashboard')]);
+            //});
         } else if (route.page === 'PostsIndex') {
             //require.ensure([], (require) => {
             //cb(null, [require('app/components/pages/PostsIndex')]);

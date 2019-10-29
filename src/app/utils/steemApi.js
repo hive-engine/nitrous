@@ -312,7 +312,7 @@ export async function getContentAsync(author, permlink) {
 
 export async function getStateAsync(url) {
     // strip off query string
-    const path = url.split('?')[0];
+    let path = url.split('?')[0];
 
     console.log('path');
     console.log(path);
@@ -321,6 +321,12 @@ export async function getStateAsync(url) {
     const steemitApiStateNeeded = !url.match(
         /^[\/]?(trending|hot|created|promoted|syndication)($|\/$|\/([^\/]+)\/?$)/
     );
+
+    // add special handling for dashboard
+    const match = path.match(/^\/(@[\w\.\d-]+)\/dashboard\/?$/);
+    if (match) {
+        path = '/' + match[1] + '/feed';
+    }
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
