@@ -66,50 +66,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+let isRendered = false;
+
 export default function Home(props) {
     const classes = useStyles();
     const { locale, summary, requestSummary } = props;
 
     React.useEffect(() => {
-        if (!summary) {
+        if (isRendered || !summary) {
+            console.log('requestSummary');
             requestSummary({ languageCode: locale });
         }
-    }, []);
 
-    const topReviews = [
-        {
-            Author: 'trueimagine',
-            Permlink: 'movie-and-sound-new-world',
-            Title: '[Movie & Sound] New World / 신세계',
-            CoverImgUrl:
-                'https://cdn.steemitimages.com/DQmcMSrFqt6hxYjQ1ZkWxXuvJfiXVZ3tDffbLtR9117UDud/%EC%8B%A020.jpg',
-            AddDate: '/Date(1571225601000)/',
-        },
-        {
-            Author: 'keydon',
-            Permlink: '2cabrl',
-            Title: '살인의 추억 - 현실은 영화보다 더 잔혹하다.',
-            CoverImgUrl: 'https://img.youtube.com/vi/uxh9_mrhehw/0.jpg',
-            AddDate: '/Date(1571222634000)/',
-        },
-        {
-            Author: 'ria-ppy',
-            Permlink: 'svaha-the-sixth-finger-2019',
-            Title: '[영화] 사바하 (SVAHA : THE SIXTH FINGER, 2019)',
-            CoverImgUrl:
-                'https://cdn.steemitimages.com/DQmdWNs77zsW4BMJxMnd2Nu68V5xqcXCqf9QX9MaJw5mfDd/movie_image.jpg',
-            AddDate: '/Date(1571219916000)/',
-        },
-        {
-            Author: 'hodolbak-aaa',
-            Permlink: 'boxoffice-027-7000-aaa',
-            Title:
-                '[역대BoxOffice] 관객수를 맞춰라! - #027 (누적당첨금 7000 AAA)',
-            CoverImgUrl:
-                'https://cdn.steemitimages.com/DQmb76hEP4kQFsjp5HK6NKnQuPqhTbT4Ke6KuoG5XaNAxYH/image.png',
-            AddDate: '/Date(1571219298000)/',
-        },
-    ];
+        isRendered = true;
+    }, []);
 
     return (
         <React.Fragment>
@@ -120,7 +90,7 @@ export default function Home(props) {
                         <ThumbUpIcon /> {tt('review.summary.featured_reviews')}
                     </h3>
                     <Grid container spacing={4} className={classes.cardGrid}>
-                        {topReviews.map(e => (
+                        {summary.TopPosts.map(e => (
                             <Grid
                                 item
                                 key={e.Author + e.Permlink}
