@@ -361,13 +361,7 @@ class ReplyEditor extends React.Component {
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
         };
-        const successCallbackWrapper = (...args) => {
-            replyForm.resetForm();
-            this.setState({ loading: false });
-            this.props.setPayoutType(formId, defaultPayoutType);
-            this.props.setBeneficiaries(formId, []);
-            if (successCallback) successCallback(args);
-        };
+
         const isEdit = type === 'edit';
         const isHtml = rte || isHtmlTest(body.value);
         const replyParams = {
@@ -383,7 +377,6 @@ class ReplyEditor extends React.Component {
             jsonMetadata,
             payoutType,
             beneficiaries,
-            successCallback: successCallbackWrapper,
             errorCallback,
         };
         const postLabel = username ? (
@@ -427,18 +420,33 @@ class ReplyEditor extends React.Component {
                     </div>
                     <form
                         className={vframe_class}
-                        onSubmit={handleSubmit(({ data }) => {
-                            const startLoadingIndicator = () =>
-                                this.setState({
-                                    loading: true,
-                                    postError: undefined,
+                        onSubmit={handleSubmit(
+                            ({ data, updateInitialValues }) => {
+                                const startLoadingIndicator = () =>
+                                    this.setState({
+                                        loading: true,
+                                        postError: undefined,
+                                    });
+
+                                const successCallbackWrapper = (...args) => {
+                                    updateInitialValues();
+                                    replyForm.resetForm();
+                                    this.setState({ loading: false });
+                                    this.props.setPayoutType(
+                                        formId,
+                                        defaultPayoutType
+                                    );
+                                    this.props.setBeneficiaries(formId, []);
+                                    if (successCallback) successCallback(args);
+                                };
+                                reply({
+                                    ...data,
+                                    ...replyParams,
+                                    successCallback: successCallbackWrapper,
+                                    startLoadingIndicator,
                                 });
-                            reply({
-                                ...data,
-                                ...replyParams,
-                                startLoadingIndicator,
-                            });
-                        })}
+                            }
+                        )}
                         onChange={() => {
                             this.setState({ postError: null });
                         }}
