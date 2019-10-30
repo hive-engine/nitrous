@@ -469,10 +469,7 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
-                        <AuthorRecentPosts
-                            author={author}
-                            permlink={permlink}
-                        />
+                        
                     </span>
                 )}
 
