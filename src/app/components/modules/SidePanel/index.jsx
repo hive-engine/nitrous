@@ -106,6 +106,12 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'lassecashabout',
+                label: 'About',
+                link: '/welcome.md',
+                internal: true,
+            },
+            {
                 value: 'lassecashinfo',
                 label: 'Info on LASSECASH',
                 link: 'https://scot.today/token/LASSECASH',
@@ -124,7 +130,7 @@ const SidePanel = ({
                 value: 'lassefaq',
                 label: 'FAQ',
                 link: '/faq.html',
-                internal: true
+                internal: true,
             },
         ],
         legal: [
@@ -167,9 +173,7 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Community
-                        </a>
+                        <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
