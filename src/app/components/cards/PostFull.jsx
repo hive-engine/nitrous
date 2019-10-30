@@ -28,7 +28,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
-
+import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
         <span className="PostFull__time_author_category vcard">
@@ -469,6 +469,9 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
+                        author={author}
+                            permlink={permlink}
+                        /> 
                     </span>
                 )}
 
