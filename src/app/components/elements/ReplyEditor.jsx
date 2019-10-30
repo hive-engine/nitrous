@@ -363,6 +363,15 @@ class ReplyEditor extends React.Component {
         };
 
         const isEdit = type === 'edit';
+        const successCallbackWrapper = (...args) => {
+            if (!isEdit) {
+                replyForm.resetForm();
+            }
+            this.setState({ loading: false });
+            this.props.setPayoutType(formId, defaultPayoutType);
+            this.props.setBeneficiaries(formId, []);
+            if (successCallback) successCallback(args);
+        };
         const isHtml = rte || isHtmlTest(body.value);
         const replyParams = {
             author,
@@ -377,6 +386,7 @@ class ReplyEditor extends React.Component {
             jsonMetadata,
             payoutType,
             beneficiaries,
+            successCallback: successCallbackWrapper,
             errorCallback,
         };
         const postLabel = username ? (
@@ -420,33 +430,19 @@ class ReplyEditor extends React.Component {
                     </div>
                     <form
                         className={vframe_class}
-                        onSubmit={handleSubmit(
-                            ({ data, updateInitialValues }) => {
-                                const startLoadingIndicator = () =>
-                                    this.setState({
-                                        loading: true,
-                                        postError: undefined,
-                                    });
-
-                                const successCallbackWrapper = (...args) => {
-                                    updateInitialValues();
-                                    replyForm.resetForm();
-                                    this.setState({ loading: false });
-                                    this.props.setPayoutType(
-                                        formId,
-                                        defaultPayoutType
-                                    );
-                                    this.props.setBeneficiaries(formId, []);
-                                    if (successCallback) successCallback(args);
-                                };
-                                reply({
-                                    ...data,
-                                    ...replyParams,
-                                    successCallback: successCallbackWrapper,
-                                    startLoadingIndicator,
+                        onSubmit={handleSubmit(({ data }) => {
+                            const startLoadingIndicator = () =>
+                                this.setState({
+                                    loading: true,
+                                    postError: undefined,
                                 });
-                            }
-                        )}
+
+                            reply({
+                                ...data,
+                                ...replyParams,
+                                startLoadingIndicator,
+                            });
+                        })}
                         onChange={() => {
                             this.setState({ postError: null });
                         }}
