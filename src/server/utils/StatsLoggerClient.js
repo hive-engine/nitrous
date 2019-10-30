@@ -18,7 +18,7 @@ export default class StatsLoggerClient {
             // Implement debug loggers here, as any new calls are added in methods below.
             this.SDC = {
                 timing() {
-                    console.log('StatsLoggerClient call: ', arguments);
+                    // console.log('StatsLoggerClient call: ', arguments);
                 },
             };
         }
