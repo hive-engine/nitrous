@@ -374,7 +374,8 @@
         "view_the_full_context": "Zobacz pełen kontekst.",
         "view_the_direct_parent": "Zobacz wpis nadrzędny",
         "you_are_viewing_a_single_comments_thread_from":
-            "Przeglądasz wątek pojedynczego komentarza"
+            "Przeglądasz wątek pojedynczego komentarza",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

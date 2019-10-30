@@ -385,7 +385,8 @@
         "view_the_full_context": "Voir le contexte complet",
         "view_the_direct_parent": "Voir le message précédent",
         "you_are_viewing_a_single_comments_thread_from":
-            "Vous visualisez un commentaire unique de l'article"
+            "Vous visualisez un commentaire unique de l'article",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

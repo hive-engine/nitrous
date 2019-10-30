@@ -377,7 +377,8 @@
         "view_the_full_context": "スレッドをすべて表示する",
         "view_the_direct_parent": "親コメントを表示する",
         "you_are_viewing_a_single_comments_thread_from":
-            "次のスレッドのコメントの1つを表示しています "
+            "次のスレッドのコメントの1つを表示しています ",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

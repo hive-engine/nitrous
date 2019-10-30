@@ -379,7 +379,8 @@
         "view_the_full_context": "Vedi il contesto completo",
         "view_the_direct_parent": "Visualizza il collegamento diretto",
         "you_are_viewing_a_single_comments_thread_from":
-            "Stai visualizzando il commento singolo di un thread di "
+            "Stai visualizzando il commento singolo di un thread di ",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

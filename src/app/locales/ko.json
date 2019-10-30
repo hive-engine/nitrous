@@ -373,7 +373,8 @@
         "view_the_full_context": "전체 글 보기",
         "view_the_direct_parent": "상위 댓글 보기",
         "you_are_viewing_a_single_comments_thread_from":
-            "You are viewing a single comment's thread from"
+            "You are viewing a single comment's thread from",
+        "recent_posts_by_author": "%(author)s님의 최근 게시글"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

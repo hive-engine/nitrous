@@ -380,7 +380,8 @@
         "view_the_full_context": "Ver todo el contexto",
         "view_the_direct_parent": "Ver el comentario relacionado",
         "you_are_viewing_a_single_comments_thread_from":
-            "Estás viendo  los comentarios relacionados de"
+            "Estás viendo  los comentarios relacionados de",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

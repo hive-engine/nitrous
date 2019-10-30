@@ -357,7 +357,8 @@
         "view_the_full_context": "查看全文",
         "view_the_direct_parent": "查看上一级",
         "you_are_viewing_a_single_comments_thread_from":
-            "你正在查看单个评论的主题"
+            "你正在查看单个评论的主题",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
