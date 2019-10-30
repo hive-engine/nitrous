@@ -473,7 +473,6 @@ class PostFull extends React.Component {
                             author={author}
                             permlink={permlink}
                         />
-                        /> 
                     </span>
                 )}
 
