@@ -86,6 +86,7 @@ const map = {
     'edouard': 'Verified Creator',
     'kommienezuspadt': 'Verified Creator',
     'mecenasmusic': 'Verified Creator',
+    'cpt.popcorn': 'Verified Creator',
 };
 
 export default map;
