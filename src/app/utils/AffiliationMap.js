@@ -87,6 +87,7 @@ const map = {
     'kommienezuspadt': 'Verified Creator',
     'mecenasmusic': 'Verified Creator',
     'cpt.popcorn': 'Verified Creator',
+    'alt-tab': 'Verified Creator',
 };
 
 export default map;
