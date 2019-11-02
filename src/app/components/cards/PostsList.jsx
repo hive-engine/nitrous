@@ -244,8 +244,8 @@ class PostsList extends React.Component {
                             </li>
                             <div className="articles__content-block--ad">
                                 <ReviveAd
-                                    adKey="feed"
-                                    id={`feed_${Math.floor(i / every)}`}
+                                    adKey="feed_small"
+                                    id={`feed_small_${Math.floor(i / every)}`}
                                 />
                             </div>
                         </div>

@@ -22,14 +22,26 @@ async function callApi(url, params) {
 }
 
 async function getSteemEngineAccountHistoryAsync(account) {
-    return callApi('https://api.steem-engine.com/accounts/history', {
+    const transfers = await callApi(
+        'https://api.steem-engine.com/accounts/history',
+        {
+            account,
+            limit: 50,
+            offset: 0,
+            type: 'user',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+            v: new Date().getTime(),
+        }
+    );
+    const history = await getScotDataAsync('get_account_history', {
         account,
-        limit: 100,
-        offset: 0,
-        type: 'user',
-        symbol: LIQUID_TOKEN_UPPERCASE,
-        v: new Date().getTime(),
+        token: LIQUID_TOKEN_UPPERCASE,
+        limit: 50,
+        startTime: new Date().getTime(),
     });
+    return transfers
+        .concat(history)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
 export async function getScotDataAsync(path, params) {
@@ -42,13 +54,11 @@ export async function getScotAccountDataAsync(account) {
 
 async function getAccount(account) {
     const accounts = await api.getAccountsAsync([account]);
-    console.log(accounts);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
 async function getGlobalProps() {
     const gprops = await api.getDynamicGlobalPropertiesAsync();
-    console.log(gprops);
     return gprops;
 }
 
@@ -62,6 +72,8 @@ async function getAuthorRep(feedData) {
 }
 
 function mergeContent(content, scotData) {
+    const parentAuthor = content.parent_author;
+    const parentPermlink = content.parent_permlink;
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
     const title = content.title;
@@ -85,6 +97,10 @@ function mergeContent(content, scotData) {
     if (title) {
         content.title = title;
     }
+    // Prefer parent author / permlink of content
+    content.parent_author = parentAuthor;
+    content.parent_permlink = parentPermlink;
+
     content.scotData = {};
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
 }
@@ -133,15 +149,23 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         discussionIndex.push(key);
     });
     state.content = filteredContent;
-    if (!state.discussion_idx[tag]) {
-        state.discussion_idx[tag] = {};
+    if (feedType == 'blog' || feedType == 'feed') {
+        // author feeds
+        if (!state.accounts[tag]) {
+            state.accounts[tag] = {};
+        }
+        state.accounts[tag][feedType] = discussionIndex;
+    } else {
+        if (!state.discussion_idx[tag]) {
+            state.discussion_idx[tag] = {};
+        }
+        state.discussion_idx[tag][feedType] = discussionIndex;
     }
-    state.discussion_idx[tag][feedType] = discussionIndex;
 }
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
@@ -153,11 +177,12 @@ export async function attachScotData(url, state) {
         if (tag) {
             discussionQuery.tag = tag;
         }
+        let callName = `get_discussions_by_${feedType}`;
+        if (feedType === 'payout_comments') {
+            callName = 'get_comment_discussions_by_payout';
+        }
         // first call feed.
-        let feedData = await getScotDataAsync(
-            `get_discussions_by_${feedType}`,
-            discussionQuery
-        );
+        let feedData = await getScotDataAsync(callName, discussionQuery);
         await fetchMissingData(tag, feedType, state, feedData);
         return;
     }
@@ -211,10 +236,7 @@ export async function attachScotData(url, state) {
             state.accounts[account].all_token_status = tokenStatuses;
         }
         if (transferHistory) {
-            // Reverse to show recent activity first
-            state.accounts[
-                account
-            ].transfer_history = transferHistory.reverse();
+            state.accounts[account].transfer_history = transferHistory;
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
@@ -225,24 +247,33 @@ export async function attachScotData(url, state) {
         return;
     }
 
-    /* Not yet robust (no resteems here, will yield inconsistent behavior?). also need to add to authors[..]/feed.
     urlParts = url.match(/^[\/]?@([^\/]+)\/feed[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync(
-            'get_feed',
-            {
-                token: LIQUID_TOKEN_UPPERCASE,
-                account,
-                limit: 20,
-            }
-        );
-        await fetchMissingData(account, '', state, feedData);
+        let feedData = await getScotDataAsync('get_feed', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'feed', state, feedData);
         return;
     }
-    */
 
-    if (state.content) {
+    urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        let feedData = await getScotDataAsync('get_discussions_by_blog', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+            include_reblogs: true,
+        });
+        await fetchMissingData(account, 'blog', state, feedData);
+        return;
+    }
+
+    // Do not do this merging except on client side.
+    if (state.content && process.env.BROWSER) {
         await Promise.all(
             Object.entries(state.content)
                 .filter(entry => {
@@ -263,8 +294,9 @@ export async function attachScotData(url, state) {
         Object.entries(state.content)
             .filter(
                 entry =>
-                    entry[1].scotData &&
-                    entry[1].scotData[LIQUID_TOKEN_UPPERCASE]
+                    (entry[1].scotData &&
+                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
+                    (entry[1].parent_author && entry[1].parent_permlink)
             )
             .forEach(entry => {
                 filteredContent[entry[0]] = entry[1];
@@ -285,9 +317,11 @@ export async function getStateAsync(url) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
-    );
+    const steemitApiStateNeeded =
+        !url.match(
+            /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
+        ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
+
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
         : {
@@ -319,22 +353,35 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
     );
+    let order;
+    let callName;
     if (callNameMatch) {
-        const order = callNameMatch[1].toLowerCase();
-        const discussionQuery = {
+        order = callNameMatch[1].toLowerCase();
+        if (order == 'feed') {
+            callName = 'get_feed';
+        } else {
+            callName = `get_discussions_by_${order}`;
+        }
+    } else if (call_name === 'getPostDiscussionsByPayoutAsync') {
+        callName = 'get_discussions_by_payout';
+    } else if (call_name === 'getCommentDiscussionsByPayoutAsync') {
+        callName = 'get_comment_discussions_by_payout';
+    }
+    if (callName) {
+        let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
         };
+        if (order == 'blog') {
+            discussionQuery.include_reblogs = true;
+        }
         if (!discussionQuery.tag) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(
-            `get_discussions_by_${order}`,
-            discussionQuery
-        );
+        feedData = await getScotDataAsync(callName, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');

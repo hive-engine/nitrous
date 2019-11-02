@@ -180,7 +180,7 @@ class Post extends React.Component {
                     ) : null}
                     {this.props.reviveEnabled && showAd ? (
                         <div className="Post_footer__ad">
-                            <ReviveAd adKey="post_footer_betweencomments" />
+                            <ReviveAd adKey="feed_small" />
                         </div>
                     ) : null}
                 </div>
@@ -263,7 +263,9 @@ class Post extends React.Component {
                     </div>
                 ) : null}
                 {this.props.reviveEnabled ? (
-                    <ReviveAd adKey="post_footer_abovecomments" />
+                    <div className="Post_footer__ad">
+                        <ReviveAd adKey="feed_small" />
+                    </div>
                 ) : null}
 
                 <div id="#comments" className="Post_comments row hfeed">
