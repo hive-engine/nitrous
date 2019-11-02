@@ -248,7 +248,7 @@ class Header extends React.Component {
         const nav = navigate || defaultNavigate;
 
         const submit_story = $STM_Config.read_only_mode ? null : (
-            <Link to="/submit.html">
+            <Link to="/submit.html" className="show-for-medium">
                 <IconButton />
             </Link>
         );

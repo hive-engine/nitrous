@@ -181,10 +181,13 @@ const SidePanel = ({
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
+                {username && (
+                    <ul className="vertical menu">
+                        {sidePanelLinks['extras_loggedIn'].map(makeLink)}
+                    </ul>
+                )}
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks['extras'].map(makeLink)}
-                    {!!username &&
-                        sidePanelLinks['extras_loggedIn'].map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     {sidePanelLinks['extras_sticky'].map(makeLink)}
