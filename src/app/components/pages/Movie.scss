@@ -22,3 +22,11 @@
     color: white;
     opacity: 0.5;
 }
+
+.title-icon {
+    margin-bottom: -6px;
+
+    @include MQ(FM) {
+        margin-bottom: -2px;
+    }
+}

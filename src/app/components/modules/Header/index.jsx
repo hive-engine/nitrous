@@ -326,7 +326,7 @@ class Header extends React.Component {
                     </div>
 
                     <nav className="row Header__nav">
-                        <div className="shrink columns show-for-medium Header__logotype">
+                        <div className="shrink columns Header__logotype">
                             {/*LOGO*/}
                             <Link to="/home">
                                 <AppLogo />
@@ -341,7 +341,7 @@ class Header extends React.Component {
                                 pathname={pathname}
                             />
                         </div>
-                        <div className="small-3 medium-3 large-4 columns Header__buttons">
+                        <div className="shrink columns Header__buttons">
                             {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                             {!loggedIn && (
                                 <span className="Header__user-signup show-for-large">

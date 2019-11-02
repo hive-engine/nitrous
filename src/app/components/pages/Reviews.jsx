@@ -43,9 +43,10 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(2),
+        justifyContent: 'space-between',
     },
     formControl: {
-        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         minWidth: '90px',
     },
     card: {
@@ -150,6 +151,7 @@ export default function Reviews(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg" className={classes.root}>
+                <h1>{tt('review.top_menu.reviews')}</h1>
                 <form autoComplete="off">
                     <FormControl
                         variant="outlined"

@@ -831,7 +831,7 @@
         "confirm_transfer": "Transfer %(amount)s from %(from)s to %(to)s?"
     },
     "userwallet_jsx": {
-        "transfer": "Transfer",
+        "transfer": "송금",
         "conversion_complete_tip": "Will complete on",
         "in_conversion": "%(amount)s in conversion",
         "transfer_to_savings": "금고로 전송",

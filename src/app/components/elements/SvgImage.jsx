@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 export default class SvgImage extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
-        width: PropTypes.string.isRequired,
-        height: PropTypes.string.isRequired,
+        width: PropTypes.string,
+        height: PropTypes.string,
         className: PropTypes.string,
     };
     render() {

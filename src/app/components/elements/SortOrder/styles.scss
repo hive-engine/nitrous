@@ -1,6 +1,19 @@
+.app-logo {
+    width: 40px;
+
+    @include MQ(FM) {
+        width: 65px;
+    }
+}
+
 .nav__block-list {
     margin: 0px;
     display: flex;
+
+    .nav__icon {
+        margin-bottom: -6px;
+        margin-right: 2px;
+    }
 }
 
 li.nav__block-list-item {

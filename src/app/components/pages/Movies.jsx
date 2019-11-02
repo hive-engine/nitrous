@@ -38,9 +38,10 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(2),
+        justifyContent: 'space-between',
     },
     formControl: {
-        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         minWidth: '90px',
     },
     card: {
@@ -153,7 +154,8 @@ export default function Movies(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg" className={classes.root}>
-                <form autoComplete="off">
+                <h1>{tt(`review.top_menu.${listName}`)}</h1>
+                <form autoComplete="off" style={{ float: 'right' }}>
                     <FormControl
                         variant="outlined"
                         className={classes.formControl}

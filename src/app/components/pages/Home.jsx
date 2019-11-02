@@ -28,6 +28,7 @@ import RateReviewIcon from '@material-ui/icons/RateReview';
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
+        marginBottom: theme.spacing(3),
     },
     thumbnail: {
         width: '19px',
@@ -74,7 +75,6 @@ export default function Home(props) {
 
     React.useEffect(() => {
         if (isRendered || !summary) {
-            console.log('requestSummary');
             requestSummary({ languageCode: locale });
         }
 
@@ -87,7 +87,8 @@ export default function Home(props) {
             {summary ? (
                 <Container maxWidth="lg" className={classes.root}>
                     <h3>
-                        <ThumbUpIcon /> {tt('review.summary.featured_reviews')}
+                        <ThumbUpIcon className="title-icon" />{' '}
+                        {tt('review.summary.featured_reviews')}
                     </h3>
                     <Grid container spacing={4} className={classes.cardGrid}>
                         {summary.TopPosts.map(e => (
@@ -145,7 +146,8 @@ export default function Home(props) {
                     </Grid>
                     <br />
                     <h3>
-                        <MovieFilterIcon /> {tt('review.summary.recent_movies')}
+                        <MovieFilterIcon className="title-icon" />{' '}
+                        {tt('review.summary.recent_movies')}
                     </h3>
                     <RecentMovies
                         type={1}
@@ -154,7 +156,8 @@ export default function Home(props) {
                     />
                     <br />
                     <h3>
-                        <TvIcon /> {tt('review.summary.recent_tvs')}
+                        <TvIcon className="title-icon" />{' '}
+                        {tt('review.summary.recent_tvs')}
                     </h3>
                     <RecentMovies
                         type={2}
@@ -163,7 +166,7 @@ export default function Home(props) {
                     />
                     <br />
                     <h3>
-                        <RateReviewIcon />{' '}
+                        <RateReviewIcon className="title-icon" />{' '}
                         {tt('review.summary.recent_movie_reviews')}
                     </h3>
                     <RecentReviews
@@ -173,7 +176,7 @@ export default function Home(props) {
                     />
                     <br />
                     <h3>
-                        <RateReviewIcon />{' '}
+                        <RateReviewIcon className="title-icon" />{' '}
                         {tt('review.summary.recent_tv_reviews')}
                     </h3>
                     <RecentReviews

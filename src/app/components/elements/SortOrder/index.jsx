@@ -6,6 +6,11 @@ import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import NativeSelect from 'app/components/elements/NativeSelect';
 import { actions as movieActions } from 'app/redux/MovieReducer';
+import Hidden from '@material-ui/core/Hidden';
+import MovieFilterIcon from '@material-ui/icons/MovieFilter';
+import TvIcon from '@material-ui/icons/Tv';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const SortOrder = ({
     topic,
@@ -51,24 +56,28 @@ const SortOrder = ({
                 value: 'movie',
                 label: tt('review.top_menu.movies'),
                 link: `/movie`,
+                icon: <MovieFilterIcon className="nav__icon" />,
                 onClick: () => requestNewList(),
             },
             {
                 value: 'tv',
                 label: tt('review.top_menu.tvs'),
                 link: `/tv`,
+                icon: <TvIcon className="nav__icon" />,
                 onClick: () => requestNewList(),
             },
             {
                 value: 'review',
                 label: tt('review.top_menu.reviews'),
                 link: `/review`,
+                icon: <RateReviewIcon className="nav__icon" />,
                 onClick: () => requestNewList(),
             },
             {
                 value: 'created',
                 label: tt('g.new').toUpperCase(),
                 link: `/created/${tag}`,
+                icon: <PostAddIcon className="nav__icon" />,
                 onClick: null,
             },
         ];
@@ -87,7 +96,8 @@ const SortOrder = ({
                         }`}
                     >
                         <Link to={i.link} onClick={i.onClick}>
-                            {i.label}
+                            {i.icon}
+                            <Hidden xsDown>{i.label}</Hidden>
                         </Link>
                     </li>
                 );
