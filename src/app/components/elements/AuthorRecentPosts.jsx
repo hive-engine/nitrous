@@ -52,7 +52,6 @@ class AuthorRecentPosts extends React.PureComponent {
                                             {'  '}
                                             <span>({cont.children})</span>
                                         </th>
-                                        <td>{formatDate(cont.created)}</td>
                                     </tr>
                                 );
                             })}
