@@ -314,6 +314,7 @@ class PostsIndex extends React.Component {
         const mqLarge =
             process.env.BROWSER &&
             window.matchMedia('screen and (min-width: 75em)').matches;
+
         return (
             <div
                 className={
@@ -449,6 +450,24 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    sct_to_steemp={this.props.scotInfo.getIn([
+                                        'sct_to_steemp',
+                                    ])}
+                                    steem_to_krw={this.props.scotInfo.getIn([
+                                        'steem_to_krw',
+                                    ])}
+                                    sctm_price={this.props.scotInfo.getIn([
+                                        'sctm_price',
+                                    ])}
+                                    received_sctm={this.props.scotInfo.getIn([
+                                        'received_sctm',
+                                    ])}
+                                    received_list={this.props.scotInfo.getIn([
+                                        'received_list',
+                                    ])}
+                                    krwp_balance={this.props.scotInfo.getIn([
+                                        'krwp_balance',
+                                    ])}
                                 />
                             </div>
                         )}

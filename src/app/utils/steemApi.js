@@ -177,7 +177,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted)($|\/$|\/([^\/]+)\/?$)/
+        /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
     );
 
     if (urlParts) {
@@ -190,11 +190,12 @@ export async function attachScotData(url, state) {
         if (tag) {
             discussionQuery.tag = tag;
         }
+        let callName = `get_discussions_by_${feedType}`;
+        if (feedType === 'payout_comments') {
+            callName = 'get_comment_discussions_by_payout';
+        }
         // first call feed.
-        let feedData = await getScotDataAsync(
-            `get_discussions_by_${feedType}`,
-            discussionQuery
-        );
+        let feedData = await getScotDataAsync(callName, discussionQuery);
         await fetchMissingData(tag, feedType, state, feedData);
         return;
     }
@@ -299,7 +300,8 @@ export async function attachScotData(url, state) {
         return;
     }
 
-    if (state.content) {
+    // Do not do this merging except on client side.
+    if (state.content && process.env.BROWSER) {
         await Promise.all(
             Object.entries(state.content)
                 .filter(entry => {
@@ -343,9 +345,10 @@ export async function getStateAsync(url) {
     const path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = !path.match(
-        /^[\/]?(trending|hot|created|promoted|search)($|\/$|\/([^\/]+)\/?$)/
-    );
+    const steemitApiStateNeeded =
+        !url.match(
+            /^[\/]?(trending|hot|created|promoted|payout|payout_comments|search)($|\/$|\/([^\/]+)\/?$)/
+        ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -380,15 +383,21 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     const callNameMatch = call_name.match(
         /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
     );
+    let order;
+    let callName;
     if (callNameMatch) {
-        // const callNameMatch = call_name.match(/getDiscussionsBy(.*)Async/);
-        // const order = callNameMatch && callNameMatch[1].toLowerCase();
-        // if (order && (scotOnly || order.match(/Trending|Hot|Created|Promoted/))) {
-        const order = callNameMatch[1].toLowerCase();
-        let callName = `get_discussions_by_${order}`;
+        order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {
             callName = 'get_feed';
+        } else {
+            callName = `get_discussions_by_${order}`;
         }
+    } else if (call_name === 'getPostDiscussionsByPayoutAsync') {
+        callName = 'get_discussions_by_payout';
+    } else if (call_name === 'getCommentDiscussionsByPayoutAsync') {
+        callName = 'get_comment_discussions_by_payout';
+    }
+    if (callName) {
         let discussionQuery = {
             ...args[0],
             token: LIQUID_TOKEN_UPPERCASE,
@@ -454,12 +463,13 @@ export async function fetchFeedDataAsync(call_name, ...args) {
 }
 
 export async function getSteemPriceInfo() {
-    var steemPrice = callApi('https://postpromoter.net/api/prices');
-    var steemPriceOnUpbit = callApi(
-        'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
-    );
-    var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
-    return allInfo;
+    const steemprice = await callApi('https://apisct.cloud/price');
+    // var steemPrice = callApi('https://postpromoter.net/api/prices');
+    // var steemPriceOnUpbit = callApi(
+    //     'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
+    // );
+    // var allInfo = await Promise.all([steemPrice, steemPriceOnUpbit]);
+    return steemprice;
 }
 
 export async function fetchSnaxBalanceAsync(account) {
