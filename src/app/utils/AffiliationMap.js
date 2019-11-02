@@ -21,7 +21,7 @@ const map = {
     bala41288: 'Tribe Team',
     thereikiforest: 'Pope',
     r2cornell: 'Dragon',
-    scipio: 'Dragon',
+    aggroed: 'Dragon',
     afolwalex: 'Dragon',
     swedishdragon: 'Dragon',
     geke: 'Dragon',
