@@ -21,13 +21,18 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import {
+    APP_DOMAIN,
+    APP_NAME,
+    SHOW_AUTHOR_RECENT_POSTS,
+} from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -469,6 +474,12 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
+                        {SHOW_AUTHOR_RECENT_POSTS && (
+                            <AuthorRecentPosts
+                                author={author}
+                                permlink={permlink}
+                            />
+                        )}
                     </span>
                 )}
 
