@@ -182,6 +182,17 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.steem_to_krw = allPrice.find(
                 data => data.symbol === 'STEEM_KRW'
             ).price_average;
+
+            scotConfig.info.sbd_to_dollar = allPrice.find(
+                data => data.symbol === 'SBD'
+            ).price_average;
+            scotConfig.info.sctm_to_steem = allPrice.find(
+                data => data.symbol === 'SCTM'
+            ).price_average;
+            scotConfig.info.krwp_to_steem = allPrice.find(
+                data => data.symbol === 'KRWP'
+            ).price_average;
+
             scotConfig.info.sctm_price = sctmPrice.data.sctmprice;
             scotConfig.info.received_sctm = receivedSCTM.data.amount;
             scotConfig.info.received_list = receivedSCTM.data.list;

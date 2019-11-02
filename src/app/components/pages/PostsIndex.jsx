@@ -378,11 +378,20 @@ class PostsIndex extends React.Component {
                         this.props.scotInfo && (
                             <div>
                                 <SidebarSwap
-                                    sbd_to_dollor={this.props.scotInfo.getIn([
-                                        'sbd_to_dollor',
+                                    sct_to_steemp={this.props.scotInfo.getIn([
+                                        'sct_to_steemp',
                                     ])}
                                     steem_to_dollor={this.props.scotInfo.getIn([
                                         'steem_to_dollor',
+                                    ])}
+                                    sctm_to_steem={this.props.scotInfo.getIn([
+                                        'sctm_to_steem',
+                                    ])}
+                                    krwp_to_steem={this.props.scotInfo.getIn([
+                                        'krwp_to_steem',
+                                    ])}
+                                    sbd_to_dollar={this.props.scotInfo.getIn([
+                                        'sbd_to_dollar',
                                     ])}
                                 />
                             </div>

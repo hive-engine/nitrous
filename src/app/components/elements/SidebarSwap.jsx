@@ -56,38 +56,50 @@ class SidebarSwap extends Component {
             output_amount: 0,
             selectedValue: '',
             loadToken: false,
-            providerBalance: ['', '', '', '', ''],
+            providerBalance: ['', '', '', ''],
         };
-        const { sbd_to_dollor, steem_to_dollor } = this.props;
+        const {
+            sct_to_steemp,
+            steem_to_dollor,
+            sctm_to_steem,
+            krwp_to_steem,
+            sbd_to_dollar,
+        } = this.props;
+        console.log(
+            sct_to_steemp,
+            steem_to_dollor,
+            sctm_to_steem,
+            krwp_to_steem,
+            sbd_to_dollar
+        );
+
         // console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
-        this.ratio_toke_by_steem = [1, 1, 1, 1, 1];
+        this.ratio_toke_by_steem = [1, 1, 1, 1];
 
         var that = this;
-        this.getAllTokenInfo().then(allPrice => {
-            that.ratio_toke_by_steem[0] = allPrice[0] * 1; //SCT
-            that.ratio_toke_by_steem[1] = allPrice[1] * 1; //SCTM
-            that.ratio_toke_by_steem[2] = allPrice[2] * 1; //KRWP
-            that.ratio_toke_by_steem[4] = sbd_to_dollor / steem_to_dollor * 1; //SBD
-            // console.log(that.ratio_toke_by_steem);
-            that.setState({ loadToken: true });
-        });
+        this.ratio_toke_by_steem[0] = sct_to_steemp * 1;
+        this.ratio_toke_by_steem[1] = sctm_to_steem * 1; //sctm
+        this.ratio_toke_by_steem[2] = krwp_to_steem * 1; //krwp
+        this.ratio_toke_by_steem[3] = sbd_to_dollar / steem_to_dollor * 1; //sbd
 
         this.getSwapAccountInfo(SWAP_ACCOUNT).then(allInfo => {
             var providerBalance = [
                 allInfo[0] + ' ' + 'SCT',
                 allInfo[1] + ' ' + 'SCTM',
                 allInfo[2] + ' ' + 'KRWP',
-                allInfo[3][0].balance,
                 allInfo[3][0].sbd_balance,
             ];
-            that.setState({ providerBalance });
+            that.setState({
+                providerBalance,
+                loadToken: true,
+            });
         });
 
-        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
-        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'STEEM', 'SBD'];
+        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
 
-        this.swap_fee = 1.0;
+        this.swap_fee = 2.0;
         this.selected_token = [0, 0];
         this.input_amount = 0;
 
@@ -103,14 +115,12 @@ class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
-        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
     outputSelected(e) {
         console.log('-- PromotePost.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
-        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
@@ -119,7 +129,6 @@ class SidebarSwap extends Component {
     amountChange(e) {
         const amount = e.target.value;
         this.input_amount = amount;
-        // update value = amount * (100-swap_fee)/100 * a/b
         this.calculateOutput();
     }
 
@@ -164,25 +173,26 @@ class SidebarSwap extends Component {
     }
 
     calculateOutput() {
-        // update value = amount * (100-swap_fee)/100 * a/b
         const amount = this.input_amount;
         const a = this.ratio_toke_by_steem[this.selected_token[0]];
         const b = this.ratio_toke_by_steem[this.selected_token[1]];
+
+        const input_symbol = this.input_token_type[this.selected_token[0]];
+        const output_symbol = this.output_token_type[this.selected_token[1]];
 
         console.log('calculateOutput');
         console.log(this.selected_token[0]);
         console.log(this.selected_token[1]);
         // token pair가 krwp and sbd라면, 1:1로 한다.
         if (
-            (this.selected_token[0] == 2 && this.selected_token[1] == 4) ||
-            (this.selected_token[0] == 4 && this.selected_token[1] == 2)
+            (input_symbol == 'KRWP' && output_symbol == 'SBD') ||
+            (input_symbol == 'SBD' && output_symbol == 'KRWP')
         ) {
-            var output_amount = amount * ((100 - this.swap_fee) / 100.0) * 1;
+            var output_amount = amount * 1;
             output_amount = output_amount.toFixed(3);
             this.setState({ amount, output_amount });
         } else {
-            var output_amount =
-                amount * ((100 - this.swap_fee) / 100.0) * (1 * a / b);
+            var output_amount = amount * (1 * a / b);
             output_amount = output_amount.toFixed(3);
             this.setState({ amount, output_amount });
         }
@@ -231,7 +241,7 @@ class SidebarSwap extends Component {
                                 className="articles__icon-100"
                                 title={`수수료는 ${
                                     this.swap_fee
-                                }%입니다.\n0.25% -소각\n0.25% - 스왑 기금\n0.25% - 유동성 공급자 기금\n0.25% - 운영 기금`}
+                                }%입니다.\n25% -소각\n25% - 스왑 기금\n25% - 유동성 공급자 기금\n25% - 운영 기금`}
                             >
                                 <button className="button" disabled={true}>
                                     {'Fees'}
