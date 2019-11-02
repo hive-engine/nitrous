@@ -16,7 +16,7 @@ export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalmedicine';
 export const TAG_LIST = fromJSOrdered({
     lotusstore: ['naturaltherapists', 'lotusproducts', 'lotusworkshops', 'homesteaderscoop'],
-    plantmedicine: ['herbs', 'cannabis', 'foraging', 'mushrooms', 'wildcrafting','herbalism','essentialoils', 'cbd'],
+    plantmedicine: ['naturalmedicine', 'herbs', 'cannabis', 'foraging', 'mushrooms', 'wildcrafting','herbalism','essentialoils', 'cbd'],
     earthmedicine: ['sustainability', 'environment', 'permaculture', 'homesteading', 'ecotrain'],
     foodismedicine: ['healthyeating', 'vegan'],
     spirituality: ['mindfulness', 'meditation'],
