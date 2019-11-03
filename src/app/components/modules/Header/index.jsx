@@ -305,16 +305,18 @@ class Header extends React.Component {
                 <header className="Header">
                     {this.props.announcement &&
                         this.props.showAnnouncement &&
-                        shouldShowAnnouncement(this.props.announcement.id) && (
+                        shouldShowAnnouncement(
+                            this.props.announcement.get('id')
+                        ) && (
                             <Announcement
                                 onClose={() =>
                                     this.hideAnnouncement(
-                                        this.props.announcement.id
+                                        this.props.announcement.get('id')
                                     )
                                 }
-                                id={this.props.announcement.id}
-                                title={this.props.announcement.title}
-                                link={this.props.announcement.link}
+                                id={this.props.announcement.get('id')}
+                                title={this.props.announcement.get('title')}
+                                link={this.props.announcement.get('link')}
                             />
                         )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
