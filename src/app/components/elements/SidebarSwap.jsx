@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
-const SWAP_ACCOUNT = 'sct.jcob';
+const SWAP_ACCOUNT = 'sct.swap';
 
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
@@ -57,6 +57,7 @@ class SidebarSwap extends Component {
             selectedValue: '',
             loadToken: false,
             providerBalance: ['', '', '', ''],
+            swap_rate: 1,
         };
         const {
             sct_to_steemp,
@@ -64,14 +65,18 @@ class SidebarSwap extends Component {
             sctm_to_steem,
             krwp_to_steem,
             sbd_to_dollar,
+            steem_to_krw,
         } = this.props;
         console.log(
             sct_to_steemp,
             steem_to_dollor,
             sctm_to_steem,
             krwp_to_steem,
-            sbd_to_dollar
+            sbd_to_dollar,
+            steem_to_krw
         );
+        this.steem_to_krw = steem_to_krw;
+        this.steem_to_krw = steem_to_krw;
 
         // console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
@@ -188,13 +193,27 @@ class SidebarSwap extends Component {
             (input_symbol == 'KRWP' && output_symbol == 'SBD') ||
             (input_symbol == 'SBD' && output_symbol == 'KRWP')
         ) {
-            var output_amount = amount * 1;
+            var swap_rate = 1;
+            if (this.ratio_toke_by_steem[3] * this.steem_to_krw > 1000) {
+                //  SBD/steem * steem/krw
+                swap_rate = 1 * a / b;
+            }
+            var output_amount = amount * swap_rate;
             output_amount = output_amount.toFixed(3);
-            this.setState({ amount, output_amount });
+
+            this.setState({
+                amount,
+                output_amount,
+                swap_rate: swap_rate.toFixed(3),
+            });
         } else {
             var output_amount = amount * (1 * a / b);
             output_amount = output_amount.toFixed(3);
-            this.setState({ amount, output_amount });
+            this.setState({
+                amount,
+                output_amount,
+                swap_rate: (1 * a / b).toFixed(3),
+            });
         }
     }
 
@@ -211,6 +230,7 @@ class SidebarSwap extends Component {
                     <div className="swap-form">
                         <div className="swap-input">
                             {/* input component */}
+                            <div className="text-left">{'from:'}</div>
                             <SelectToken
                                 amount={amount}
                                 amountChange={this.amountChange}
@@ -225,7 +245,7 @@ class SidebarSwap extends Component {
                                 {/* <Icon name="dropdown-arrow" /> */}
                                 {'▼'}
                             </div>
-
+                            <div className="text-left">{'to:'}</div>
                             <SelectToken
                                 amount={output_amount}
                                 amountChange={this.amountChange}
@@ -256,12 +276,18 @@ class SidebarSwap extends Component {
                                 {'Swap'}
                             </button>
                         </div>
-                        <div className="text-center">
-                            {`Provider balance : ${
+                        <div className="text-right">
+                            {`Available: ${
                                 this.state.providerBalance[
                                     this.selected_token[1]
                                 ]
                             }`}
+                        </div>
+                        <div className="text-right">
+                            {`1 ${
+                                this.input_token_type[this.selected_token[0]]
+                            }=${this.state.swap_rate}
+                            ${this.output_token_type[this.selected_token[1]]}`}
                         </div>
                     </div>
                 </div>
