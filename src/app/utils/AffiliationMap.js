@@ -88,6 +88,7 @@ const map = {
     'mecenasmusic': 'Verified Creator',
     'cpt.popcorn': 'Verified Creator',
     'alt-tab': 'Verified Creator',
+    'jennyferandtony': 'Verified Creator',
 };
 
 export default map;
