@@ -56,7 +56,7 @@ export const icons = [
     'pencil2',
     'pin',
     'pin-disabled',
-].concat(POSTED_VIA_NITROUS_ICON ? [] : []);
+].concat(POSTED_VIA_NITROUS_ICON ? [POSTED_VIA_NITROUS_ICON] : []);
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);
 
