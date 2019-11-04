@@ -26,6 +26,7 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
+import SidebarSwap from 'app/components/elements/SidebarSwap';
 import SidebarThumbsup from 'app/components/elements/SidebarThumbsup';
 
 class PostsIndex extends React.Component {
@@ -372,6 +373,33 @@ class PostsIndex extends React.Component {
 
                 <aside className="c-sidebar c-sidebar--right">
                     <Notices notices={this.props.notices} />
+
+                    {this.props.isBrowser &&
+                        this.props.scotInfo && (
+                            <div>
+                                <SidebarSwap
+                                    sct_to_steemp={this.props.scotInfo.getIn([
+                                        'sct_to_steemp',
+                                    ])}
+                                    steem_to_dollor={this.props.scotInfo.getIn([
+                                        'steem_to_dollor',
+                                    ])}
+                                    sctm_to_steem={this.props.scotInfo.getIn([
+                                        'sctm_to_steem',
+                                    ])}
+                                    krwp_to_steem={this.props.scotInfo.getIn([
+                                        'krwp_to_steem',
+                                    ])}
+                                    sbd_to_dollar={this.props.scotInfo.getIn([
+                                        'sbd_to_dollar',
+                                    ])}
+                                    steem_to_krw={this.props.scotInfo.getIn([
+                                        'steem_to_krw',
+                                    ])}
+                                />
+                            </div>
+                        )}
+
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
                             <div>
