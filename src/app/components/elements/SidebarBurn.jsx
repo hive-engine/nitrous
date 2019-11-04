@@ -166,25 +166,12 @@ const SidebarBurn = ({
                                         justifyContent: 'space-between',
                                     }}
                                 >
-                                    <div>SCTM Price(Steem)</div>
+                                    <div>SCTM Price(Steem/KRWP)</div>
                                     <div>
                                         <span className="decimal">
-                                            {parseFloat(sctm_price).toFixed(3)}
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="c-sidebar__list-item">
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                    }}
-                                >
-                                    <div>Swap Rate(per 1SCTM)</div>
-                                    <div>
-                                        <span className="decimal">
-                                            {parseFloat(swapRate).toFixed(3)}
+                                            {parseFloat(sctm_price).toFixed(1)}/{parseFloat(
+                                                swapRate
+                                            ).toFixed(1)}
                                         </span>
                                     </div>
                                 </div>
@@ -208,7 +195,12 @@ const SidebarBurn = ({
                             </li>
                             <li
                                 className="c-sidebar__list-item"
-                                style={styleBurn}
+                                style={
+                                    parseFloat(received_sctm.toFixed(1)) >=
+                                    parseFloat(maxAmount.toFixed(1))
+                                        ? styleBurn
+                                        : styleToken
+                                }
                             >
                                 <div
                                     style={{
@@ -216,25 +208,12 @@ const SidebarBurn = ({
                                         justifyContent: 'space-between',
                                     }}
                                 >
-                                    <div>Joined SCTM</div>
+                                    <div>Joined/Max SCTM</div>
                                     <div>
                                         <span className="decimal">
-                                            {received_sctm.toFixed(3)}
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="c-sidebar__list-item">
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                    }}
-                                >
-                                    <div>Max Amount SCTM</div>
-                                    <div>
-                                        <span className="decimal">
-                                            {maxAmount.toFixed(3)}
+                                            {received_sctm.toFixed(1)}/{maxAmount.toFixed(
+                                                1
+                                            )}
                                         </span>
                                     </div>
                                 </div>
