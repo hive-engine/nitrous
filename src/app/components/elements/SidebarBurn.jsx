@@ -196,8 +196,8 @@ const SidebarBurn = ({
                             <li
                                 className="c-sidebar__list-item"
                                 style={
-                                    received_sctm.toFixed(1) >=
-                                    maxAmount.toFixed(1)
+                                    parseFloat(received_sctm.toFixed(1)) >=
+                                    parseFloat(maxAmount.toFixed(1))
                                         ? styleBurn
                                         : styleToken
                                 }
