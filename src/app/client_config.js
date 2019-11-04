@@ -14,7 +14,7 @@ export const APP_DOMAIN = 'www.dporn.co';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'porn';
-export const TAG_LIST = fromJSOrdered(['porn','boudoir','erotica']);
+export const TAG_LIST = fromJSOrdered(['porn', 'boudoir', 'erotica']);
 export const LIQUID_TOKEN = 'Porn';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PORN';
@@ -101,3 +101,5 @@ export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
+export const SHOW_AUTHOR_RECENT_POSTS = false;
+export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
