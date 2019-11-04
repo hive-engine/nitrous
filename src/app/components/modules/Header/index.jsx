@@ -441,6 +441,8 @@ const mapStateToProps = (state, ownProps) => {
     const gptEnabled = state.app.getIn(['googleAds', 'gptEnabled']);
     const walletUrl = state.app.get('walletUrl');
 
+    const announcement = state.offchain.getIn(['pinned_posts', 'announcement']);
+
     return {
         username,
         loggedIn,
@@ -450,6 +452,7 @@ const mapStateToProps = (state, ownProps) => {
             state.app.getIn(['user_preferences', 'locale']) || DEFAULT_LANGUAGE,
         account_meta: user_profile,
         current_account_name,
+        announcement,
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
         walletUrl,

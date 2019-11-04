@@ -21,7 +21,12 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import {
+    APP_DOMAIN,
+    APP_NAME,
+    SHOW_AUTHOR_RECENT_POSTS,
+    POSTED_VIA_NITROUS_ICON,
+} from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
@@ -31,6 +36,7 @@ import axios from 'axios';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import OtherReviewsOfSameMovie from 'app/components/elements/OtherReviewsOfSameMovie';
 import { MOVIEDB_URL_PATTERN } from 'shared/constants';
+import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -339,6 +345,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = '';
+        if (jsonMetadata) app_info = jsonMetadata.app;
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -471,6 +479,17 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {POSTED_VIA_NITROUS_ICON &&
+                    app_info.startsWith(APP_NAME.toLowerCase()) && (
+                        <span
+                            className="articles__icon-100"
+                            title={tt('g.written_from', {
+                                app_name: APP_NAME,
+                            })}
+                        >
+                            <Icon name={POSTED_VIA_NITROUS_ICON} />
+                        </span>
+                    )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -572,6 +591,12 @@ class PostFull extends React.Component {
                                 permlink={permlink}
                             />
                         </div>
+                        {SHOW_AUTHOR_RECENT_POSTS && (
+                            <AuthorRecentPosts
+                                author={author}
+                                permlink={permlink}
+                            />
+                        )}
                     </span>
                 )}
 
