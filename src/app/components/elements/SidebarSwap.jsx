@@ -101,8 +101,8 @@ class SidebarSwap extends Component {
             });
         });
 
-        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
-        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
+        this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
 
         this.swap_fee = 3.0;
         this.selected_token = [0, 0];
