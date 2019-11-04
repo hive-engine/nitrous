@@ -50,6 +50,7 @@ export async function pinnedPosts() {
         notices: [],
     };
 
+    loadedPostData.announcement = postData.announcement;
     for (const url of postData.pinned_posts) {
         const [username, postId] = url.split('@')[1].split('/');
         let post = await getContentAsync(username, postId);
