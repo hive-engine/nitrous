@@ -104,7 +104,7 @@ class SidebarSwap extends Component {
         this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
         this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
 
-        this.swap_fee = 2.0;
+        this.swap_fee = 3.0;
         this.selected_token = [0, 0];
         this.input_amount = 0;
 
@@ -230,7 +230,9 @@ class SidebarSwap extends Component {
                     <div className="swap-form">
                         <div className="swap-input">
                             {/* input component */}
-                            <div className="text-left">{'from:'}</div>
+                            <div className="c-sidebar__list-small">
+                                {'from:'}
+                            </div>
                             <SelectToken
                                 amount={amount}
                                 amountChange={this.amountChange}
@@ -245,7 +247,7 @@ class SidebarSwap extends Component {
                                 {/* <Icon name="dropdown-arrow" /> */}
                                 {'▼'}
                             </div>
-                            <div className="text-left">{'to:'}</div>
+                            <div className="c-sidebar__list-small">{'to:'}</div>
                             <SelectToken
                                 amount={output_amount}
                                 amountChange={this.amountChange}
@@ -259,9 +261,7 @@ class SidebarSwap extends Component {
                         <div className="text-right">
                             <span
                                 className="articles__icon-100"
-                                title={`수수료는 ${
-                                    this.swap_fee
-                                }%입니다.\n25% -소각\n25% - 스왑 기금\n25% - 유동성 공급자 기금\n25% - 운영 기금`}
+                                title={`수수료는 ${this.swap_fee}%입니다.`}
                             >
                                 <button className="button" disabled={true}>
                                     {'Fees'}
@@ -276,18 +276,21 @@ class SidebarSwap extends Component {
                                 {'Swap'}
                             </button>
                         </div>
-                        <div className="text-right">
+                        <div className="c-sidebar__list-small text-right">
                             {`Available: ${
                                 this.state.providerBalance[
                                     this.selected_token[1]
                                 ]
                             }`}
                         </div>
-                        <div className="text-right">
-                            {`1 ${
+                        <div className="c-sidebar__list-small text-right">
+                            {`1${
                                 this.input_token_type[this.selected_token[0]]
-                            }=${this.state.swap_rate}
-                            ${this.output_token_type[this.selected_token[1]]}`}
+                            }=${this.state.swap_rate}${
+                                this.output_token_type[this.selected_token[1]]
+                            }=${this.ratio_toke_by_steem[
+                                this.selected_token[0]
+                            ].toFixed(3)}STEEM`}
                         </div>
                     </div>
                 </div>
