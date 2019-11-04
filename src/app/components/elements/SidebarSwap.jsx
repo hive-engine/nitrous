@@ -261,7 +261,9 @@ class SidebarSwap extends Component {
                         <div className="text-right">
                             <span
                                 className="articles__icon-100"
-                                title={`수수료는 ${this.swap_fee}%입니다.`}
+                                title={`Fee is ${
+                                    this.swap_fee
+                                }%. The rate is based on the average token price traded for 3 days.`}
                             >
                                 <button className="button" disabled={true}>
                                     {'Fees'}
@@ -394,7 +396,7 @@ export default connect(
                 amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
                 memo: `@${username}:${asset}:${outputasset}`,
                 __config: {
-                    successMessage: '토큰을 전송했습니다.' + '.',
+                    successMessage: 'Token transfer was successful.' + '.',
                 },
             };
             dispatch(
@@ -437,7 +439,7 @@ export default connect(
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
                 __config: {
-                    successMessage: '토큰을 전송했습니다.' + '.',
+                    successMessage: 'Token transfer was successful.' + '.',
                 },
             };
             dispatch(
