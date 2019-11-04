@@ -113,48 +113,48 @@ export const TRADING_VIEW_CONFIG = {
         autosize: true,
         symbols: [
             {
-                "title": "S&P 500",
-                "proName": "OANDA:SPX500USD"
+                title: 'S&P 500',
+                proName: 'OANDA:SPX500USD',
             },
             {
-                "description": "Nasdaq",
-                "proName": "NASDAQ:NDAQ"
+                description: 'Nasdaq',
+                proName: 'NASDAQ:NDAQ',
             },
             {
-                "description": "Bitcoin",
-                "proName": "COINBASE:BTCUSD"
+                description: 'Bitcoin',
+                proName: 'COINBASE:BTCUSD',
             },
             {
-                "description": "Ethereum",
-                "proName": "COINBASE:ETHUSD"
+                description: 'Ethereum',
+                proName: 'COINBASE:ETHUSD',
             },
             {
-                "description": "Steem",
-                "proName": "BITTREX:STEEMUSD"
+                description: 'Steem',
+                proName: 'BITTREX:STEEMUSD',
             },
             {
-                "description": "SBD",
-                "proName": "BITTREX:SBDUSD"
+                description: 'SBD',
+                proName: 'BITTREX:SBDUSD',
             },
             {
-                "description": "Litecoin",
-                "proName": "COINBASE:LTCUSD"
+                description: 'Litecoin',
+                proName: 'COINBASE:LTCUSD',
             },
             {
-                "description": "Binance Coin",
-                "proName": "BINANCE:BNBUSD"
+                description: 'Binance Coin',
+                proName: 'BINANCE:BNBUSD',
             },
             {
-                "description": "Basic Attention Token",
-                "proName": "BINANCE:BATUSD"
+                description: 'Basic Attention Token',
+                proName: 'BINANCE:BATUSD',
             },
             {
-                "description": "Monero",
-                "proName": "BITTREX:XMRUSD"
+                description: 'Monero',
+                proName: 'BITTREX:XMRUSD',
             },
             {
-                "description": "Eos",
-                "proName": "COINBASE:EOSUSD"
+                description: 'Eos',
+                proName: 'COINBASE:EOSUSD',
             },
         ],
     },
@@ -164,123 +164,123 @@ export const TRADING_VIEW_CONFIG = {
         showChart: false,
         tabs: [
             {
-                "title": "Overview",
-                "symbols": [
+                title: 'Overview',
+                symbols: [
                     {
-                        "s": "OANDA:SPX500USD",
-                        "d": "S&P 500"
+                        s: 'OANDA:SPX500USD',
+                        d: 'S&P 500',
                     },
                     {
-                        "s": "NASDAQ:NDAQ",
-                        "d": "Nasdaq"
+                        s: 'NASDAQ:NDAQ',
+                        d: 'Nasdaq',
                     },
                     {
-                        "s": "DJCFD:DJI",
-                        "d": "Dow Jones"
+                        s: 'DJCFD:DJI',
+                        d: 'Dow Jones',
                     },
                     {
-                        "s": "COINBASE:BTCUSD",
-                        "d": "Bitcoin"
+                        s: 'COINBASE:BTCUSD',
+                        d: 'Bitcoin',
                     },
                     {
-                        "s": "COINBASE:ETHUSD",
-                        "d": "Ethereum"
+                        s: 'COINBASE:ETHUSD',
+                        d: 'Ethereum',
                     },
                     {
-                        "s": "BITTREX:STEEMUSD",
-                        "d": "Steem"
+                        s: 'BITTREX:STEEMUSD',
+                        d: 'Steem',
                     },
                     {
-                        "s": "TVC:GOLD",
-                        "d": "Gold"
+                        s: 'TVC:GOLD',
+                        d: 'Gold',
                     },
                     {
-                        "s": "NYMEX:CL1!",
-                        "d": "Crude Oil"
-                    }
-                    ],
-                "originalTitle": "Indices"
+                        s: 'NYMEX:CL1!',
+                        d: 'Crude Oil',
+                    },
+                ],
+                originalTitle: 'Indices',
             },
             {
-                "title": "Crypto",
-                "symbols": [
+                title: 'Crypto',
+                symbols: [
                     {
-                        "s": "COINBASE:BTCUSD",
-                        "d": "BTC"
+                        s: 'COINBASE:BTCUSD',
+                        d: 'BTC',
                     },
                     {
-                        "s": "COINBASE:ETHUSD",
-                        "d": "ETH"
+                        s: 'COINBASE:ETHUSD',
+                        d: 'ETH',
                     },
                     {
-                        "s": "BINANCE:STEEMUSD",
-                        "d": "STEEM"
+                        s: 'BINANCE:STEEMUSD',
+                        d: 'STEEM',
                     },
                     {
-                        "s": "BITTREX:SBDUSD",
-                        "d": "Steem-Backed Dollars"
+                        s: 'BITTREX:SBDUSD',
+                        d: 'Steem-Backed Dollars',
                     },
                     {
-                        "s": "COINBASE:LTCUSD",
-                        "d": "Litecoin"
+                        s: 'COINBASE:LTCUSD',
+                        d: 'Litecoin',
                     },
                     {
-                        "s": "BINANCE:BNBUSD",
-                        "d": "BNB"
+                        s: 'BINANCE:BNBUSD',
+                        d: 'BNB',
                     },
                     {
-                        "s": "BINANCE:BATUSD",
-                        "d": "Basic Attention Token"
+                        s: 'BINANCE:BATUSD',
+                        d: 'Basic Attention Token',
                     },
                     {
-                        "s": "BINANCE:XMRUSD",
-                        "d": "Monero"
+                        s: 'BINANCE:XMRUSD',
+                        d: 'Monero',
                     },
                     {
-                        "s": "COINBASE:EOSUSD",
-                        "d": "Eos"
+                        s: 'COINBASE:EOSUSD',
+                        d: 'Eos',
                     },
                 ],
                 originalTitle: 'Bonds',
             },
             {
-                "title": "Stocks",
-                "symbols": [
+                title: 'Stocks',
+                symbols: [
                     {
-                        "s": "NASDAQ:TSLA",
-                        "d": "Tesla"
+                        s: 'NASDAQ:TSLA',
+                        d: 'Tesla',
                     },
                     {
-                        "s": "NASDAQ:AAPL",
-                        "d": "AAPL"
+                        s: 'NASDAQ:AAPL',
+                        d: 'AAPL',
                     },
                     {
-                        "s": "NYSE:BRK.B",
-                        "d": "Berkshire Hathaway"
+                        s: 'NYSE:BRK.B',
+                        d: 'Berkshire Hathaway',
                     },
                     {
-                        "s": "NYSE:KO",
-                        "d": "Coca Cola"
+                        s: 'NYSE:KO',
+                        d: 'Coca Cola',
                     },
                     {
-                        "s": "NYSE:TWTR",
-                        "d": "Twitter"
+                        s: 'NYSE:TWTR',
+                        d: 'Twitter',
                     },
                     {
-                        "s": "NASDAQ:AMZN",
-                        "d": "Amazon"
+                        s: 'NASDAQ:AMZN',
+                        d: 'Amazon',
                     },
                     {
-                        "s": "NYSE:F",
-                        "d": "Ford"
+                        s: 'NYSE:F',
+                        d: 'Ford',
                     },
                     {
-                        "s": "NASDAQ:FB",
-                        "d": "Facebook"
+                        s: 'NASDAQ:FB',
+                        d: 'Facebook',
                     },
                     {
-                        "s": "NYSE:BABA",
-                        "d": "Alibaba"
+                        s: 'NYSE:BABA',
+                        d: 'Alibaba',
                     },
                 ],
                 originalTitle: 'Forex',
@@ -296,3 +296,5 @@ export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
+export const SHOW_AUTHOR_RECENT_POSTS = true;
+export const POSTED_VIA_NITROUS_ICON = 'steemleo'; // put corresponding svg in src/app/assets/icons/___.svg
