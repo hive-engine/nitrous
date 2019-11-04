@@ -198,7 +198,8 @@ class SidebarSwap extends Component {
                 //  SBD/steem * steem/krw
                 swap_rate = 1 * a / b;
             }
-            var output_amount = amount * swap_rate;
+            var output_amount =
+                amount * swap_rate * (100.0 - this.swap_fee) / 100.0;
             output_amount = output_amount.toFixed(3);
 
             this.setState({
@@ -207,7 +208,8 @@ class SidebarSwap extends Component {
                 swap_rate: swap_rate.toFixed(3),
             });
         } else {
-            var output_amount = amount * (1 * a / b);
+            var output_amount =
+                amount * (1 * a / b) * (100.0 - this.swap_fee) / 100.0;
             output_amount = output_amount.toFixed(3);
             this.setState({
                 amount,
