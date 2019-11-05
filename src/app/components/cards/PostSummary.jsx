@@ -20,7 +20,11 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import { INTERLEAVE_PROMOTED, APP_NAME } from 'app/client_config';
+import {
+    APP_NAME,
+    INTERLEAVE_PROMOTED,
+    POSTED_VIA_NITROUS_ICON,
+} from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -214,18 +218,19 @@ class PostSummary extends React.Component {
                                 />
                             </span>
 
-                            {app_info.startsWith(
-                                `${APP_NAME}/`.toLowerCase()
-                            ) && (
-                                <span
-                                    className="articles__icon-100"
-                                    title={tt('g.written_from', {
-                                        app_name: APP_NAME,
-                                    })}
-                                >
-                                    <Icon name="app" />
-                                </span>
-                            )}
+                            {POSTED_VIA_NITROUS_ICON &&
+                                app_info.startsWith(
+                                    `${APP_NAME}/`.toLowerCase()
+                                ) && (
+                                    <span
+                                        className="articles__icon-100"
+                                        title={tt('g.written_from', {
+                                            app_name: APP_NAME,
+                                        })}
+                                    >
+                                        <Icon name={POSTED_VIA_NITROUS_ICON} />
+                                    </span>
+                                )}
 
                             {full_power && (
                                 <span
