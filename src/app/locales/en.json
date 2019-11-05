@@ -256,7 +256,7 @@
         "circulating": "Circulating",
         "burn": "Burn",
         "staking": "Staking",
-        "written_from": "written from %(app_name)s",
+        "written_from": "Posted from %(app_name)s",
         "all_token_claim": "Claim all tokens",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",

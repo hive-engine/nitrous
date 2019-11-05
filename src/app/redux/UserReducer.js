@@ -63,7 +63,7 @@ const defaultState = fromJS({
     locale: DEFAULT_LANGUAGE,
     show_side_panel: false,
     maybeLoggedIn: false,
-    showAnnouncement: false,
+    showAnnouncement: true,
 });
 
 export default function reducer(state = defaultState, action) {
@@ -272,13 +272,13 @@ export default function reducer(state = defaultState, action) {
             return state.set('show_post_advanced_settings_modal', '');
 
         case SHOW_ANNOUNCEMENT:
-            typeof sessionStorage !== 'undefined' &&
-                sessionStorage.setItem('hideAnnouncement', 'false');
+            typeof localStorage !== 'undefined' &&
+                localStorage.setItem('hideAnnouncement', 0);
             return state.set('showAnnouncement', true);
 
         case HIDE_ANNOUNCEMENT:
-            typeof sessionStorage !== 'undefined' &&
-                sessionStorage.setItem('hideAnnouncement', 'true');
+            typeof localStorage !== 'undefined' &&
+                localStorage.setItem('hideAnnouncement', payload.id);
             return state.set('showAnnouncement', false);
 
         case VOTING_POWER_LOOKUP:
@@ -498,8 +498,9 @@ export const hidePostAdvancedSettings = () => ({
     type: HIDE_POST_ADVANCED_SETTINGS,
 });
 
-export const hideAnnouncement = () => ({
+export const hideAnnouncement = payload => ({
     type: HIDE_ANNOUNCEMENT,
+    payload,
 });
 
 export const showAnnouncement = () => ({
