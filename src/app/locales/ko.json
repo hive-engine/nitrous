@@ -255,7 +255,8 @@
             "클레임 요청이 완료 되었습니다. 결과는 수분 이내 확인이 가능합니다.",
         "post_as": "Post as",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
-            "vote currently exists, user must be indicate a desire to reject witness"
+            "vote currently exists, user must be indicate a desire to reject witness",
+        "written_from": "%(app_name)s에서 작성되었습니다."
     },
     "navigation": {
         "about": "스팀이란?",
