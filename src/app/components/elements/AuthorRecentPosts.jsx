@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import tt from 'counterpart';
-import { Link } from 'react-router';
 
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 
@@ -17,19 +16,24 @@ const formatDate = date => {
     return `${yyyy}-${mm}-${dd}`;
 };
 
-class AuthorRecentPosts extends React.Component {
+class AuthorRecentPosts extends React.PureComponent {
     componentDidMount() {
-        const { author } = this.props;
+        // this.getDiscussionsByAuthor();
+        const { author, permlink } = this.props;
+        const postFilter = value =>
+            value.author === author && value.permlink !== permlink;
         this.props.fetchAuthorRecentPosts({
-            category: 'recent_user_posts',
+            order: 'recent_user_posts',
+            category: author,
             accountname: author,
+            postFilter,
             limit: MAX_LIMIT,
         });
     }
 
     render() {
-        const { author, permlink, discussions, content } = this.props;
-        if (discussions && discussions.size) {
+        const { author, loading, discussions, content } = this.props;
+        if (!loading && (discussions && discussions.size)) {
             return (
                 <div className={classNames('AuthorRecentPosts', 'callout')}>
                     <h6>
@@ -39,20 +43,12 @@ class AuthorRecentPosts extends React.Component {
                         <tbody>
                             {discussions.map((e, i) => {
                                 const cont = content.get(e).toJS();
-                                const post_url = `/${cont.category}/${
-                                    cont.authorperm
-                                }`;
                                 return (
                                     <tr key={String(i)}>
                                         <th>
-                                            {author === cont.author &&
-                                            permlink === cont.permlink ? (
-                                                <span>{cont.title}</span>
-                                            ) : (
-                                                <Link to={post_url}>
-                                                    {cont.title}
-                                                </Link>
-                                            )}
+                                            <a href={`/${cont.authorperm}`}>
+                                                {cont.title}
+                                            </a>
                                             {'  '}
                                             <span>({cont.children})</span>
                                         </th>
@@ -80,7 +76,7 @@ export default connect(
             ...ownProps,
             loading: state.app.get('loading'),
             discussions: state.global.getIn([
-                'accounts',
+                'discussion_idx',
                 ownProps.author,
                 'recent_user_posts',
             ]),

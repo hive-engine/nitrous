@@ -21,7 +21,12 @@ import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
+import {
+    APP_DOMAIN,
+    APP_NAME,
+    SHOW_AUTHOR_RECENT_POSTS,
+    POSTED_VIA_NITROUS_ICON,
+} from 'app/client_config';
 import tt from 'counterpart';
 import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
@@ -375,11 +380,17 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
-                {app_info.startsWith('steeminventory/') && (
-                    <span title={tt('g.written_from', { app_name: APP_NAME })}>
-                        <Icon name="iv" />
-                    </span>
-                )}
+                {POSTED_VIA_NITROUS_ICON &&
+                    app_info.startsWith(`${APP_NAME.toLowerCase()}/`) && (
+                        <span
+                            className="articles__icon-100"
+                            title={tt('g.written_from', {
+                                app_name: APP_NAME,
+                            })}
+                        >
+                            <Icon name={POSTED_VIA_NITROUS_ICON} />
+                        </span>
+                    )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -476,10 +487,12 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
-                        <AuthorRecentPosts
-                            author={author}
-                            permlink={permlink}
-                        />
+                        {SHOW_AUTHOR_RECENT_POSTS && (
+                            <AuthorRecentPosts
+                                author={author}
+                                permlink={permlink}
+                            />
+                        )}
                     </span>
                 )}
 
