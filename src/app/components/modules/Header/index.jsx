@@ -40,6 +40,11 @@ class Header extends React.Component {
             showReviveAd: true,
             showAnnouncement: this.props.showAnnouncement,
         };
+
+        this.hideAnnouncement = event => {
+            this.props.hideAnnouncement(event);
+            this.forceUpdate();
+        };
     }
 
     componentDidMount() {
@@ -298,9 +303,22 @@ class Header extends React.Component {
                 onUnfix={e => this.headroomOnUnfix(e)}
             >
                 <header className="Header">
-                    {showAnnouncement && (
-                        <Announcement onClose={e => this.hideAnnouncement(e)} />
-                    )}
+                    {this.props.announcement &&
+                        this.props.showAnnouncement &&
+                        shouldShowAnnouncement(
+                            this.props.announcement.get('id')
+                        ) && (
+                            <Announcement
+                                onClose={() =>
+                                    this.hideAnnouncement(
+                                        this.props.announcement.get('id')
+                                    )
+                                }
+                                id={this.props.announcement.get('id')}
+                                title={this.props.announcement.get('title')}
+                                link={this.props.announcement.get('link')}
+                            />
+                        )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
                     <div style={showAd ? {} : { display: 'none' }}>
                         <GptAd
@@ -421,13 +439,16 @@ const mapStateToProps = (state, ownProps) => {
     const gptEnabled = state.app.getIn(['googleAds', 'gptEnabled']);
     const walletUrl = state.app.get('walletUrl');
 
+    const announcement = state.offchain.getIn(['pinned_posts', 'announcement']);
+
     return {
         username,
         loggedIn,
         userPath,
-        nightmodeEnabled: state.user.getIn(['user_preferences', 'nightmode']),
+        nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
         account_meta: user_profile,
         current_account_name,
+        announcement,
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
         walletUrl,
@@ -454,9 +475,20 @@ const mapDispatchToProps = dispatch => ({
     hideSidePanel: () => {
         dispatch(userActions.hideSidePanel());
     },
-    hideAnnouncement: () => dispatch(userActions.hideAnnouncement()),
+    hideAnnouncement: id => dispatch(userActions.hideAnnouncement({ id })),
 });
 
 const connectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
+
+function shouldShowAnnouncement(id) {
+    if (
+        typeof id !== 'undefined' &&
+        (typeof localStorage === 'undefined' ||
+            (typeof localStorage !== 'undefined' &&
+                localStorage.getItem('hideAnnouncement') !== id.toString()))
+    )
+        return true;
+    else return false;
+}
 
 export default connectedHeader;
