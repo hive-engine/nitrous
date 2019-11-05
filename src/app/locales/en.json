@@ -250,7 +250,7 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
-        "written_from": "written from %(app_name)s",
+        "written_from": "Posted from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
         "all_claim_completed": "Claims completed!"
@@ -365,7 +365,8 @@
         "view_the_full_context": "View the full context",
         "view_the_direct_parent": "View the direct parent",
         "you_are_viewing_a_single_comments_thread_from":
-            "You are viewing a single comment's thread from"
+            "You are viewing a single comment's thread from",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
