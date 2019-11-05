@@ -353,9 +353,6 @@ export async function getStateAsync(url) {
     }
     await attachScotData(url, raw);
 
-    console.log('raw');
-    console.log(raw);
-
     const cleansed = stateCleaner(raw);
 
     return cleansed;
