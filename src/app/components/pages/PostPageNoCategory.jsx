@@ -18,7 +18,7 @@ class PostWrapper extends React.Component {
         const route_params = this.props.routeParams;
         const post = route_params.username + '/' + route_params.slug;
         const dis = this.props.content.get(post);
-        if (!dis) {
+        if (!dis || !dis.get('category')) {
             this.props
                 .getContent({
                     author: route_params.username,
