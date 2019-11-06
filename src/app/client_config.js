@@ -91,7 +91,7 @@ export const CONFIG_MAP = {
             'ganja',
         ]),
         INTERLEAVE_PROMOTED: true,
-        PROMOTED_POST_ACCOUNT: 'weedcash',
+        PROMOTED_POST_ACCOUNT: 'null',
         VESTING_TOKEN: 'WEED POWER',
         SITE_DESCRIPTION:
             'Weedcash is a social media platform where everyone gets paid for ' +
