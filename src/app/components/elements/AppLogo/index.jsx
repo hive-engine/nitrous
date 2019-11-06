@@ -4,7 +4,7 @@ import SvgImage from 'app/components/elements/SvgImage';
 import { APP_ICON } from 'app/client_config';
 
 const AppLogo = () => {
-    return <SvgImage name={APP_ICON} width="100px" height="40px" />;
+    return <SvgImage name={APP_ICON} width="115px" height="40px" />;
 };
 
 export default AppLogo;
