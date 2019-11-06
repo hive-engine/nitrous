@@ -136,9 +136,9 @@ function* usernamePasswordLogin(action) {
     // or if the user's browser does not support session storage,
     // show the announcement.
     if (
-        typeof sessionStorage === 'undefined' ||
-        (typeof sessionStorage !== 'undefined' &&
-            sessionStorage.getItem('hideAnnouncement') !== 'true')
+        typeof localStorage === 'undefined' ||
+        (typeof localStorage !== 'undefined' &&
+            !localStorage.getItem('hideAnnouncement'))
     ) {
         // Uncomment to re-enable announcment
         // TODO: use config to enable/disable

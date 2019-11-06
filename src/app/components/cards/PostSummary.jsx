@@ -20,7 +20,6 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
-import { INTERLEAVE_PROMOTED } from 'app/client_config';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -70,6 +69,8 @@ class PostSummary extends React.Component {
             featured,
             featuredOnClose,
             appDomain,
+            appName,
+            nitrousPostedIcon,
             interleavePromoted,
         } = this.props;
         const { account } = this.props;
@@ -127,6 +128,7 @@ class PostSummary extends React.Component {
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
         const full_power = content.get('percent_steem_dollars') === 0;
+        const app_info = content.get('app') || '';
 
         let post_url;
         let title_text;
@@ -216,6 +218,20 @@ class PostSummary extends React.Component {
                                     className="updated"
                                 />
                             </span>
+
+                            {nitrousPostedIcon &&
+                                app_info.startsWith(
+                                    `${appName.toLowerCase()}/`
+                                ) && (
+                                    <span
+                                        className="articles__icon-100"
+                                        title={tt('g.written_from', {
+                                            app_name: appName,
+                                        })}
+                                    >
+                                        <Icon name={nitrousPostedIcon} />
+                                    </span>
+                                )}
 
                             {full_power && (
                                 <span
@@ -437,6 +453,11 @@ export default connect(
                 state.offchain.get('account'),
             blogmode: state.app.getIn(['user_preferences', 'blogmode']),
             appDomain: state.app.getIn(['hostConfig', 'APP_DOMAIN']),
+            appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+            nitrousPostedIcon: state.app.getIn([
+                'hostConfig',
+                'POSTED_VIA_NITROUS_ICON',
+            ]),
             interleavePromoted: state.app.getIn(
                 ['hostConfig', 'INTERLEAVE_PROMOTED'],
                 false
