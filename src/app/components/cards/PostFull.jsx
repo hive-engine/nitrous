@@ -28,6 +28,7 @@ import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { GoogleAd } from 'app/components/elements/GoogleAd';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -266,6 +267,8 @@ class PostFull extends React.Component {
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
         if (content.category) link = `/${content.category}${link}`;
+        let app_info = '';
+        if (jsonMetadata) app_info = jsonMetadata.app;
 
         const { category, title, body } = content;
         if (process.env.BROWSER && title)
@@ -379,6 +382,21 @@ class PostFull extends React.Component {
         let post_header = (
             <h1 className="entry-title">
                 {content.title}
+                {hostConfig['POSTED_VIA_NITROUS_ICON'] &&
+                    app_info.startsWith(
+                        hostConfig['APP_NAME'].toLowerCase()
+                    ) && (
+                        <span
+                            className="articles__icon-100"
+                            title={tt('g.written_from', {
+                                app_name: hostConfig['APP_NAME'],
+                            })}
+                        >
+                            <Icon
+                                name={hostConfig['POSTED_VIA_NITROUS_ICON']}
+                            />
+                        </span>
+                    )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
                         <Icon name="steempower" />
@@ -475,6 +493,12 @@ class PostFull extends React.Component {
                         <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
+                        {hostConfig['SHOW_AUTHOR_RECENT_POSTS'] && (
+                            <AuthorRecentPosts
+                                author={author}
+                                permlink={permlink}
+                            />
+                        )}
                     </span>
                 )}
 
