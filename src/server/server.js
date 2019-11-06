@@ -40,11 +40,26 @@ const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
 
-// import ads.txt to be served statically
-const adstxt = fs.readFileSync(
-    path.join(__dirname, '../app/assets/ads.txt'),
-    'utf8'
-);
+[ 'ads.txt', 'googled114a072e131cab7.html' ].forEach(f => {
+    const fData = fs.readFileSync(
+        path.join(__dirname, '../app/assets/' + f),
+        'utf8'
+    );
+    
+
+
+    app.use(
+        mount('/' + f, function*() {
+            this.type = 'text/plain';
+            this.body = fData;
+        })
+    );
+});
+
+
+
+
+
 
 // Serve static assets without fanfare
 app.use(
@@ -78,12 +93,7 @@ app.use(
     )
 );
 
-app.use(
-    mount('/ads.txt', function*() {
-        this.type = 'text/plain';
-        this.body = adstxt;
-    })
-);
+
 
 // Proxy asset folder to webpack development server in development mode
 if (env === 'development') {
