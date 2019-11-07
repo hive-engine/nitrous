@@ -89,6 +89,7 @@ const map = {
     'cpt.popcorn': 'Verified Creator',
     'alt-tab': 'Verified Creator',
     'jennyferandtony': 'Verified Creator',
+    'topadultcurator': 'Verified Creator',
 };
 
 export default map;
