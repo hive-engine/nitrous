@@ -12,21 +12,8 @@ import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
-import SidebarLinks from 'app/components/elements/SidebarLinks';
-import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
-import Notices from 'app/components/elements/Notices';
-import { GptUtils } from 'app/utils/GptUtils';
-import GptAd from 'app/components/elements/GptAd';
-import ReviveAd from 'app/components/elements/ReviveAd';
-import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
-import Topics from './Topics';
-import SortOrder from 'app/components/elements/SortOrder';
-import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
-import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
-import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-import SidebarToken from 'app/components/elements/SidebarToken';
-import { TradingViewEmbed, widgetType } from 'react-tradingview-embed';
-import { TRADING_VIEW_CONFIG, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import SidebarMenu from 'app/components/elements/SidebarMenu';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import Info from 'app/components/elements/Info';
 import { getDate } from 'app/utils/Date';
 import Slider from 'react-slick';
@@ -102,11 +89,6 @@ class Dashboard extends React.Component {
             process.env.BROWSER &&
             window.matchMedia('screen and (min-width: 75em)').matches;
 
-        let tvWidgetConfigMarketOverview = TRADING_VIEW_CONFIG.MARKET_OVERVIEW;
-        tvWidgetConfigMarketOverview.colorTheme = nightmodeEnabled
-            ? 'dark'
-            : 'light';
-
         var settings = {
             dots: true,
             infinite: true,
@@ -116,7 +98,7 @@ class Dashboard extends React.Component {
         };
 
         return (
-            <div className={'PostsIndex row' + layoutClass}>
+            <div className={'Dashboard row' + layoutClass}>
                 <article className="articles">
                     <Slider {...settings}>
                         <div>
@@ -157,13 +139,28 @@ class Dashboard extends React.Component {
                         </div>
                     </Slider>
 
-                    <div>buttons</div>
+                    <div className="buttons">
+                        <a
+                            href="https://dex.steemleo.com"
+                            target="_blank"
+                            className="dex"
+                        >
+                            {tt('g.steemleo_dex')}
+                        </a>
+                        <a
+                            href={`/@${username}/transfers`}
+                            target="_blank"
+                            className="wallet"
+                        >
+                            {tt('g.wallet')}
+                        </a>
+                    </div>
 
                     <div>3 columns of posts</div>
                 </article>
 
                 <aside className="c-sidebar c-sidebar--left">
-                    <div> menus </div>
+                    <SidebarMenu username={username} />
                 </aside>
             </div>
         );
