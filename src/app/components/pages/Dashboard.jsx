@@ -80,6 +80,7 @@ class Dashboard extends React.Component {
         );
 
         const { nightmodeEnabled } = this.props;
+        const oppositeTheme = nightmodeEnabled ? 'theme-light' : 'theme-dark';
 
         const layoutClass = this.props.blogmode
             ? ' layout-block'
@@ -160,7 +161,10 @@ class Dashboard extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--left">
-                    <SidebarMenu username={username} />
+                    <SidebarMenu
+                        username={username}
+                        className={oppositeTheme}
+                    />
                 </aside>
             </div>
         );

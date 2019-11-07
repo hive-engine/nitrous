@@ -665,6 +665,15 @@
         "replies_to": "Replies to %(username)s",
         "comments_by": "Comments by %(username)s"
     },
+    "sidebar_menu_jsx": {
+        "home": "Home",
+        "create_a_post": "Create a Post",
+        "analytics": "Analytics",
+        "trending": "Trending",
+        "tags": "Tags",
+        "publishing": "Publishing",
+        "exploring": "Exploring"
+    },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
             "You need a private password or key (not a public key)",

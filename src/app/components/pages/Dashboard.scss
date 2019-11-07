@@ -93,14 +93,14 @@
   }
 }
 
-.c-sidebar {
+.Dashboard .c-sidebar {
   width: 100%;
   flex: 0 0 240px;
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   &__module {
       padding: 1.5em 2em;
     @include themify($themes) {
-        background-color: themed('moduleBackgroundColor');
+        background-color: #1C252B; // themed('moduleBackgroundColor');
         border: themed('border');
     }
     margin-bottom: 1em;
@@ -119,6 +119,18 @@
       }
       @include MQ(L) {
         display: none;
+      }
+    }
+    .Icon {
+      margin-right: 0.8rem;
+      @extend .link;
+      @extend .link--primary;
+
+      svg {
+        @include themify($themes) {
+          fill: themed('textColorSecondary');
+        }
+        transition: 0.2s all ease-in-out;
       }
     }
   }
@@ -154,11 +166,15 @@
     // @extend .h3;
     font-family: $font-primary;
     font-weight: bold;
+    text-transform: uppercase;
     @include font-size(18px);
     margin: 0 0 16px 0;
     &--inline {
       display: inline;
     }
+  }
+  &__hr {
+    margin-bottom: 12px;
   }
   &__link {
     @extend .link;
