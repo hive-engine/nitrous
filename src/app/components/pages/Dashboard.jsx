@@ -26,9 +26,9 @@ import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import SidebarToken from 'app/components/elements/SidebarToken';
 import { TradingViewEmbed, widgetType } from 'react-tradingview-embed';
-import { TRADING_VIEW_CONFIG } from 'app/client_config';
+import { TRADING_VIEW_CONFIG, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import Info from 'app/components/elements/Info';
-
+import { getDate } from 'app/utils/Date';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -44,6 +44,8 @@ class Dashboard extends React.Component {
         username: PropTypes.string,
         blogmode: PropTypes.bool,
         categories: PropTypes.object,
+        voteRegenSec: PropTypes.number,
+        rewardData: PropTypes.object,
     };
 
     constructor() {
@@ -52,7 +54,43 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        let { username } = this.props.routeParams;
+        const { username } = this.props.routeParams;
+        const { accounts, /*username,*/ voteRegenSec, rewardData } = this.props;
+        const account = accounts.get(username);
+
+        // do not render if account is not loaded or available
+        if (!account) return null;
+
+        const tokenStatus = account.has('token_status')
+            ? account.get('token_status').toJS()
+            : {
+                  pending_token: 0,
+              };
+
+        const precision = tokenStatus['precision'];
+        const totalEarning =
+            tokenStatus['earned_token'] / Math.pow(10, precision);
+        const votingPower =
+            Math.min(
+                tokenStatus['voting_power'] +
+                    (new Date() - getDate(tokenStatus['last_vote_time'])) *
+                        10000 /
+                        (1000 * voteRegenSec),
+                10000
+            ) / 100;
+        const resourceCredits = 100.0 * account.get('rc');
+
+        // calculate vote value
+        const applyRewardsCurve = r =>
+            Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
+            rewardData.reward_pool /
+            rewardData.pending_rshares;
+        const stakedTokens = tokenStatus['staked_tokens'];
+        const rshares = stakedTokens;
+        const scotDenom = Math.pow(10, precision);
+        const voteValue = Number(
+            (applyRewardsCurve(rshares) / scotDenom).toFixed(precision)
+        );
 
         const { nightmodeEnabled } = this.props;
 
@@ -83,38 +121,38 @@ class Dashboard extends React.Component {
                     <Slider {...settings}>
                         <div>
                             <Info
-                                description="Total Earnings"
-                                amount={2000}
-                                unit="LEO"
+                                description={tt('g.total_earning')}
+                                amount={totalEarning}
+                                unit={LIQUID_TOKEN_UPPERCASE}
                                 background="#2BB4F2"
-                                icon="steemleo"
+                                icon="bank"
                             />
                         </div>
                         <div>
                             <Info
-                                description="Voting Mana"
-                                amount={100}
+                                description={tt('g.voting_power')}
+                                amount={votingPower}
                                 unit="%"
                                 background="#5F6CBC"
-                                icon="logo"
+                                icon="flash"
                             />
                         </div>
                         <div>
                             <Info
-                                description="Resource Credits"
-                                amount={100}
+                                description={tt('g.resource_credits')}
+                                amount={resourceCredits}
                                 unit="%"
                                 background="#29A49A"
-                                icon="logo"
+                                icon="battery"
                             />
                         </div>
                         <div>
                             <Info
-                                description="Vote Value (at 100%)"
-                                amount={10}
-                                unit="LEO"
+                                description={tt('g.vote_value')}
+                                amount={voteValue}
+                                unit={LIQUID_TOKEN_UPPERCASE}
                                 background="#79919C"
-                                icon="logo"
+                                icon="dollar"
                             />
                         </div>
                     </Slider>
@@ -137,6 +175,15 @@ module.exports = {
     component: connect(
         (state, ownProps) => {
             const scotConfig = state.app.get('scotConfig');
+
+            const rewardData = {
+                pending_rshares: scotConfig.getIn(['info', 'pending_rshares']),
+                reward_pool: scotConfig.getIn(['info', 'reward_pool']),
+                author_curve_exponent: scotConfig.getIn([
+                    'config',
+                    'author_curve_exponent',
+                ]),
+            };
 
             return {
                 discussions: state.global.get('discussion_idx'),
@@ -164,6 +211,11 @@ module.exports = {
                     'user_preferences',
                     'nightmode',
                 ]),
+                voteRegenSec: scotConfig.getIn(
+                    ['config', 'vote_regeneration_seconds'],
+                    5 * 24 * 60 * 60
+                ),
+                rewardData,
             };
         },
         dispatch => {

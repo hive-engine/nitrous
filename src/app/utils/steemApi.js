@@ -71,6 +71,27 @@ async function getAuthorRep(feedData) {
     return authorRep;
 }
 
+function getAccountRC(account) {
+    return new Promise(resolve => {
+        api.send(
+            'rc_api',
+            {
+                method: 'find_rc_accounts',
+                params: { accounts: [account] },
+            },
+            function(err, res) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                const rc = res.rc_accounts[0];
+                const rc_percentage = rc.rc_manabar.current_mana / rc.max_rc;
+                resolve(rc_percentage);
+            }
+        );
+    });
+}
+
 function mergeContent(content, scotData) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
@@ -255,6 +276,58 @@ export async function attachScotData(url, state) {
             limit: 20,
         });
         await fetchMissingData(account, 'feed', state, feedData);
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?@([^\/]+)\/dashboard[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+
+        console.log('fetch dashboard data');
+
+        // fetch feed data
+
+        let feedData = await getScotDataAsync('get_feed', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'feed', state, feedData);
+
+        // fetch blog data
+        let blogData = await getScotDataAsync('get_discussions_by_blog', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+            include_reblogs: true,
+        });
+        await fetchMissingData(account, 'blog', state, blogData);
+
+        // fetch token info
+        const [tokenStatuses] = await Promise.all([
+            getScotAccountDataAsync(account),
+        ]);
+
+        if (!state.accounts) {
+            state.accounts = {};
+        }
+        if (!state.accounts[account]) {
+            state.accounts[account] = await getAccount(account);
+        }
+        if (!state.props) {
+            state.props = await getGlobalProps();
+        }
+
+        // fetch resource credits
+        const rc = await getAccountRC(account);
+        state.accounts[account].rc = rc;
+
+        if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
+            state.accounts[account].token_status =
+                tokenStatuses[LIQUID_TOKEN_UPPERCASE];
+            state.accounts[account].all_token_status = tokenStatuses;
+        }
+
         return;
     }
 

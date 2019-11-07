@@ -1,7 +1,7 @@
 .Info {
   color: white;
   margin: 0.2rem 0.8rem;
-  padding: 0 0.8rem;
+  padding: 0 0.2rem 0 0.8rem;
   border-radius: 5px;
   height: 80px;
   line-height: 80px;
@@ -22,10 +22,10 @@
       text-transform: uppercase;
     }
   }
-  .icon {
+  .img {
     float: right;
   }
-  span {
+  span.item {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
