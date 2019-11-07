@@ -103,6 +103,7 @@
         background-color: #1C252B; // themed('moduleBackgroundColor');
         border: themed('border');
     }
+    border: 0 solid #eee;
     margin-bottom: 1em;
     box-shadow: 0px 5px 10px 0 rgba(0,0,0,0);
     transition: 0.2s box-shadow ease-in-out;
@@ -199,6 +200,9 @@
     font-weight: bold;
     @include font-size(17px);
     margin-bottom: 24px;
+  }
+  .avatar {
+    text-align: center;
   }
 }
 

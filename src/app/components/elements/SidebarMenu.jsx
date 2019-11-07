@@ -3,7 +3,10 @@ import tt from 'counterpart';
 import Icon from 'app/components/elements/Icon';
 
 const SidebarMenu = ({ username, className }) => (
-    <div className={`c-sidebar__module ${className}`}>
+    <div
+        className={`c-sidebar__module ${className}`}
+        style={{ border: '0 solid #fff' }}
+    >
         <div className="c-sidebar__header">
             <h3 className="c-sidebar__h3">
                 {tt('sidebar_menu_jsx.publishing')}

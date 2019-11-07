@@ -161,6 +161,13 @@ class Dashboard extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--left">
+                    <div className={`avatar ${oppositeTheme}`}>
+                        <img
+                            src={`https://steemitimages.com/u/${
+                                username
+                            }/avatar`}
+                        />
+                    </div>
                     <SidebarMenu
                         username={username}
                         className={oppositeTheme}
