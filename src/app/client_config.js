@@ -14,7 +14,45 @@ export const APP_DOMAIN = 'www.build-it.io';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'build-it';
-export const TAG_LIST = fromJSOrdered(['build-it']);
+export const TAG_LIST = fromJSOrdered({
+    'build-it': [
+    'build-daily',
+    'build-contest',
+    'build-syndication',
+    'build-stats',
+    ],
+    diy: [
+    'how-to',
+    'tutorial',
+    'repair',
+    ],
+    food: [
+    'recipe',
+    'diet',
+    ],
+    home: [
+    'gardening',
+    'furniture',
+    'construction',
+    'homesteading',
+    ],
+    art: [
+    'photography',
+    'crafts',
+    'design',
+    ],
+    technology: [
+    'code',
+    'electronics',
+    'computers',
+    'automation',
+    ],
+    automotive: [
+    'cars',
+    'motorbikes',
+    'trucks',
+    ],
+});
 export const LIQUID_TOKEN = 'Build';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'BUILD';
@@ -101,5 +139,5 @@ export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
-export const SHOW_AUTHOR_RECENT_POSTS = false;
-export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
+export const SHOW_AUTHOR_RECENT_POSTS = true;
+export const POSTED_VIA_NITROUS_ICON = 'buildcaravan'; // put corresponding svg in src/app/assets/icons/___.svg
