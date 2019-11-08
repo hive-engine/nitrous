@@ -117,6 +117,16 @@ const SidePanel = ({
                 label: 'Discord',
                 link: 'https://discord.gg/evpRvx5',
             },
+            {
+                value: 'twitter',
+                label: 'Twitter',
+                link: 'https://twitter.com/bilpcoin',
+            },
+            {
+                value: 'instagram',
+                label: 'Instagram',
+                link: 'https://www.instagram.com/bilpcoin/',
+            },
             {            
                 value: 'blog-bilpcoin',
                 label: '@bilpcoin',
@@ -133,6 +143,12 @@ const SidePanel = ({
                 value: 'blog-bilpcoinbot',
                 label: '@bilpcoinbot',
                 link: '/@bilpcoinbot',
+                internal: true,
+            },
+            {
+                value: 'blog-bilpcoinrecords',
+                label: '@bilpcoinrecords',
+                link: '/@bilpcoinrecords',
                 internal: true,
             },
         ],
