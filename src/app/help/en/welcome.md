@@ -1,6 +1,6 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
-![](https://i.imgur.com/LIL9PTL.png)
+<p align="center">![](https://i.imgur.com/LIL9PTL.png)</p>
 
 ## Welcome to Natural Medicine!
 
@@ -8,7 +8,7 @@ LOTUS is a social coin for enthusiasts of natural health - from herbalism and es
 
 This page is full of information to help you learn about how to use our platform. If you're already on Steem, you might like to scroll all the way down to find the useful posts that are specifically about LOTUS - such as how to to trade and buy LOTUS, how to format posts, what it means to delegate, and many other useful posts besides! 
 
-![](https://i.imgur.com/hplLJle.png)
+<p align="center">![](https://i.imgur.com/hplLJle.png)</p>
 
 ## <span id="Getting_Started">Getting Started</span>
 <span id="disable_router_nav_history_direction_check"></span>
