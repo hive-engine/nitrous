@@ -1,6 +1,35 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
+    'localhost:8080': {
+        APP_NAME: 'FoodiesUnite',
+        APP_ICON: 'foodies',
+        APP_ICON_WIDTH: '220px',
+        APP_ICON_HEIGHT: '40px',
+        APP_URL: 'https://foodiesunite.net',
+        APP_DOMAIN: 'foodiesunite.net',
+        LIQUID_TOKEN: 'FOODIE',
+        LIQUID_TOKEN_UPPERCASE: 'FOODIE',
+        APP_MAX_TAG: 10,
+        SCOT_TAG: 'foodie',
+        TAG_LIST: fromJSOrdered(['foodie', 'food', 'recipes']),
+        INTERLEAVE_PROMOTED: true,
+        PROMOTED_POST_ACCOUNT: 'foodiepromo',
+        VESTING_TOKEN: 'FOODIE POWER',
+        SITE_DESCRIPTION:
+            'FoodiesUnite is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called FOODIE, that ' +
+            'supports real value for digital rewards through market price discovery and liquidity',
+        // Revive Ads
+        NO_ADS_STAKE_THRESHOLD: 9999999999,
+        REVIVE_ADS: {},
+        ALLOW_MASTER_PW: false,
+        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+        POST_FOOTER: '',
+        SCOT_TAG_FIRST: false,
+        PINNED_POSTS_URL: null,
+        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-27',
+    },
     'vit.global': {
         APP_NAME: 'VisionIndustry',
         APP_ICON: 'vitp',
