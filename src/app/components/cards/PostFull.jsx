@@ -384,7 +384,7 @@ class PostFull extends React.Component {
                 {content.title}
                 {hostConfig['POSTED_VIA_NITROUS_ICON'] &&
                     app_info.startsWith(
-                        hostConfig['APP_NAME'].toLowerCase()
+                        `${hostConfig['APP_NAME'].toLowerCase()}/`
                     ) && (
                         <span
                             className="articles__icon-100"
