@@ -220,7 +220,7 @@ class PostSummary extends React.Component {
 
                             {POSTED_VIA_NITROUS_ICON &&
                                 app_info.startsWith(
-                                    `${APP_NAME}/`.toLowerCase()
+                                    `${APP_NAME.toLowerCase()}/`
                                 ) && (
                                     <span
                                         className="articles__icon-100"

@@ -382,7 +382,7 @@ class PostFull extends React.Component {
             <h1 className="entry-title">
                 {content.title}
                 {POSTED_VIA_NITROUS_ICON &&
-                    app_info.startsWith(`${APP_NAME}/`.toLowerCase()) && (
+                    app_info.startsWith(`${APP_NAME.toLowerCase()}/`) && (
                         <span
                             className="articles__icon-100"
                             title={tt('g.written_from', {
