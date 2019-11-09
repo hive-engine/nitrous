@@ -1,5 +1,5 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, CURATOR_ACCOUNT } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -92,6 +92,32 @@ function getAccountRC(account) {
     });
 }
 
+async function getAccountCuration(args) {
+    let { account, start, limit, start_author, start_permlink } = args;
+    start = start || -1;
+    limit = limit || 20;
+    const history = await api.getAccountHistoryAsync(
+        account,
+        start,
+        limit * 10
+    );
+    let votes = history
+        .filter(h => h[1].op[0] === 'vote' && h[1].op[1].voter === account)
+        .map(h => h[1].op[1]);
+    let first = 0,
+        count = 0;
+    votes.forEach(v => {
+        v.authorperm = '@' + v.author + '/' + v.permlink;
+        if (start_author && start_permlink) {
+            if (start_author === v.author && start_permlink === v.permlink) {
+                first = count + 1;
+            }
+        }
+        count++;
+    });
+    return votes.slice(first, first + limit);
+}
+
 function mergeContent(content, scotData) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
@@ -126,7 +152,13 @@ function mergeContent(content, scotData) {
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
 }
 
-async function fetchMissingData(tag, feedType, state, feedData) {
+async function fetchMissingData(
+    tag,
+    feedType,
+    state,
+    feedData,
+    overwrite = true
+) {
     if (!state.content) {
         state.content = {};
     }
@@ -137,7 +169,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
     const missingContent = await Promise.all(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
-            console.log('Unexpected missing: ' + authorPermlink);
+            // console.log('Unexpected missing: ' + authorPermlink);
             return api.getContentAsync(authorPermlink[0], authorPermlink[1]);
         })
     );
@@ -169,8 +201,16 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         mergeContent(filteredContent[key], d);
         discussionIndex.push(key);
     });
-    state.content = filteredContent;
-    if (feedType == 'blog' || feedType == 'feed') {
+    if (overwrite) {
+        state.content = filteredContent;
+    } else {
+        for (let key in filteredContent) {
+            if (!state.content[key]) {
+                state.content[key] = filteredContent[key];
+            }
+        }
+    }
+    if (feedType == 'blog' || feedType == 'feed' || feedType == 'vote') {
         // author feeds
         if (!state.accounts[tag]) {
             state.accounts[tag] = {};
@@ -301,7 +341,15 @@ export async function attachScotData(url, state) {
             limit: 20,
             include_reblogs: true,
         });
-        await fetchMissingData(account, 'blog', state, blogData);
+        await fetchMissingData(account, 'blog', state, blogData, false);
+
+        // fetch curation data
+        let curationData = await getAccountCuration({
+            account: CURATOR_ACCOUNT,
+            start: -1,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'vote', state, curationData, false);
 
         // fetch token info
         const [tokenStatuses] = await Promise.all([
@@ -435,7 +483,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed|Vote)Async/
     );
     if (callNameMatch) {
         const order = callNameMatch[1].toLowerCase();
@@ -454,7 +502,15 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(callName, discussionQuery);
+        if (order == 'vote') {
+            feedData = await getAccountCuration({
+                account: CURATOR_ACCOUNT,
+                start: -1,
+                ...discussionQuery,
+            });
+        } else {
+            feedData = await getScotDataAsync(callName, discussionQuery);
+        }
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');

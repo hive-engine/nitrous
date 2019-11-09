@@ -83,6 +83,7 @@
         "read_offical_blog": "Steemit Blog",
         "recent_password": "Recent Password",
         "receive": "Receive ",
+        "recommended": "Recommended Posts",
         "remove": "Remove",
         "remove_vote": "Remove Vote",
         "replied_to": "replied to %(account)s",
@@ -569,6 +570,11 @@
         "empty_feed_5": "Browse The FAQ",
         "my_feed": "My Feed",
         "accountnames_feed": "%(account_name)s's Feed"
+    },
+    "posts_panel_jsx": {
+        "accountnames_blog": "%(account_name)s's Blog",
+        "no_recommended": "No recommended posts at this moment",
+        "no_blog": "No blogs are found"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
