@@ -297,10 +297,12 @@ export default function reducer(state = defaultState, action = {}) {
                 fetching,
                 endOfData,
             } = payload;
+            console.log('RECEIVE_DATA', payload);
             let new_state;
             if (
                 order === 'by_author' ||
                 order === 'by_feed' ||
+                order === 'by_voter' ||
                 order === 'by_comments' ||
                 order === 'by_replies'
             ) {
@@ -382,7 +384,7 @@ export default function reducer(state = defaultState, action = {}) {
             });
             return new_state;
         }
-            
+
         case RECEIVE_AUTHOR_RECENT_POSTS: {
             const { data, order, category } = payload;
             let new_state = state.updateIn(

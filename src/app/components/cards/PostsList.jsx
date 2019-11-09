@@ -103,7 +103,8 @@ class PostsList extends React.Component {
     };
 
     scrollListener = debounce(() => {
-        const el = window.document.getElementById('posts_list');
+        const { category } = this.props;
+        const el = window.document.getElementById(`posts_list_${category}`);
         if (!el) return;
         const scrollTop =
             window.pageYOffset !== undefined
@@ -117,9 +118,10 @@ class PostsList extends React.Component {
             topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight <
             10
         ) {
-            const { loadMore, posts, category, showResteem } = this.props;
-            if (loadMore && posts && posts.size)
+            const { loadMore, posts, showResteem } = this.props;
+            if (loadMore && posts && posts.size) {
                 loadMore(posts.last(), category, showResteem);
+            }
         }
         // Detect if we're in mobile mode (renders larger preview imgs)
         const mq = window.matchMedia('screen and (max-width: 39.9375em)');
@@ -266,7 +268,7 @@ class PostsList extends React.Component {
             });
 
         return (
-            <div id="posts_list" className="PostsList">
+            <div id={`posts_list_${category}`} className="PostsList">
                 <ul
                     className="PostsList__summaries hfeed"
                     itemScope

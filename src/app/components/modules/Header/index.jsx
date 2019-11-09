@@ -327,6 +327,7 @@ class Header extends React.Component {
                                 topic={category === 'feed' ? '' : category}
                                 horizontal={true}
                                 pathname={pathname}
+                                username={username}
                             />
                         </div>
                         <div className="small-7 large-4 columns Header__buttons">

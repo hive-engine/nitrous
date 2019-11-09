@@ -2,6 +2,7 @@ import GDPRUserList from './utils/GDPRUserList';
 
 export const routeRegex = {
     PostsIndex: /^\/(@[\w\.\d-]+)\/feed\/?$/,
+    Dashboard: /^\/(@[\w\.\d-]+)\/dashboard\/?$/,
     UserProfile1: /^\/(@[\w\.\d-]+)\/?$/,
     UserProfile2: /^\/(@[\w\.\d-]+)\/(blog|posts|comments|transfers|curation-rewards|author-rewards|permissions|created|recent-replies|feed|password|followed|followers|settings)\/?$/,
     UserProfile3: /^\/(@[\w\.\d-]+)\/[\w\.\d-]+/,
@@ -77,6 +78,13 @@ export default function resolveRoute(path) {
             return { page: 'NotFound' };
         }
         return { page: 'PostsIndex', params: ['home', match[1]] };
+    }
+    match = path.match(routeRegex.Dashboard);
+    if (match) {
+        if (GDPRUserList.includes(match[1].substring(1))) {
+            return { page: 'NotFound' };
+        }
+        return { page: 'Dashboard', params: ['home', match[1]] };
     }
     match =
         path.match(routeRegex.UserProfile1) ||

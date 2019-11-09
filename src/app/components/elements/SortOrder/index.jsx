@@ -5,12 +5,12 @@ import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import NativeSelect from 'app/components/elements/NativeSelect';
 
-const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
+const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
     /*
      * We do not sort the user feed by anything other than 'new'.
      * So don't make links to it from the SortOrder component.
      * Instead fall back to the 'all tags' route when a user attempts to sort from a feed page.
-     * If a user lands on the 'feed' page and the sort order is displayed (e.g. a mobile user) 
+     * If a user lands on the 'feed' page and the sort order is displayed (e.g. a mobile user)
      * display the active sort as 'new'.
      */
     let tag = topic;
@@ -19,6 +19,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     if (topic === 'feed') {
         tag = '';
         sort = 'created';
+    }
+
+    if (topic == 'dashboard') {
+        tag = '';
+        sort = 'dashboard';
     }
 
     // If we are at the homepage, the sort order is 'trending'
@@ -31,11 +36,17 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         tag ? `/${sort.value}/${tag}` : `/${sort.value}`;
 
     const handleChange = tag => sort => {
-        browserHistory.replace(makeRoute(tag, sort));
+        let path = '/';
+        if (sort.value === 'dashboard') {
+            path = sort.value;
+        } else {
+            path = makeRoute(tag, sort);
+        }
+        browserHistory.replace(path);
     };
 
     const sorts = tag => {
-        return [
+        let tabs = [
             {
                 value: 'trending',
                 label: tt('main_menu.trending'),
@@ -51,12 +62,15 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 label: tt('main_menu.hot'),
                 link: `/hot/${tag}`,
             },
-            {
-                value: 'promoted',
-                label: tt('g.promoted'),
-                link: `/promoted/${tag}`,
-            },
         ];
+        if (username != null && username.length > 0) {
+            tabs.push({
+                value: 'dashboard',
+                label: tt('g.dashboard'),
+                link: `/@${username}/dashboard`,
+            });
+        }
+        return tabs;
     };
 
     return horizontal ? (
@@ -90,6 +104,7 @@ SortOrder.propTypes = {
     sortOrder: PropTypes.string,
     horizontal: PropTypes.bool,
     pathname: PropTypes.string,
+    username: PropTypes.string,
 };
 
 SortOrder.defaultProps = {
@@ -97,6 +112,7 @@ SortOrder.defaultProps = {
     topic: '',
     sortOrder: '',
     pathname: '',
+    username: '',
 };
 
 export default SortOrder;

@@ -24,6 +24,7 @@
         "comments": "Comments",
         "confirm": "Confirm",
         "convert": "Convert",
+        "dashboard": "Dashboard",
         "date": "Date",
         "delete": "Delete",
         "dismiss": "Dismiss",
@@ -82,6 +83,7 @@
         "read_offical_blog": "Steemit Blog",
         "recent_password": "Recent Password",
         "receive": "Receive ",
+        "recommended": "Recommended Posts",
         "remove": "Remove",
         "remove_vote": "Remove Vote",
         "replied_to": "replied to %(account)s",
@@ -98,6 +100,7 @@
         "request": "request",
         "required": "Required",
         "rewards": "Rewards",
+        "resource_credits": "Resource Credits",
         "save": "Save",
         "saved": "Saved",
         "search": "Search",
@@ -108,6 +111,7 @@
         "sign_in": "Sign in",
         "sign_up": "Sign up",
         "since": "since %(date)s",
+        "steemleo_dex": "SteemLeo DEX",
         "submit": "Submit",
         "power_up": "Stake",
         "submit_a_story": "Post",
@@ -115,6 +119,7 @@
         "to": " to ",
         "topics": "Topics",
         "toggle_nightmode": "Toggle Night Mode",
+        "total_earning": "Total Earnings",
         "all_tags": "All tags",
         "all_tags_mobile": "All content",
         "transfer": "Transfer ",
@@ -130,6 +135,8 @@
         "version": "Version",
         "vote": "Vote",
         "votes": "votes",
+        "vote_value": "Vote Value (at 100%%)",
+        "voting_power": "Voting Power",
         "wallet": "Wallet",
         "warning": "warning",
         "yes": "Yes",
@@ -564,6 +571,11 @@
         "my_feed": "My Feed",
         "accountnames_feed": "%(account_name)s's Feed"
     },
+    "posts_panel_jsx": {
+        "accountnames_blog": "%(account_name)s's Blog",
+        "no_recommended": "No recommended posts at this moment",
+        "no_blog": "No blogs are found"
+    },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
         "from_savings": "from savings",
@@ -658,6 +670,15 @@
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
         "comments_by": "Comments by %(username)s"
+    },
+    "sidebar_menu_jsx": {
+        "home": "Home",
+        "create_a_post": "Create a Post",
+        "analytics": "Analytics",
+        "trending": "Trending",
+        "tags": "Tags",
+        "publishing": "Publishing",
+        "exploring": "Exploring"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":

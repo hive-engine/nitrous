@@ -1,0 +1,33 @@
+.Info {
+  color: white;
+  margin: 0.2rem 0.8rem;
+  padding: 0 0.2rem 0 0.8rem;
+  border-radius: 5px;
+  height: 80px;
+  line-height: 80px;
+
+  .suffix {
+    padding-left: 0.3rem;
+  }
+  .content {
+    float: left;
+    margin-top: -0.3rem;
+    .amount {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+    .desc {
+      font-weight: normal;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+  }
+  .img {
+    float: right;
+  }
+  span.item {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+}
