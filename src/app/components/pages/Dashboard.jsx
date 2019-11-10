@@ -9,8 +9,6 @@ import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import Info from 'app/components/elements/Info';
 import { getDate } from 'app/utils/Date';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import PostPanel from 'app/components/modules/PostPanel';
 
 class Dashboard extends React.Component {
