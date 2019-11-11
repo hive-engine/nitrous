@@ -99,7 +99,7 @@ class Dashboard extends React.Component {
                                     description={tt('g.total_earning')}
                                     amount={totalEarning}
                                     unit={LIQUID_TOKEN_UPPERCASE}
-                                    background="#2BB4F2"
+                                    background="#000000"
                                     icon="bank"
                                 />
                             </div>
@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
                                     description={tt('g.voting_power')}
                                     amount={votingPower}
                                     unit="%"
-                                    background="#5F6CBC"
+                                    background="#003c61"
                                     icon="flash"
                                 />
                             </div>
@@ -117,7 +117,7 @@ class Dashboard extends React.Component {
                                     description={tt('g.resource_credits')}
                                     amount={resourceCredits}
                                     unit="%"
-                                    background="#29A49A"
+                                    background="#009c82"
                                     icon="battery"
                                 />
                             </div>
@@ -126,7 +126,7 @@ class Dashboard extends React.Component {
                                     description={tt('g.vote_value')}
                                     amount={voteValue}
                                     unit={LIQUID_TOKEN_UPPERCASE}
-                                    background="#79919C"
+                                    background="#b0571c"
                                     icon="dollar"
                                 />
                             </div>
