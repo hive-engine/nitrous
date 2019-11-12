@@ -30,6 +30,10 @@ const map = {
     
     conradsuperb: 'Ambassador',
     whatsthatcryptom: 'Ambassador',
+
+    'super-irie': 'Curator',
+    
+    
     
 };
 
