@@ -253,7 +253,7 @@ class PostPanel extends React.Component {
             >
                 <article className="articles">
                     <div className="articles__header row">
-                        <div className="small-6 medium-6 large-6 column">
+                        <div className="small-10 medium-10 large-10 column">
                             <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
                                 {page_title}
                             </h1>

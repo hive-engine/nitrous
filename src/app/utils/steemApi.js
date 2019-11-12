@@ -159,6 +159,10 @@ async function fetchMissingData(
     feedData,
     overwrite = true
 ) {
+    if (!feedData) {
+        console.log('feedData is empty', feedData);
+        return;
+    }
     if (!state.content) {
         state.content = {};
     }
@@ -323,7 +327,7 @@ export async function attachScotData(url, state) {
     if (urlParts) {
         const account = urlParts[1];
 
-        console.log('fetch dashboard data');
+        console.log('fetch dashboard data: start');
 
         // fetch feed data
 
@@ -334,6 +338,8 @@ export async function attachScotData(url, state) {
         });
         await fetchMissingData(account, 'feed', state, feedData);
 
+        console.log('fetch dashboard data -- feed');
+
         // fetch blog data
         let blogData = await getScotDataAsync('get_discussions_by_blog', {
             token: LIQUID_TOKEN_UPPERCASE,
@@ -343,6 +349,8 @@ export async function attachScotData(url, state) {
         });
         await fetchMissingData(account, 'blog', state, blogData, false);
 
+        console.log('fetch dashboard data -- blog');
+
         // fetch curation data
         let curationData = await getAccountCuration({
             account: CURATOR_ACCOUNT,
@@ -350,6 +358,8 @@ export async function attachScotData(url, state) {
             limit: 20,
         });
         await fetchMissingData(account, 'vote', state, curationData, false);
+
+        console.log('fetch dashboard data -- recommended');
 
         // fetch token info
         const [tokenStatuses] = await Promise.all([
@@ -365,16 +375,21 @@ export async function attachScotData(url, state) {
         if (!state.props) {
             state.props = await getGlobalProps();
         }
-
-        // fetch resource credits
-        const rc = await getAccountRC(account);
-        state.accounts[account].rc = rc;
-
         if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
             state.accounts[account].token_status =
                 tokenStatuses[LIQUID_TOKEN_UPPERCASE];
             state.accounts[account].all_token_status = tokenStatuses;
         }
+
+        console.log('fetch dashboard data -- token stats');
+
+        // fetch resource credits
+        const rc = await getAccountRC(account);
+        state.accounts[account].rc = rc;
+
+        console.log('fetch dashboard data -- rc');
+
+        console.log('fetch dashboard data: end');
 
         return;
     }

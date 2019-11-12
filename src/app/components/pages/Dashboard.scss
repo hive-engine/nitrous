@@ -1036,6 +1036,17 @@ a#changeLayout:focus {
     box-shadow: none;
     padding: 0;
 
+    &__header {
+      background-color: #efefef;
+      text-align: center;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      .column {
+        margin: auto;
+      }
+    }
+
     &__summary {
       &-header {
         .user__name a {
