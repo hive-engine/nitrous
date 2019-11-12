@@ -10,6 +10,7 @@ import Info from 'app/components/elements/Info';
 import { getDate } from 'app/utils/Date';
 import Slider from 'react-slick';
 import PostPanel from 'app/components/modules/PostPanel';
+import NativeSelect from 'app/components/elements/NativeSelect';
 
 class Dashboard extends React.Component {
     static propTypes = {
@@ -28,13 +29,15 @@ class Dashboard extends React.Component {
 
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            panel: 'feed',
+        };
     }
 
     render() {
-        const { username } = this.props.routeParams;
-        const { accounts, voteRegenSec, rewardData, content } = this.props;
-        const account = accounts.get(username);
+        const { account_name } = this.props.routeParams;
+        const { accounts, voteRegenSec, rewardData, username } = this.props;
+        const account = accounts.get(account_name);
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -81,19 +84,60 @@ class Dashboard extends React.Component {
             process.env.BROWSER &&
             window.matchMedia('screen and (min-width: 75em)').matches;
 
-        var settings = {
+        const infoSlidesToShow = mqLarge ? 4 : 1;
+        const settings1 = {
             dots: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 4,
+            slidesToShow: infoSlidesToShow,
             slidesToScroll: 1,
         };
+        const buttonSlidesToShow = mqLarge ? 2 : 1;
+        const settings2 = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: buttonSlidesToShow,
+            slidesToScroll: 1,
+        };
+
+        const handleChange = option => {
+            this.setState({ panel: option.value });
+        };
+
+        const panelOptions = [
+            {
+                value: 'feed',
+                label:
+                    account_name === username
+                        ? tt('posts_index.my_feed')
+                        : tt('posts_index.accountnames_feed', {
+                              account_name,
+                          }),
+                link: '#feed',
+            },
+            {
+                value: 'blog',
+                label:
+                    account_name === username
+                        ? tt('g.my_blog')
+                        : tt('posts_panel_jsx.accountnames_blog', {
+                              account_name,
+                          }),
+                link: '#blog',
+            },
+            {
+                value: 'vote',
+                label: tt('g.recommended'),
+                link: '#vote',
+            },
+        ];
 
         return (
             <div className={'Dashboard row' + layoutClass}>
                 <article className="articles">
                     <div>
-                        <Slider {...settings}>
+                        <Slider {...settings1}>
                             <div>
                                 <Info
                                     description={tt('g.total_earning')}
@@ -133,45 +177,75 @@ class Dashboard extends React.Component {
                         </Slider>
                     </div>
                     <div className="buttons">
-                        <a
-                            href="https://dex.steemleo.com"
-                            target="_blank"
-                            className="dex"
-                        >
-                            {tt('g.steemleo_dex')}
-                        </a>
-                        <a
-                            href={`/@${username}/transfers`}
-                            target="_blank"
-                            className="wallet"
-                        >
-                            {tt('g.wallet')}
-                        </a>
+                        <Slider {...settings2}>
+                            <div>
+                                <a
+                                    href="https://dex.steemleo.com"
+                                    target="_blank"
+                                    className="dex"
+                                >
+                                    {tt('g.steemleo_dex')}
+                                </a>
+                            </div>
+                            <div>
+                                <a
+                                    href={`/@${account_name}/transfers`}
+                                    target="_blank"
+                                    className="wallet"
+                                >
+                                    {tt('g.wallet')}
+                                </a>
+                            </div>
+                        </Slider>
                     </div>
-
-                    <div className="row posts">
-                        <div className="column">
-                            <PostPanel account={username} category="vote" />
+                    {mqLarge ? (
+                        <div className="row posts">
+                            <div className="column">
+                                <PostPanel
+                                    account={account_name}
+                                    category="vote"
+                                />
+                            </div>
+                            <div className="column">
+                                <PostPanel
+                                    account={account_name}
+                                    category="feed"
+                                />
+                            </div>
+                            <div className="column">
+                                <PostPanel
+                                    account={account_name}
+                                    category="blog"
+                                />
+                            </div>
                         </div>
-                        <div className="column">
-                            <PostPanel account={username} category="feed" />
+                    ) : (
+                        <div className="row posts-selector">
+                            <NativeSelect
+                                currentlySelected={this.state.panel}
+                                options={panelOptions}
+                                onChange={handleChange}
+                            />
+                            <div>
+                                <PostPanel
+                                    account={account_name}
+                                    category={this.state.panel}
+                                />
+                            </div>
                         </div>
-                        <div className="column">
-                            <PostPanel account={username} category="blog" />
-                        </div>
-                    </div>
+                    )}
                 </article>
 
                 <aside className="c-sidebar c-sidebar--left">
                     <div className={`avatar ${oppositeTheme}`}>
                         <img
                             src={`https://steemitimages.com/u/${
-                                username
+                                account_name
                             }/avatar`}
                         />
                     </div>
                     <SidebarMenu
-                        username={username}
+                        username={account_name}
                         className={oppositeTheme}
                     />
                 </aside>
@@ -181,7 +255,7 @@ class Dashboard extends React.Component {
 }
 
 module.exports = {
-    path: '@:username/dashboard',
+    path: '@:account_name/dashboard',
     component: connect((state, ownProps) => {
         const scotConfig = state.app.get('scotConfig');
 
