@@ -15,7 +15,7 @@ const map = {
     // 'robot.pay' : 'Robot',
     
     reggaesteem: 'Official',
-    beachfrontcrypto: 'ReggaeSteem',
+    beachfrontcrypto: 'Official',
     'donald.porter': 'ReggaeSteem',
     miyard: 'ReggaeSteem',
     dmilliz: 'ReggaeSteem',
@@ -27,6 +27,9 @@ const map = {
     'roger.remix': 'Ambassador',
     joseacabrerav: 'Ambassador',
     'bahagia-arbi': 'Ambassador',
+    
+    conradsuperb: 'Ambassador',
+    whatsthatcryptom: 'Ambassador',
     
 };
 
