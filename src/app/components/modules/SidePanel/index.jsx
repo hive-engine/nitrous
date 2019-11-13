@@ -51,99 +51,52 @@ const SidePanel = ({
     };
 
     const sidePanelLinks = {
-        internal: [
+        roadofrich: [
             {
-                value: 'steemengine',
-                label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: 'playror',
+                label: 'PLAY ROR',
+                link: `https://rorsteem.com/`,
             },
             {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
+                value: 'officialsite',
+                label: 'Official Site',
+                link: `http://roadofrich.com/`,
             },
         ],
-        exchanges: [
+        contactus: [
             {
-                value: 'blocktrades',
-                label: 'Blocktrades',
-                link: username
-                    ? `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem&receive_address=${
-                          username
-                      }`
-                    : `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem`,
+                value: 'openkakaotalk',
+                label: 'Open Kakaotalk',
+                link: `https://open.kakao.com/o/gHpYWMkb`,
             },
             {
-                value: 'gopax',
-                label: 'GOPAX',
-                link: 'https://www.gopax.co.kr/exchange/steem-krw/',
+                value: 'discordchannel',
+                label: 'Discord Channel',
+                link: `https://discord.gg/vyPHGk6`,
             },
         ],
-        external: [
+        richlist: [
             {
-                value: 'chat',
-                label: tt('navigation.chat'),
-                link: 'https://steem.chat/home',
+                value: 'rorsrich',
+                label: 'RORS TOKEN',
+                link: `https://steem-engine.rocks/tokens/RORS/richlist`,
             },
             {
-                value: 'jobs',
-                label: tt('navigation.jobs'),
-                link:
-                    'https://recruiting.paylocity.com/recruiting/jobs/List/3288/Steemit-Inc',
-            },
-            {
-                value: 'tools',
-                label: tt('navigation.app_center'),
-                link: 'https://steemprojects.com/',
-            },
-            {
-                value: 'business',
-                label: tt('navigation.business_center'),
-                link: 'https://steemeconomy.com/',
-            },
-            {
-                value: 'api_docs',
-                label: tt('navigation.api_docs'),
-                link: 'https://developers.steem.io/',
+                value: 'ivrich',
+                label: 'IV TOKEN',
+                link: `https://steem-engine.rocks/tokens/IV/richlist`,
             },
         ],
-        organizational: [
+        tradetoken: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                value: 'rorstoken',
+                label: 'RORS TOKEN',
+                link: `https://steem-engine.com/?p=market&t=RORS`,
             },
             {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
-            },
-            {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
-            },
-            {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
-                internal: true,
-            },
-        ],
-        legal: [
-            {
-                value: 'privacy',
-                label: tt('navigation.privacy_policy'),
-                link: '/privacy.html',
-            },
-            {
-                value: 'tos',
-                label: tt('navigation.terms_of_service'),
-                link: '/tos.html',
+                value: 'ivtoken',
+                label: 'IV TOKEN',
+                link: `https://steem-engine.com/?p=market&t=IV`,
             },
         ],
         extras: [
@@ -174,11 +127,27 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Trade {LIQUID_TOKEN_UPPERCASE}
-                        </a>
+                        <a className="menu-section">Road of rich</a>
                     </li>
-                    {sidePanelLinks['internal'].map(makeLink)}
+                    {sidePanelLinks['roadofrich'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Contact Us</a>
+                    </li>
+                    {sidePanelLinks['contactus'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">RICH RIST</a>
+                    </li>
+                    {sidePanelLinks['richlist'].map(makeLink)}
+                </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Trade Token</a>
+                    </li>
+                    {sidePanelLinks['tradetoken'].map(makeLink)}
                 </ul>
             </div>
         </div>
