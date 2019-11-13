@@ -12,7 +12,7 @@ export const APP_ICON = 'steemleo';
 export const APP_URL = 'https://www.steemleo.com';
 export const APP_DOMAIN = 'www.steemleo.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 12;
+export const APP_MAX_TAG = 15;
 export const SCOT_TAG = 'steemleo';
 export const TAG_LIST = fromJSOrdered({
     steemleo: [
@@ -23,13 +23,13 @@ export const TAG_LIST = fromJSOrdered({
         'syndication',
     ],
     crypto: ['blockchain', 'defi', 'steem', 'bitcoin', 'spanish'],
-    investing: ['news', 'politics', 'personalfinance'],
+    investing: ['news', 'politics', 'personalfinance', 'steemsilvergold'],
     trading: ['analysis'],
 });
 export const LIQUID_TOKEN = 'Leo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LEO';
-export const CURATOR_ACCOUNT = 'steem.leo';
+export const CURATOR_ACCOUNT = 'leo.voter';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
@@ -60,7 +60,7 @@ export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
 // meta info
-export const TWITTER_HANDLE = '@steemit';
+export const TWITTER_HANDLE = '@steemleo';
 export const SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-share.png';
 export const TWITTER_SHARE_IMAGE =
@@ -74,7 +74,7 @@ export const SITE_DESCRIPTION =
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
 // Revive Ads
-export const NO_ADS_STAKE_THRESHOLD = 6000;
+export const NO_ADS_STAKE_THRESHOLD = 100000;
 export const REVIVE_ADS = {
     header_banner: {
         zoneId: '2045',

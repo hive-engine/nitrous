@@ -140,7 +140,7 @@ class Dashboard extends React.Component {
                         <Slider {...settings1}>
                             <div>
                                 <Info
-                                    description={tt('g.total_earning')}
+                                    description={tt('g.lifetime_earning')}
                                     amount={totalEarning}
                                     unit={LIQUID_TOKEN_UPPERCASE}
                                     background="#000000"
