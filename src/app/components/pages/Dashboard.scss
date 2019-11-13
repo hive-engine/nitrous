@@ -170,6 +170,7 @@
     text-transform: uppercase;
     @include font-size(18px);
     margin: 0 0 16px 0;
+    color: #fcfcfc;
     &--inline {
       display: inline;
     }
@@ -203,6 +204,7 @@
   }
   .avatar {
     text-align: center;
+    background-color: $color-background-dark;
   }
 }
 
@@ -1041,10 +1043,13 @@ a#changeLayout:focus {
     padding: 0;
 
     &__header {
-      background-color: #efefef;
       text-align: center;
       padding-top: 5px;
       padding-bottom: 5px;
+
+      @include themify($themes) {
+        background-color: themed('backgroundColorHeavy');
+      }
 
       .column {
         margin: auto;
