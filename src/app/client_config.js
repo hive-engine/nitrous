@@ -12,7 +12,7 @@ export const APP_ICON = 'neoxag';
 export const APP_URL = 'https://www.neoxian.city';
 export const APP_DOMAIN = 'www.neoxian.city';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 10;
+export const APP_MAX_TAG = 15;
 export const SCOT_TAG = 'neoxian';
 export const TAG_LIST = fromJSOrdered(['neoxian']);
 export const LIQUID_TOKEN = 'Neoxian Silver';
