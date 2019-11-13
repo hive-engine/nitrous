@@ -180,9 +180,20 @@ class PostsList extends React.Component {
                 !showResteem && account && cont.get('author') != account;
             const hide = cont.getIn(['stats', 'hide']);
             if (!hideResteem && (!(ignore || hide) || showSpam))
-                // rephide
-                postsInfo.push({ item, ignore });
+                if (category === 'vote') {
+                    // rephide
+                    const created = cont.get('created');
+                    postsInfo.push({ item, ignore, created });
+                } else {
+                    postsInfo.push({ item, ignore });
+                }
         });
+
+        if (category === 'vote' && postsInfo && postsInfo.length > 0) {
+            postsInfo.sort((a, b) => {
+                return new Date(b.created) - new Date(a.created);
+            });
+        }
 
         // Helper functions for determining whether to show pinned posts.
         const isLoggedInOnFeed = username && pathname === `/@${username}/feed`;

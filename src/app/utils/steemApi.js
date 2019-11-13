@@ -174,7 +174,14 @@ async function fetchMissingData(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
             // console.log('Unexpected missing: ' + authorPermlink);
-            return api.getContentAsync(authorPermlink[0], authorPermlink[1]);
+            if (feedType === 'vote') {
+                return getContentAsync(authorPermlink[0], authorPermlink[1]);
+            } else {
+                return api.getContentAsync(
+                    authorPermlink[0],
+                    authorPermlink[1]
+                );
+            }
         })
     );
     missingContent.forEach(c => {
@@ -202,7 +209,9 @@ async function fetchMissingData(
         } else {
             filteredContent[key] = state.content[key];
         }
-        mergeContent(filteredContent[key], d);
+        if (feedType !== 'vote') {
+            mergeContent(filteredContent[key], d);
+        }
         discussionIndex.push(key);
     });
     if (overwrite) {
@@ -531,10 +540,18 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
                 let content;
                 if (scotData.desc == null || scotData.children == null) {
-                    content = await api.getContentAsync(
-                        authorPermlink[0],
-                        authorPermlink[1]
-                    );
+                    if (order == 'vote') {
+                        content = await getContentAsync(
+                            authorPermlink[0],
+                            authorPermlink[1]
+                        );
+                    } else {
+                        content = await api.getContentAsync(
+                            authorPermlink[0],
+                            authorPermlink[1]
+                        );
+                        mergeContent(content, scotData);
+                    }
                 } else {
                     content = {
                         body: scotData.desc,
@@ -544,8 +561,8 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                         children: scotData.children,
                         replies: [], // intentional
                     };
+                    mergeContent(content, scotData);
                 }
-                mergeContent(content, scotData);
                 return content;
             })
         );
