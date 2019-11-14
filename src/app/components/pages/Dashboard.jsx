@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
             : ' layout-list';
 
         const mqLarge =
-            process.env.BROWSER &&
+            !process.env.BROWSER ||
             window.matchMedia('screen and (min-width: 75em)').matches;
 
         const infoSlidesToShow = mqLarge ? 4 : 1;
