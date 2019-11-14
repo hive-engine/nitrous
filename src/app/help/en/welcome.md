@@ -46,13 +46,11 @@ LOTUS is a social coin for enthusiasts of natural health - from herbalism and es
 
 Natural Medicine runs off the Steem Blockchain. That means you need a Steem account. Once you have signed in, you will then be able to use **the same keys** to sign in to *any* of the Steem front ends, such as Natural Medicine or [Steempeak](https://steempeak.com/@naturalmedicine). 
 
-Unlike centralized web services, **it is not possible to recover lost passwords on the Steem blockchain**.The most important sign in advice we can give you is to back up your password in a secure password manager such as Last Pass, as well as an offline printed copy *just in case*!
+Unlike centralized web services, **it is not possible to recover lost passwords on the Steem blockchain**.The most important sign in advice we can give you is to back up your password in a secure password manager such as Last Pass, as well as an offline printed copy *just in case*! Remember your account has potential value, so ensure you treat it as such!
 
-Remember your account has potential value, so ensure you treat it as such!
+You can sign up for an account [here](https://signup.steemit.com/), which is totally free, but may take a few days to a week. We recommend you use Steem Ninja by using [this referral link](https://widget.steem.ninja/widget.html?referrer=naturalmedicine&image=http://metametheus.net/wp-content/uploads/2019/09/natural-medicine-io.png&title=). It costs $2.50 USD, but is instant, secure and pre-loaded with a little bit SP or steempower, which you need to get started. Don't worry, this will all become clearer as you continue to read below!
 
-You can sign up for an account [here](), which is totally free, but may take a few days to a week. We recommend you use Steem Ninja. It costs $2.50 USD, but is instant, secure and pre-loaded with a little bit SP or steempower, which you need to get started. Don't worry, this will all become clearer as you continue to read below!
-
-**To buy an account with Steem Ninja, please use our referral link [here](https://widget.steem.ninja/widget.html?referrer=naturalmedicine&image=http://metametheus.net/wp-content/uploads/2019/09/natural-medicine-io.png&title=)!**
+**Natural Medicine offers free accounts too. If you'd like a free account, please email us at welcome@naturalmedicine.io**
 
 <a href="#Table_of_Contents">^</a>
 ### <span id="Setup_your_Profile_Avatar_and_Cover_Image"> Setup your Profile, Avatar, and Cover Image</span>
