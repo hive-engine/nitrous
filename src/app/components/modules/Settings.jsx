@@ -521,9 +521,9 @@ class Settings extends React.Component {
                         <div className="row">
                             <div className="small-12 medium-6 large-6 columns">
                                 <br />
-                                <br />
-                                <UserList
-                                    title={tt('settings_jsx.muted_users')}
+                                <h4>Muted Users</h4>
+                                <MuteList
+                                    account={accountname}
                                     users={ignores}
                                 />
                             </div>
