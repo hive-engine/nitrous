@@ -80,14 +80,14 @@ class SidebarSwap extends Component {
 
         // console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
-        this.ratio_toke_by_steem = [1, 1, 1, 1];
+        this.ratio_toke_by_steem = {
+            SCT: sct_to_steemp * 1,
+            SCTM: sctm_to_steem * 1,
+            KRWP: krwp_to_steem * 1,
+            SBD: sbd_to_dollar / steem_to_dollor * 1,
+        };
 
         var that = this;
-        this.ratio_toke_by_steem[0] = sct_to_steemp * 1;
-        this.ratio_toke_by_steem[1] = sctm_to_steem * 1; //sctm
-        this.ratio_toke_by_steem[2] = krwp_to_steem * 1; //krwp
-        this.ratio_toke_by_steem[3] = sbd_to_dollar / steem_to_dollor * 1; //sbd
-
         this.getSwapAccountInfo(SWAP_ACCOUNT).then(allInfo => {
             var providerBalance = [
                 allInfo[0] + ' ' + 'SCT',
@@ -101,8 +101,8 @@ class SidebarSwap extends Component {
             });
         });
 
-        this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
-        this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
+        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
 
         this.swap_fee = 3.0;
         this.selected_token = [0, 0];
@@ -120,6 +120,12 @@ class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
+        if (this.input_token_type[this.selected_token[0]] == 'SBD') {
+            this.output_token_type = ['KRWP'];
+            this.selected_token[1] = 0;
+        } else {
+            this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
+        }
         this.calculateOutput();
     }
 
@@ -153,14 +159,15 @@ class SidebarSwap extends Component {
         console.log(
             'onClickSwap',
             username,
-            this.input_token_type[this.selected_token[0]]
+            this.input_token_type[this.selected_token[0]],
+            this.output_token_type[this.selected_token[1]]
         );
         if (this.selected_token[0] > 2) {
             //3,4
             this.props.dispatchTransfer({
                 amount: this.input_amount,
                 asset: this.input_token_type[this.selected_token[0]],
-                outputasset: this.input_token_type[this.selected_token[1]],
+                outputasset: this.output_token_type[this.selected_token[1]],
                 onClose: this.onClose,
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
@@ -169,7 +176,7 @@ class SidebarSwap extends Component {
             this.props.dispatchSubmit({
                 amount: this.input_amount,
                 asset: this.input_token_type[this.selected_token[0]],
-                outputasset: this.input_token_type[this.selected_token[1]],
+                outputasset: this.output_token_type[this.selected_token[1]],
                 onClose: this.onClose,
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
@@ -179,44 +186,21 @@ class SidebarSwap extends Component {
 
     calculateOutput() {
         const amount = this.input_amount;
-        const a = this.ratio_toke_by_steem[this.selected_token[0]];
-        const b = this.ratio_toke_by_steem[this.selected_token[1]];
-
         const input_symbol = this.input_token_type[this.selected_token[0]];
         const output_symbol = this.output_token_type[this.selected_token[1]];
+        const a = this.ratio_toke_by_steem[input_symbol];
+        const b = this.ratio_toke_by_steem[output_symbol];
 
         console.log('calculateOutput');
-        console.log(this.selected_token[0]);
-        console.log(this.selected_token[1]);
-        // token pair가 krwp and sbd라면, 1:1로 한다.
-        if (
-            (input_symbol == 'KRWP' && output_symbol == 'SBD') ||
-            (input_symbol == 'SBD' && output_symbol == 'KRWP')
-        ) {
-            var swap_rate = 1;
-            if (this.ratio_toke_by_steem[3] * this.steem_to_krw > 1000) {
-                //  SBD/steem * steem/krw
-                swap_rate = 1 * a / b;
-            }
-            var output_amount =
-                amount * swap_rate * (100.0 - this.swap_fee) / 100.0;
-            output_amount = output_amount.toFixed(3);
-
-            this.setState({
-                amount,
-                output_amount,
-                swap_rate: swap_rate.toFixed(3),
-            });
-        } else {
-            var output_amount =
-                amount * (1 * a / b) * (100.0 - this.swap_fee) / 100.0;
-            output_amount = output_amount.toFixed(3);
-            this.setState({
-                amount,
-                output_amount,
-                swap_rate: (1 * a / b).toFixed(3),
-            });
-        }
+        console.log(input_symbol, output_symbol);
+        var output_amount =
+            amount * (1 * a / b) * (100.0 - this.swap_fee) / 100.0;
+        output_amount = output_amount.toFixed(3);
+        this.setState({
+            amount,
+            output_amount,
+            swap_rate: (1 * a / b).toFixed(3),
+        });
     }
 
     render() {
@@ -293,7 +277,7 @@ class SidebarSwap extends Component {
                             }=${this.state.swap_rate}${
                                 this.output_token_type[this.selected_token[1]]
                             }=${this.ratio_toke_by_steem[
-                                this.selected_token[0]
+                                this.input_token_type[this.selected_token[0]]
                             ].toFixed(3)}STEEM`}
                         </div>
                     </div>
