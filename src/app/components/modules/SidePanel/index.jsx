@@ -127,6 +127,12 @@ const SidePanel = ({
                 link: 'https://steem-engine.rocks/tokens/SPORTS/richlist',
                 internal: true,
             },
+            {
+                value: 'get_sports',
+                label: 'GET SPORTS',
+                link: 'https://get.sportstalksocial.com',
+                internal: true,
+            },
         ],
         legal: [
             {
