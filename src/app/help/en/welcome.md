@@ -1,23 +1,17 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
-<p align="center">![](https://i.imgur.com/LIL9PTL.png)</p>
+![](https://i.imgur.com/nxeSc65.png)
+
 
 ## Welcome to Natural Medicine!
 
 LOTUS is a social coin for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices. Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow food and plants as medicine. Earn LOTUS by publishing or interacting with others on the platform. 
 
-This page is full of information to help you learn about how to use our platform. If you're already on Steem, you might like to scroll all the way down to find the useful posts that are specifically about LOTUS - such as how to to trade and buy LOTUS, how to format posts, what it means to delegate, and many other useful posts besides! 
-
-<p align="center">![](https://i.imgur.com/hplLJle.png)</p>
 
 ## <span id="Getting_Started">Getting Started</span>
 <span id="disable_router_nav_history_direction_check"></span>
 
-This page is full of information to help you learn about how to use our platform. You can return to this page at any time by clicking on the "Welcome" link in the main menu. There is a table of contents below to help you navigate.
 
-![](https://i.imgur.com/hplLJle.png)
-
-## <span id="Getting_Started">Getting Started</span>
 
 ### 
 
