@@ -62,6 +62,9 @@ export const icons = [
     'dollar',
     'tag',
     'trending',
+    'trade',
+    'stakeholders',
+    'dashboard',
 ];
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);

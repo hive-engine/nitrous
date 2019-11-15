@@ -261,7 +261,7 @@ class Header extends React.Component {
         const user_menu = [
             {
                 link: dashboard_link,
-                icon: 'home',
+                icon: 'flash',
                 value: tt('g.dashboard'),
             },
             {

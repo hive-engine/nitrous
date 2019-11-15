@@ -136,7 +136,7 @@
         "vote": "Vote",
         "votes": "votes",
         "vote_value": "Vote Value (at 100%%)",
-        "voting_power": "Voting Power",
+        "voting_power": "LEO Voting Power",
         "wallet": "Wallet",
         "warning": "warning",
         "yes": "Yes",
@@ -679,7 +679,11 @@
         "trending": "Trending",
         "tags": "Tags",
         "publishing": "Publishing",
-        "exploring": "Exploring"
+        "exploring": "Exploring",
+        "tools": "Tools & Resources",
+        "leodex": "Trade LEO",
+        "steemworld": "Steemworld",
+        "stakeholders": "Top Stakeholders"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
