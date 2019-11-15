@@ -105,12 +105,7 @@ const SidePanel = ({
             },
         ],
         organizational: [
-            {
-                value: 'lassecashabout',
-                label: 'About',
-                link: '/welcome.md',
-                internal: true,
-            },
+    
             {
                 value: 'lassecashinfo',
                 label: 'Info on LASSECASH',
@@ -123,7 +118,7 @@ const SidePanel = ({
             },
             {
                 value: 'lassediscord',
-                label: 'Discord',
+                label: 'Contact us at Discord',
                 link: 'https://discord.gg/5JW2w9t',
             },
             {
