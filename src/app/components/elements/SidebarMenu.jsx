@@ -79,9 +79,9 @@ const SidebarMenu = ({ username, className }) => (
                 </li>
 
                 <li className="c-sidebar__list-item">
-                    <a className="c-sidebar__link" href="https://steemd.com/">
+                    <a className="c-sidebar__link" href="https://steem-engine.rocks/tokens/LEO/richlist">
                         <Icon name="tag" size="1x" />
-                        {tt('sidebar_menu_jsx.steemd')}
+                        {tt('sidebar_menu_jsx.stakeholders')}
                     </a>
                 </li>
             </ul>
