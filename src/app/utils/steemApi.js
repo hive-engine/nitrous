@@ -103,7 +103,8 @@ async function getAccountCuration(args) {
     );
     let votes = history
         .filter(h => h[1].op[0] === 'vote' && h[1].op[1].voter === account)
-        .map(h => h[1].op[1]);
+        .map(h => h[1].op[1])
+        .reverse();
     let first = 0,
         count = 0;
     votes.forEach(v => {

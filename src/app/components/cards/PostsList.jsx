@@ -179,14 +179,15 @@ class PostsList extends React.Component {
             const hideResteem =
                 !showResteem && account && cont.get('author') != account;
             const hide = cont.getIn(['stats', 'hide']);
-            if (!hideResteem && (!(ignore || hide) || showSpam))
-                if (category === 'vote') {
-                    // rephide
-                    const created = cont.get('created');
-                    postsInfo.push({ item, ignore, created });
-                } else {
-                    postsInfo.push({ item, ignore });
-                }
+            if (!hideResteem && (!(ignore || hide) || showSpam)) {
+                // if (category === 'vote') {
+                // const created = cont.get('created');
+                // postsInfo.push({ item, ignore, created });
+                // } else {
+                // rephide
+                postsInfo.push({ item, ignore });
+                // }
+            }
         });
 
         if (category === 'vote' && postsInfo && postsInfo.length > 0) {
