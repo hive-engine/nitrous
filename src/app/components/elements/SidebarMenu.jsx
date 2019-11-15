@@ -66,21 +66,21 @@ const SidebarMenu = ({ username, className }) => (
             <ul className="c-sidebar__list">
                 <li className="c-sidebar__list-item">
                     <a className="c-sidebar__link" href="https://dex.steemleo.com">
-                        <Icon name="home" size="1x" />
+                        <Icon name="trade" size="1x" />
                         {tt('sidebar_menu_jsx.leodex')}
                     </a>
                 </li>
 
                 <li className="c-sidebar__list-item">
                     <a className="c-sidebar__link" href="https://steemworld.org">
-                        <Icon name="trending" size="1x" />
+                        <Icon name="dashboard" size="1x" />
                         {tt('sidebar_menu_jsx.steemworld')}
                     </a>
                 </li>
 
                 <li className="c-sidebar__list-item">
                     <a className="c-sidebar__link" href="https://steem-engine.rocks/tokens/LEO/richlist">
-                        <Icon name="tag" size="1x" />
+                        <Icon name="stakeholders" size="1x" />
                         {tt('sidebar_menu_jsx.stakeholders')}
                     </a>
                 </li>
