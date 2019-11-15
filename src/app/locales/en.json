@@ -679,7 +679,11 @@
         "trending": "Trending",
         "tags": "Tags",
         "publishing": "Publishing",
-        "exploring": "Exploring"
+        "exploring": "Exploring",
+        "tools": "Tools & Resources",
+        "leodex": "Trade Steem-Based Tokens",
+        "steemworld": "Steemworld",
+        "steemd": "Steemd (Blockchain Explorer)"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
