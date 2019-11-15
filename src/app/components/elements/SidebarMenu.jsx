@@ -73,7 +73,7 @@ const SidebarMenu = ({ username, className }) => (
 
                 <li className="c-sidebar__list-item">
                     <a className="c-sidebar__link" href="https://steemworld.org">
-                        <Icon name="dashboard" size="1x" />
+                        <Icon name="clock" size="1x" />
                         {tt('sidebar_menu_jsx.steemworld')}
                     </a>
                 </li>
