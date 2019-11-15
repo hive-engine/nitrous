@@ -27,8 +27,8 @@ Yes, you need a STEEM wallet, and there are atleast 2 ways to get a STEEM wallet
 
 <a href="#Table_of_Contents_General">^</a>
 
-## <span id="Do_you_have_discord">Do you have a discord server?</span>
+## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
 
-Yes, it is called LASSECASH and the link is here: https://discord.gg/5JW2w9t
+You can ask it at the LASSECASH Discord channel, the link is here: https://discord.gg/5JW2w9t
 
 <a href="#Table_of_Contents_General">^</a>
