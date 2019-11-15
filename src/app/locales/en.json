@@ -681,9 +681,9 @@
         "publishing": "Publishing",
         "exploring": "Exploring",
         "tools": "Tools & Resources",
-        "leodex": "Trade Steem-Based Tokens",
+        "leodex": "Trade LEO",
         "steemworld": "Steemworld",
-        "steemd": "Steemd (Blockchain Explorer)"
+        "stakeholders": "Top Stakeholders"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
