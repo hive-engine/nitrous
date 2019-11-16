@@ -396,6 +396,15 @@ class PostsIndex extends React.Component {
                                     steem_to_krw={this.props.scotInfo.getIn([
                                         'steem_to_krw',
                                     ])}
+                                    steem_to_krw_current={this.props.scotInfo.getIn(
+                                        ['steem_to_krw_current']
+                                    )}
+                                    steem_to_dollar_current={this.props.scotInfo.getIn(
+                                        ['steem_to_dollar_current']
+                                    )}
+                                    sbd_to_dollar_current={this.props.scotInfo.getIn(
+                                        ['sbd_to_dollar_current']
+                                    )}
                                 />
                             </div>
                         )}

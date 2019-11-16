@@ -66,6 +66,9 @@ class SidebarSwap extends Component {
             krwp_to_steem,
             sbd_to_dollar,
             steem_to_krw,
+            steem_to_krw_current,
+            steem_to_dollar_current,
+            sbd_to_dollar_current,
         } = this.props;
         console.log(
             sct_to_steemp,
@@ -83,8 +86,8 @@ class SidebarSwap extends Component {
         this.ratio_toke_by_steem = {
             SCT: sct_to_steemp * 1,
             SCTM: sctm_to_steem * 1,
-            KRWP: krwp_to_steem * 1,
-            SBD: sbd_to_dollar / steem_to_dollor * 1,
+            KRWP: 1000.0 / steem_to_krw_current,
+            SBD: sbd_to_dollar_current / steem_to_dollar_current * 1,
         };
 
         var that = this;
@@ -121,8 +124,8 @@ class SidebarSwap extends Component {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
         if (this.input_token_type[this.selected_token[0]] == 'SBD') {
-            this.output_token_type = ['KRWP'];
-            this.selected_token[1] = 0;
+            this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
+            // this.selected_token[1] = 0;
         } else {
             this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
         }
@@ -133,8 +136,8 @@ class SidebarSwap extends Component {
         console.log('-- PromotePost.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
         if (this.output_token_type[this.selected_token[1]] == 'SBD') {
-            this.input_token_type = ['KRWP'];
-            this.selected_token[0] = 0;
+            this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
+            // this.selected_token[0] = 0;
         } else {
             this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
         }
