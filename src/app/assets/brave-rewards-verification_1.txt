@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: naturalmedicine.io
+Token: 2a0f766e3edece37dddf801c8af1e61a1100d0f0a3bccf8d5898e321acdfd9e8
