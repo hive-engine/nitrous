@@ -136,8 +136,8 @@ class SidebarSwap extends Component {
         console.log('-- PromotePost.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
         if (this.output_token_type[this.selected_token[1]] == 'SBD') {
-            this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
-            // this.selected_token[0] = 0;
+            this.input_token_type = ['KRWP'];
+            this.selected_token[0] = 0;
         } else {
             this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
         }
