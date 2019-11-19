@@ -123,12 +123,10 @@ class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- PromotePost.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
-        if (this.input_token_type[this.selected_token[0]] == 'SBD') {
-            this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
-            // this.selected_token[1] = 0;
-        } else {
-            this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
-        }
+        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD'];
+        this.output_token_type = this.output_token_type.filter(
+            a => a != this.input_token_type[this.selected_token[0]]
+        );
         this.calculateOutput();
     }
 
