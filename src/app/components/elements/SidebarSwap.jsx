@@ -56,7 +56,12 @@ class SidebarSwap extends Component {
             output_amount: 0,
             selectedValue: '',
             loadToken: false,
-            providerBalance: ['', '', '', ''],
+            providerBalance: {
+                SCT: 0 + ' ' + 'SCT',
+                SCTM: 0 + ' ' + 'SCTM',
+                KRWP: 0 + ' ' + 'KRWP',
+                SBD: '0 SBD',
+            },
             swap_rate: 1,
         };
         const {
@@ -92,12 +97,12 @@ class SidebarSwap extends Component {
 
         var that = this;
         this.getSwapAccountInfo(SWAP_ACCOUNT).then(allInfo => {
-            var providerBalance = [
-                allInfo[0] + ' ' + 'SCT',
-                allInfo[1] + ' ' + 'SCTM',
-                allInfo[2] + ' ' + 'KRWP',
-                allInfo[3][0].sbd_balance,
-            ];
+            var providerBalance = {
+                SCT: allInfo[0] + ' ' + 'SCT',
+                SCTM: allInfo[1] + ' ' + 'SCTM',
+                KRWP: allInfo[2] + ' ' + 'KRWP',
+                SBD: allInfo[3][0].sbd_balance,
+            };
             that.setState({
                 providerBalance,
                 loadToken: true,
@@ -274,7 +279,9 @@ class SidebarSwap extends Component {
                         <div className="c-sidebar__list-small text-right">
                             {`Available: ${
                                 this.state.providerBalance[
-                                    this.selected_token[1]
+                                    this.output_token_type[
+                                        this.selected_token[1]
+                                    ]
                                 ]
                             }`}
                         </div>
