@@ -10,6 +10,7 @@ const map = {
     roadscape: 'Steemit',
     steemitblog: 'Steemit',
     steemitdev: 'Steemit',
+    wehmoen: 'Lead Developer',
 
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
