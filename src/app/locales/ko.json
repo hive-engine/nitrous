@@ -1023,7 +1023,10 @@
                 { "code": " ", "name": "전체언어" },
                 { "code": "en", "name": "영어" },
                 { "code": "ko", "name": "한국어" },
-                { "code": "zh", "name": "중국어" }
+                { "code": "zh", "name": "중국어" },
+                { "code": "es", "name": "스페인어" },
+                { "code": "it", "name": "이탈리아어" },
+                { "code": "pt", "name": "포르투갈어" }
             ]
         },
         "load_more_list": {

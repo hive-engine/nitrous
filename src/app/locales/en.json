@@ -916,7 +916,10 @@
                 { "code": " ", "name": "All Languages" },
                 { "code": "en", "name": "English" },
                 { "code": "ko", "name": "Korean" },
-                { "code": "zh", "name": "Chinese" }
+                { "code": "zh", "name": "Chinese" },
+                { "code": "es", "name": "Spanish" },
+                { "code": "it", "name": "Italian" },
+                { "code": "pt", "name": "Portuguese" }
             ]
         },
         "load_more_list": {
