@@ -27,7 +27,7 @@ export default class WelcomePanel extends React.Component {
                         <div className="large-1 show-for-large" />
                         <div className="small-12 medium-6 large-5 welcomePitch">
                             <h1 className="fade-in--1">
-                                Get paid in crypto currency for amatuer porn and make crypto watching porn. 
+                                Get paid in crypto currency for amateur porn and make crypto watching porn. 
                             </h1>
 
                         </div>
