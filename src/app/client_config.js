@@ -99,7 +99,7 @@ export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
-export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = 'neoxianburn';
-export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 5;
+export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
+export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0;
 export const SHOW_AUTHOR_RECENT_POSTS = false;
 export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
