@@ -26,7 +26,6 @@ const map = {
     o0pepper0o: 'Verified Creator',
     davescustommedia: 'Verified Creator',
     ashyeyecandy: 'Verified Creator',
-    hotnimmi: 'Verified Creator',
     futuremind: 'Verified Creator',
     reneeblack: 'Verified Creator',
     akiroq: 'Verified Creator',
