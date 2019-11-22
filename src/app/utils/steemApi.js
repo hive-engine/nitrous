@@ -103,7 +103,8 @@ async function getAccountCuration(args) {
     );
     let votes = history
         .filter(h => h[1].op[0] === 'vote' && h[1].op[1].voter === account)
-        .map(h => h[1].op[1]);
+        .map(h => h[1].op[1])
+        .reverse();
     let first = 0,
         count = 0;
     votes.forEach(v => {
@@ -159,6 +160,10 @@ async function fetchMissingData(
     feedData,
     overwrite = true
 ) {
+    if (!feedData) {
+        console.log('feedData is empty', feedData);
+        return;
+    }
     if (!state.content) {
         state.content = {};
     }
@@ -170,7 +175,14 @@ async function fetchMissingData(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
             // console.log('Unexpected missing: ' + authorPermlink);
-            return api.getContentAsync(authorPermlink[0], authorPermlink[1]);
+            if (feedType === 'vote') {
+                return getContentAsync(authorPermlink[0], authorPermlink[1]);
+            } else {
+                return api.getContentAsync(
+                    authorPermlink[0],
+                    authorPermlink[1]
+                );
+            }
         })
     );
     missingContent.forEach(c => {
@@ -198,7 +210,9 @@ async function fetchMissingData(
         } else {
             filteredContent[key] = state.content[key];
         }
-        mergeContent(filteredContent[key], d);
+        if (feedType !== 'vote') {
+            mergeContent(filteredContent[key], d);
+        }
         discussionIndex.push(key);
     });
     if (overwrite) {
@@ -324,7 +338,7 @@ export async function attachScotData(url, state) {
     if (urlParts) {
         const account = urlParts[1];
 
-        console.log('fetch dashboard data');
+        console.log('fetch dashboard data: start');
 
         // fetch feed data
 
@@ -335,6 +349,8 @@ export async function attachScotData(url, state) {
         });
         await fetchMissingData(account, 'feed', state, feedData);
 
+        console.log('fetch dashboard data -- feed');
+
         // fetch blog data
         let blogData = await getScotDataAsync('get_discussions_by_blog', {
             token: LIQUID_TOKEN_UPPERCASE,
@@ -344,6 +360,8 @@ export async function attachScotData(url, state) {
         });
         await fetchMissingData(account, 'blog', state, blogData, false);
 
+        console.log('fetch dashboard data -- blog');
+
         // fetch curation data
         let curationData = await getAccountCuration({
             account: CURATOR_ACCOUNT,
@@ -351,6 +369,8 @@ export async function attachScotData(url, state) {
             limit: 20,
         });
         await fetchMissingData(account, 'vote', state, curationData, false);
+
+        console.log('fetch dashboard data -- recommended');
 
         // fetch token info
         const [tokenStatuses] = await Promise.all([
@@ -366,16 +386,21 @@ export async function attachScotData(url, state) {
         if (!state.props) {
             state.props = await getGlobalProps();
         }
-
-        // fetch resource credits
-        const rc = await getAccountRC(account);
-        state.accounts[account].rc = rc;
-
         if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
             state.accounts[account].token_status =
                 tokenStatuses[LIQUID_TOKEN_UPPERCASE];
             state.accounts[account].all_token_status = tokenStatuses;
         }
+
+        console.log('fetch dashboard data -- token stats');
+
+        // fetch resource credits
+        const rc = await getAccountRC(account);
+        state.accounts[account].rc = rc;
+
+        console.log('fetch dashboard data -- rc');
+
+        console.log('fetch dashboard data: end');
 
         return;
     }
@@ -525,10 +550,18 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
                 let content;
                 if (scotData.desc == null || scotData.children == null) {
-                    content = await api.getContentAsync(
-                        authorPermlink[0],
-                        authorPermlink[1]
-                    );
+                    if (order == 'vote') {
+                        content = await getContentAsync(
+                            authorPermlink[0],
+                            authorPermlink[1]
+                        );
+                    } else {
+                        content = await api.getContentAsync(
+                            authorPermlink[0],
+                            authorPermlink[1]
+                        );
+                        mergeContent(content, scotData);
+                    }
                 } else {
                     content = {
                         body: scotData.desc,
@@ -538,8 +571,8 @@ export async function fetchFeedDataAsync(call_name, ...args) {
                         children: scotData.children,
                         replies: [], // intentional
                     };
+                    mergeContent(content, scotData);
                 }
-                mergeContent(content, scotData);
                 return content;
             })
         );

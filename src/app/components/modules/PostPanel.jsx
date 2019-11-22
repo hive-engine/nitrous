@@ -197,13 +197,6 @@ class PostPanel extends React.Component {
 
         const topicDiscussions = discussions.get(category || '');
 
-        // If we're at one of the four sort order routes without a tag filter,
-        // use the translated string for that sort order, f.ex "trending"
-        //
-        // If you click on a tag while you're in a sort order route,
-        // the title should be the translated string for that sort order
-        // plus the tag string, f.ex "trending: blog"
-        //
         // Logged-in:
         // At homepage (@user/feed) say "My feed"
         let page_title = 'Posts'; // sensible default here?
@@ -253,7 +246,7 @@ class PostPanel extends React.Component {
             >
                 <article className="articles">
                     <div className="articles__header row">
-                        <div className="small-6 medium-6 large-6 column">
+                        <div className="small-10 medium-10 large-10 column">
                             <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
                                 {page_title}
                             </h1>

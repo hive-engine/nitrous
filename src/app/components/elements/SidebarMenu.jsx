@@ -54,6 +54,45 @@ const SidebarMenu = ({ username, className }) => (
                 </li>
             </ul>
         </div>
+
+        <hr className="c-siderbar__hr" />
+
+        <div className="c-sidebar__header">
+            <h3 className="c-sidebar__h3">{tt('sidebar_menu_jsx.tools')}</h3>
+        </div>
+        <div className="c-sidebar__content">
+            <ul className="c-sidebar__list">
+                <li className="c-sidebar__list-item">
+                    <a
+                        className="c-sidebar__link"
+                        href="https://dex.steemleo.com"
+                    >
+                        <Icon name="trade" size="1x" />
+                        {tt('sidebar_menu_jsx.leodex')}
+                    </a>
+                </li>
+
+                <li className="c-sidebar__list-item">
+                    <a
+                        className="c-sidebar__link"
+                        href="https://steemworld.org"
+                    >
+                        <Icon name="clock" size="1x" />
+                        {tt('sidebar_menu_jsx.steemworld')}
+                    </a>
+                </li>
+
+                <li className="c-sidebar__list-item">
+                    <a
+                        className="c-sidebar__link"
+                        href="https://steem-engine.rocks/tokens/LEO/richlist"
+                    >
+                        <Icon name="stakeholders" size="1x" />
+                        {tt('sidebar_menu_jsx.stakeholders')}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 );
 

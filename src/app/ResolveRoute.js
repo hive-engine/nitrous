@@ -30,8 +30,8 @@ export default function resolveRoute(path) {
     if (path === '/syndication') {
         return { page: 'Syndication' };
     }
-    if (path === '/learn') {
-        return { page: 'Learn' };
+    if (path === '/leopedia') {
+        return { page: 'Leopedia' };
     }
     if (path === '/faq.html') {
         return { page: 'Faq' };

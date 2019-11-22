@@ -255,6 +255,7 @@ class Header extends React.Component {
         );
 
         const feed_link = `/@${username}/feed`;
+        const dashboard_link = `/@${username}/dashboard`;
         const replies_link = `/@${username}/recent-replies`;
         const account_link = `/@${username}`;
         const comments_link = `/@${username}/comments`;
@@ -263,6 +264,11 @@ class Header extends React.Component {
         const pathCheck = userPath === '/submit.html' ? true : null;
 
         const user_menu = [
+            {
+                link: dashboard_link,
+                icon: 'flash',
+                value: tt('g.dashboard'),
+            },
             {
                 link: feed_link,
                 icon: 'home',
