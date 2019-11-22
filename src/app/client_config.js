@@ -1,11 +1,11 @@
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'SteemSanDiego';
+export const APP_NAME = 'Sand';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'SteemSanDiego';
-export const APP_NAME_UPPERCASE = 'STEEMSANDIEGO';
+export const APP_NAME_LATIN = 'Sand';
+export const APP_NAME_UPPERCASE = 'SAND';
 export const APP_ICON = 'sandiego';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
@@ -54,7 +54,7 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'SteemSanDiego is a social media platform where everyone gets paid for ' +
+    'SAND is a social media platform where everyone gets paid for ' +
     'creating and curating content. It leverages a robust digital points system, called SAND, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
