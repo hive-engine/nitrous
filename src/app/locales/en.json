@@ -119,7 +119,7 @@
         "to": " to ",
         "topics": "Topics",
         "toggle_nightmode": "Toggle Night Mode",
-        "total_earning": "Total Earnings",
+        "lifetime_earning": "Lifetime Earnings",
         "all_tags": "All tags",
         "all_tags_mobile": "All content",
         "transfer": "Transfer ",
@@ -136,7 +136,7 @@
         "vote": "Vote",
         "votes": "votes",
         "vote_value": "Vote Value (at 100%%)",
-        "voting_power": "Voting Power",
+        "voting_power": "LEO Voting Power",
         "wallet": "Wallet",
         "warning": "warning",
         "yes": "Yes",
@@ -659,6 +659,7 @@
         "alternative_sources": "Alternative Sources"
     },
     "header_jsx": {
+        "rocket": "rocket",
         "home": "home",
         "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
@@ -678,7 +679,11 @@
         "trending": "Trending",
         "tags": "Tags",
         "publishing": "Publishing",
-        "exploring": "Exploring"
+        "exploring": "Exploring",
+        "tools": "Tools & Resources",
+        "leodex": "Trade LEO",
+        "steemworld": "Steemworld",
+        "stakeholders": "Top Stakeholders"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":

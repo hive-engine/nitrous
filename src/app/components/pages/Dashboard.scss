@@ -170,6 +170,7 @@
     text-transform: uppercase;
     @include font-size(18px);
     margin: 0 0 16px 0;
+    color: #fcfcfc;
     &--inline {
       display: inline;
     }
@@ -203,6 +204,7 @@
   }
   .avatar {
     text-align: center;
+    background-color: $color-background-dark;
   }
 }
 
@@ -1004,6 +1006,10 @@ a#changeLayout:focus {
   text-align: center;
   @include font-size(18px);
 
+  @media screen and (max-width: 39.9375em) {
+    margin-top: 2rem;
+  }
+
   a {
       width: 160px;
       margin: 1rem;
@@ -1035,6 +1041,20 @@ a#changeLayout:focus {
     min-width: 0px;
     box-shadow: none;
     padding: 0;
+
+    &__header {
+      text-align: center;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      @include themify($themes) {
+        background-color: themed('backgroundColorHeavy');
+      }
+
+      .column {
+        margin: auto;
+      }
+    }
 
     &__summary {
       &-header {
@@ -1121,4 +1141,8 @@ a#changeLayout:focus {
   .callout {
     background-color: inherit;
   }
+}
+
+.Dashboard .posts-selector {
+  margin-top: 80px;
 }
