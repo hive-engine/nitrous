@@ -1,7 +1,7 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    'localhost:8080': {
+    '144.202.1.72:8080': {
         APP_NAME: 'FoodiesUnite',
         APP_ICON: 'foodies',
         APP_ICON_WIDTH: '220px',
@@ -92,7 +92,7 @@ export const CONFIG_MAP = {
     'weedcash.network': {
         APP_NAME: 'WeedCash',
         APP_ICON: 'weedcash',
-        APP_ICON_WIDTH: '150px',
+        APP_ICON_WIDTH: '140px',
         APP_ICON_HEIGHT: '40px',
         APP_URL: 'https://www.weedcash.network',
         APP_DOMAIN: 'www.weedcash.network',
@@ -133,10 +133,11 @@ export const CONFIG_MAP = {
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
         SCOT_TAG_FIRST: false,
-        PINNED_POSTS_URL: null,
+        PINNED_POSTS_URL: 'https://richardcrill.github.io',
         SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
         SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'coffeebuds',
         SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
+        SHOW_AUTHOR_RECENT_POSTS: true,
     },
 };
 
