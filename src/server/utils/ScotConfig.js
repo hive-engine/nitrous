@@ -194,11 +194,11 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.steem_to_krw_current = allPrice.find(
                 data => data.symbol === 'STEEM_KRW'
             ).price;
+            scotConfig.info.sbd_to_krw_current = allPrice.find(
+                data => data.symbol === 'SBD_KRW'
+            ).price;
             scotConfig.info.steem_to_dollar_current = allPrice.find(
                 data => data.symbol === 'STEEM'
-            ).price;
-            scotConfig.info.sbd_to_dollar_current = allPrice.find(
-                data => data.symbol === 'SBD'
             ).price;
 
             scotConfig.info.sctm_price = sctmPrice.data.sctmprice;
