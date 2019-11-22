@@ -383,6 +383,7 @@ class PostFull extends React.Component {
             <h1 className="entry-title">
                 {content.title}
                 {hostConfig['POSTED_VIA_NITROUS_ICON'] &&
+                    app_info &&
                     app_info.startsWith(
                         `${hostConfig['APP_NAME'].toLowerCase()}/`
                     ) && (

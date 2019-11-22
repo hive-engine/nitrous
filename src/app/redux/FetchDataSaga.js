@@ -274,8 +274,15 @@ export function* fetchData(action) {
             },
         ];
     } else if (order === 'by_replies') {
-        call_name = 'getRepliesByLastUpdateAsync';
-        args = [author, permlink, constants.FETCH_DATA_BATCH_SIZE];
+        call_name = 'getDiscussionsByRepliesAsync';
+        args = [
+            {
+                tag: author,
+                limit: constants.FETCH_DATA_BATCH_SIZE,
+                start_author: author,
+                start_permlink: permlink,
+            },
+        ];
     } else if (order === 'by_feed') {
         // https://github.com/steemit/steem/issues/249
         call_name = 'getDiscussionsByFeedAsync';
@@ -301,6 +308,7 @@ export function* fetchData(action) {
         call_name = 'getDiscussionsByCommentsAsync';
         args = [
             {
+                tag: author,
                 limit: constants.FETCH_DATA_BATCH_SIZE,
                 start_author: author,
                 start_permlink: permlink,
@@ -327,8 +335,7 @@ export function* fetchData(action) {
                 ...args
             );
 
-            // Set next arg. Note 'by_replies' does not use same structure.
-            if (lastValue && order !== 'by_replies') {
+            if (lastValue) {
                 args[0].start_author = lastValue.author;
                 args[0].start_permlink = lastValue.permlink;
             }
