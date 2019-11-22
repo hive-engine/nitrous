@@ -1,5 +1,5 @@
 import { api } from '@steemit/steem-js';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE, CURATOR_ACCOUNT } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -71,6 +71,53 @@ async function getAuthorRep(feedData) {
     return authorRep;
 }
 
+function getAccountRC(account) {
+    return new Promise(resolve => {
+        api.send(
+            'rc_api',
+            {
+                method: 'find_rc_accounts',
+                params: { accounts: [account] },
+            },
+            function(err, res) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                const rc = res.rc_accounts[0];
+                const rc_percentage = rc.rc_manabar.current_mana / rc.max_rc;
+                resolve(rc_percentage);
+            }
+        );
+    });
+}
+
+async function getAccountCuration(args) {
+    let { account, start, limit, start_author, start_permlink } = args;
+    start = start || -1;
+    limit = limit || 20;
+    const history = await api.getAccountHistoryAsync(
+        account,
+        start,
+        limit * 10
+    );
+    let votes = history
+        .filter(h => h[1].op[0] === 'vote' && h[1].op[1].voter === account)
+        .map(h => h[1].op[1]);
+    let first = 0,
+        count = 0;
+    votes.forEach(v => {
+        v.authorperm = '@' + v.author + '/' + v.permlink;
+        if (start_author && start_permlink) {
+            if (start_author === v.author && start_permlink === v.permlink) {
+                first = count + 1;
+            }
+        }
+        count++;
+    });
+    return votes.slice(first, first + limit);
+}
+
 function mergeContent(content, scotData) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
@@ -105,7 +152,13 @@ function mergeContent(content, scotData) {
     content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
 }
 
-async function fetchMissingData(tag, feedType, state, feedData) {
+async function fetchMissingData(
+    tag,
+    feedType,
+    state,
+    feedData,
+    overwrite = true
+) {
     if (!state.content) {
         state.content = {};
     }
@@ -116,7 +169,7 @@ async function fetchMissingData(tag, feedType, state, feedData) {
     const missingContent = await Promise.all(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
-            console.log('Unexpected missing: ' + authorPermlink);
+            // console.log('Unexpected missing: ' + authorPermlink);
             return api.getContentAsync(authorPermlink[0], authorPermlink[1]);
         })
     );
@@ -148,8 +201,16 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         mergeContent(filteredContent[key], d);
         discussionIndex.push(key);
     });
-    state.content = filteredContent;
-    if (feedType == 'blog' || feedType == 'feed') {
+    if (overwrite) {
+        state.content = filteredContent;
+    } else {
+        for (let key in filteredContent) {
+            if (!state.content[key]) {
+                state.content[key] = filteredContent[key];
+            }
+        }
+    }
+    if (feedType == 'blog' || feedType == 'feed' || feedType == 'vote') {
         // author feeds
         if (!state.accounts[tag]) {
             state.accounts[tag] = {};
@@ -259,6 +320,66 @@ export async function attachScotData(url, state) {
         return;
     }
 
+    urlParts = url.match(/^[\/]?@([^\/]+)\/dashboard[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+
+        console.log('fetch dashboard data');
+
+        // fetch feed data
+
+        let feedData = await getScotDataAsync('get_feed', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'feed', state, feedData);
+
+        // fetch blog data
+        let blogData = await getScotDataAsync('get_discussions_by_blog', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+            include_reblogs: true,
+        });
+        await fetchMissingData(account, 'blog', state, blogData, false);
+
+        // fetch curation data
+        let curationData = await getAccountCuration({
+            account: CURATOR_ACCOUNT,
+            start: -1,
+            limit: 20,
+        });
+        await fetchMissingData(account, 'vote', state, curationData, false);
+
+        // fetch token info
+        const [tokenStatuses] = await Promise.all([
+            getScotAccountDataAsync(account),
+        ]);
+
+        if (!state.accounts) {
+            state.accounts = {};
+        }
+        if (!state.accounts[account]) {
+            state.accounts[account] = await getAccount(account);
+        }
+        if (!state.props) {
+            state.props = await getGlobalProps();
+        }
+
+        // fetch resource credits
+        const rc = await getAccountRC(account);
+        state.accounts[account].rc = rc;
+
+        if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
+            state.accounts[account].token_status =
+                tokenStatuses[LIQUID_TOKEN_UPPERCASE];
+            state.accounts[account].all_token_status = tokenStatuses;
+        }
+
+        return;
+    }
+
     urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
@@ -314,13 +435,19 @@ export async function getContentAsync(author, permlink) {
 
 export async function getStateAsync(url) {
     // strip off query string
-    const path = url.split('?')[0];
+    let path = url.split('?')[0];
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded =
         !url.match(
             /^[\/]?(trending|hot|created|promoted|payout|payout_comments|syndication)($|\/$|\/([^\/]+)\/?$)/
         ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
+
+    // add special handling for dashboard
+    const match = path.match(/^\/(@[\w\.\d-]+)\/dashboard\/?$/);
+    if (match) {
+        path = '/' + match[1] + '/feed';
+    }
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -356,7 +483,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed|Vote)Async/
     );
     let order;
     let callName;
@@ -384,7 +511,15 @@ export async function fetchFeedDataAsync(call_name, ...args) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        feedData = await getScotDataAsync(callName, discussionQuery);
+        if (order == 'vote') {
+            feedData = await getAccountCuration({
+                account: CURATOR_ACCOUNT,
+                start: -1,
+                ...discussionQuery,
+            });
+        } else {
+            feedData = await getScotDataAsync(callName, discussionQuery);
+        }
         feedData = await Promise.all(
             feedData.map(async scotData => {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');

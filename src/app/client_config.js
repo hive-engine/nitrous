@@ -29,6 +29,7 @@ export const TAG_LIST = fromJSOrdered({
 export const LIQUID_TOKEN = 'Leo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LEO';
+export const CURATOR_ACCOUNT = 'steem.leo';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;

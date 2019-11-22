@@ -297,10 +297,12 @@ export default function reducer(state = defaultState, action = {}) {
                 fetching,
                 endOfData,
             } = payload;
+            console.log('RECEIVE_DATA', payload);
             let new_state;
             if (
                 order === 'by_author' ||
                 order === 'by_feed' ||
+                order === 'by_voter' ||
                 order === 'by_comments' ||
                 order === 'by_replies'
             ) {
@@ -377,33 +379,6 @@ export default function reducer(state = defaultState, action = {}) {
 
                             map.set(key, value);
                         }
-                    });
-                });
-            });
-            return new_state;
-        }
-
-        case RECEIVE_AUTHOR_RECENT_POSTS: {
-            const { data, order, category } = payload;
-            let new_state = state.updateIn(
-                ['discussion_idx', category || '', order],
-                List(),
-                list => {
-                    return list.withMutations(posts => {
-                        data.forEach(value => {
-                            const entry = `${value.author}/${value.permlink}`;
-                            if (!posts.includes(entry)) posts.push(entry);
-                        });
-                    });
-                }
-            );
-            new_state = new_state.updateIn(['content'], content => {
-                return content.withMutations(map => {
-                    data.forEach(value => {
-                        const key = `${value.author}/${value.permlink}`;
-                        value = fromJS(value);
-                        value = value.set('stats', fromJS(contentStats(value)));
-                        map.set(key, value);
                     });
                 });
             });

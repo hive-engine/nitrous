@@ -14,6 +14,7 @@
 @import "./elements/Userpic";
 @import "./elements/Voting";
 @import "./elements/FormattedAsset";
+@import "./elements/Info";
 @import "./elements/ReplyEditor";
 @import "./elements/DropdownMenu";
 @import "./elements/VerticalMenu";
@@ -56,6 +57,7 @@
 
 // pages
 @import "./pages/PostsIndex";
+@import "./pages/Dashboard";
 @import "./pages/Topics";
 @import "./pages/Post";
 @import "./pages/Privacy";

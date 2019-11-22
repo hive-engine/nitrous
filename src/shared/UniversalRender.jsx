@@ -292,6 +292,7 @@ export async function serverRender(
         // Are we loading an un-category-aliased post?
         if (
             !url.match(routeRegex.PostsIndex) &&
+            !url.match(routeRegex.Dashboard) &&
             !url.match(routeRegex.UserProfile1) &&
             !url.match(routeRegex.UserProfile2) &&
             url.match(routeRegex.PostNoCategory)

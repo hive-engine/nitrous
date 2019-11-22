@@ -284,6 +284,16 @@ export function* fetchData(action) {
                 start_permlink: permlink,
             },
         ];
+    } else if (order === 'by_voter') {
+        call_name = 'getDiscussionsByVoteAsync';
+        args = [
+            {
+                tag: accountname,
+                limit: constants.FETCH_DATA_BATCH_SIZE,
+                start_author: author,
+                start_permlink: permlink,
+            },
+        ];
     } else if (order === 'by_comments') {
         call_name = 'getDiscussionsByCommentsAsync';
         args = [
@@ -312,6 +322,8 @@ export function* fetchData(action) {
                 call_name,
                 ...args
             );
+
+            console.log('fetchData', feedData, endOfData, lastValue);
 
             // Set next arg. Note 'by_replies' does not use same structure.
             if (lastValue && order !== 'by_replies') {
