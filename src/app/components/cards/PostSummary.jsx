@@ -219,6 +219,7 @@ class PostSummary extends React.Component {
                             </span>
 
                             {POSTED_VIA_NITROUS_ICON &&
+                                app_info &&
                                 app_info.startsWith(
                                     `${APP_NAME.toLowerCase()}/`
                                 ) && (
