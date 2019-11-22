@@ -153,7 +153,12 @@ async function fetchMissingData(tag, feedType, state, feedData) {
         discussionIndex.push(key);
     });
     state.content = filteredContent;
-    if (feedType == 'blog' || feedType == 'feed') {
+    if (
+        feedType == 'blog' ||
+        feedType == 'feed' ||
+        feedType == 'comments' ||
+        feedType == 'recent_replies'
+    ) {
         // author feeds
         if (!state.accounts[tag]) {
             state.accounts[tag] = {};
@@ -164,6 +169,15 @@ async function fetchMissingData(tag, feedType, state, feedData) {
             state.discussion_idx[tag] = {};
         }
         state.discussion_idx[tag][feedType] = discussionIndex;
+    }
+}
+
+async function addAccountToState(state, account) {
+    if (!state.accounts) {
+        state.accounts = {};
+    }
+    if (!state.accounts[account]) {
+        state.accounts[account] = await getAccount(account);
     }
 }
 
@@ -229,12 +243,7 @@ export async function attachScotData(url, state) {
             fetchSnaxBalanceAsync(account),
         ]);
 
-        if (!state.accounts) {
-            state.accounts = {};
-        }
-        if (!state.accounts[account]) {
-            state.accounts[account] = await getAccount(account);
-        }
+        await addAccountToState(state, account);
         if (!state.props) {
             state.props = await getGlobalProps();
         }
@@ -282,7 +291,34 @@ export async function attachScotData(url, state) {
             limit: 20,
             include_reblogs: true,
         });
+        await addAccountToState(state, account);
         await fetchMissingData(account, 'blog', state, feedData);
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?@([^\/]+)(\/comments)?[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        let feedData = await getScotDataAsync('get_discussions_by_comments', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await addAccountToState(state, account);
+        await fetchMissingData(account, 'comments', state, feedData);
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?@([^\/]+)(\/recent-replies)?[\/]?$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        let feedData = await getScotDataAsync('get_discussions_by_replies', {
+            token: LIQUID_TOKEN_UPPERCASE,
+            tag: account,
+            limit: 20,
+        });
+        await addAccountToState(state, account);
+        await fetchMissingData(account, 'recent_replies', state, feedData);
         return;
     }
 
@@ -334,7 +370,10 @@ export async function getStateAsync(url) {
     const steemitApiStateNeeded =
         !url.match(
             /^[\/]?(trending|hot|created|promoted|payout|payout_comments|certified|grow|favorite-mentor|popular-community|extra-clout|send-us|ulogs|steemgigs|via-marlians)($|\/$|\/([^\/]+)\/?$)/
-        ) && !url.match(/^[\/]?@[^\/]+\/(feed|blog)$/);
+        ) &&
+        !url.match(
+            /^[\/]?@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/
+        );
 
     let raw = steemitApiStateNeeded
         ? await api.getStateAsync(path)
@@ -367,7 +406,7 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     let lastValue;
 
     const callNameMatch = call_name.match(
-        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed|Certified|Ulogs|Steemgigs|Via-marlians)Async/
+        /getDiscussionsBy(Trending|Hot|Created|Promoted|Blog|Feed|Comments|Replies|Certified|Ulogs|Steemgigs|Via-marlians)Async/
     );
     let order;
     let callName;
