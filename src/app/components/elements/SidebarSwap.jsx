@@ -69,22 +69,15 @@ class SidebarSwap extends Component {
             steem_to_dollor,
             sctm_to_steem,
             krwp_to_steem,
-            sbd_to_dollar,
-            steem_to_krw,
             steem_to_krw_current,
-            steem_to_dollar_current,
-            sbd_to_dollar_current,
+            sbd_to_krw_current,
         } = this.props;
         console.log(
             sct_to_steemp,
             steem_to_dollor,
             sctm_to_steem,
-            krwp_to_steem,
-            sbd_to_dollar,
-            steem_to_krw
+            krwp_to_steem
         );
-        this.steem_to_krw = steem_to_krw;
-        this.steem_to_krw = steem_to_krw;
 
         // console.log(sbd_to_dollor, steem_to_dollor);
         // I should get ratio between tokens from .. api.
@@ -92,7 +85,7 @@ class SidebarSwap extends Component {
             SCT: sct_to_steemp * 1,
             SCTM: sctm_to_steem * 1,
             KRWP: 1000.0 / steem_to_krw_current,
-            SBD: sbd_to_dollar_current / steem_to_dollar_current * 1,
+            SBD: sbd_to_krw_current / steem_to_krw_current * 1,
         };
 
         var that = this;
