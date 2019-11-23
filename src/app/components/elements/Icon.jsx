@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { POSTED_VIA_NITROUS_ICON } from 'app/client_config';
 
 export const icons = [
     'user',
@@ -55,7 +56,6 @@ export const icons = [
     'pencil2',
     'pin',
     'pin-disabled',
-    'steemleo',
     'bank',
     'flash',
     'battery',
@@ -65,7 +65,7 @@ export const icons = [
     'trade',
     'stakeholders',
     'dashboard',
-];
+].concat(POSTED_VIA_NITROUS_ICON ? [POSTED_VIA_NITROUS_ICON] : []);
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);
 
