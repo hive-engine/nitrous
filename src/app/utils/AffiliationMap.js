@@ -89,6 +89,7 @@ const map = {
     'alt-tab': 'Verified Creator',
     'jennyferandtony': 'Verified Creator',
     'topadultcurator': 'Verified Creator',
+    'saintchristopher': 'Verified Creator',
 };
 
 export default map;
