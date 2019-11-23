@@ -25,26 +25,15 @@ const map = {
     lmon: 'NaturalProducts Editor',
     liambu: 'NaturalProducts Curator',
     anggreklestari: 'NaturalProducts Curator',
-    'bahagia-arbi': 'NaturalProducts Curator',
-    balte: 'NaturalProducts Patron',
-    alokkumar121: 'NaturalProducts Delegator',
     amar15: 'NaturalProducts Delegator',
-    amico: 'NaturalProducts Delegator',
-    anttn: 'NaturalProducts Delegator',
     artemislives: 'NaturalProducts Delegator',
-    certain: 'NaturalProducts Delegator',
-    dotwin1981: 'NaturalProducts Delegator',
     edkarnie: 'NaturalProducts Delegator',
     hafizullah: 'NaturalProducts Delegator',
     hatoto: 'NaturalProducts Delegator',
-    jznsamuel: 'NaturalProducts Delegator',
     liucixin: 'NaturalProducts Delegator',
     mystry360: 'NaturalProducts Delegator',
-    reeta0119: 'NaturalProducts Delegator',
     sumit71428: 'NaturalProducts Delegator',
-    'super-irie': 'NaturalProducts Delegator',
-    tixinhacapitinha: 'NaturalProducts Delegator',
-    sumatranate: 'NaturalProducts Delegator'
+    tixinhacapitinha: 'NaturalProducts Delegator'
 };
 
 export default map;
