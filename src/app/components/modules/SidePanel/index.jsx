@@ -104,6 +104,11 @@ const SidePanel = ({
         ],
         organizational_WEED: [
             {
+                value: 'orgsite',
+                label: 'About Weedcash',
+                link: 'https://weedcash.org/',
+            },
+            {
                 value: 'discord',
                 label: 'Discord',
                 link: 'https://discord.gg/jMHX3d8',
