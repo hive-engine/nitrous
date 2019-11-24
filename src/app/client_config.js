@@ -1,7 +1,7 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    '144.202.1.72:8080': {
+    'foodiesunite.net': {
         APP_NAME: 'FoodiesUnite',
         APP_ICON: 'foodies',
         APP_ICON_WIDTH: '220px',
@@ -12,7 +12,35 @@ export const CONFIG_MAP = {
         LIQUID_TOKEN_UPPERCASE: 'FOODIE',
         APP_MAX_TAG: 10,
         SCOT_TAG: 'foodie',
-        TAG_LIST: fromJSOrdered(['foodie', 'food', 'recipes']),
+        TAG_LIST: fromJSOrdered({
+            bbq: [],
+            beverages: [
+                'functionalbeverages',
+                'healthybeverages',
+                'sportsbeverages',
+            ],
+            dairy: [],
+            desserts: [],
+            food: ['fooding', 'functionalfood', 'healthfood'],
+            gastronomy: [],
+            healthyfoods: [],
+            keto: [],
+            organic: [],
+            snacks: [],
+            sweets: ['vitamins', 'minerals'],
+            vegetarian: [],
+            vegan: [],
+            recipies: [],
+            community: [
+                'cleanplanet',
+                'innerblocks',
+                'ecotrain',
+                'steembasicincome',
+                'weedcash',
+                'vegansofsteemit',
+            ],
+            contest: [],
+        }),
         INTERLEAVE_PROMOTED: true,
         PROMOTED_POST_ACCOUNT: 'foodiepromo',
         VESTING_TOKEN: 'FOODIE POWER',
