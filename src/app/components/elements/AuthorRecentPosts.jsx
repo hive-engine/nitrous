@@ -6,7 +6,7 @@ import tt from 'counterpart';
 
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 
-const MAX_LIMIT = 10;
+const MAX_LIMIT = 5;
 
 const formatDate = date => {
     const d = new Date(`${date}Z`);
