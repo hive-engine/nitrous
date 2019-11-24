@@ -201,8 +201,7 @@ class SidebarSwap extends Component {
             this.input_token_type[this.selected_token[0]],
             this.output_token_type[this.selected_token[1]]
         );
-        if (this.selected_token[0] > 2) {
-            //3,4
+        if (this.input_token_type[this.selected_token[0]] === 'SBD') {
             this.props.dispatchTransfer({
                 amount: this.input_amount,
                 asset: this.input_token_type[this.selected_token[0]],
