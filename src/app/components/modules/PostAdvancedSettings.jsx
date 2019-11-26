@@ -22,12 +22,17 @@ class PostAdvancedSettings extends Component {
 
     initForm(props) {
         const { fields } = props;
+
+        console.log('props', props);
+
         reactForm({
             fields,
             instance: this,
             name: 'advancedSettings',
             initialValues: props.initialValues,
             validation: values => {
+                console.log('values', values);
+                console.log('values bene', values.beneficiaries);
                 return {
                     beneficiaries: validateBeneficiaries(
                         props.username,
@@ -111,8 +116,8 @@ class PostAdvancedSettings extends Component {
                         {defaultPayoutType === '0%'
                             ? tt('reply_editor.decline_payout')
                             : defaultPayoutType === '50%'
-                              ? tt('reply_editor.default_50_50')
-                              : tt('reply_editor.power_up_100')}
+                            ? tt('reply_editor.default_50_50')
+                            : tt('reply_editor.power_up_100')}
                     </div>
                 </div>
                 <div className="row">
@@ -133,7 +138,8 @@ class PostAdvancedSettings extends Component {
                 <BeneficiarySelector {...beneficiaries.props} tabIndex={1} />
                 <div className="error">
                     {(beneficiaries.touched || beneficiaries.value) &&
-                        beneficiaries.error}&nbsp;
+                        beneficiaries.error}
+                    &nbsp;
                 </div>
                 <div className="row">
                     <div className="column">

@@ -333,7 +333,8 @@
         "update_post": "저장",
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
         "advanced_settings": "고급 설정(베니피셔리)",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "set_krwp_beneficiary": "@sct.krwp 베네피셔리 설정(100)"
     },
     "beneficiary_selector_jsx": {
         "header": "베니피셔리 설정",

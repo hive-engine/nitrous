@@ -328,6 +328,12 @@ class ReplyEditor extends React.Component {
         });
     };
 
+    setKrwpBeneficiary = () => {
+        const { formId } = this.props;
+        console.log('formid', formId);
+        this.props.setBeneficiaries(formId, [{username:'sct.krwp', percent:100}]);
+    };
+
     render() {
         const originalPost = {
             category: this.props.category,
@@ -636,6 +642,17 @@ class ReplyEditor extends React.Component {
                                                 )}
                                             </a>{' '}
                                             <br />
+                                            <a
+                                                href="#"
+                                                onClick={
+                                                    this.setKrwpBeneficiary
+                                                }
+                                            >
+                                                {tt(
+                                                    'reply_editor.set_krwp_beneficiary'
+                                                )}
+                                            </a>{' '}
+                                            <br />
                                             &nbsp;
                                         </div>
                                     </div>
@@ -922,6 +939,7 @@ export default formId =>
                 startLoadingIndicator,
             }) => {
                 // const post = state.global.getIn(['content', author + '/' + permlink])
+                debugger;
                 const username = state.user.getIn(['current', 'username']);
 
                 const isEdit = type === 'edit';
@@ -1044,6 +1062,9 @@ export default formId =>
 
                 const originalBody = isEdit ? originalPost.body : null;
                 const __config = { originalBody };
+                let payFee = true;
+                debugger;
+
                 // Avoid changing payout option during edits #735
                 if (!isEdit) {
                     switch (payoutType) {
@@ -1066,6 +1087,13 @@ export default formId =>
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
+                        const krwpBene = beneficiaries.filter(e => e.username === 'sct.krwp');
+
+                        debugger;
+                        if(krwpBene && krwpBene.length > 0 && krwpBene[0].percent === 100){
+                            payFee = false;
+                        }
+                        
                         if (!__config.comment_options) {
                             __config.comment_options = {};
                         }
@@ -1092,6 +1120,7 @@ export default formId =>
                     }
                 }
 
+                debugger; 
                 const operation = {
                     ...linkProps,
                     category: rootCategory,

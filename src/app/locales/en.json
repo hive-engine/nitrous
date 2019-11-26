@@ -331,7 +331,8 @@
         "update_post": "Update Post",
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "set_krwp_beneficiary": "Set beneficiary(@sct.krwp 100)"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
