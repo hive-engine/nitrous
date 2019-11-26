@@ -25,6 +25,7 @@ import {
     TAG_LIST,
     SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
     SCOT_DEFAULT_BENEFICIARY_PERCENT,
+    LIQUID_TOKEN_UPPERCASE,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -330,8 +331,10 @@ class ReplyEditor extends React.Component {
 
     setKrwpBeneficiary = () => {
         const { formId } = this.props;
-        console.log('formid', formId);
-        this.props.setBeneficiaries(formId, [{username:'sct.krwp', percent:100}]);
+        // console.log('formid', formId);
+        this.props.setBeneficiaries(formId, [
+            { username: 'sct.krwp', percent: 100 },
+        ]);
     };
 
     render() {
@@ -871,6 +874,8 @@ export default formId =>
             ]);
             beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
 
+            let postingFee = '1';
+
             const ret = {
                 ...ownProps,
                 fields,
@@ -883,6 +888,7 @@ export default formId =>
                 state,
                 formId,
                 richTextEditor,
+                postingFee,
             };
             return ret;
         },
@@ -939,7 +945,6 @@ export default formId =>
                 startLoadingIndicator,
             }) => {
                 // const post = state.global.getIn(['content', author + '/' + permlink])
-                debugger;
                 const username = state.user.getIn(['current', 'username']);
 
                 const isEdit = type === 'edit';
@@ -1063,7 +1068,6 @@ export default formId =>
                 const originalBody = isEdit ? originalPost.body : null;
                 const __config = { originalBody };
                 let payFee = true;
-                debugger;
 
                 // Avoid changing payout option during edits #735
                 if (!isEdit) {
@@ -1087,13 +1091,18 @@ export default formId =>
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
-                        const krwpBene = beneficiaries.filter(e => e.username === 'sct.krwp');
+                        const krwpBene = beneficiaries.filter(
+                            e => e.username === 'sct.krwp'
+                        );
 
-                        debugger;
-                        if(krwpBene && krwpBene.length > 0 && krwpBene[0].percent === 100){
+                        if (
+                            krwpBene &&
+                            krwpBene.length > 0 &&
+                            krwpBene[0].percent === 100
+                        ) {
                             payFee = false;
                         }
-                        
+
                         if (!__config.comment_options) {
                             __config.comment_options = {};
                         }
@@ -1120,8 +1129,14 @@ export default formId =>
                     }
                 }
 
-                debugger; 
-                const operation = {
+                const tmpSuccessCallback = successCallback;
+                const postingFee = '0.001'; // posting fee set 1 SCT
+                const current_account = state.user.get('current');
+                const tokenBalances = current_account
+                    ? current_account.get('token_balances')
+                    : null;
+
+                let operation = {
                     ...linkProps,
                     category: rootCategory,
                     title,
@@ -1129,14 +1144,79 @@ export default formId =>
                     json_metadata: meta,
                     __config,
                 };
-                dispatch(
-                    transactionActions.broadcastOperation({
-                        type: 'comment',
-                        operation,
-                        errorCallback,
-                        successCallback,
-                    })
-                );
+
+                if (!isEdit && payFee) {
+                    const balance = tokenBalances.get('balance');
+
+                    if (!balance) {
+                        // fail to get token balance
+                        errorCallback('fail to get token balance');
+                        return;
+                    }
+
+                    if (parseFloat(balance) < parseFloat(postingFee)) {
+                        // not enough posting fee
+                        errorCallback(tt('reply_editor.lack_balance'));
+                        return;
+                    }
+
+                    successCallback = s => {
+                        operation = {
+                            ...linkProps,
+                            category: rootCategory,
+                            title,
+                            body,
+                            json_metadata: meta,
+                            __config,
+                        };
+
+                        const successCallback = tmpSuccessCallback;
+
+                        dispatch(
+                            transactionActions.broadcastOperation({
+                                type: 'comment',
+                                operation,
+                                errorCallback,
+                                successCallback,
+                            })
+                        );
+                    };
+
+                    const transferOperation = {
+                        contractName: 'tokens',
+                        contractAction: 'transfer', // for test, transfer 로 변경
+                        contractPayload: {
+                            symbol: LIQUID_TOKEN_UPPERCASE,
+                            to: 'null',
+                            quantity: postingFee,
+                            memo: 'posting fee',
+                        },
+                    };
+
+                    operation = {
+                        id: 'ssc-mainnet1',
+                        required_auths: [username],
+                        json: JSON.stringify(transferOperation),
+                    };
+
+                    dispatch(
+                        transactionActions.broadcastOperation({
+                            type: 'custom_json',
+                            operation,
+                            errorCallback,
+                            successCallback,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        transactionActions.broadcastOperation({
+                            type: 'comment',
+                            operation,
+                            errorCallback,
+                            successCallback,
+                        })
+                    );
+                }
             },
         })
     )(ReplyEditor);
