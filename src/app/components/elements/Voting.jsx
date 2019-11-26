@@ -504,8 +504,7 @@ class Voting extends React.Component {
                     scotPrecision
                 )} ${LIQUID_TOKEN_UPPERCASE}`,
             });
-            // Uncomment to enable
-            if (false && scot_token_bene_payout > 0 && tokenBeneficiary) {
+            if (scot_token_bene_payout > 0 && tokenBeneficiary) {
                 payoutItems.push({
                     value: `- Token Benefactor ${scot_token_bene_payout.toFixed(
                         scotPrecision
