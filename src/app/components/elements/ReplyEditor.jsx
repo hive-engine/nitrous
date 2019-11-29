@@ -1129,8 +1129,9 @@ export default formId =>
                     }
                 }
 
-                const tmpSuccessCallback = successCallback;
+                const feeAccount = 'sct.postingfee';
                 const postingFee = '0.001'; // posting fee set 1 SCT
+                const tmpSuccessCallback = successCallback;
                 const current_account = state.user.get('current');
                 const tokenBalances = current_account
                     ? current_account.get('token_balances')
@@ -1154,9 +1155,16 @@ export default formId =>
                         return;
                     }
 
+                    console.log(`sct balance ${balance}`);
+
                     if (parseFloat(balance) < parseFloat(postingFee)) {
                         // not enough posting fee
-                        errorCallback(tt('reply_editor.lack_balance'));
+                        errorCallback(
+                            tt('reply_editor.lack_balance', {
+                                balance: balance,
+                                fee: postingFee,
+                            })
+                        );
                         return;
                     }
 
@@ -1187,7 +1195,7 @@ export default formId =>
                         contractAction: 'transfer', // for test, transfer 로 변경
                         contractPayload: {
                             symbol: LIQUID_TOKEN_UPPERCASE,
-                            to: 'null',
+                            to: feeAccount,
                             quantity: postingFee,
                             memo: 'posting fee',
                         },

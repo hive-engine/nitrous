@@ -334,7 +334,7 @@
         "beneficiaries_set": "%(count)s set",
         "set_krwp_beneficiary": "Set beneficiary(@sct.krwp 100)",
         "lack_balance":
-            "Not enough posting fee(You need to set beneficiary(@sct.krwp 100)"
+            "Not enough posting fee %(fee)s SCT.(You need to set beneficiary(@sct.krwp 100). Your balance is %(balance)s SCT."
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
