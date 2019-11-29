@@ -113,6 +113,17 @@ app.use(
     })
 );
 
+const braveTxt = fs.readFileSync(
+    path.join(__dirname, '../app/assets/brave-rewards-verification.txt'),
+    'utf8'
+);
+app.use(
+    mount('/.well-known/brave-rewards-verification.txt', function*() {
+        this.type = 'text/plain';
+        this.body = braveTxt;
+    })
+);
+
 // Proxy asset folder to webpack development server in development mode
 if (env === 'development') {
     const webpack_dev_port = process.env.PORT
