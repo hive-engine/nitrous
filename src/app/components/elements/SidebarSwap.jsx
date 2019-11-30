@@ -66,6 +66,7 @@ class SidebarSwap extends Component {
         };
         const {
             sct_to_steemp,
+            dec_to_steemp,
             steem_to_dollor,
             sctm_to_steem,
             krwp_to_steem,
@@ -88,6 +89,7 @@ class SidebarSwap extends Component {
             SBD: sbd_to_krw_current / steem_to_krw_current * 1,
             ORG: 250.0 / steem_to_krw_current,
             SVC: 1000.0 / steem_to_krw_current,
+            DEC: dec_to_steemp * 1,
         };
 
         var that = this;
@@ -99,6 +101,7 @@ class SidebarSwap extends Component {
                 SBD: allInfo[3][0].sbd_balance,
                 ORG: allInfo[4] + ' ' + 'ORG',
                 SVC: allInfo[5] + ' ' + 'SVC',
+                DEC: allInfo[6] + ' ' + 'DEC',
             };
             that.setState({
                 providerBalance,
@@ -106,8 +109,24 @@ class SidebarSwap extends Component {
             });
         });
 
-        this.input_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD', 'ORG', 'SVC'];
-        this.output_token_type = ['SCT', 'SCTM', 'KRWP', 'SBD', 'ORG', 'SVC'];
+        this.input_token_type = [
+            'SCT',
+            'SCTM',
+            'KRWP',
+            'SBD',
+            'ORG',
+            'SVC',
+            'DEC',
+        ];
+        this.output_token_type = [
+            'SCT',
+            'SCTM',
+            'KRWP',
+            'SBD',
+            'ORG',
+            'SVC',
+            'DEC',
+        ];
 
         this.swap_fee = 3.0;
         this.selected_token = [0, 0];
@@ -132,6 +151,9 @@ class SidebarSwap extends Component {
         } else if (this.input_token_type[this.selected_token[0]] == 'SVC') {
             this.output_token_type = ['KRWP'];
             this.selected_token[1] = 0;
+        } else if (this.input_token_type[this.selected_token[0]] == 'DEC') {
+            this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
+            this.selected_token[1] = 0;
         } else {
             // input선택한것은 제거하기
             this.output_token_type = [
@@ -141,6 +163,7 @@ class SidebarSwap extends Component {
                 'SBD',
                 'ORG',
                 'SVC',
+                'DEC',
             ];
             this.output_token_type = this.output_token_type.filter(
                 a => a != this.input_token_type[this.selected_token[0]]
@@ -158,6 +181,9 @@ class SidebarSwap extends Component {
         } else if (this.output_token_type[this.selected_token[1]] == 'SVC') {
             this.input_token_type = ['KRWP'];
             this.selected_token[0] = 0;
+        } else if (this.output_token_type[this.selected_token[1]] == 'DEC') {
+            this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
+            this.selected_token[0] = 0;
         } else if (this.output_token_type[this.selected_token[1]] == 'SBD') {
             this.input_token_type = ['KRWP'];
             this.selected_token[0] = 0;
@@ -169,6 +195,7 @@ class SidebarSwap extends Component {
                 'SBD',
                 'ORG',
                 'SVC',
+                'DEC',
             ];
         }
         this.calculateOutput();
@@ -339,6 +366,7 @@ class SidebarSwap extends Component {
             }),
             this.getTokenBalance(SWAP_ACCOUNT, 'ORG'),
             this.getTokenBalance(SWAP_ACCOUNT, 'SVC'),
+            this.getTokenBalance(SWAP_ACCOUNT, 'DEC'),
         ]);
         return allInfo;
     }
