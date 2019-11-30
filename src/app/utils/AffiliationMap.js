@@ -90,6 +90,7 @@ const map = {
     'jennyferandtony': 'Verified Creator',
     'topadultcurator': 'Verified Creator',
     'saintchristopher': 'Verified Creator',
+    'moonshines': 'Verified Creator',
 };
 
 export default map;
