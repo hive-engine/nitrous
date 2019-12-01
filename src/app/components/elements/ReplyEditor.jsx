@@ -1130,7 +1130,7 @@ export default formId =>
                 }
 
                 const feeAccount = 'sct.postingfee';
-                const postingFee = '0.001'; // posting fee set 1 SCT
+                const postingFee = '1'; // posting fee set 1 SCT
                 const tmpSuccessCallback = successCallback;
                 const current_account = state.user.get('current');
                 const tokenBalances = current_account
