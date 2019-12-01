@@ -365,12 +365,27 @@ class ReplyEditor extends React.Component {
         const { submitting, valid, handleSubmit } = this.state.replyForm;
         const { replyForm, postError, titleWarn, rte } = this.state;
         const { progress, noClipboardData } = this.state;
-        const disabled = submitting || !valid;
         const loading = submitting || this.state.loading;
+        const current_account = state.user.get('current');
+        const tokenBalanceInfo = current_account
+                    ? current_account.get('token_balances')
+                    : null;
+        let disabled = submitting || !valid;
+
+        const postingFee = '1.000';
+        if(tokenBalanceInfo && tokenBalanceInfo.get('balance')){
+            if (parseFloat(tokenBalanceInfo.get('balance')) < parseFloat(postingFee)) {
+                disabled = true;
+            }
+        }
 
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
         };
+
+        this.setState({
+            postingDisabled:false
+        });
 
         const isEdit = type === 'edit';
         const successCallbackWrapper = (...args) => {
@@ -645,17 +660,6 @@ class ReplyEditor extends React.Component {
                                                 )}
                                             </a>{' '}
                                             <br />
-                                            <a
-                                                href="#"
-                                                onClick={
-                                                    this.setKrwpBeneficiary
-                                                }
-                                            >
-                                                {tt(
-                                                    'reply_editor.set_krwp_beneficiary'
-                                                )}
-                                            </a>{' '}
-                                            <br />
                                             &nbsp;
                                         </div>
                                     </div>
@@ -723,8 +727,20 @@ class ReplyEditor extends React.Component {
                             {!loading &&
                                 !this.props.onCancel && (
                                     <button
-                                        className="button hollow no-border"
+                                        // className="button hollow no-border"
+                                        className="button"
                                         tabIndex={5}
+                                        onClick={this.setKrwpBeneficiary}
+                                    >
+                                        {tt('reply_editor.set_krwp_beneficiary')}
+                                    </button>
+                                )}
+                            {!loading &&
+                                !this.props.onCancel && (
+                                    <button
+                                        // className="button hollow no-border"
+                                        className="button"
+                                        tabIndex={6}
                                         disabled={submitting}
                                         onClick={onCancel}
                                     >
@@ -1146,7 +1162,7 @@ export default formId =>
                     __config,
                 };
 
-                if (!isEdit && payFee) {
+                if (!isEdit && isNew && payFee) {
                     const balance = tokenBalances.get('balance');
 
                     if (!balance) {

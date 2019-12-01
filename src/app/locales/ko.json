@@ -334,7 +334,7 @@
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
         "advanced_settings": "고급 설정(베니피셔리)",
         "beneficiaries_set": "%(count)s set",
-        "set_krwp_beneficiary": "@sct.krwp 베네피셔리 설정(100)",
+        "set_krwp_beneficiary": "@sct.krwp 베네피셔리 설정",
         "lack_balance":
             "포스팅 피(%(fee)s SCT)가 부족합니다. @sct.krwp로 100퍼센트 베네피셔리를 설정하시면 포스팅 피 없이 포스팅이 가능합니다. 잔고는 %(balance)s SCT 입니다."
     },
