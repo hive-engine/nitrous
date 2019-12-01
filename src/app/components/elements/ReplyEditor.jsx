@@ -119,6 +119,8 @@ class ReplyEditor extends React.Component {
                     ? stateFromHtml(this.props.richTextEditor, raw)
                     : null,
             });
+
+            this.setState({ postingDisabled: false });
         }
     }
 
@@ -169,31 +171,36 @@ class ReplyEditor extends React.Component {
                     this.showDraftSaved();
                 }, 500);
 
-                const krwpBene = beneficiaries.filter(
-                    e => e.username === 'sct.krwp'
-                );
-
-                if (
-                    krwpBene &&
-                    krwpBene.length > 0 &&
-                    krwpBene[0].percent === '100'
-                ) {
-                    this.setState({ postingDisabled: false });
-                } else {
-                    const current_account = this.props.state.user.get(
-                        'current'
+                if (tp.type === 'submit_story') {
+                    const krwpBene = beneficiaries.filter(
+                        e => e.username === 'sct.krwp'
                     );
-                    const tokenBalanceInfo = current_account
-                        ? current_account.get('token_balances')
-                        : null;
 
-                    const postingFee = '1.000';
-                    if (tokenBalanceInfo && tokenBalanceInfo.get('balance')) {
+                    if (
+                        krwpBene &&
+                        krwpBene.length > 0 &&
+                        krwpBene[0].percent === '100'
+                    ) {
+                        this.setState({ postingDisabled: false });
+                    } else {
+                        const current_account = this.props.state.user.get(
+                            'current'
+                        );
+                        const tokenBalanceInfo = current_account
+                            ? current_account.get('token_balances')
+                            : null;
+
+                        const postingFee = '1.000';
                         if (
-                            parseFloat(tokenBalanceInfo.get('balance')) <
-                            parseFloat(postingFee)
+                            tokenBalanceInfo &&
+                            tokenBalanceInfo.get('balance')
                         ) {
-                            this.setState({ postingDisabled: true });
+                            if (
+                                parseFloat(tokenBalanceInfo.get('balance')) <
+                                parseFloat(postingFee)
+                            ) {
+                                this.setState({ postingDisabled: true });
+                            }
                         }
                     }
                 }
@@ -363,7 +370,9 @@ class ReplyEditor extends React.Component {
         });
     };
 
-    setKrwpBeneficiary = () => {
+    setKrwpBeneficiary = e => {
+        e.preventDefault();
+
         const { formId } = this.props;
 
         this.props.setBeneficiaries(formId, [
@@ -1136,7 +1145,7 @@ export default formId =>
                         if (
                             krwpBene &&
                             krwpBene.length > 0 &&
-                            krwpBene[0].percent === 100
+                            krwpBene[0].percent === '100'
                         ) {
                             payFee = false;
                         }
@@ -1184,7 +1193,7 @@ export default formId =>
                     __config,
                 };
 
-                if (!isEdit && isNew && payFee) {
+                if (!isEdit && isNew && payFee && type === 'submit_story') {
                     const balance = tokenBalances.get('balance');
 
                     if (!balance) {
