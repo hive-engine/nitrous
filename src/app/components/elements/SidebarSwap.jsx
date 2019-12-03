@@ -153,7 +153,7 @@ class SidebarSwap extends Component {
             this.selected_token[1] = 0;
         } else if (this.input_token_type[this.selected_token[0]] == 'DEC') {
             this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
-            this.selected_token[1] = 0;
+            // this.selected_token[1] = 0;
         } else {
             // input선택한것은 제거하기
             this.output_token_type = [
@@ -183,7 +183,12 @@ class SidebarSwap extends Component {
             this.selected_token[0] = 0;
         } else if (this.output_token_type[this.selected_token[1]] == 'DEC') {
             this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
-            this.selected_token[0] = 0;
+            var matched_token = this.input_token_type.find(
+                a => a == this.input_token_type[this.selected_token[0]]
+            );
+            if (matched_token == undefined) {
+                this.selected_token[0] = 0;
+            }
         } else if (this.output_token_type[this.selected_token[1]] == 'SBD') {
             this.input_token_type = ['KRWP'];
             this.selected_token[0] = 0;
