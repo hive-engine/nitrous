@@ -27,7 +27,7 @@ export const CONFIG_MAP = {
             keto: [],
             organic: [],
             snacks: [],
-            sweets: ['vitamins', 'minerals'],
+            sweets: [],
             vegetarian: [],
             vegan: [],
             recipies: [],
