@@ -91,6 +91,7 @@ const map = {
     'topadultcurator': 'Verified Creator',
     'saintchristopher': 'Verified Creator',
     'moonshines': 'Verified Creator',
+    'xchameleonx': 'Verified Creator',
 };
 
 export default map;
