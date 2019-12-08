@@ -1121,7 +1121,10 @@ export default formId =>
 
                 const operation = {
                     ...linkProps,
-                    category: rootCategory,
+                    category: state.app.getIn(
+                        ['hostConfig', 'COMMUNITY_CATEGORY'],
+                        rootCategory
+                    ),
                     title,
                     body,
                     json_metadata: meta,

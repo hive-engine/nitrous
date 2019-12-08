@@ -9,7 +9,7 @@ import { authorNameAndRep } from 'app/utils/ComponentFormatters';
 import AuthorDropdown from '../AuthorDropdown';
 import Reputation from 'app/components/elements/Reputation';
 import normalizeProfile from 'app/utils/NormalizeProfile';
-import AffiliationMap from 'app/utils/AffiliationMap';
+import { getAffiliation } from 'app/utils/AffiliationMap';
 import tt from 'counterpart';
 import Overlay from 'react-overlays/lib/Overlay';
 import { findDOMNode } from 'react-dom';
@@ -97,11 +97,14 @@ class Author extends React.Component {
             mute,
             authorRepLog10,
             showAffiliation,
+            scotTokenSymbol,
         } = this.props; // html
         const { username } = this.props; // redux
         const { name, about } = this.props.account
             ? normalizeProfile(this.props.account.toJS())
             : {};
+
+        const authorAffiliation = getAffiliation(scotTokenSymbol, author);
 
         if (!(follow || mute) || username === author) {
             return (
@@ -115,10 +118,8 @@ class Author extends React.Component {
                         <Link to={'/@' + author}>{author}</Link>
                     </strong>{' '}
                     <Reputation value={authorRepLog10} />
-                    {showAffiliation && AffiliationMap[author] ? (
-                        <span className="affiliation">
-                            {AffiliationMap[author]}
-                        </span>
+                    {showAffiliation && authorAffiliation ? (
+                        <span className="affiliation">{authorAffiliation}</span>
                     ) : null}
                 </span>
             );
@@ -140,9 +141,9 @@ class Author extends React.Component {
                             to={'/@' + author}
                         >
                             {author} <Reputation value={authorRepLog10} />
-                            {showAffiliation && AffiliationMap[author] ? (
+                            {showAffiliation && authorAffiliation ? (
                                 <span className="affiliation">
-                                    {AffiliationMap[author]}
+                                    {authorAffiliation}
                                 </span>
                             ) : null}
                             <Icon name="dropdown-arrow" />
@@ -178,6 +179,11 @@ export default connect((state, ownProps) => {
     const { author, follow, mute, authorRepLog10 } = ownProps;
     const username = state.user.getIn(['current', 'username']);
     const account = state.global.getIn(['accounts', author]);
+    const scotTokenSymbol = state.app.getIn([
+        'hostConfig',
+        'LIQUID_TOKEN_UPPERCASE',
+    ]);
+
     return {
         author,
         follow,
@@ -185,5 +191,6 @@ export default connect((state, ownProps) => {
         authorRepLog10,
         username,
         account,
+        scotTokenSymbol,
     };
 })(Author);

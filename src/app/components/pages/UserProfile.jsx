@@ -25,7 +25,7 @@ import Userpic from 'app/components/elements/Userpic';
 import Callout from 'app/components/elements/Callout';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import userIllegalContent from 'app/utils/userIllegalContent';
-import AffiliationMap from 'app/utils/AffiliationMap';
+import { getAffiliation } from 'app/utils/AffiliationMap';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import SanitizedLink from 'app/components/elements/SanitizedLink';
@@ -146,6 +146,7 @@ export default class UserProfile extends React.Component {
                 follow,
                 accountname,
                 walletUrl,
+                scotTokenSymbol,
             },
             onPrint,
         } = this;
@@ -518,6 +519,7 @@ export default class UserProfile extends React.Component {
                     'url(' + proxifyImageUrl(cover_image, '2048x512') + ')',
             };
         }
+        const accountAffiliation = getAffiliation(scotTokenSymbol, accountname);
 
         return (
             <div className="UserProfile">
@@ -544,9 +546,9 @@ export default class UserProfile extends React.Component {
                                     ({rep})
                                 </span>
                             </Tooltip>
-                            {AffiliationMap[accountname] ? (
+                            {accountAffiliation ? (
                                 <span className="affiliation">
-                                    {AffiliationMap[accountname]}
+                                    {accountAffiliation}
                                 </span>
                             ) : null}
                         </h1>
@@ -621,6 +623,10 @@ module.exports = {
             const current_user = state.user.get('current');
             const accountname = ownProps.routeParams.accountname.toLowerCase();
             const walletUrl = state.app.get('walletUrl');
+            const scotTokenSymbol = state.app.getIn([
+                'hostConfig',
+                'LIQUID_TOKEN_UPPERCASE',
+            ]);
 
             return {
                 discussions: state.global.get('discussion_idx'),
@@ -633,6 +639,7 @@ module.exports = {
                 follow_count: state.global.get('follow_count'),
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 walletUrl,
+                scotTokenSymbol,
             };
         },
         dispatch => ({

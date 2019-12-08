@@ -127,7 +127,8 @@ export const CONFIG_MAP = {
         LIQUID_TOKEN: 'Weed',
         LIQUID_TOKEN_UPPERCASE: 'WEED',
         APP_MAX_TAG: 10,
-        SCOT_TAG: 'hive-195708',
+        SCOT_TAG: 'weedcash',
+        COMMUNITY_CATEGORY: 'hive-195708',
         TAG_LIST: fromJSOrdered([
             'weedcash',
             'weed',
