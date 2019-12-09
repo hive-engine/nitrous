@@ -15,7 +15,6 @@ export const APP_DOMAIN = 'www.battlegames.io';
 export const APP_MAX_TAG = 13;
 export const SCOT_TAG = 'battle';
 export const TAG_LIST = fromJSOrdered([
-    'spsanta',
     'radaquest',
     'splinterlands',
     'nextcolony',
