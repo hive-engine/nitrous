@@ -35,7 +35,12 @@ const map = {
     dirapa: 'Verified Creator',
     julisavio: 'Verified Creator',
     voxmortis: 'Verified Creator',
-    rehan12: 'Verified Creator'
+    ahmadmanga: 'Verified Creator',
+    marianaemilia: 'Verified Creator',
+    simplegame: 'Verified Creator',
+    'splinterlands-ru': 'Verified Creator',
+    flauwy: 'Verified Creator',
+    rehan12: 'Verified Creator' 
 };
 
 export default map;
