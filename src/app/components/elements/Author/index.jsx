@@ -105,11 +105,18 @@ class Author extends React.Component {
             : {};
 
         const AffiliationMap = {};
+        const AffiliationAuthorMap = {};
         if (affiliationDb) {
             for (let i = 0; i < affiliationDb.size; i++) {
-                AffiliationMap[
-                    affiliationDb.get(i).get('account')
-                ] = affiliationDb.get(i).get('title');
+                if (affiliationDb.get(i).get('type') === 'NORMAL') {
+                    AffiliationMap[
+                        affiliationDb.get(i).get('account')
+                    ] = affiliationDb.get(i).get('title');
+                } else {
+                    AffiliationAuthorMap[
+                        affiliationDb.get(i).get('account')
+                    ] = affiliationDb.get(i).get('title');
+                }
             }
         }
 
@@ -128,6 +135,11 @@ class Author extends React.Component {
                     {showAffiliation && AffiliationMap[author] ? (
                         <span className="affiliation">
                             {AffiliationMap[author]}
+                        </span>
+                    ) : null}
+                    {showAffiliation && AffiliationAuthorMap[author] ? (
+                        <span className="affiliation recommendauthor">
+                            {AffiliationAuthorMap[author]}
                         </span>
                     ) : null}
                 </span>
@@ -153,6 +165,11 @@ class Author extends React.Component {
                             {showAffiliation && AffiliationMap[author] ? (
                                 <span className="affiliation">
                                     {AffiliationMap[author]}
+                                </span>
+                            ) : null}
+                            {showAffiliation && AffiliationAuthorMap[author] ? (
+                                <span className="affiliation recommendauthor">
+                                    {AffiliationAuthorMap[author]}
                                 </span>
                             ) : null}
                             <Icon name="dropdown-arrow" />
