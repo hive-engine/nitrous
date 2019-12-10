@@ -279,6 +279,8 @@ class PostsIndex extends React.Component {
         if (category === 'feed') {
             if (account_name === this.props.username)
                 page_title = tt('posts_index.my_feed');
+            else if (this.props.location.pathname === '/@mamacoco/feed')
+                page_title = tt('g.recommend');
             else
                 page_title = tt('posts_index.accountnames_feed', {
                     account_name,

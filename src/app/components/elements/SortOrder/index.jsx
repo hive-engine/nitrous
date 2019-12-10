@@ -31,6 +31,8 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'review';
     } else if (pathname === '/created/sct-producer') {
         sort = 'market';
+    } else if (pathname === '/@mamacoco/feed') {
+        sort = 'recommend';
     }
 
     const makeRoute = (tag, sort) => {
@@ -39,6 +41,8 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
             return '/created/sct-producer';
         } else if (sort.value === 'review') {
             return '/created/sct-consumer';
+        } else if (sort.value === 'recommend') {
+            return '/@mamacoco/feed';
         } else {
             return `/${sort.value}`;
         }
@@ -50,6 +54,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
 
     const sorts = tag => {
         return [
+            {
+                value: 'recommend',
+                label: tt('g.recommend'),
+                link: `/@mamacoco/feed`,
+            },
             {
                 value: 'hot',
                 label: tt('main_menu.hot'),

@@ -164,6 +164,8 @@ class PostsList extends React.Component {
             username,
             nsfwPref,
         } = this.props;
+        const recommendedTags = 'union';
+
         const { thumbSize } = this.state;
         const postsInfo = [];
         posts.forEach(item => {
@@ -172,14 +174,18 @@ class PostsList extends React.Component {
                 //console.error('PostsList --> Missing cont key', item);
                 return;
             }
+
             const ignore =
                 ignore_result && ignore_result.has(cont.get('author'));
             const hideResteem =
                 !showResteem && account && cont.get('author') != account;
             const hide = cont.getIn(['stats', 'hide']);
-            if (!hideResteem && (!(ignore || hide) || showSpam))
-                // rephide
-                postsInfo.push({ item, ignore });
+            if (!hideResteem && (!(ignore || hide) || showSpam)) {
+                if (cont.get('tags').includes(recommendedTags)) {
+                    // rephide
+                    postsInfo.push({ item, ignore });
+                }
+            }
         });
 
         // Helper functions for determining whether to show pinned posts.
@@ -224,6 +230,7 @@ class PostsList extends React.Component {
                 );
             });
         };
+
         const renderSummary = items =>
             items.map((item, i) => {
                 const every = this.props.adSlots.in_feed_1.every;
