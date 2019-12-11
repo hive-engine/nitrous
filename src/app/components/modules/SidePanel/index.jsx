@@ -6,6 +6,7 @@ import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
+import { SIGNUP_URL } from 'shared/constants';
 
 const SidePanel = ({
     alignment,
@@ -65,23 +66,21 @@ const SidePanel = ({
                 link: `https://freedomex.io/trading/${
                     LIQUID_TOKEN_UPPERCASE
                 }freex`,
-            },  
+            },
         ],
         internal_support: [
             {
                 value: 'steemengineblockexplorer',
                 label: 'Steem Engine Block Explorer',
-                link: `https://steem-engine.rocks/@${
-                     username
-                }`,
+                link: `https://steem-engine.rocks/@${username}`,
             },
             {
                 value: 'richlist',
                 label: 'Rich list',
                 link: `https://steem-engine.rocks/tokens/${
-                     LIQUID_TOKEN_UPPERCASE
+                    LIQUID_TOKEN_UPPERCASE
                 }/richlist`,
-            },    
+            },
         ],
 
         exchanges: [
@@ -172,7 +171,7 @@ const SidePanel = ({
             {
                 value: 'signup',
                 label: tt('g.sign_up'),
-                link: 'https://signup.steemit.com',
+                link: SIGNUP_URL,
             },
             {
                 value: 'post',
@@ -202,7 +201,6 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['internal_support'].map(makeLink)}
-
                 </ul>
             </div>
         </div>
