@@ -4,6 +4,7 @@ import tt from 'counterpart';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import NativeSelect from 'app/components/elements/NativeSelect';
+import { RECOMMENDED_FOLLOW_ACCOUNT } from 'app/client_config';
 
 const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
     /*
@@ -31,7 +32,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'review';
     } else if (pathname === '/created/sct-producer') {
         sort = 'market';
-    } else if (pathname === '/@mamacoco/feed') {
+    } else if (pathname === `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`) {
         sort = 'recommend';
     }
 
@@ -42,7 +43,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         } else if (sort.value === 'review') {
             return '/created/sct-consumer';
         } else if (sort.value === 'recommend') {
-            return '/@mamacoco/feed';
+            return `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`;
         } else {
             return `/${sort.value}`;
         }
@@ -57,7 +58,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
             {
                 value: 'recommend',
                 label: tt('g.recommend'),
-                link: `/@mamacoco/feed`,
+                link: `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`,
             },
             {
                 value: 'hot',

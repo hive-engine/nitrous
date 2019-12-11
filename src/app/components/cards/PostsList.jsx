@@ -12,6 +12,10 @@ import { findParent } from 'app/utils/DomUtils';
 import Icon from 'app/components/elements/Icon';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
+import {
+    RECOMMENDED_FOLLOW_ACCOUNT,
+    RECOMMENDED_POSTING_TAG,
+} from 'app/client_config';
 
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
@@ -164,7 +168,6 @@ class PostsList extends React.Component {
             username,
             nsfwPref,
         } = this.props;
-        const recommendedTags = 'union';
 
         const { thumbSize } = this.state;
         const postsInfo = [];
@@ -181,8 +184,11 @@ class PostsList extends React.Component {
                 !showResteem && account && cont.get('author') != account;
             const hide = cont.getIn(['stats', 'hide']);
             if (!hideResteem && (!(ignore || hide) || showSpam)) {
-                if (cont.get('tags').includes(recommendedTags)) {
-                    // rephide
+                if (pathname === `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`) {
+                    if (cont.get('tags').includes(RECOMMENDED_POSTING_TAG)) {
+                        postsInfo.push({ item, ignore });
+                    }
+                } else {
                     postsInfo.push({ item, ignore });
                 }
             }
