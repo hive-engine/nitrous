@@ -96,8 +96,13 @@ class ReplyEditor extends React.Component {
                 if (title) title.props.onChange(draft.title);
                 if (draft.payoutType)
                     this.props.setPayoutType(formId, draft.payoutType);
-                if (draft.beneficiaries)
-                    this.props.setBeneficiaries(formId, draft.beneficiaries);
+                if (draft.beneficiaries) {
+                    this.props.setBeneficiaries(
+                        formId,
+                        draft.beneficiaries,
+                        this.props.state
+                    );
+                }
                 raw = draft.body;
             }
 
@@ -114,6 +119,8 @@ class ReplyEditor extends React.Component {
                     ? stateFromHtml(this.props.richTextEditor, raw)
                     : null,
             });
+
+            this.setState({ postingDisabled: false });
         }
     }
 
@@ -163,6 +170,40 @@ class ReplyEditor extends React.Component {
                     );
                     this.showDraftSaved();
                 }, 500);
+
+                if (tp.type === 'submit_story') {
+                    const krwpBene = beneficiaries.filter(
+                        e => e.username === 'sct.krwp'
+                    );
+
+                    if (
+                        krwpBene &&
+                        krwpBene.length > 0 &&
+                        krwpBene[0].percent === '100'
+                    ) {
+                        this.setState({ postingDisabled: false });
+                    } else {
+                        const current_account = this.props.state.user.get(
+                            'current'
+                        );
+                        const tokenBalanceInfo = current_account
+                            ? current_account.get('token_balances')
+                            : null;
+
+                        const postingFee = '1.000';
+                        if (
+                            tokenBalanceInfo &&
+                            tokenBalanceInfo.get('balance')
+                        ) {
+                            if (
+                                parseFloat(tokenBalanceInfo.get('balance')) <
+                                parseFloat(postingFee)
+                            ) {
+                                this.setState({ postingDisabled: true });
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -329,11 +370,13 @@ class ReplyEditor extends React.Component {
         });
     };
 
-    setKrwpBeneficiary = () => {
+    setKrwpBeneficiary = e => {
+        e.preventDefault();
+
         const { formId } = this.props;
-        // console.log('formid', formId);
+
         this.props.setBeneficiaries(formId, [
-            { username: 'sct.krwp', percent: 100 },
+            { username: 'sct.krwp', percent: '100' },
         ]);
     };
 
@@ -365,8 +408,8 @@ class ReplyEditor extends React.Component {
         const { submitting, valid, handleSubmit } = this.state.replyForm;
         const { replyForm, postError, titleWarn, rte } = this.state;
         const { progress, noClipboardData } = this.state;
-        const disabled = submitting || !valid;
         const loading = submitting || this.state.loading;
+        let disabled = submitting || !valid;
 
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
@@ -645,17 +688,6 @@ class ReplyEditor extends React.Component {
                                                 )}
                                             </a>{' '}
                                             <br />
-                                            <a
-                                                href="#"
-                                                onClick={
-                                                    this.setKrwpBeneficiary
-                                                }
-                                            >
-                                                {tt(
-                                                    'reply_editor.set_krwp_beneficiary'
-                                                )}
-                                            </a>{' '}
-                                            <br />
                                             &nbsp;
                                         </div>
                                     </div>
@@ -694,7 +726,7 @@ class ReplyEditor extends React.Component {
                                 <button
                                     type="submit"
                                     className="button"
-                                    disabled={disabled}
+                                    disabled={this.state.postingDisabled}
                                     tabIndex={4}
                                 >
                                     {isEdit
@@ -723,8 +755,22 @@ class ReplyEditor extends React.Component {
                             {!loading &&
                                 !this.props.onCancel && (
                                     <button
-                                        className="button hollow no-border"
+                                        // className="button hollow no-border"
+                                        className="button"
                                         tabIndex={5}
+                                        onClick={this.setKrwpBeneficiary}
+                                    >
+                                        {tt(
+                                            'reply_editor.set_krwp_beneficiary'
+                                        )}
+                                    </button>
+                                )}
+                            {!loading &&
+                                !this.props.onCancel && (
+                                    <button
+                                        // className="button hollow no-border"
+                                        className="button"
+                                        tabIndex={6}
                                         disabled={submitting}
                                         onClick={onCancel}
                                     >
@@ -917,13 +963,14 @@ export default formId =>
                         value: payoutType,
                     })
                 ),
-            setBeneficiaries: (formId, beneficiaries) =>
+            setBeneficiaries: (formId, beneficiaries, state) => {
                 dispatch(
                     userActions.set({
                         key: ['current', 'post', formId, 'beneficiaries'],
                         value: fromJS(beneficiaries),
                     })
-                ),
+                );
+            },
             reply: ({
                 category,
                 title,
@@ -1098,7 +1145,7 @@ export default formId =>
                         if (
                             krwpBene &&
                             krwpBene.length > 0 &&
-                            krwpBene[0].percent === 100
+                            krwpBene[0].percent === '100'
                         ) {
                             payFee = false;
                         }
@@ -1130,7 +1177,7 @@ export default formId =>
                 }
 
                 const feeAccount = 'sct.postingfee';
-                const postingFee = '0.001'; // posting fee set 1 SCT
+                const postingFee = '1'; // posting fee set 1 SCT
                 const tmpSuccessCallback = successCallback;
                 const current_account = state.user.get('current');
                 const tokenBalances = current_account
@@ -1146,7 +1193,7 @@ export default formId =>
                     __config,
                 };
 
-                if (!isEdit && payFee) {
+                if (!isEdit && isNew && payFee && type === 'submit_story') {
                     const balance = tokenBalances.get('balance');
 
                     if (!balance) {
