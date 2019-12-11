@@ -79,6 +79,7 @@
         "promoted": "홍보글",
         "market": "마켓(판매)",
         "review": "마켓(구매)",
+        "recommend": "추천글",
         "re": "RE",
         "re_to": "RE: %(topic)s",
         "read_offical_blog": "Steemit Blog",
@@ -333,7 +334,10 @@
         "update_post": "저장",
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
         "advanced_settings": "고급 설정(베니피셔리)",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "set_krwp_beneficiary": "@sct.krwp 베네피셔리 설정",
+        "lack_balance":
+            "포스팅 피(%(fee)s SCT)가 부족합니다. @sct.krwp로 100퍼센트 베네피셔리를 설정하시면 포스팅 피 없이 포스팅이 가능합니다. 잔고는 %(balance)s SCT 입니다."
     },
     "beneficiary_selector_jsx": {
         "header": "베니피셔리 설정",

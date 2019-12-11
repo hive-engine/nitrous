@@ -79,6 +79,7 @@
         "promoted": "Promoted",
         "market": "Market(Producer)",
         "review": "Market(Consumer)",
+        "recommend": "Recommend",
         "re": "RE",
         "re_to": "RE: %(topic)s",
         "read_offical_blog": "Steemit Blog",
@@ -331,7 +332,10 @@
         "update_post": "Update Post",
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "set_krwp_beneficiary": "Set beneficiary(@sct.krwp 100)",
+        "lack_balance":
+            "Not enough posting fee %(fee)s SCT.(You need to set beneficiary(@sct.krwp 100). Your balance is %(balance)s SCT."
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",

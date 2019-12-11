@@ -8,7 +8,11 @@ import { List, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
+import {
+    INTERLEAVE_PROMOTED,
+    TAG_LIST,
+    RECOMMENDED_FOLLOW_ACCOUNT,
+} from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -279,6 +283,11 @@ class PostsIndex extends React.Component {
         if (category === 'feed') {
             if (account_name === this.props.username)
                 page_title = tt('posts_index.my_feed');
+            else if (
+                this.props.location.pathname ===
+                `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`
+            )
+                page_title = tt('g.recommend');
             else
                 page_title = tt('posts_index.accountnames_feed', {
                     account_name,

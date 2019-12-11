@@ -22,6 +22,7 @@ class PostAdvancedSettings extends Component {
 
     initForm(props) {
         const { fields } = props;
+
         reactForm({
             fields,
             instance: this,
@@ -133,7 +134,8 @@ class PostAdvancedSettings extends Component {
                 <BeneficiarySelector {...beneficiaries.props} tabIndex={1} />
                 <div className="error">
                     {(beneficiaries.touched || beneficiaries.value) &&
-                        beneficiaries.error}&nbsp;
+                        beneficiaries.error}
+                    &nbsp;
                 </div>
                 <div className="row">
                     <div className="column">

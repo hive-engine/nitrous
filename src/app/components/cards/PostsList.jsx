@@ -12,6 +12,10 @@ import { findParent } from 'app/utils/DomUtils';
 import Icon from 'app/components/elements/Icon';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
+import {
+    RECOMMENDED_FOLLOW_ACCOUNT,
+    RECOMMENDED_POSTING_TAG,
+} from 'app/client_config';
 
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
@@ -164,6 +168,7 @@ class PostsList extends React.Component {
             username,
             nsfwPref,
         } = this.props;
+
         const { thumbSize } = this.state;
         const postsInfo = [];
         posts.forEach(item => {
@@ -172,14 +177,21 @@ class PostsList extends React.Component {
                 //console.error('PostsList --> Missing cont key', item);
                 return;
             }
+
             const ignore =
                 ignore_result && ignore_result.has(cont.get('author'));
             const hideResteem =
                 !showResteem && account && cont.get('author') != account;
             const hide = cont.getIn(['stats', 'hide']);
-            if (!hideResteem && (!(ignore || hide) || showSpam))
-                // rephide
-                postsInfo.push({ item, ignore });
+            if (!hideResteem && (!(ignore || hide) || showSpam)) {
+                if (pathname === `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`) {
+                    if (cont.get('tags').includes(RECOMMENDED_POSTING_TAG)) {
+                        postsInfo.push({ item, ignore });
+                    }
+                } else {
+                    postsInfo.push({ item, ignore });
+                }
+            }
         });
 
         // Helper functions for determining whether to show pinned posts.
@@ -224,6 +236,7 @@ class PostsList extends React.Component {
                 );
             });
         };
+
         const renderSummary = items =>
             items.map((item, i) => {
                 const every = this.props.adSlots.in_feed_1.every;

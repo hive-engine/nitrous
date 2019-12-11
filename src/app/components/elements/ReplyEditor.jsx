@@ -25,6 +25,7 @@ import {
     TAG_LIST,
     SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
     SCOT_DEFAULT_BENEFICIARY_PERCENT,
+    LIQUID_TOKEN_UPPERCASE,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -95,8 +96,13 @@ class ReplyEditor extends React.Component {
                 if (title) title.props.onChange(draft.title);
                 if (draft.payoutType)
                     this.props.setPayoutType(formId, draft.payoutType);
-                if (draft.beneficiaries)
-                    this.props.setBeneficiaries(formId, draft.beneficiaries);
+                if (draft.beneficiaries) {
+                    this.props.setBeneficiaries(
+                        formId,
+                        draft.beneficiaries,
+                        this.props.state
+                    );
+                }
                 raw = draft.body;
             }
 
@@ -113,6 +119,8 @@ class ReplyEditor extends React.Component {
                     ? stateFromHtml(this.props.richTextEditor, raw)
                     : null,
             });
+
+            this.setState({ postingDisabled: false });
         }
     }
 
@@ -162,6 +170,40 @@ class ReplyEditor extends React.Component {
                     );
                     this.showDraftSaved();
                 }, 500);
+
+                if (tp.type === 'submit_story') {
+                    const krwpBene = beneficiaries.filter(
+                        e => e.username === 'sct.krwp'
+                    );
+
+                    if (
+                        krwpBene &&
+                        krwpBene.length > 0 &&
+                        krwpBene[0].percent === '100'
+                    ) {
+                        this.setState({ postingDisabled: false });
+                    } else {
+                        const current_account = this.props.state.user.get(
+                            'current'
+                        );
+                        const tokenBalanceInfo = current_account
+                            ? current_account.get('token_balances')
+                            : null;
+
+                        const postingFee = '1.000';
+                        if (
+                            tokenBalanceInfo &&
+                            tokenBalanceInfo.get('balance')
+                        ) {
+                            if (
+                                parseFloat(tokenBalanceInfo.get('balance')) <
+                                parseFloat(postingFee)
+                            ) {
+                                // this.setState({ postingDisabled: true });
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -328,6 +370,16 @@ class ReplyEditor extends React.Component {
         });
     };
 
+    setKrwpBeneficiary = e => {
+        e.preventDefault();
+
+        const { formId } = this.props;
+
+        this.props.setBeneficiaries(formId, [
+            { username: 'sct.krwp', percent: '100' },
+        ]);
+    };
+
     render() {
         const originalPost = {
             category: this.props.category,
@@ -356,8 +408,8 @@ class ReplyEditor extends React.Component {
         const { submitting, valid, handleSubmit } = this.state.replyForm;
         const { replyForm, postError, titleWarn, rte } = this.state;
         const { progress, noClipboardData } = this.state;
-        const disabled = submitting || !valid;
         const loading = submitting || this.state.loading;
+        let disabled = submitting || !valid;
 
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
@@ -674,7 +726,7 @@ class ReplyEditor extends React.Component {
                                 <button
                                     type="submit"
                                     className="button"
-                                    disabled={disabled}
+                                    disabled={this.state.postingDisabled}
                                     tabIndex={4}
                                 >
                                     {isEdit
@@ -703,8 +755,22 @@ class ReplyEditor extends React.Component {
                             {!loading &&
                                 !this.props.onCancel && (
                                     <button
-                                        className="button hollow no-border"
+                                        // className="button hollow no-border"
+                                        className="button"
                                         tabIndex={5}
+                                        onClick={this.setKrwpBeneficiary}
+                                    >
+                                        {tt(
+                                            'reply_editor.set_krwp_beneficiary'
+                                        )}
+                                    </button>
+                                )}
+                            {!loading &&
+                                !this.props.onCancel && (
+                                    <button
+                                        // className="button hollow no-border"
+                                        className="button"
+                                        tabIndex={6}
                                         disabled={submitting}
                                         onClick={onCancel}
                                     >
@@ -854,6 +920,8 @@ export default formId =>
             ]);
             beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
 
+            let postingFee = '1';
+
             const ret = {
                 ...ownProps,
                 fields,
@@ -866,6 +934,7 @@ export default formId =>
                 state,
                 formId,
                 richTextEditor,
+                postingFee,
             };
             return ret;
         },
@@ -894,13 +963,14 @@ export default formId =>
                         value: payoutType,
                     })
                 ),
-            setBeneficiaries: (formId, beneficiaries) =>
+            setBeneficiaries: (formId, beneficiaries, state) => {
                 dispatch(
                     userActions.set({
                         key: ['current', 'post', formId, 'beneficiaries'],
                         value: fromJS(beneficiaries),
                     })
-                ),
+                );
+            },
             reply: ({
                 category,
                 title,
@@ -1044,6 +1114,8 @@ export default formId =>
 
                 const originalBody = isEdit ? originalPost.body : null;
                 const __config = { originalBody };
+                let payFee = true;
+
                 // Avoid changing payout option during edits #735
                 if (!isEdit) {
                     switch (payoutType) {
@@ -1066,6 +1138,18 @@ export default formId =>
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
+                        const krwpBene = beneficiaries.filter(
+                            e => e.username === 'sct.krwp'
+                        );
+
+                        if (
+                            krwpBene &&
+                            krwpBene.length > 0 &&
+                            krwpBene[0].percent === '100'
+                        ) {
+                            payFee = false;
+                        }
+
                         if (!__config.comment_options) {
                             __config.comment_options = {};
                         }
@@ -1092,7 +1176,15 @@ export default formId =>
                     }
                 }
 
-                const operation = {
+                const feeAccount = 'sct.postingfee';
+                const postingFee = '1'; // posting fee set 1 SCT
+                const tmpSuccessCallback = successCallback;
+                const current_account = state.user.get('current');
+                const tokenBalances = current_account
+                    ? current_account.get('token_balances')
+                    : null;
+
+                let operation = {
                     ...linkProps,
                     category: rootCategory,
                     title,
@@ -1100,6 +1192,77 @@ export default formId =>
                     json_metadata: meta,
                     __config,
                 };
+
+                // if (!isEdit && isNew && payFee && type === 'submit_story') {
+                //     const balance = tokenBalances.get('balance');
+
+                //     if (!balance) {
+                //         // fail to get token balance
+                //         errorCallback('fail to get token balance');
+                //         return;
+                //     }
+
+                //     console.log(`sct balance ${balance}`);
+
+                //     if (parseFloat(balance) < parseFloat(postingFee)) {
+                //         // not enough posting fee
+                //         errorCallback(
+                //             tt('reply_editor.lack_balance', {
+                //                 balance: balance,
+                //                 fee: postingFee,
+                //             })
+                //         );
+                //         return;
+                //     }
+
+                //     successCallback = s => {
+                //         operation = {
+                //             ...linkProps,
+                //             category: rootCategory,
+                //             title,
+                //             body,
+                //             json_metadata: meta,
+                //             __config,
+                //         };
+
+                //         const successCallback = tmpSuccessCallback;
+
+                //         dispatch(
+                //             transactionActions.broadcastOperation({
+                //                 type: 'comment',
+                //                 operation,
+                //                 errorCallback,
+                //                 successCallback,
+                //             })
+                //         );
+                //     };
+
+                //     const transferOperation = {
+                //         contractName: 'tokens',
+                //         contractAction: 'transfer', // for test, transfer 로 변경
+                //         contractPayload: {
+                //             symbol: LIQUID_TOKEN_UPPERCASE,
+                //             to: feeAccount,
+                //             quantity: postingFee,
+                //             memo: 'posting fee',
+                //         },
+                //     };
+
+                //     operation = {
+                //         id: 'ssc-mainnet1',
+                //         required_auths: [username],
+                //         json: JSON.stringify(transferOperation),
+                //     };
+
+                //     dispatch(
+                //         transactionActions.broadcastOperation({
+                //             type: 'custom_json',
+                //             operation,
+                //             errorCallback,
+                //             successCallback,
+                //         })
+                //     );
+                // } else {
                 dispatch(
                     transactionActions.broadcastOperation({
                         type: 'comment',
@@ -1108,6 +1271,7 @@ export default formId =>
                         successCallback,
                     })
                 );
+                // }
             },
         })
     )(ReplyEditor);
