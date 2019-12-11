@@ -199,7 +199,7 @@ class ReplyEditor extends React.Component {
                                 parseFloat(tokenBalanceInfo.get('balance')) <
                                 parseFloat(postingFee)
                             ) {
-                                this.setState({ postingDisabled: true });
+                                // this.setState({ postingDisabled: true });
                             }
                         }
                     }
@@ -1193,85 +1193,85 @@ export default formId =>
                     __config,
                 };
 
-                if (!isEdit && isNew && payFee && type === 'submit_story') {
-                    const balance = tokenBalances.get('balance');
+                // if (!isEdit && isNew && payFee && type === 'submit_story') {
+                //     const balance = tokenBalances.get('balance');
 
-                    if (!balance) {
-                        // fail to get token balance
-                        errorCallback('fail to get token balance');
-                        return;
-                    }
+                //     if (!balance) {
+                //         // fail to get token balance
+                //         errorCallback('fail to get token balance');
+                //         return;
+                //     }
 
-                    console.log(`sct balance ${balance}`);
+                //     console.log(`sct balance ${balance}`);
 
-                    if (parseFloat(balance) < parseFloat(postingFee)) {
-                        // not enough posting fee
-                        errorCallback(
-                            tt('reply_editor.lack_balance', {
-                                balance: balance,
-                                fee: postingFee,
-                            })
-                        );
-                        return;
-                    }
+                //     if (parseFloat(balance) < parseFloat(postingFee)) {
+                //         // not enough posting fee
+                //         errorCallback(
+                //             tt('reply_editor.lack_balance', {
+                //                 balance: balance,
+                //                 fee: postingFee,
+                //             })
+                //         );
+                //         return;
+                //     }
 
-                    successCallback = s => {
-                        operation = {
-                            ...linkProps,
-                            category: rootCategory,
-                            title,
-                            body,
-                            json_metadata: meta,
-                            __config,
-                        };
+                //     successCallback = s => {
+                //         operation = {
+                //             ...linkProps,
+                //             category: rootCategory,
+                //             title,
+                //             body,
+                //             json_metadata: meta,
+                //             __config,
+                //         };
 
-                        const successCallback = tmpSuccessCallback;
+                //         const successCallback = tmpSuccessCallback;
 
-                        dispatch(
-                            transactionActions.broadcastOperation({
-                                type: 'comment',
-                                operation,
-                                errorCallback,
-                                successCallback,
-                            })
-                        );
-                    };
+                //         dispatch(
+                //             transactionActions.broadcastOperation({
+                //                 type: 'comment',
+                //                 operation,
+                //                 errorCallback,
+                //                 successCallback,
+                //             })
+                //         );
+                //     };
 
-                    const transferOperation = {
-                        contractName: 'tokens',
-                        contractAction: 'transfer', // for test, transfer 로 변경
-                        contractPayload: {
-                            symbol: LIQUID_TOKEN_UPPERCASE,
-                            to: feeAccount,
-                            quantity: postingFee,
-                            memo: 'posting fee',
-                        },
-                    };
+                //     const transferOperation = {
+                //         contractName: 'tokens',
+                //         contractAction: 'transfer', // for test, transfer 로 변경
+                //         contractPayload: {
+                //             symbol: LIQUID_TOKEN_UPPERCASE,
+                //             to: feeAccount,
+                //             quantity: postingFee,
+                //             memo: 'posting fee',
+                //         },
+                //     };
 
-                    operation = {
-                        id: 'ssc-mainnet1',
-                        required_auths: [username],
-                        json: JSON.stringify(transferOperation),
-                    };
+                //     operation = {
+                //         id: 'ssc-mainnet1',
+                //         required_auths: [username],
+                //         json: JSON.stringify(transferOperation),
+                //     };
 
-                    dispatch(
-                        transactionActions.broadcastOperation({
-                            type: 'custom_json',
-                            operation,
-                            errorCallback,
-                            successCallback,
-                        })
-                    );
-                } else {
-                    dispatch(
-                        transactionActions.broadcastOperation({
-                            type: 'comment',
-                            operation,
-                            errorCallback,
-                            successCallback,
-                        })
-                    );
-                }
+                //     dispatch(
+                //         transactionActions.broadcastOperation({
+                //             type: 'custom_json',
+                //             operation,
+                //             errorCallback,
+                //             successCallback,
+                //         })
+                //     );
+                // } else {
+                dispatch(
+                    transactionActions.broadcastOperation({
+                        type: 'comment',
+                        operation,
+                        errorCallback,
+                        successCallback,
+                    })
+                );
+                // }
             },
         })
     )(ReplyEditor);

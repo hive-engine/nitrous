@@ -79,6 +79,7 @@ export const TOPIC_TAG_LIST = fromJSOrdered([
     'sct-otc',
     'sct-prediction',
     'sct-qna',
+    'sct-coin',
 ]);
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
