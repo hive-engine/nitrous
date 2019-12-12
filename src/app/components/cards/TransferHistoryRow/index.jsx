@@ -85,7 +85,7 @@ class TransferHistoryRow extends React.Component {
                         amount: `${formatScotAmount(
                             op.int_amount,
                             op.precision
-                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                        )} ${op.token}`,
                     })}
                     {postLink(APP_URL, op.author, op.permlink)}
                 </span>
