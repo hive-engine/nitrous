@@ -30,7 +30,7 @@ export const CONFIG_MAP = {
             sweets: [],
             vegetarian: [],
             vegan: [],
-            recipies: [],
+            recipes: [],
             community: [
                 'cleanplanet',
                 'innerblocks',
