@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 import { filterTags } from 'app/utils/StateFunctions';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import { COMMUNITY_CATEGORY, APP_NAME } from 'app/client_config';
+
+function getDisplayTag(tag) {
+    return tag === COMMUNITY_CATEGORY ? APP_NAME : tag;
+}
 
 export default ({ post, horizontal, single }) => {
     let sort_order = 'trending';
@@ -40,16 +45,20 @@ export default ({ post, horizontal, single }) => {
         const list = tags.map((tag, idx) => (
             <Link to={`/${sort_order}/${tag}`} key={idx}>
                 {' '}
-                {tag}{' '}
+                {getDisplayTag(tag)}{' '}
             </Link>
         ));
         return <div className="TagList__horizontal">{list}</div>;
     }
     if (tags.length == 1) {
-        return <Link to={`/${sort_order}/${tags[0]}`}>{tags[0]}</Link>;
+        return (
+            <Link to={`/${sort_order}/${tags[0]}`}>
+                {getDisplayTag(tags[0])}
+            </Link>
+        );
     }
     const list = tags.map(tag => {
-        return { value: tag, link: `/${sort_order}/${tag}` };
+        return { value: getDisplayTag(tag), link: `/${sort_order}/${tag}` };
     });
     return (
         <DropdownMenu
