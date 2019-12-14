@@ -216,7 +216,12 @@ class PostSummary extends React.Component {
                         </span>
 
                         <span className="articles__tag-link">
-                            {tt('g.in')}&nbsp;<TagList post={p} single />&nbsp;•&nbsp;
+                            {tt('g.in')}&nbsp;<TagList
+                                post={p}
+                                hiveTag={communityCategory}
+                                appName={appName}
+                                single
+                            />&nbsp;•&nbsp;
                         </span>
                         <Link className="timestamp__link" to={post_url}>
                             <span className="timestamp__time">

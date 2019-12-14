@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router';
 import { filterTags } from 'app/utils/StateFunctions';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { COMMUNITY_CATEGORY, APP_NAME } from 'app/client_config';
 
 function getDisplayTag(tag, hiveTag, appName) {
     return tag === hiveTag ? appName : tag;
+}
+
+function getUrl(sort_order, tag, hiveTag) {
+    return tag === hiveTag ? `/${sort_order}` : `/${sort_order}/${tag}`;
 }
 
 export default ({ post, hiveTag, appName, horizontal, single }) => {
@@ -43,7 +46,7 @@ export default ({ post, hiveTag, appName, horizontal, single }) => {
     if (horizontal) {
         // show it as a dropdown in Preview
         const list = tags.map((tag, idx) => (
-            <Link to={`/${sort_order}/${tag}`} key={idx}>
+            <Link to={getUrl(sort_order, tag, hiveTag)} key={idx}>
                 {' '}
                 {getDisplayTag(tag, hiveTag, appName)}{' '}
             </Link>
@@ -52,7 +55,7 @@ export default ({ post, hiveTag, appName, horizontal, single }) => {
     }
     if (tags.length == 1) {
         return (
-            <Link to={`/${sort_order}/${tags[0]}`}>
+            <Link to={getUrl(sort_order, tag)}>
                 {getDisplayTag(tags[0], hiveTag, appName)}
             </Link>
         );
@@ -60,7 +63,7 @@ export default ({ post, hiveTag, appName, horizontal, single }) => {
     const list = tags.map(tag => {
         return {
             value: getDisplayTag(tag, hiveTag, appName),
-            link: `/${sort_order}/${tag}`,
+            link: getUrl(sort_order, tag),
         };
     });
     return (

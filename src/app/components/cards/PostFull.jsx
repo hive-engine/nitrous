@@ -30,7 +30,13 @@ import { GoogleAd } from 'app/components/elements/GoogleAd';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import AuthorRecentPosts from '../elements/AuthorRecentPosts';
 
-function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
+function TimeAuthorCategory({
+    content,
+    hiveTag,
+    appName,
+    authorRepLog10,
+    showTags,
+}) {
     return (
         <span className="PostFull__time_author_category vcard">
             <Icon name="clock" className="space-right" />
@@ -44,14 +50,25 @@ function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
             {showTags && (
                 <span>
                     {' '}
-                    {tt('g.in')} <TagList post={content} single />
+                    {tt('g.in')}{' '}
+                    <TagList
+                        post={content}
+                        hiveTag={hiveTag}
+                        appName={appName}
+                        single
+                    />
                 </span>
             )}
         </span>
     );
 }
 
-function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
+function TimeAuthorCategoryLarge({
+    content,
+    hiveTag,
+    appName,
+    authorRepLog10,
+}) {
     return (
         <span className="PostFull__time_author_category_large vcard">
             <Userpic account={content.author} />
@@ -63,7 +80,13 @@ function TimeAuthorCategoryLarge({ content, authorRepLog10 }) {
                 />
                 <span>
                     {' '}
-                    {tt('g.in')} <TagList post={content} single />
+                    {tt('g.in')}{' '}
+                    <TagList
+                        post={content}
+                        hiveTag={hiveTag}
+                        appName={appName}
+                        single
+                    />
                 </span>{' '}
                 •&nbsp; <TimeAgoWrapper date={content.created} />
                 &nbsp;{' '}
@@ -488,6 +511,8 @@ class PostFull extends React.Component {
                             {post_header}
                             <TimeAuthorCategoryLarge
                                 content={content}
+                                hiveTag={hostConfig['COMMUNITY_CATEGORY']}
+                                appName={hostConfig['APP_NAME']}
                                 authorRepLog10={authorRepLog10}
                             />
                         </div>
@@ -515,11 +540,14 @@ class PostFull extends React.Component {
                     post={content}
                     hiveTag={hostConfig['COMMUNITY_CATEGORY']}
                     appName={hostConfig['APP_NAME']}
+                    horizontal
                 />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
                             content={content}
+                            hiveTag={hostConfig['COMMUNITY_CATEGORY']}
+                            appName={hostConfig['APP_NAME']}
                             authorRepLog10={authorRepLog10}
                         />
                     </div>
