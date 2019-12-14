@@ -18,7 +18,9 @@ export default ({ post, hiveTag, appName, horizontal, single }) => {
 
     if (single)
         return (
-            <Link to={`/${sort_order}/${post.category}`}>{post.category}</Link>
+            <Link to={getUrl(sort_order, post.category, hiveTag)}>
+                {getDisplayTag(post.category, hiveTag, appName)}
+            </Link>
         );
 
     const json = post.json_metadata;
