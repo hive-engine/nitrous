@@ -117,8 +117,7 @@ export const CONFIG_MAP = {
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
         GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
     },
-    'localhost:8080': {
-        //'weedcash.network': {
+    'weedcash.network': {
         APP_NAME: 'WeedCash',
         APP_ICON: 'weedcash',
         APP_ICON_WIDTH: '140px',
