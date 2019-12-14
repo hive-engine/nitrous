@@ -511,7 +511,11 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
-                <TagList post={content} horizontal />
+                <TagList
+                    post={content}
+                    hiveTag={hostConfig['COMMUNITY_CATEGORY']}
+                    appName={hostConfig['APP_NAME']}
+                />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory

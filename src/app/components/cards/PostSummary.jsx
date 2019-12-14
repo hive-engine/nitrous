@@ -72,6 +72,7 @@ class PostSummary extends React.Component {
             appName,
             nitrousPostedIcon,
             interleavePromoted,
+            communityCategory,
         } = this.props;
         const { account } = this.props;
         if (!content) return null;
@@ -176,7 +177,13 @@ class PostSummary extends React.Component {
                     mute={false}
                     showAffiliation
                 />
-                {} {tt('g.in')} <TagList post={p} single />&nbsp;•&nbsp;
+                {} {tt('g.in')}{' '}
+                <TagList
+                    post={p}
+                    hiveTag={communityCategory}
+                    appName={appName}
+                    single
+                />&nbsp;•&nbsp;
                 <Link to={post_url}>
                     <TimeAgoWrapper date={p.created} className="updated" />
                 </Link>
@@ -462,6 +469,10 @@ export default connect(
                 ['hostConfig', 'INTERLEAVE_PROMOTED'],
                 false
             ),
+            communityCategory: state.app.getIn([
+                'hostConfig',
+                'COMMUNITY_CATEGORY',
+            ]),
         };
     },
 
