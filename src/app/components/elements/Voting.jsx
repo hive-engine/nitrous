@@ -225,6 +225,7 @@ class Voting extends React.Component {
             voteRegenSec,
             rewardData,
             hostConfig,
+            tokenBeneficiary,
         } = this.props;
         const {
             votingUp,
@@ -249,6 +250,7 @@ class Voting extends React.Component {
         let scot_pending_token = 0;
         let scot_total_author_payout = 0;
         let scot_total_curator_payout = 0;
+        let scot_token_bene_payout = 0;
         let payout = 0;
         let promoted = 0;
         // Arbitrary invalid cash time (steem related behavior)
@@ -286,12 +288,12 @@ class Voting extends React.Component {
             scot_total_author_payout = parseInt(
                 scotData.get('total_payout_value')
             );
-            const scot_bene_payout = parseInt(
+            scot_token_bene_payout = parseInt(
                 scotData.get('beneficiaries_payout_value')
             );
             promoted = parseInt(scotData.get('promoted'));
             scot_total_author_payout -= scot_total_curator_payout;
-            scot_total_author_payout -= scot_bene_payout;
+            scot_total_author_payout -= scot_token_bene_payout;
             payout = cashout_active
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
@@ -300,6 +302,7 @@ class Voting extends React.Component {
             scot_pending_token /= scotDenom;
             scot_total_curator_payout /= scotDenom;
             scot_total_author_payout /= scotDenom;
+            scot_token_bene_payout /= scotDenom;
             payout /= scotDenom;
             promoted /= scotDenom;
         }
@@ -494,6 +497,14 @@ class Voting extends React.Component {
                     scotPrecision
                 )} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`,
             });
+            // Uncomment to enable
+            if (false && scot_token_bene_payout > 0 && tokenBeneficiary) {
+                payoutItems.push({
+                    value: `- Token Benefactor ${scot_token_bene_payout.toFixed(
+                        scotPrecision
+                    )} ${LIQUID_TOKEN_UPPERCASE}`,
+                });
+            }
         }
 
         // add beneficiary info. use toFixed due to a bug of formatDecimal (5.00 is shown as 5,.00)
@@ -786,6 +797,10 @@ export default connect(
             ),
             rewardData,
             hostConfig,
+            tokenBeneficiary: scotConfig.getIn(
+                ['config', 'beneficiaries_account'],
+                ''
+            ),
         };
     },
 
