@@ -23,6 +23,14 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Syndication')]);
             //});
+        } else if (route.page === 'Leopedia') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Leopedia')]);
+            //});
+        } else if (route.page === 'Leopediakeychain') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Leopediakeychain')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
