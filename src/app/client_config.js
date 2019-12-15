@@ -50,13 +50,31 @@ export const CONFIG_MAP = {
             'supports real value for digital rewards through market price discovery and liquidity',
         // Revive Ads
         NO_ADS_STAKE_THRESHOLD: 9999999999,
-        REVIVE_ADS: {},
+        REVIVE_ADS: {
+            header_banner: {
+                zoneId: '3113',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            sidebar_left: {
+                zoneId: '3111',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            sidebar_right: {
+                zoneId: '3112',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            feed_small: {
+                zoneId: '3114',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+        },
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-27',
+        GOOGLE_AD_CLIENT: 'ca-pub-1391439792985803',
     },
     'vit.global': {
         APP_NAME: 'VisionIndustry',
