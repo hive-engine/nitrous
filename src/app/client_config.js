@@ -103,3 +103,4 @@ export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0;
 export const SHOW_AUTHOR_RECENT_POSTS = false;
 export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
+export const COMMUNITY_CATEGORY = '';
