@@ -19,6 +19,7 @@ import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
 import {
     APP_NAME,
+    COMMUNITY_CATEGORY,
     SCOT_TAG,
     SCOT_TAG_FIRST,
     APP_MAX_TAG,
@@ -1106,7 +1107,9 @@ export default formId =>
 
                 const operation = {
                     ...linkProps,
-                    category: rootCategory,
+                    category: COMMUNITY_CATEGORY
+                        ? COMMUNITY_CATEGORY
+                        : rootCategory,
                     title,
                     body,
                     json_metadata: meta,
