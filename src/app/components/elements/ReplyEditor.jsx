@@ -726,6 +726,14 @@ class ReplyEditor extends React.Component {
                             )}
                         </div>
                         <div className={vframe_section_shrink_class}>
+                            {isStory &&
+                                !isEdit && (
+                                    <div className="">
+                                        {tt(
+                                            'reply_editor.set_free_posting_msg'
+                                        )}
+                                    </div>
+                                )}
                             {!loading && (
                                 <button
                                     type="submit"

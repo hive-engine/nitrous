@@ -335,9 +335,11 @@
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
         "advanced_settings": "고급 설정(베니피셔리)",
         "beneficiaries_set": "%(count)s set",
-        "set_krwp_beneficiary": "@sct.krwp 베네피셔리 설정",
+        "set_krwp_beneficiary": "무료포스팅 설정",
         "lack_balance":
-            "포스팅 피(%(fee)s SCT)가 부족합니다. @sct.krwp로 100퍼센트 베네피셔리를 설정하시면 포스팅 피 없이 포스팅이 가능합니다. 잔고는 %(balance)s SCT 입니다."
+            "포스팅 피(%(fee)s SCT)가 부족합니다. @sct.krwp로 100퍼센트 베네피셔리를 설정(무료포스팅 클릭)하시면 포스팅 피 없이 포스팅이 가능합니다. 잔고는 %(balance)s SCT 입니다.",
+        "set_free_posting_msg":
+            "무료포스팅 설정을 하면 @sct.krwp로 100퍼센트 베네피셔리 설정이 되고 포스팅료를 받지 않습니다.(보상 전액 KRWP로 수령)"
     },
     "beneficiary_selector_jsx": {
         "header": "베니피셔리 설정",
