@@ -3,6 +3,17 @@ import classNames from 'classnames';
 import { Link } from 'react-router';
 import { filterTags } from 'app/utils/StateFunctions';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import { COMMUNITY_CATEGORY, APP_NAME } from 'app/client_config';
+
+function getDisplayTag(tag) {
+    return tag === COMMUNITY_CATEGORY ? APP_NAME : tag;
+}
+
+function getUrl(sort_order, tag) {
+    return tag === COMMUNITY_CATEGORY
+        ? `/${sort_order}`
+        : `/${sort_order}/${tag}`;
+}
 
 export default ({ post, scotTokens = [], horizontal, single }) => {
     let sort_order = 'hot';
@@ -11,7 +22,9 @@ export default ({ post, scotTokens = [], horizontal, single }) => {
 
     if (single)
         return (
-            <Link to={`/${sort_order}/${post.category}`}>{post.category}</Link>
+            <Link to={getUrl(sort_order, post.category)}>
+                {getDisplayTag(post.category)}
+            </Link>
         );
 
     const json = post.json_metadata;
@@ -65,17 +78,22 @@ beneficiaries reward: ${beneficiaries_reward_percentage}%`;
                         TagItem__nitrous: scot_nitrous_info,
                     })}
                 >
-                    <Link to={`/${sort_order}/${tag}`}> {tag} </Link>
+                    <Link to={getUrl(sort_order, tag)}>
+                        {' '}
+                        {getDisplayTag(tag)}{' '}
+                    </Link>
                 </span>
             );
         });
         return <div className="TagList__horizontal">{list}</div>;
     }
     if (tags.length == 1) {
-        return <Link to={`/${sort_order}/${tags[0]}`}>{tags[0]}</Link>;
+        return (
+            <Link to={getUrl(sort_order, tag)}>{getDisplayTag(tags[0])}</Link>
+        );
     }
     const list = tags.map(tag => {
-        return { value: tag, link: `/${sort_order}/${tag}` };
+        return { value: getDisplayTag(tag), link: getUrl(sort_order, tag) };
     });
     return (
         <DropdownMenu
