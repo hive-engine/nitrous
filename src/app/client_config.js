@@ -177,3 +177,6 @@ export const POSTED_VIA_NITROUS_ICON = 'steemcoinpan'; // put corresponding svg 
 export const RECOMMENDED_POSTING_TAG = 'sct-coin';
 export const RECOMMENDED_FOLLOW_ACCOUNT = 'sct.com'; // recommended author follow account
 export const COMMUNITY_CATEGORY = '';
+export const POSTINGFEE_ACCOUNT = 'sct.postingfee';
+export const POSTINGFEE_AMOUNT = '1';
+export const POSTINGFEE_SYMBOL = 'SCT';
