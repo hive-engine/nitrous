@@ -1,6 +1,35 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
+    'localhost:8080': {
+        APP_NAME: 'Lago',
+        APP_ICON: 'lago',
+        APP_ICON_WIDTH: '40px',
+        APP_ICON_HEIGHT: '40px',
+        APP_URL: 'https://lago.com.gt',
+        APP_DOMAIN: 'lago.com.gt',
+        LIQUID_TOKEN: 'Lago',
+        LIQUID_TOKEN_UPPERCASE: 'LAGO',
+        APP_MAX_TAG: 10,
+        SCOT_TAG: 'lago',
+        TAG_LIST: fromJSOrdered(['lago']),
+        INTERLEAVE_PROMOTED: true,
+        PROMOTED_POST_ACCOUNT: 'null',
+        VESTING_TOKEN: 'LAGO POWER',
+        SITE_DESCRIPTION:
+            'Lago is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called LAGO, that ' +
+            'supports real value for digital rewards through market price discovery and liquidity',
+        // Revive Ads
+        NO_ADS_STAKE_THRESHOLD: 9999999999,
+        REVIVE_ADS: {},
+        ALLOW_MASTER_PW: false,
+        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+        POST_FOOTER: '',
+        SCOT_TAG_FIRST: false,
+        PINNED_POSTS_URL: null,
+        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-16',
+    },
     'foodiesunite.net': {
         APP_NAME: 'FoodiesUnite',
         APP_ICON: 'foodies',

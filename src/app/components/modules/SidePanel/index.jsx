@@ -119,6 +119,13 @@ const SidePanel = ({
                 link: 'https://video.weedcash.network',
             },
         ],
+        organizational_LAGO: [
+            {
+                value: 'lago_orgsite',
+                label: 'LagoTube',
+                link: 'https://tube.lago.com.gt/',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',
