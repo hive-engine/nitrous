@@ -194,7 +194,7 @@ class PostsIndex extends React.Component {
             order = constants.DEFAULT_SORT_ORDER,
         } = this.props.routeParams;
 
-        const { discussions, pinned } = this.props;
+        const { discussions, pinned, scotTokenSymbol } = this.props;
         const { par, cats, found } = this.searchCategories(
             category,
             null,
@@ -365,7 +365,10 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser && (
                         <div>
                             {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
-                            <SidebarLinks username={this.props.username} />
+                            <SidebarLinks
+                                username={this.props.username}
+                                scotTokenSymbol={scotTokenSymbol}
+                            />
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
@@ -461,6 +464,7 @@ module.exports = {
                     'INTERLEAVE_PROMOTED',
                     false
                 ),
+                scotTokenSymbol,
             };
         },
         dispatch => {
