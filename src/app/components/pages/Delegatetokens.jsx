@@ -1,12 +1,12 @@
 import React from 'react';
 import HelpContent from 'app/components/elements/HelpContent';
 
-class Leopediakeychain extends React.Component {
+class Delegatetokens extends React.Component {
     render() {
         return (
             <div className="row">
                 <div className="column large-8 medium-10 small-12">
-                    <HelpContent path="leopediakeychain" />
+                    <HelpContent path="delegatetokens" />
                 </div>
             </div>
         );
@@ -14,6 +14,6 @@ class Leopediakeychain extends React.Component {
 }
 
 module.exports = {
-    path: 'leopediakeychain',
-    component: Leopediakeychain,
+    path: 'delegatetokens',
+    component: Delegatetokens,
 };

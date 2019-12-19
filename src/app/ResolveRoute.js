@@ -33,6 +33,15 @@ export default function resolveRoute(path) {
     if (path === '/leopedia') {
         return { page: 'Leopedia' };
     }
+    if (path === '/keychain') {
+        return { page: 'Keychain' };
+    }
+    if (path === '/delegatetokens') {
+        return { page: 'Delegatetokens' };
+    }
+    if (path === '/glossary') {
+        return { page: 'Glossary' };
+    }
     if (path === '/faq.html') {
         return { page: 'Faq' };
     }

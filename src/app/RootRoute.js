@@ -27,9 +27,17 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Leopedia')]);
             //});
-        } else if (route.page === 'Leopediakeychain') {
+        } else if (route.page === 'Keychain') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Leopediakeychain')]);
+            cb(null, [require('app/components/pages/Keychain')]);
+            //});
+        } else if (route.page === 'Delegatetokens') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Delegatetokens')]);
+            //});
+        } else if (route.page === 'Glossary') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Glossary')]);
             //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
