@@ -93,6 +93,7 @@ const map = {
      moonshines: 'Verified Creator',
      xchameleonx: 'Verified Creator',
      puffbawl: 'Verified Creator',
+     'canadian-vixen': 'Verified Creator',
 };
 
 export default map;
