@@ -1,7 +1,7 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    'localhost:8080': {
+    'lago.com.gt': {
         APP_NAME: 'Lago',
         APP_ICON: 'lago',
         APP_ICON_WIDTH: '40px',
@@ -104,6 +104,7 @@ export const CONFIG_MAP = {
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-27',
         GOOGLE_AD_CLIENT: 'ca-pub-1391439792985803',
+        COMMUNITY_CATEGORY: 'hive-120586',
     },
     'vit.global': {
         APP_NAME: 'VisionIndustry',
