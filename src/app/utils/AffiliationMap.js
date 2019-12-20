@@ -95,6 +95,7 @@ const map = {
      puffbawl: 'Verified Creator',
      'canadian-vixen': 'Verified Creator',
      quoththeraven : 'Verified Creator',
+     dodocat : 'Verified Creator',
 };
 
 export default map;
