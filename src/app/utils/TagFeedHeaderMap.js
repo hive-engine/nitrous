@@ -1,7 +1,6 @@
 const map = {
     // default
-    'porn': 'test',
-    porn:test,
+    'erotica': 'test',
     //'tag': "Tag description. Can use *Markdown*.",
 };
 
