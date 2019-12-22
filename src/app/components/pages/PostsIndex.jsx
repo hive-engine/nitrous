@@ -22,6 +22,8 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
+import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -65,7 +67,10 @@ class PostsIndex extends React.Component {
               : []
             : [];
         const notices = this.props.notices || [];
-        const topic_discussions = this.props.discussions.get(category || '');
+        const topic_discussions =
+            this.props.discussions != null
+                ? this.props.discussions.get(category || '')
+                : null;
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
@@ -257,7 +262,8 @@ class PostsIndex extends React.Component {
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
 
-        const topicDiscussions = discussions.get(category || '');
+        const topicDiscussions =
+            discussions != null ? discussions.get(category || '') : null;
 
         // If we're at one of the four sort order routes without a tag filter,
         // use the translated string for that sort order, f.ex "trending"
@@ -340,6 +346,11 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
+                    {category !== 'feed' && (
+                        <MarkdownViewer
+                            text={tagHeaderMap[category] || tagHeaderMap['']}
+                        />
+                    )}
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
