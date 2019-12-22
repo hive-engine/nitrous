@@ -1,6 +1,6 @@
 const map = {
     // default
-    '': 'Test',
+    '': '',
     //'tag': "Tag description. Can use *Markdown*.",
 };
 
