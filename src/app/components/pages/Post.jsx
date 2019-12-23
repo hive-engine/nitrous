@@ -112,7 +112,6 @@ class Post extends React.Component {
             if (gray) {
                 return (
                     <div className="Post">
-                            <p>test</p>
                         <div className="row">
                             <div className="column">
                                 <div className="PostFull">
@@ -181,6 +180,7 @@ class Post extends React.Component {
                     ) : null}
                     {this.props.reviveEnabled && showAd ? (
                         <div className="Post_footer__ad">
+                                                        <p>test</p>
                             <ReviveAd adKey="feed_small" />
                         </div>
                     ) : null}
