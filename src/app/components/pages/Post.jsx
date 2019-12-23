@@ -112,6 +112,7 @@ class Post extends React.Component {
             if (gray) {
                 return (
                     <div className="Post">
+                            <p>test</p>
                         <div className="row">
                             <div className="column">
                                 <div className="PostFull">
