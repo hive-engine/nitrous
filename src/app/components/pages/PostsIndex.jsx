@@ -329,13 +329,6 @@ class PostsIndex extends React.Component {
             window.matchMedia('screen and (min-width: 75em)').matches;
         return (
             
-            /* trying ad between header bar and content
-            {this.props.isBrowser ? (
-                <div className="articles__content-block--ad">
-                    <iframe data-aa="1249388" src="//ad.a-ads.com/1249388?size=728x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_728x90} allowtransparency="true"></iframe>
-                </div>
-            ) : null} 
-            */
             
             <div
                 className={
@@ -372,7 +365,11 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
-                    <div>...</div>
+                    
+                    {!this.props.isBrowser ? (
+                    <div><strong>FEATURE VIDEO:</strong> <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a> by <a href="https://reggaesteemm.io/@takeova">@Takeova</a> & <a href="https://reggaesteemm.io/@stinezent">@StinezEnt</a></div>
+                     ) : null}
+                    
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
