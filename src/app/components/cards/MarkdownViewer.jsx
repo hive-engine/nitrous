@@ -253,10 +253,11 @@ class MarkdownViewer extends Component {
                             >
                                 {tt('g.show')}
                             </button>                                                 
-                        </div>
-                    <p>test</p>
+                        </div>   
                     )}
+                <p>test</p>
             </div>
+            
         );
     }
 }
