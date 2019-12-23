@@ -466,7 +466,6 @@ class PostFull extends React.Component {
                     highQualityPost={high_quality_post}
                     noImage={content.stats.gray}
                     hideImages={hideImages}
-                    <p>test</p>
                 />
             );
         }
