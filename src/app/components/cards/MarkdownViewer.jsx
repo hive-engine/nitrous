@@ -237,7 +237,6 @@ class MarkdownViewer extends Component {
             (large ? '' : ' MarkdownViewer--small');
         return (
             <div className={'MarkdownViewer ' + cn}>
-                                <p>test</p>
                 {sections}
                 {noImageActive &&
                     allowNoImage && (
@@ -254,6 +253,7 @@ class MarkdownViewer extends Component {
                             >
                                 {tt('g.show')}
                             </button>
+                                                        <p>test</p>
                         </div>
                     )}
             </div>
