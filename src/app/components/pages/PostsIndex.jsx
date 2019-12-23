@@ -366,9 +366,11 @@ class PostsIndex extends React.Component {
                         </div>
                     </div>
                     
-                    {this.props.isMobile ? (
-                    <div><strong>FEATURE VIDEO:</strong> <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a> by <a href="https://reggaesteemm.io/@takeova">@Takeova</a> & <a href="https://reggaesteemm.io/@stinezent">@StinezEnt</a></div>
-                     ) : null}
+                    
+                    <div style={{ textAlign: 'center' }}>
+                        <strong>FEATURE VIDEO: <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a></strong> by <a href="https://reggaesteemm.io/@takeova">@Takeova</a> & <a href="https://reggaesteemm.io/@stinezent">@StinezEnt</a>
+                    </div>
+                   
                     
                     <hr className="articles__hr" />
                     {!fetching &&
