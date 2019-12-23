@@ -257,7 +257,6 @@ class MarkdownViewer extends Component {
                     )}
             </div>
             <div>
-                 <hr>
                  <center>Posted via <a href="https://www.dporn.co/">DPorn.co</a> | Get Rewards For Sex Content</center>
             </div>
         );
