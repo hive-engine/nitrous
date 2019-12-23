@@ -489,6 +489,7 @@ class PostFull extends React.Component {
                             />
                         </div>
                         <div className="PostFull__body entry-content">
+                            <p>test</p>
                             {contentBody}
                         </div>
                         {SHOW_AUTHOR_RECENT_POSTS && (
