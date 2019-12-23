@@ -345,6 +345,7 @@ class PostsIndex extends React.Component {
                         <div className="medium-1 show-for-mq-medium column">
                             <ArticleLayoutSelector />
                         </div>
+                                                <p>test</p>
                     </div>
                     {category !== 'feed' && (
                         <MarkdownViewer
