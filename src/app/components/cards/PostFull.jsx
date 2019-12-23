@@ -488,8 +488,7 @@ class PostFull extends React.Component {
                                 authorRepLog10={authorRepLog10}
                             />
                         </div>
-                        <div className="PostFull__body entry-content">
-                            <p>test</p>
+                        <div className="PostFull__body entry-content">                           
                             {contentBody}
                         </div>
                         {SHOW_AUTHOR_RECENT_POSTS && (
