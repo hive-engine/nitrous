@@ -403,6 +403,7 @@ class PostsIndex extends React.Component {
                     <div className="sidebar-ad">
                             <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj"><img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" /></a>    
                     </div>
+                    <br />
                     <div className="sidebar-ad">
                         <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
                     </div>
