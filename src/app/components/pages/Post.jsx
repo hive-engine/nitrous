@@ -179,8 +179,7 @@ class Post extends React.Component {
                         </div>
                     ) : null}
                     {this.props.reviveEnabled && showAd ? (
-                        <div className="Post_footer__ad">
-                                                        <p>test</p>
+                        <div className="Post_footer__ad">                                              
                             <ReviveAd adKey="feed_small" />
                         </div>
                     ) : null}
@@ -230,6 +229,7 @@ class Post extends React.Component {
                 <div className="row">
                     <div className="column">
                         <PostFull post={post} cont={content} />
+                        <p>test</p>
                     </div>
                 </div>
                 {!isLoggedIn() && (
@@ -257,6 +257,7 @@ class Post extends React.Component {
                 )}
                 {this.props.gptEnabled ? (
                     <div className="Post_footer__ad">
+                        <p>test</p>
                         <GptAd
                             type="Freestar"
                             id="steemit_728x90_468x60_300x250_AboveComments"
