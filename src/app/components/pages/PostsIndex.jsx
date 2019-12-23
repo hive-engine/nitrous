@@ -437,10 +437,10 @@ class PostsIndex extends React.Component {
                     </small>
                     <div style={{ textAlign: 'center', marginTop: 20 }}>
                         <div class="sidebar-ad">
-                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
+                            <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj"><img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" /></a>    
                         </div>
                         <div class="sidebar-ad">
-                            <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj"><img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" /></a>    
+                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
                         </div>
                     </div>
                     {this.props.gptEnabled ? (
