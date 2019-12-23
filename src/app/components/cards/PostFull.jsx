@@ -457,6 +457,7 @@ class PostFull extends React.Component {
             contentBody = <LoadingIndicator type="circle-strong" />;
         } else {
             contentBody = (
+                
                 <MarkdownViewer
                     formId={formId + '-viewer'}
                     text={content_body}
@@ -465,6 +466,7 @@ class PostFull extends React.Component {
                     highQualityPost={high_quality_post}
                     noImage={content.stats.gray}
                     hideImages={hideImages}
+                    <p>test</p>
                 />
             );
         }
