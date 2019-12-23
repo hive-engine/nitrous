@@ -255,6 +255,7 @@ class MarkdownViewer extends Component {
                             </button>
                         </div>
                     )}
+                <p>test</p>
             </div>
         );
     }
@@ -263,4 +264,3 @@ class MarkdownViewer extends Component {
 export default connect((state, ownProps) => {
     return { ...ownProps };
 })(MarkdownViewer);
-<p>test</p>
