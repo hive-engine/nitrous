@@ -367,8 +367,8 @@ class PostsIndex extends React.Component {
                     </div>
                     
                     
-                    <div style={{ textAlign: 'center' }}>
-                        <strong>FEATURE VIDEO: <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a></strong> by <a href="https://reggaesteemm.io/@takeova">@Takeova</a> & <a href="https://reggaesteemm.io/@stinezent">@StinezEnt</a>
+                    <div style={{ textAlign: 'center' , marginBottom: 10 }}>
+                        <strong>FEATURE VIDEO: <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a></strong> by <a href="https://reggaesteem.io/@takeova">@Takeova</a> & <a href="https://reggaesteem.io/@stinezent">@StinezEnt</a>
                     </div>
                    
                     
