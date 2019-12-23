@@ -252,9 +252,9 @@ class MarkdownViewer extends Component {
                                 className="button hollow tiny float-right"
                             >
                                 {tt('g.show')}
-                            </button>
-                                                        <p>test</p>
+                            </button>                                                 
                         </div>
+                    <p>test</p>
                     )}
             </div>
         );
