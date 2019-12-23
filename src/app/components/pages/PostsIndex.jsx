@@ -334,7 +334,6 @@ class PostsIndex extends React.Component {
                                     levels={max_levels}
                                 />
                             </span>
-                                                                            <p>test</p>
                         </div>
                         <div className="small-6 medium-5 large-5 column hide-for-large articles__header-select">
                             <SortOrder
@@ -344,7 +343,6 @@ class PostsIndex extends React.Component {
                             />
                         </div>
                         <div className="medium-1 show-for-mq-medium column">
-                                                                            <p>test</p>
                             <ArticleLayoutSelector />
                         </div>
                     </div>
@@ -353,9 +351,7 @@ class PostsIndex extends React.Component {
                             text={tagHeaderMap[category] || tagHeaderMap['']}
                         />
                     )}
-                                                                    <p>test</p>
                     <hr className="articles__hr" />
-                                                                    <p>test</p>
                     {!fetching &&
                     (posts && !posts.size) &&
                     (pinned && !pinned.size) ? (
