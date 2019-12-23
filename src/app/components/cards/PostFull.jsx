@@ -380,6 +380,7 @@ class PostFull extends React.Component {
 
         let post_header = (
             <h1 className="entry-title">
+                                            <p>test</p>
                 {content.title}
                 {POSTED_VIA_NITROUS_ICON &&
                     app_info &&
@@ -488,7 +489,6 @@ class PostFull extends React.Component {
                         </div>
                         <div className="PostFull__body entry-content">
                             {contentBody}
-                            <p>test</p>
                         </div>
                         {SHOW_AUTHOR_RECENT_POSTS && (
                             <AuthorRecentPosts
@@ -509,6 +509,7 @@ class PostFull extends React.Component {
                 )}
                 <TagList post={content} horizontal />
                 <div className="PostFull__footer row">
+                                                <p>test</p>
                     <div className="columns medium-12 large-5">
                         <TimeAuthorCategory
                             content={content}
