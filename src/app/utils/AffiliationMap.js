@@ -33,7 +33,7 @@ const map = {
 
     'super-irie': 'Curator',
     
-    jahm.syndicator: 'New',
+    'jahm.syndicator': 'New',
     
     // Artist Specific Badges
     
