@@ -4,3 +4,4 @@ module.exports = {
     path: '/(:category/)@:username/:slug',
     component: Post,
 };
+<p>test</p>
