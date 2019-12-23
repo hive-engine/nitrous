@@ -16,6 +16,7 @@ const map = {
     
     reggaesteem: 'Official',
     beachfrontcrypto: 'Official',
+    
     'donald.porter': 'ReggaeSteem',
     miyard: 'ReggaeSteem',
     dmilliz: 'ReggaeSteem',
@@ -23,7 +24,6 @@ const map = {
     
     nojahm4u: 'Moderator',
     
-    mistakili: 'Ambassador',
     'roger.remix': 'Ambassador',
     joseacabrerav: 'Ambassador',
     'bahagia-arbi': 'Ambassador',
@@ -32,6 +32,16 @@ const map = {
     whatsthatcryptom: 'Ambassador',
 
     'super-irie': 'Curator',
+    
+    jahm.syndicator: 'New'
+    
+    // Artist Specific Badges
+    
+    stinezent: 'Producer',
+    takeova: 'Featured Artist',
+    
+    jahwayne: 'Producer',
+    bettybiz: 'Featured Artist',
     
     
     
