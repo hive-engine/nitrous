@@ -131,5 +131,5 @@ export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
 export const SHOW_AUTHOR_RECENT_POSTS = true;
-export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
+export const POSTED_VIA_NITROUS_ICON = 'lotus'; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = 'hive-120078';
