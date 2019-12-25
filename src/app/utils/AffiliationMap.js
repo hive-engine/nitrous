@@ -28,6 +28,7 @@ const map = {
     metametheus: 'And if you listen very hard...',
     tryskele: 'Be The Change',
     'a1-shroom-spores': 'Hemp token owner',
+    justinparke: 'Italist',
     
     
 
