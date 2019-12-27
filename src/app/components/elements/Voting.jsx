@@ -566,13 +566,13 @@ class Voting extends React.Component {
         }
 
         if (cashout_active) {
-            payoutItems.push({
-                value: tt('voting_jsx.pending_payout', {
-                    value: `${scot_pending_token.toFixed(scotPrecision)} ${
-                        LIQUID_TOKEN_UPPERCASE
-                    }`,
-                }),
-            });
+            // payoutItems.push({
+            //     value: tt('voting_jsx.pending_payout', {
+            //         value: `${scot_pending_token.toFixed(scotPrecision)} ${
+            //             LIQUID_TOKEN_UPPERCASE
+            //         }`,
+            //     }),
+            // });
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
@@ -605,11 +605,11 @@ class Voting extends React.Component {
 
         // Steem Payout Infomation
         if (steem_cashout_active) {
-            payoutItems.push({
-                value: tt('voting_jsx.steem_payouts', {
-                    value: `$${formatDecimal(pending_payout).join('')}`,
-                }),
-            });
+            // payoutItems.push({
+            //     value: tt('voting_jsx.steem_payouts', {
+            //         value: `$${formatDecimal(pending_payout).join('')}`,
+            //     }),
+            // });
             // Uncomment to enable
             if (false && scot_token_bene_payout > 0 && tokenBeneficiary) {
                 payoutItems.push({
@@ -660,13 +660,13 @@ class Voting extends React.Component {
 
         const payoutEl = (
             <DropdownMenu el="div" items={payoutItems}>
-                <span>
+                {/* <span>
                     <FormattedAsset
                         amount={payout}
                         asset={LIQUID_TOKEN_UPPERCASE}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
-                </span>
+                </span> */}
             </DropdownMenu>
         );
 
@@ -719,11 +719,11 @@ class Voting extends React.Component {
                 const { percent, voter, estimate } = avotes[v];
                 const sign = Math.sign(percent);
                 const estimateStr = estimate
-                    ? ` (${percent / 100}% ${estimate})`
+                    ? ` (${percent / 100}%) ${estimate}`
                     : '';
                 if (sign === 0) continue;
                 voters.push({
-                    value: (sign > 0 ? '+ ' : '- ') + voter + estimateStr,
+                    value: (sign > 0 ? '+ ' : '- ') + voter,
                     link: '/@' + voter,
                 });
             }
