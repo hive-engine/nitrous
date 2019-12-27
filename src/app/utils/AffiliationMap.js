@@ -96,6 +96,7 @@ const map = {
      'canadian-vixen': 'Verified Creator',
      quoththeraven : 'Verified Creator',
      dodocat : 'Verified Creator',
+     'viking-ventures' : 'Verified Creator',
 };
 
 export default map;
