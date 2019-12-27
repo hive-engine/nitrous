@@ -97,6 +97,7 @@ const map = {
      quoththeraven : 'Verified Creator',
      dodocat : 'Verified Creator',
      'viking-ventures' : 'Verified Creator',
+     phwoargeous : 'Verified Creator',
 };
 
 export default map;
