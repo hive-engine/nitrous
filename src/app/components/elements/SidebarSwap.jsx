@@ -54,7 +54,8 @@ class SidebarSwap extends Component {
         this.state = {
             amount: 0,
             output_amount: 0,
-            selectedValue: '',
+            selectedValue1: '',
+            selectedValue2: '',
             loadToken: false,
             providerBalance: {
                 SCT: 0 + ' ' + 'SCT',
@@ -87,6 +88,7 @@ class SidebarSwap extends Component {
             SCTM: sctm_to_steem * 1,
             KRWP: 1000.0 / steem_to_krw_current,
             SBD: sbd_to_krw_current / steem_to_krw_current * 1,
+            STEEM: 1.0,
             ORG: 250.0 / steem_to_krw_current,
             SVC: 1000.0 / steem_to_krw_current,
             DEC: dec_to_steemp * 1,
@@ -99,6 +101,7 @@ class SidebarSwap extends Component {
                 SCTM: allInfo[1] + ' ' + 'SCTM',
                 KRWP: allInfo[2] + ' ' + 'KRWP',
                 SBD: allInfo[3][0].sbd_balance,
+                STEEM: allInfo[3][0].balance,
                 ORG: allInfo[4] + ' ' + 'ORG',
                 SVC: allInfo[5] + ' ' + 'SVC',
                 DEC: allInfo[6] + ' ' + 'DEC',
@@ -109,11 +112,30 @@ class SidebarSwap extends Component {
             });
         });
 
+        this.pair_token = [];
+        this.pair_token['SCT'] = ['KRWP'];
+        this.pair_token['SCTM'] = ['KRWP'];
+        this.pair_token['KRWP'] = [
+            'SCT',
+            'SCTM',
+            'SBD',
+            'STEEM',
+            'ORG',
+            'SVC',
+            'DEC',
+        ];
+        this.pair_token['SBD'] = ['KRWP'];
+        this.pair_token['STEEM'] = ['KRWP'];
+        this.pair_token['ORG'] = ['KRWP'];
+        this.pair_token['SVC'] = ['KRWP'];
+        this.pair_token['DEC'] = ['KRWP'];
+
         this.input_token_type = [
             'SCT',
             'SCTM',
             'KRWP',
             'SBD',
+            'STEEM',
             'ORG',
             'SVC',
             'DEC',
@@ -123,6 +145,7 @@ class SidebarSwap extends Component {
             'SCTM',
             'KRWP',
             'SBD',
+            'STEEM',
             'ORG',
             'SVC',
             'DEC',
@@ -142,67 +165,50 @@ class SidebarSwap extends Component {
     }
 
     inputSelected(e) {
-        console.log('-- PromotePost.inputSelected -->', e.target.value);
+        console.log('-- swap.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
-
-        if (this.input_token_type[this.selected_token[0]] == 'ORG') {
-            this.output_token_type = ['KRWP'];
+        this.output_token_type = this.pair_token[
+            this.input_token_type[this.selected_token[0]]
+        ];
+        if (this.output_token_type[this.selected_token[1]] == undefined)
             this.selected_token[1] = 0;
-        } else if (this.input_token_type[this.selected_token[0]] == 'SVC') {
-            this.output_token_type = ['KRWP'];
-            this.selected_token[1] = 0;
-        } else if (this.input_token_type[this.selected_token[0]] == 'DEC') {
-            this.output_token_type = ['SCT', 'SCTM', 'KRWP'];
-            // this.selected_token[1] = 0;
-        } else {
-            // input선택한것은 제거하기
+        if (this.input_token_type[this.selected_token[0]] == 'KRWP') {
             this.output_token_type = [
                 'SCT',
                 'SCTM',
                 'KRWP',
                 'SBD',
+                'STEEM',
                 'ORG',
                 'SVC',
                 'DEC',
             ];
-            this.output_token_type = this.output_token_type.filter(
-                a => a != this.input_token_type[this.selected_token[0]]
-            );
         }
         this.calculateOutput();
     }
 
     outputSelected(e) {
-        console.log('-- PromotePost.outputSelected -->', e.target.value);
+        console.log('-- swap.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
-        if (this.output_token_type[this.selected_token[1]] == 'ORG') {
-            this.input_token_type = ['KRWP'];
+        this.input_token_type = this.pair_token[
+            this.output_token_type[this.selected_token[1]]
+        ];
+        if (this.output_token_type[this.selected_token[1]] != 'KRWP') {
             this.selected_token[0] = 0;
-        } else if (this.output_token_type[this.selected_token[1]] == 'SVC') {
             this.input_token_type = ['KRWP'];
-            this.selected_token[0] = 0;
-        } else if (this.output_token_type[this.selected_token[1]] == 'DEC') {
-            this.input_token_type = ['SCT', 'SCTM', 'KRWP'];
-            var matched_token = this.input_token_type.find(
-                a => a == this.input_token_type[this.selected_token[0]]
-            );
-            if (matched_token == undefined) {
-                this.selected_token[0] = 0;
-            }
-        } else if (this.output_token_type[this.selected_token[1]] == 'SBD') {
-            this.input_token_type = ['KRWP'];
-            this.selected_token[0] = 0;
         } else {
             this.input_token_type = [
                 'SCT',
                 'SCTM',
                 'KRWP',
                 'SBD',
+                'STEEM',
                 'ORG',
                 'SVC',
                 'DEC',
             ];
         }
+
         this.calculateOutput();
     }
 
@@ -262,6 +268,8 @@ class SidebarSwap extends Component {
         const b = this.ratio_toke_by_steem[output_symbol];
 
         console.log('calculateOutput');
+        console.log(this.state.selectedValue1, this.state.selectedValue2);
+        console.log(this.selected_token[0], this.selected_token[1]);
         console.log(input_symbol, output_symbol);
         var output_amount =
             amount * (1 * a / b) * (100.0 - this.swap_fee) / 100.0;
@@ -293,7 +301,7 @@ class SidebarSwap extends Component {
                                 amount={amount}
                                 amountChange={this.amountChange}
                                 selectedChange={this.inputSelected}
-                                selectedValue={this.state.selectedValue}
+                                selectedValue={this.state.selectedValue1}
                                 input_token_type={this.input_token_type}
                                 marginBottom={0}
                                 inputDisabled={!this.state.loadToken}
@@ -308,7 +316,7 @@ class SidebarSwap extends Component {
                                 amount={output_amount}
                                 amountChange={this.amountChange}
                                 selectedChange={this.outputSelected}
-                                selectedValue={this.state.selectedValue}
+                                selectedValue={this.state.selectedValue2}
                                 input_token_type={this.output_token_type}
                                 marginBottom={10}
                                 inputDisabled={true}
