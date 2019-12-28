@@ -32,6 +32,8 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
         sort = 'review';
     } else if (pathname === '/created/sct-producer') {
         sort = 'market';
+    } else if (pathname === '/created/sct-suggest') {
+        sort = 'suggest';
     } else if (pathname === `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`) {
         sort = 'recommend';
     }
@@ -42,6 +44,8 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
             return '/created/sct-producer';
         } else if (sort.value === 'review') {
             return '/created/sct-consumer';
+        } else if (sort.value === 'suggest') {
+            return '/created/sct-suggest';
         } else if (sort.value === 'recommend') {
             return `/@${RECOMMENDED_FOLLOW_ACCOUNT}/feed`;
         } else {
@@ -84,6 +88,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 value: 'review',
                 label: tt('g.review'),
                 link: `/created/sct-consumer`,
+            },
+            {
+                value: 'suggest',
+                label: tt('g.suggest'),
+                link: `/created/sct-suggest`,
             },
         ];
     };
