@@ -248,6 +248,16 @@ class SidebarSwap extends Component {
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
             });
+        }
+        if (this.input_token_type[this.selected_token[0]] === 'STEEM') {
+            this.props.dispatchTransfer({
+                amount: this.input_amount,
+                asset: this.input_token_type[this.selected_token[0]],
+                outputasset: this.output_token_type[this.selected_token[1]],
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+            });
         } else {
             this.props.dispatchSubmit({
                 amount: this.input_amount,
