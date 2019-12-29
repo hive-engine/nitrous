@@ -61,6 +61,7 @@ export const CONFIG_MAP = {
             vegan: [],
             recipes: [],
             community: [
+                'appics',
                 'cleanplanet',
                 'innerblocks',
                 'ecotrain',
