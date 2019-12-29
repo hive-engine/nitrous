@@ -221,6 +221,8 @@ export default function ServerHTML({
                     />
                 ) : null}
                 <title>{page_title}</title>
+                
+                <script data-ad-client="ca-pub-5317992226603818" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             </head>
             <body>
                 {
