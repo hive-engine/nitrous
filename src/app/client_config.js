@@ -212,7 +212,7 @@ export const CONFIG_MAP = {
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: 'https://richardcrill.github.io',
         SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
-        SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'coffeebuds',
+        SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'canna-community',
         SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
         SHOW_AUTHOR_RECENT_POSTS: true,
         POSTED_VIA_NITROUS_ICON: 'weedcash',

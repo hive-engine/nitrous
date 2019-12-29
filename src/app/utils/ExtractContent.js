@@ -7,13 +7,21 @@ import Remarkable from 'remarkable';
 
 const remarkable = new Remarkable({ html: true, linkify: false });
 
-const getValidImage = array => {
-    return array &&
-        Array.isArray(array) &&
-        array.length >= 1 &&
-        typeof array[0] === 'string'
-        ? array[0]
-        : null;
+const getValidImage = image => {
+    if (!image) {
+        return null;
+    }
+    if (
+        Array.isArray(image) &&
+        image.length >= 1 &&
+        typeof image[0] === 'string'
+    ) {
+        return array[0];
+    }
+    if (typeof image === 'string') {
+        return image;
+    }
+    return null;
 };
 
 export default function extractContent(get, content, appDomain) {
