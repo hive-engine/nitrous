@@ -35,7 +35,7 @@ const map = {
     
     'jahm.syndicator': 'New',
     
-    // Artist Specific Badges
+    // Artist Badges
     
     stinezent: 'Producer',
     takeova: 'Featured Artist',
@@ -43,7 +43,9 @@ const map = {
     jahwayne: 'Producer',
     bettybiz: 'Featured Artist',
     
+    // Member Badges
     
+    justinparke: 'Italist',
     
 };
 
