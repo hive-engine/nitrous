@@ -76,7 +76,6 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     const voted = content.active_votes;
     const lastUpdate = content.last_update;
     const title = content.title;
-    const jsonMeta = content.json_metadata;
     Object.assign(content, scotData);
     if (voted) {
         const scotVoted = new Set(content.active_votes.map(v => v.voter));
@@ -100,9 +99,6 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     // Prefer parent author / permlink of content
     content.parent_author = parentAuthor;
     content.parent_permlink = parentPermlink;
-    if (jsonMeta) {
-        content.json_metadata = jsonMeta;
-    }
 
     content.scotData = {};
     content.scotData[scotTokenSymbol] = scotData;

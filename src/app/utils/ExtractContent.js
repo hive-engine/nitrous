@@ -16,7 +16,7 @@ const getValidImage = image => {
         image.length >= 1 &&
         typeof image[0] === 'string'
     ) {
-        return array[0];
+        return image[0];
     }
     if (typeof image === 'string') {
         return image;
