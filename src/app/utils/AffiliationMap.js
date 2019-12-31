@@ -2,6 +2,7 @@ const map = {
     FOODIE: {
         jasonbu: 'SuperFoodie',
         lmon: 'SuperFoodie',
+        yanirauseche: 'SuperFoodie',
         foodiesunite: 'Foodie Team',
         foodiebountiful: 'Foodie Team',
     },
