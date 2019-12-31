@@ -182,6 +182,14 @@ class PostsIndex extends React.Component {
         }
     }
 
+    goPicpPick = () => {
+        window.open('https://apisct.cloud/manager');
+    };
+
+    goNoticeTelegram = () => {
+        window.open('https://t.me/sct_notice');
+    };
+
     buildCategories(cat, parent, categories) {
         if (!categories) return this.props.categories;
 
@@ -382,6 +390,21 @@ class PostsIndex extends React.Component {
 
                 <aside className="c-sidebar c-sidebar--right">
                     <Notices notices={this.props.notices} />
+
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.goNoticeTelegram}
+                    >
+                        공지사항 텔레그램방
+                    </button>
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.goPicpPick}
+                    >
+                        뽑기 도전
+                    </button>
 
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
