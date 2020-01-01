@@ -60,13 +60,6 @@ const SidePanel = ({
                 }`,
             },
             {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
-            },
-            {
                 value: 'richlist',
                 label: 'Rich List',
                 link: `https://tribes.rocks/lens/?page=rich_list&token=${
@@ -127,7 +120,7 @@ const SidePanel = ({
             {
                 value: 'kakaotalk',
                 label: 'Kakao Talk',
-                link: 'https://open.kakao.com/o/gY8uabub',
+                link: 'https://open.kakao.com/o/gljh1dRb',
             },
             {
                 value: 'discord',
