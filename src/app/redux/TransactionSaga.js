@@ -429,6 +429,21 @@ function* accepted_comment({ operation }) {
     yield put(globalActions.linkReply(operation));
     // mark the time (can only post 1 per min)
     // yield put(user.actions.acceptedComment())
+    if (operation.__config.feeJson) {
+        operation.__config.feeJson.contractPayload.memo = `@${author}/${
+            permlink
+        }`;
+        const feeOp = {
+            type: 'custom_json',
+            operation: {
+                id: 'ssc-mainnet1',
+                required_auths: [author],
+                json: JSON.stringify(operation.__config.feeJson),
+            },
+        };
+
+        yield call(broadcastOperation, { payload: feeOp });
+    }
 }
 
 function updateFollowState(action, following, state) {

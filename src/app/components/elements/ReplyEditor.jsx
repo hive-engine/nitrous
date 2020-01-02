@@ -29,7 +29,7 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     POSTINGFEE_ACCOUNT,
     POSTINGFEE_AMOUNT,
-    POSTINGFEE_SYMBOL
+    POSTINGFEE_SYMBOL,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -1188,7 +1188,6 @@ export default formId =>
                     }
                 }
 
-                const tmpSuccessCallback = successCallback;
                 const current_account = state.user.get('current');
                 const tokenBalances = current_account
                     ? current_account.get('token_balances')
@@ -1227,29 +1226,7 @@ export default formId =>
                         return;
                     }
 
-                    successCallback = s => {
-                        operation = {
-                            ...linkProps,
-                            category: rootCategory,
-                            title,
-                            body,
-                            json_metadata: meta,
-                            __config,
-                        };
-
-                        const successCallback = tmpSuccessCallback;
-
-                        dispatch(
-                            transactionActions.broadcastOperation({
-                                type: 'comment',
-                                operation,
-                                errorCallback,
-                                successCallback,
-                            })
-                        );
-                    };
-
-                    const transferOperation = {
+                    __config.feeJson = {
                         contractName: 'tokens',
                         contractAction: 'transfer', // for test, transfer 로 변경
                         contractPayload: {
@@ -1259,22 +1236,8 @@ export default formId =>
                             memo: 'posting fee',
                         },
                     };
+                }
 
-                    operation = {
-                        id: 'ssc-mainnet1',
-                        required_auths: [username],
-                        json: JSON.stringify(transferOperation),
-                    };
-
-                    dispatch(
-                        transactionActions.broadcastOperation({
-                            type: 'custom_json',
-                            operation,
-                            errorCallback,
-                            successCallback,
-                        })
-                    );
-                } else {
                 dispatch(
                     transactionActions.broadcastOperation({
                         type: 'comment',
@@ -1283,7 +1246,6 @@ export default formId =>
                         successCallback,
                     })
                 );
-                }
             },
         })
     )(ReplyEditor);
