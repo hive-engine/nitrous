@@ -140,7 +140,7 @@ const SidePanel = ({
             {
                 value: 'actifit',
                 label: 'Actifit',
-                link: 'https://actifit.io/signup?referrer=actipat',
+                link: 'https://actifit.io/signup?referrer=sportsbuy',
                 internal: true,
             },           
         ],
