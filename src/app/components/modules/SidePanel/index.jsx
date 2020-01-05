@@ -60,7 +60,7 @@ const SidePanel = ({
             {
                 value: 'leodex',
                 label: 'SteemLeo DEX',
-                link: `https://dex.steemleo.com/?token=SPORTS`,
+                link: `https://dex.steemleo.com/market/SPORTS`,
             },            
             {
                 value: 'steemengine',
