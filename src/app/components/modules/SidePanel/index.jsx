@@ -116,6 +116,11 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'referee',
+                label: 'Referee Elections',
+                link: 'https://referee.sportstalk.social/',
+            },
+            {
                 value: 'sportstube',
                 label: 'SportsTube',
                 link: 'https://video.sportstalksocial.com',
