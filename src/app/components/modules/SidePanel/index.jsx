@@ -53,6 +53,16 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
+                value: 'getsports',
+                label: 'GET SPORTS',
+                link: `https://get.sportstalksocial.com/`,
+            },
+            {
+                value: 'leodex',
+                label: 'SteemLeo DEX',
+                link: `https://dex.steemleo.com/?token=SPORTS`,
+            },            
+            {
                 value: 'steemengine',
                 label: 'Steem Engine',
                 link: `https://steem-engine.com/?p=market&t=${
@@ -116,23 +126,23 @@ const SidePanel = ({
                 link: 'http://discord.sportstalk.social',
             },
             {
-                value: 'scottoday',
-                label: 'SPORTS SCOT.TODAY',
-                link: 'http://scot.today/token/SPORTS',
-                internal: true,
-            },
-            {
                 value: 'sports_richlist',
                 label: 'SPORTS Richlist',
                 link: 'https://steem-engine.rocks/tokens/SPORTS/richlist',
                 internal: true,
             },
             {
-                value: 'get_sports',
-                label: 'GET SPORTS',
-                link: 'https://get.sportstalksocial.com',
+                value: 'sportspredictsocial',
+                label: 'SportsPredictSocial',
+                link: 'https://www.sportspredictsocial.com/',
                 internal: true,
             },
+            {
+                value: 'actifit',
+                label: 'Actifit',
+                link: 'https://actifit.io/signup?referrer=actipat',
+                internal: true,
+            },           
         ],
         legal: [
             {
