@@ -23,7 +23,11 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 
 *Let's start by sharing some posts which provide answers to common questions.*
 
+<div style="text-align: center;">
+
 ![](https://i.imgur.com/KhNtxcJ.png)
+
+</div>
 
 - [What is Delegating, and How Do I Do It?]() *Coming*
 - [How Can I Buy & Sell LOTUS?](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
@@ -35,7 +39,11 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 - [Content Guidelines](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
 - [The Natural Medicine Manifesto](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
 
+<div style="text-align: center;">
+
 ![](https://i.imgur.com/KhNtxcJ.png)
+
+</div>
 
 **Below you'll find a wealth of information about www.naturalmedicine.io and the Steem blockchain. Remember, if you need further help, all you have to do is join our Discord. Whilst Discord isn't affiliated with the Steem blockchain or Natural Medicine, it's a great place to connect and ask for help. It's really easy to create an account, and you can use it on your mobile or your browser.**
 
@@ -46,7 +54,11 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 - <a href="Steem,_Steempower,_ SteemDollars_and_Lotus_-What_do_They_ Mean?">Steem, Steempower, Steemdollars and LOTUS - What Do They Mean?</a>
 - <a href="Everything_You_Need_to_Know_about_the_Steem_Blockchain"> Everything you Need to Know about the Steem Blockchain</a>
 
+<div style="text-align: center;">
+
 ![](https://i.imgur.com/KhNtxcJ.png)
+
+</div>
 
 ### <span id="Earn for Writing Natural Health Content">Earn for Writing Natural Health Content</span>
 
@@ -118,6 +130,8 @@ If you'd like to know more about Steem and how it works, we suggest you click [h
 
 We encourage everyone who might be reading any medical advice based on content that appears on Natural Medicine to exercise caution, do their own research, and consult a medical professional. 
 
+<div style="text-align: center;">
+
 ![](https://i.imgur.com/1VUQm9l.png)
 
-
+</div>
