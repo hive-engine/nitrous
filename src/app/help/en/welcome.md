@@ -2,7 +2,6 @@
 <div style="text-align: center;">
 
 ![](https://i.imgur.com/nxeSc65.png)
-
 </div>
 
 **Natural Medicine is a social media for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices.**
@@ -16,7 +15,6 @@ Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as
 - [Lotus for Scientists](https://steemit.com/naturalmedicine/@alchemage/lotus-token-for-scientists-a-call-for-more-science-in-the-natural-medicine-community) by @alchemage
 
 Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for STEEM, the token for the STEEM blockchain, and into mainstream currencies such as USD. You can read more about how to do that [here](). **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
-
 <div style="text-align: center;">
 
 ![](https://i.imgur.com/coA6KdI.png)
