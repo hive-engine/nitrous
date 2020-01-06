@@ -1,5 +1,8 @@
+
 <div style="text-align: center;">
+
 ![](https://i.imgur.com/nxeSc65.png)
+
 </div>
 
 **Natural Medicine is a social media for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices.**
@@ -15,7 +18,9 @@ Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as
 Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for STEEM, the token for the STEEM blockchain, and into mainstream currencies such as USD. You can read more about how to do that [here](). **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
 
 <div style="text-align: center;">
+
 ![](https://i.imgur.com/coA6KdI.png)
+
 </div>
 
 Natural Medicine offers free accounts with [delegated LOTUS]() to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we're very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other interactions on the blockchain.***
@@ -73,13 +78,11 @@ Whilst earning is not guaranteed and dependent on the quality of your content an
 - Look out for upvotes from our community and our dolphin account, @lotusup. 
 - Have a chance to be curated in ['best of' posts](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/a-collection-of-best-natural-health-posts-curation-71) which are collated weekly by our lotus curators for further exposure. 
 - [Write for us](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/community-jobs-earn-for-writing-for-our-tribe) on various natural health topics. 
-
 <div style="text-align: center;">
-    
+
 ![](https://i.imgur.com/8NdWdo9.png)
 
 </div>
-
 We also share the best of the best on our [Twitter](https://twitter.com/Lotus_Medicine) and [Facebook](https://www.facebook.com/Natural-Medicine-On-Steem-1003470073174904/) accounts, giving your blogs even more exposure. 
 
 <a href="#Table_of_Contents">^</a>
