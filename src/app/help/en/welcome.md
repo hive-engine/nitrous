@@ -1,7 +1,7 @@
 
 <div style="text-align: center;">
 
-https://i.imgur.com/nxeSc65.png
+![](https://i.imgur.com/nxeSc65.png)
 
 </div>
 
