@@ -98,6 +98,7 @@ const map = {
      dodocat : 'Verified Creator',
      'viking-ventures' : 'Verified Creator',
      phwoargeous : 'Verified Creator',
+     iamsozi : 'Verified Creator',
 };
 
 export default map;
