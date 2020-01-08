@@ -206,7 +206,24 @@ export const CONFIG_MAP = {
             'supports real value for digital rewards through market price discovery and liquidity',
         // Revive Ads
         NO_ADS_STAKE_THRESHOLD: 9999999999,
-        REVIVE_ADS: {},
+        REVIVE_ADS: {
+            header_banner: {
+                zoneId: '3167',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            sidebar_left: {
+                zoneId: '3168',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            sidebar_right: {
+                zoneId: '3169',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+            feed_small: {
+                zoneId: '3170',
+                reviveId: '727bec5e09208690b050ccfc6a45d384',
+            },
+        },
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
