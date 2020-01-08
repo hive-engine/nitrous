@@ -99,6 +99,7 @@ const map = {
      'viking-ventures' : 'Verified Creator',
      phwoargeous : 'Verified Creator',
      iamsozi : 'Verified Creator',
+     'invest.porn' : 'Verified Creator',
 };
 
 export default map;
