@@ -25,7 +25,7 @@ Natural Medicine offers free accounts with [delegated LOTUS]() to new users. Sim
 
 Once you have signed in, you will then be able to use the same keys to sign in to any of the Steem front ends, such as [Steempeak](), which we recommend for non natural medicine related content, saving drafts and more. We call these various ways to interact with the Steem blockchain 'front ends' and 'dapps' or decentralised apps. There's something on the Steem blockchain for everyone!
 
-**Below you'll find some more information about the various intricacies of Natural Medicine, it's reward system, and the it's link to the STEEM platform. For more information, please feel free to join our Discord by clicking [here](). There is always a friendly person to help you out!**
+**Below you'll find some more information about the various intricacies of Natural Medicine, it's reward system, and the it's link to the STEEM platform. For more information, please feel free to join our Discord by clicking [here](https://discord.gg/2pwc5Gf). There is always a friendly person to help you out!**
 
 *Let's start by sharing some posts which provide answers to common questions.*
 
@@ -35,15 +35,22 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 
 </div>
 
-- [What is Delegating, and How Do I Do It?]() *Coming*
-- [How Can I Buy & Sell LOTUS?](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
-- [What is the Difference Between Natural Medicine & Other Steem Front Ends? Why Post From NaturalMedicine.io?]() *Coming*
-- [What is powering up or staking, and how do I do it?](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)
-- [What does it mean to burn LOTUS, and how do I do it?]() *Coming*
-- [How do I format a good post?](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
-- [How Do I Instal Keychain on my Browser, and what does it do?](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/installing-and-using-keychain-on-your-browser-a-safe-and-easy-way-to-keep-your-keys)
-- [Content Guidelines](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
-- [The Natural Medicine Manifesto](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
+- [DELEGATION  - What is it , and how do I do it?]() *Coming*
+- [BUYING & SELLING LOTUS - A How To](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
+- [NATURALMEDICINE.IO VS STEEMIT - An Explanation](https://www.naturalmedicine.io/health/@naturalmedicine/on-tribes-steem-and-interfaces-a-few-simple-faq-answered) 
+- [POWERING UP OR STAKING - A guide](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)
+- [BURNING LOTUS - What is it, and how do I do it?]() *Coming*
+- [FORMATTING - How do I make my post look great?](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
+- [KEYCHAIN BROWSER EXTENSION - An easy way to store your keys](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/installing-and-using-keychain-on-your-browser-a-safe-and-easy-way-to-keep-your-keys)
+- [CONTENT GUIDELINES](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
+- [OUR MANIFESTO - Our ethos](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
+- [BADGES - Advertise your Identity & Jazz Up Your Profile](https://naturalmedicine.io/naturalmedicine/@riverflows/want-a-badge-next-to-your-user-name-on-naturalmedicine-io-advertise-your-gig-business-blog-or-identity)
+- [LOTUS V STEEM V FIAT - A Currency Clarification]() 
+- [MAKING MY POST VISIBLE - A Guide to Advertising](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
+- [PINNING YOUR POSTS - More on post visibility](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
+- [LOTUS STORE - More on Advertising your Product](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/introducing-potential-use-case-tags-and-lotus-store)
+- [CURATION TRAILS AND AUTOVOTES - A Guide](https://steempeak.com/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
+- [STAKING TOKENS - Proof of Stake Rewards](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/earn-lotus-through-staking-lotus-introducing-proof-of-stake-pos)
 
 <div style="text-align: center;">
 
@@ -51,7 +58,7 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 
 </div>
 
-**Below you'll find a wealth of information about www.naturalmedicine.io and the Steem blockchain. Remember, if you need further help, all you have to do is join our Discord. Whilst Discord isn't affiliated with the Steem blockchain or Natural Medicine, it's a great place to connect and ask for help. It's really easy to create an account, and you can use it on your mobile or your browser.**
+**Below you'll find a wealth of information about www.naturalmedicine.io and the Steem blockchain. Remember, if you need further help, all you have to do is join our [Discord](https://discord.gg/2pwc5Gf). Whilst [Discord](https://discord.gg/2pwc5Gf) isn't affiliated with the Steem blockchain or Natural Medicine, it's a great place to connect and ask for help. It's really easy to create an account, and you can use it on your mobile or your browser.**
 
 - <a href="#Earn_For_Writing_Natural_Health Content">Earn ForWriting Natural Health Content</a>
 - <a href="#Payments">Payments</a>
@@ -95,7 +102,7 @@ Payouts are made 7 days after the post/comment is created. You can claim your re
 
 Upvotes are Natural Medicine's way of saying you like someone's post or comment. To upvote, click on the *Upvote* icon at the bottom of the post/comment. This will reward the post with LOTUS. **If you also have Steem invested, it will upvote in Steem too. Notice that comments and upvotes on Natural Medicine will also appear on the other front ends.** Don't worry if you get a downvote - they are rare, and usually counted by upvotes. 
 
-Our accounts will warn you if they're going to downvote you, and we only downvote if you've plagiarised or wrote a really terrible post just for the rewards! Be mindful about the quality we expect and read more about our posting guidelines [here](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes). We're happy to negotiate with you should you recieve a downvote you think you don't deserve - simply pop into our Discord and ask there.
+Our accounts will warn you if they're going to downvote you, and we only downvote if you've plagiarised or wrote a really terrible post just for the rewards! Be mindful about the quality we expect and read more about our posting guidelines [here](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes). We're happy to negotiate with you should you recieve a downvote you think you don't deserve - simply pop into our [Discord](https://discord.gg/2pwc5Gf) and ask there.
 
 <a href="#Table_of_Contents">^</a>
 
