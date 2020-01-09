@@ -35,21 +35,21 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 
 </div>
 
-- [DELEGATION  - What is it , and how do I do it?]() *Coming*
 - [BUYING & SELLING LOTUS - A How To](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
-- [NATURALMEDICINE.IO VS STEEMIT - An Explanation](https://www.naturalmedicine.io/health/@naturalmedicine/on-tribes-steem-and-interfaces-a-few-simple-faq-answered) 
-- [POWERING UP OR STAKING - A guide](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)
+- [BADGES - Advertise your Identity & Jazz Up Your Profile](https://naturalmedicine.io/naturalmedicine/@riverflows/want-a-badge-next-to-your-user-name-on-naturalmedicine-io-advertise-your-gig-business-blog-or-identity)
 - [BURNING LOTUS - What is it, and how do I do it?]() *Coming*
+- [CONTENT GUIDELINES](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
+- [CURATION TRAILS AND AUTOVOTES - A Guide](https://steempeak.com/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
+- [DELEGATION  - What is it , and how do I do it?]() *Coming*
 - [FORMATTING - How do I make my post look great?](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
 - [KEYCHAIN BROWSER EXTENSION - An easy way to store your keys](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/installing-and-using-keychain-on-your-browser-a-safe-and-easy-way-to-keep-your-keys)
-- [CONTENT GUIDELINES](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
-- [OUR MANIFESTO - Our ethos](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
-- [BADGES - Advertise your Identity & Jazz Up Your Profile](https://naturalmedicine.io/naturalmedicine/@riverflows/want-a-badge-next-to-your-user-name-on-naturalmedicine-io-advertise-your-gig-business-blog-or-identity)
-- [LOTUS V STEEM V FIAT - A Currency Clarification]() 
-- [MAKING MY POST VISIBLE - A Guide to Advertising](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
-- [PINNING YOUR POSTS - More on post visibility](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
+- [LOTUS V STEEM V FIAT - A Currency Clarification]() Coming
 - [LOTUS STORE - More on Advertising your Product](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/introducing-potential-use-case-tags-and-lotus-store)
-- [CURATION TRAILS AND AUTOVOTES - A Guide](https://steempeak.com/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
+- [MANIFESTO - Our ethos](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
+- [MAKING MY POST VISIBLE - A Guide to Advertising](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
+- [NATURALMEDICINE.IO VS STEEMIT - An Explanation](https://www.naturalmedicine.io/health/@naturalmedicine/on-tribes-steem-and-interfaces-a-few-simple-faq-answered) 
+- [PINNING YOUR POSTS - More on post visibility](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
+- [POWERING UP OR STAKING - A guide](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)
 - [STAKING TOKENS - Proof of Stake Rewards](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/earn-lotus-through-staking-lotus-introducing-proof-of-stake-pos)
 
 <div style="text-align: center;">
@@ -88,6 +88,7 @@ Whilst earning is not guaranteed and dependent on the quality of your content an
 ![](https://i.imgur.com/8NdWdo9.png)
 
 </div>
+
 We also share the best of the best on our [Twitter](https://twitter.com/Lotus_Medicine) and [Facebook](https://www.facebook.com/Natural-Medicine-On-Steem-1003470073174904/) accounts, giving your blogs even more exposure. 
 
 <a href="#Table_of_Contents">^</a>
@@ -116,7 +117,7 @@ Up to 50% of the reward for each post goes to the people who upvoted on it. Thes
 
 Steem is the primary token of the Steem Blockchain and often a reward on posts. Lotus is our token, and exchangeable for STEEM. 
 
-When you publish and engage on NaturalMedicine.io, you’ll also be earning Steem rewards. If someone on another Steem frontend like SteemLeo  or Steempeak upvotes you, you will earn the token they have staked (or invested. If you’re not sure how to ‘stake’ the tokens you have earnt, read this post).
+When you publish and engage on NaturalMedicine.io, you’ll also be earning Steem rewards. If someone on another Steem frontend like SteemLeo  or Steempeak upvotes you, you will earn the token they have staked (or invested. If you’re not sure how to ‘stake’ the tokens you have earnt, read [this post](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)).
 
 You will be able to see your Steem rewards for each post if you log on to Steempeak (remember, all Steem interfaces uses the same passkeys!).
 
