@@ -1,10 +1,10 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    'localhost:8080': {
+    'steemdiamond.com': {
         APP_NAME: 'SteemDiamond',
         APP_ICON: 'steemdiamond',
-        APP_ICON_WIDTH: '40px',
+        APP_ICON_WIDTH: '200px',
         APP_ICON_HEIGHT: '40px',
         APP_URL: 'https://steemdiamond.com',
         APP_DOMAIN: 'steemdiamond.com',
