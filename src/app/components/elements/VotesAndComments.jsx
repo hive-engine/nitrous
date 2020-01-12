@@ -38,16 +38,18 @@ class VotesAndComments extends React.Component {
 
         return (
             <span className="VotesAndComments">
-                <span
-                    className="VotesAndComments__votes"
-                    title={tt('votesandcomments_jsx.vote_count', {
-                        count: totalVotes,
-                    })}
-                >
-                    <Icon size="1x" name="chevron-up-circle" />&nbsp;{
-                        totalVotes
-                    }
-                </span>
+                {
+                    //<span
+                    //    className="VotesAndComments__votes"
+                    //    title={tt('votesandcomments_jsx.vote_count', {
+                    //        count: totalVotes,
+                    //    })}
+                    //>
+                    //    <Icon size="1x" name="chevron-up-circle" />&nbsp;{
+                    //        totalVotes
+                    //    }
+                    //</span>
+                }
                 <span
                     className={
                         'VotesAndComments__comments' +

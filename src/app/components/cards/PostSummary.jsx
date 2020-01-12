@@ -276,7 +276,7 @@ class PostSummary extends React.Component {
 
         const content_footer = (
             <div className="PostSummary__footer">
-                <Voting post={post} showList={false} />
+                <Voting post={post} showList={true} />
                 <VotesAndComments post={post} commentsLink={comments_url} />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
@@ -293,7 +293,7 @@ class PostSummary extends React.Component {
 
         const summary_footer = (
             <div className="articles__summary-footer">
-                <Voting post={post} showList={false} />
+                <Voting post={post} showList={true} />
                 <VotesAndComments post={post} commentsLink={comments_url} />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
