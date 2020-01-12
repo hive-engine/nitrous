@@ -51,6 +51,7 @@ global.webpackIsomorphicTools.server(ROOT, () => {
             randomize: true,
         },
         useAppbaseApi: !!config.steemd_use_appbase,
+        useTestNet: true,
     });
     steem.config.set('address_prefix', config.get('address_prefix'));
     steem.config.set('chain_id', config.get('chain_id'));

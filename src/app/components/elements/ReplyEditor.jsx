@@ -25,6 +25,7 @@ import {
     APP_MAX_TAG,
     SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
     SCOT_DEFAULT_BENEFICIARY_PERCENT,
+    TEST_NAI_ASSET,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -1041,16 +1042,19 @@ export default formId =>
                 const __config = { originalBody };
                 // Avoid changing payout option during edits #735
                 if (!isEdit) {
+                    if (!__config.comment_options) {
+                        __config.comment_options = {};
+                    }
+                    if (!__config.comment_options.extensions) {
+                        __config.comment_options.extensions = [];
+                    }
                     switch (payoutType) {
                         case '0%': // decline payout
-                            __config.comment_options = {
-                                max_accepted_payout: '0.000 SBD',
-                            };
+                            __config.comment_options.max_accepted_payout =
+                                '0.000 TBD';
                             break;
                         case '100%': // 100% steem power payout
-                            __config.comment_options = {
-                                percent_steem_dollars: 0, // 10000 === 100% (of 50%)
-                            };
+                            __config.comment_options.percent_steem_dollars = 0;
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
@@ -1061,30 +1065,40 @@ export default formId =>
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
-                        if (!__config.comment_options) {
-                            __config.comment_options = {};
-                        }
-                        __config.comment_options.extensions = [
-                            [
-                                0,
-                                {
-                                    beneficiaries: beneficiaries
-                                        .sort(
-                                            (a, b) =>
-                                                a.username < b.username
-                                                    ? -1
-                                                    : a.username > b.username
-                                                      ? 1
-                                                      : 0
-                                        )
-                                        .map(elt => ({
-                                            account: elt.username,
-                                            weight: parseInt(elt.percent) * 100,
-                                        })),
-                                },
-                            ],
-                        ];
+                        __config.comment_options.extensions.push([
+                            0,
+                            {
+                                beneficiaries: beneficiaries
+                                    .sort(
+                                        (a, b) =>
+                                            a.username < b.username
+                                                ? -1
+                                                : a.username > b.username
+                                                  ? 1
+                                                  : 0
+                                    )
+                                    .map(elt => ({
+                                        account: elt.username,
+                                        weight: parseInt(elt.percent) * 100,
+                                    })),
+                            },
+                        ]);
                     }
+                    __config.comment_options.extensions.push([
+                        1,
+                        {
+                            votable_assets: [
+                                [
+                                    TEST_NAI_ASSET,
+                                    {
+                                        max_accepted_payout: 10,
+                                        allow_curation_rewards: true,
+                                        beneficiaries: {},
+                                    },
+                                ],
+                            ],
+                        },
+                    ]);
                 }
 
                 const operation = {

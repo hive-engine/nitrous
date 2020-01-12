@@ -84,6 +84,7 @@ function runApp(initial_state) {
         url: config.steemd_connection_client,
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
+        useTestNet: true,
     });
     steem.config.set('address_prefix', config.address_prefix);
     steem.config.set('chain_id', config.chain_id);

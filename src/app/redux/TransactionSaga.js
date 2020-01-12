@@ -27,13 +27,13 @@ export const transactionWatches = [
 const hook = {
     preBroadcast_comment,
     preBroadcast_transfer,
-    preBroadcast_vote,
-    error_vote,
+    preBroadcast_vote2,
+    error_vote2,
     error_custom_json,
     accepted_comment,
     accepted_custom_json,
     accepted_delete_comment,
-    accepted_vote,
+    accepted_vote2,
 };
 export function* preBroadcast_transfer({ operation }) {
     let memoStr = operation.memo;
@@ -60,7 +60,7 @@ export function* preBroadcast_transfer({ operation }) {
 const toStringUtf8 = o =>
     o ? (Buffer.isBuffer(o) ? o.toString('utf-8') : o.toString()) : o;
 
-function* preBroadcast_vote({ operation, username }) {
+function* preBroadcast_vote2({ operation, username }) {
     if (!operation.voter) operation.voter = username;
     const { voter, author, permlink, weight } = operation;
     // give immediate feedback
@@ -450,7 +450,10 @@ function* accepted_delete_comment({ operation }) {
     yield put(globalActions.deleteContent(operation));
 }
 
-function* accepted_vote({ operation: { author, permlink, weight }, username }) {
+function* accepted_vote2({
+    operation: { author, permlink, weight },
+    username,
+}) {
     console.log(
         'Vote accepted, weight',
         weight,
@@ -606,7 +609,7 @@ function* error_custom_json({ operation: { id, required_posting_auths } }) {
     }
 }
 
-function* error_vote({ operation: { author, permlink } }) {
+function* error_vote2({ operation: { author, permlink } }) {
     yield put(
         globalActions.remove({
             key: `transaction_vote_active_${author}_${permlink}`,

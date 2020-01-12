@@ -30,10 +30,10 @@ export const VESTING_TOKEN = 'WEED POWER';
 export const INTERLEAVE_PROMOTED = true;
 export const PROMOTED_POST_ACCOUNT = 'null';
 
-export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
-export const INVEST_TOKEN_SHORT = 'SP';
-export const DEBT_TOKEN = 'STEEM DOLLAR';
-export const DEBT_TOKENS = 'STEEM DOLLARS';
+export const INVEST_TOKEN_UPPERCASE = 'TEST POWER';
+export const INVEST_TOKEN_SHORT = 'TP';
+export const DEBT_TOKEN = 'TEST DOLLAR';
+export const DEBT_TOKENS = 'TEST DOLLARS';
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
 export const LANDING_PAGE_URL = 'https://steem.io/';
@@ -42,10 +42,10 @@ export const PRIVACY_POLICY_URL = 'https://' + APP_DOMAIN + '/privacy.html';
 export const WHITEPAPER_URL = 'https://steem.io/SteemWhitePaper.pdf';
 
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
-export const LIQUID_TICKER = 'STEEM';
+export const LIQUID_TICKER = 'TESTS';
 export const VEST_TICKER = 'VESTS';
-export const DEBT_TICKER = 'SBD';
-export const DEBT_TOKEN_SHORT = 'SBD';
+export const DEBT_TICKER = 'TBD';
+export const DEBT_TOKEN_SHORT = 'TBD';
 
 // application settings
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap
@@ -109,3 +109,5 @@ export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
 export const SHOW_AUTHOR_RECENT_POSTS = false;
 export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = '';
+
+export const TEST_NAI_ASSET = { nai: '@@333185944', precision: 3 };

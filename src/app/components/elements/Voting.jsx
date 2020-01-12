@@ -13,6 +13,7 @@ import {
     INVEST_TOKEN_SHORT,
     VOTE_WEIGHT_DROPDOWN_THRESHOLD,
     SCOT_DENOM,
+    TEST_NAI_ASSET,
 } from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
@@ -836,12 +837,13 @@ export default connect(
             };
             dispatch(
                 transactionActions.broadcastOperation({
-                    type: 'vote',
+                    type: 'vote2',
                     operation: {
                         voter: username,
                         author,
                         permlink,
-                        weight,
+                        rshares: [[TEST_NAI_ASSET, 0]],
+                        //weight,
                         __config: {
                             title: weight < 0 ? 'Confirm Downvote' : null,
                         },
