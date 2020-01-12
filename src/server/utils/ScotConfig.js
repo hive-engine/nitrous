@@ -52,7 +52,11 @@ ScotConfig.prototype.refresh = async function() {
     try {
         const scotConfig = await getScotDataAsync('config', {});
         const scotInfo = await getScotDataAsync('info', {});
-        this.cache.set(key, { info: scotInfo, config: scotConfig });
+        const scotConfigMap = {};
+        scotConfig.forEach(c => {
+            scotConfigMap[c.token] = c;
+        });
+        this.cache.set(key, { info: scotInfo, config: scotConfigMap });
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);

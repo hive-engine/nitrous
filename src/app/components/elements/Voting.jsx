@@ -55,6 +55,7 @@ class Voting extends React.Component {
         enable_slider: PropTypes.bool,
         voting: PropTypes.bool,
         scotData: PropTypes.object,
+        downvoteEnabled: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -226,6 +227,7 @@ class Voting extends React.Component {
             rewardData,
             hostConfig,
             tokenBeneficiary,
+            downvoteEnabled,
         } = this.props;
         const {
             votingUp,
@@ -370,7 +372,7 @@ class Voting extends React.Component {
         };
 
         let downVote;
-        if (true) {
+        if (downvoteEnabled) {
             const down = (
                 <Icon
                     name={votingDownActive ? 'empty' : 'chevron-down-circle'}
@@ -800,6 +802,10 @@ export default connect(
             tokenBeneficiary: scotConfig.getIn(
                 ['config', 'beneficiaries_account'],
                 ''
+            ),
+            downvoteEnabled: !scotConfig.getIn(
+                ['config', 'disable_downvoting'],
+                false
             ),
         };
     },

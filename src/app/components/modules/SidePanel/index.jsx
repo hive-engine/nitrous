@@ -126,6 +126,25 @@ const SidePanel = ({
                 link: 'https://tube.lago.com.gt/',
             },
         ],
+        organizational_DIAMOND: [
+            {
+                value: 'diamond_guide',
+                label: 'Guide to SteemDiamond',
+                internal: true,
+                link: '/@diamondtoken/guide-to-steemdiamond',
+            },
+            {
+                value: 'diamond_stake',
+                label: 'Diamond Staking',
+                internal: true,
+                link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
+            },
+            {
+                value: 'diamond_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/steemdiamond',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',

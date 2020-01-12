@@ -81,7 +81,16 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
                 googleAds: googleAds,
                 env: process.env.NODE_ENV,
                 walletUrl: config.wallet_url,
-                scotConfig: ctx.scotConfigData,
+                scotConfig: {
+                    info:
+                        ctx.scotConfigData.info[
+                            CONFIG_MAP[host]['LIQUID_TOKEN_UPPERCASE']
+                        ],
+                    config:
+                        ctx.scotConfigData.config[
+                            CONFIG_MAP[host]['LIQUID_TOKEN_UPPERCASE']
+                        ],
+                },
                 reviveEnabled: config.revive_enabled,
             },
         };
