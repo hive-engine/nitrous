@@ -17,7 +17,7 @@ Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as
 Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for STEEM, the token for the STEEM blockchain, and into mainstream currencies such as USD. You can read more about how to do that [here](). **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
 <div style="text-align: center;">
 
-![](https://i.imgur.com/coA6KdI.png)
+![](https://i.imgur.com/idnZZvl.png)
 
 </div>
 
@@ -85,7 +85,7 @@ Whilst earning is not guaranteed and dependent on the quality of your content an
 - [Write for us](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/community-jobs-earn-for-writing-for-our-tribe) on various natural health topics. 
 <div style="text-align: center;">
 
-![](https://i.imgur.com/8NdWdo9.png)
+
 
 </div>
 
