@@ -21,7 +21,7 @@ Our platform enables users to reward and earn LOTUS by publishing or interacting
 
 </div>
 
-Natural Medicine offers free accounts with [delegated LOTUS]() to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we're very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other interactions on the blockchain.***
+Natural Medicine offers free accounts with [delegated LOTUS](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe) to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we're very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other interactions on the blockchain.***
 
 Once you have signed in, you will then be able to use the same keys to sign in to any of the Steem front ends, such as [Steempeak](), which we recommend for non natural medicine related content, saving drafts and more. We call these various ways to interact with the Steem blockchain 'front ends' and 'dapps' or decentralised apps. There's something on the Steem blockchain for everyone!
 
@@ -40,7 +40,7 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 - [BURNING LOTUS - What is it, and how do I do it?]() *Coming*
 - [CONTENT GUIDELINES](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
 - [CURATION TRAILS AND AUTOVOTES - A Guide](https://steempeak.com/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
-- [DELEGATION  - What is it , and how do I do it?]() *Coming*
+- [DELEGATION  - What is it , and how do I do it?](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe)
 - [FORMATTING - How do I make my post look great?](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
 - [KEYCHAIN BROWSER EXTENSION - An easy way to store your keys](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/installing-and-using-keychain-on-your-browser-a-safe-and-easy-way-to-keep-your-keys)
 - [LOTUS V STEEM V FIAT - A Currency Clarification]() Coming
