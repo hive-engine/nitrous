@@ -2,21 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SvgImage from 'app/components/elements/SvgImage';
 import { APP_ICON } from 'app/client_config';
-
-const admins = [
-    'segyepark',
-    'segyepark.aaa',
-    'virus707',
-    'jayplayco',
-    'jayplay.aaa',
-    'jayplay.cur',
-    'skuld2000',
-    'triplea.cur',
-    'triplea.bot',
-];
+import { ADMINS } from 'shared/constants';
 
 export const AuthorIcon = ({ author }) => {
-    if (admins.indexOf(author) === -1) {
+    if (ADMINS.indexOf(author) === -1) {
         return null;
     }
 

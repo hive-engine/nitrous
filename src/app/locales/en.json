@@ -983,7 +983,8 @@
         },
         "no_list": "No result was found in these options.",
         "no_info": "No information for this section.",
-        "other_reviews_for_same_movie": "Other reviews of the same movie"
+        "other_reviews_for_same_movie": "Other reviews of the same movie",
+        "like": "LIKE"
     },
     "delegations_jsx": {
         "delegations": "Delegations"

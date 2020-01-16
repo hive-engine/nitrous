@@ -1090,6 +1090,7 @@
         },
         "no_list": "목록이 존재하지 않습니다. 다른 조건을 선택하세요.",
         "no_info": "정보가 존재하지 않습니다.",
-        "other_reviews_for_same_movie": "같은 영화, 다른 리뷰"
+        "other_reviews_for_same_movie": "같은 영화, 다른 리뷰",
+        "like": "좋아요"
     }
 }

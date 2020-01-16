@@ -35,6 +35,10 @@ const UPDATE_OPTIONS = 'movie/UPDATE_OPTIONS';
 const REQUEST_NEW_LIST = 'movie/REQUEST_NEW_LIST';
 const CLEAR_MOVIE_LIST = 'movie/CLEAR_MOVIE_LIST';
 
+export const REQUEST_REVIEW_LIKE = 'movie/REQUEST_REVIEW_LIKE';
+const RECEIVE_REVIEW_LIKE = 'movie/RECEIVE_REVIEW_LIKE';
+const REQUEST_REVIEW_LIKE_END = 'movie/REQUEST_REVIEW_LIKE_END';
+
 export const defaultState = {
     options: {
         movies: {
@@ -69,6 +73,10 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_MOVIES:
         case REQUEST_REVIEWS:
             return state.set('loading', true);
+        case REQUEST_REVIEW_LIKE:
+            return state.set('loadingReviewLike', true);
+        case RECEIVE_REVIEW_LIKE:
+            return state; // TODO: Set necessary values
         case RECEIVE_SUMMARY:
             return state.set('summary', fromJS(payload.data));
         case RECEIVE_MOVIE:
@@ -167,6 +175,8 @@ export default function reducer(state = defaultState, action = {}) {
         case REQUEST_MOVIES_END:
         case REQUEST_REVIEWS_END:
             return state.set('loading', false);
+        case REQUEST_REVIEW_LIKE_END:
+            return state.set('loadingReviewLike', false);
         case UPDATE_OPTIONS:
             return state.setIn(['options', payload.type], fromJS(payload.data));
         case REQUEST_NEW_LIST:
@@ -262,6 +272,21 @@ export const actions = {
 
     requestReviewsEnd: () => ({
         type: REQUEST_REVIEWS_END,
+    }),
+
+    requestReviewLike: payload => ({
+        type: REQUEST_REVIEW_LIKE,
+        payload,
+    }),
+
+    receiveReviewLike: payload => ({
+        type: RECEIVE_REVIEW_LIKE,
+        payload,
+    }),
+
+    requestReviewLikeEnd: payload => ({
+        type: REQUEST_REVIEW_LIKE_END,
+        payload,
     }),
 
     requestReviewsForNewList: payload => ({

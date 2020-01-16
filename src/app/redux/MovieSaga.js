@@ -1,7 +1,8 @@
 import { delay } from 'redux-saga';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as movieReducer from './MovieReducer';
 import * as movieApi from 'app/utils/MovieApi';
+import * as CustomUtil from 'app/utils/CustomUtil';
 
 export const movieWatches = [
     takeLatest(movieReducer.REQUEST_SUMMARY, requestSummary),
@@ -18,6 +19,7 @@ export const movieWatches = [
         requestReviewsForNewList
     ),
     takeLatest(movieReducer.UPDATE_REVIEWS, requestReviews),
+    takeLatest(movieReducer.REQUEST_REVIEW_LIKE, requestReviewLike),
 ];
 
 function* requestSummary(action) {
@@ -187,4 +189,27 @@ function* requestReviewsForNewList(action) {
     } catch (error) {
         console.error(action.payload, error);
     }
+}
+
+function* requestReviewLike(action) {
+    const { author, permlink } = action.payload;
+
+    try {
+        const stateMovie = yield select(state => state.movie);
+
+        const token = yield call(CustomUtil.getToken, stateMovie);
+
+        const data = yield call(
+            movieApi.addTopPostLike,
+            author,
+            permlink,
+            token
+        );
+
+        yield put(movieReducer.actions.receiveReviewLike(data));
+    } catch (error) {
+        console.error(action.payload, error);
+    }
+
+    yield put(movieReducer.actions.requestReviewLikeEnd());
 }

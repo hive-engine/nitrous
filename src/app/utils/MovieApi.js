@@ -135,3 +135,17 @@ export async function getReviewsForNewList(
         return null;
     }
 }
+
+export async function addTopPostLike(author, permlink, token) {
+    try {
+        const response = await axios.post(
+            'https://tool.steem.world/AAA/AddTopPostLike',
+            { author, permlink, token }
+        );
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return -99;
+    }
+}

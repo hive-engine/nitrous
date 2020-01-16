@@ -6,3 +6,15 @@ export const SUBMIT_FORM_ID = 'submitStory';
 export const PROMOTED_POST_PAD_SIZE = 5;
 export const MOVIEDB_URL_PATTERN = /https:\/\/www\.themoviedb\.org\/(?:movie|tv)\/(?:\d+)/;
 export const LIST_MAX_SIZE = 20;
+export const ADMINS = [
+    'segyepark',
+    'segyepark.aaa',
+    'virus707',
+    'jayplayco',
+    'jayplay.aaa',
+    'jayplay.cur',
+    'skuld2000',
+    'triplea.cur',
+    'triplea.bot',
+];
+export const MODERATORS = ['hodolbak', 'hodolbak-aaa'];

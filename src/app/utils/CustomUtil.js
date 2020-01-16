@@ -1,3 +1,6 @@
+import * as steem from '@steemit/steem-js';
+import axios from 'axios';
+
 const movieImageBaseUrl = 'https://image.tmdb.org/t/p';
 
 export function convertUnixTimestampToDate(value) {
@@ -210,4 +213,133 @@ export function getRecentReviews(movieType, list) {
     return list
         .filter(o => o.MovieType === movieType)
         .sort((o, n) => n.AddDate - o.AddDate);
+}
+
+export async function signTransactionByState(state) {
+    const username = state.user.getIn(['current', 'username']);
+    if (!username) return null;
+
+    const postingKey = state.user.getIn([
+        'current',
+        'private_keys',
+        'posting_private',
+    ]);
+    if (!postingKey) return null;
+
+    return await signTransaction(username, postingKey.toWif());
+}
+
+export async function signTransaction(username, postingKey) {
+    const globals = await steem.api.getDynamicGlobalPropertiesAsync();
+
+    const head_block_number = globals['head_block_number'] & 0xffff;
+    const ref_block_prefix = parseInt(
+        globals['head_block_id'].substring(8, 16),
+        16
+    );
+    const now = new Date();
+    const expiration = new Date(now.getTime() + 10000);
+    const transaction = {
+        ref_block_num: head_block_number,
+        ref_block_prefix: ref_block_prefix,
+        expiration: expiration.toISOString().split('.')[0],
+        operations: [
+            [
+                'custom_json',
+                {
+                    required_auths: [],
+                    required_posting_auths: [username],
+                    id: 'authenticate',
+                    json: JSON.stringify({ app: 'triplea' }),
+                },
+            ],
+        ],
+        extensions: [],
+        signatures: [],
+    };
+
+    steem.auth.signTransaction(transaction, [postingKey]);
+    let signatures = transaction['signatures'];
+
+    for (let i = 0; i < signatures.length; ++i) {
+        let signature = signatures[i];
+        let s = '';
+        let h;
+        for (let j = 0; j < signature.length; ++j) {
+            h = signature[j].toString(16);
+            if (h.length < 2) {
+                h = '0' + h;
+            }
+            s += h;
+        }
+        signature = s;
+        signatures[i] = s;
+    }
+
+    transaction['signatures'] = signatures;
+
+    return transaction;
+}
+
+export function setLocalStorageWithExpiry(key, value, ttlInSecond) {
+    const now = new Date();
+
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttlInSecond * 1000,
+    };
+
+    localStorage.setItem(key, JSON.stringify(item));
+}
+
+export function getLocalStorageWithExpiry(key) {
+    const itemStr = localStorage.getItem(key);
+
+    if (!itemStr) {
+        return null;
+    }
+
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+    }
+
+    return item.value;
+}
+
+export async function getToken(state) {
+    try {
+        let token = getLocalStorageWithExpiry('AppToken');
+        if (token) return token;
+
+        const transaction = await signTransactionByState(state);
+        if (!transaction) return null;
+
+        const transactionPara = encodeURIComponent(JSON.stringify(transaction));
+        const response = await axios.get(
+            `https://tool.steem.world/AAA/GetToken?transaction=${
+                transactionPara
+            }`
+        );
+
+        if (!response.data) return null;
+
+        const expiresIn = response.data.ExpiresIn;
+        token = response.data.Token;
+
+        if (!expiresIn) return null;
+        if (!token) return null;
+
+        setLocalStorageWithExpiry('AppToken', token, expiresIn);
+
+        console.log(token);
+
+        return token;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
 }

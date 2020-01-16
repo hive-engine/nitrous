@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as userActions from 'app/redux/UserReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
+import { actions as movieActions } from 'app/redux/MovieReducer';
 import Voting from 'app/components/elements/Voting';
 import Reblog from 'app/components/elements/Reblog';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
@@ -35,8 +36,11 @@ import { GoogleAd } from 'app/components/elements/GoogleAd';
 import axios from 'axios';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import OtherReviewsOfSameMovie from 'app/components/elements/OtherReviewsOfSameMovie';
-import { MOVIEDB_URL_PATTERN } from 'shared/constants';
+import { MOVIEDB_URL_PATTERN, ADMINS, MODERATORS } from 'shared/constants';
 import AuthorRecentPosts from '../elements/AuthorRecentPosts';
+
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 function TimeAuthorCategory({ content, authorRepLog10, showTags }) {
     return (
@@ -99,6 +103,7 @@ class PostFull extends React.Component {
         showPromotePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
         showLuckyBox: PropTypes.func.isRequired,
+        requestReviewLike: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -296,6 +301,14 @@ class PostFull extends React.Component {
             });
         };
         this.props.showLuckyBox(uuid, locale, hideLuckyBoxIcon);
+    };
+
+    requestReviewLike = () => {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        this.props.requestReviewLike(author, permlink);
     };
 
     async showLuckyBoxIcon(username, author, permlink) {
@@ -600,7 +613,18 @@ class PostFull extends React.Component {
                         )}
                     </span>
                 )}
-
+                {(ADMINS.indexOf(username) > -1 ||
+                    MODERATORS.indexOf(username) > -1) && (
+                    <button
+                        className="Promote__button float-right button hollow tiny"
+                        onClick={this.requestReviewLike}
+                    >
+                        <FavoriteIcon
+                            style={{ fontSize: 11, marginBottom: -3 }}
+                        />{' '}
+                        {tt('review.like')}
+                    </button>
+                )}
                 {showPromote && (
                     <button
                         className="Promote__button float-right button hollow tiny"
@@ -744,6 +768,9 @@ export default connect(
                     params: { uuid, locale, hideLuckyBoxIcon },
                 })
             );
+        },
+        requestReviewLike: (author, permlink) => {
+            dispatch(movieActions.requestReviewLike({ author, permlink }));
         },
     })
 )(PostFull);
