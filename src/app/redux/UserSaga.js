@@ -95,8 +95,7 @@ function* shouldShowLoginWarning({ username, password }) {
         state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
     );
     if (!allowMasterPassword && !auth.isWif(password)) {
-        const accounts = yield api.getAccountsAsync([username]);
-        const account = accounts[0];
+        const account = (yield api.getAccountsAsync([username]))[0];
         const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
             .toPublicKey()
             .toString();

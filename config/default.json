@@ -6,7 +6,7 @@
     "directives": {
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
       "connectSrc": "https://servedby.revive-adserver.net https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
-      "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com",
+      "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
       "frameSrc": "'self' googleads.g.doubleclick.net https:",
@@ -59,6 +59,7 @@
   "conveyor_username": false,
   "pinned_posts_url": false,
   "wallet_url": "https://wallet.steemitdev.com",
+  "gpt_banned_tags": ["nsfw", "tante"],
   "google_ad_enabled": null,
   "google_ad_test": null,
   "google_ad_client": null,
@@ -72,6 +73,7 @@
       "every": 15
     }
   },
+  "video_ads_enabled": null,
   "gpt_enabled": null,
   "gpt_basic_slots": {
     "bottom-of-post": {
