@@ -215,11 +215,11 @@ export function getRecentReviews(movieType, list) {
         .sort((o, n) => n.AddDate - o.AddDate);
 }
 
-export async function signTransactionByState(state) {
-    const username = state.user.getIn(['current', 'username']);
+export async function signTransactionByState(stateUser) {
+    const username = stateUser.getIn(['current', 'username']);
     if (!username) return null;
 
-    const postingKey = state.user.getIn([
+    const postingKey = stateUser.getIn([
         'current',
         'private_keys',
         'posting_private',
@@ -310,12 +310,12 @@ export function getLocalStorageWithExpiry(key) {
     return item.value;
 }
 
-export async function getToken(state) {
+export async function getToken(stateUser) {
     try {
         let token = getLocalStorageWithExpiry('AppToken');
         if (token) return token;
 
-        const transaction = await signTransactionByState(state);
+        const transaction = await signTransactionByState(stateUser);
         if (!transaction) return null;
 
         const transactionPara = encodeURIComponent(JSON.stringify(transaction));

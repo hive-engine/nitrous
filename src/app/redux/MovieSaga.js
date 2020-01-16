@@ -195,9 +195,9 @@ function* requestReviewLike(action) {
     const { author, permlink } = action.payload;
 
     try {
-        const stateMovie = yield select(state => state.movie);
+        const stateUser = yield select(state => state.user);
 
-        const token = yield call(CustomUtil.getToken, stateMovie);
+        const token = yield call(CustomUtil.getToken, stateUser);
 
         const data = yield call(
             movieApi.addTopPostLike,
