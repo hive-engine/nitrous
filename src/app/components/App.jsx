@@ -181,7 +181,7 @@ class App extends React.Component {
                 ref="App_root"
             >
                 <div className="ad" onClick={this.goAd}>
-                    [AD]Travala 암호화폐로 유명호텔 10%싸게 예약하자
+                    [AD]Travala 암호화폐로 유명호텔 싸게 예약하자
                 </div>
                 <ConnectedSidePanel alignment="right" />
 
