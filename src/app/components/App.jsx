@@ -71,6 +71,10 @@ class App extends React.Component {
         );
     }
 
+    goAd = () => {
+        window.open('https://www.travala.com/ref/HVJ8T9');
+    };
+
     setShowBannerFalse = () => {
         this.setState({ showBanner: false });
     };
@@ -176,6 +180,9 @@ class App extends React.Component {
                 })}
                 ref="App_root"
             >
+                <div className="ad" onClick={this.goAd}>
+                    [AD]Travala 암호화폐로 유명호텔 10%싸게 예약하자
+                </div>
                 <ConnectedSidePanel alignment="right" />
 
                 {headerHidden ? null : (
