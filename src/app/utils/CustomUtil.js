@@ -335,8 +335,6 @@ export async function getToken(stateUser) {
 
         setLocalStorageWithExpiry('AppToken', token, expiresIn);
 
-        console.log(token);
-
         return token;
     } catch (e) {
         console.log(e);
