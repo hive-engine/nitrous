@@ -942,7 +942,8 @@ export default formId =>
             }) => {
                 // const post = state.global.getIn(['content', author + '/' + permlink])
                 const username = state.user.getIn(['current', 'username']);
-                const appDomain = state.app.getIn(['hostConfig', 'APP_DOMAIN']);
+                const hostConfig = state.app.get('hostConfig', Map()).toJS();
+                const appDomain = hostConfig['APP_DOMAIN'];
 
                 const isEdit = type === 'edit';
                 const isNew = /^submit_/.test(type);
@@ -1010,9 +1011,7 @@ export default formId =>
                 if (rtags.links.size) meta.links = rtags.links;
                 else delete meta.links;
 
-                meta.app = `${state.app
-                    .getIn(['hostConfig', 'APP_NAME'])
-                    .toLowerCase()}/0.1`;
+                meta.app = `${hostConfig['APP_NAME'].toLowerCase()}/0.1`;
                 if (isStory) {
                     meta.format = isHtml ? 'html' : 'markdown';
                 }
@@ -1025,7 +1024,7 @@ export default formId =>
                     return;
                 }
 
-                if (meta.tags && meta.tags.length > maxTag) {
+                if (meta.tags && meta.tags.length > hostConfig['APP_MAX_TAG']) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
                               rootCategory: originalPost.category,
@@ -1035,7 +1034,7 @@ export default formId =>
                         tt('reply_editor.use_limited_amount_of_tags', {
                             tagsLength: meta.tags.length,
                             includingCategory,
-                            maxTags: MAX_TAG,
+                            maxTags: hostConfig['APP_MAX_TAG'],
                         })
                     );
                     return;
@@ -1060,21 +1059,12 @@ export default formId =>
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
-                    if (
-                        state.app.getIn(
-                            ['hostConfig', 'SCOT_DEFAULT_BENEFICIARY_ACCOUNT'],
-                            false
-                        )
-                    ) {
+                    if (hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT']) {
                         beneficiaries.push({
-                            username: state.app.getIn([
-                                'hostConfig',
-                                'SCOT_DEFAULT_BENEFICIARY_ACCOUNT',
-                            ]),
-                            percent: state.app.getIn([
-                                'hostConfig',
-                                'SCOT_DEFAULT_BENEFICIARY_PERCENT',
-                            ]),
+                            username:
+                                hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT'],
+                            percent:
+                                hostConfig['SCOT_DEFAULT_BENEFICIARY_PERCENT'],
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
@@ -1110,10 +1100,8 @@ export default formId =>
                     ...linkProps,
                     category:
                         originalPost.category ||
-                        state.app.getIn(
-                            ['hostConfig', 'COMMUNITY_CATEGORY'],
-                            metaTags.first()
-                        ),
+                        hostConfig['COMMUNITY_CATEGORY'] ||
+                        metaTags.first(),
                     title,
                     body,
                     json_metadata: meta,
