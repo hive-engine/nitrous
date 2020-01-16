@@ -92,6 +92,10 @@ Whilst earning is not guaranteed and dependent on the quality of your content an
 
 We also share the best of the best on our [Twitter](https://twitter.com/Lotus_Medicine) and [Facebook](https://www.facebook.com/Natural-Medicine-On-Steem-1003470073174904/) accounts, giving your blogs even more exposure. 
 
+![](https://i.imgur.com/YXt6FtW.png)
+
+
+
 <a href="#Table_of_Contents">^</a>
 
 ### <span id="Payments">Payments</span>
