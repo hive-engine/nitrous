@@ -144,6 +144,11 @@ const SidePanel = ({
                 label: 'Telegram',
                 link: 'https://t.me/steemdiamond',
             },
+            {
+                value: 'diamond_discord',
+                label: 'Discord',
+                link: 'https://discord.gg/MrdkRBV',
+            },
         ],
         legal: [
             {
