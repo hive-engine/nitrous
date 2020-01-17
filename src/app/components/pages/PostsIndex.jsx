@@ -24,11 +24,13 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
+import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
 class PostsIndex extends React.Component {
     static propTypes = {
         discussions: PropTypes.object,
-        accounts: PropTypes.object,
+        feed_posts: PropTypes.object,
         status: PropTypes.object,
         routeParams: PropTypes.object,
         requestData: PropTypes.func,
@@ -67,9 +69,10 @@ class PostsIndex extends React.Component {
               : []
             : [];
         const notices = this.props.notices || [];
-        const topic_discussions = this.props.discussions
-            ? this.props.discussions.get(category || '')
-            : '';
+        const topic_discussions =
+            this.props.discussions != null
+                ? this.props.discussions.get(category || '')
+                : null;
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
@@ -215,7 +218,7 @@ class PostsIndex extends React.Component {
             account_name = order.slice(1);
             order = 'by_feed';
             topics_order = 'created';
-            posts = this.props.accounts.getIn([account_name, 'feed']) || List();
+            posts = this.props.feed_posts;
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
                 emptyText = (
@@ -325,6 +328,11 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
+                    {category !== 'feed' && (
+                        <MarkdownViewer
+                            text={tagHeaderMap[category] || tagHeaderMap['']}
+                        />
+                    )}
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
@@ -335,7 +343,7 @@ class PostsIndex extends React.Component {
                             ref="list"
                             posts={posts}
                             loading={fetching}
-                            anyPosts={true}
+                            anyPosts
                             category={category}
                             loadMore={this.loadMore}
                             showPinned={true}
@@ -354,9 +362,12 @@ class PostsIndex extends React.Component {
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
-                    {this.props.gptEnabled ? (
+                    {this.props.gptEnabled && allowAdsOnContent ? (
                         <div className="sidebar-ad">
-                            <GptAd type="Freestar" id="steemit_160x600_Right" />
+                            <GptAd
+                                type="Freestar"
+                                id="bsa-zone_1566495004689-0_123456"
+                            />
                         </div>
                     ) : null}
                     {this.props.reviveEnabled && mqLarge ? (
@@ -387,12 +398,12 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small>
-                    {this.props.gptEnabled ? (
+                    {this.props.gptEnabled && allowAdsOnContent ? (
                         <div>
                             <div className="sidebar-ad">
                                 <GptAd
                                     type="Freestar"
-                                    slotName="steemit_160x600_Left_1"
+                                    slotName="bsa-zone_1566494461953-7_123456"
                                 />
                             </div>
                             <div
@@ -401,7 +412,7 @@ class PostsIndex extends React.Component {
                             >
                                 <GptAd
                                     type="Freestar"
-                                    slotName="steemit_160x600_Left_2"
+                                    slotName="bsa-zone_1566494856923-9_123456"
                                 />
                             </div>
                         </div>
@@ -421,11 +432,21 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            // special case if user feed (vs. trending, etc)
+            let feed_posts;
+            if (ownProps.routeParams.category === 'feed') {
+                const account_name = ownProps.routeParams.order.slice(1);
+                feed_posts = state.global.getIn(
+                    ['accounts', account_name, 'feed'],
+                    List()
+                );
+            }
+
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
                 loading: state.app.get('loading'),
-                accounts: state.global.get('accounts'),
+                feed_posts,
                 username:
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),

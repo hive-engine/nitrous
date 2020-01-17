@@ -226,6 +226,7 @@ class PostsList extends React.Component {
                 );
             });
         };
+
         const renderSummary = items =>
             items.map((item, i) => {
                 const every = this.props.adSlots.in_feed_1.every;
@@ -318,7 +319,6 @@ export default connect(
             username,
             content,
             ignore_result,
-            pathname,
             nsfwPref,
             pinned,
             shouldSeeAds,

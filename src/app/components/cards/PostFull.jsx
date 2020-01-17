@@ -18,7 +18,6 @@ import TagList from 'app/components/elements/TagList';
 import Author from 'app/components/elements/Author';
 import { repLog10, parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import DMCAList from 'app/utils/DMCAList';
-import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
@@ -38,6 +37,7 @@ import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import OtherReviewsOfSameMovie from 'app/components/elements/OtherReviewsOfSameMovie';
 import { MOVIEDB_URL_PATTERN, ADMINS, MODERATORS } from 'shared/constants';
 import AuthorRecentPosts from '../elements/AuthorRecentPosts';
+import { allowDelete } from 'app/utils/StateFunctions';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -557,7 +557,7 @@ class PostFull extends React.Component {
             username !== undefined && post_content.get('depth') < 255;
         const showEditOption = username === author;
         const showDeleteOption =
-            username === author && content.stats.allowDelete && !_isPaidout;
+            username === author && allowDelete(post_content) && !_isPaidout;
 
         const authorRepLog10 = repLog10(content.author_reputation);
         const isPreViewCount =
@@ -676,12 +676,6 @@ class PostFull extends React.Component {
                                 />
                                 {content.children}
                             </Link>
-                        </span>
-                        <span className="PostFull__views">
-                            <PageViewsCounter
-                                hidden={false}
-                                sinceDate={isPreViewCount ? 'Dec 2016' : null}
-                            />
                         </span>
                         <ShareMenu menu={share_menu} />
                         <button
