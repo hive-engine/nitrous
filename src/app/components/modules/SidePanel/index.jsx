@@ -40,14 +40,13 @@ const SidePanel = ({
                     </a>
                 </li>
             );
-        } else {
-            const cn = ix === arr.length - 1 ? 'last' : null;
-            return (
-                <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
-                </li>
-            );
         }
+        const cn = ix === arr.length - 1 ? 'last' : null;
+        return (
+            <li key={i.value} className={cn}>
+                <Link to={i.link}>{i.label}</Link>
+            </li>
+        );
     };
 
     const sidePanelLinks = {
@@ -61,7 +60,7 @@ const SidePanel = ({
                 value: 'leodex',
                 label: 'SteemLeo DEX',
                 link: `https://dex.steemleo.com/market/SPORTS`,
-            },            
+            },
             {
                 value: 'steemengine',
                 label: 'Steem Engine',
@@ -147,7 +146,7 @@ const SidePanel = ({
                 label: 'Actifit',
                 link: 'https://actifit.io/signup?referrer=sportsbuy',
                 internal: true,
-            },           
+            },
         ],
         legal: [
             {
@@ -185,7 +184,7 @@ const SidePanel = ({
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
-                    {sidePanelLinks['extras'].map(makeLink)}
+                    {sidePanelLinks.extras.map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
