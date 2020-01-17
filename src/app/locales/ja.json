@@ -304,7 +304,7 @@
         "exceeds_maximum_length": "最大長を超えています (%(maxKb)sKB)",
         "including_the_category": "(カテゴリ'%(rootCategory)s'を含む)",
         "use_limited_amount_of_tags":
-            "合計で%(tagsLength)s個のタグがあります%(includingCategory)s。投稿とカテゴリの行には5つ以内にしてください。",
+            "合計で%(tagsLength)s個のタグがあります%(includingCategory)s。投稿とカテゴリの行には%(maxTags)sつ以内にしてください。",
         "are_you_sure_you_want_to_clear_this_form":
             "フォームの内容を消去してもよろしいですか？",
         "uploading": "アップロード中",
