@@ -91,9 +91,6 @@ export default class UserProfile extends React.Component {
 
         let order;
         switch (category) {
-            case 'feed':
-                order = 'by_feed';
-                break;
             case 'blog':
                 order = 'by_author';
                 break;
@@ -216,21 +213,12 @@ export default class UserProfile extends React.Component {
                     />
                 </div>
             );
-        } else if (
-            section === 'curation-rewards' ||
-            section === 'author-rewards' ||
-            section === 'permissions' ||
-            section === 'password'
-        ) {
-            walletClass = 'active';
-            tab_content = <div>Moved to wallet</div>;
         } else if (section === 'followers') {
             if (followers && followers.has('blog_result')) {
                 tab_content = (
                     <div>
                         <UserList
                             title={tt('user_profile.followers')}
-                            account={account}
                             users={followers.get('blog_result')}
                         />
                     </div>
@@ -241,7 +229,6 @@ export default class UserProfile extends React.Component {
                 tab_content = (
                     <UserList
                         title="Followed"
-                        account={account}
                         users={following.get('blog_result')}
                     />
                 );
@@ -518,16 +505,16 @@ export default class UserProfile extends React.Component {
                     'url(' + proxifyImageUrl(cover_image, '2048x512') + ')',
             };
         }
-        
+
         // A-ads styles
         const adStyle_300x250 = {
             width: '300px',
             height: '250px',
             border: '0',
-            padding: '0', 
-            overflow:'hidden'
+            padding: '0',
+            overflow: 'hidden',
         };
-        
+
         return (
             <div className="UserProfile">
                 <div className="UserProfile__banner row expanded">
@@ -620,7 +607,13 @@ export default class UserProfile extends React.Component {
                 <div>{tab_content}</div>
                 <div style={{ textAlign: 'center', marginBottom: 40 }}>
                     <div className="Post_footer__ad">
-                        <iframe data-aa="1249447" src="//ad.a-ads.com/1249447?size=300x250&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_300x250} allowtransparency="true"></iframe>
+                        <iframe
+                            data-aa="1249447"
+                            src="//ad.a-ads.com/1249447?size=300x250&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
+                            scrolling="no"
+                            style={adStyle_300x250}
+                            allowtransparency="true"
+                        />
                     </div>
                 </div>
             </div>

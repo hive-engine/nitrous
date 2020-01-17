@@ -40,14 +40,13 @@ const SidePanel = ({
                     </a>
                 </li>
             );
-        } else {
-            const cn = ix === arr.length - 1 ? 'last' : null;
-            return (
-                <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
-                </li>
-            );
         }
+        const cn = ix === arr.length - 1 ? 'last' : null;
+        return (
+            <li key={i.value} className={cn}>
+                <Link to={i.link}>{i.label}</Link>
+            </li>
+        );
     };
 
     const sidePanelLinks = {
@@ -58,13 +57,6 @@ const SidePanel = ({
                 link: `https://steem-engine.com/?p=market&t=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
-            },
-            {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
             },
         ],
         exchanges: [
@@ -165,45 +157,57 @@ const SidePanel = ({
         ],
     };
 
-// TODO: fix links to work with above 
+    // TODO: fix links to work with above
     return (
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
-                    {sidePanelLinks['extras'].map(makeLink)}
+                    {sidePanelLinks.extras.map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section" href="https://reggaetube.io">
+                        <a
+                            className="menu-section"
+                            href="https://reggaetube.io"
+                        >
                             ReggaeTube
                         </a>
                     </li>
                     <li>
                         <a href="https://www.reggaetube.io/#!/upload">
-                            Upload Video <Icon name="extlink" /> 
+                            Upload Video <Icon name="extlink" />
                         </a>
                     </li>
-                    <li> 
+                    <li>
                         <a className="menu-section">
                             Redeem {LIQUID_TOKEN_UPPERCASE}
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/artists" target="_blank">
-                            Artists <Icon name="extlink" /> 
+                        <a
+                            href="https://www.reggaesteem.com/artists"
+                            target="_blank"
+                        >
+                            Artists <Icon name="extlink" />
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/tourism" target="_blank">
-                            Tourism <Icon name="extlink" /> 
+                        <a
+                            href="https://www.reggaesteem.com/tourism"
+                            target="_blank"
+                        >
+                            Tourism <Icon name="extlink" />
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.reggaesteem.com/advertise" target="_blank">
-                            Advertise <Icon name="extlink" /> 
+                        <a
+                            href="https://www.reggaesteem.com/advertise"
+                            target="_blank"
+                        >
+                            Advertise <Icon name="extlink" />
                         </a>
-                    </li>              
+                    </li>
                     <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
@@ -211,21 +215,21 @@ const SidePanel = ({
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
                     <li>
-                        <a className="menu-section">
-                            Help
-                        </a>
+                        <a className="menu-section">Help</a>
                     </li>
                     <li>
-                        <a href="https://www.youtube.com/watch?v=-fSu4gWk5rY&list=PL2GAL5HEcoFVVSzFV1ayTGVzuc0jLFx14" target="_blank">
-                            How-to Videos <Icon name="extlink" /> 
+                        <a
+                            href="https://www.youtube.com/watch?v=-fSu4gWk5rY&list=PL2GAL5HEcoFVVSzFV1ayTGVzuc0jLFx14"
+                            target="_blank"
+                        >
+                            How-to Videos <Icon name="extlink" />
                         </a>
                     </li>
                     <li>
                         <a href="https://discord.gg/sZCXZ9K" target="_blank">
-                            Discord Support <Icon name="extlink" /> 
+                            Discord Support <Icon name="extlink" />
                         </a>
-                    </li> 
-                  
+                    </li>
                 </ul>
             </div>
         </div>

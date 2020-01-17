@@ -22,11 +22,13 @@ import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector'
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
+import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
+import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
 class PostsIndex extends React.Component {
     static propTypes = {
         discussions: PropTypes.object,
-        accounts: PropTypes.object,
+        feed_posts: PropTypes.object,
         status: PropTypes.object,
         routeParams: PropTypes.object,
         requestData: PropTypes.func,
@@ -65,7 +67,10 @@ class PostsIndex extends React.Component {
               : []
             : [];
         const notices = this.props.notices || [];
-        const topic_discussions = this.props.discussions.get(category || '');
+        const topic_discussions =
+            this.props.discussions != null
+                ? this.props.discussions.get(category || '')
+                : null;
         if (!topic_discussions) return { posts: List(), promotedPosts: List() };
         const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
@@ -211,7 +216,7 @@ class PostsIndex extends React.Component {
             account_name = order.slice(1);
             order = 'by_feed';
             topics_order = 'trending';
-            posts = this.props.accounts.getIn([account_name, 'feed']) || List();
+            posts = this.props.feed_posts;
             const isMyAccount = this.props.username === account_name;
             if (isMyAccount) {
                 emptyText = (
@@ -257,29 +262,30 @@ class PostsIndex extends React.Component {
         const fetching = (status && status.fetching) || this.props.loading;
         const { showSpam } = this.state;
 
-        const topicDiscussions = discussions.get(category || '');
-        
+        const topicDiscussions =
+            discussions != null ? discussions.get(category || '') : null;
+
         // A-ads styles
-       const adStyle_200x200 = {
+        const adStyle_200x200 = {
             width: '200px',
             height: '200px',
             border: '0',
-            padding: '0', 
-            overflow:'hidden'
+            padding: '0',
+            overflow: 'hidden',
         };
         const adStyle_200x90 = {
             width: '200px',
             height: '90px',
             border: '0',
-            padding: '0', 
-            overflow:'hidden'
+            padding: '0',
+            overflow: 'hidden',
         };
         const adStyle_728x90 = {
             width: '728px',
             height: '90px',
             border: '0',
-            padding: '0', 
-            overflow:'hidden'
+            padding: '0',
+            overflow: 'hidden',
         };
 
         // If we're at one of the four sort order routes without a tag filter,
@@ -328,8 +334,6 @@ class PostsIndex extends React.Component {
             process.env.BROWSER &&
             window.matchMedia('screen and (min-width: 75em)').matches;
         return (
-            
-            
             <div
                 className={
                     'PostsIndex row' +
@@ -349,7 +353,7 @@ class PostsIndex extends React.Component {
                                     order={topics_order}
                                     current={category}
                                     categories={categories}
-                                    compact={true}
+                                    compact
                                     levels={max_levels}
                                 />
                             </span>
@@ -365,13 +369,26 @@ class PostsIndex extends React.Component {
                             <ArticleLayoutSelector />
                         </div>
                     </div>
-                    
-                    
-                    <div style={{ textAlign: 'center' , marginBottom: 10 }}>
-                        <strong>FEATURE VIDEO: <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">Squad Goals</a></strong> by <a href="https://reggaesteem.io/@takeova">@Takeova</a> & <a href="https://reggaesteem.io/@stinezent">@StinezEnt</a>
+
+                    <div style={{ textAlign: 'center', marginBottom: 10 }}>
+                        <strong>
+                            FEATURE VIDEO:{' '}
+                            <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">
+                                Squad Goals
+                            </a>
+                        </strong>{' '}
+                        by{' '}
+                        <a href="https://reggaesteem.io/@takeova">@Takeova</a> &{' '}
+                        <a href="https://reggaesteem.io/@stinezent">
+                            @StinezEnt
+                        </a>
                     </div>
-                   
-                    
+
+                    {category !== 'feed' && (
+                        <MarkdownViewer
+                            text={tagHeaderMap[category] || tagHeaderMap['']}
+                        />
+                    )}
                     <hr className="articles__hr" />
                     {!fetching &&
                     (posts && !posts.size) &&
@@ -382,7 +399,7 @@ class PostsIndex extends React.Component {
                             ref="list"
                             posts={posts}
                             loading={fetching}
-                            anyPosts={true}
+                            anyPosts
                             category={category}
                             loadMore={this.loadMore}
                             showPinned={true}
@@ -400,16 +417,27 @@ class PostsIndex extends React.Component {
                         </div>
                     ) : null}
                     <div className="sidebar-ad">
-                            <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj"><img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" /></a>    
+                        <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">
+                            <img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" />
+                        </a>
                     </div>
                     <br />
                     <div className="sidebar-ad">
-                        <iframe data-aa="1247599" src="//ad.a-ads.com/1247599?size=200x200&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x200} allowtransparency="true"></iframe>
+                        <iframe
+                            data-aa="1247599"
+                            src="//ad.a-ads.com/1247599?size=200x200&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
+                            scrolling="no"
+                            style={adStyle_200x200}
+                            allowtransparency="true"
+                        />
                     </div>
                     <Notices notices={this.props.notices} />
-                    {this.props.gptEnabled ? (
+                    {this.props.gptEnabled && allowAdsOnContent ? (
                         <div className="sidebar-ad">
-                            <GptAd type="Freestar" id="steemit_160x600_Right" />
+                            <GptAd
+                                type="Freestar"
+                                id="bsa-zone_1566495004689-0_123456"
+                            />
                         </div>
                     ) : null}
                     {this.props.reviveEnabled && mqLarge ? (
@@ -441,15 +469,21 @@ class PostsIndex extends React.Component {
                     </small>
                     <div style={{ textAlign: 'center', marginTop: 20 }}>
                         <div className="sidebar-ad">
-                            <iframe data-aa="1249451" src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333" scrolling="no" style={adStyle_200x90} allowtransparency="true"></iframe>
+                            <iframe
+                                data-aa="1249451"
+                                src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
+                                scrolling="no"
+                                style={adStyle_200x90}
+                                allowtransparency="true"
+                            />
                         </div>
                     </div>
-                    {this.props.gptEnabled ? (
+                    {this.props.gptEnabled && allowAdsOnContent ? (
                         <div>
                             <div className="sidebar-ad">
                                 <GptAd
                                     type="Freestar"
-                                    slotName="steemit_160x600_Left_1"
+                                    slotName="bsa-zone_1566494461953-7_123456"
                                 />
                             </div>
                             <div
@@ -458,7 +492,7 @@ class PostsIndex extends React.Component {
                             >
                                 <GptAd
                                     type="Freestar"
-                                    slotName="steemit_160x600_Left_2"
+                                    slotName="bsa-zone_1566494856923-9_123456"
                                 />
                             </div>
                         </div>
@@ -478,11 +512,21 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            // special case if user feed (vs. trending, etc)
+            let feed_posts;
+            if (ownProps.routeParams.category === 'feed') {
+                const account_name = ownProps.routeParams.order.slice(1);
+                feed_posts = state.global.getIn(
+                    ['accounts', account_name, 'feed'],
+                    List()
+                );
+            }
+
             return {
                 discussions: state.global.get('discussion_idx'),
                 status: state.global.get('status'),
                 loading: state.app.get('loading'),
-                accounts: state.global.get('accounts'),
+                feed_posts,
                 username:
                     state.user.getIn(['current', 'username']) ||
                     state.offchain.get('account'),
