@@ -40,14 +40,13 @@ const SidePanel = ({
                     </a>
                 </li>
             );
-        } else {
-            const cn = ix === arr.length - 1 ? 'last' : null;
-            return (
-                <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
-                </li>
-            );
         }
+        const cn = ix === arr.length - 1 ? 'last' : null;
+        return (
+            <li key={i.value} className={cn}>
+                <Link to={i.link}>{i.label}</Link>
+            </li>
+        );
     };
 
     const sidePanelLinks = {
@@ -125,12 +124,14 @@ const SidePanel = ({
             {
                 value: 'faq',
                 label: 'FAQ',
-                link: 'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq',
+                link:
+                    'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/natural-medicine-faq',
             },
             {
                 value: 'manifesto',
                 label: 'Manifesto',
-                link: 'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary',
+                link:
+                    'https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary',
             },
         ],
         legal: [
@@ -169,13 +170,11 @@ const SidePanel = ({
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
-                    {sidePanelLinks['extras'].map(makeLink)}
+                    {sidePanelLinks.extras.map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Community
-                        </a>
+                        <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
