@@ -179,7 +179,7 @@ async function addAccountToState(state, account) {
 
 export async function attachScotData(url, state) {
     let urlParts = url.match(
-        /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
+        /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
     if (urlParts) {
         const feedType = urlParts[1];
@@ -360,15 +360,21 @@ export async function getContentAsync(author, permlink) {
 
 export async function getStateAsync(url) {
     // strip off query string
-    const path = url.split('?')[0];
+    let path = url.split('?')[0];
+
+    // strip off leading and trailing slashes
+    if (path.length > 0 && path[0] == '/')
+        path = path.substring(1, path.length);
+    if (path.length > 0 && path[path.length - 1] == '/')
+        path = path.substring(0, path.length - 1);
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded =
-        !url.match(
-            /^[\/]?(trending|hot|created|promoted|payout|payout_comments)($|\/$|\/([^\/]+)\/?$)/
+        !path.match(
+            /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
-        !url.match(
-            /^[\/]?@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/
+        !path.match(
+            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/
         );
 
     let raw = steemitApiStateNeeded
@@ -386,10 +392,9 @@ export async function getStateAsync(url) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(url, raw);
+    await attachScotData(path, raw);
 
     const cleansed = stateCleaner(raw);
-
     return cleansed;
 }
 

@@ -92,9 +92,6 @@ export default class UserProfile extends React.Component {
 
         let order;
         switch (category) {
-            case 'feed':
-                order = 'by_feed';
-                break;
             case 'blog':
                 order = 'by_author';
                 break;
@@ -228,22 +225,12 @@ export default class UserProfile extends React.Component {
                     />
                 </div>
             );
-        }
-        if (
-            section === 'curation-rewards' ||
-            section === 'author-rewards' ||
-            section === 'permissions' ||
-            section === 'password'
-        ) {
-            walletClass = 'active';
-            tab_content = <div>Moved to wallet</div>;
         } else if (section === 'followers') {
             if (followers && followers.has('blog_result')) {
                 tab_content = (
                     <div>
                         <UserList
                             title={tt('user_profile.followers')}
-                            account={account}
                             users={followers.get('blog_result')}
                         />
                     </div>
@@ -254,7 +241,6 @@ export default class UserProfile extends React.Component {
                 tab_content = (
                     <UserList
                         title="Followed"
-                        account={account}
                         users={following.get('blog_result')}
                     />
                 );

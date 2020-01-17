@@ -30,9 +30,6 @@ const RECEIVE_META = 'global/RECEIVE_META';
 const SET = 'global/SET';
 const REMOVE = 'global/REMOVE';
 const UPDATE = 'global/UPDATE';
-const SET_META_DATA = 'global/SET_META_DATA';
-const CLEAR_META = 'global/CLEAR_META';
-const CLEAR_META_ELEMENT = 'global/CLEAR_META_ELEMENT';
 const FETCH_JSON = 'global/FETCH_JSON';
 const FETCH_JSON_RESULT = 'global/FETCH_JSON_RESULT';
 const SHOW_DIALOG = 'global/SHOW_DIALOG';
@@ -174,49 +171,6 @@ export default function reducer(state = defaultState, action = {}) {
             }, state);
         }
 
-        case RECEIVE_COMMENT: {
-            const {
-                author,
-                permlink,
-                parent_author = '',
-                parent_permlink = '',
-                title = '',
-                body,
-            } = payload.op;
-            const key = author + '/' + permlink;
-            let updatedState = state.updateIn(
-                ['content', key],
-                Map(emptyContent),
-                r =>
-                    r.merge({
-                        author,
-                        permlink,
-                        parent_author,
-                        parent_permlink,
-                        title: title.toString('utf-8'),
-                        body: body.toString('utf-8'),
-                    })
-            );
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'replies'],
-                    List(),
-                    r => r.insert(0, key)
-                );
-                const children = updatedState.getIn(
-                    ['content', parent_key, 'replies'],
-                    List()
-                ).size;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'children'],
-                    0,
-                    () => children
-                );
-            }
-            return updatedState;
-        }
-
         case RECEIVE_CONTENT: {
             const content = fromJS(payload.content);
             const key = content.get('author') + '/' + content.get('permlink');
@@ -318,6 +272,8 @@ export default function reducer(state = defaultState, action = {}) {
                 endOfData,
             } = payload;
             let new_state;
+
+            // append incoming post keys to proper content list
             if (
                 order === 'by_author' ||
                 order === 'by_feed' ||
@@ -329,8 +285,8 @@ export default function reducer(state = defaultState, action = {}) {
                 new_state = state.updateIn(key, List(), list => {
                     return list.withMutations(posts => {
                         data.forEach(value => {
-                            const key2 = `${value.author}/${value.permlink}`;
-                            if (!posts.includes(key2)) posts.push(key2);
+                            const key = `${value.author}/${value.permlink}`;
+                            if (!posts.includes(key)) posts.push(key);
                         });
                     });
                 });
@@ -340,15 +296,15 @@ export default function reducer(state = defaultState, action = {}) {
                     list => {
                         return list.withMutations(posts => {
                             data.forEach(value => {
-                                const entry = `${value.author}/${
-                                    value.permlink
-                                }`;
-                                if (!posts.includes(entry)) posts.push(entry);
+                                const key = `${value.author}/${value.permlink}`;
+                                if (!posts.includes(key)) posts.push(key);
                             });
                         });
                     }
                 );
             }
+
+            // append content stats data to each post
             new_state = new_state.updateIn(['content'], content => {
                 return content.withMutations(map => {
                     data.forEach(value => {
@@ -359,6 +315,7 @@ export default function reducer(state = defaultState, action = {}) {
                     });
                 });
             });
+
             new_state = new_state.updateIn(
                 ['status', category || '', order],
                 () => {
@@ -460,22 +417,6 @@ export default function reducer(state = defaultState, action = {}) {
             return state.updateIn(key, notSet, updater);
         }
 
-        case SET_META_DATA: {
-            const { id, meta } = payload;
-            return state.setIn(['metaLinkData', id], fromJS(meta));
-        }
-
-        case CLEAR_META: {
-            return state.deleteIn(['metaLinkData', payload.id]);
-        }
-
-        case CLEAR_META_ELEMENT: {
-            const { formId, element } = payload;
-            return state.updateIn(['metaLinkData', formId], data =>
-                data.remove(element)
-            );
-        }
-
         case FETCH_JSON: {
             return state;
         }
@@ -525,11 +466,6 @@ export const receiveAccounts = payload => ({
 
 export const syncPinnedPosts = payload => ({
     type: SYNC_PINNED_POSTS,
-    payload,
-});
-
-export const receiveComment = payload => ({
-    type: RECEIVE_COMMENT,
     payload,
 });
 
@@ -596,21 +532,6 @@ export const remove = payload => ({
 
 export const update = payload => ({
     type: UPDATE,
-    payload,
-});
-
-export const setMetaData = payload => ({
-    type: SET_META_DATA,
-    payload,
-});
-
-export const clearMeta = payload => ({
-    type: CLEAR_META,
-    payload,
-});
-
-export const clearMetaElement = payload => ({
-    type: CLEAR_META_ELEMENT,
     payload,
 });
 
