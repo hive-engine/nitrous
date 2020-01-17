@@ -22,17 +22,6 @@ export default function ServerHTML({
     return (
         <html lang="en">
             <head>
-                
-                <!-- Global site tag (gtag.js) - Google Analytics -->
-                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123140076-3"></script>
-                <script>
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-
-                  gtag('config', 'UA-123140076-3');
-                </script>
-
                 <meta charSet="utf-8" />
                 <meta
                     name="viewport"
@@ -232,8 +221,12 @@ export default function ServerHTML({
                     />
                 ) : null}
                 <title>{page_title}</title>
-                
-                <script data-ad-client="ca-pub-5317992226603818" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+                <script
+                    data-ad-client="ca-pub-5317992226603818"
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                />
             </head>
             <body>
                 {
