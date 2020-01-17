@@ -146,7 +146,7 @@ span.Header__hamburger.toggle-menu {
   color: #D2AE63;
   @include themify($themes) {
       border-bottom: themed('borderLight');
-  }  
+  }
   @include MQ(M) {
     text-align: center;
   }
@@ -159,7 +159,7 @@ span.Header__hamburger.toggle-menu {
     &:hover, &:focus {
       color: #ccc;
     }
-  }  
+  }
 }
 
 .announcement-banner__text {

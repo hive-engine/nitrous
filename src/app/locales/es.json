@@ -307,7 +307,7 @@
         "exceeds_maximum_length": "Excede la capacidad máxima (%(maxKb)sKB)",
         "including_the_category": "(incluyendo categoría '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo 5 tags en tu post y en la línea de categorías",
+            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo %(maxTags)s tags en tu post y en la línea de categorías",
         "are_you_sure_you_want_to_clear_this_form":
             "¿Estás seguro de que quieres limpiar este formulario?",
         "uploading": "Subiendo",

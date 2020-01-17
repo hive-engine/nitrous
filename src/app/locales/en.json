@@ -271,6 +271,7 @@
         "change_account_password": "Change Account Password",
         "vote_for_witnesses": "Vote for Witnesses",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
         "sign_up": "Sign up",
@@ -287,7 +288,8 @@
         "intro_tagline": "Your voice is worth something",
         "intro_paragraph":
             "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
-        "jobs": "Jobs at Steemit"
+        "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals"
     },
     "main_menu": {
         "hot": "Hot",
@@ -299,7 +301,7 @@
         "including_the_category":
             " (including the category '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "You have %(tagsLength)s tags total%(includingCategory)s. Please use only 5 in your post and category line.",
+            "You have %(tagsLength)s tags total%(includingCategory)s. Please use only %(maxTags)s in your post and category line.",
         "are_you_sure_you_want_to_clear_this_form":
             "Are you sure you want to exit the comment editor?",
         "uploading": "Uploading...",
