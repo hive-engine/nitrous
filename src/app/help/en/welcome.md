@@ -4,9 +4,9 @@
 ![](https://i.imgur.com/nxeSc65.png)
 </div>
 
-**Natural Medicine is a social media for enthusiasts of natural health - from herbalism and essential oils, to food as medicine, meditation and spirituality, as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centred practices.**
+**Natural Medicine is a social media platform for enthusiasts of natural health; from herbalism and essential oils, food as medicine, meditation and spirituality - as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centered practices.**
 
-Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts below, which provide more information about what kind of topics are supported. They are written by our bloggers, for our bloggers.
+Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts, which provide more information about what kind of topics are supported. They are written by our bloggers, for our bloggers.
 
 - [Lotus for Vegans](https://steempeak.com/naturalmedicine/@plantstoplanks/lotus-coin-for-vegans-communities-coming-together) by @plantstoplanks
 - [Lotus for Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
@@ -15,18 +15,18 @@ Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as
 - [Lotus for Scientists](https://steemit.com/naturalmedicine/@alchemage/lotus-token-for-scientists-a-call-for-more-science-in-the-natural-medicine-community) by @alchemage
 - [Lotus For Yogis](https://www.naturalmedicine.io/yoga/@naturalmedicine/get-paid-instantly-for-writing-about-yoga) by @riverflows
 
-Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for STEEM, the token for the STEEM blockchain, and into mainstream currencies such as USD. You can read more about how to do that [here](). **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
+Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for STEEM (the token for the STEEM blockchain)and into mainstream currencies such as USD. **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
 <div style="text-align: center;">
 
 ![](https://i.imgur.com/idnZZvl.png)
 
 </div>
 
-Natural Medicine offers free accounts with [delegated LOTUS](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe) to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we're very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other interactions on the blockchain.***
+Natural Medicine offers free accounts with [delegated LOTUS](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe) to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we are very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other transactions on the blockchain.***
 
 Once you have signed in, you will then be able to use the same keys to sign in to any of the Steem front ends, such as [Steempeak](), which we recommend for non natural medicine related content, saving drafts and more. We call these various ways to interact with the Steem blockchain 'front ends' and 'dapps' or decentralised apps. There's something on the Steem blockchain for everyone!
 
-**Below you'll find some more information about the various intricacies of Natural Medicine, it's reward system, and the it's link to the STEEM platform. For more information, please feel free to join our Discord by clicking [here](https://discord.gg/2pwc5Gf). There is always a friendly person to help you out!**
+**Below you'll find some more information about the various intricacies of Natural Medicine, it's reward system, and its link to the STEEM platform. For more information, please feel free to join our Discord by clicking [here](https://discord.gg/2pwc5Gf). There is always a friendly person to help you out!**
 
 *Let's start by sharing some posts which provide answers to common questions.*
 
@@ -106,7 +106,7 @@ Payouts are made 7 days after the post/comment is created. You can claim your re
 
 ### <span id="Upvotes_and_Downvotes">Upvotes and Downvotes</span>
 
-Upvotes are Natural Medicine's way of saying you like someone's post or comment. To upvote, click on the *Upvote* icon at the bottom of the post/comment. This will reward the post with LOTUS. **If you also have Steem invested, it will upvote in Steem too. Notice that comments and upvotes on Natural Medicine will also appear on the other front ends.** Don't worry if you get a downvote - they are rare, and usually counted by upvotes. 
+Upvotes are Natural Medicine's way of saying you like someone's post or comment. To upvote, click on the *Upvote* icon at the bottom of the post/comment. This will reward the post with LOTUS. **If you also have Steem invested, it will upvote in Steem too. Notice that comments and upvotes on Natural Medicine will also appear on the other front ends.** Don't worry if you get a downvote - they are rare, and usually countered by upvotes. 
 
 Our accounts will warn you if they're going to downvote you, and we only downvote if you've plagiarised or wrote a really terrible post just for the rewards! Be mindful about the quality we expect and read more about our posting guidelines [here](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes). We're happy to negotiate with you should you recieve a downvote you think you don't deserve - simply pop into our [Discord](https://discord.gg/2pwc5Gf) and ask there.
 
@@ -128,11 +128,11 @@ You will be able to see your Steem rewards for each post if you log on to Steemp
 
 **Steempower** or **LotusPower** is also a reward on posts. Exchanging Steem for Steem Power is called "Powering Up" or "Staking". More 'steem' or 'lotus' power is good! You will then: 
 
-- Have greater voting power (STU)
-- Receive more curation rewards when voting
-- Be able to do more actions (transactions) on the blockchain having more 'Resource Credits'. 
+- Have greater voting power (STU),
+- Receive more curation rewards when voting,
+- and be able to do more actions (transactions) on the blockchain having more 'Resource Credits'. 
 
-If someone [delegates]() to you (either Steem or Lotus) you'll also have a little bit more 'power' whilst that delegation is activated. It's like being lent more cash to play with - and it can be taken back any time. 
+If someone [delegates](https://naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe) to you (either Steem or Lotus) you'll also have a little bit more 'power' whilst that delegation is activated. It's like being lent more cash to play with - and it can be taken back any time. 
 
 **Steem Dollars** is another Steem token which is often rewarded on posts. You can send these to your bank account via a cryptocurrency wallet. Read more about that [here](). *Link Coming*
 
