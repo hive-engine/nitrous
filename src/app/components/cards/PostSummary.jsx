@@ -25,6 +25,8 @@ import {
     INTERLEAVE_PROMOTED,
     POSTED_VIA_NITROUS_ICON,
 } from 'app/client_config';
+import { hasNsfwTag } from 'app/utils/StateFunctions';
+import { repLog10 } from 'app/utils/ParsersAndFormatters';
 
 class PostSummary extends React.Component {
     static propTypes = {
@@ -111,9 +113,10 @@ class PostSummary extends React.Component {
             );
         }
 
-        const { gray, authorRepLog10, flagWeight, isNsfw } = content
-            .get('stats', Map())
-            .toJS();
+        const { gray } = content.get('stats', Map()).toJS();
+        const authorRepLog10 = repLog10(content.get('author_reputation'));
+        const isNsfw = hasNsfwTag(content);
+        const special = content.get('special');
         const pinned = content.get('pinned');
 
         const isPromoted =
@@ -264,11 +267,7 @@ class PostSummary extends React.Component {
         const content_footer = (
             <div className="PostSummary__footer">
                 <Voting post={post} showList={true} />
-                <VotesAndComments
-                    post={post}
-                    commentsLink={comments_url}
-                    showVotes={false}
-                />
+                <VotesAndComments post={post} commentsLink={comments_url} />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog
@@ -285,11 +284,7 @@ class PostSummary extends React.Component {
         const summary_footer = (
             <div className="articles__summary-footer">
                 <Voting post={post} showList={true} />
-                <VotesAndComments
-                    post={post}
-                    commentsLink={comments_url}
-                    showVotes={false}
-                />
+                <VotesAndComments post={post} commentsLink={comments_url} />
                 <span className="PostSummary__time_author_category">
                     {!archived && (
                         <Reblog
