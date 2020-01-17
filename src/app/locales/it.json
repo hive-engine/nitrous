@@ -292,7 +292,7 @@
         "whitepaper": "Steem Whitepaper",
         "intro_tagline": "Il denaro parla",
         "intro_paragraph":
-            "La tua voce vale qualcosa. Entra nella comunità che ti pagare per pubblicare e curare contenuti di alta qualità.",
+            "La tua voce vale qualcosa. Entra nella comunità che ti paga per pubblicare e curare contenuti di alta qualità.",
         "jobs": "Jobs at Steemit",
         "witnesses": "Witness"
     },
@@ -305,7 +305,7 @@
         "exceeds_maximum_length": "Supera la grandezza massima (%(maxKb)sKB)",
         "including_the_category": " (inclusa la categoria '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Hai %(tagsLength)s tag in totale %(includingCategory)s. Usane solo 5 nel tuo post e nella linea delle categorie.",
+            "Hai %(tagsLength)s tag in totale %(includingCategory)s. Usane solo %(maxTags)s nel tuo post e nella linea delle categorie.",
         "are_you_sure_you_want_to_clear_this_form":
             "Sicuro di voler cancellare questo form?",
         "uploading": "Caricamento",
