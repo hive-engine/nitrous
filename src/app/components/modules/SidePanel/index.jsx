@@ -40,14 +40,13 @@ const SidePanel = ({
                     </a>
                 </li>
             );
-        } else {
-            const cn = ix === arr.length - 1 ? 'last' : null;
-            return (
-                <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
-                </li>
-            );
         }
+        const cn = ix === arr.length - 1 ? 'last' : null;
+        return (
+            <li key={i.value} className={cn}>
+                <Link to={i.link}>{i.label}</Link>
+            </li>
+        );
     };
 
     const sidePanelLinks = {
@@ -115,12 +114,16 @@ const SidePanel = ({
             {
                 value: 'whitepaper',
                 label: 'Whitepaper',
-                link: 'https://www.steemace.io/steemace/@steem-ace/a-new-scot-tribe-on-steem-steemace-com-for-gaming-content-or-over-100k-sp-7-5k-pal-and-120-splinterlands-beta-booster-to-reward',
+                link:
+                    '/@steem-ace/a-new-scot-tribe-on-steem-steemace-com-for-gaming-content-or-over-100k-sp-7-5k-pal-and-120-splinterlands-beta-booster-to-reward',
+                internal: true,
             },
             {
                 value: 'guidelines',
                 label: 'Content Guidelines',
-                link: 'https://www.steemace.io/steemace/@steem-ace/steemace-is-for-gaming-content-what-is-gaming-content-updated-version',
+                link:
+                    '/@steem-ace/steemace-is-for-gaming-content-what-is-gaming-content-updated-version',
+                internal: true,
             },
         ],
         legal: [
@@ -159,17 +162,15 @@ const SidePanel = ({
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
-                    {sidePanelLinks['extras'].map(makeLink)}
+                    {sidePanelLinks.extras.map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            Community
-                        </a>
+                        <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['community'].map(makeLink)}
                 </ul>
-                
+
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
@@ -178,12 +179,10 @@ const SidePanel = ({
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
                 </ul>
-                
+
                 <ul className="vertical menu">
                     <li>
-                        <a className="menu-section">
-                            About
-                        </a>
+                        <a className="menu-section">About</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
                 </ul>
