@@ -144,7 +144,7 @@ class MarkdownViewer extends Component {
         // HtmlReady inserts ~~~ embed:${id} type ~~~
         for (let section of cleanText.split('~~~ embed:')) {
             const match = section.match(
-                /^([A-Za-z0-9\?\=\_\-\/\.]+) (youtube|vimeo|twitch|dtube)\s?(\d+)? ~~~/
+                /^([A-Za-z0-9\?\=\_\-\/\.]+) (youtube|vimeo|twitch|dtube|threespeak)\s?(\d+)? ~~~/
             );
             if (match && match.length >= 3) {
                 const id = match[1];
@@ -164,12 +164,27 @@ class MarkdownViewer extends Component {
                             allowFullScreen="true"
                         />
                     );
+                } else if (type === 'threespeak') {
+                    const url = `https://3speak.online/embed?v=${id}`;
+                    sections.push(
+                        <div className="videoWrapper" key={idx++}>
+                            <iframe
+                                src={url}
+                                width={w}
+                                height={h}
+                                frameBorder="0"
+                                webkitallowfullscreen
+                                mozallowfullscreen
+                                allowFullScreen
+                            />
+                        </div>
+                    );
                 } else if (type === 'vimeo') {
                     const url = `https://player.vimeo.com/video/${id}#t=${
                         startTime
                     }s`;
                     sections.push(
-                        <div className="videoWrapper">
+                        <div className="videoWrapper" key={idx++}>
                             <iframe
                                 key={idx++}
                                 src={url}
@@ -185,7 +200,7 @@ class MarkdownViewer extends Component {
                 } else if (type === 'twitch') {
                     const url = `https://player.twitch.tv/${id}`;
                     sections.push(
-                        <div className="videoWrapper">
+                        <div className="videoWrapper" key={idx++}>
                             <iframe
                                 key={idx++}
                                 src={url}
@@ -199,7 +214,7 @@ class MarkdownViewer extends Component {
                 } else if (type === 'dtube') {
                     const url = `https://emb.d.tube/#!/${id}`;
                     sections.push(
-                        <div className="videoWrapper">
+                        <div className="videoWrapper" key={idx++}>
                             <iframe
                                 key={idx++}
                                 src={url}

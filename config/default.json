@@ -4,9 +4,9 @@
   "gtag_measurement_id": false,
   "helmet": {
     "directives": {
-      "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
+      "childSrc": "'self' 3speak.online emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
       "connectSrc": "https://request-global.czilladx.com https://servedby.revive-adserver.net https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
-      "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com",
+      "defaultSrc": "tpc.googlesyndication.com 'self' img.3speakcontent.online emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
       "frameSrc": "'self' googleads.g.doubleclick.net https:",
