@@ -59,12 +59,8 @@
   "conveyor_username": false,
   "pinned_posts_url": false,
   "wallet_url": "https://wallet.steemitdev.com",
-<<<<<<< HEAD
   "google_ad_enabled": true,
-=======
   "gpt_banned_tags": ["nsfw", "tante"],
-  "google_ad_enabled": null,
->>>>>>> master
   "google_ad_test": null,
   "google_ad_client": "ca-pub-1316865473229920",
   "google_ad_slots": {
