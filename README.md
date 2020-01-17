@@ -23,7 +23,7 @@ Change `src/app/assets/images/favicons` with your own, and also change
 Condenser is the react.js web interface to the world's first and best
 blockchain-based social media platform, steemit.com.  It uses
 [STEEM](https://github.com/steemit/steem), a blockchain powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
-applications.   
+applications.
 
 ## Installation
 
