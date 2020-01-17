@@ -7,15 +7,9 @@ import { SCOT_DENOM } from 'app/client_config';
 const FLAG_WEIGHT = 2 - Math.min(2, Math.log10(SCOT_DENOM));
 
 const expectedStats = Map({
-    isNsfw: false,
     hide: false,
-    hasPendingPayout: false,
     gray: false,
-    flagWeight: FLAG_WEIGHT,
-    up_votes: 0,
     total_votes: 0,
-    authorRepLog10: undefined,
-    allowDelete: true,
 });
 
 describe('Global reducer', () => {
@@ -184,55 +178,6 @@ describe('Global reducer', () => {
         expect(actual.get('accounts')).toEqual(expected.get('accounts'));
     });
 
-    it('should return correct state for a RECEIVE_COMMENT action', () => {
-        // Arrange
-        const payload = {
-            op: {
-                author: 'critic',
-                permlink: 'critical-comment',
-                parent_author: 'Yerofeyev',
-                parent_permlink: 'moscow-stations',
-                title: 'moscow to the end of the line',
-                body: 'corpus of the text',
-            },
-        };
-        const {
-            author,
-            permlink,
-            parent_author,
-            parent_permlink,
-            title,
-            body,
-        } = payload.op;
-        //Act
-        const actual = reducer(
-            reducer(),
-            globalActions.receiveComment(payload)
-        );
-        //  Assert
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'author'])
-        ).toEqual(author);
-        expect(
-            actual.getIn(['content', `${author}/${permlink}`, 'title'])
-        ).toEqual(title);
-        expect(
-            actual.getIn(['content', `${parent_author}/${parent_permlink}`])
-        ).toEqual(
-            Map({ replies: List(['critic/critical-comment']), children: 1 })
-        );
-        // Arrange
-        payload.op.parent_author = '';
-        // Act
-        const actual2 = reducer(
-            reducer(),
-            globalActions.receiveComment(payload)
-        );
-        // Assert
-        expect(
-            actual2.getIn(['content', `${parent_author}/${parent_permlink}`])
-        ).toEqual(undefined);
-    });
     it('should return correct state for a RECEIVE_CONTENT action', () => {
         // Arrange
         const payload = {
@@ -438,9 +383,6 @@ describe('Global reducer', () => {
         expect(actual1.getIn(['content', postKey, 'active_votes'])).toEqual(
             fromJS(postData.active_votes)
         );
-        expect(
-            actual1.getIn(['content', postKey, 'stats', 'allowDelete'])
-        ).toEqual(false);
 
         // Push new key to posts list, If order meets the condition.
         expect(
@@ -637,15 +579,9 @@ describe('Global reducer', () => {
             ])
         ).toEqual(
             Map({
-                isNsfw: false,
                 hide: false,
-                hasPendingPayout: false,
                 gray: false,
-                flagWeight: FLAG_WEIGHT,
-                up_votes: 2,
                 total_votes: 2,
-                authorRepLog10: undefined,
-                allowDelete: false,
             })
         );
 
@@ -741,57 +677,6 @@ describe('Global reducer', () => {
         const actual = reducer(initial, globalActions.update(payload));
         // Assert
         expect(actual.getIn(payload.key)).toEqual(payload.updater());
-    });
-
-    it('should return correct state for a SET_META_DATA action', () => {
-        // Arrange
-        const payload = {
-            id: 'pear',
-            meta: { flip: 'flop' },
-        };
-        const initial = reducer();
-        // Act
-        const actual = reducer(initial, globalActions.setMetaData(payload));
-        // Assert
-        expect(actual.getIn(['metaLinkData', payload.id])).toEqual(
-            fromJS(payload.meta)
-        );
-    });
-
-    it('should return correct state for a CLEAR_META action', () => {
-        // Arrange
-        const initial = reducer().set(
-            'metaLinkData',
-            Map({ deleteMe: { erase: 'me' } })
-        );
-        // Act
-        const actual = reducer(
-            initial,
-            globalActions.clearMeta({ id: 'deleteMe' })
-        );
-        // Assert
-        expect(actual.get('metaLinkData')).toEqual(Map({}));
-    });
-
-    it('should return correct state for a CLEAR_META_ELEMENT action', () => {
-        // Arrange
-        const payload = {
-            id: 'pear',
-            meta: { flip: 'flop' },
-        };
-
-        const clearPayload = {
-            formId: 'pear',
-            element: 'flip',
-        };
-        const initial = reducer(initial, globalActions.setMetaData(payload));
-        // Act
-        const actual = reducer(
-            initial,
-            globalActions.clearMetaElement(clearPayload)
-        );
-        // Assert
-        expect(actual.get('metaLinkData')).toEqual(Map({ pear: Map({}) }));
     });
 
     it('should return correct state for a FETCH_JSON action', () => {
