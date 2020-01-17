@@ -391,6 +391,7 @@ export async function getStateAsync(url, scotTokenSymbol) {
 
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded =
+        path !== '' &&
         !path.match(
             /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
