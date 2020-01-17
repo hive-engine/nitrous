@@ -304,7 +304,7 @@
         "exceeds_maximum_length": "Przekracza maksymalną długość (%(maxKb)sKB)",
         "including_the_category": "(wliczając kategorię '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Masz %(tagsLength)s tagów total%(includingCategory)s. Ogranicz liczbę tagów do 5 w swoim poście.",
+            "Masz %(tagsLength)s tagów total%(includingCategory)s. Ogranicz liczbę tagów do %(maxTags)s w swoim poście.",
         "are_you_sure_you_want_to_clear_this_form":
             "Czy jesteś pewien, że chcesz wyczyścić ten formularz?",
         "uploading": "Wysyłanie",

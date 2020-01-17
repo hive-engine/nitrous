@@ -12,6 +12,7 @@ import { findParent } from 'app/utils/DomUtils';
 import Icon from 'app/components/elements/Icon';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
+import VideoAd from 'app/components/elements/VideoAd';
 
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
@@ -240,6 +241,7 @@ class PostsList extends React.Component {
                 );
             });
         };
+
         const renderSummary = items =>
             items.map((item, i) => {
                 const every = this.props.adSlots.in_feed_1.every;
@@ -332,7 +334,6 @@ export default connect(
             username,
             content,
             ignore_result,
-            pathname,
             nsfwPref,
             pinned,
             shouldSeeAds,

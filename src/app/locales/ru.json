@@ -309,7 +309,7 @@
         "exceeds_maximum_length": "Превышает максимальную длину (%(maxKb)sKB)",
         "including_the_category": "(включая категорию «%(rootCategory)s»)",
         "use_limited_amount_of_tags":
-            "У вас %(tagsLength)s тегов, включая %(includingCategory)s. Пожалуйста, используйте не более 5 в посте и категории.",
+            "У вас %(tagsLength)s тегов, включая %(includingCategory)s. Пожалуйста, используйте не более %(maxTags)s в посте и категории.",
         "are_you_sure_you_want_to_clear_this_form":
             "Вы уверены, что вы хотите очистить эту форму?",
         "uploading": "Загрузка",
