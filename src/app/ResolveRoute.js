@@ -39,6 +39,9 @@ export default function resolveRoute(path) {
     if (path === '/delegatetokens') {
         return { page: 'Delegatetokens' };
     }
+    if (path === '/leoshop') {
+        return { page: 'Leoshop' };
+    }
     if (path === '/glossary') {
         return { page: 'Glossary' };
     }

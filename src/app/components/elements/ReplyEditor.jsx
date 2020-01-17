@@ -51,6 +51,7 @@ class ReplyEditor extends React.Component {
         richTextEditor: PropTypes.func,
         defaultPayoutType: PropTypes.string,
         payoutType: PropTypes.string,
+        postTemplateName: PropTypes.string,
     };
 
     static defaultProps = {
@@ -132,6 +133,72 @@ class ReplyEditor extends React.Component {
             const ns = nextState;
             const tp = this.props;
             const np = nextProps;
+
+            if (
+                typeof nextProps.postTemplateName !== 'undefined' &&
+                nextProps.postTemplateName !== null
+            ) {
+                const { formId } = tp;
+
+                if (nextProps.postTemplateName.indexOf('create_') === 0) {
+                    const { username } = tp;
+                    const { body, title, tags } = ns;
+                    const { payoutType, beneficiaries } = np;
+                    const lsEntryName = `steemPostTemplates-${username}`;
+
+                    let userTemplates = window.localStorage.getItem(
+                        lsEntryName
+                    );
+                    if (!userTemplates) {
+                        userTemplates = [];
+                    } else {
+                        userTemplates = JSON.parse(userTemplates);
+                    }
+
+                    userTemplates.push({
+                        name: nextProps.postTemplateName.replace('create_', ''),
+                        beneficiaries,
+                        payoutType,
+                        markdown: body.value,
+                        title: title.value,
+                        tags: tags.value,
+                    });
+
+                    window.localStorage.setItem(
+                        lsEntryName,
+                        JSON.stringify(userTemplates)
+                    );
+
+                    this.props.setPostTemplateName(formId, null);
+                } else {
+                    const lsEntryName = `steemPostTemplates-${
+                        nextProps.username
+                    }`;
+                    const userTemplates = JSON.parse(
+                        window.localStorage.getItem(lsEntryName)
+                    );
+
+                    for (let ti = 0; ti < userTemplates.length; ti += 1) {
+                        const template = userTemplates[ti];
+                        if (template.name === nextProps.postTemplateName) {
+                            this.state.body.props.onChange(template.markdown);
+                            this.state.title.props.onChange(template.title);
+                            this.state.tags.props.onChange(template.tags);
+                            this.props.setPayoutType(
+                                formId,
+                                template.payoutType
+                            );
+                            this.props.setBeneficiaries(
+                                formId,
+                                template.beneficiaries
+                            );
+
+                            this.props.setPostTemplateName(formId, null);
+                            break;
+                        }
+                    }
+                }
+            }
 
             // Save curent draft to localStorage
             if (
@@ -847,6 +914,12 @@ export default formId =>
                 formId,
                 'beneficiaries',
             ]);
+            const postTemplateName = state.user.getIn([
+                'current',
+                'post',
+                formId,
+                'postTemplateName',
+            ]);
             beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
 
             const ret = {
@@ -857,6 +930,7 @@ export default formId =>
                 defaultPayoutType,
                 payoutType,
                 beneficiaries,
+                postTemplateName,
                 initialValues: { title, body, category },
                 state,
                 formId,
@@ -894,6 +968,13 @@ export default formId =>
                     userActions.set({
                         key: ['current', 'post', formId, 'beneficiaries'],
                         value: fromJS(beneficiaries),
+                    })
+                ),
+            setPostTemplateName: (formId, postTemplateName) =>
+                dispatch(
+                    userActions.set({
+                        key: ['current', 'post', formId, 'postTemplateName'],
+                        value: postTemplateName,
                     })
                 ),
             reply: ({
