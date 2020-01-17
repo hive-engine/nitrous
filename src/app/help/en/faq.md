@@ -17,9 +17,9 @@ Lasse Ehlers contributed with the name, idea and face for LASSECASH. LASSECASH i
 Yes, you need a STEEM wallet, and there are atleast 2 ways to get a STEEM wallet, either through the steemit.com site (which is free but VERY slow) or through the https://anon.steem.network which is instant but cost a little crypto currency.
 
 
-
 ## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
 
 You can ask it at the LASSECASH Discord server, the link is here: https://discord.gg/5JW2w9t
+
 
 
