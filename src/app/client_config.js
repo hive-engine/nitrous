@@ -25,7 +25,7 @@ export const CONFIG_MAP = {
             'trading',
             'news',
         ]),
-        INTERLEAVE_PROMOTED: true,
+        INTERLEAVE_PROMOTED: false,
         PROMOTED_POST_ACCOUNT: 'null',
         VESTING_TOKEN: 'DIAMOND POWER',
         SITE_DESCRIPTION:

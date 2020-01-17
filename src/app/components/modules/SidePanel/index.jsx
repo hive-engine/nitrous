@@ -149,6 +149,11 @@ const SidePanel = ({
                 label: 'Discord',
                 link: 'https://discord.gg/MrdkRBV',
             },
+            {
+                value: 'diamond_richlist',
+                label: 'Rich List',
+                link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
+            },
         ],
         legal: [
             {
