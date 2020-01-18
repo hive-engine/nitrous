@@ -3,6 +3,8 @@ import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
 
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -96,20 +98,28 @@ ScotConfig.prototype.refresh = async function() {
                 account: 'null',
                 symbol: scotConfig.tokenStats.scotToken,
             }),
-            ssc.findOne('tokens', 'tokens', {
-                symbol: scotConfig.tokenStats.scotMinerTokens[0],
-            }),
-            ssc.findOne('tokens', 'balances', {
-                account: 'null',
-                symbol: scotConfig.tokenStats.scotMinerTokens[0],
-            }),
-            ssc.findOne('tokens', 'tokens', {
-                symbol: scotConfig.tokenStats.scotMinerTokens[1],
-            }),
-            ssc.findOne('tokens', 'balances', {
-                account: 'null',
-                symbol: scotConfig.tokenStats.scotMinerTokens[1],
-            }),
+            scotConfig.tokenStats.scotMinerTokens.length > 0
+                ? ssc.findOne('tokens', 'tokens', {
+                      symbol: scotConfig.tokenStats.scotMinerTokens[0],
+                  })
+                : Promise.resolve(null),
+            scotConfig.tokenStats.scotMinerTokens.length > 0
+                ? ssc.findOne('tokens', 'balances', {
+                      account: 'null',
+                      symbol: scotConfig.tokenStats.scotMinerTokens[0],
+                  })
+                : Promise.resolve(null),
+            scotConfig.tokenStats.scotMinerTokens.length > 1
+                ? ssc.findOne('tokens', 'tokens', {
+                      symbol: scotConfig.tokenStats.scotMinerTokens[1],
+                  })
+                : Promise.resolve(null),
+            scotConfig.tokenStats.scotMinerTokens.length > 1
+                ? ssc.findOne('tokens', 'balances', {
+                      account: 'null',
+                      symbol: scotConfig.tokenStats.scotMinerTokens[1],
+                  })
+                : Promise.resolve(null),
         ]);
 
         if (totalTokenBalance) {

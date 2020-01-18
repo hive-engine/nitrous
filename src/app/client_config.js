@@ -293,10 +293,12 @@ export const TRADING_VIEW_CONFIG = {
 // Other configurations
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-export const POST_FOOTER = '<hr><center>Posted via <a href="https://steemleo.com/">Steemleo</a> | A Decentralized Community for Investors </center>';
+export const POST_FOOTER =
+    '---\n<center>Posted via [Steemleo](${POST_URL}) | A Decentralized Community for Investors </center>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
 export const SHOW_AUTHOR_RECENT_POSTS = true;
 export const POSTED_VIA_NITROUS_ICON = 'steemleo'; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = 'hive-167922';
+export const SHOW_TOKEN_STATS = true;
