@@ -256,6 +256,10 @@
                 "Если кто-то попросил вас опубликовать или показать ваш приватный ключ, это возможно злоумышленник, который пытается украсть ваши токены.",
             "checkbox": "Я понял"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -276,6 +280,7 @@
         "change_account_password": "Изменить пароль аккаунта",
         "vote_for_witnesses": "Проголосовать за делегатов",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Политика Конфиденциальности",
         "terms_of_service": "Условия пользования",
         "sign_up": "Присоединиться",
@@ -293,6 +298,7 @@
         "intro_paragraph":
             "Ваше мнение имеет цену. Присоединяйтесь к сообществу, которое платит за контент и за работу по отбору самого лучшего контента.",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "Делегаты"
     },
     "main_menu": {
@@ -377,7 +383,8 @@
         "view_the_full_context": "Показать полный контекст",
         "view_the_direct_parent": "Просмотр прямого родителя",
         "you_are_viewing_a_single_comments_thread_from":
-            "Вы читаете одну нить комментариев от"
+            "Вы читаете одну нить комментариев от",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
