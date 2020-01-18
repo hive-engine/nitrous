@@ -256,6 +256,10 @@
                 "Steemit Inc.の従業員を含む正当なユーザーは秘密キーまたはマスターパスワードを要求することはありません。",
             "checkbox": "理解しました。"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -276,6 +280,7 @@
         "change_account_password": "パスワードの変更",
         "vote_for_witnesses": "証人に投票する",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "プライバシーポリシー",
         "terms_of_service": "利用規約",
         "sign_up": "登録",
@@ -293,6 +298,7 @@
         "intro_paragraph":
             "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "証人"
     },
     "main_menu": {
@@ -377,7 +383,8 @@
         "view_the_full_context": "スレッドをすべて表示する",
         "view_the_direct_parent": "親コメントを表示する",
         "you_are_viewing_a_single_comments_thread_from":
-            "次のスレッドのコメントの1つを表示しています "
+            "次のスレッドのコメントの1つを表示しています ",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

@@ -260,6 +260,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -280,6 +284,7 @@
         "change_account_password": "Cambia la password dell'account",
         "vote_for_witnesses": "Vota per i Witness",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Condizioni di servizio",
         "sign_up": "Entra",
@@ -297,6 +302,7 @@
         "intro_paragraph":
             "La tua voce vale qualcosa. Entra nella comunità che ti paga per pubblicare e curare contenuti di alta qualità.",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "Witness"
     },
     "main_menu": {
@@ -379,7 +385,8 @@
         "view_the_full_context": "Vedi il contesto completo",
         "view_the_direct_parent": "Visualizza il collegamento diretto",
         "you_are_viewing_a_single_comments_thread_from":
-            "Stai visualizzando il commento singolo di un thread di "
+            "Stai visualizzando il commento singolo di un thread di ",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
