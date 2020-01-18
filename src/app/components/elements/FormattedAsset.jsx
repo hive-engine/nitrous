@@ -4,7 +4,7 @@ import {
     parsePayoutAmount,
 } from 'app/utils/ParsersAndFormatters';
 
-const FormattedAsset = ({ amount, asset, classname }) => {
+const FormattedAsset = ({ amount, asset, postSummary = false, classname }) => {
     if (amount && typeof amount === 'string') {
         amount = parsePayoutAmount(amount);
     }
@@ -16,12 +16,14 @@ const FormattedAsset = ({ amount, asset, classname }) => {
             <span className="integer">{amnt[0]}</span>
             <span className="decimal">{amnt[1]}</span>
         </span>
-    ) : (
+    ) : !postSummary ? (
         <span className="FormattedAsset">
             <span className="integer">{amnt[0]}</span>
             <span className="decimal">{amnt[1]}</span>{' '}
             <span className="asset">{asset}</span>
         </span>
+    ) : (
+        <span className="FormattedAsset" />
     );
 };
 

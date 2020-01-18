@@ -50,6 +50,7 @@ class Voting extends React.Component {
         // HTML properties
         post: PropTypes.string.isRequired,
         showList: PropTypes.bool,
+        postSummary: PropTypes.bool,
 
         // Redux connect properties
         vote: PropTypes.func.isRequired,
@@ -67,6 +68,7 @@ class Voting extends React.Component {
 
     static defaultProps = {
         showList: true,
+        postSummary: false,
     };
 
     constructor(props) {
@@ -222,6 +224,7 @@ class Voting extends React.Component {
         const {
             active_votes,
             showList,
+            postSummary,
             voting,
             enable_slider,
             is_comment,
@@ -576,9 +579,9 @@ class Voting extends React.Component {
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
-            // payoutItems.push({
-            //     value: `${cashout_time}`,
-            // });
+            payoutItems.push({
+                value: `${cashout_time}`,
+            });
         } else if (scot_total_author_payout) {
             payoutItems.push({
                 value: tt('voting_jsx.past_token_payouts', {
@@ -664,6 +667,7 @@ class Voting extends React.Component {
                     <FormattedAsset
                         amount={payout}
                         asset={LIQUID_TOKEN_UPPERCASE}
+                        postSummary={postSummary}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
@@ -890,6 +894,7 @@ export default connect(
         return {
             post: ownProps.post,
             showList: ownProps.showList,
+            postSummary: ownProps.postSummary,
             author,
             permlink,
             username,
