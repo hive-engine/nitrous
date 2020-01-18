@@ -24,6 +24,8 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
+import SidebarToken from 'app/components/elements/SidebarToken';
+import { SHOW_TOKEN_STATS } from 'app/client_config';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -383,11 +385,98 @@ class PostsIndex extends React.Component {
                 <aside className="c-sidebar c-sidebar--right">
                     {this.props.isBrowser && (
                         <div>
-                            {/* <SidebarStats steemPower={123} followers={23} reputation={62} />  */}
                             <SidebarLinks username={this.props.username} />
                         </div>
                     )}
                     <Notices notices={this.props.notices} />
+                    {SHOW_TOKEN_STATS &&
+                        this.props.isBrowser &&
+                        this.props.tokenStats && (
+                            <div>
+                                <SidebarToken
+                                    scotToken={this.props.tokenStats.getIn([
+                                        'scotToken',
+                                    ])}
+                                    scotTokenCirculating={this.props.tokenStats.getIn(
+                                        [
+                                            'total_token_balance',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={
+                                        this.props.tokenStats.getIn([
+                                            'token_burn_balance',
+                                            'balance',
+                                        ]) || 0
+                                    }
+                                    scotTokenStaking={this.props.tokenStats.getIn(
+                                        ['total_token_balance', 'totalStaked']
+                                    )}
+                                />
+                            </div>
+                        )}
+                    {SHOW_TOKEN_STATS &&
+                        this.props.isBrowser &&
+                        this.props.tokenStats &&
+                        this.props.tokenStats.getIn(['scotMinerTokens', 0]) && (
+                            <div>
+                                <SidebarToken
+                                    scotToken={this.props.tokenStats.getIn([
+                                        'scotMinerTokens',
+                                        0,
+                                    ])}
+                                    scotTokenCirculating={this.props.tokenStats.getIn(
+                                        [
+                                            'total_token_miner_balance',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={
+                                        this.props.tokenStats.getIn([
+                                            'token_miner_burn_balance',
+                                            'balance',
+                                        ]) || 0
+                                    }
+                                    scotTokenStaking={this.props.tokenStats.getIn(
+                                        [
+                                            'total_token_miner_balance',
+                                            'totalStaked',
+                                        ]
+                                    )}
+                                />
+                            </div>
+                        )}
+                    {SHOW_TOKEN_STATS &&
+                        this.props.isBrowser &&
+                        this.props.tokenStats &&
+                        this.props.tokenStats.getIn(['scotMinerTokens', 1]) && (
+                            <div>
+                                <SidebarToken
+                                    scotToken={this.props.tokenStats.getIn([
+                                        'scotMinerTokens',
+                                        1,
+                                    ])}
+                                    scotTokenCirculating={this.props.tokenStats.getIn(
+                                        [
+                                            'total_token_mega_miner_balance',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={
+                                        this.props.tokenStats.getIn([
+                                            'token_mega_miner_burn_balance',
+                                            'balance',
+                                        ]) || 0
+                                    }
+                                    scotTokenStaking={this.props.tokenStats.getIn(
+                                        [
+                                            'total_token_mega_miner_balance',
+                                            'totalStaked',
+                                        ]
+                                    )}
+                                />
+                            </div>
+                        )}
                     {this.props.gptEnabled && allowAdsOnContent ? (
                         <div className="sidebar-ad">
                             <GptAd
@@ -457,6 +546,7 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;
             if (ownProps.routeParams.category === 'feed') {
@@ -488,6 +578,7 @@ module.exports = {
                     .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviveEnabled: state.app.get('reviveEnabled'),
+                tokenStats: scotConfig.getIn(['config', 'tokenStats']),
             };
         },
         dispatch => {
