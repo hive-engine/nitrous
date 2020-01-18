@@ -15,8 +15,7 @@ export const APP_DOMAIN = 'www.naturalmedicine.io';
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'naturalmedicine';
 export const TAG_LIST = fromJSOrdered({
-    lotusstore: [
-          ],
+    lotusstore: [],
     plantmedicine: [
         'naturalmedicine',
         'herbs',
@@ -129,3 +128,4 @@ export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
 export const SHOW_AUTHOR_RECENT_POSTS = true;
 export const POSTED_VIA_NITROUS_ICON = 'lotus'; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = 'hive-120078';
+export const SHOW_TOKEN_STATS = true;
