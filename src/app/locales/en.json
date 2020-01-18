@@ -36,7 +36,7 @@
         "affiliation_naturalc": "NaturalProducts Curator",
         "affiliation_naturale": "NaturalProducts Editor",
         "affiliation_naturaldelg": "NaturalProducts Delegator",
-        "affiliation_naturalpat": "NaturalProducts Patron",      
+        "affiliation_naturalpat": "NaturalProducts Patron",
         "feed": "Feed",
         "follow": "Follow",
         "for": " for ",
@@ -255,6 +255,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "Posted from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
