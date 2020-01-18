@@ -579,10 +579,9 @@ class Voting extends React.Component {
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
-            payoutItems.push({
-                value: `${cashout_time}`,
-            });
-        } else if (scot_total_author_payout) {
+        } else if (!cashout_active && payout > 0) {
+            // - payout instead of total_author_payout: total_author_payout can be zero with 100% beneficiary
+            // - !cashout_active is needed to avoid the info is also shown for pending posts.
             payoutItems.push({
                 value: tt('voting_jsx.past_token_payouts', {
                     value: `${payout.toFixed(scotPrecision)} ${

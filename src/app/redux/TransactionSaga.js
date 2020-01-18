@@ -425,10 +425,8 @@ function* accepted_comment({ operation }) {
     const { author, permlink } = operation;
     // update again with new $$ amount from the steemd node
     yield call(getContent, { author, permlink });
-    // receiveComment did the linking already (but that is commented out)
     yield put(globalActions.linkReply(operation));
-    // mark the time (can only post 1 per min)
-    // yield put(user.actions.acceptedComment())
+
     if (operation.__config.feeJson) {
         operation.__config.feeJson.contractPayload.memo = `@${author}/${
             permlink

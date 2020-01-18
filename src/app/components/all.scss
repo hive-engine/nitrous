@@ -1,6 +1,7 @@
 @import "./App";
 
 // cards
+@import "./cards/BeneficiarySelector";
 @import "./cards/Comment";
 @import "./cards/MarkdownViewer";
 @import "./cards/PostSummary";
@@ -42,6 +43,7 @@
 @import "./elements/GptAd";
 @import "./elements/FormattedAssetTokens";
 @import "./elements/AuthorRecentPosts";
+@import "./elements/VideoAd";
 
 // modules
 @import "./modules/Header/styles";
