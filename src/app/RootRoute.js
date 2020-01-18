@@ -35,6 +35,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Delegatetokens')]);
             //});
+        } else if (route.page === 'Leoshop') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Leoshop')]);
+            //});
         } else if (route.page === 'Glossary') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Glossary')]);
