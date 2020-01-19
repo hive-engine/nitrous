@@ -2,6 +2,9 @@ import * as config from 'config';
 import NodeCache from 'node-cache';
 
 import { getScotDataAsync } from 'app/utils/steemApi';
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
+import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
@@ -53,9 +56,85 @@ ScotConfig.prototype.refresh = async function() {
         const scotConfig = await getScotDataAsync('config', {});
         const scotInfo = await getScotDataAsync('info', {});
         const scotConfigMap = {};
+        let tokenList = [];
+        const minerTokenToToken = {};
+
+        const configTokens = new Set(
+            Object.values(CONFIG_MAP).map(c => c['LIQUID_TOKEN_UPPERCASE'])
+        );
         scotConfig.forEach(c => {
-            scotConfigMap[c.token] = c;
+            if (configTokens.has(c.token)) {
+                const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
+                c.tokenStats = { scotToken: c.token, scotMinerTokens };
+                scotConfigMap[c.token] = c;
+                tokenList.push(c.token);
+                tokenList = tokenList.concat(scotMinerTokens);
+                if (scotMinerTokens.length > 0) {
+                    minerTokenToToken[scotMinerTokens[0]] = {
+                        token: c.token,
+                        megaMiner: false,
+                    };
+                }
+                if (scotMinerTokens.length > 1) {
+                    minerTokenToToken[scotMinerTokens[1]] = {
+                        token: c.token,
+                        megaMiner: true,
+                    };
+                }
+            }
         });
+
+        const [totalTokenBalances, tokenBurnBalances] = await Promise.all([
+            ssc.find('tokens', 'tokens', {
+                symbol: { $in: tokenList },
+            }),
+            ssc.find('tokens', 'balances', {
+                account: 'null',
+                symbol: { $in: tokenList },
+            }),
+        ]);
+
+        for (const totalTokenBalance of totalTokenBalances) {
+            //console.log(totalTokenBalance);
+            if (minerTokenToToken[totalTokenBalance.symbol]) {
+                const minerTokenInfo =
+                    minerTokenToToken[totalTokenBalance.symbol];
+                if (minerTokenInfo.megaMiner) {
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.total_token_mega_miner_balance = totalTokenBalance;
+                } else {
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.total_token_miner_balance = totalTokenBalance;
+                }
+            } else {
+                scotConfigMap[
+                    totalTokenBalance.symbol
+                ].tokenStats.total_token_balance = totalTokenBalance;
+            }
+        }
+        for (const tokenBurnBalance of tokenBurnBalances) {
+            console.log(tokenBurnBalance);
+            if (minerTokenToToken[tokenBurnBalance.symbol]) {
+                const minerTokenInfo =
+                    minerTokenToToken[tokenBurnBalance.symbol];
+                if (minerTokenInfo.megaMiner) {
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.token_burn_mega_miner_balance = tokenBurnBalance;
+                } else {
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.token_burn_miner_balance = tokenBurnBalance;
+                }
+            } else {
+                scotConfigMap[
+                    tokenBurnBalance.symbol
+                ].tokenStats.token_burn_balance = tokenBurnBalance;
+            }
+        }
+        //console.log(scotConfigMap);
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
         console.info('Scot Config refreshed...');
     } catch (err) {
