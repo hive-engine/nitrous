@@ -95,7 +95,6 @@ ScotConfig.prototype.refresh = async function() {
         ]);
 
         for (const totalTokenBalance of totalTokenBalances) {
-            //console.log(totalTokenBalance);
             if (minerTokenToToken[totalTokenBalance.symbol]) {
                 const minerTokenInfo =
                     minerTokenToToken[totalTokenBalance.symbol];
@@ -115,7 +114,6 @@ ScotConfig.prototype.refresh = async function() {
             }
         }
         for (const tokenBurnBalance of tokenBurnBalances) {
-            console.log(tokenBurnBalance);
             if (minerTokenToToken[tokenBurnBalance.symbol]) {
                 const minerTokenInfo =
                     minerTokenToToken[tokenBurnBalance.symbol];
@@ -134,7 +132,6 @@ ScotConfig.prototype.refresh = async function() {
                 ].tokenStats.token_burn_balance = tokenBurnBalance;
             }
         }
-        //console.log(scotConfigMap);
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
         console.info('Scot Config refreshed...');
     } catch (err) {
