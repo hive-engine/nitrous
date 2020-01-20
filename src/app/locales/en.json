@@ -269,7 +269,9 @@
         "thumbsup_completed": "Processing is complete.",
         "thumbsup_information":
             "Do you want to give this account %(amount)s %(LIQUID_TOKEN)s for this article? Click 'Confirm' to proceed.",
-        "edited": "Edited"
+        "edited": "Edited",
+        "noticeMessanger": "Notice Telegram",
+        "luckydraw": "Lucky Draw"
     },
     "navigation": {
         "about": "About Steemit, Inc.",
