@@ -401,14 +401,14 @@ class PostsIndex extends React.Component {
                         className="c-sidebar--right--link"
                         onClick={this.goNoticeTelegram}
                     >
-                        공지사항 텔레그램방
+                        {tt('g.noticeMessanger')}
                     </button>
                     <button
                         type="button"
                         className="c-sidebar--right--link"
                         onClick={this.goPicpPick}
                     >
-                        뽑기 도전
+                        {tt('g.luckydraw')}
                     </button>
 
                     {this.props.isBrowser &&

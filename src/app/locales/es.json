@@ -269,7 +269,9 @@
         "total": "Total",
         "circulating": "Circulating",
         "burn": "Burn",
-        "staking": "Staking"
+        "staking": "Staking",
+        "noticeMessanger": "Notice Telegram",
+        "luckydraw": "Lucky Draw"
     },
     "navigation": {
         "about": "Sobre",

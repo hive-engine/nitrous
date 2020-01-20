@@ -272,7 +272,9 @@
         "thumbsup_completed": "따봉처리가 모두 완료되었습니다.",
         "thumbsup_information":
             "이 포스팅에 %(amount)s %(LIQUID_TOKEN)s 만큼 따봉을 드립니다. 확인처리시 진행됩니다. 따봉이 처리 완료되기 전까지 댓글 작성을 사용하지 마십시오.",
-        "edited": "수정됨"
+        "edited": "수정됨",
+        "noticeMessanger": "공지사항 텔레그램방",
+        "luckydraw": "행운의 뽑기"
     },
     "navigation": {
         "about": "스팀이란?",
