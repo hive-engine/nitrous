@@ -120,6 +120,11 @@ const SidePanel = ({
                 link: 'https://www.instagram.com/bilpcoin/',
             },
             {
+                value: 'bpc-store',
+                label: 'Store',
+                link: 'https://shop.spreadshirt.co.uk/bilpcoin/all',
+            },
+            {
                 value: 'blog-bilpcoin',
                 label: '@bilpcoin',
                 link: '/@bilpcoin',
