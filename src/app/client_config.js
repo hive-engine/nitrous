@@ -216,7 +216,7 @@ export const CONFIG_MAP = {
         APP_DOMAIN: 'www.weedcash.network',
         LIQUID_TOKEN: 'Weed',
         LIQUID_TOKEN_UPPERCASE: 'WEED',
-        APP_MAX_TAG: 10,
+        APP_MAX_TAG: 15,
         SCOT_TAG: 'weedcash',
         COMMUNITY_CATEGORY: 'hive-195708',
         TAG_LIST: fromJSOrdered([
