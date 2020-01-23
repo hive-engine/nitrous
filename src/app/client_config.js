@@ -110,4 +110,4 @@ export const SHOW_AUTHOR_RECENT_POSTS = false;
 export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = '';
 
-export const TEST_NAI_ASSET = { nai: '@@333185944', precision: 3 };
+export const TEST_NAI_ASSET = { nai: '@@862656508', precision: 3 };
