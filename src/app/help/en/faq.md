@@ -143,6 +143,9 @@ By buying NOBEL and staking it, the donator gets an investor and curator<br>
 ![](https://steemitimages.com/640x0/https://files.steempeak.com/file/steempeak/achimmertens/SNfXOTzs-3ways_to_donate_with_nobel.jpg)<br>
 *Flyer made with canvas by Achim Mertens*
 
+![](https://files.steempeak.com/file/steempeak/achimmertens/uw45MAl1-image.png)
+*Moneyflow during donation with NOBEL*
+
 
 4\. The Investors
 -----------------
