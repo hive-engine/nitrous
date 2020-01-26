@@ -23,6 +23,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Swap')]);
             //});
+        } else if (route.page === 'swap-test') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SwapTest')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
