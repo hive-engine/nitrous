@@ -23,7 +23,7 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Swap')]);
             //});
-        } else if (route.page === 'swap-test') {
+        } else if (route.page === 'SwapTest') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/SwapTest')]);
             //});

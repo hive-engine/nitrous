@@ -17,7 +17,7 @@ export default function resolveRoute(path) {
     if (path === '/') {
         return { page: 'PostsIndex', params: ['hot'] };
     }
-    if (path === '/swap-test') {
+    if (path === '/SwapTest') {
         return { page: 'SwapTest' };
     }
     if (path === '/swap') {

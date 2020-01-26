@@ -2,7 +2,7 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SidebarSwap from 'app/components/elements/SidebarSwap';
+import SidebarSwap from 'app/components/elements/SidebarUniSwap';
 
 class Swap extends React.Component {
     static propTypes = {
@@ -16,29 +16,7 @@ class Swap extends React.Component {
         return (
             <div className="row">
                 <div>
-                    <SidebarSwap
-                        sct_to_steemp={this.props.scotInfo.getIn([
-                            'sct_to_steemp',
-                        ])}
-                        dec_to_steemp={this.props.scotInfo.getIn([
-                            'dec_to_steemp',
-                        ])}
-                        steem_to_dollor={this.props.scotInfo.getIn([
-                            'steem_to_dollor',
-                        ])}
-                        sctm_to_steem={this.props.scotInfo.getIn([
-                            'sctm_to_steem',
-                        ])}
-                        krwp_to_steem={this.props.scotInfo.getIn([
-                            'krwp_to_steem',
-                        ])}
-                        steem_to_krw_current={this.props.scotInfo.getIn([
-                            'steem_to_krw_current',
-                        ])}
-                        sbd_to_krw_current={this.props.scotInfo.getIn([
-                            'sbd_to_krw_current',
-                        ])}
-                    />
+                    <SidebarSwap />
                 </div>
             </div>
         );
