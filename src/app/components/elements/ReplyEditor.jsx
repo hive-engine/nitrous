@@ -37,6 +37,35 @@ const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 const RTE_DEFAULT = false;
 const MAX_TAG = APP_MAX_TAG || 10;
 
+function allTags(userInput, originalCategory, hashtags) {
+    // take space-delimited user input
+    let tags = OrderedSet(
+        userInput
+            ? userInput
+                  .trim()
+                  .replace(/#/g, '')
+                  .split(/ +/)
+            : []
+    );
+
+    if (SCOT_TAG_FIRST) {
+        tags = OrderedSet([SCOT_TAG, ...tags.toJS()]);
+    } else {
+        tags = tags.add(SCOT_TAG);
+    }
+
+    // remove original category, if present
+    if (originalCategory && /^[-a-z\d]+$/.test(originalCategory))
+        tags = tags.delete(originalCategory);
+
+    // append hashtags from post until limit is reached
+    const tagged = [...hashtags];
+    while (tags.size < MAX_TAG && tagged.length > 0) {
+        tags = tags.add(tagged.shift());
+    }
+    return tags;
+}
+
 class ReplyEditor extends React.Component {
     static propTypes = {
         // html component attributes
@@ -73,8 +102,7 @@ class ReplyEditor extends React.Component {
     }
 
     componentWillMount() {
-        const { setMetaData, formId, jsonMetadata } = this.props;
-        setMetaData(formId, jsonMetadata);
+        const { formId } = this.props;
 
         if (process.env.BROWSER) {
             // Check for rte editor preference
@@ -212,11 +240,6 @@ class ReplyEditor extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        const { clearMetaData, formId } = this.props;
-        clearMetaData(formId);
-    }
-
     initForm(props) {
         const { isStory, type, fields } = props;
         const isEdit = type === 'edit';
@@ -300,9 +323,11 @@ class ReplyEditor extends React.Component {
     };
     showDraftSaved() {
         const { draft } = this.refs;
-        draft.className = 'ReplyEditor__draft';
-        void draft.offsetWidth; // reset animation
-        draft.className = 'ReplyEditor__draft ReplyEditor__draft-saved';
+        if (draft) {
+            draft.className = 'ReplyEditor__draft';
+            void draft.offsetWidth; // reset animation
+            draft.className = 'ReplyEditor__draft ReplyEditor__draft-saved';
+        }
     }
 
     showAdvancedSettings = e => {
@@ -409,7 +434,12 @@ class ReplyEditor extends React.Component {
             payoutType,
             beneficiaries,
         } = this.props;
-        const { submitting, valid, handleSubmit } = this.state.replyForm;
+        const {
+            submitting,
+            valid,
+            handleSubmit,
+            resetForm,
+        } = this.state.replyForm;
         const { replyForm, postError, titleWarn, rte } = this.state;
         const { progress, noClipboardData } = this.state;
         const loading = submitting || this.state.loading;
@@ -418,11 +448,10 @@ class ReplyEditor extends React.Component {
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
         };
-
         const isEdit = type === 'edit';
         const successCallbackWrapper = (...args) => {
             if (!isEdit) {
-                replyForm.resetForm();
+                resetForm();
             }
             this.setState({ loading: false });
             this.props.setPayoutType(formId, defaultPayoutType);
@@ -953,17 +982,6 @@ export default formId =>
 
         // mapDispatchToProps
         dispatch => ({
-            clearMetaData: id => {
-                dispatch(globalActions.clearMeta({ id }));
-            },
-            setMetaData: (id, jsonMetadata) => {
-                dispatch(
-                    globalActions.setMetaData({
-                        id,
-                        meta: jsonMetadata ? jsonMetadata.steem : null,
-                    })
-                );
-            },
             uploadImage: (file, progress) =>
                 dispatch(userActions.uploadImage({ file, progress })),
             showAdvancedSettings: formId =>
@@ -1054,38 +1072,15 @@ export default formId =>
                     return;
                 }
 
-                const formCategories = OrderedSet(
-                    category
-                        ? category
-                              .trim()
-                              .replace(/#/g, '')
-                              .split(/ +/)
-                        : []
+                const metaTags = allTags(
+                    category,
+                    originalPost.category,
+                    rtags.hashtags
                 );
-                const rootCategory =
-                    originalPost && originalPost.category
-                        ? originalPost.category
-                        : SCOT_TAG_FIRST ? SCOT_TAG : formCategories.first();
-                let allCategories = OrderedSet([...formCategories.toJS()]);
-                if (/^[-a-z\d]+$/.test(rootCategory))
-                    allCategories = allCategories.add(rootCategory);
-
-                let postHashtags = [...rtags.hashtags];
-                // "- allCategories.includes(SCOT_TAG) ? 0 : 1" to save the last tag space for SCOT_TAG
-                while (
-                    allCategories.size <
-                    MAX_TAG - allCategories.includes(SCOT_TAG)
-                        ? 0
-                        : 1 && postHashtags.length > 0
-                ) {
-                    allCategories = allCategories.add(postHashtags.shift());
-                }
-                // Add scot tag
-                allCategories = allCategories.add(SCOT_TAG);
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
-                if (allCategories.size) meta.tags = allCategories.toJS();
+                if (metaTags.size) meta.tags = metaTags.toJS();
                 else delete meta.tags;
                 if (rtags.usertags.size) meta.users = rtags.usertags;
                 else delete meta.users;
@@ -1107,16 +1102,17 @@ export default formId =>
                     return;
                 }
 
-                if (meta.tags.length > MAX_TAG) {
+                if (meta.tags && meta.tags.length > MAX_TAG) {
                     const includingCategory = isEdit
                         ? tt('reply_editor.including_the_category', {
-                              rootCategory,
+                              rootCategory: originalPost.category,
                           })
                         : '';
                     errorCallback(
                         tt('reply_editor.use_limited_amount_of_tags', {
                             tagsLength: meta.tags.length,
                             includingCategory,
+                            maxTags: MAX_TAG,
                         })
                     );
                     return;
@@ -1195,9 +1191,11 @@ export default formId =>
 
                 let operation = {
                     ...linkProps,
-                    category: COMMUNITY_CATEGORY
-                        ? COMMUNITY_CATEGORY
-                        : rootCategory,
+                    category:
+                        originalPost.category ||
+                        (COMMUNITY_CATEGORY
+                            ? COMMUNITY_CATEGORY
+                            : metaTags.first()),
                     title,
                     body,
                     json_metadata: meta,

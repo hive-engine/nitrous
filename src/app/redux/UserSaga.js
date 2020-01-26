@@ -93,8 +93,7 @@ function* shouldShowLoginWarning({ username, password }) {
 
     // If it's a master key, show the warning.
     if (!ALLOW_MASTER_PW && !auth.isWif(password)) {
-        const accounts = yield api.getAccountsAsync([username]);
-        const account = accounts[0];
+        const account = (yield api.getAccountsAsync([username]))[0];
         const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
             .toPublicKey()
             .toString();

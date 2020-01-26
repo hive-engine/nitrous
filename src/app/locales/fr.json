@@ -272,7 +272,9 @@
         "total": "Total",
         "circulating": "Circulating",
         "burn": "Burn",
-        "staking": "Staking"
+        "staking": "Staking",
+        "noticeMessanger": "Notice Telegram",
+        "luckydraw": "Lucky Draw"
     },
     "navigation": {
         "about": "A propos",
@@ -315,7 +317,7 @@
             "Dépassement de la taille maximale ( %(maxKb)s KB)",
         "including_the_category": "(incluant la catégorie '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Vous avez un total de %(tagsLength)s mots clés %(includingCategory)s. Veuillez en utiliser seulement 5, autant pour l'article que pour le champ dédié aux mots clés.",
+            "Vous avez un total de %(tagsLength)s mots clés %(includingCategory)s. Veuillez en utiliser seulement %(maxTags)s, autant pour l'article que pour le champ dédié aux mots clés.",
         "are_you_sure_you_want_to_clear_this_form":
             "Etes-vous sûr de vouloir effacer ce formulaire ?",
         "uploading": "Téléchargement en cours",

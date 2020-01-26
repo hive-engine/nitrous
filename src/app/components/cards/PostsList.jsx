@@ -329,7 +329,6 @@ export default connect(
             username,
             content,
             ignore_result,
-            pathname,
             nsfwPref,
             pinned,
             shouldSeeAds,

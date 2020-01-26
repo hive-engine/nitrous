@@ -289,7 +289,7 @@
         "exceeds_maximum_length": "超过最大长度(%(maxKb)sKB)",
         "including_the_category": "(包括类别'%(rootCategory)s ')",
         "use_limited_amount_of_tags":
-            "你总共可以标记%(tagsLength)s个标签%(includingCategory)s。请在你的文章分类栏中最多使用5个标签。",
+            "你总共可以标记%(tagsLength)s个标签%(includingCategory)s。请在你的文章分类栏中最多使用%(maxTags)s个标签。",
         "are_you_sure_you_want_to_clear_this_form": "你确定要清除这个表格吗?",
         "uploading": "上传",
         "draft_saved": "草稿已保存。",
