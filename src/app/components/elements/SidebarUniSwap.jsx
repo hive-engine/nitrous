@@ -20,7 +20,7 @@ const SelectToken = props => {
 
     return (
         <div>
-            <div className="able-coin">{`Available: ${0}`}</div>
+            <div className="able-coin">{`Balnace: ${0}`}</div>
             <input
                 type="text"
                 className="coin-input"
@@ -131,7 +131,7 @@ class SidebarSwap extends Component {
                 </div>
                 <div className="swap-form">
                     <div className="input-box">
-                        <div className="text-label">{'From'}</div>
+                        <div className="text-label">{'Input'}</div>
                         <SelectToken
                             amount={amount}
                             amountChange={this.amountChange}
@@ -142,9 +142,9 @@ class SidebarSwap extends Component {
                             inputDisabled={!this.state.loadToken}
                         />
                     </div>
-                    <div className="arrow-sec">From에서 To로 변환됩니다.</div>
+                    <div className="arrow-sec" />
                     <div className="input-box">
-                        <div className="text-label">{'To'}</div>
+                        <div className="text-label">{'Output'}</div>
                         <SelectToken
                             amount={output_amount}
                             amountChange={this.amountChange}
