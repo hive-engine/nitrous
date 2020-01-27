@@ -8,6 +8,8 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './Swap/config';
 
+import Reveal from 'app/components/elements/Reveal';
+
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
         return (
@@ -49,6 +51,7 @@ class SidebarSwap extends Component {
         super(props);
         this.state = {
             loadToken: true,
+            show: true,
         };
         this.info = new swapinfo();
 
@@ -98,6 +101,8 @@ class SidebarSwap extends Component {
 
         return (
             <div className="swap-wrap">
+                <Reveal show={this.state.show}>{'Hello'}</Reveal>
+
                 <div className="tab-title">
                     <ul>
                         <li className="active">
