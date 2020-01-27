@@ -6,9 +6,8 @@ import { api } from '@steemit/steem-js';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
-
 import swapinfo from './Swap/config';
-const SWAP_ACCOUNT = 'sct.jcob';
+
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
         return (
@@ -31,7 +30,12 @@ const SelectToken = props => {
                 onChange={props.amountChange}
                 disabled={props.inputDisabled}
             />
-            <button type="button" className="coin-select" value="0">
+            <button
+                type="button"
+                className="coin-select"
+                value="0"
+                onClick={props.showTokenListCallback}
+            >
                 Select a token
             </button>
             {/* <select onChange={props.selectedChange} className="coin-select">{options}</select> */}
@@ -46,31 +50,7 @@ class SidebarSwap extends Component {
         this.state = {
             loadToken: true,
         };
-        const info = new swapinfo();
-        console.log(info.input_token_type);
-
-        this.input_token_type = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
-        this.output_token_type = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
-
-        this.swap_fee = 3.0;
+        this.info = new swapinfo();
 
         // Functions
         this.onClickSwap = this.onClickSwap.bind(this);
@@ -80,6 +60,8 @@ class SidebarSwap extends Component {
         this.errorCallback = this.errorCallback.bind(this);
         this.onClose = this.onClose.bind(this);
     }
+
+    showTokenList = () => {};
 
     inputSelected(e) {
         console.log('-- swap.inputSelected -->', e.target.value);
@@ -122,10 +104,10 @@ class SidebarSwap extends Component {
                             <a href="/swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/send">Send</a>
+                            <a href="/swap#send">Send</a>
                         </li>
                         <li>
-                            <a href="/add-liquidity">Pool</a>
+                            <a href="/swap#add-liquidity">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -137,9 +119,10 @@ class SidebarSwap extends Component {
                             amountChange={this.amountChange}
                             selectedChange={this.inputSelected}
                             selectedValue={this.state.selectedValue1}
-                            input_token_type={this.input_token_type}
+                            input_token_type={this.info.input_token_type}
                             marginBottom={0}
                             inputDisabled={!this.state.loadToken}
+                            showTokenListCallback={this.showTokenList}
                         />
                     </div>
                     <div className="arrow-sec" />
@@ -150,9 +133,10 @@ class SidebarSwap extends Component {
                             amountChange={this.amountChange}
                             selectedChange={this.outputSelected}
                             selectedValue={this.state.selectedValue2}
-                            input_token_type={this.output_token_type}
+                            input_token_type={this.info.output_token_type}
                             marginBottom={10}
                             inputDisabled={!this.state.loadToken}
+                            showTokenListCallback={this.showTokenList}
                         />
                     </div>
                     <dl className="exchange-rate">
