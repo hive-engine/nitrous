@@ -17,6 +17,12 @@ export default function resolveRoute(path) {
     if (path === '/') {
         return { page: 'PostsIndex', params: ['hot'] };
     }
+    if (path === '/SwapTest') {
+        return { page: 'SwapTest' };
+    }
+    if (path === '/swap') {
+        return { page: 'Swap' };
+    }
     if (path === '/about.html') {
         return { page: 'About' };
     }

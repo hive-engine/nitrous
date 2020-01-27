@@ -19,6 +19,14 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Swap') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Swap')]);
+            //});
+        } else if (route.page === 'SwapTest') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SwapTest')]);
+            //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);

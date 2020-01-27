@@ -44,6 +44,7 @@
 @import "./elements/FormattedAssetTokens";
 @import "./elements/AuthorRecentPosts";
 @import "./elements/VideoAd";
+@import "./elements/SidebarUniSwap";
 
 // modules
 @import "./modules/Header/styles";
@@ -70,6 +71,7 @@
 @import "./pages/Search";
 @import "./pages/Search-CSE-Theme";
 @import "./pages/Search-GSC-Control";
+@import "./pages/Swap";
 
 // packages
 @import "~react-hint/css/index";
