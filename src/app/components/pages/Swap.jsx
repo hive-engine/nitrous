@@ -13,13 +13,7 @@ class Swap extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        return (
-            <div className="row">
-                <div>
-                    <SidebarSwap />
-                </div>
-            </div>
-        );
+        return <SidebarSwap />;
     }
 }
 

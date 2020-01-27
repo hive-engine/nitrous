@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 
+import swapinfo from './Swap/config';
 const SWAP_ACCOUNT = 'sct.jcob';
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
@@ -18,13 +19,11 @@ const SelectToken = props => {
     });
 
     return (
-        <div
-            className="input-group"
-            style={{ marginBottom: props.marginBottom }}
-        >
+        <div>
+            <div className="able-coin">{`Available: ${0}`}</div>
             <input
-                className="input-group-field"
                 type="text"
+                className="coin-input"
                 placeholder={tt('g.amount')}
                 value={props.amount}
                 // ref="amount"
@@ -32,9 +31,10 @@ const SelectToken = props => {
                 onChange={props.amountChange}
                 disabled={props.inputDisabled}
             />
-            <div className="pd-0 bg-x">
-                <select onChange={props.selectedChange}>{options}</select>
-            </div>
+            <button type="button" className="coin-select" value="0">
+                Select a token
+            </button>
+            {/* <select onChange={props.selectedChange} className="coin-select">{options}</select> */}
         </div>
     );
 };
@@ -46,9 +46,8 @@ class SidebarSwap extends Component {
         this.state = {
             loadToken: true,
         };
-
-        // member variable
-        this.swap_fee = 3.0;
+        const info = new swapinfo();
+        console.log(info.input_token_type);
 
         this.input_token_type = [
             'SCT',
@@ -71,6 +70,8 @@ class SidebarSwap extends Component {
             'DEC',
         ];
 
+        this.swap_fee = 3.0;
+
         // Functions
         this.onClickSwap = this.onClickSwap.bind(this);
         this.amountChange = this.amountChange.bind(this);
@@ -88,7 +89,9 @@ class SidebarSwap extends Component {
         console.log('-- swap.outputSelected -->', e.target.value);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.body.classList.add('theme-swap');
+    }
 
     amountChange(e) {
         const amount = e.target.value;
@@ -112,69 +115,58 @@ class SidebarSwap extends Component {
         const styleToken = { color: 'rgb(0, 120, 167)' };
 
         return (
-            <div className="c-sidebar__module">
-                <div className="c-sidebar__header" style={styleToken}>
-                    <h3 className="c-sidebar__h3">Token Swap</h3>
+            <div className="swap-wrap">
+                <div className="tab-title">
+                    <ul>
+                        <li className="active">
+                            <a href="/swap">Swap</a>
+                        </li>
+                        <li>
+                            <a href="/send">Send</a>
+                        </li>
+                        <li>
+                            <a href="/add-liquidity">Pool</a>
+                        </li>
+                    </ul>
                 </div>
-                <div className="c-sidebar__content">
-                    <div className="swap-form">
-                        <div className="swap-input">
-                            {/* input component */}
-                            <div className="c-sidebar__list-small">
-                                {'from:'}
-                            </div>
-                            <SelectToken
-                                amount={amount}
-                                amountChange={this.amountChange}
-                                selectedChange={this.inputSelected}
-                                selectedValue={this.state.selectedValue1}
-                                input_token_type={this.input_token_type}
-                                marginBottom={0}
-                                inputDisabled={!this.state.loadToken}
-                            />
-
-                            <div className="text-center">
-                                {/* <Icon name="dropdown-arrow" /> */}
-                                {'▼'}
-                            </div>
-                            <div className="c-sidebar__list-small">{'to:'}</div>
-                            <SelectToken
-                                amount={output_amount}
-                                amountChange={this.amountChange}
-                                selectedChange={this.outputSelected}
-                                selectedValue={this.state.selectedValue2}
-                                input_token_type={this.output_token_type}
-                                marginBottom={10}
-                                inputDisabled={true}
-                            />
-                        </div>
-                        <div className="text-right">
-                            <span
-                                className="articles__icon-100"
-                                title={`Fee is ${
-                                    this.swap_fee
-                                }%. The rate is based on the average token price traded for 3 days.`}
-                            >
-                                <button className="button" disabled={true}>
-                                    {'Fees'}
-                                </button>
-                            </span>
-
-                            <button
-                                type="button"
-                                className="button"
-                                onClick={this.onClickSwap}
-                            >
-                                {'Swap'}
-                            </button>
-                        </div>
-                        <div className="c-sidebar__list-small text-right">
-                            {`Available: ${0}`}
-                        </div>
-                        <div className="c-sidebar__list-small text-right">
-                            {`1KRWP = 4ORG`}
-                        </div>
+                <div className="swap-form">
+                    <div className="input-box">
+                        <div className="text-label">{'From'}</div>
+                        <SelectToken
+                            amount={amount}
+                            amountChange={this.amountChange}
+                            selectedChange={this.inputSelected}
+                            selectedValue={this.state.selectedValue1}
+                            input_token_type={this.input_token_type}
+                            marginBottom={0}
+                            inputDisabled={!this.state.loadToken}
+                        />
                     </div>
+                    <div className="arrow-sec">From에서 To로 변환됩니다.</div>
+                    <div className="input-box">
+                        <div className="text-label">{'To'}</div>
+                        <SelectToken
+                            amount={output_amount}
+                            amountChange={this.amountChange}
+                            selectedChange={this.outputSelected}
+                            selectedValue={this.state.selectedValue2}
+                            input_token_type={this.output_token_type}
+                            marginBottom={10}
+                            inputDisabled={!this.state.loadToken}
+                        />
+                    </div>
+                    <dl className="exchange-rate">
+                        <dt>Exchange Rate</dt>
+                        <dd>{`1KRWP = 4ORG`}</dd>
+                    </dl>
+
+                    <button
+                        type="button"
+                        className="submit-coin"
+                        onClick={this.onClickSwap}
+                    >
+                        {'Swap'}
+                    </button>
                 </div>
             </div>
         );
