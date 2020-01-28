@@ -16,5 +16,6 @@ export const ADMINS = [
     'skuld2000',
     'triplea.cur',
     'triplea.bot',
+    'triple.aaa',
 ];
 export const MODERATORS = ['hodolbak', 'hodolbak-aaa'];
