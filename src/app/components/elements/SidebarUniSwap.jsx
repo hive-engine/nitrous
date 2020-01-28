@@ -9,7 +9,8 @@ import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './Swap/config';
 
 import Reveal from 'app/components/elements/Reveal';
-
+import CloseButton from 'app/components/elements/CloseButton';
+import TokenList from 'app/components/elements/Swap/TokenList';
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
         return (
@@ -51,57 +52,66 @@ class SidebarSwap extends Component {
         super(props);
         this.state = {
             loadToken: true,
-            show: true,
+            show: false,
         };
         this.info = new swapinfo();
-
-        // Functions
-        this.onClickSwap = this.onClickSwap.bind(this);
-        this.amountChange = this.amountChange.bind(this);
-        this.inputSelected = this.inputSelected.bind(this);
-        this.outputSelected = this.outputSelected.bind(this);
-        this.errorCallback = this.errorCallback.bind(this);
-        this.onClose = this.onClose.bind(this);
     }
 
-    showTokenList = () => {};
+    showTokenList = () => {
+        this.setState({ show: true });
+    };
 
-    inputSelected(e) {
+    hideTokenList = () => {
+        this.setState({ show: false });
+    };
+
+    inputSelected = e => {
         console.log('-- swap.inputSelected -->', e.target.value);
-    }
+    };
 
-    outputSelected(e) {
+    outputSelected = e => {
         console.log('-- swap.outputSelected -->', e.target.value);
-    }
+    };
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
     }
 
-    amountChange(e) {
+    amountChange = e => {
         const amount = e.target.value;
         console.log('amountChange', amount);
-    }
+    };
 
-    errorCallback(estr) {
+    errorCallback = estr => {
         console.log('errorCallback');
-    }
+    };
 
-    onClose() {
+    onClose = () => {
         console.log('onClose');
-    }
+    };
 
-    onClickSwap(e) {}
+    onClickSwap = e => {};
 
-    calculateOutput() {}
+    calculateOutput = () => {};
+
+    selectToken = token => {
+        console.log(token);
+    };
 
     render() {
         const { amount, output_amount } = this.state;
         const styleToken = { color: 'rgb(0, 120, 167)' };
+        const route_params = this.props.routeParams;
+        console.log(route_params);
 
         return (
             <div className="swap-wrap">
-                <Reveal show={this.state.show}>{'Hello'}</Reveal>
+                <Reveal show={this.state.show} onHide={this.hideTokenList}>
+                    <CloseButton onClick={this.hideTokenList} />
+                    <TokenList
+                    // selectedCallback={this.selectToken}
+                    />
+                </Reveal>
 
                 <div className="tab-title">
                     <ul>
