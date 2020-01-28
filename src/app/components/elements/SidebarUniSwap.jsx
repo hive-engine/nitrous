@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import tt from 'counterpart';
-import SSC from 'sscjs';
-const ssc = new SSC('https://api.steem-engine.com/rpc');
-import { api } from '@steemit/steem-js';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -12,14 +9,6 @@ import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
 const SelectToken = props => {
-    var options = props.input_token_type.map(function(token_name, index) {
-        return (
-            <option value={index} key={index}>
-                {token_name}
-            </option>
-        );
-    });
-
     return (
         <div>
             <div className="able-coin">{`Balnace: ${0}`}</div>
@@ -28,7 +17,6 @@ const SelectToken = props => {
                 className="coin-input"
                 placeholder={tt('g.amount')}
                 value={props.amount}
-                // ref="amount"
                 autoComplete="off"
                 onChange={props.amountChange}
                 disabled={props.inputDisabled}
@@ -39,7 +27,7 @@ const SelectToken = props => {
                 value="0"
                 onClick={props.showTokenListCallback}
             >
-                Select a token
+                {props.token_name == '' ? 'Select a token' : props.token_name}
             </button>
             {/* <select onChange={props.selectedChange} className="coin-select">{options}</select> */}
         </div>
@@ -53,9 +41,22 @@ class SidebarSwap extends Component {
         this.state = {
             loadToken: true,
             show: false,
+            input_token: '',
+            output_token: '',
         };
         this.info = new swapinfo();
+        this.selected = '';
     }
+
+    selectInputToken = () => {
+        this.showTokenList();
+        this.selected = 'input';
+    };
+
+    selectOutputToken = () => {
+        this.showTokenList();
+        this.selected = 'output';
+    };
 
     showTokenList = () => {
         this.setState({ show: true });
@@ -64,6 +65,15 @@ class SidebarSwap extends Component {
     hideTokenList = () => {
         this.setState({ show: false });
     };
+
+    tokenClickCallback(parent, token) {
+        parent.hideTokenList();
+        console.log('tokenClickCallback', token);
+        if (parent.selected == 'input')
+            parent.setState({ input_token: token.name });
+        else if (parent.selected == 'output')
+            parent.setState({ output_token: token.name });
+    }
 
     inputSelected = e => {
         console.log('-- swap.inputSelected -->', e.target.value);
@@ -95,21 +105,21 @@ class SidebarSwap extends Component {
     calculateOutput = () => {};
 
     selectToken = token => {
-        console.log(token);
+        console.log('selectToken', token);
     };
 
+    calculateExchangeRate() {}
+
     render() {
-        const { amount, output_amount } = this.state;
-        const styleToken = { color: 'rgb(0, 120, 167)' };
-        const route_params = this.props.routeParams;
-        console.log(route_params);
+        const { input_amount, output_amount } = this.state;
 
         return (
             <div className="swap-wrap">
                 <Reveal show={this.state.show} onHide={this.hideTokenList}>
                     <CloseButton onClick={this.hideTokenList} />
                     <TokenList
-                    // selectedCallback={this.selectToken}
+                        parent={this}
+                        onTokenClick={this.tokenClickCallback}
                     />
                 </Reveal>
 
@@ -130,14 +140,13 @@ class SidebarSwap extends Component {
                     <div className="input-box">
                         <div className="text-label">{'Input'}</div>
                         <SelectToken
-                            amount={amount}
+                            amount={input_amount}
                             amountChange={this.amountChange}
                             selectedChange={this.inputSelected}
                             selectedValue={this.state.selectedValue1}
-                            input_token_type={this.info.input_token_type}
-                            marginBottom={0}
+                            token_name={this.state.input_token}
                             inputDisabled={!this.state.loadToken}
-                            showTokenListCallback={this.showTokenList}
+                            showTokenListCallback={this.selectInputToken}
                         />
                     </div>
                     <div className="arrow-sec" />
@@ -148,10 +157,9 @@ class SidebarSwap extends Component {
                             amountChange={this.amountChange}
                             selectedChange={this.outputSelected}
                             selectedValue={this.state.selectedValue2}
-                            input_token_type={this.info.output_token_type}
-                            marginBottom={10}
+                            token_name={this.state.output_token}
                             inputDisabled={!this.state.loadToken}
-                            showTokenListCallback={this.showTokenList}
+                            showTokenListCallback={this.selectOutputToken}
                         />
                     </div>
                     <dl className="exchange-rate">
