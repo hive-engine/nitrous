@@ -21,6 +21,7 @@ export const TAG_LIST = fromJSOrdered([
     'godsunchained',
     'steemquest',
     'pirateworld',
+    'holybread',
     'steemknights',
     'hashkings',
     'ibt',
