@@ -23,7 +23,7 @@ var subnode = [
 class swapConfig {
     constructor() {
         // 선택할 수 있는 input token
-        this.input_token_type = [
+        this.input_token_list = [
             'SCT',
             'SCTM',
             'KRWP',
@@ -34,7 +34,7 @@ class swapConfig {
             'DEC',
         ];
         // 선택할 수 있는 output token
-        this.output_token_type = [
+        this.output_token_list = [
             'SCT',
             'SCTM',
             'KRWP',
@@ -49,6 +49,10 @@ class swapConfig {
         this.nodes = subnode;
         this.mainNode = mainnode;
     }
+
+    findNode(input_token, output_token) {}
+
+    calculateExchangeRate(input_token, output_token) {}
 }
 
 export default swapConfig;

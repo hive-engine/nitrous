@@ -165,13 +165,14 @@ class SidebarSwap extends Component {
         }
     };
 
-    calculateOutputAmountChnage(amount) {}
-
     calculateExchangeRate = () => {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
-            exchange_rate = 10;
+            exchange_rate = this.info.calculateExchangeRate(
+                input_token,
+                output_token
+            );
             if (this.input_amount > 0) {
                 this.output_amount = exchange_rate * this.input_amount;
                 this.setState({ output_amount: this.output_amount });
