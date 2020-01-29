@@ -8,6 +8,9 @@ import swapinfo from './Swap/config';
 import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
+
+var swap_node = 'sct.jcob';
+
 const SelectToken = props => {
     return (
         <div>
@@ -127,10 +130,39 @@ class SidebarSwap extends Component {
 
     onClickSwap = e => {
         console.log('transfer');
-        // console.log(this.state.input_token)
-        // console.log(this.input_amount)
-        // console.log(this.state.output_token)
-        // console.log(this.output_amount)
+        const { input_token, output_token } = this.state;
+
+        if (this.input_amount > 0 && input_token != '' && output_token != '') {
+            if (input_token === 'SBD') {
+                this.props.dispatchTransfer({
+                    amount: this.input_amount,
+                    asset: input_token,
+                    outputasset: output_token,
+                    onClose: this.onClose,
+                    currentUser: this.props.currentUser,
+                    errorCallback: this.errorCallback,
+                });
+            }
+            if (input_token === 'STEEM') {
+                this.props.dispatchTransfer({
+                    amount: this.input_amount,
+                    asset: input_token,
+                    outputasset: output_token,
+                    onClose: this.onClose,
+                    currentUser: this.props.currentUser,
+                    errorCallback: this.errorCallback,
+                });
+            } else {
+                this.props.dispatchSubmit({
+                    amount: this.input_amount,
+                    asset: input_token,
+                    outputasset: output_token,
+                    onClose: this.onClose,
+                    currentUser: this.props.currentUser,
+                    errorCallback: this.errorCallback,
+                });
+            }
+        }
     };
 
     calculateOutputAmountChnage(amount) {}
@@ -265,9 +297,9 @@ export default connect(
 
             const operation = {
                 from: username,
-                to: SWAP_ACCOUNT,
+                to: swap_node,
                 amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
-                memo: `@${username}:${asset}:${outputasset}`,
+                memo: `@swap:${asset}:${outputasset}`,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
                 },
@@ -302,9 +334,9 @@ export default connect(
                 contractAction: 'transfer',
                 contractPayload: {
                     symbol: asset,
-                    to: SWAP_ACCOUNT,
+                    to: swap_node,
                     quantity: amount,
-                    memo: `@${username}:${asset}:${outputasset}`,
+                    memo: `@swap:${asset}:${outputasset}`,
                 },
             };
             const operation = {
