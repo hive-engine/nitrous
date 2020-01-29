@@ -98,11 +98,12 @@ body {
             right: 0.85rem;
             bottom: 0.75rem;
             z-index: 10;
-            padding: 0 1.75rem 0 12px;
+            padding: 0 2rem 0 12px;
             height: 2rem;
             font-size: 1rem;
             text-transform: none;
             background: #fafafa;
+            border: 1px solid #e1e1e1;
             border-radius: 1rem;
             outline: 0;
             margin: 0 !important;
@@ -166,5 +167,18 @@ body {
         background: #2f80ed;
         border-radius: 25px;
         margin: 2.5rem auto !important;
+    }
+}
+.reveal {
+    .token-list {
+        ul {
+            li {
+                button {
+                    img {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
     }
 }

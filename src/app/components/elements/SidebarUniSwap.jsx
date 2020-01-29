@@ -27,10 +27,19 @@ const SelectToken = props => {
             <button
                 type="button"
                 className="coin-select"
-                value="0"
+                value={props.token_name == '' ? '0' : '1'}
                 onClick={props.showTokenListCallback}
             >
-                {props.token_name == '' ? 'Select a token' : props.token_name}
+                {props.token_name == '' ? (
+                    ''
+                ) : (
+                    <img width={'24px'} src={props.token_symbol_img} />
+                )}
+                <span>
+                    {props.token_name == ''
+                        ? 'Select a token'
+                        : ` ${props.token_name}`}
+                </span>
             </button>
             {/* <select onChange={props.selectedChange} className="coin-select">{options}</select> */}
         </div>
@@ -46,6 +55,8 @@ class SidebarSwap extends Component {
             show: false,
             input_token: '',
             output_token: '',
+            input_token_symbol: '',
+            output_token_symbol: '',
             exchange_rate: 0,
         };
         this.info = new swapinfo();
@@ -76,13 +87,25 @@ class SidebarSwap extends Component {
         parent.hideTokenList();
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
-            parent.setState({ input_token: token.name }, () => {
-                parent.calculateExchangeRate();
-            });
+            parent.setState(
+                {
+                    input_token: token.name,
+                    input_token_symbol: token.ico,
+                },
+                () => {
+                    parent.calculateExchangeRate();
+                }
+            );
         else if (parent.selected == 'output')
-            parent.setState({ output_token: token.name }, () => {
-                parent.calculateExchangeRate();
-            });
+            parent.setState(
+                {
+                    output_token: token.name,
+                    output_token_symbol: token.ico,
+                },
+                () => {
+                    parent.calculateExchangeRate();
+                }
+            );
     }
 
     inputSelected = e => {
@@ -173,6 +196,7 @@ class SidebarSwap extends Component {
                 input_token,
                 output_token
             );
+            exchange_rate = 1;
             if (this.input_amount > 0) {
                 this.output_amount = exchange_rate * this.input_amount;
                 this.setState({ output_amount: this.output_amount });
@@ -224,6 +248,7 @@ class SidebarSwap extends Component {
                             selectedChange={this.inputSelected}
                             selectedValue={this.state.selectedValue1}
                             token_name={this.state.input_token}
+                            token_symbol_img={this.state.input_token_symbol}
                             inputDisabled={!this.state.loadToken}
                             showTokenListCallback={this.selectInputToken}
                         />
@@ -237,6 +262,7 @@ class SidebarSwap extends Component {
                             selectedChange={this.outputSelected}
                             selectedValue={this.state.selectedValue2}
                             token_name={this.state.output_token}
+                            token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={!this.state.loadToken}
                             showTokenListCallback={this.selectOutputToken}
                         />

@@ -7,10 +7,26 @@ class TokenList extends Component {
         this.state = {};
 
         this.tokens = [];
-        this.tokens.push({ id: 'krwp', name: 'KRWP' });
-        this.tokens.push({ id: 'sct', name: 'SCT' });
-        this.tokens.push({ id: 'org', name: 'ORG' });
-        this.tokens.push({ id: 'svc', name: 'SVC' });
+        this.tokens.push({
+            id: 'krwp',
+            name: 'KRWP',
+            ico: '/images/tokens/noimage.png',
+        });
+        this.tokens.push({
+            id: 'sct',
+            name: 'SCT',
+            ico: '/images/tokens/sct.png',
+        });
+        this.tokens.push({
+            id: 'org',
+            name: 'ORG',
+            ico: '/images/tokens/noimage.png',
+        });
+        this.tokens.push({
+            id: 'svc',
+            name: 'SVC',
+            ico: '/images/tokens/svc.png',
+        });
     }
 
     selectToken = () => {
@@ -39,12 +55,13 @@ class TokenList extends Component {
                         this.tokenClick(token);
                     }}
                 >
-                    {token.name}
+                    <img width={'24px'} src={token.ico} />
+                    <span>{` ${token.name}`}</span>
                 </button>
             </li>
         ));
         return (
-            <div>
+            <div className="token-list">
                 <ul>{listItems}</ul>
             </div>
         );
