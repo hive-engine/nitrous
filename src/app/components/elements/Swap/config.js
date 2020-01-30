@@ -1,3 +1,7 @@
+import SSC from 'sscjs';
+const ssc = new SSC('https://api.steem-engine.com/rpc');
+import { api } from '@steemit/steem-js';
+
 var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
@@ -50,9 +54,67 @@ class swapConfig {
         this.mainNode = mainnode;
     }
 
-    findNode(input_token, output_token) {}
+    getSteemBalance(account) {
+        return new Promise((resolve, reject) => {
+            api.getAccounts([account], function(err, response) {
+                if (err) reject(err);
+                resolve(response[0].balance);
+            });
+        });
+    }
 
-    calculateExchangeRate(input_token, output_token) {}
+    getSBDBalance(account) {
+        return new Promise((resolve, reject) => {
+            api.getAccounts([account], function(err, response) {
+                if (err) reject(err);
+                resolve(response[0].sbd_balance);
+            });
+        });
+    }
+
+    getTokenBalance(account, symbol) {
+        if (symbol == 'STEEM') return this.getSteemBalance();
+        else if (symbol == 'SBD') return this.getSBDBalance();
+        else {
+            return new Promise((resolve, reject) => {
+                ssc.findOne(
+                    'tokens',
+                    'balances',
+                    { account, symbol },
+                    (err, result) => {
+                        if (err) reject(err);
+                        // console.log(result)
+                        if (result == null) resolve('0.0');
+                        else resolve(result.balance);
+                    }
+                );
+            });
+        }
+    }
+
+    findNode(input_token, output_token) {
+        var validNode = null;
+        for (const node of this.nodes) {
+            var one = node.tokens.find(token => token == input_token);
+            var two = node.tokens.find(token => token == output_token);
+            if (one != undefined && two != undefined) {
+                validNode = node;
+                break;
+            }
+        }
+        return validNode;
+    }
+
+    async calculateExchangeRate(input_token, output_token) {
+        var validNode = this.findNode(input_token, output_token);
+        if (validNode == null) return 0;
+        console.log(validNode);
+        var balance = await Promise.all([
+            this.getTokenBalance(validNode.account, input_token),
+            this.getTokenBalance(validNode.account, output_token),
+        ]);
+        console.log(balance);
+    }
 }
 
 export default swapConfig;

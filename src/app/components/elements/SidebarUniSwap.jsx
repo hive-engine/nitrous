@@ -155,7 +155,12 @@ class SidebarSwap extends Component {
         console.log('transfer');
         const { input_token, output_token } = this.state;
 
-        if (this.input_amount > 0 && input_token != '' && output_token != '') {
+        if (
+            this.input_amount > 0 &&
+            this.output_amount > 0 &&
+            input_token != '' &&
+            output_token != ''
+        ) {
             if (input_token === 'SBD') {
                 this.props.dispatchTransfer({
                     amount: this.input_amount,
@@ -188,11 +193,11 @@ class SidebarSwap extends Component {
         }
     };
 
-    calculateExchangeRate = () => {
+    calculateExchangeRate = async () => {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
-            exchange_rate = this.info.calculateExchangeRate(
+            exchange_rate = await this.info.calculateExchangeRate(
                 input_token,
                 output_token
             );
