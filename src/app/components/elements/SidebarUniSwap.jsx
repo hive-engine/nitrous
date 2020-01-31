@@ -125,17 +125,7 @@ class SidebarSwap extends Component {
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
-
-        var estimated_output_amount = await this.info.calculateExchangeAmount(
-            this.state.input_token,
-            this.state.output_token,
-            this.input_amount
-        );
-        if (this.input_amount > 0) {
-            this.output_amount = estimated_output_amount;
-            var exchange_rate = this.output_amount / this.input_amount;
-            this.setState({ output_amount: this.output_amount, exchange_rate });
-        }
+        this.calculateExchange();
     };
 
     outputAmountChange = e => {};
@@ -205,9 +195,16 @@ class SidebarSwap extends Component {
             if (this.input_amount > 0) {
                 this.output_amount = estimated_output_amount;
                 exchange_rate = this.output_amount / this.input_amount;
+                this.output_amount = this.output_amount.toFixed(3);
+                exchange_rate = exchange_rate.toFixed(3);
                 this.setState({
                     output_amount: this.output_amount,
                     exchange_rate,
+                });
+            } else {
+                this.setState({
+                    output_amount: 0,
+                    exchange_rate: 0,
                 });
             }
         }
@@ -331,7 +328,7 @@ export default connect(
             const operation = {
                 from: username,
                 to: swap_node,
-                amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
+                amount: parseFloat(amount).toFixed(3) + ' ' + asset,
                 memo: `@swap:${asset}:${outputasset}:${nodeName}:${username}`,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
