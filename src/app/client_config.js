@@ -689,4 +689,9 @@ export const SHOW_AUTHOR_RECENT_POSTS = true;
 export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/assets/icons/___.svg
 export const COMMUNITY_CATEGORY = 'hive-101690';
 export const SHOW_TOKEN_STATS = true;
-export const TOKEN_STATS_EXCLUDE_ACCOUNTS = ['sportsprojects','sportspartners'];
+export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [
+    'sportsprojects',
+    'sportspartners',
+    'sportspromo',
+    'getsports',
+      ];
