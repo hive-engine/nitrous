@@ -93,7 +93,7 @@ class SidebarSwap extends Component {
                     input_token_symbol: token.ico,
                 },
                 () => {
-                    parent.calculateExchangeRate();
+                    parent.calculateExchange();
                 }
             );
         else if (parent.selected == 'output')
@@ -103,7 +103,7 @@ class SidebarSwap extends Component {
                     output_token_symbol: token.ico,
                 },
                 () => {
-                    parent.calculateExchangeRate();
+                    parent.calculateExchange();
                 }
             );
     }
@@ -120,28 +120,26 @@ class SidebarSwap extends Component {
         document.body.classList.add('theme-swap');
     }
 
-    inputAmountChange = e => {
+    inputAmountChange = async e => {
         this.setState({ input_amount: undefined });
         const amount = e.target.value;
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
-        var rate = this.state.exchange_rate;
-        this.output_amount = rate * this.input_amount;
-        this.setState({ output_amount: this.output_amount });
+
+        var estimated_output_amount = await this.info.calculateExchangeAmount(
+            this.state.input_token,
+            this.state.output_token,
+            this.input_amount
+        );
+        if (this.input_amount > 0) {
+            this.output_amount = estimated_output_amount;
+            var exchange_rate = this.output_amount / this.input_amount;
+            this.setState({ output_amount: this.output_amount, exchange_rate });
+        }
     };
 
-    outputAmountChange = e => {
-        this.setState({ output_amount: undefined });
-        const amount = e.target.value;
-        console.log('outputAmountChange', amount);
-
-        this.output_amount = amount;
-        var rate = this.state.exchange_rate;
-        if (rate > 0) this.input_amount = 1 / rate * this.output_amount;
-        else this.input_amount = 0;
-        this.setState({ input_amount: this.input_amount });
-    };
+    outputAmountChange = e => {};
 
     errorCallback = estr => {
         console.log('errorCallback');
@@ -193,24 +191,24 @@ class SidebarSwap extends Component {
         }
     };
 
-    calculateExchangeRate = async () => {
+    calculateExchange = async () => {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
-            exchange_rate = await this.info.calculateExchangeRate(
+            var estimated_output_amount = await this.info.calculateExchangeAmount(
                 input_token,
-                output_token
+                output_token,
+                this.input_amount
             );
-            exchange_rate = 1;
             if (this.input_amount > 0) {
-                this.output_amount = exchange_rate * this.input_amount;
-                this.setState({ output_amount: this.output_amount });
-            } else if (this.output_amount > 0) {
-                this.input_amount = 1 / rate * this.output_amount;
-                this.setState({ input_amount: this.input_amount });
+                this.output_amount = estimated_output_amount;
+                exchange_rate = this.output_amount / this.input_amount;
+                this.setState({
+                    output_amount: this.output_amount,
+                    exchange_rate,
+                });
             }
         }
-        this.setState({ exchange_rate });
         return exchange_rate;
     };
 
@@ -268,7 +266,7 @@ class SidebarSwap extends Component {
                             selectedValue={this.state.selectedValue2}
                             token_name={this.state.output_token}
                             token_symbol_img={this.state.output_token_symbol}
-                            inputDisabled={!this.state.loadToken}
+                            inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
                         />
                     </div>

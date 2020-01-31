@@ -97,7 +97,7 @@ class swapConfig {
         for (const node of this.nodes) {
             var one = node.tokens.find(token => token == input_token);
             var two = node.tokens.find(token => token == output_token);
-            if (one != undefined && two != undefined) {
+            if (one != undefined && two != undefined && one != two) {
                 validNode = node;
                 break;
             }
@@ -105,7 +105,7 @@ class swapConfig {
         return validNode;
     }
 
-    async calculateExchangeRate(input_token, output_token) {
+    async calculateExchangeAmount(input_token, output_token, input_amount) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
         console.log(validNode);
@@ -113,7 +113,13 @@ class swapConfig {
             this.getTokenBalance(validNode.account, input_token),
             this.getTokenBalance(validNode.account, output_token),
         ]);
+        // input, output balance
         console.log(balance);
+        var alpha = input_amount / balance[0];
+        var rate_fee = (100.0 - this.swap_fee) / 100.0;
+        var estimated_output_amount =
+            balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
+        return estimated_output_amount;
     }
 }
 
