@@ -8,7 +8,6 @@ import swapinfo from './Swap/config';
 import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
-
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -152,18 +151,19 @@ class SidebarSwap extends Component {
     onClickSwap = e => {
         console.log('transfer');
         const { input_token, output_token } = this.state;
-
         if (
             this.input_amount > 0 &&
             this.output_amount > 0 &&
             input_token != '' &&
             output_token != ''
         ) {
+            var node = this.info.findNode(input_token, output_token);
             if (input_token === 'SBD') {
                 this.props.dispatchTransfer({
                     amount: this.input_amount,
                     asset: input_token,
                     outputasset: output_token,
+                    nodeName: node.name,
                     onClose: this.onClose,
                     currentUser: this.props.currentUser,
                     errorCallback: this.errorCallback,
@@ -174,6 +174,7 @@ class SidebarSwap extends Component {
                     amount: this.input_amount,
                     asset: input_token,
                     outputasset: output_token,
+                    nodeName: node.name,
                     onClose: this.onClose,
                     currentUser: this.props.currentUser,
                     errorCallback: this.errorCallback,
@@ -183,6 +184,7 @@ class SidebarSwap extends Component {
                     amount: this.input_amount,
                     asset: input_token,
                     outputasset: output_token,
+                    nodeName: node.name,
                     onClose: this.onClose,
                     currentUser: this.props.currentUser,
                     errorCallback: this.errorCallback,
@@ -258,7 +260,7 @@ class SidebarSwap extends Component {
                     </div>
                     <div className="arrow-sec" />
                     <div className="input-box">
-                        <div className="text-label">{'Output'}</div>
+                        <div className="text-label">{'Output (estimated)'}</div>
                         <SelectToken
                             amount={output_amount}
                             amountChange={this.outputAmountChange}
@@ -312,6 +314,7 @@ export default connect(
             amount,
             asset,
             outputasset,
+            nodeName,
             currentUser,
             onClose,
             errorCallback,
@@ -329,7 +332,7 @@ export default connect(
                 from: username,
                 to: swap_node,
                 amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
-                memo: `@swap:${asset}:${outputasset}`,
+                memo: `@swap:${asset}:${outputasset}:${nodeName}:${username}`,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
                 },
@@ -347,6 +350,7 @@ export default connect(
             amount,
             asset,
             outputasset,
+            nodeName,
             currentUser,
             onClose,
             errorCallback,
@@ -366,7 +370,9 @@ export default connect(
                     symbol: asset,
                     to: swap_node,
                     quantity: amount,
-                    memo: `@swap:${asset}:${outputasset}`,
+                    memo: `@swap:${asset}:${outputasset}:${nodeName}:${
+                        username
+                    }`,
                 },
             };
             const operation = {
