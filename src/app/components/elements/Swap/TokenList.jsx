@@ -10,21 +10,25 @@ class TokenList extends Component {
         this.tokens.push({
             id: 'krwp',
             name: 'KRWP',
+            fullname: '1000 KRW Pegged',
             ico: '/images/tokens/noimage.png',
         });
         this.tokens.push({
             id: 'sct',
             name: 'SCT',
+            fullname: 'SteemCoinpan Token',
             ico: '/images/tokens/sct.png',
         });
         this.tokens.push({
             id: 'org',
             name: 'ORG',
+            fullname: 'Orange Token',
             ico: '/images/tokens/noimage.png',
         });
         this.tokens.push({
             id: 'svc',
             name: 'SVC',
+            fullname: 'Steem Vote Coin',
             ico: '/images/tokens/svc.png',
         });
     }
@@ -55,8 +59,11 @@ class TokenList extends Component {
                         this.tokenClick(token);
                     }}
                 >
-                    <img width={'24px'} src={token.ico} />
-                    <span>{` ${token.name}`}</span>
+                    <img src={token.ico} />
+                    <p className="token-name">
+                        <span className="simple">{`${token.name}`}</span>
+                        <span className="full">{`${token.fullname}`}</span>
+                    </p>
                 </button>
             </li>
         ));

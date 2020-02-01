@@ -13,7 +13,7 @@ var swap_node = 'sct.jcob';
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`Balnace: ${0}`}</div>
+            <div className="able-coin">{`Balnace: ${100}`}</div>
             <input
                 type="text"
                 className="coin-input"
@@ -32,7 +32,7 @@ const SelectToken = props => {
                 {props.token_name == '' ? (
                     ''
                 ) : (
-                    <img width={'24px'} src={props.token_symbol_img} />
+                    <img src={props.token_symbol_img} />
                 )}
                 <span>
                     {props.token_name == ''
@@ -222,6 +222,7 @@ class SidebarSwap extends Component {
             <div className="swap-wrap">
                 <Reveal show={this.state.show} onHide={this.hideTokenList}>
                     <CloseButton onClick={this.hideTokenList} />
+                    <h2 className="token-title">Select Token</h2>
                     <TokenList
                         parent={this}
                         onTokenClick={this.tokenClickCallback}
