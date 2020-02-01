@@ -10,7 +10,9 @@ body {
 }
 
 .swap-wrap {
-    width: 560px;
+    width: 100%;
+    padding: 0 3%;
+    max-width: 580px;
     margin: 3rem auto;
     .tab-title {
         ul {
@@ -98,15 +100,21 @@ body {
             right: 0.85rem;
             bottom: 0.75rem;
             z-index: 10;
-            padding: 0 1.75rem 0 12px;
+            padding: 0 2rem 0 12px;
             height: 2rem;
             font-size: 1rem;
             text-transform: none;
             background: #fafafa;
+            border: 1px solid #e1e1e1;
             border-radius: 1rem;
             outline: 0;
             margin: 0 !important;
             cursor: pointer;
+            img {
+                display: inline-block;
+                width: 24px;
+                height: auto;
+            }
             &:after {
                 content: '';
                 position: absolute;
@@ -166,5 +174,84 @@ body {
         background: #2f80ed;
         border-radius: 25px;
         margin: 2.5rem auto !important;
+    }
+}
+
+.reveal-overlay {
+    background: rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+.reveal[role="document"] {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    width: 650px;
+    max-width: 90%;
+    min-height: 500px;
+    height: 500px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: none;
+    margin: 0;
+    .close-button {
+        top: 0;
+        right: 0;
+        margin-right: 0 !important;
+        width: 52px;
+        height: 52px;
+        text-align: left;
+        text-indent: -999px;
+        overflow: hidden;
+        background: url('data:image/svg+xml; utf8, <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>') no-repeat 50% 50%;
+    }
+    .token-title {
+        padding: 1rem;
+        font-size: 1.3rem;
+        margin: 0;
+    }
+    .token-list {
+        ul {
+            list-style: none;
+            margin: 0;
+            li {
+                list-style: none;
+                button {
+                    padding: 1rem;
+                    width: 100%;
+                    text-align: left;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    &:hover {
+                        background: #f1f1f1;
+                    }
+                    img {
+                        display: inline-block;
+                        height: 32px;
+                        width: auto;
+                        vertical-align: top;
+                        margin-right: 1rem;
+                    }
+                    .token-name {
+                        display: inline-block;
+                        vertical-align: top;
+                        margin: 0;
+                        .simple {
+                            display: block;
+                            line-height: 1.3rem;
+                            font-size: 1.25rem;
+                            color: #2a2a2a;
+                        }
+                        .full {
+                            display: block;
+                            line-height: 1.2rem;
+                            font-size: 1rem;
+                            color: #ccc;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

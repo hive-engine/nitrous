@@ -22,7 +22,8 @@ module.exports = {
 };
 
 module.exports = {
-    path: 'swap',
+    path: '/beta/swap',
+
     component: connect(
         (state, ownProps) => {
             const scotConfig = state.app.get('scotConfig');
