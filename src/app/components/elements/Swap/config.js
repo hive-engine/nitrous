@@ -119,7 +119,10 @@ class swapConfig {
         var rate_fee = (100.0 - this.swap_fee) / 100.0;
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
-        return estimated_output_amount;
+        return {
+            estimaed_output_amount: estimated_output_amount,
+            node_output_balance: balance[1],
+        };
     }
 }
 

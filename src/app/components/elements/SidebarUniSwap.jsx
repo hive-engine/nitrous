@@ -13,7 +13,9 @@ var swap_node = 'sct.jcob';
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`Balnace: ${0}`}</div>
+            <div className="able-coin">{`Balnace: ${
+                props.balance == undefined ? '0' : props.balance
+            }`}</div>
             <input
                 type="text"
                 className="coin-input"
@@ -32,7 +34,7 @@ const SelectToken = props => {
                 {props.token_name == '' ? (
                     ''
                 ) : (
-                    <img width={'24px'} src={props.token_symbol_img} />
+                    <img src={props.token_symbol_img} />
                 )}
                 <span>
                     {props.token_name == ''
@@ -57,6 +59,8 @@ class SidebarSwap extends Component {
             input_token_symbol: '',
             output_token_symbol: '',
             exchange_rate: 0,
+            node_output_balance: 0,
+            user_input_balance: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -187,24 +191,35 @@ class SidebarSwap extends Component {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
-            var estimated_output_amount = await this.info.calculateExchangeAmount(
+            var results = await this.info.calculateExchangeAmount(
                 input_token,
                 output_token,
                 this.input_amount
             );
+            var user_input_balance = await this.info.getTokenBalance(
+                this.props.currentUser.get('username'),
+                input_token
+            );
+            console.log(this.props.currentUser.get('username'));
+            console.log('user_input_balance', user_input_balance);
+
             if (this.input_amount > 0) {
-                this.output_amount = estimated_output_amount;
+                this.output_amount = results.estimaed_output_amount;
                 exchange_rate = this.output_amount / this.input_amount;
                 this.output_amount = this.output_amount.toFixed(3);
                 exchange_rate = exchange_rate.toFixed(3);
                 this.setState({
                     output_amount: this.output_amount,
                     exchange_rate,
+                    node_output_balance: results.node_output_balance,
+                    user_input_balance: user_input_balance,
                 });
             } else {
                 this.setState({
                     output_amount: 0,
                     exchange_rate: 0,
+                    node_output_balance: results.node_output_balance,
+                    user_input_balance: user_input_balance,
                 });
             }
         }
@@ -222,6 +237,7 @@ class SidebarSwap extends Component {
             <div className="swap-wrap">
                 <Reveal show={this.state.show} onHide={this.hideTokenList}>
                     <CloseButton onClick={this.hideTokenList} />
+                    <h2 className="token-title">Select Token</h2>
                     <TokenList
                         parent={this}
                         onTokenClick={this.tokenClickCallback}
@@ -253,6 +269,7 @@ class SidebarSwap extends Component {
                             token_symbol_img={this.state.input_token_symbol}
                             inputDisabled={!this.state.loadToken}
                             showTokenListCallback={this.selectInputToken}
+                            balance={this.state.user_input_balance}
                         />
                     </div>
                     <div className="arrow-sec" />
@@ -267,6 +284,7 @@ class SidebarSwap extends Component {
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
+                            balance={this.state.node_output_balance}
                         />
                     </div>
                     <dl className="exchange-rate">
