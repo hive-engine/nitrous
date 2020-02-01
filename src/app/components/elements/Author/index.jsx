@@ -89,7 +89,14 @@ class Author extends React.Component {
         });
     };
 
+    goBadgeLink = link => {
+        if (link) {
+            window.open(link);
+        }
+    };
+
     shouldComponentUpdate = shouldComponentUpdate(this, 'Author');
+
     render() {
         const {
             author,
@@ -105,6 +112,9 @@ class Author extends React.Component {
             : {};
 
         const AffiliationMap = {};
+        const AffiliationLinkMap = {};
+        const AffiliationBackcolorMap = {};
+        const AffiliationForecolorMap = {};
         const AffiliationAuthorMap = {};
         if (affiliationDb) {
             for (let i = 0; i < affiliationDb.size; i++) {
@@ -112,6 +122,24 @@ class Author extends React.Component {
                     AffiliationMap[
                         affiliationDb.get(i).get('account')
                     ] = affiliationDb.get(i).get('title');
+
+                    if (affiliationDb.get(i).get('link')) {
+                        AffiliationLinkMap[
+                            affiliationDb.get(i).get('account')
+                        ] = affiliationDb.get(i).get('link');
+                    }
+
+                    if (affiliationDb.get(i).get('backcolor')) {
+                        AffiliationBackcolorMap[
+                            affiliationDb.get(i).get('account')
+                        ] = affiliationDb.get(i).get('backcolor');
+                    }
+
+                    if (affiliationDb.get(i).get('forecolor')) {
+                        AffiliationForecolorMap[
+                            affiliationDb.get(i).get('account')
+                        ] = affiliationDb.get(i).get('forecolor');
+                    }
                 } else {
                     AffiliationAuthorMap[
                         affiliationDb.get(i).get('account')
@@ -133,9 +161,32 @@ class Author extends React.Component {
                     </strong>{' '}
                     <Reputation value={authorRepLog10} />
                     {showAffiliation && AffiliationMap[author] ? (
-                        <span className="affiliation">
-                            {AffiliationMap[author]}
-                        </span>
+                        showAffiliation &&
+                        AffiliationMap[author] &&
+                        AffiliationLinkMap[author] ? (
+                            <span
+                                style={{
+                                    textDecoration: 'underline',
+                                    color: 'yellow',
+                                    cursor: 'pointer',
+                                }}
+                                className="affiliation"
+                                onClick={() =>
+                                    this.goBadgeLink(AffiliationLinkMap[author])
+                                }
+                            >
+                                {AffiliationMap[author]}
+                            </span>
+                        ) : (
+                            <span
+                                className="affiliation"
+                                onClick={() =>
+                                    this.goBadgeLink(AffiliationLinkMap[author])
+                                }
+                            >
+                                {AffiliationMap[author]}
+                            </span>
+                        )
                     ) : null}
                     {showAffiliation && AffiliationAuthorMap[author] ? (
                         <span className="affiliation recommendauthor">
