@@ -139,11 +139,6 @@ const SidePanel = ({
                 link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
             },
             {
-                value: 'diamond_telegram',
-                label: 'Telegram',
-                link: 'https://t.me/steemdiamond',
-            },
-            {
                 value: 'diamond_discord',
                 label: 'Discord',
                 link: 'https://discord.gg/MrdkRBV',

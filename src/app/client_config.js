@@ -4,7 +4,7 @@ export const CONFIG_MAP = {
     'steemdiamond.com': {
         APP_NAME: 'SteemDiamond',
         APP_ICON: 'steemdiamond',
-        APP_ICON_WIDTH: '160px',
+        APP_ICON_WIDTH: '140px',
         APP_ICON_HEIGHT: '40px',
         APP_URL: 'https://steemdiamond.com',
         APP_DOMAIN: 'steemdiamond.com',
@@ -237,6 +237,8 @@ export const CONFIG_MAP = {
             'news',
             'props4crops',
             'ganja',
+            'psilocybin',
+            'dmt',
         ]),
         INTERLEAVE_PROMOTED: true,
         PROMOTED_POST_ACCOUNT: 'null',
