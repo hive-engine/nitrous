@@ -6,6 +6,10 @@ const map = {
         foodiebountiful: 'Foodie Team',
     },
 
+    PESOS: {
+        yehey: 'Founder',
+    },
+
     //steemit
     ned: 'Steemit',
     justinw: 'Steemit',
