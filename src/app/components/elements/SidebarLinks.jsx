@@ -37,6 +37,16 @@ const SidebarLinks = ({ username, scotTokenSymbol }) => (
                         </a>
                     </li>
                 )}
+                {scotTokenSymbol === 'WEED' && (
+                    <li className="c-sidebar__list-item">
+                        <a
+                            className="c-sidebar__link"
+                            href="https://video.weedcash.network"
+                        >
+                            WeedCash DTube
+                        </a>
+                    </li>
+                )}
             </ul>
         </div>
     </div>
