@@ -2,7 +2,6 @@ const map = {
     //steemit
     brumest: 'PhotoStreem Curator',
     swedishdragon: 'PhotoStreem Founder',
-    axeman: 
     cafeconleche: 'Photostreem Curator',
     nelyp: 'PhotoStreem Curator',
     derangedvisions: 'PhotoStreem Curator',
