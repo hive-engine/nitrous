@@ -213,11 +213,11 @@ body {
     }
 }
 
-.reveal-overlay {
+.reveal-swap-overlay {
     background: rgba(0,0,0,0.4);
     cursor: pointer;
 }
-.reveal[role="document"] {
+.reveal-swap[role="document"] {
     position: absolute;
     left: 50%;
     top: 50%;

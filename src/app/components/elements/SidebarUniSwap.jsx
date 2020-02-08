@@ -240,7 +240,11 @@ class SidebarSwap extends Component {
 
         return (
             <div className="swap-wrap">
-                <Reveal show={this.state.show} onHide={this.hideTokenList}>
+                <Reveal
+                    show={this.state.show}
+                    onHide={this.hideTokenList}
+                    isSwapModal={true}
+                >
                     <CloseButton onClick={this.hideTokenList} />
                     <h2 className="token-title">Select Token</h2>
                     <div className="token-search">

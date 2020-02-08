@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-overlays/lib/Modal';
 import Transition from 'react-overlays/lib/Transition';
 
-const Reveal = ({ children, onHide, show }) => {
+const Reveal = ({ children, onHide, show, isSwapModal }) => {
     const modalStyle = {
         bottom: 0,
         left: 0,
@@ -21,12 +21,20 @@ const Reveal = ({ children, onHide, show }) => {
             transition={Transition}
             onHide={onHide}
             show={show}
-            backdropClassName={'reveal-overlay'}
+            backdropClassName={
+                isSwapModal
+                    ? 'reveal-swap-overlay reveal-overlay'
+                    : 'reveal-overlay'
+            }
             backdropStyle={{ display: 'block' }}
             style={modalStyle}
         >
             <div
-                className={'reveal fade in'}
+                className={
+                    isSwapModal
+                        ? 'reveal reveal-swap fade in'
+                        : 'reveal fade in'
+                }
                 role={'document'}
                 tabIndex={'-1'}
                 style={{ display: 'block' }}
