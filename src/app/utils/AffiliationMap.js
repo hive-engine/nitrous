@@ -2,13 +2,13 @@ const map = {
     //steemit
     brumest: 'PhotoStreem Curator',
     swedishdragon: 'PhotoStreem Founder',
-    cafeconleche: 'Photostreem Curator',
+    wwwiebe: 'Photostreem Curator',
     nelyp: 'PhotoStreem Curator',
-    derangedvisions: 'PhotoStreem Curator',
-    jasonrussell: 'PhotoStreem Curator',
-    lightcaptured: 'PhotoStreem Curator',
+    aleister: 'PhotoStreem Curator',
+    bambuka: 'PhotoStreem Curator',
+    davidesimoncini: 'PhotoStreem Curator',
     'news-today': 'PhotoStreem Founder',
-    jznsamuel: 'PhotoStreem Curator',
+    onealfa: 'PhotoStreem Curator',
     monochromes: 'PhotoStreem Supported Contest',
     portraitcontest: 'PhotoStreem Supported Contest',
    
@@ -18,5 +18,6 @@ const map = {
 };
 
 export default map;
+
 
 
