@@ -185,6 +185,10 @@ export default function ServerHTML({
                         async
                     />
                 ) : null}
+                <meta
+                    name="google-site-verification"
+                    content="3NS6qyCTbLAg1fk-_jyjJ4oOmLelvOk0UZFrDue_yAU"
+                />
                 {adClient ? (
                     <script
                         async
