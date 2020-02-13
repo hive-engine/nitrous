@@ -329,9 +329,9 @@ class SidebarSwap extends Component {
                         <dd>
                             {this.state.exchange_rate == 0
                                 ? '-'
-                                : `1 ${this.state.output_token} = ${
+                                : `1 ${this.state.input_token} = ${
                                       this.state.exchange_rate
-                                  } ${this.state.input_token}`}
+                                  } ${this.state.output_token}`}
                         </dd>
                     </dl>
 

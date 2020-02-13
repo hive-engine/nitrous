@@ -31,6 +31,12 @@ class TokenList extends Component {
             fullname: 'Steem Vote Coin',
             ico: '/images/tokens/svc.png',
         });
+        this.tokens.push({
+            id: 'steem',
+            name: 'STEEM',
+            fullname: 'Steem',
+            ico: '/images/tokens/steem.png',
+        });
     }
 
     selectToken = () => {

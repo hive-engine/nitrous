@@ -5,8 +5,8 @@ import { api } from '@steemit/steem-js';
 var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
-    tokens: ['KRWP', 'ORG', 'SVC'],
-    liqudity_token: ['HABIT'],
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM'],
+    liqudity_token: ['KPORG', 'KPSVC', 'KPSTEEM'],
 };
 
 var subnode = [
@@ -14,40 +14,24 @@ var subnode = [
         name: 'kporg',
         account: 'sct.kporg',
         tokens: ['KRWP', 'ORG'],
-        liqudity_token: 'HABIT',
+        liqudity_token: 'KPORG',
     },
     {
         name: 'kpsvc',
         account: 'sct.kpsvc',
         tokens: ['KRWP', 'SVC'],
-        liqudity_token: 'HABIT1',
+        liqudity_token: 'KPSVC',
+    },
+    {
+        name: 'kpsteem',
+        account: 'sct.kpsteem',
+        tokens: ['KRWP', 'STEEM'],
+        liqudity_token: 'KPSTEEM',
     },
 ];
 
 class swapConfig {
     constructor() {
-        // 선택할 수 있는 input token
-        this.input_token_list = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
-        // 선택할 수 있는 output token
-        this.output_token_list = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
         // fee
         this.swap_fee = 3.0;
         this.nodes = subnode;
@@ -57,8 +41,12 @@ class swapConfig {
     getSteemBalance(account) {
         return new Promise((resolve, reject) => {
             api.getAccounts([account], function(err, response) {
+                console.log(response[0]);
                 if (err) reject(err);
-                resolve(response[0].balance);
+                console.log(response[0].balance);
+                var steem_balance = response[0].balance.split(' ')[0];
+                console.log(steem_balance);
+                resolve(steem_balance);
             });
         });
     }
@@ -67,14 +55,14 @@ class swapConfig {
         return new Promise((resolve, reject) => {
             api.getAccounts([account], function(err, response) {
                 if (err) reject(err);
-                resolve(response[0].sbd_balance);
+                resolve(response[0].sbd_balance.split[' '][0]);
             });
         });
     }
 
     getTokenBalance(account, symbol) {
-        if (symbol == 'STEEM') return this.getSteemBalance();
-        else if (symbol == 'SBD') return this.getSBDBalance();
+        if (symbol == 'STEEM') return this.getSteemBalance(account);
+        else if (symbol == 'SBD') return this.getSBDBalance(account);
         else {
             return new Promise((resolve, reject) => {
                 ssc.findOne(
@@ -114,7 +102,7 @@ class swapConfig {
             this.getTokenBalance(validNode.account, output_token),
         ]);
         // input, output balance
-        console.log(balance);
+        console.log('calculateExchangeAmount', balance);
         var alpha = input_amount / balance[0];
         var rate_fee = (100.0 - this.swap_fee) / 100.0;
         var estimated_output_amount =
