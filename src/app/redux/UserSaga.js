@@ -334,7 +334,6 @@ function* usernamePasswordLogin2({
         if (!fullAuths.size) {
             console.log('No full auths');
             yield put(userActions.hideLoginWarning());
-            localStorage.removeItem('autopost2');
             const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
             if (
                 !ALLOW_MASTER_PW &&
@@ -389,7 +388,6 @@ function* usernamePasswordLogin2({
                             'This login gives owner or active permissions and should not be used here.  Please provide a posting only login.',
                     })
                 );
-                localStorage.removeItem('autopost2');
                 return;
             }
         }
