@@ -3,7 +3,7 @@ import tt from 'counterpart';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
-import swapinfo from './Swap/config';
+import swapinfo from './config';
 
 import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';

@@ -19,6 +19,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Pool') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Swap')]);
+            //});
         } else if (route.page === 'Swap') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Swap')]);

@@ -2,7 +2,7 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SidebarSwap from 'app/components/elements/SidebarUniSwap';
+import SwapComponent from 'app/components/elements/Swap/Swap';
 
 class Swap extends React.Component {
     static propTypes = {
@@ -13,7 +13,7 @@ class Swap extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        return <SidebarSwap />;
+        return <SwapComponent />;
     }
 }
 
