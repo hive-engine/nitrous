@@ -267,6 +267,7 @@ class SidebarSwap extends Component {
                     </div>
                     <TokenList
                         parent={this}
+                        tokens={this.info.tokens}
                         onTokenClick={this.tokenClickCallback}
                     />
                 </Reveal>
