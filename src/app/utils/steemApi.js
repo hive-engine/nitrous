@@ -17,7 +17,7 @@ async function callApi(url, params) {
         })
         .catch(err => {
             console.error(`Could not fetch data, url: ${url}`);
-            return {};
+            return [];
         });
 }
 
