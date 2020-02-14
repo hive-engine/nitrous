@@ -21,11 +21,11 @@ export default {
             //});
         } else if (route.page === 'Pool') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Swap')]);
+            cb(null, [require('app/components/pages/SctPool')]);
             //});
         } else if (route.page === 'Swap') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Swap')]);
+            cb(null, [require('app/components/pages/SctSwap')]);
             //});
         } else if (route.page === 'Faq') {
             //require.ensure([], (require) => {

@@ -18,10 +18,6 @@ class Swap extends React.Component {
 }
 
 module.exports = {
-    component: Swap,
-};
-
-module.exports = {
     path: '/beta/swap',
 
     component: connect(

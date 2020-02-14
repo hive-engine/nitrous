@@ -275,13 +275,13 @@ class SidebarSwap extends Component {
                 <div className="tab-title">
                     <ul>
                         <li className="active">
-                            <a href="/swap">Swap</a>
+                            <a href="/beta/swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/swap#send">Send</a>
+                            <a href="/beta/swap#send">Send</a>
                         </li>
                         <li>
-                            <a href="/swap#add-liquidity">Pool</a>
+                            <a href="/beta/pool">Pool</a>
                         </li>
                     </ul>
                 </div>
