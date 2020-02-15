@@ -20,8 +20,11 @@ export default function resolveRoute(path) {
     if (path === '/beta/swap') {
         return { page: 'Swap' };
     }
-    if (path === '/beta/pool') {
-        return { page: 'Pool' };
+    if (path === '/beta/add-liquidity') {
+        return { page: 'Add liquidity' };
+    }
+    if (path === '/beta/remove-liquidity') {
+        return { page: 'Remove liquidity' };
     }
     if (path === '/about.html') {
         return { page: 'About' };

@@ -8,6 +8,7 @@ import swapinfo from './config';
 import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
+import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -51,13 +52,16 @@ const SelectToken = props => {
     );
 };
 
-class SidebarSwap extends Component {
+class PoolComponent extends Component {
     constructor(props) {
         // console.log(props);
         super(props);
         this.state = {
             loadToken: true,
             show: false,
+            selected_pool_show: false,
+            poolMode: 0,
+            selectedPoolText: 'Add Liquidity',
             input_token: 'KRWP',
             input_token_symbol: '/images/tokens/noimage.png',
             output_token: '',
@@ -67,11 +71,11 @@ class SidebarSwap extends Component {
             node_output_balance: 0,
             user_input_balance: 0,
             user_output_balance: 0,
-            user_get_liqudity: 0,
-            liqudity_token: 0,
-            liqudity_token_rate: 0,
-            liqudity_token_all: 0,
-            liqudity_token_symbol: '',
+            user_get_liquidity: 0,
+            liquidity_token: 0,
+            liquidity_token_rate: 0,
+            liquidity_token_all: 0,
+            liquidity_token_symbol: '',
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -87,6 +91,20 @@ class SidebarSwap extends Component {
     selectOutputToken = () => {
         this.showTokenList();
         this.selected = 'output';
+    };
+
+    showPoolMode = () => {
+        this.setState({ selected_pool_show: true });
+    };
+    hidePoolMode = (mode, index) => {
+        console.log(mode, index);
+        if (mode != undefined)
+            this.setState({
+                selected_pool_show: false,
+                selectedPoolText: mode,
+                poolMode: index,
+            });
+        else this.setState({ selected_pool_show: false });
     };
 
     showTokenList = () => {
@@ -124,20 +142,20 @@ class SidebarSwap extends Component {
 
         this.input_amount = amount;
 
-        var user_get_liqudity =
-            this.state.liqudity_token * 1 * this.input_amount;
-        user_get_liqudity = user_get_liqudity.toFixed(3);
+        var user_get_liquidity =
+            this.state.liquidity_token * 1 * this.input_amount;
+        user_get_liquidity = user_get_liquidity.toFixed(3);
 
-        var all = user_get_liqudity * 1 + this.state.liqudity_token_all * 1;
-        var rate = 100 * user_get_liqudity / all;
+        var all = user_get_liquidity * 1 + this.state.liquidity_token_all * 1;
+        var rate = 100 * user_get_liquidity / all;
         rate = rate.toFixed(3);
 
         this.output_amount = this.state.exchange_rate * this.input_amount;
         this.output_amount = this.output_amount.toFixed(3);
 
         this.setState({
-            user_get_liqudity,
-            liqudity_token_rate: rate,
+            user_get_liquidity,
+            liquidity_token_rate: rate,
             output_amount: this.output_amount,
         });
     };
@@ -264,9 +282,9 @@ class SidebarSwap extends Component {
                 exchange_rate: results.exchange_rate,
                 node_input_balance: results.node_input_balance,
                 node_output_balance: results.node_output_balance,
-                liqudity_token_all: results.liqudity_token_all,
-                liqudity_token: results.liqudity_token,
-                liqudity_token_symbol: results.liqudity_token_symbol,
+                liquidity_token_all: results.liquidity_token_all,
+                liquidity_token: results.liquidity_token,
+                liquidity_token_symbol: results.liquidity_token_symbol,
             });
         }
     };
@@ -280,6 +298,10 @@ class SidebarSwap extends Component {
 
         return (
             <div className="swap-wrap">
+                <SelectedPool
+                    show={this.state.selected_pool_show}
+                    onHideSelcected={this.hidePoolMode}
+                />
                 <Reveal
                     show={this.state.show}
                     onHide={this.hideTokenList}
@@ -322,9 +344,18 @@ class SidebarSwap extends Component {
                             <a href="/beta/swap#send">Send</a>
                         </li>
                         <li className="active">
-                            <a href="/beta/pool">Pool</a>
+                            <a href="/beta/add-liquidity">Pool</a>
                         </li>
                     </ul>
+                </div>
+                <div className="mid-space">
+                    <button
+                        type="button"
+                        className="turn-upDown"
+                        onClick={this.showPoolMode}
+                    >
+                        {this.state.selectedPoolText}
+                    </button>
                 </div>
                 <div className="swap-form">
                     <div className="input-box">
@@ -393,9 +424,9 @@ class SidebarSwap extends Component {
                         <dd>
                             {this.state.exchange_rate > 0 &&
                             this.input_amount > 0
-                                ? `${this.state.user_get_liqudity} ${
-                                      this.state.liqudity_token_symbol
-                                  } (${this.state.liqudity_token_rate}%)`
+                                ? `${this.state.user_get_liquidity} ${
+                                      this.state.liquidity_token_symbol
+                                  } (${this.state.liquidity_token_rate}%)`
                                 : '-'}
                         </dd>
                     </dl>
@@ -404,7 +435,7 @@ class SidebarSwap extends Component {
                         className="submit-coin"
                         onClick={this.onClickDeposit}
                     >
-                        {'Add Liquidity'}
+                        {this.state.selectedPoolText}
                     </button>
                 </div>
             </div>
@@ -505,4 +536,4 @@ export default connect(
             );
         },
     })
-)(SidebarSwap);
+)(PoolComponent);

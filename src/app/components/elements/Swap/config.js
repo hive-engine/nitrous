@@ -43,7 +43,7 @@ var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
     tokens: ['KRWP', 'ORG', 'SVC', 'STEEM'],
-    liqudity_token: ['KPORG', 'KPSVC', 'KPSTEEM'],
+    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM'],
 };
 
 var subnode = [
@@ -51,19 +51,19 @@ var subnode = [
         name: 'kporg',
         account: 'sct.kporg',
         tokens: ['KRWP', 'ORG'],
-        liqudity_token: 'KPORG',
+        liquidity_token: 'KPORG',
     },
     {
         name: 'kpsvc',
         account: 'sct.kpsvc',
         tokens: ['KRWP', 'SVC'],
-        liqudity_token: 'KPSVC',
+        liquidity_token: 'KPSVC',
     },
     {
         name: 'kpsteem',
         account: 'sct.kpsteem',
         tokens: ['KRWP', 'STEEM'],
-        liqudity_token: 'KPSTEEM',
+        liquidity_token: 'KPSTEEM',
     },
 ];
 
@@ -169,8 +169,8 @@ class swapConfig {
         var balance = await Promise.all([
             this.getTokenBalance(validNode.account, input_token),
             this.getTokenBalance(validNode.account, output_token),
-            this.getLiqudityTokenAllBalance(
-                validNode.liqudity_token,
+            this.getLiquidityTokenAllBalance(
+                validNode.liquidity_token,
                 validNode.account
             ),
         ]);
@@ -179,16 +179,16 @@ class swapConfig {
         var rate = assume_krwp / balance[0];
         var exchange_rate = rate * balance[1];
 
-        var liqudity_token_all = balance[2];
-        var liqudity_token = rate * liqudity_token_all;
+        var liquidity_token_all = balance[2];
+        var liquidity_token = rate * liquidity_token_all;
 
         return {
             node_input_balance: balance[0],
             node_output_balance: balance[1],
             exchange_rate: exchange_rate.toFixed(3),
-            liqudity_token: liqudity_token.toFixed(3),
-            liqudity_token_all: liqudity_token_all.toFixed(3),
-            liqudity_token_symbol: validNode.liqudity_token,
+            liquidity_token: liquidity_token.toFixed(3),
+            liquidity_token_all: liquidity_token_all.toFixed(3),
+            liquidity_token_symbol: validNode.liquidity_token,
         };
     }
 
@@ -224,7 +224,7 @@ class swapConfig {
         });
     }
 
-    async getLiqudityTokenAllBalance(symbol, node_account) {
+    async getLiquidityTokenAllBalance(symbol, node_account) {
         var all = await this.getHolder(symbol);
         all = all.filter(one => one.account != node_account);
         var circulated_balance = 0;

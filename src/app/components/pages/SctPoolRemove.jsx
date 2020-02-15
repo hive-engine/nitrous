@@ -2,7 +2,7 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PoolComponent from 'app/components/elements/Swap/Pool';
+import PoolComponent from 'app/components/elements/Swap/PoolRemove';
 
 class Pool extends React.Component {
     static propTypes = {
@@ -18,7 +18,7 @@ class Pool extends React.Component {
 }
 
 module.exports = {
-    path: '/beta/pool',
+    path: '/beta/remove-liquidity',
 
     component: connect(
         (state, ownProps) => {

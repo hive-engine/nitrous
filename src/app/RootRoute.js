@@ -19,9 +19,13 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
-        } else if (route.page === 'Pool') {
+        } else if (route.page === 'Remove liquidity') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctPool')]);
+            cb(null, [require('app/components/pages/SctPoolRemove')]);
+            //});
+        } else if (route.page === 'Add liquidity') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SctPoolAdd')]);
             //});
         } else if (route.page === 'Swap') {
             //require.ensure([], (require) => {

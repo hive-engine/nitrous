@@ -8,12 +8,13 @@ import swapinfo from './config';
 import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
+import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`Balnace: ${
+            <div className="able-coin">{`My balance: ${
                 props.balance == undefined ? '0' : props.balance
             }`}</div>
             <input
@@ -47,25 +48,34 @@ const SelectToken = props => {
                     </svg>
                 </i>
             </button>
-            {/* <select onChange={props.selectedChange} className="coin-select">{options}</select> */}
         </div>
     );
 };
 
-class SwapComponent extends Component {
+class PoolComponent extends Component {
     constructor(props) {
         // console.log(props);
         super(props);
         this.state = {
             loadToken: true,
             show: false,
-            input_token: '',
+            selected_pool_show: false,
+            poolMode: 1,
+            selectedPoolText: 'Remove Liquidity',
+            input_token: 'KRWP',
+            input_token_symbol: '/images/tokens/noimage.png',
             output_token: '',
-            input_token_symbol: '',
             output_token_symbol: '',
             exchange_rate: 0,
+            node_input_balance: 0,
             node_output_balance: 0,
             user_input_balance: 0,
+            user_output_balance: 0,
+            user_get_liquidity: 0,
+            liquidity_token: 0,
+            liquidity_token_rate: 0,
+            liquidity_token_all: 0,
+            liquidity_token_symbol: '',
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -83,6 +93,20 @@ class SwapComponent extends Component {
         this.selected = 'output';
     };
 
+    showPoolMode = () => {
+        this.setState({ selected_pool_show: true });
+    };
+    hidePoolMode = (mode, index) => {
+        console.log(mode, index);
+        if (mode != undefined)
+            this.setState({
+                selected_pool_show: false,
+                selectedPoolText: mode,
+                poolMode: index,
+            });
+        else this.setState({ selected_pool_show: false });
+    };
+
     showTokenList = () => {
         this.setState({ show: true });
     };
@@ -94,35 +118,18 @@ class SwapComponent extends Component {
     tokenClickCallback(parent, token) {
         parent.hideTokenList();
         console.log('tokenClickCallback', token);
-        if (parent.selected == 'input')
-            parent.setState(
-                {
-                    input_token: token.name,
-                    input_token_symbol: token.ico,
-                },
-                () => {
-                    parent.calculateExchange();
-                }
-            );
-        else if (parent.selected == 'output')
+        if (parent.selected == 'output') {
             parent.setState(
                 {
                     output_token: token.name,
                     output_token_symbol: token.ico,
                 },
                 () => {
-                    parent.calculateExchange();
+                    parent.calculateDeposit();
                 }
             );
+        }
     }
-
-    inputSelected = e => {
-        console.log('-- swap.inputSelected -->', e.target.value);
-    };
-
-    outputSelected = e => {
-        console.log('-- swap.outputSelected -->', e.target.value);
-    };
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
@@ -134,7 +141,23 @@ class SwapComponent extends Component {
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
-        this.calculateExchange();
+
+        var user_get_liquidity =
+            this.state.liquidity_token * 1 * this.input_amount;
+        user_get_liquidity = user_get_liquidity.toFixed(3);
+
+        var all = user_get_liquidity * 1 + this.state.liquidity_token_all * 1;
+        var rate = 100 * user_get_liquidity / all;
+        rate = rate.toFixed(3);
+
+        this.output_amount = this.state.exchange_rate * this.input_amount;
+        this.output_amount = this.output_amount.toFixed(3);
+
+        this.setState({
+            user_get_liquidity,
+            liquidity_token_rate: rate,
+            output_amount: this.output_amount,
+        });
     };
 
     outputAmountChange = e => {};
@@ -147,7 +170,55 @@ class SwapComponent extends Component {
         console.log('onClose');
     };
 
-    onClickSwap = e => {
+    onSuccessFirst = () => {
+        console.log('on Success');
+        this.transferToken(
+            this.state.output_token,
+            this.output_amount,
+            this.name,
+            this.memo_2
+        );
+    };
+
+    transferToken(input_token, input_amount, username, memo, onSuccess = null) {
+        if (input_token === 'SBD') {
+            this.props.dispatchTransfer({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess,
+            });
+        }
+        if (input_token === 'STEEM') {
+            this.props.dispatchTransfer({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess,
+            });
+        } else {
+            this.props.dispatchSubmit({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess,
+            });
+        }
+    }
+
+    onClickDeposit = e => {
         console.log('transfer');
         const { input_token, output_token } = this.state;
         if (
@@ -157,78 +228,65 @@ class SwapComponent extends Component {
             output_token != ''
         ) {
             var node = this.info.findNode(input_token, output_token);
-            if (input_token === 'SBD') {
-                this.props.dispatchTransfer({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
-            }
-            if (input_token === 'STEEM') {
-                this.props.dispatchTransfer({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
-            } else {
-                this.props.dispatchSubmit({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
-            }
+            var timestamp = new Date();
+            var key = timestamp.getTime();
+            var name = this.props.currentUser.get('username');
+            var memo_1 = `@deposit:${input_token}:${output_token}:${
+                node.name
+            }:${name}:${key}`;
+            var memo_2 = `@deposit:${output_token}:${input_token}:${
+                node.name
+            }:${name}:${key}`;
+
+            this.name = name;
+            this.memo_2 = memo_2;
+            this.transferToken(
+                input_token,
+                this.input_amount,
+                name,
+                memo_1,
+                this.onSuccessFirst
+            );
         }
     };
 
-    calculateExchange = async () => {
+    calculateDeposit = async () => {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
-            var results = await this.info.calculateExchangeAmount(
-                input_token,
-                output_token,
-                this.input_amount
-            );
-            var user_input_balance = await this.info.getTokenBalance(
-                this.props.currentUser.get('username'),
-                input_token
-            );
-            console.log(this.props.currentUser.get('username'));
-            console.log('user_input_balance', user_input_balance);
+            var that = this;
+            this.info
+                .getTokenBalance(
+                    this.props.currentUser.get('username'),
+                    input_token
+                )
+                .then(balance => {
+                    that.setState({ user_input_balance: balance });
+                });
 
-            if (this.input_amount > 0) {
-                this.output_amount = results.estimaed_output_amount;
-                exchange_rate = this.output_amount / this.input_amount;
-                this.output_amount = this.output_amount.toFixed(3);
-                exchange_rate = exchange_rate.toFixed(3);
-                this.setState({
-                    output_amount: this.output_amount,
-                    exchange_rate,
-                    node_output_balance: results.node_output_balance,
-                    user_input_balance: user_input_balance,
+            this.info
+                .getTokenBalance(
+                    this.props.currentUser.get('username'),
+                    output_token
+                )
+                .then(balance => {
+                    that.setState({ user_output_balance: balance });
                 });
-            } else {
-                this.setState({
-                    output_amount: 0,
-                    exchange_rate: 0,
-                    node_output_balance: results.node_output_balance,
-                    user_input_balance: user_input_balance,
-                });
-            }
+
+            var results = await this.info.calculateDepositAmount(
+                input_token,
+                output_token
+            );
+
+            this.setState({
+                exchange_rate: results.exchange_rate,
+                node_input_balance: results.node_input_balance,
+                node_output_balance: results.node_output_balance,
+                liquidity_token_all: results.liquidity_token_all,
+                liquidity_token: results.liquidity_token,
+                liquidity_token_symbol: results.liquidity_token_symbol,
+            });
         }
-        return exchange_rate;
     };
 
     selectToken = token => {
@@ -240,6 +298,10 @@ class SwapComponent extends Component {
 
         return (
             <div className="swap-wrap">
+                <SelectedPool
+                    show={this.state.selected_pool_show}
+                    onHideSelcected={this.hidePoolMode}
+                />
                 <Reveal
                     show={this.state.show}
                     onHide={this.hideTokenList}
@@ -275,29 +337,37 @@ class SwapComponent extends Component {
 
                 <div className="tab-title">
                     <ul>
-                        <li className="active">
+                        <li>
                             <a href="/beta/swap">Swap</a>
                         </li>
                         <li>
                             <a href="/beta/swap#send">Send</a>
                         </li>
-                        <li>
+                        <li className="active">
                             <a href="/beta/add-liquidity">Pool</a>
                         </li>
                     </ul>
                 </div>
+                <div className="mid-space">
+                    <button
+                        type="button"
+                        className="turn-upDown"
+                        onClick={this.showPoolMode}
+                    >
+                        {this.state.selectedPoolText}
+                    </button>
+                </div>
                 <div className="swap-form">
                     <div className="input-box">
-                        <div className="text-label">{'Input'}</div>
+                        <div className="text-label">{'Deposit'}</div>
                         <SelectToken
                             amount={input_amount}
                             amountChange={this.inputAmountChange}
-                            selectedChange={this.inputSelected}
                             selectedValue={this.state.selectedValue1}
                             token_name={this.state.input_token}
                             token_symbol_img={this.state.input_token_symbol}
                             inputDisabled={!this.state.loadToken}
-                            showTokenListCallback={this.selectInputToken}
+                            // showTokenListCallback={this.selectInputToken}
                             balance={this.state.user_input_balance}
                         />
                     </div>
@@ -313,17 +383,18 @@ class SwapComponent extends Component {
                         </button>
                     </div>
                     <div className="input-box">
-                        <div className="text-label">{'Output (estimated)'}</div>
+                        <div className="text-label">
+                            {'Deposit (estimated)'}
+                        </div>
                         <SelectToken
                             amount={output_amount}
                             amountChange={this.outputAmountChange}
-                            selectedChange={this.outputSelected}
                             selectedValue={this.state.selectedValue2}
                             token_name={this.state.output_token}
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
-                            balance={this.state.node_output_balance}
+                            balance={this.state.user_output_balance}
                         />
                     </div>
                     <dl className="exchange-rate">
@@ -336,13 +407,35 @@ class SwapComponent extends Component {
                                   } ${this.state.output_token}`}
                         </dd>
                     </dl>
-
+                    <dl className="exchange-rate">
+                        <dt>Current Pool Size</dt>
+                        <dd>
+                            {this.state.exchange_rate == 0
+                                ? '-'
+                                : `${this.state.node_input_balance} ${
+                                      this.state.input_token
+                                  } + ${this.state.node_output_balance} ${
+                                      this.state.output_token
+                                  }`}
+                        </dd>
+                    </dl>
+                    <dl className="exchange-rate">
+                        <dt>Your Pool Share (%)</dt>
+                        <dd>
+                            {this.state.exchange_rate > 0 &&
+                            this.input_amount > 0
+                                ? `${this.state.user_get_liquidity} ${
+                                      this.state.liquidity_token_symbol
+                                  } (${this.state.liquidity_token_rate}%)`
+                                : '-'}
+                        </dd>
+                    </dl>
                     <button
                         type="button"
                         className="submit-coin"
-                        onClick={this.onClickSwap}
+                        onClick={this.onClickDeposit}
                     >
-                        {'Swap'}
+                        {this.state.selectedPoolText}
                     </button>
                 </div>
             </div>
@@ -367,18 +460,17 @@ export default connect(
         dispatchTransfer: ({
             amount,
             asset,
-            outputasset,
-            nodeName,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
 
@@ -386,7 +478,7 @@ export default connect(
                 from: username,
                 to: swap_node,
                 amount: parseFloat(amount).toFixed(3) + ' ' + asset,
-                memo: `@swap:${asset}:${outputasset}:${nodeName}:${username}`,
+                memo,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
                 },
@@ -403,18 +495,17 @@ export default connect(
         dispatchSubmit: ({
             amount,
             asset,
-            outputasset,
-            nodeName,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
             const transferOperation = {
@@ -424,9 +515,7 @@ export default connect(
                     symbol: asset,
                     to: swap_node,
                     quantity: amount,
-                    memo: `@swap:${asset}:${outputasset}:${nodeName}:${
-                        username
-                    }`,
+                    memo,
                 },
             };
             const operation = {
@@ -447,4 +536,4 @@ export default connect(
             );
         },
     })
-)(SwapComponent);
+)(PoolComponent);
