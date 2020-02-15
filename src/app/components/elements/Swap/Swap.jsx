@@ -250,6 +250,7 @@ class SidebarSwap extends Component {
                     <div className="token-search">
                         <form>
                             <input
+                                autoFocus
                                 type="text"
                                 placeholder="Search Token Name"
                             />

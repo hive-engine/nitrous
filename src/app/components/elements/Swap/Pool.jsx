@@ -219,17 +219,7 @@ class SidebarSwap extends Component {
             var memo_2 = `@deposit:${output_token}:${input_token}:${
                 node.name
             }:${name}:${key}`;
-            console.log('one');
-            console.log(this.input_amount);
-            console.log(input_token);
-            console.log(node.name);
-            console.log(memo_1);
 
-            console.log('two');
-            console.log(this.output_amount);
-            console.log(output_token);
-            console.log(node.name);
-            console.log(memo_2);
             this.name = name;
             this.memo_2 = memo_2;
             this.transferToken(
@@ -300,6 +290,7 @@ class SidebarSwap extends Component {
                     <div className="token-search">
                         <form>
                             <input
+                                autoFocus
                                 type="text"
                                 placeholder="Search Token Name"
                             />
