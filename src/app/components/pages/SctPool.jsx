@@ -2,7 +2,7 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SwapComponent from 'app/components/elements/Swap/Swap';
+import PoolComponent from 'app/components/elements/Swap/Pool';
 
 class Pool extends React.Component {
     static propTypes = {
@@ -13,7 +13,7 @@ class Pool extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        return <SwapComponent />;
+        return <PoolComponent />;
     }
 }
 

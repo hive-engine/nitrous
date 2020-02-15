@@ -2,6 +2,43 @@ import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 import { api } from '@steemit/steem-js';
 
+async function getScotHolder(symbol, cnt, offset) {
+    return new Promise((resolve, reject) => {
+        let holders = new Array();
+        ssc.find(
+            'tokens',
+            'balances',
+            { symbol: symbol },
+            cnt,
+            offset,
+            [],
+            async (err, results) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                for (const result of results) {
+                    holders.push(result);
+                }
+
+                if (results.length == cnt) {
+                    const holder = await getScotHolder(
+                        symbol,
+                        cnt,
+                        offset + cnt
+                    );
+                    for (const result of holder) {
+                        holders.push(result);
+                    }
+                }
+
+                resolve(holders);
+            }
+        );
+    });
+}
+
 var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
@@ -125,6 +162,36 @@ class swapConfig {
         return validNode;
     }
 
+    async calculateDepositAmount(input_token, output_token) {
+        var validNode = this.findNode(input_token, output_token);
+        if (validNode == null) return 0;
+
+        var balance = await Promise.all([
+            this.getTokenBalance(validNode.account, input_token),
+            this.getTokenBalance(validNode.account, output_token),
+            this.getLiqudityTokenAllBalance(
+                validNode.liqudity_token,
+                validNode.account
+            ),
+        ]);
+        console.log(balance);
+        var assume_krwp = 1;
+        var rate = assume_krwp / balance[0];
+        var exchange_rate = rate * balance[1];
+
+        var liqudity_token_all = balance[2];
+        var liqudity_token = rate * liqudity_token_all;
+
+        return {
+            node_input_balance: balance[0],
+            node_output_balance: balance[1],
+            exchange_rate: exchange_rate.toFixed(3),
+            liqudity_token: liqudity_token.toFixed(3),
+            liqudity_token_all: liqudity_token_all.toFixed(3),
+            liqudity_token_symbol: validNode.liqudity_token,
+        };
+    }
+
     async calculateExchangeAmount(input_token, output_token, input_amount) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
@@ -143,6 +210,28 @@ class swapConfig {
             estimaed_output_amount: estimated_output_amount,
             node_output_balance: balance[1],
         };
+    }
+
+    async getHolder(symbol) {
+        return new Promise(async (resolve, reject) => {
+            await getScotHolder(symbol, 500, 0)
+                .then(results => {
+                    resolve(results);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    }
+
+    async getLiqudityTokenAllBalance(symbol, node_account) {
+        var all = await this.getHolder(symbol);
+        all = all.filter(one => one.account != node_account);
+        var circulated_balance = 0;
+        for (const one of all) {
+            circulated_balance = circulated_balance + one.balance * 1.0;
+        }
+        return circulated_balance;
     }
 }
 
