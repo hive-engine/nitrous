@@ -71,9 +71,9 @@ class PoolComponent extends Component {
             node_output_balance: 0,
             user_input_balance: 0,
             user_output_balance: 0,
-            user_get_liquidity: 0,
             liquidity_token: 0,
             liquidity_token_rate: 0,
+            liquidity_token_user: 0,
             liquidity_token_all: 0,
             liquidity_token_symbol: '',
         };
@@ -141,21 +141,10 @@ class PoolComponent extends Component {
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
-
-        var user_get_liquidity =
-            this.state.liquidity_token * 1 * this.input_amount;
-        user_get_liquidity = user_get_liquidity.toFixed(3);
-
-        var all = user_get_liquidity * 1 + this.state.liquidity_token_all * 1;
-        var rate = 100 * user_get_liquidity / all;
-        rate = rate.toFixed(3);
-
         this.output_amount = this.state.exchange_rate * this.input_amount;
         this.output_amount = this.output_amount.toFixed(3);
 
         this.setState({
-            user_get_liquidity,
-            liquidity_token_rate: rate,
             output_amount: this.output_amount,
         });
     };
@@ -251,7 +240,6 @@ class PoolComponent extends Component {
     };
 
     calculateDeposit = async () => {
-        var exchange_rate = 0;
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
             var that = this;
@@ -275,14 +263,21 @@ class PoolComponent extends Component {
 
             var results = await this.info.calculateDepositAmount(
                 input_token,
-                output_token
+                output_token,
+                this.props.currentUser.get('username')
             );
-
+            console.log(results);
+            var liquidity_token_rate =
+                results.liquidity_token_user *
+                1 /
+                (results.liquidity_token_all * 1);
             this.setState({
                 exchange_rate: results.exchange_rate,
                 node_input_balance: results.node_input_balance,
                 node_output_balance: results.node_output_balance,
                 liquidity_token_all: results.liquidity_token_all,
+                liquidity_token_user: results.liquidity_token_user,
+                liquidity_token_rate: liquidity_token_rate.toFixed(3),
                 liquidity_token: results.liquidity_token,
                 liquidity_token_symbol: results.liquidity_token_symbol,
             });
@@ -422,9 +417,8 @@ class PoolComponent extends Component {
                     <dl className="exchange-rate">
                         <dt>Your Pool Share (%)</dt>
                         <dd>
-                            {this.state.exchange_rate > 0 &&
-                            this.input_amount > 0
-                                ? `${this.state.user_get_liquidity} ${
+                            {this.state.exchange_rate > 0
+                                ? `${this.state.liquidity_token_user} ${
                                       this.state.liquidity_token_symbol
                                   } (${this.state.liquidity_token_rate}%)`
                                 : '-'}

@@ -162,7 +162,38 @@ class swapConfig {
         return validNode;
     }
 
-    async calculateDepositAmount(input_token, output_token) {
+    async calculateRemoveAmount(input_token) {
+        var output_token = 'KRWP';
+        var validNode = this.findNode(input_token, output_token);
+        if (validNode == null) return 0;
+
+        var balance = await Promise.all([
+            this.getTokenBalance(validNode.account, input_token),
+            this.getTokenBalance(validNode.account, output_token),
+            this.getTokenBalance(validNode.account, validNode.liquidity_token),
+            this.getLiquidityTokenAllBalance(
+                validNode.liquidity_token,
+                validNode.account
+            ),
+        ]);
+
+        var rate = 1 / balance[1]; // krwp
+        var exchange_rate = rate * balance[0]; //1 krwp = xx token
+
+        var rate_remove = 1 / balance[3];
+        var rate_input_token = rate_remove * balance[0];
+        var rate_output_token = rate_remove * balance[1];
+        return {
+            node_token_balance: balance[0],
+            node_krwp_balance: balance[1],
+            exchange_rate: exchange_rate.toFixed(3),
+            remove_rate: rate_remove.toFixed(3),
+            rate_input_token: rate_input_token.toFixed(3),
+            rate_output_token: rate_output_token.toFixed(3),
+        };
+    }
+
+    async calculateDepositAmount(input_token, output_token, user_account) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
 
@@ -173,14 +204,15 @@ class swapConfig {
                 validNode.liquidity_token,
                 validNode.account
             ),
+            this.getTokenBalance(user_account, validNode.liquidity_token),
         ]);
-        console.log(balance);
         var assume_krwp = 1;
         var rate = assume_krwp / balance[0];
         var exchange_rate = rate * balance[1];
 
         var liquidity_token_all = balance[2];
         var liquidity_token = rate * liquidity_token_all;
+        var liquidity_token_user = balance[3];
 
         return {
             node_input_balance: balance[0],
@@ -188,6 +220,7 @@ class swapConfig {
             exchange_rate: exchange_rate.toFixed(3),
             liquidity_token: liquidity_token.toFixed(3),
             liquidity_token_all: liquidity_token_all.toFixed(3),
+            liquidity_token_user: liquidity_token_user,
             liquidity_token_symbol: validNode.liquidity_token,
         };
     }

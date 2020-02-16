@@ -14,9 +14,13 @@ var swap_node = 'sct.jcob';
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`My balance: ${
-                props.balance == undefined ? '0' : props.balance
-            }`}</div>
+            <div className="able-coin">
+                {props.showTokenListCallback == null
+                    ? ''
+                    : `My balance: ${
+                          props.balance == undefined ? '0' : props.balance
+                      }`}
+            </div>
             <input
                 type="text"
                 className="coin-input"
@@ -26,28 +30,37 @@ const SelectToken = props => {
                 onChange={props.amountChange}
                 disabled={props.inputDisabled}
             />
-            <button
-                type="button"
-                className="coin-select"
-                value={props.token_name == '' ? '0' : '1'}
-                onClick={props.showTokenListCallback}
-            >
-                {props.token_name == '' ? (
-                    ''
-                ) : (
-                    <img src={props.token_symbol_img} />
-                )}
-                <span>
-                    {props.token_name == ''
-                        ? 'Select a token'
-                        : `${props.token_name}`}
-                </span>
-                <i className="arrow">
-                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                        <path d="M0.97168 1L6.20532 6L11.439 1" />
-                    </svg>
-                </i>
-            </button>
+            {props.showTokenListCallback == null ? (
+                ''
+            ) : (
+                <button
+                    type="button"
+                    className="coin-select"
+                    value={props.token_name == '' ? '0' : '1'}
+                    onClick={props.showTokenListCallback}
+                >
+                    {props.token_name == '' ? (
+                        ''
+                    ) : (
+                        <img src={props.token_symbol_img} />
+                    )}
+                    <span>
+                        {props.token_name == ''
+                            ? 'Select a token'
+                            : `${props.token_name}`}
+                    </span>
+                    <i className="arrow">
+                        <svg
+                            width="12"
+                            height="7"
+                            viewBox="0 0 12 7"
+                            fill="none"
+                        >
+                            <path d="M0.97168 1L6.20532 6L11.439 1" />
+                        </svg>
+                    </i>
+                </button>
+            )}
         </div>
     );
 };
@@ -62,13 +75,13 @@ class PoolComponent extends Component {
             selected_pool_show: false,
             poolMode: 1,
             selectedPoolText: 'Remove Liquidity',
-            input_token: 'KRWP',
-            input_token_symbol: '/images/tokens/noimage.png',
-            output_token: '',
-            output_token_symbol: '',
+            input_token: '',
+            input_token_symbol: '',
+            output_token: 'KRWP',
+            output_token_symbol: '/images/tokens/noimage.png',
             exchange_rate: 0,
-            node_input_balance: 0,
-            node_output_balance: 0,
+            node_token_balance: 0,
+            node_krwp_balance: 0,
             user_input_balance: 0,
             user_output_balance: 0,
             user_get_liquidity: 0,
@@ -97,14 +110,7 @@ class PoolComponent extends Component {
         this.setState({ selected_pool_show: true });
     };
     hidePoolMode = (mode, index) => {
-        console.log(mode, index);
-        if (mode != undefined)
-            this.setState({
-                selected_pool_show: false,
-                selectedPoolText: mode,
-                poolMode: index,
-            });
-        else this.setState({ selected_pool_show: false });
+        this.setState({ selected_pool_show: false });
     };
 
     showTokenList = () => {
@@ -118,17 +124,16 @@ class PoolComponent extends Component {
     tokenClickCallback(parent, token) {
         parent.hideTokenList();
         console.log('tokenClickCallback', token);
-        if (parent.selected == 'output') {
+        if (parent.selected == 'input')
             parent.setState(
                 {
-                    output_token: token.name,
-                    output_token_symbol: token.ico,
+                    input_token: token.name,
+                    input_token_symbol: token.ico,
                 },
                 () => {
-                    parent.calculateDeposit();
+                    parent.calculateRemove();
                 }
             );
-        }
     }
 
     componentDidMount() {
@@ -250,41 +255,15 @@ class PoolComponent extends Component {
         }
     };
 
-    calculateDeposit = async () => {
-        var exchange_rate = 0;
-        const { input_token, output_token } = this.state;
-        if (input_token != '' && output_token != '') {
-            var that = this;
-            this.info
-                .getTokenBalance(
-                    this.props.currentUser.get('username'),
-                    input_token
-                )
-                .then(balance => {
-                    that.setState({ user_input_balance: balance });
-                });
-
-            this.info
-                .getTokenBalance(
-                    this.props.currentUser.get('username'),
-                    output_token
-                )
-                .then(balance => {
-                    that.setState({ user_output_balance: balance });
-                });
-
-            var results = await this.info.calculateDepositAmount(
-                input_token,
-                output_token
-            );
-
+    calculateRemove = async () => {
+        const { input_token } = this.state;
+        if (input_token != '') {
+            var results = await this.info.calculateRemoveAmount(input_token);
+            console.log(results);
             this.setState({
                 exchange_rate: results.exchange_rate,
-                node_input_balance: results.node_input_balance,
-                node_output_balance: results.node_output_balance,
-                liquidity_token_all: results.liquidity_token_all,
-                liquidity_token: results.liquidity_token,
-                liquidity_token_symbol: results.liquidity_token_symbol,
+                node_token_balance: results.node_token_balance,
+                node_krwp_balance: results.node_krwp_balance,
             });
         }
     };
@@ -359,7 +338,7 @@ class PoolComponent extends Component {
                 </div>
                 <div className="swap-form">
                     <div className="input-box">
-                        <div className="text-label">{'Deposit'}</div>
+                        <div className="text-label">{'Pool Tokens'}</div>
                         <SelectToken
                             amount={input_amount}
                             amountChange={this.inputAmountChange}
@@ -367,7 +346,7 @@ class PoolComponent extends Component {
                             token_name={this.state.input_token}
                             token_symbol_img={this.state.input_token_symbol}
                             inputDisabled={!this.state.loadToken}
-                            // showTokenListCallback={this.selectInputToken}
+                            showTokenListCallback={this.selectInputToken}
                             balance={this.state.user_input_balance}
                         />
                     </div>
@@ -383,9 +362,7 @@ class PoolComponent extends Component {
                         </button>
                     </div>
                     <div className="input-box">
-                        <div className="text-label">
-                            {'Deposit (estimated)'}
-                        </div>
+                        <div className="text-label">{'Output'}</div>
                         <SelectToken
                             amount={output_amount}
                             amountChange={this.outputAmountChange}
@@ -393,7 +370,7 @@ class PoolComponent extends Component {
                             token_name={this.state.output_token}
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
-                            showTokenListCallback={this.selectOutputToken}
+                            // showTokenListCallback={this.selectOutputToken}
                             balance={this.state.user_output_balance}
                         />
                     </div>
@@ -402,9 +379,9 @@ class PoolComponent extends Component {
                         <dd>
                             {this.state.exchange_rate == 0
                                 ? '-'
-                                : `1 ${this.state.input_token} = ${
+                                : `1 ${this.state.output_token} = ${
                                       this.state.exchange_rate
-                                  } ${this.state.output_token}`}
+                                  } ${this.state.input_token}`}
                         </dd>
                     </dl>
                     <dl className="exchange-rate">
@@ -412,10 +389,10 @@ class PoolComponent extends Component {
                         <dd>
                             {this.state.exchange_rate == 0
                                 ? '-'
-                                : `${this.state.node_input_balance} ${
-                                      this.state.input_token
-                                  } + ${this.state.node_output_balance} ${
+                                : `${this.state.node_krwp_balance} ${
                                       this.state.output_token
+                                  } + ${this.state.node_token_balance} ${
+                                      this.state.input_token
                                   }`}
                         </dd>
                     </dl>
