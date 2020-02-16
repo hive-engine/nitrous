@@ -13,7 +13,7 @@ var swap_node = 'sct.jcob';
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`Balnace: ${
+            <div className="able-coin">{`My balance: ${
                 props.balance == undefined ? '0' : props.balance
             }`}</div>
             <input
@@ -66,6 +66,7 @@ class SwapComponent extends Component {
             exchange_rate: 0,
             node_output_balance: 0,
             user_input_balance: 0,
+            user_output_balance: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -201,12 +202,25 @@ class SwapComponent extends Component {
                 output_token,
                 this.input_amount
             );
-            var user_input_balance = await this.info.getTokenBalance(
-                this.props.currentUser.get('username'),
-                input_token
-            );
-            console.log(this.props.currentUser.get('username'));
-            console.log('user_input_balance', user_input_balance);
+
+            var that = this;
+            this.info
+                .getTokenBalance(
+                    this.props.currentUser.get('username'),
+                    input_token
+                )
+                .then(balance => {
+                    that.setState({ user_input_balance: balance });
+                });
+
+            this.info
+                .getTokenBalance(
+                    this.props.currentUser.get('username'),
+                    output_token
+                )
+                .then(balance => {
+                    that.setState({ user_output_balance: balance });
+                });
 
             if (this.input_amount > 0) {
                 this.output_amount = results.estimaed_output_amount;
@@ -217,14 +231,12 @@ class SwapComponent extends Component {
                     output_amount: this.output_amount,
                     exchange_rate,
                     node_output_balance: results.node_output_balance,
-                    user_input_balance: user_input_balance,
                 });
             } else {
                 this.setState({
                     output_amount: 0,
                     exchange_rate: 0,
                     node_output_balance: results.node_output_balance,
-                    user_input_balance: user_input_balance,
                 });
             }
         }
@@ -323,7 +335,7 @@ class SwapComponent extends Component {
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
-                            balance={this.state.node_output_balance}
+                            balance={this.state.user_output_balance}
                         />
                     </div>
                     <dl className="exchange-rate">
