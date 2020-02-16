@@ -2,9 +2,9 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SidebarSwap from 'app/components/elements/SidebarUniSwap';
+import PoolComponent from 'app/components/elements/Swap/PoolAdd';
 
-class Swap extends React.Component {
+class Pool extends React.Component {
     static propTypes = {
         accounts: PropTypes.object,
         status: PropTypes.object,
@@ -13,16 +13,12 @@ class Swap extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        return <SidebarSwap />;
+        return <PoolComponent />;
     }
 }
 
 module.exports = {
-    component: Swap,
-};
-
-module.exports = {
-    path: '/beta/swap',
+    path: '/beta/add-liquidity',
 
     component: connect(
         (state, ownProps) => {
@@ -44,5 +40,5 @@ module.exports = {
                     dispatch(fetchDataSagaActions.requestData(args)),
             };
         }
-    )(Swap),
+    )(Pool),
 };
