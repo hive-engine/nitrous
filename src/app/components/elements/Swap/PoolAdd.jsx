@@ -268,6 +268,7 @@ class PoolComponent extends Component {
             );
             console.log(results);
             var liquidity_token_rate =
+                100 *
                 results.liquidity_token_user *
                 1 /
                 (results.liquidity_token_all * 1);
@@ -418,9 +419,17 @@ class PoolComponent extends Component {
                         <dt>Your Pool Share (%)</dt>
                         <dd>
                             {this.state.exchange_rate > 0
-                                ? `${this.state.liquidity_token_user} ${
-                                      this.state.liquidity_token_symbol
-                                  } (${this.state.liquidity_token_rate}%)`
+                                ? `${(
+                                      this.state.node_input_balance *
+                                      this.state.liquidity_token_rate /
+                                      100
+                                  ).toFixed(3)} ${this.state.input_token} + ${(
+                                      this.state.node_output_balance *
+                                      this.state.liquidity_token_rate /
+                                      100
+                                  ).toFixed(3)} ${this.state.output_token} (${
+                                      this.state.liquidity_token_rate
+                                  }%)`
                                 : '-'}
                         </dd>
                     </dl>

@@ -147,22 +147,17 @@ class PoolComponent extends Component {
 
         this.input_amount = amount;
 
-        var user_get_liquidity =
-            this.state.liquidity_token * 1 * this.input_amount;
-        user_get_liquidity = user_get_liquidity.toFixed(3);
+        var tokenWithdraw = this.state.rate_input_token * this.input_amount;
+        tokenWithdraw = tokenWithdraw.toFixed(3);
+        var krwpWithdraw = this.state.rate_output_token * this.input_amount;
+        krwpWithdraw = krwpWithdraw.toFixed(3);
 
-        var all = user_get_liquidity * 1 + this.state.liquidity_token_all * 1;
-        var rate = 100 * user_get_liquidity / all;
-        rate = rate.toFixed(3);
-
-        this.output_amount = this.state.exchange_rate * this.input_amount;
-        this.output_amount = this.output_amount.toFixed(3);
-
-        this.setState({
-            user_get_liquidity,
-            liquidity_token_rate: rate,
-            output_amount: this.output_amount,
-        });
+        if (this.state.rate_input_token > 0 && this.state.rate_output_token > 0)
+            this.setState({
+                output_amount: `${krwpWithdraw} ${this.state.output_token} + ${
+                    tokenWithdraw
+                } ${this.state.input_token}`,
+            });
     };
 
     outputAmountChange = e => {};
@@ -173,16 +168,6 @@ class PoolComponent extends Component {
 
     onClose = () => {
         console.log('onClose');
-    };
-
-    onSuccessFirst = () => {
-        console.log('on Success');
-        this.transferToken(
-            this.state.output_token,
-            this.output_amount,
-            this.name,
-            this.memo_2
-        );
     };
 
     transferToken(input_token, input_amount, username, memo, onSuccess = null) {
@@ -226,31 +211,16 @@ class PoolComponent extends Component {
     onClickDeposit = e => {
         console.log('transfer');
         const { input_token, output_token } = this.state;
-        if (
-            this.input_amount > 0 &&
-            this.output_amount > 0 &&
-            input_token != '' &&
-            output_token != ''
-        ) {
+        if (this.input_amount > 0 && input_token != '' && output_token != '') {
             var node = this.info.findNode(input_token, output_token);
-            var timestamp = new Date();
-            var key = timestamp.getTime();
             var name = this.props.currentUser.get('username');
-            var memo_1 = `@deposit:${input_token}:${output_token}:${
-                node.name
-            }:${name}:${key}`;
-            var memo_2 = `@deposit:${output_token}:${input_token}:${
-                node.name
-            }:${name}:${key}`;
+            var memo_1 = `@burn:${node.liquidity_token}:${node.name}:${name}`;
 
-            this.name = name;
-            this.memo_2 = memo_2;
             this.transferToken(
-                input_token,
+                node.liquidity_token,
                 this.input_amount,
                 name,
-                memo_1,
-                this.onSuccessFirst
+                memo_1
             );
         }
     };
@@ -258,12 +228,27 @@ class PoolComponent extends Component {
     calculateRemove = async () => {
         const { input_token } = this.state;
         if (input_token != '') {
-            var results = await this.info.calculateRemoveAmount(input_token);
+            var results = await this.info.calculateRemoveAmount(
+                input_token,
+                this.props.currentUser.get('username')
+            );
             console.log(results);
+            var liquidity_token_rate =
+                100 *
+                results.liquidity_token_user *
+                1 /
+                (results.liquidity_token_all * 1);
             this.setState({
+                rate_input_token: results.rate_input_token,
+                rate_output_token: results.rate_output_token,
                 exchange_rate: results.exchange_rate,
                 node_token_balance: results.node_token_balance,
                 node_krwp_balance: results.node_krwp_balance,
+                liquidity_token_all: results.liquidity_token_all,
+                liquidity_token_user: results.liquidity_token_user,
+                liquidity_token_rate: liquidity_token_rate.toFixed(3),
+                liquidity_token_symbol: results.liquidity_token_symbol,
+                user_input_balance: results.liquidity_token_user,
             });
         }
     };
@@ -399,11 +384,14 @@ class PoolComponent extends Component {
                     <dl className="exchange-rate">
                         <dt>Your Pool Share (%)</dt>
                         <dd>
-                            {this.state.exchange_rate > 0 &&
-                            this.input_amount > 0
-                                ? `${this.state.user_get_liquidity} ${
-                                      this.state.liquidity_token_symbol
-                                  } (${this.state.liquidity_token_rate}%)`
+                            {this.state.exchange_rate > 0
+                                ? `${(
+                                      this.state.rate_output_token *
+                                      this.state.user_input_balance
+                                  ).toFixed(3)} ${this.state.output_token} + ${(
+                                      this.state.rate_input_token *
+                                      this.state.user_input_balance
+                                  ).toFixed(3)} ${this.state.input_token}`
                                 : '-'}
                         </dd>
                     </dl>
