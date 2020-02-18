@@ -53,18 +53,14 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'steemleodex',
-                label: 'SteemLeo DEX',
-                link: `https://dex.steemleo.com/?token=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: 'leodex',
+                label: 'Leodex Exchange',
+                link: `https://dex.steemleo.com`,
             },
             {
-                value: 'steemengine',
-                label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: 'leoshop',
+                label: 'Leoshop Marketplace',
+                link: `https://shop.steemleo.com`,
             },
         ],
         exchanges: [
@@ -113,6 +109,11 @@ const SidePanel = ({
         ],
         organizational: [
             {
+                value: 'faq',
+                label: 'Frequently Asked Questions',
+                link: 'https://steemleo.com/faq',
+            },
+            {
                 value: 'welcome',
                 label: 'Guide to SteemLeo',
                 link: 'https://steemleo.com/welcome',
@@ -123,9 +124,9 @@ const SidePanel = ({
                 link: 'https://discord.gg/KgcVDKQ',
             },
             {
-                value: 'leotube',
-                label: 'LeoTube',
-                link: 'https://tube.steemleo.com',
+                value: '3speak',
+                label: 'SteemLeo on 3speak',
+                link: 'https://3speak.online/c/hive-167922',
             },
         ],
         legal: [

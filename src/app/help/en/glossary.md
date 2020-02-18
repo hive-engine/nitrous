@@ -42,6 +42,9 @@ Any possession that has an exchange value.
 #### Asset Backed Commercial Paper (ABCP):
 Short-term debt that is backed by assets.
 
+#### Asian Trading Session:
+The Asian trading session opens at 6:00pm EST and closes at 4:00am EST and includes the major trading time period for the Shanghai and Nikkei 225 exchange.  
+
 #### Amortization:
 The repayment of a loan from an individual or financial institution by installment.
 
@@ -103,6 +106,9 @@ Individuals elected by the shareholders to carry out certain functions as laid o
 #### Bridge Loan:
 A loan used by corporations until they secure more permanent financing.  The loan provides an immediate infusion of cash which helps the cash flow of the company.  These notes are usually for 12 months or less in length.
 
+#### Brexit:
+Which stands for "British exit," refers to the U.K.'s June 23, 2016 election to leave the European Union (EU).
+
 #### Bull:
 An investor who believes the stock market is under priced and set for an increase.  A bull market is an increase of at least 20% from the bottom.
 
@@ -134,7 +140,7 @@ Buying at the beginning of a trading session as long as the price is within an o
 #### C Corporation:
 A corporation that elects to be taxed as a corporation.  Federal and State taxes are paid on earnings by the corporation.  Any dividends that are paid to the shareholders are subject to another round of taxation.  This compares with a S Corporation where the earnings fall to the tax return of the shareholder and are not taxed at the corporate level. 
 
-#### Call:
+#### Call (a.k.a. Call Option):
 An option that gives the holder the right to buy an underlying asset.  The terms usually stipulate at what price the asset can be purchased at.
 
 #### Capital:
@@ -161,6 +167,12 @@ Assets on a balance sheet that can be converted to cash within 90 days.  These a
 #### Cash Ratio:
 The percentage of a firm's assets that are held in cash.
 
+#### Cash Dividend Payout Ratio:
+Dividends come from cash flow, not earnings, so whether the payout ratio is suspect or not, one should investigate the cash dividend payout ratio as it gives a more accurate picture of whether the dividend is sustainable or not. The lower the number the better because if a company's cash dividend payout ratio is higher than 100%, it means that it's paying more in dividends than it's receiving in cash and not sustainable long term.
+
+#### CBOE Volatility Index:
+Measures the volatility over the last 30 days on the S&P 500. Also known, as the fear gauge, VIX values greater than 30 represent risk off trading environments. 
+
 #### Chair of the Board:
 The highest ranking member of the Board of Directors.  The most powerful officer of the corporation and the one who presides over the meetings.
 
@@ -182,6 +194,12 @@ Buying a security at a higher price than expected because of a rapid increase in
 #### Certificate of Deposit (CD):
 A certificate issued by a bank that shows a specified amount of money was deposited. The certificate is good for a certain time period at a particular interest rate. The end date is known as the maturity date. Certificates of Deposit can be in any denomination and can last up to 5 years.
 
+#### Commitments of Traders (COT):
+Is a weekly market report issued by the Commodity Futures Trading Commission (CFTC) listing the positions held by commercial traders and the “Smart Money.”
+
+#### Commodity Currency:
+Is a name given to currencies of countries which depend on the export of raw materials like aluminum, copper, oil, etc. for income. 
+
 #### Chief Executive Officer (CEO):
 A title held by the Chairperson of the Board or the President.  This is usually the person responsible for the activities of the company.
 
@@ -190,6 +208,9 @@ The officer in a firm who is responsible for the financial affairs.
 
 #### Chief Operating Officer (COO):
 The officer of a firm who is responsible for the day-to-day activities of the company.  This is usually under the CEO or an executive vice president.
+
+#### Crack Spread:
+Is the difference between an oil refiners raw material cost and the sale of those finished products ranging from gasoline to plastics.
 
 #### Closing Cost:
 An expense that is incurring in transferring the ownership of real estate.
@@ -267,8 +288,29 @@ The total cost that goes into producing a finished product that is sold.  This i
 
 ## <span id="d">D</span>
 
+#### DAX:
+a stock index consisting of the top thirty major German companies trading on the Frankfurt Stock Exchange (FSE). 
+
+#### Death Cross:
+Occurs when the 50-day moving average crosses below the 200-day moving average and often signals the potential start of a longer -term downtrend.  
+
 #### Dividend:
 A portion of a company profits that are paid to shareholders. It is commonly issued out on an annual basis and given to holders of common and preferred stock holders. Dividends are often expressed in percent terms. A $50 stock price that pays a $5 annual dividend is said to be paying a 10% dividend.
+
+#### Dividend Aristocrats:
+Are publicly traded companies that have increased their dividend payouts for 25 consecutive years or more.
+
+#### Dividend Payout Ratios: 
+Is the ratio of the total amount of dividends paid out to shareholders relative to the net income of the company. If a company has a dividend payout ratio over 100% then that means that the company is paying out more to its shareholders than earnings coming in.
+
+#### Dividend investing strategy:
+A trading strategy with the goal of establishing passive income by buying and holding companies that pay out dividends.
+
+#### Doctor Copper:
+Is terminology for copper’s ability to forecast boom and bust economic cycles.  Rising copper prices imply, for example industrial or housing demand, while declining copper prices imply lack of demand or a slowing global economy.
+
+#### Double Bottom Reversal (“W”) Pattern: 
+Where price stops going lower due to buyers stepping and finally reverses price when additional buyers step in to overcome all the sellers.  
 
 <hr>
 
@@ -277,21 +319,51 @@ A portion of a company profits that are paid to shareholders. It is commonly iss
 #### Earnings Per Share (EPS):
 A company's earnings are divided by their total outstanding shares. If a company earns $12 million and has 12 million shares outstanding, the EPS is $1.00. The shares outstanding is usually the average number for the reporting period. Often referred to as the “bottom number” when companies report.
 
+#### Exchange Rate:
+The price of one currency expressed in terms of another currency or the base currency. 
+
 <hr>
 
 ## <span id="f">F</span>
+
+#### FANG Stocks:
+Is the acronym CNBC's Mad Money host Jim Cramer came up with in 2013 to represent Facebook, Amazon, Netflix and Google. 
+
+#### FTSE 100:
+A stock index in London that consist of 100 companies with highest market capitalization. 
 
 <hr>
 
 ## <span id="g">G</span>
 
+#### Golden Cross:
+Occurs when the 50-day moving average crosses above the 200-day moving average and often signals the potential start of a longer -term uptrend.
+
+#### Gordon Growth Model:
+A model is used to determine the intrinsic value of a stock based future dividend payments.
+
+#### Greenshoe Option:
+A tool used by underwriters to stabilizer price above the IPO price.  
+
+#### Gross Profit Margin:
+Profits as a percentage of sales.
+
 <hr>
 
 ## <span id="h">H</span>
 
+#### The Halo Effect:
+Brand loyalty towards a company's product(s) based on his/her experience with that product.
+
 <hr>
 
 ## <span id="i">I</span>
+
+#### Intermarket Analysis:
+An analysis that give traders/investors a macro picture of where stocks, bonds, commodities and currencies are heading next. 
+
+#### Insider Trading Strategy:
+A trading strategy with the goal of mimicking the buying or selling stocks that corporate officers and members of the board of directors of companies are buying or selling. 
 
 <hr>
 
@@ -305,6 +377,12 @@ A company's earnings are divided by their total outstanding shares. If a company
 
 ## <span id="l">L</span>
 
+#### Liquidity:
+Where there are enough buyers and sellers to execute market orders at quickly and without slippage. 
+
+#### London Trading Session: 
+The London trading session opens at 3:00am EST and closes at 12:00pm EST and includes the major trading time period for the FTSE 100 and DAX exchange.
+
 <hr>
 
 ## <span id="m">M</span>
@@ -312,18 +390,53 @@ A company's earnings are divided by their total outstanding shares. If a company
 #### Market Capitalization:
 The dollar value of the outstanding share. This is determined by taking the share price and multiplying it by the shares outstanding. Market capitalization is used to determine company size.
 
+#### Margin:
+A cash reserve within a brokerage account needed to open or maintain a position. 
+
 #### Maturity Date:
 The date when a financial instrument is paid off. It applies to bonds and CDs. The instrument comes due and payable on that date.
 
 ## <span id="n">N</span>
 
+#### New York Trading Session:
+The New York trading session opens at 8:00am EST and closes at 5:00pm EST and includes the major trading time period for the DOW Jones, Nasdaq, Russell 2000 and the S&P 500.
+
+#### NIFTY 50:
+A stock index in India that representing the 50 of Indian's top public companies in 13 sectors.
+
+#### Nikkei 225:
+A stock market index for the Tokyo Stock Exchange (TSE) that represents the top 225 top-rated Japanese companies.
+
+#### Negative Divergence:
+Occurs in an uptrend when the price action makes higher highs, but an oscillating indictor such as the RSI or MACD is making lower lows. 
+
 <hr>
 
 ## <span id="o">O</span>
 
+#### Option Contract:
+A contract that give a trader/investor the right, but not the obligation to buy or sell an asset at a predetermined price over a certain period of time. 
+
+#### The Oprah Effect:
+Refers to the boost in sales that followed an endorsement on The Oprah Winfrey Show back in days. 
+
+#### Payout ratio:
+This ratio compares the dividend to earnings and gives an idea of how sustainable the dividend is. If the payout ratio is low (say 33% or below), the dividend should be pretty secure, if the payout ratio is high (say 66% or above) start getting some answers, but if the payout ratio is above 100%, expect the dividend to be cut.
+
+
 <hr>
 
 ## <span id="p">P</span>
+
+#### Price In Point (PIP):
+A measurement that represents the change in price between two currencies. 
+
+#### Price To Earnings Ratio:
+Also known as the p/e ratio, is fast way to determine the valuation of a stock, relative to its peers.  
+
+#### Put Option:
+The right, but not the obligation to sell 100 shares of an asset at a specified price within a specified time frame.
+
 
 <hr>
 
@@ -333,12 +446,36 @@ The date when a financial instrument is paid off. It applies to bonds and CDs. T
 
 ## <span id="r">R</span>
 
+#### Ratio Analysis:
+Is the comparison of line items in the financial statements of a business. Ratio analysis consists of calculating financial performance using five basic types of ratios: profitability, liquidity, activity, debt, and market.
+
+#### Return On Equity:
+Is a profitability ratio that measures the ability of a firm to generate profits from its shareholders investments in the company. In other words, the return on equity ratio shows how much profit each dollar of common stockholders’ equity generates.
+
+#### REITs:
+Or real estate investment trusts, are companies that own or finance income-producing real estate in a range of property sectors ad most of them trade on major stock exchanges, REITs lease space and collect rent on its real estate and generates income which is then paid out to shareholders in the form of dividends.
+
 #### Revenues:
 The total sales achieved during a period. Often referred to as the “top number” when companies report.
+
+#### Russell 2000 Index:
+A stock index that represents the largest 2000 small cap public companies in the US.
 
 <hr>
 
 ## <span id="s">S</span>
+
+#### Safe-Haven Currencies:
+Are currencies that increase in value during times of risk on environments. Safe-haven currencies are usually inversely correlated to equity markets. 
+
+#### Sector Rotation:
+The action of the Smart Money to reallocate funds from one sector to another to take advantage of the business / economic cycles. 
+
+#### Smart Money:
+Are the institutional investors, banks and financial professionals that have the capital to buy information that gives them a trading edge.
+
+#### Standard & Poor's 500 Index:
+Known as the S&P 500 is an index with 500 of the top companies in the U.S. Stocks. Because it’s the largest stock index in the world, it serves as a barometer for all other stock indexes in the world. 
 
 #### Stock:
 Ownership stake in a corporation, denoted in shares, representing a piece of company's earnings.
@@ -346,6 +483,12 @@ Ownership stake in a corporation, denoted in shares, representing a piece of com
 <hr>
 
 ## <span id="t">T</span>
+
+#### Trading Plan:
+Is a set of rules and guidelines that defines your trading personality, money and risk management techniques and criteria for entering and exiting trades. 
+
+#### Trust (an investment trust):
+Is a company that owns a fixed amount of a given asset. Investors pool money and buy shares of the trust, owning contracts that represent ownership of the asset held by the trust.
 
 <hr>
 
@@ -372,6 +515,9 @@ The generic term that describes the securities industry. Many of the sellers of 
 
 #### Yield:
 The return on a financial instrument. With stocks this is a dividend or the effective rate of interest paid on a bond.
+
+#### Yield Curve:
+Refers to the relationship between the short- and long-term interest rates of fixed-income securities issued by the U.S. Treasury. 
 
 <hr>
 

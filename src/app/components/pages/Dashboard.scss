@@ -1,12 +1,12 @@
 .PostsList {
   clear: right;
-}
+  }
 
 .PostsList__summaries {
   list-style-type: none;
   margin-left: 0;
 }
-
+//change this to change "sidebar locations" of the dashboard page
 .Dashboard {
     .articles__h1--no-wrap {
         white-space: nowrap;
@@ -56,17 +56,6 @@
     }
   }
 }
-
-
-// .container {
-//   width: 100%;
-//   padding-bottom: 4em;
-//   min-height: 100%;
-//   @include themify($themes) {
-//       background-color: themed('backgroundColor');
-//       color: themed('textColor');
-//     }
-// }
 
 
 .content-container {
@@ -217,7 +206,7 @@
     max-width: 1240px;
   }
 }
-
+//changes the sidebar background color
 .Dashboard.row.layout-list {
   max-width: none;
   @include MQ(L) {
@@ -226,41 +215,40 @@
 }
 
 .articles {
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    padding: 4px 1em 1em 1em;
-    transition: all 0.2s ease-out;
-    border: transparent;
-    min-width: 300px;
-    width: 100%;
-    margin: auto;
-    background-color: transparent;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 4px 1em 1em 1em;
+  transition: all 0.2s ease-out;
+  border: transparent;
+  min-width: 300px;
+  width: 100%;
+  margin: auto;
+  background-color: transparent;
+  box-shadow: none;
 
   @include MQ(M) {
     margin: 0 1em;
-    padding: 0.5em 0em;
-    min-width: 550px;
+    padding: 0em 1em;
+    min-width: 500px;
     max-width: 664px;
     order: 2;
-
   }
+
   h2 {
     font-family: sans-serif;
   }
   @include MQ(L) {
-    min-width: 664px;
+    min-width: 550px;
     max-width: 664px;
-    padding: 1.5em 4em;
     @include themify($themes) {
-        border: themed('border');
-        box-shadow: 5px 5px 0 0 themed('contentBorderAccent');
-        background-color: themed('moduleBackgroundColor');
+      border: themed('borderTransparent');
+      background-color: themed('transparent');
     }
   }
 
   &:hover {
     @include MQ(L) {
       @include themify($themes) {
-          box-shadow: 6px 6px 0 0 themed('contentBorderAccent');
+          box-shadow: 0px 0px 0 0 themed('contentBorderAccent');
       }
     }
   }
@@ -293,6 +281,7 @@
     height: 24px;
     position: relative;
   }
+  //change this to change the actual post container content summary (i.e. changing modulebackgroundcolor)
   &__summary {
       margin: 0em 0 1em;
       transition: 0.2s all ease-in-out;
@@ -300,7 +289,6 @@
       padding-bottom: 10px;
       @include themify($themes) {
           background-color: themed('moduleBackgroundColor');
-          border-bottom: themed('border');
         }
       @include MQ(M) {
         margin: 0 0 40px;
@@ -308,11 +296,14 @@
         padding-bottom: 0;
         @include themify($themes) {
             border: themed('border');
+            //border change here didn't change anything noticable on the site
           }
       }
       &:hover {
-        @include MQ(M) {
-          box-shadow: 0px 5px 10px 0 rgba(0,0,0,0.03);
+        @include MQ(L) {
+          @include themify($themes) {
+              box-shadow: 6px 6px 0 0 themed('contentBorderAccent');
+          }
         }
       }
   }
@@ -445,7 +436,7 @@
     // @extend .h2;
     margin: 0;
     @include font-size(16px);
-      overflow : hidden;
+      overflow : auto;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -748,7 +739,7 @@ a#changeLayout:focus {
         min-width: 1050px;
       }
       @include themify($themes) {
-         background-color: themed('moduleBackgroundColor');
+         background-color: themed('color-text-gray-light');
          border: themed('border');
       }
       &__hr {
@@ -759,13 +750,15 @@ a#changeLayout:focus {
           }
         }
       }
+      //changing these setting seems to change (font size) on the entire website
       &__summary {
+        font-size: 15px;
         border: transparent;
         box-shadow: none;
         padding-bottom: 0px;
         margin: 0 0 1.4em;
         @include themify($themes) {
-          border-bottom: themed('borderLight');
+          border-bottom: themed('border');
         }
         @include MQ(M) {
           padding-bottom: 6px;
@@ -777,7 +770,7 @@ a#changeLayout:focus {
         padding-left: 5px;
       }
       &__h2 {
-        @include font-size(16px);
+        @include font-size(15px);
 
         @include MQ(M) {
           -webkit-line-clamp: 2;
@@ -789,8 +782,8 @@ a#changeLayout:focus {
       }
       &__feature-img-container {
         overflow: hidden;
-        width: 130px;
-        height: 77px;
+        width: 162px;
+        height: 96px;
         position: relative;
         display: inline-block;
       }
@@ -800,21 +793,23 @@ a#changeLayout:focus {
         top: 50%;
         transform:translateY(-50%)
       }
-      &__summary-header {
-        padding: 2px 0 5px;
+      //change this to modify the first header (author name, rep, tag, etc.)
+      &__summary-header { 
+        font-size: 20px;
+        padding: 4px 0 15px;
         border: transparent;
       }
       &__summary-footer {
         padding: 2px 0 5px;
         border: transparent;
-        padding: 4px;
-        padding-top: 3px;
+        padding: 6px;
+        padding-top: 8px;
         // @include themify($themes) {
         //     border-bottom: themed('borderLight');
         //   }
       }
       &__p {
-        @include font-size(15px);
+        @include font-size(19px);
         -webkit-line-clamp: 1;
         padding-right: 6px;
         margin-top: 2px;
@@ -903,7 +898,7 @@ a#changeLayout:focus {
         margin: 0 0 10px;
         padding-bottom: 0;
         @include themify($themes) {
-          border-bottom: themed('borderTransparent');
+          border-bottom: themed('border');
         }
       }
       &__summary.promoted {
@@ -918,12 +913,12 @@ a#changeLayout:focus {
         padding: 0;
       }
       &__h2 {
-        @include font-size(14px);
+        @include font-size(20px);
         padding-bottom: 2px;
       }
       .PostSummary__body {
         padding: 0;
-        @include font-size(14px);
+        @include font-size(20px);
       }
       &__content-block {
         &--img {
@@ -1028,6 +1023,9 @@ a#changeLayout:focus {
       &.dex {
           background-color: #F99522;
       }
+      &.shop {
+        background-color: #06ba6f;
+    }
       &.wallet {
           background-color: #1594F2;
       }
@@ -1048,7 +1046,7 @@ a#changeLayout:focus {
       padding-bottom: 5px;
 
       @include themify($themes) {
-        background-color: themed('backgroundColorHeavy');
+        background-color: themed('moduleBackgroundColor2');
       }
 
       .column {
@@ -1059,46 +1057,53 @@ a#changeLayout:focus {
     &__summary {
       &-header {
         .user__name a {
-          font-size: 0.75rem;
+          font-size: 1rem;
         }
         span.Reputation {
-          font-size: 0.75rem;
+          font-size: .9rem;
         }
         .articles__tag-link {
-          font-size: 0.75rem;
+          font-size: .9rem;
         }
         .timestamp__time {
-          font-size: 0.75rem;
+          font-size: 1rem;
         }
       }
-
+    //change size of footer elements on individual posts (i.e. voting box, LEO amount, etc.)
       &-footer {
-        font-size: 0.75rem;
+        font-size: 1rem;
 
         .Voting__inner {
+          font-size: 1rem;
           padding-right: 0.3rem;
+          padding-left: 0.3rem;
           margin-right: 0;
         }
 
         .Voting__button-up div > a {
-          padding-right: 0;
+          font-size: 1rem;
+          padding-right: 0.3rem;
+          padding-left: 0.3rem;
         }
 
         .VotesAndComments__votes {
+          font-size: 1rem;
           padding-right: 0.3rem;
+          padding-left: 0.3rem;
         }
 
         .VotesAndComments__comments {
-          padding-left: 0;
+          font-size: 1rem;
+          padding-left: 0.3rem;
           padding-right: 0.3rem;
         }
 
         .Icon > svg {
-          width: 0.75rem;
-          height: 0.75rem;
+          width: 1.2rem;
+          height: 1.2rem;
         }
         a {
-          font-size: 0.75rem;
+          font-size: 1rem;
         }
       }
 
@@ -1115,24 +1120,30 @@ a#changeLayout:focus {
         &--text {
 
           min-width: 200px;
-
+          //change font sizing for individual post content title & body
           .entry-title {
-            font-size: 0.7rem;
+            font-size: .9rem;
+            padding-right: 0.2rem;
+            padding-left: 0.2rem;
           }
           .entry-content {
-            font-size: 0.6rem;
+            font-size: .9rem;
             white-space: normal;
+            padding-right: 0.2rem;
+            padding-left: 0.2rem;
           }
 
         }
       }
     }
-
+//change featured image size
     &__feature {
       &-img {
         &-container {
-          width: 40px;
-          height: 40px;
+          width: 90px;
+          height: 90px;
+          padding-right: 0.2rem;
+          padding-left: 0.2rem;
         }
       }
     }
