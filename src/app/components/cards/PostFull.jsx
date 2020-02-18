@@ -489,9 +489,6 @@ class PostFull extends React.Component {
                         </div>
                         <div className="PostFull__body entry-content">                           
                             {contentBody}
-                                        <div>
-                 <center>Posted via <a href="https://www.dporn.co/">DPorn.co</a> | Get Rewards For Sex Content</center>
-            </div>
                         </div>
                         {SHOW_AUTHOR_RECENT_POSTS && (
                             <AuthorRecentPosts
