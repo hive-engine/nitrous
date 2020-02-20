@@ -374,15 +374,14 @@ class PostsIndex extends React.Component {
 
                     <div style={{ textAlign: 'center', marginBottom: 10 }}>
                         <strong>
-                            FEATURE VIDEO:{' '}
-                            <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">
-                                Squad Goals
+                            <a href="https://www.reggaesteem.io/jahmfest/@reggaesteem/reggaesteem-jahmfest-june-26th-to-28th-2020">
+                                JAHMFEST June 26-28th in Negril
                             </a>
                         </strong>{' '}
-                        by{' '}
-                        <a href="https://reggaesteem.io/@takeova">@Takeova</a> &{' '}
-                        <a href="https://reggaesteem.io/@stinezent">
-                            @StinezEnt
+                        | Tickets: {' '}
+                        <a href="https://shop.steemleo.com/@reggaesteem/k63364an-reggaesteem-jahmfest-2020-earlybird-room-package">LeoShop</a> &{' '}
+                        <a href="https://discord.gg/PTJQMAW">
+                            Discord
                         </a>
                     </div>
 
