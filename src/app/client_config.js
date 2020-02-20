@@ -47,7 +47,7 @@ export const TAG_LIST = fromJSOrdered([
     'steemleo',
     'zzan',
 ]);
-export const MAIN_TAG_LIST = fromJSOrdered(['sct']);
+export const MAIN_TAG_LIST = fromJSOrdered(['hive-101145']);
 export const LANG_TAG_LIST = fromJSOrdered([
     'sct-kr',
     'sct-en',
