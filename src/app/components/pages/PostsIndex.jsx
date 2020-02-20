@@ -378,7 +378,7 @@ class PostsIndex extends React.Component {
                                 JAHMFEST June 26-28th in Negril
                             </a>
                         </strong>{' '}
-                        | Tickets: {' '}
+                        - Tickets: {' '}
                         <a href="https://shop.steemleo.com/@reggaesteem/k63364an-reggaesteem-jahmfest-2020-earlybird-room-package">LeoShop</a> {' '}
                         <a href="https://discord.gg/PTJQMAW">
                             Discord
