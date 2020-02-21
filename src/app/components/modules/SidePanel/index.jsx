@@ -133,21 +133,16 @@ const SidePanel = ({
                 link: '/@diamondtoken/guide-to-steemdiamond',
             },
             {
-                value: 'diamond_stake',
+                value: 'diamond_staking',
                 label: 'Diamond Staking',
                 internal: true,
                 link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
             },
             {
                 value: 'diamond_telegram',
-                label: 'Discord',
+                label: 'Telegram',
                 link: 'https://t.me/steemdiamond',
             },
-            //{
-            //    value: 'diamond_discord',
-            //    label: 'Discord',
-            //    link: 'https://discord.gg/MrdkRBV',
-            //},
             {
                 value: 'diamond_richlist',
                 label: 'Rich List',
