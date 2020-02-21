@@ -79,7 +79,7 @@ class swapConfig {
             id: 'krwp',
             name: 'KRWP',
             fullname: '1000 KRW Pegged',
-            ico: '/images/tokens/noimage.png',
+            ico: '/images/tokens/krwp.png',
         });
         this.tokens.push({
             id: 'sct',

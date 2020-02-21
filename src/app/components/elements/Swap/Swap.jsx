@@ -13,7 +13,7 @@ var swap_node = 'sct.jcob';
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`My balance: ${
+            <div className="able-coin">{`Balance: ${
                 props.balance == undefined ? '0' : props.balance
             }`}</div>
             <input
