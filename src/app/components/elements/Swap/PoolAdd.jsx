@@ -130,9 +130,9 @@ class PoolComponent extends Component {
     inputAmountChange = async e => {
         this.setState({ input_amount: undefined });
         const amount = e.target.value;
-        console.log('inputAmountChange', amount);
         this.input_amount = amount;
-        this.output_amount = this.state.exchange_rate * this.input_amount;
+        var rate = this.input_amount / this.state.node_input_balance;
+        this.output_amount = rate * this.state.node_output_balance;
         this.output_amount = this.info.floorNumber(this.output_amount);
         if (this.state.exchange_rate == undefined) this.output_amount = 0;
         this.setState({
