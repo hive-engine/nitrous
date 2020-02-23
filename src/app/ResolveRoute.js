@@ -27,13 +27,13 @@ export default function resolveRoute(path) {
     //     return { page: 'Remove liquidity' };
     // }
     if (path === '/about.html') {
-        return { page: 'Remove liquidity' };
+        return { page: 'About' };
     }
     if (path === '/welcome') {
-        return { page: 'Swap' };
+        return { page: 'Welcome' };
     }
     if (path === '/faq.html') {
-        return { page: 'Add liquidity' };
+        return { page: 'Faq' };
     }
     if (path === '/login.html') {
         return { page: 'Login' };
