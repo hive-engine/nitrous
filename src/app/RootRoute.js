@@ -13,11 +13,15 @@ export default {
         const route = resolveRoute(nextState.location.pathname);
         if (route.page === 'About') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/About')]);
+            cb(null, [require('app/components/pages/SctPoolRemove')]);
             //});
         } else if (route.page === 'Welcome') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Welcome')]);
+            cb(null, [require('app/components/pages/SctSwap')]);
+            //});
+        } else if (route.page === 'Faq') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/SctPoolAdd')]);
             //});
         } else if (route.page === 'Remove liquidity') {
             //require.ensure([], (require) => {
@@ -30,10 +34,6 @@ export default {
         } else if (route.page === 'Swap') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/SctSwap')]);
-            //});
-        } else if (route.page === 'Faq') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Faq')]);
             //});
         } else if (route.page === 'Login') {
             //require.ensure([], (require) => {

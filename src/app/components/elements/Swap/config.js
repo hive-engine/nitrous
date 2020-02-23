@@ -79,7 +79,7 @@ class swapConfig {
             id: 'krwp',
             name: 'KRWP',
             fullname: '1000 KRW Pegged',
-            ico: '/images/tokens/noimage.png',
+            ico: '/images/tokens/krwp.png',
         });
         this.tokens.push({
             id: 'sct',
@@ -105,6 +105,21 @@ class swapConfig {
             fullname: 'Steem',
             ico: '/images/tokens/steem.png',
         });
+    }
+
+    floorNumberWithNumber(num, pow) {
+        var n = Math.pow(10, pow);
+        var _num = parseFloat(num);
+        _num = Math.floor(_num * n) / n;
+        _num = _num.toFixed(pow);
+        return _num;
+    }
+
+    floorNumber(num) {
+        var _num = parseFloat(num);
+        _num = Math.floor(_num * 1000) / 1000;
+        _num = _num.toFixed(3);
+        return _num;
     }
 
     getSteemBalance(account) {
@@ -180,8 +195,9 @@ class swapConfig {
 
         var rate = 1 / balance[1]; // krwp
         var exchange_rate = rate * balance[0]; //1 krwp = xx token
+        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
 
-        var rate_remove = 1 / balance[3];
+        var rate_remove = 1 / balance[3]; //  1 / all_token
         var rate_input_token = rate_remove * balance[0];
         var rate_output_token = rate_remove * balance[1];
 
@@ -190,12 +206,12 @@ class swapConfig {
         return {
             node_token_balance: balance[0],
             node_krwp_balance: balance[1],
-            exchange_rate: exchange_rate.toFixed(3),
-            remove_rate: rate_remove.toFixed(3),
+            exchange_rate: exchange_rate,
+            remove_rate: rate_remove,
             rate_input_token: rate_input_token,
             rate_output_token: rate_output_token,
-            liquidity_token_all: liquidity_token_all.toFixed(3),
-            liquidity_token_user: liquidity_token_user.toFixed(3),
+            liquidity_token_all: liquidity_token_all,
+            liquidity_token_user: liquidity_token_user,
             liquidity_token_symbol: validNode.liquidity_token,
         };
     }
@@ -216,6 +232,8 @@ class swapConfig {
         var assume_krwp = 1;
         var rate = assume_krwp / balance[0];
         var exchange_rate = rate * balance[1];
+        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
+        console.log('exchange_rate', exchange_rate);
 
         var liquidity_token_all = balance[2];
         var liquidity_token = rate * liquidity_token_all;
@@ -224,10 +242,10 @@ class swapConfig {
         return {
             node_input_balance: balance[0],
             node_output_balance: balance[1],
-            exchange_rate: exchange_rate.toFixed(3),
-            liquidity_token: liquidity_token.toFixed(3),
-            liquidity_token_all: liquidity_token_all.toFixed(3),
-            liquidity_token_user: liquidity_token_user.toFixed(3),
+            exchange_rate: exchange_rate,
+            liquidity_token: liquidity_token,
+            liquidity_token_all: liquidity_token_all,
+            liquidity_token_user: liquidity_token_user,
             liquidity_token_symbol: validNode.liquidity_token,
         };
     }
@@ -243,12 +261,17 @@ class swapConfig {
         // input, output balance
         console.log('calculateExchangeAmount', balance);
         var alpha = input_amount / balance[0];
+
         var rate_fee = (100.0 - this.swap_fee) / 100.0;
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
+        var exchange_rate = estimated_output_amount / input_amount;
+        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
+        estimated_output_amount = this.floorNumber(estimated_output_amount);
         return {
-            estimaed_output_amount: estimated_output_amount,
+            estimated_output_amount,
             node_output_balance: balance[1],
+            exchange_rate,
         };
     }
 

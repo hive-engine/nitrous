@@ -18,7 +18,7 @@ class Swap extends React.Component {
 }
 
 module.exports = {
-    path: '/beta/swap',
+    path: 'welcome',
 
     component: connect(
         (state, ownProps) => {

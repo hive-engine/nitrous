@@ -17,23 +17,23 @@ export default function resolveRoute(path) {
     if (path === '/') {
         return { page: 'PostsIndex', params: ['hot'] };
     }
-    if (path === '/beta/swap') {
-        return { page: 'Swap' };
-    }
-    if (path === '/beta/add-liquidity') {
-        return { page: 'Add liquidity' };
-    }
-    if (path === '/beta/remove-liquidity') {
+    // if (path === '/beta/swap') {
+    //     return { page: 'Swap' };
+    // }
+    // if (path === '/beta/add-liquidity') {
+    //     return { page: 'Add liquidity' };
+    // }
+    // if (path === '/beta/remove-liquidity') {
+    //     return { page: 'Remove liquidity' };
+    // }
+    if (path === '/about.html') {
         return { page: 'Remove liquidity' };
     }
-    if (path === '/about.html') {
-        return { page: 'About' };
-    }
     if (path === '/welcome') {
-        return { page: 'Welcome' };
+        return { page: 'Swap' };
     }
     if (path === '/faq.html') {
-        return { page: 'Faq' };
+        return { page: 'Add liquidity' };
     }
     if (path === '/login.html') {
         return { page: 'Login' };

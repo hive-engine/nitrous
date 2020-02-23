@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import tt from 'counterpart';
-import Reveal from 'app/components/elements/Reveal';
+import Reveal from 'app/components/elements/Swap/SelectedReveal';
 import CloseButton from 'app/components/elements/CloseButton';
 
 class SelectedMode extends Component {
@@ -9,11 +9,11 @@ class SelectedMode extends Component {
 
         this.modes = [];
         this.modes.push({
-            url: 'add-liquidity',
+            url: 'faq.html',
             name: 'Add Liquidity',
         });
         this.modes.push({
-            url: 'remove-liquidity',
+            url: 'about.html',
             name: 'Remove Liquidity',
         });
 
@@ -33,23 +33,19 @@ class SelectedMode extends Component {
     };
     render() {
         var _show = this.props.show;
+        var selected = this.props.selected;
 
         const listItems = this.modes.map((mode, i) => (
-            <li key={i}>
-                <button>
-                    <p className="token-name">
-                        <a className="simple" href={`/beta/${mode.url}`}>
-                            {mode.name}
-                        </a>
-                    </p>
-                </button>
+            <li key={i} className={i == selected ? 'active' : ''}>
+                <a className="anchor" href={`/${mode.url}`}>
+                    {mode.name}
+                </a>
             </li>
         ));
 
         return (
-            <Reveal show={_show} isSwapModal={true} onHide={this.closeModal}>
-                <CloseButton onClick={this.closeModal} />
-                <div className="token-list">
+            <Reveal show={_show} onHide={this.closeModal}>
+                <div className="liquidity-select">
                     <ul>{listItems}</ul>
                 </div>
             </Reveal>
