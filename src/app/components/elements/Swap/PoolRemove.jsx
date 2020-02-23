@@ -148,9 +148,10 @@ class PoolComponent extends Component {
         this.input_amount = amount;
 
         var tokenWithdraw = this.state.rate_input_token * this.input_amount;
-        tokenWithdraw = tokenWithdraw.toFixed(3);
+        tokenWithdraw = this.info.floorNumber(tokenWithdraw);
+
         var krwpWithdraw = this.state.rate_output_token * this.input_amount;
-        krwpWithdraw = krwpWithdraw.toFixed(3);
+        krwpWithdraw = this.info.floorNumber(krwpWithdraw);
 
         if (this.state.rate_input_token > 0 && this.state.rate_output_token > 0)
             this.setState({
@@ -246,7 +247,9 @@ class PoolComponent extends Component {
                 node_krwp_balance: results.node_krwp_balance,
                 liquidity_token_all: results.liquidity_token_all,
                 liquidity_token_user: results.liquidity_token_user,
-                liquidity_token_rate: liquidity_token_rate.toFixed(3),
+                liquidity_token_rate: this.info.floorNumber(
+                    liquidity_token_rate
+                ),
                 liquidity_token_symbol: results.liquidity_token_symbol,
                 user_input_balance: results.liquidity_token_user,
             });
@@ -400,15 +403,15 @@ class PoolComponent extends Component {
                             <dt>Your Pool Share (%)</dt>
                             <dd>
                                 {this.state.exchange_rate > 0
-                                    ? `${(
+                                    ? `${this.info.floorNumber(
                                           this.state.rate_output_token *
-                                          this.state.user_input_balance
-                                      ).toFixed(3)} ${
+                                              this.state.user_input_balance
+                                      )} ${
                                           this.state.output_token
-                                      } + ${(
+                                      } + ${this.info.floorNumber(
                                           this.state.rate_input_token *
-                                          this.state.user_input_balance
-                                      ).toFixed(3)} ${this.state.input_token}
+                                              this.state.user_input_balance
+                                      )} ${this.state.input_token}
                                     ${this.state.output_token} (${
                                           this.state.liquidity_token_rate
                                       }%)`

@@ -195,8 +195,9 @@ class swapConfig {
 
         var rate = 1 / balance[1]; // krwp
         var exchange_rate = rate * balance[0]; //1 krwp = xx token
+        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
 
-        var rate_remove = 1 / balance[3];
+        var rate_remove = 1 / balance[3]; //  1 / all_token
         var rate_input_token = rate_remove * balance[0];
         var rate_output_token = rate_remove * balance[1];
 
@@ -205,12 +206,12 @@ class swapConfig {
         return {
             node_token_balance: balance[0],
             node_krwp_balance: balance[1],
-            exchange_rate: exchange_rate.toFixed(3),
-            remove_rate: rate_remove.toFixed(3),
+            exchange_rate: exchange_rate,
+            remove_rate: rate_remove,
             rate_input_token: rate_input_token,
             rate_output_token: rate_output_token,
-            liquidity_token_all: liquidity_token_all.toFixed(3),
-            liquidity_token_user: liquidity_token_user.toFixed(3),
+            liquidity_token_all: liquidity_token_all,
+            liquidity_token_user: liquidity_token_user,
             liquidity_token_symbol: validNode.liquidity_token,
         };
     }
