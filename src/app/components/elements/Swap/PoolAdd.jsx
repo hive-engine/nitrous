@@ -343,6 +343,20 @@ class PoolComponent extends Component {
                         onClick={this.showPoolMode}
                     >
                         {this.state.selectedPoolText}
+                        <span className="down-arrow">
+                            <svg
+                                width="12"
+                                height="7"
+                                viewBox="0 0 12 7"
+                                fill="none"
+                                alt="arrow down"
+                            >
+                                <path
+                                    d="M0.97168 1L6.20532 6L11.439 1"
+                                    stroke="#2F80ED"
+                                />
+                            </svg>
+                        </span>
                     </button>
                 </div>
                 <div className="swap-form">
@@ -360,15 +374,21 @@ class PoolComponent extends Component {
                         />
                     </div>
                     <div className="mid-space">
-                        <button type="button" className="turn-upDown">
+                        <span className="icon">
                             <svg
-                                width="10"
-                                height="10"
-                                xmlns="http://www.w3.org/2000/svg"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 12 12"
+                                fill="none"
+                                alt="plus"
                             >
-                                <path d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z" />
+                                <path
+                                    d="M1 6H6M11 6L6 6M6 1V6M6 6L6 11"
+                                    stroke="#aeaeae"
+                                    stroke-linecap="round"
+                                />
                             </svg>
-                        </button>
+                        </span>
                     </div>
                     <div className="input-box">
                         <div className="text-label">
@@ -386,44 +406,48 @@ class PoolComponent extends Component {
                         />
                     </div>
                     <dl className="exchange-rate">
-                        <dt>Exchange Rate</dt>
-                        <dd>
-                            {this.state.exchange_rate == 0
-                                ? '-'
-                                : `1 ${this.state.input_token} = ${
-                                      this.state.exchange_rate
-                                  } ${this.state.output_token}`}
-                        </dd>
-                    </dl>
-                    <dl className="exchange-rate">
-                        <dt>Current Pool Size</dt>
-                        <dd>
-                            {this.state.exchange_rate == 0
-                                ? '-'
-                                : `${this.state.node_input_balance} ${
-                                      this.state.input_token
-                                  } + ${this.state.node_output_balance} ${
-                                      this.state.output_token
-                                  }`}
-                        </dd>
-                    </dl>
-                    <dl className="exchange-rate">
-                        <dt>Your Pool Share (%)</dt>
-                        <dd>
-                            {this.state.exchange_rate > 0
-                                ? `${(
-                                      this.state.node_input_balance *
-                                      this.state.liquidity_token_rate /
-                                      100
-                                  ).toFixed(3)} ${this.state.input_token} + ${(
-                                      this.state.node_output_balance *
-                                      this.state.liquidity_token_rate /
-                                      100
-                                  ).toFixed(3)} ${this.state.output_token} (${
-                                      this.state.liquidity_token_rate
-                                  }%)`
-                                : '-'}
-                        </dd>
+                        <div className="row-box">
+                            <dt>Exchange Rate</dt>
+                            <dd>
+                                {this.state.exchange_rate == 0
+                                    ? '-'
+                                    : `1 ${this.state.input_token} = ${
+                                          this.state.exchange_rate
+                                      } ${this.state.output_token}`}
+                            </dd>
+                        </div>
+                        <div className="row-box">
+                            <dt>Current Pool Size</dt>
+                            <dd>
+                                {this.state.exchange_rate == 0
+                                    ? '-'
+                                    : `${this.state.node_input_balance} ${
+                                          this.state.input_token
+                                      } + ${this.state.node_output_balance} ${
+                                          this.state.output_token
+                                      }`}
+                            </dd>
+                        </div>
+                        <div className="row-box">
+                            <dt>Your Pool Share (%)</dt>
+                            <dd>
+                                {this.state.exchange_rate > 0
+                                    ? `${(
+                                          this.state.node_input_balance *
+                                          this.state.liquidity_token_rate /
+                                          100
+                                      ).toFixed(3)} ${
+                                          this.state.input_token
+                                      } + ${(
+                                          this.state.node_output_balance *
+                                          this.state.liquidity_token_rate /
+                                          100
+                                      ).toFixed(3)} ${
+                                          this.state.output_token
+                                      } (${this.state.liquidity_token_rate}%)`
+                                    : '-'}
+                            </dd>
+                        </div>
                     </dl>
                     <button
                         type="button"

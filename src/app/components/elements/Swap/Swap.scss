@@ -165,12 +165,29 @@ body {
         border-radius: 0.625rem 0.625rem 0 0;
         margin: -0.15rem 0.5rem;
         .turn-liquidity {
+            position: relative;
             box-sizing: border-box;
             padding: 1rem;
             width: 100%;
             text-align: left;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #2f80ed;
             margin: 0 !important;
             cursor: pointer;
+            &:hover {
+                color: #5ca2ff;
+            }
+            .down-arrow {
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                margin-top: -3.5px;
+                display: block;
+                svg {
+                    vertical-align: top;
+                }
+            }
         }
     }
     .mid-space {
@@ -186,12 +203,16 @@ body {
             height: 26px;
             cursor: pointer;
         }
+        .icon {
+            display: inline-block;
+            height: 26px;
+        }
     }
     .exchange-rate {
         margin: -1rem 0.5rem 0;
         padding: 1rem 1rem 0;
-        line-height: 1.5rem;
-        font-size: 0.75rem;
+        line-height: 2rem;
+        font-size: 0.82rem;
         color: #737373;
         background: #fafafa;
         border-radius: 0.625rem;
@@ -200,8 +221,24 @@ body {
             display: table;
             clear: both;
         }
+        .row-box {
+            line-height: 1.2rem;
+            &:first-of-type {
+                padding-top: 0.85rem;
+            }
+            &:last-of-type {
+                padding-bottom: 0.85rem;
+            }
+            &:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+        }
         dt {
             float: left;
+            font-weight: 400;
+            margin-bottom: 0;
         }
         dd {
             float: right;
