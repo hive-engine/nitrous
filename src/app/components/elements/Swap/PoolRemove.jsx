@@ -5,7 +5,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
 
-import Reveal from 'app/components/elements/Swap/SelectedReveal';
+import Reveal from 'app/components/elements/Reveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
 import SelectedPool from 'app/components/elements/Swap/SelectedPool';
@@ -285,7 +285,6 @@ class PoolComponent extends Component {
                                 </span>
                             </p>
                             <input
-                                autoFocus
                                 type="text"
                                 placeholder="Search Token Name"
                             />
@@ -301,13 +300,13 @@ class PoolComponent extends Component {
                 <div className="tab-title">
                     <ul>
                         <li>
-                            <a href="/beta/swap">Swap</a>
+                            <a href="/welcome">Swap</a>
                         </li>
                         <li>
-                            <a href="/beta/swap#send">Send</a>
+                            <a href="/welcome#test">Send</a>
                         </li>
                         <li className="active">
-                            <a href="/beta/add-liquidity">Pool</a>
+                            <a href="/faq.html">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -357,10 +356,7 @@ class PoolComponent extends Component {
                                 fill="#aeaeae"
                                 alt="arrow"
                             >
-                                <path
-                                    d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z"
-                                    stroke-linecap="round"
-                                />
+                                <path d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z" />
                             </svg>
                         </span>
                     </div>
@@ -381,23 +377,23 @@ class PoolComponent extends Component {
                         <div className="row-box">
                             <dt>Exchange Rate</dt>
                             <dd>
-                                {this.state.exchange_rate == 0
-                                    ? '-'
-                                    : `1 ${this.state.output_token} = ${
+                                {this.state.exchange_rate > 0
+                                    ? `1 ${this.state.output_token} = ${
                                           this.state.exchange_rate
-                                      } ${this.state.input_token}`}
+                                      } ${this.state.input_token}`
+                                    : '-'}
                             </dd>
                         </div>
                         <div className="row-box">
                             <dt>Current Pool Size</dt>
                             <dd>
-                                {this.state.exchange_rate == 0
-                                    ? '-'
-                                    : `${this.state.node_krwp_balance} ${
+                                {this.state.exchange_rate > 0
+                                    ? `${this.state.node_krwp_balance} ${
                                           this.state.output_token
                                       } + ${this.state.node_token_balance} ${
                                           this.state.input_token
-                                      }`}
+                                      }`
+                                    : '-'}
                             </dd>
                         </div>
                         <div className="row-box">

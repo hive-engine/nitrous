@@ -223,10 +223,8 @@ class SwapComponent extends Component {
                 });
 
             if (this.input_amount > 0) {
-                this.output_amount = results.estimaed_output_amount;
-                exchange_rate = this.output_amount / this.input_amount;
-                this.output_amount = this.output_amount.toFixed(3);
-                exchange_rate = exchange_rate.toFixed(3);
+                this.output_amount = results.estimated_output_amount;
+                exchange_rate = results.exchange_rate;
                 this.setState({
                     output_amount: this.output_amount,
                     exchange_rate,
@@ -270,7 +268,6 @@ class SwapComponent extends Component {
                                 </span>
                             </p>
                             <input
-                                autoFocus
                                 type="text"
                                 placeholder="Search Token Name"
                             />
@@ -286,13 +283,13 @@ class SwapComponent extends Component {
                 <div className="tab-title">
                     <ul>
                         <li className="active">
-                            <a href="/beta/swap">Swap</a>
+                            <a href="/welcome">Swap</a>
                         </li>
                         <li>
-                            <a href="/beta/swap#send">Send</a>
+                            <a href="/welcome#test">Send</a>
                         </li>
                         <li>
-                            <a href="/beta/add-liquidity">Pool</a>
+                            <a href="/faq.html">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -320,10 +317,7 @@ class SwapComponent extends Component {
                                 fill="#222"
                                 alt="arrow"
                             >
-                                <path
-                                    d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z"
-                                    stroke-linecap="round"
-                                />
+                                <path d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z" />
                             </svg>
                         </button>
                     </div>
@@ -344,11 +338,11 @@ class SwapComponent extends Component {
                     <dl className="exchange-rate">
                         <dt>Exchange Rate</dt>
                         <dd>
-                            {this.state.exchange_rate == 0
-                                ? '-'
-                                : `1 ${this.state.input_token} = ${
+                            {this.state.exchange_rate > 0
+                                ? `1 ${this.state.input_token} = ${
                                       this.state.exchange_rate
-                                  } ${this.state.output_token}`}
+                                  } ${this.state.output_token}`
+                                : '-'}
                         </dd>
                     </dl>
 

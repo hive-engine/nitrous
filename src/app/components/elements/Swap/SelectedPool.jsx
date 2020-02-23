@@ -9,11 +9,11 @@ class SelectedMode extends Component {
 
         this.modes = [];
         this.modes.push({
-            url: 'add-liquidity',
+            url: 'faq.html',
             name: 'Add Liquidity',
         });
         this.modes.push({
-            url: 'remove-liquidity',
+            url: 'about.html',
             name: 'Remove Liquidity',
         });
 
@@ -37,7 +37,7 @@ class SelectedMode extends Component {
 
         const listItems = this.modes.map((mode, i) => (
             <li key={i} className={i == selected ? 'active' : ''}>
-                <a className="anchor" href={`/beta/${mode.url}`}>
+                <a className="anchor" href={`/${mode.url}`}>
                     {mode.name}
                 </a>
             </li>

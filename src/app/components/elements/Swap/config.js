@@ -107,6 +107,21 @@ class swapConfig {
         });
     }
 
+    floorNumberWithNumber(num, pow) {
+        var n = Math.pow(10, pow);
+        var _num = parseFloat(num);
+        _num = Math.floor(_num * n) / n;
+        _num = _num.toFixed(pow);
+        return _num;
+    }
+
+    floorNumber(num) {
+        var _num = parseFloat(num);
+        _num = Math.floor(_num * 1000) / 1000;
+        _num = _num.toFixed(3);
+        return _num;
+    }
+
     getSteemBalance(account) {
         return new Promise((resolve, reject) => {
             api.getAccounts([account], function(err, response) {
@@ -243,12 +258,17 @@ class swapConfig {
         // input, output balance
         console.log('calculateExchangeAmount', balance);
         var alpha = input_amount / balance[0];
+
         var rate_fee = (100.0 - this.swap_fee) / 100.0;
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
+        var exchange_rate = estimated_output_amount / input_amount;
+        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
+        estimated_output_amount = this.floorNumber(estimated_output_amount);
         return {
-            estimaed_output_amount: estimated_output_amount,
+            estimated_output_amount,
             node_output_balance: balance[1],
+            exchange_rate,
         };
     }
 

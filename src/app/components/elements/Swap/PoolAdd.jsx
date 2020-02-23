@@ -63,7 +63,7 @@ class PoolComponent extends Component {
             poolMode: 0,
             selectedPoolText: 'Add Liquidity',
             input_token: 'KRWP',
-            input_token_symbol: '/images/tokens/noimage.png',
+            input_token_symbol: '/images/tokens/krwp.png',
             output_token: '',
             output_token_symbol: '',
             exchange_rate: 0,
@@ -127,7 +127,6 @@ class PoolComponent extends Component {
     componentDidMount() {
         document.body.classList.add('theme-swap');
     }
-
     inputAmountChange = async e => {
         this.setState({ input_amount: undefined });
         const amount = e.target.value;
@@ -136,12 +135,11 @@ class PoolComponent extends Component {
         this.input_amount = amount;
         this.output_amount = this.state.exchange_rate * this.input_amount;
         this.output_amount = this.output_amount.toFixed(3);
-
+        if (this.state.exchange_rate == undefined) this.output_amount = 0;
         this.setState({
             output_amount: this.output_amount,
         });
     };
-
     outputAmountChange = e => {};
 
     errorCallback = estr => {
@@ -326,13 +324,13 @@ class PoolComponent extends Component {
                 <div className="tab-title">
                     <ul>
                         <li>
-                            <a href="/beta/swap">Swap</a>
+                            <a href="/welcome">Swap</a>
                         </li>
                         <li>
-                            <a href="/beta/swap#send">Send</a>
+                            <a href="/welcome#test">Send</a>
                         </li>
                         <li className="active">
-                            <a href="/beta/add-liquidity">Pool</a>
+                            <a href="/faq.html">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -385,7 +383,6 @@ class PoolComponent extends Component {
                                 <path
                                     d="M1 6H6M11 6L6 6M6 1V6M6 6L6 11"
                                     stroke="#aeaeae"
-                                    stroke-linecap="round"
                                 />
                             </svg>
                         </span>
@@ -409,23 +406,23 @@ class PoolComponent extends Component {
                         <div className="row-box">
                             <dt>Exchange Rate</dt>
                             <dd>
-                                {this.state.exchange_rate == 0
-                                    ? '-'
-                                    : `1 ${this.state.input_token} = ${
+                                {this.state.exchange_rate > 0
+                                    ? `1 ${this.state.input_token} = ${
                                           this.state.exchange_rate
-                                      } ${this.state.output_token}`}
+                                      } ${this.state.output_token}`
+                                    : '-'}
                             </dd>
                         </div>
                         <div className="row-box">
                             <dt>Current Pool Size</dt>
                             <dd>
-                                {this.state.exchange_rate == 0
-                                    ? '-'
-                                    : `${this.state.node_input_balance} ${
+                                {this.state.exchange_rate > 0
+                                    ? `${this.state.node_input_balance} ${
                                           this.state.input_token
                                       } + ${this.state.node_output_balance} ${
                                           this.state.output_token
-                                      }`}
+                                      }`
+                                    : '-'}
                             </dd>
                         </div>
                         <div className="row-box">
