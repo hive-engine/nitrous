@@ -5,7 +5,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
 
-import Reveal from 'app/components/elements/Reveal';
+import Reveal from 'app/components/elements/Swap/SelectedReveal';
 import CloseButton from 'app/components/elements/CloseButton';
 import TokenList from 'app/components/elements/Swap/TokenList';
 import SelectedPool from 'app/components/elements/Swap/SelectedPool';
@@ -265,6 +265,7 @@ class PoolComponent extends Component {
                 <SelectedPool
                     show={this.state.selected_pool_show}
                     onHideSelcected={this.hidePoolMode}
+                    selected={1}
                 />
                 <Reveal
                     show={this.state.show}
