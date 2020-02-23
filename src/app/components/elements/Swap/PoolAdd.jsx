@@ -131,10 +131,9 @@ class PoolComponent extends Component {
         this.setState({ input_amount: undefined });
         const amount = e.target.value;
         console.log('inputAmountChange', amount);
-
         this.input_amount = amount;
         this.output_amount = this.state.exchange_rate * this.input_amount;
-        this.output_amount = this.output_amount.toFixed(3);
+        this.output_amount = this.info.floorNumber(this.output_amount);
         if (this.state.exchange_rate == undefined) this.output_amount = 0;
         this.setState({
             output_amount: this.output_amount,
@@ -259,7 +258,6 @@ class PoolComponent extends Component {
             );
             console.log(results);
             var liquidity_token_rate =
-                100 *
                 results.liquidity_token_user *
                 1 /
                 (results.liquidity_token_all * 1);
@@ -269,7 +267,7 @@ class PoolComponent extends Component {
                 node_output_balance: results.node_output_balance,
                 liquidity_token_all: results.liquidity_token_all,
                 liquidity_token_user: results.liquidity_token_user,
-                liquidity_token_rate: liquidity_token_rate.toFixed(3),
+                liquidity_token_rate,
                 liquidity_token: results.liquidity_token,
                 liquidity_token_symbol: results.liquidity_token_symbol,
             });
@@ -308,7 +306,6 @@ class PoolComponent extends Component {
                                 </span>
                             </p>
                             <input
-                                autoFocus
                                 type="text"
                                 placeholder="Search Token Name"
                             />
@@ -429,19 +426,19 @@ class PoolComponent extends Component {
                             <dt>Your Pool Share (%)</dt>
                             <dd>
                                 {this.state.exchange_rate > 0
-                                    ? `${(
+                                    ? `${this.info.floorNumber(
                                           this.state.node_input_balance *
-                                          this.state.liquidity_token_rate /
-                                          100
-                                      ).toFixed(3)} ${
+                                              this.state.liquidity_token_rate
+                                      )} ${
                                           this.state.input_token
-                                      } + ${(
+                                      } + ${this.info.floorNumber(
                                           this.state.node_output_balance *
-                                          this.state.liquidity_token_rate /
-                                          100
-                                      ).toFixed(3)} ${
+                                              this.state.liquidity_token_rate
+                                      )} ${
                                           this.state.output_token
-                                      } (${this.state.liquidity_token_rate}%)`
+                                      } (${this.info.floorNumber(
+                                          100 * this.state.liquidity_token_rate
+                                      )}%)`
                                     : '-'}
                             </dd>
                         </div>
