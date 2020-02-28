@@ -362,7 +362,7 @@ export async function getStateAsync(url) {
     const steemitApiStateNeeded =
         path !== '' &&
         !path.match(
-            /^(trending|hot|created|promoted|payout|payout_comments|movie|tv|review)($|\/([^\/]+)$)/
+            /^(trending|hot|created|promoted|payout|payout_comments|home|movie|tv|review)($|\/([^\/]+)$)/
         ) &&
         !path.match(
             /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/
