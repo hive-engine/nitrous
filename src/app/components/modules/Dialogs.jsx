@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CloseButton from 'app/components/elements/CloseButton';
 import Reveal from 'app/components/elements/Reveal';
+import Reveal2 from 'app/components/elements/Swap/SelectedReveal';
+
 import { Map, List } from 'immutable';
 import * as globalActions from 'app/redux/GlobalReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -12,7 +14,7 @@ import PromotePost from 'app/components/modules/PromotePost';
 import ExplorePost from 'app/components/modules/ExplorePost';
 import RatePost from 'app/components/modules/RatePost';
 import RewardPost from 'app/components/modules/RewardPost';
-
+import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 class Dialogs extends React.Component {
     static propTypes = {
         active_dialogs: PropTypes.object,
@@ -59,6 +61,16 @@ class Dialogs extends React.Component {
                                 {...v.get('params').toJS()}
                             />
                         </Reveal>
+                    </span>
+                ) : k === 'selectedMode' ? (
+                    <span key={idx++}>
+                        <Reveal2 onHide={this['hide_' + k]} show>
+                            <CloseButton onClick={this['hide_' + k]} />
+                            <SelectedPool
+                                onClose={this['hide_' + k]}
+                                {...v.get('params').toJS()}
+                            />
+                        </Reveal2>
                     </span>
                 ) : k === 'ratePost' ? (
                     <span key={idx++}>

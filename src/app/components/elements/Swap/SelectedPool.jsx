@@ -24,13 +24,6 @@ class SelectedMode extends Component {
 
     componentDidMount() {}
 
-    modeClick = (token, i) => {
-        this.closeModal(token, i);
-    };
-
-    closeModal = (token, i) => {
-        this.props.onHideSelcected(token, i);
-    };
     render() {
         var _show = this.props.show;
         var selected = this.props.selected;
@@ -44,11 +37,9 @@ class SelectedMode extends Component {
         ));
 
         return (
-            <Reveal show={_show} onHide={this.closeModal}>
-                <div className="liquidity-select">
-                    <ul>{listItems}</ul>
-                </div>
-            </Reveal>
+            <div className="liquidity-select">
+                <ul>{listItems}</ul>
+            </div>
         );
     }
 }

@@ -73,7 +73,6 @@ class PoolComponent extends Component {
             loadToken: true,
             show: false,
             selected_pool_show: false,
-            poolMode: 1,
             selectedPoolText: 'Remove Liquidity',
             input_token: '',
             input_token_symbol: '',
@@ -107,10 +106,7 @@ class PoolComponent extends Component {
     };
 
     showPoolMode = () => {
-        this.setState({ selected_pool_show: true });
-    };
-    hidePoolMode = (mode, index) => {
-        this.setState({ selected_pool_show: false });
+        this.props.showSelectDialog(1);
     };
 
     showTokenList = () => {
@@ -265,11 +261,6 @@ class PoolComponent extends Component {
 
         return (
             <div className="swap-wrap">
-                <SelectedPool
-                    show={this.state.selected_pool_show}
-                    onHideSelcected={this.hidePoolMode}
-                    selected={1}
-                />
                 <Reveal
                     show={this.state.show}
                     onHide={this.hideTokenList}
@@ -446,6 +437,14 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        showSelectDialog: selected => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'selectedMode',
+                    params: { selected },
+                })
+            );
+        },
         dispatchTransfer: ({
             amount,
             asset,
