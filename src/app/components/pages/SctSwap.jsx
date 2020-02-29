@@ -2,8 +2,11 @@ import React from 'react';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SwapComponent from 'app/components/elements/Swap/Swap';
+import { browserHistory } from 'react-router';
 
+import SwapComponent from 'app/components/elements/Swap/Swap';
+import PoolRemove from 'app/components/elements/Swap/PoolRemove';
+import PoolAdd from 'app/components/elements/Swap/PoolAdd';
 class Swap extends React.Component {
     static propTypes = {
         accounts: PropTypes.object,
@@ -13,12 +16,23 @@ class Swap extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        return <SwapComponent />;
+        const location = browserHistory.getCurrentLocation();
+        var hash = location.hash;
+        console.log(hash);
+        if (hash == '#swap') {
+            return <SwapComponent />;
+        } else if (hash == '#add') {
+            return <PoolAdd />;
+        } else if (hash == '#remove') {
+            return <PoolRemove />;
+        } else {
+            return <SwapComponent />;
+        }
     }
 }
 
 module.exports = {
-    path: 'welcome',
+    path: 'market',
 
     component: connect(
         (state, ownProps) => {

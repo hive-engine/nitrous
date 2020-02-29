@@ -251,13 +251,13 @@ class SwapComponent extends Component {
                 <div className="tab-title">
                     <ul>
                         <li className="active">
-                            <a href="/welcome">Swap</a>
+                            <a href="/market#swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/welcome#test">Send</a>
+                            <a href="/market#test">Send</a>
                         </li>
                         <li>
-                            <a href="/faq.html">Pool</a>
+                            <a href="/market#add">Pool</a>
                         </li>
                     </ul>
                 </div>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import tt from 'counterpart';
-import Reveal from 'app/components/elements/Swap/SelectedReveal';
-import CloseButton from 'app/components/elements/CloseButton';
+import { browserHistory } from 'react-router';
 
 class SelectedMode extends Component {
     constructor(props) {
@@ -9,17 +7,22 @@ class SelectedMode extends Component {
 
         this.modes = [];
         this.modes.push({
-            url: 'faq.html',
+            url: 'market#add',
             name: 'Add Liquidity',
         });
         this.modes.push({
-            url: 'about.html',
+            url: 'market#remove',
             name: 'Remove Liquidity',
         });
 
         this.state = {
             show: false,
         };
+    }
+
+    onClickSelect(url) {
+        this.props.onClose();
+        browserHistory.replace(url);
     }
 
     componentDidMount() {}
@@ -30,9 +33,15 @@ class SelectedMode extends Component {
 
         const listItems = this.modes.map((mode, i) => (
             <li key={i} className={i == selected ? 'active' : ''}>
-                <a className="anchor" href={`/${mode.url}`}>
+                <button
+                    type="button"
+                    className="anchor"
+                    onClick={() => {
+                        this.onClickSelect(mode.url);
+                    }}
+                >
                     {mode.name}
-                </a>
+                </button>
             </li>
         ));
 

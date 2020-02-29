@@ -7,6 +7,9 @@ body {
             }
         }
     }
+    button {
+        text-transform: none;
+    }
 }
 
 .swap-wrap {
@@ -293,16 +296,22 @@ body {
             li {
                 list-style: none;
                 padding: 0 1rem;
-                a {
+                .anchor {
                     display: block;
+                    box-sizing: border-box;
+                    width: 100%;
                     padding: 1rem;
+                    line-height: 1.6;
+                    text-align: left;
                     font-size: 1.1rem;
                     color: #666;
                     border: 1px solid #fff;
                     border-radius: 3rem;
+                    outline: 0;
+                    cursor: pointer;
                 }
                 &.active {
-                    a {
+                    .anchor {
                         font-weight: 700;
                         color: #2f80ed;
                         border-color: #ddd;
