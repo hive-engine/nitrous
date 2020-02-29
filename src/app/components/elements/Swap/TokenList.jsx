@@ -23,6 +23,7 @@ class TokenList extends Component {
     tokenClick = token => {
         console.log('Hello', token);
         this.props.onTokenClick(this.props.parent, token);
+        this.props.onClose();
     };
 
     render() {

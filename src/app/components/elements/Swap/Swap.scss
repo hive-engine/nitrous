@@ -282,11 +282,11 @@ body {
     border-radius: 20px;
     box-shadow: none;
     margin: 0;
+    outline:0;
     &.reveal-pool {
         padding-top: 2rem;
         min-height: 200px;
         height: 200px;
-        outline:0;
         ul {
             list-style: none;
             margin-left: 0;
@@ -321,6 +321,7 @@ body {
         text-indent: -999px;
         overflow: hidden;
         background: url('data:image/svg+xml; utf8, <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>') no-repeat 50% 50%;
+        outline: 0;
     }
     .token-title {
         padding: 1rem;
@@ -370,6 +371,7 @@ body {
                     width: 100%;
                     text-align: left;
                     cursor: pointer;
+                    outline:0;
                     &:hover {
                         background: #f1f1f1;
                     }

@@ -15,6 +15,8 @@ import ExplorePost from 'app/components/modules/ExplorePost';
 import RatePost from 'app/components/modules/RatePost';
 import RewardPost from 'app/components/modules/RewardPost';
 import SelectedPool from 'app/components/elements/Swap/SelectedPool';
+import SelectedToken from 'app/components/elements/Swap/SelectedToken';
+
 class Dialogs extends React.Component {
     static propTypes = {
         active_dialogs: PropTypes.object,
@@ -65,12 +67,25 @@ class Dialogs extends React.Component {
                 ) : k === 'selectedMode' ? (
                     <span key={idx++}>
                         <Reveal2 onHide={this['hide_' + k]} show>
-                            <CloseButton onClick={this['hide_' + k]} />
                             <SelectedPool
                                 onClose={this['hide_' + k]}
                                 {...v.get('params').toJS()}
                             />
                         </Reveal2>
+                    </span>
+                ) : k === 'selectedToken' ? (
+                    <span key={idx++}>
+                        <Reveal
+                            onHide={this['hide_' + k]}
+                            show
+                            isSwapModal={true}
+                        >
+                            <CloseButton onClick={this['hide_' + k]} />
+                            <SelectedToken
+                                onClose={this['hide_' + k]}
+                                {...v.get('params').toJS()}
+                            />
+                        </Reveal>
                     </span>
                 ) : k === 'ratePost' ? (
                     <span key={idx++}>
