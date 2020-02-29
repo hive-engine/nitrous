@@ -11,31 +11,7 @@ export default {
     component: App,
     getChildRoutes(nextState, cb) {
         const route = resolveRoute(nextState.location.pathname);
-        if (route.page === 'About') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctPoolRemove')]);
-            //});
-        } else if (route.page === 'Welcome') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctSwap')]);
-            //});
-        } else if (route.page === 'Faq') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctPoolAdd')]);
-            //});
-        } else if (route.page === 'Remove liquidity') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctPoolRemove')]);
-            //});
-        } else if (route.page === 'Add liquidity') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctPoolAdd')]);
-            //});
-        } else if (route.page === 'Swap') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/SctSwap')]);
-            //});
-        } else if (route.page === 'Login') {
+        if (route.page === 'Login') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Login')]);
             //});
@@ -98,7 +74,7 @@ export default {
             //});
         } else if (route.page === 'Market') {
             require.ensure([], require => {
-                cb(null, [require('app/components/pages/Market')]);
+                cb(null, [require('app/components/pages/SctSwap')]);
             });
         } else if (route.page === 'Post') {
             //require.ensure([], (require) => {

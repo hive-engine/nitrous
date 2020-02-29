@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CloseButton from 'app/components/elements/CloseButton';
 import Reveal from 'app/components/elements/Reveal';
+import Reveal2 from 'app/components/elements/Swap/SelectedReveal';
+
 import { Map, List } from 'immutable';
 import * as globalActions from 'app/redux/GlobalReducer';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -12,6 +14,8 @@ import PromotePost from 'app/components/modules/PromotePost';
 import ExplorePost from 'app/components/modules/ExplorePost';
 import RatePost from 'app/components/modules/RatePost';
 import RewardPost from 'app/components/modules/RewardPost';
+import SelectedPool from 'app/components/elements/Swap/SelectedPool';
+import SelectedToken from 'app/components/elements/Swap/SelectedToken';
 
 class Dialogs extends React.Component {
     static propTypes = {
@@ -55,6 +59,29 @@ class Dialogs extends React.Component {
                         <Reveal onHide={this['hide_' + k]} show>
                             <CloseButton onClick={this['hide_' + k]} />
                             <PromotePost
+                                onClose={this['hide_' + k]}
+                                {...v.get('params').toJS()}
+                            />
+                        </Reveal>
+                    </span>
+                ) : k === 'selectedMode' ? (
+                    <span key={idx++}>
+                        <Reveal2 onHide={this['hide_' + k]} show>
+                            <SelectedPool
+                                onClose={this['hide_' + k]}
+                                {...v.get('params').toJS()}
+                            />
+                        </Reveal2>
+                    </span>
+                ) : k === 'selectedToken' ? (
+                    <span key={idx++}>
+                        <Reveal
+                            onHide={this['hide_' + k]}
+                            show
+                            isSwapModal={true}
+                        >
+                            <CloseButton onClick={this['hide_' + k]} />
+                            <SelectedToken
                                 onClose={this['hide_' + k]}
                                 {...v.get('params').toJS()}
                             />

@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
-
-import Reveal from 'app/components/elements/Reveal';
-import CloseButton from 'app/components/elements/CloseButton';
-import TokenList from 'app/components/elements/Swap/TokenList';
-import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -71,9 +66,7 @@ class PoolComponent extends Component {
         super(props);
         this.state = {
             loadToken: true,
-            show: false,
             selected_pool_show: false,
-            poolMode: 1,
             selectedPoolText: 'Remove Liquidity',
             input_token: '',
             input_token_symbol: '',
@@ -97,32 +90,28 @@ class PoolComponent extends Component {
     }
 
     selectInputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'input';
     };
 
     selectOutputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'output';
     };
 
     showPoolMode = () => {
-        this.setState({ selected_pool_show: true });
-    };
-    hidePoolMode = (mode, index) => {
-        this.setState({ selected_pool_show: false });
-    };
-
-    showTokenList = () => {
-        this.setState({ show: true });
-    };
-
-    hideTokenList = () => {
-        this.setState({ show: false });
+        this.props.showSelectDialog(1);
     };
 
     tokenClickCallback(parent, token) {
-        parent.hideTokenList();
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
             parent.setState(
@@ -265,51 +254,16 @@ class PoolComponent extends Component {
 
         return (
             <div className="swap-wrap">
-                <SelectedPool
-                    show={this.state.selected_pool_show}
-                    onHideSelcected={this.hidePoolMode}
-                    selected={1}
-                />
-                <Reveal
-                    show={this.state.show}
-                    onHide={this.hideTokenList}
-                    isSwapModal={true}
-                >
-                    <CloseButton onClick={this.hideTokenList} />
-                    <h2 className="token-title">Select Token</h2>
-                    <div className="token-search">
-                        <form>
-                            <p className="srh-icon">
-                                <span className="table-cell">
-                                    <img
-                                        src="/images/magnifying-glass.svg"
-                                        alt="search"
-                                    />
-                                </span>
-                            </p>
-                            <input
-                                type="text"
-                                placeholder="Search Token Name"
-                            />
-                        </form>
-                    </div>
-                    <TokenList
-                        parent={this}
-                        tokens={this.info.tokens}
-                        onTokenClick={this.tokenClickCallback}
-                    />
-                </Reveal>
-
                 <div className="tab-title">
                     <ul>
                         <li>
-                            <a href="/welcome">Swap</a>
+                            <a href="/market#swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/welcome#test">Send</a>
+                            <a href="/market#test">Send</a>
                         </li>
                         <li className="active">
-                            <a href="/faq.html">Pool</a>
+                            <a href="/market#add">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -446,6 +400,22 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        showSelectToken: (parent, tokens, onTokenClick) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'selectedToken',
+                    params: { parent, tokens, onTokenClick },
+                })
+            );
+        },
+        showSelectDialog: selected => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'selectedMode',
+                    params: { selected },
+                })
+            );
+        },
         dispatchTransfer: ({
             amount,
             asset,

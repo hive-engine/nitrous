@@ -58,7 +58,6 @@ class SwapComponent extends Component {
         super(props);
         this.state = {
             loadToken: true,
-            show: false,
             input_token: '',
             output_token: '',
             input_token_symbol: '',
@@ -75,25 +74,24 @@ class SwapComponent extends Component {
     }
 
     selectInputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'input';
     };
 
     selectOutputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'output';
     };
 
-    showTokenList = () => {
-        this.setState({ show: true });
-    };
-
-    hideTokenList = () => {
-        this.setState({ show: false });
-    };
-
     tokenClickCallback(parent, token) {
-        parent.hideTokenList();
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
             parent.setState(
@@ -250,46 +248,16 @@ class SwapComponent extends Component {
 
         return (
             <div className="swap-wrap">
-                <Reveal
-                    show={this.state.show}
-                    onHide={this.hideTokenList}
-                    isSwapModal={true}
-                >
-                    <CloseButton onClick={this.hideTokenList} />
-                    <h2 className="token-title">Select Token</h2>
-                    <div className="token-search">
-                        <form>
-                            <p className="srh-icon">
-                                <span className="table-cell">
-                                    <img
-                                        src="/images/magnifying-glass.svg"
-                                        alt="search"
-                                    />
-                                </span>
-                            </p>
-                            <input
-                                type="text"
-                                placeholder="Search Token Name"
-                            />
-                        </form>
-                    </div>
-                    <TokenList
-                        parent={this}
-                        tokens={this.info.tokens}
-                        onTokenClick={this.tokenClickCallback}
-                    />
-                </Reveal>
-
                 <div className="tab-title">
                     <ul>
                         <li className="active">
-                            <a href="/welcome">Swap</a>
+                            <a href="/market#swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/welcome#test">Send</a>
+                            <a href="/market#test">Send</a>
                         </li>
                         <li>
-                            <a href="/faq.html">Pool</a>
+                            <a href="/market#add">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -373,6 +341,14 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        showSelectToken: (parent, tokens, onTokenClick) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'selectedToken',
+                    params: { parent, tokens, onTokenClick },
+                })
+            );
+        },
         dispatchTransfer: ({
             amount,
             asset,
