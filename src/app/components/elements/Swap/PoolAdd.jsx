@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
+import SwapQueue from './SwapQueue';
+import { getSwapQueue } from 'app/utils/steemApi';
 
-import Reveal from 'app/components/elements/Reveal';
-import CloseButton from 'app/components/elements/CloseButton';
-import TokenList from 'app/components/elements/Swap/TokenList';
-import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -73,11 +71,21 @@ class PoolComponent extends Component {
             liquidity_token_user: 0,
             liquidity_token_all: 0,
             liquidity_token_symbol: '',
+            queue_size: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
         this.input_amount = 0;
         this.output_amount = 0;
+    }
+
+    async getSwapQueueInfoFromApi() {
+        console.log('getSwapQueueInfo!!!!');
+        var that = this;
+        getSwapQueue().then(result => {
+            console.log(result.length);
+            that.setState({ queue_size: result.length });
+        });
     }
 
     selectInputToken = () => {
@@ -119,6 +127,7 @@ class PoolComponent extends Component {
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
+        this.getSwapQueueInfoFromApi();
     }
     inputAmountChange = async e => {
         this.setState({ input_amount: undefined });
@@ -225,6 +234,7 @@ class PoolComponent extends Component {
     calculateDeposit = async () => {
         const { input_token, output_token } = this.state;
         if (input_token != '' && output_token != '') {
+            this.getSwapQueueInfoFromApi();
             var that = this;
             this.info
                 .getTokenBalance(
@@ -408,6 +418,7 @@ class PoolComponent extends Component {
                     >
                         {this.state.selectedPoolText}
                     </button>
+                    <SwapQueue item={this.state.queue_size} />
                 </div>
             </div>
         );

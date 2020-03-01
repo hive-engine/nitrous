@@ -259,12 +259,18 @@ body {
         text-transform: none;
         background: #2f80ed;
         border-radius: 25px;
-        margin: 2.5rem auto !important;
+        margin: 1.5rem auto 0 !important;
         cursor: pointer;
         transition: all 0.2s ease;
         &:hover {
             background: #1366d6;
         }
+    }
+    .waiting-queue {
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+        text-align: center;
+        color: #737373;
     }
 }
 
