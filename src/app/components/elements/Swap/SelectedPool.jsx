@@ -7,11 +7,11 @@ class SelectedMode extends Component {
 
         this.modes = [];
         this.modes.push({
-            url: 'market#add',
+            url: '/market#add',
             name: 'Add Liquidity',
         });
         this.modes.push({
-            url: 'market#remove',
+            url: '/market#remove',
             name: 'Remove Liquidity',
         });
 

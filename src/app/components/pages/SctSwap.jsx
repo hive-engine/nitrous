@@ -16,16 +16,20 @@ class Swap extends React.Component {
         username: PropTypes.string,
     };
     render() {
-        const location = browserHistory.getCurrentLocation();
-        var hash = location.hash;
-        console.log(hash);
-        if (hash == '#swap') {
-            return <SwapComponent />;
-        } else if (hash == '#add') {
-            return <PoolAdd />;
-        } else if (hash == '#remove') {
-            return <PoolRemove />;
-        } else {
+        try {
+            const location = browserHistory.getCurrentLocation();
+            var hash = location.hash;
+            console.log(hash);
+            if (hash == '#swap') {
+                return <SwapComponent />;
+            } else if (hash == '#add') {
+                return <PoolAdd />;
+            } else if (hash == '#remove') {
+                return <PoolRemove />;
+            } else {
+                return <SwapComponent />;
+            }
+        } catch (error) {
             return <SwapComponent />;
         }
     }
