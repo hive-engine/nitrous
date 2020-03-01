@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
+import SwapQueue from './SwapQueue';
+import { getSwapQueue } from 'app/utils/steemApi';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -82,11 +84,21 @@ class PoolComponent extends Component {
             liquidity_token_rate: 0,
             liquidity_token_all: 0,
             liquidity_token_symbol: '',
+            queue_size: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
         this.input_amount = 0;
         this.output_amount = 0;
+    }
+
+    async getSwapQueueInfoFromApi() {
+        console.log('getSwapQueueInfo!!!!');
+        var that = this;
+        getSwapQueue().then(result => {
+            console.log(result.length);
+            that.setState({ queue_size: result.length });
+        });
     }
 
     selectInputToken = () => {
@@ -127,6 +139,7 @@ class PoolComponent extends Component {
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
+        this.getSwapQueueInfoFromApi();
     }
 
     inputAmountChange = async e => {
@@ -218,6 +231,8 @@ class PoolComponent extends Component {
     calculateRemove = async () => {
         const { input_token } = this.state;
         if (input_token != '') {
+            this.getSwapQueueInfoFromApi();
+
             var results = await this.info.calculateRemoveAmount(
                 input_token,
                 this.props.currentUser.get('username')
@@ -380,6 +395,7 @@ class PoolComponent extends Component {
                     >
                         {this.state.selectedPoolText}
                     </button>
+                    <SwapQueue item={this.state.queue_size} />
                 </div>
             </div>
         );

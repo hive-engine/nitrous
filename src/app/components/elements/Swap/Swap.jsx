@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
+import SwapQueue from './SwapQueue';
+import { getSwapQueue } from 'app/utils/steemApi';
 
-import Reveal from 'app/components/elements/Reveal';
-import CloseButton from 'app/components/elements/CloseButton';
-import TokenList from 'app/components/elements/Swap/TokenList';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
@@ -66,11 +65,21 @@ class SwapComponent extends Component {
             node_output_balance: 0,
             user_input_balance: 0,
             user_output_balance: 0,
+            queue_size: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
         this.input_amount = 0;
         this.output_amount = 0;
+    }
+
+    async getSwapQueueInfoFromApi() {
+        console.log('getSwapQueueInfo!!!!');
+        var that = this;
+        getSwapQueue().then(result => {
+            console.log(result.length);
+            that.setState({ queue_size: result.length });
+        });
     }
 
     selectInputToken = () => {
@@ -125,6 +134,7 @@ class SwapComponent extends Component {
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
+        this.getSwapQueueInfoFromApi();
     }
 
     inputAmountChange = async e => {
@@ -155,6 +165,8 @@ class SwapComponent extends Component {
             input_token != '' &&
             output_token != ''
         ) {
+            // update queue
+
             var node = this.info.findNode(input_token, output_token);
             if (input_token === 'SBD') {
                 this.props.dispatchTransfer({
@@ -200,6 +212,8 @@ class SwapComponent extends Component {
                 output_token,
                 this.input_amount
             );
+
+            this.getSwapQueueInfoFromApi();
 
             var that = this;
             this.info
@@ -304,16 +318,17 @@ class SwapComponent extends Component {
                         />
                     </div>
                     <dl className="exchange-rate">
-                        <dt>Exchange Rate</dt>
-                        <dd>
-                            {this.state.exchange_rate > 0
-                                ? `1 ${this.state.input_token} = ${
-                                      this.state.exchange_rate
-                                  } ${this.state.output_token}`
-                                : '-'}
-                        </dd>
+                        <div className="row-box">
+                            <dt>Exchange Rate</dt>
+                            <dd>
+                                {this.state.exchange_rate > 0
+                                    ? `1 ${this.state.input_token} = ${
+                                          this.state.exchange_rate
+                                      } ${this.state.output_token}`
+                                    : '-'}
+                            </dd>
+                        </div>
                     </dl>
-
                     <button
                         type="button"
                         className="submit-coin"
@@ -321,6 +336,7 @@ class SwapComponent extends Component {
                     >
                         {'Swap'}
                     </button>
+                    <SwapQueue item={this.state.queue_size} />
                 </div>
             </div>
         );
