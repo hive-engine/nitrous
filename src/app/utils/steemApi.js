@@ -507,6 +507,11 @@ export async function fetchFeedDataAsync(call_name, ...args) {
     return { feedData, endOfData, lastValue };
 }
 
+export async function getSwapQueue() {
+    const queue = await callApi('https://apisct.cloud/swapqueue');
+    return queue;
+}
+
 export async function getSteemPriceInfo() {
     const steemprice = await callApi('https://apisct.cloud/price');
     // var steemPrice = callApi('https://postpromoter.net/api/prices');

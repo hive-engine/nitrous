@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import tt from 'counterpart';
-import Reveal from 'app/components/elements/Reveal';
-import CloseButton from 'app/components/elements/CloseButton';
+import { browserHistory } from 'react-router';
 
 class SelectedMode extends Component {
     constructor(props) {
@@ -9,11 +7,11 @@ class SelectedMode extends Component {
 
         this.modes = [];
         this.modes.push({
-            url: 'add-liquidity',
+            url: '/market#add',
             name: 'Add Liquidity',
         });
         this.modes.push({
-            url: 'remove-liquidity',
+            url: '/market#remove',
             name: 'Remove Liquidity',
         });
 
@@ -22,37 +20,35 @@ class SelectedMode extends Component {
         };
     }
 
+    onClickSelect(url) {
+        this.props.onClose();
+        browserHistory.replace(url);
+    }
+
     componentDidMount() {}
 
-    modeClick = (token, i) => {
-        this.closeModal(token, i);
-    };
-
-    closeModal = (token, i) => {
-        this.props.onHideSelcected(token, i);
-    };
     render() {
         var _show = this.props.show;
+        var selected = this.props.selected;
 
         const listItems = this.modes.map((mode, i) => (
-            <li key={i}>
-                <button>
-                    <p className="token-name">
-                        <a className="simple" href={`/beta/${mode.url}`}>
-                            {mode.name}
-                        </a>
-                    </p>
+            <li key={i} className={i == selected ? 'active' : ''}>
+                <button
+                    type="button"
+                    className="anchor"
+                    onClick={() => {
+                        this.onClickSelect(mode.url);
+                    }}
+                >
+                    {mode.name}
                 </button>
             </li>
         ));
 
         return (
-            <Reveal show={_show} isSwapModal={true} onHide={this.closeModal}>
-                <CloseButton onClick={this.closeModal} />
-                <div className="token-list">
-                    <ul>{listItems}</ul>
-                </div>
-            </Reveal>
+            <div className="liquidity-select">
+                <ul>{listItems}</ul>
+            </div>
         );
     }
 }

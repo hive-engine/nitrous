@@ -18,7 +18,7 @@ class Pool extends React.Component {
 }
 
 module.exports = {
-    path: '/beta/remove-liquidity',
+    path: 'about.html',
 
     component: connect(
         (state, ownProps) => {

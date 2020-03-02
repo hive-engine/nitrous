@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import swapinfo from './config';
+import SwapQueue from './SwapQueue';
+import { getSwapQueue } from 'app/utils/steemApi';
 
-import Reveal from 'app/components/elements/Reveal';
-import CloseButton from 'app/components/elements/CloseButton';
-import TokenList from 'app/components/elements/Swap/TokenList';
 var swap_node = 'sct.jcob';
 
 const SelectToken = props => {
     return (
         <div>
-            <div className="able-coin">{`My balance: ${
+            <div className="able-coin">{`Balance: ${
                 props.balance == undefined ? '0' : props.balance
             }`}</div>
             <input
@@ -58,7 +57,6 @@ class SwapComponent extends Component {
         super(props);
         this.state = {
             loadToken: true,
-            show: false,
             input_token: '',
             output_token: '',
             input_token_symbol: '',
@@ -67,6 +65,7 @@ class SwapComponent extends Component {
             node_output_balance: 0,
             user_input_balance: 0,
             user_output_balance: 0,
+            queue_size: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -74,26 +73,34 @@ class SwapComponent extends Component {
         this.output_amount = 0;
     }
 
+    async getSwapQueueInfoFromApi() {
+        console.log('getSwapQueueInfo!!!!');
+        var that = this;
+        getSwapQueue().then(result => {
+            console.log(result.length);
+            that.setState({ queue_size: result.length });
+        });
+    }
+
     selectInputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'input';
     };
 
     selectOutputToken = () => {
-        this.showTokenList();
+        this.props.showSelectToken(
+            this,
+            this.info.tokens,
+            this.tokenClickCallback
+        );
         this.selected = 'output';
     };
 
-    showTokenList = () => {
-        this.setState({ show: true });
-    };
-
-    hideTokenList = () => {
-        this.setState({ show: false });
-    };
-
     tokenClickCallback(parent, token) {
-        parent.hideTokenList();
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
             parent.setState(
@@ -127,6 +134,7 @@ class SwapComponent extends Component {
 
     componentDidMount() {
         document.body.classList.add('theme-swap');
+        this.getSwapQueueInfoFromApi();
     }
 
     inputAmountChange = async e => {
@@ -157,6 +165,8 @@ class SwapComponent extends Component {
             input_token != '' &&
             output_token != ''
         ) {
+            // update queue
+
             var node = this.info.findNode(input_token, output_token);
             if (input_token === 'SBD') {
                 this.props.dispatchTransfer({
@@ -203,6 +213,8 @@ class SwapComponent extends Component {
                 this.input_amount
             );
 
+            this.getSwapQueueInfoFromApi();
+
             var that = this;
             this.info
                 .getTokenBalance(
@@ -223,10 +235,8 @@ class SwapComponent extends Component {
                 });
 
             if (this.input_amount > 0) {
-                this.output_amount = results.estimaed_output_amount;
-                exchange_rate = this.output_amount / this.input_amount;
-                this.output_amount = this.output_amount.toFixed(3);
-                exchange_rate = exchange_rate.toFixed(3);
+                this.output_amount = results.estimated_output_amount;
+                exchange_rate = results.exchange_rate;
                 this.setState({
                     output_amount: this.output_amount,
                     exchange_rate,
@@ -252,49 +262,16 @@ class SwapComponent extends Component {
 
         return (
             <div className="swap-wrap">
-                <Reveal
-                    show={this.state.show}
-                    onHide={this.hideTokenList}
-                    isSwapModal={true}
-                >
-                    <CloseButton onClick={this.hideTokenList} />
-                    <h2 className="token-title">Select Token</h2>
-                    <div className="token-search">
-                        <form>
-                            <input
-                                autoFocus
-                                type="text"
-                                placeholder="Search Token Name"
-                            />
-                            <button type="submit" className="srh-btn">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 50 50"
-                                >
-                                    <path d="M 25 0 C 19.3545 0 14.239922 1.0161444 10.447266 2.7226562 C 8.5509372 3.5759123 6.978214 4.601147 5.8417969 5.8105469 C 4.7053797 7.0199467 4 8.4567299 4 10 L 4 39 C 4 44.607 13.225 49 25 49 C 28.494 49 31.754 48.605062 34.625 47.914062 C 33.149 47.745063 31.755234 47.305437 30.490234 46.648438 C 28.780234 46.870438 26.95 47 25 47 C 13.635 47 6 42.863 6 39 L 6 34.304688 C 9.284 37.656687 16.315266 39.940141 24.697266 39.994141 C 24.467266 39.346141 24.293734 38.674469 24.177734 37.980469 C 13.273734 37.784469 6 33.768 6 30 L 6 24.304688 C 9.323 27.697687 16.484 30 25 30 C 25.212 30 25.419859 29.991281 25.630859 29.988281 C 26.057859 29.254281 26.558953 28.574219 27.126953 27.949219 C 26.432953 27.982219 25.725 28 25 28 C 13.635 28 6 23.863 6 20 L 6 14.337891 C 7.1234422 15.480958 8.6314885 16.460332 10.447266 17.277344 C 14.239922 18.983856 19.3545 20 25 20 C 30.6455 20 35.760078 18.983856 39.552734 17.277344 C 41.368511 16.460332 42.876558 15.480958 44 14.337891 L 44 20 C 44 21.647 42.601906 23.341094 40.128906 24.746094 C 40.864906 25.017094 41.565562 25.358719 42.226562 25.761719 C 42.896563 25.302719 43.498 24.817688 44 24.304688 L 44 27.080078 C 44.758 27.761078 45.435 28.528859 46 29.380859 L 46 10 C 46 8.4567299 45.29462 7.0199467 44.158203 5.8105469 C 43.021786 4.601147 41.449062 3.5759123 39.552734 2.7226562 C 35.760078 1.0161444 30.6455 2.9605947e-16 25 0 z M 25 2 C 30.4025 2 35.287078 2.9966369 38.732422 4.546875 C 40.455094 5.3219941 41.811886 6.2353686 42.699219 7.1796875 C 43.586552 8.1240064 44 9.0567701 44 10 C 44 10.94323 43.586552 11.875994 42.699219 12.820312 C 41.811886 13.764632 40.455094 14.678006 38.732422 15.453125 C 35.287078 17.003363 30.4025 18 25 18 C 19.5975 18 14.712922 17.003363 11.267578 15.453125 C 9.5449063 14.678006 8.1881142 13.764632 7.3007812 12.820312 C 6.4134484 11.875995 6 10.94323 6 10 C 6 9.0567701 6.4134485 8.1240064 7.3007812 7.1796875 C 8.1881142 6.2353686 9.5449063 5.3219941 11.267578 4.546875 C 14.712922 2.9966369 19.5975 2 25 2 z M 36 26 C 30.488994 26 26 30.488998 26 36 C 26 41.511002 30.488994 46 36 46 C 38.396509 46 40.597385 45.148986 42.322266 43.736328 L 48.292969 49.707031 L 49.707031 48.292969 L 43.736328 42.322266 C 45.148985 40.597385 46 38.396507 46 36 C 46 30.488998 41.511006 26 36 26 z M 36 28 C 40.430126 28 44 31.569877 44 36 C 44 40.430123 40.430126 44 36 44 C 31.569874 44 28 40.430123 28 36 C 28 31.569877 31.569874 28 36 28 z" />
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
-                    <TokenList
-                        parent={this}
-                        tokens={this.info.tokens}
-                        onTokenClick={this.tokenClickCallback}
-                    />
-                </Reveal>
-
                 <div className="tab-title">
                     <ul>
                         <li className="active">
-                            <a href="/beta/swap">Swap</a>
+                            <a href="/market#swap">Swap</a>
                         </li>
                         <li>
-                            <a href="/beta/swap#send">Send</a>
+                            <a href="/market#test">Send</a>
                         </li>
                         <li>
-                            <a href="/beta/add-liquidity">Pool</a>
+                            <a href="/market#add">Pool</a>
                         </li>
                     </ul>
                 </div>
@@ -318,7 +295,9 @@ class SwapComponent extends Component {
                             <svg
                                 width="10"
                                 height="10"
-                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 10 10"
+                                fill="#222"
+                                alt="arrow"
                             >
                                 <path d="M5.298 0H4.24v7.911h-.075L1.256 4.932l-.717.735L4.769 10 9 5.667l-.718-.735-2.908 2.979h-.076V0z" />
                             </svg>
@@ -335,20 +314,21 @@ class SwapComponent extends Component {
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
-                            balance={this.state.user_output_balance}
+                            balance={this.state.node_output_balance}
                         />
                     </div>
                     <dl className="exchange-rate">
-                        <dt>Exchange Rate</dt>
-                        <dd>
-                            {this.state.exchange_rate == 0
-                                ? '-'
-                                : `1 ${this.state.input_token} = ${
-                                      this.state.exchange_rate
-                                  } ${this.state.output_token}`}
-                        </dd>
+                        <div className="row-box">
+                            <dt>Exchange Rate</dt>
+                            <dd>
+                                {this.state.exchange_rate > 0
+                                    ? `1 ${this.state.input_token} = ${
+                                          this.state.exchange_rate
+                                      } ${this.state.output_token}`
+                                    : '-'}
+                            </dd>
+                        </div>
                     </dl>
-
                     <button
                         type="button"
                         className="submit-coin"
@@ -356,6 +336,7 @@ class SwapComponent extends Component {
                     >
                         {'Swap'}
                     </button>
+                    <SwapQueue item={this.state.queue_size} />
                 </div>
             </div>
         );
@@ -376,6 +357,14 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        showSelectToken: (parent, tokens, onTokenClick) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'selectedToken',
+                    params: { parent, tokens, onTokenClick },
+                })
+            );
+        },
         dispatchTransfer: ({
             amount,
             asset,

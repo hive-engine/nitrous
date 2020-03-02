@@ -414,35 +414,6 @@ class PostsIndex extends React.Component {
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
                             <div>
-                                <SidebarSwap
-                                    sct_to_steemp={this.props.scotInfo.getIn([
-                                        'sct_to_steemp',
-                                    ])}
-                                    dec_to_steemp={this.props.scotInfo.getIn([
-                                        'dec_to_steemp',
-                                    ])}
-                                    steem_to_dollor={this.props.scotInfo.getIn([
-                                        'steem_to_dollor',
-                                    ])}
-                                    sctm_to_steem={this.props.scotInfo.getIn([
-                                        'sctm_to_steem',
-                                    ])}
-                                    krwp_to_steem={this.props.scotInfo.getIn([
-                                        'krwp_to_steem',
-                                    ])}
-                                    steem_to_krw_current={this.props.scotInfo.getIn(
-                                        ['steem_to_krw_current']
-                                    )}
-                                    sbd_to_krw_current={this.props.scotInfo.getIn(
-                                        ['sbd_to_krw_current']
-                                    )}
-                                />
-                            </div>
-                        )}
-
-                    {this.props.isBrowser &&
-                        this.props.scotInfo && (
-                            <div>
                                 <SidebarInfo
                                     sct_to_steemp={this.props.scotInfo.getIn([
                                         'sct_to_steemp',
