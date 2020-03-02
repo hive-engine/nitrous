@@ -314,7 +314,7 @@ class SwapComponent extends Component {
                             token_symbol_img={this.state.output_token_symbol}
                             inputDisabled={true}
                             showTokenListCallback={this.selectOutputToken}
-                            balance={this.state.user_output_balance}
+                            balance={this.state.node_output_balance}
                         />
                     </div>
                     <dl className="exchange-rate">
