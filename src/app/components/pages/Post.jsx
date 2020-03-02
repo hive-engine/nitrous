@@ -317,7 +317,7 @@ class Post extends React.Component {
                                 width: '100%',
                                 textAlign: 'center',
                             }}
-                            data-ad-client={'ca-pub-1316865473229920'}
+                            data-ad-client={'ca-pub-9129971884580895'}
                             data-ad-slot={'8744394721'}
                             data-ad-format={'auto'}
                             data-full-width-responsive={'true'}
