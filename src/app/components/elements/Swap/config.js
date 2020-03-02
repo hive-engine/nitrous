@@ -91,7 +91,7 @@ class swapConfig {
             id: 'org',
             name: 'ORG',
             fullname: 'Orange Token',
-            ico: '/images/tokens/noimage.png',
+            ico: '/images/tokens/org.png',
         });
         this.tokens.push({
             id: 'svc',
