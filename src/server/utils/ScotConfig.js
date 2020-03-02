@@ -202,7 +202,7 @@ ScotConfig.prototype.refresh = async function() {
                 scotConfig.tokenStats.total_token_mega_miner_balance.precision
             );
         }
-        
+
         this.cache.set(key, { info: scotInfo, config: scotConfig });
         console.info('Scot Config refreshed...');
     } catch (err) {

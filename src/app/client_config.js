@@ -694,4 +694,4 @@ export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [
     'sportspartners',
     'sportspromo',
     'getsports',
-      ];
+];
