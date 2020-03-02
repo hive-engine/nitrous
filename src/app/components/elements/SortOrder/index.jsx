@@ -26,6 +26,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
         sort = 'dashboard';
     }
 
+    if (topic == 'trade') {
+        tag = '';
+        sort = 'trade';
+    }
+
     // If we are at the homepage, the sort order is 'trending'
     if (pathname === '/') {
         tag = '';
@@ -38,6 +43,9 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
     const handleChange = tag => sort => {
         let path = '/';
         if (sort.value === 'dashboard') {
+            path = sort.value;
+        }
+        if (sort.value === 'shop') {
             path = sort.value;
         } else {
             path = makeRoute(tag, sort);
@@ -64,11 +72,18 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
             },
         ];
         if (username != null && username.length > 0) {
-            tabs.push({
-                value: 'dashboard',
-                label: tt('g.dashboard'),
-                link: `/@${username}/dashboard`,
-            });
+            tabs.push(
+                {
+                    value: 'dashboard',
+                    label: tt('g.dashboard'),
+                    link: `/@${username}/dashboard`,
+                },
+                {
+                    value: 'shop',
+                    label: tt('g.shop'),
+                    link: `/leoshop`,
+                }
+            );
         }
         return tabs;
     };

@@ -68,7 +68,6 @@ class ReplyEditor extends React.Component {
         type: PropTypes.oneOf(['submit_story', 'submit_comment', 'edit']),
         successCallback: PropTypes.func, // indicator that the editor is done and can be hidden
         onCancel: PropTypes.func, // hide editor when cancel button clicked
-
         author: PropTypes.string, // empty or string for top-level post
         permlink: PropTypes.string, // new or existing category (default calculated from title)
         parent_author: PropTypes.string, // empty or string for top-level post
@@ -187,9 +186,9 @@ class ReplyEditor extends React.Component {
                         name: nextProps.postTemplateName.replace('create_', ''),
                         beneficiaries,
                         payoutType,
-                        markdown: body.value,
-                        title: title.value,
-                        tags: tags.value,
+                        markdown: body !== undefined ? body.value : '',
+                        title: title !== undefined ? title.value : '',
+                        tags: tags !== undefined ? tags.value : '',
                     });
 
                     window.localStorage.setItem(

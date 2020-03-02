@@ -29,7 +29,7 @@ export const TAG_LIST = fromJSOrdered({
 export const LIQUID_TOKEN = 'Leo';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'LEO';
-export const CURATOR_ACCOUNT = 'leo.voter';
+export const CURATOR_ACCOUNT = 'leotrail';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
@@ -294,7 +294,7 @@ export const TRADING_VIEW_CONFIG = {
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
-    '---\n<center>Posted via [Steemleo](${POST_URL}) | A Decentralized Community for Investors </center>';
+    '---\n<center>Posted via [Steemleo](${POST_URL})</center>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100

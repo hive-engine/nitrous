@@ -1,0 +1,60 @@
+.Welcome__banner {
+
+  position: relative;
+
+  .Welcome__welcome {
+    position: absolute;
+    width: 100%;
+    bottom: 70%;
+    color: white;
+    font-size: 160%;
+    padding-left: 0%;
+  }
+
+  .Welcome__caption {
+    position: absolute;
+    width: 100%;
+    top: 65%;
+    color: white;
+    font-size: 115%;
+    padding-left: 0%;
+    padding-right: 2%;
+  }
+
+}
+
+.row {
+  max-width: 860px;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0 auto;
+  @include MQ(L) {
+    max-width: 1240px;
+  }
+}
+
+.HelpContent {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  // padding-top: 65px;
+  @include MQ(M) {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    // padding-top: 89px;
+  }
+
+  height: inherit;
+
+  p {
+    position: relative;
+  }
+  h2 {
+    margin-top: 8px;
+  }
+  h3 {
+    margin-top: 0;
+  }  
+}

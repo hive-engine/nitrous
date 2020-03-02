@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
             slidesToShow: infoSlidesToShow,
             slidesToScroll: 1,
         };
-        const buttonSlidesToShow = mqLarge ? 2 : 1;
+        const buttonSlidesToShow = mqLarge ? 3 : 1;
         const settings2 = {
             dots: true,
             infinite: true,
@@ -189,6 +189,15 @@ class Dashboard extends React.Component {
                             </div>
                             <div>
                                 <a
+                                    href="https://shop.steemleo.com"
+                                    target="_blank"
+                                    className="shop"
+                                >
+                                    {tt('g.steemleo_shop')}
+                                </a>
+                            </div>
+                            <div>
+                                <a
                                     href={`/@${account_name}/transfers`}
                                     target="_blank"
                                     className="wallet"
@@ -210,12 +219,6 @@ class Dashboard extends React.Component {
                                 <PostPanel
                                     account={account_name}
                                     category="feed"
-                                />
-                            </div>
-                            <div className="column">
-                                <PostPanel
-                                    account={account_name}
-                                    category="blog"
                                 />
                             </div>
                         </div>

@@ -47,6 +47,14 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
             //});
+        } else if (route.page === 'Steem') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Steem')]);
+            //});
+        } else if (route.page === 'Heytron') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Heytron')]);
+            //});
         } else if (route.page === 'Login') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Login')]);

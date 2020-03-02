@@ -63,7 +63,7 @@
 .PostsList__post_container {
     position: relative;
     @include themify($themes) {
-        background-color: themed('moduleBackgroundColor');
+        background-color: themed('moduleBackgroundColor2');
     }
     margin: 1rem auto;
     padding: 2rem 0.9rem 0;

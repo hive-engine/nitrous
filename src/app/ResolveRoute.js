@@ -36,6 +36,9 @@ export default function resolveRoute(path) {
     if (path === '/keychain') {
         return { page: 'Keychain' };
     }
+    if (path === '/steem') {
+        return { page: 'Steem' };
+    }
     if (path === '/delegatetokens') {
         return { page: 'Delegatetokens' };
     }
@@ -44,6 +47,12 @@ export default function resolveRoute(path) {
     }
     if (path === '/glossary') {
         return { page: 'Glossary' };
+    }
+    if (path === '/faq') {
+        return { page: 'Faq' };
+    }
+    if (path === '/heytron') {
+        return { page: 'Heytron' };
     }
     if (path === '/faq.html') {
         return { page: 'Faq' };
