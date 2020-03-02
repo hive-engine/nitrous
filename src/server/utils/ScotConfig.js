@@ -1,7 +1,11 @@
 import * as config from 'config';
 import NodeCache from 'node-cache';
 
-import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    SCOT_DENOM,
+    TOKEN_STATS_EXCLUDE_ACCOUNTS,
+} from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 
 import SSC from 'sscjs';
@@ -81,63 +85,126 @@ ScotConfig.prototype.refresh = async function() {
             JSON.parse(scotConfig.miner_tokens)
         );
 
-        const [
-            totalTokenBalance,
-            tokenBurnBalance,
-            totalTokenMinerBalance,
-            tokenMinerBurnBalance,
-            totalTokenMegaMinerBalance,
-            tokenMegaMinerBurnBalance,
-        ] = await Promise.all([
-            ssc.findOne('tokens', 'tokens', {
-                symbol: scotConfig.tokenStats.scotToken,
+        const tokenList = [scotConfig.tokenStats.scotToken].concat(
+            scotConfig.tokenStats.scotMinerTokens
+        );
+
+        const [totalTokenBalances, tokenBalances] = await Promise.all([
+            ssc.find('tokens', 'tokens', {
+                symbol: { $in: tokenList },
             }),
-            ssc.findOne('tokens', 'balances', {
-                account: 'null',
-                symbol: scotConfig.tokenStats.scotToken,
+            ssc.find('tokens', 'balances', {
+                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
+                symbol: { $in: tokenList },
             }),
-            scotConfig.tokenStats.scotMinerTokens.length > 0
-                ? ssc.findOne('tokens', 'tokens', {
-                      symbol: scotConfig.tokenStats.scotMinerTokens[0],
-                  })
-                : Promise.resolve(null),
-            scotConfig.tokenStats.scotMinerTokens.length > 0
-                ? ssc.findOne('tokens', 'balances', {
-                      account: 'null',
-                      symbol: scotConfig.tokenStats.scotMinerTokens[0],
-                  })
-                : Promise.resolve(null),
-            scotConfig.tokenStats.scotMinerTokens.length > 1
-                ? ssc.findOne('tokens', 'tokens', {
-                      symbol: scotConfig.tokenStats.scotMinerTokens[1],
-                  })
-                : Promise.resolve(null),
-            scotConfig.tokenStats.scotMinerTokens.length > 1
-                ? ssc.findOne('tokens', 'balances', {
-                      account: 'null',
-                      symbol: scotConfig.tokenStats.scotMinerTokens[1],
-                  })
-                : Promise.resolve(null),
         ]);
 
-        if (totalTokenBalance) {
-            scotConfig.tokenStats.total_token_balance = totalTokenBalance;
+        let circulating = 0;
+        let burn = 0;
+        let staking = 0;
+        let circulatingMiner = 0;
+        let burnMiner = 0;
+        let stakingMiner = 0;
+        let circulatingMegaMiner = 0;
+        let burnMegaMiner = 0;
+        let stakingMegaMiner = 0;
+        for (const totalTokenBalance of totalTokenBalances) {
+            if (
+                totalTokenBalance['symbol'] == scotConfig.tokenStats.scotToken
+            ) {
+                scotConfig.tokenStats.total_token_balance = totalTokenBalance;
+                circulating += parseFloat(totalTokenBalance.circulatingSupply);
+                staking += parseFloat(totalTokenBalance.totalStaked);
+            } else if (
+                totalTokenBalance['symbol'] ==
+                scotConfig.tokenStats.scotMinerTokens[0]
+            ) {
+                scotConfig.tokenStats.total_token_miner_balance = totalTokenBalance;
+                circulatingMiner += parseFloat(
+                    totalTokenBalance.circulatingSupply
+                );
+                stakingMiner += parseFloat(totalTokenBalance.totalStaked);
+            } else if (
+                totalTokenBalance['symbol'] ==
+                scotConfig.tokenStats.scotMinerTokens[1]
+            ) {
+                scotConfig.tokenStats.total_token_mega_miner_balance = totalTokenBalance;
+                circulatingMegaMiner += parseFloat(
+                    totalTokenBalance.circulatingSupply
+                );
+                stakingMegaMiner += parseFloat(totalTokenBalance.totalStaked);
+            }
         }
-        if (tokenBurnBalance) {
-            scotConfig.tokenStats.token_burn_balance = tokenBurnBalance;
+        for (const tokenBalance of tokenBalances) {
+            if (tokenBalance['symbol'] == scotConfig.tokenStats.scotToken) {
+                if (tokenBalance['account'] === 'null') {
+                    scotConfig.tokenStats.token_burn_balance = tokenBalance;
+                    burn += parseFloat(tokenBalance.balance);
+                } else {
+                    circulating -= parseFloat(tokenBalance.balance);
+                    staking -= parseFloat(tokenBalance.stake);
+                }
+            } else if (
+                tokenBalance['symbol'] ==
+                scotConfig.tokenStats.scotMinerTokens[0]
+            ) {
+                if (tokenBalance['account'] === 'null') {
+                    scotConfig.tokenStats.token_miner_burn_balance = tokenBalance;
+                    burnMiner += parseFloat(tokenBalance.balance);
+                } else {
+                    circulatingMiner -= parseFloat(tokenBalance.balance);
+                    stakingMiner -= parseFloat(tokenBalance.stake);
+                }
+            } else if (
+                tokenBalance['symbol'] ==
+                scotConfig.tokenStats.scotMinerTokens[1]
+            ) {
+                if (tokenBalance['account'] === 'null') {
+                    scotConfig.tokenStats.token_mega_miner_burn_balance = tokenBalance;
+                    burnMegaMiner += parseFloat(tokenBalance.balance);
+                } else {
+                    circulatingMegaMiner -= parseFloat(tokenBalance.balance);
+                    stakingMegaMiner -= parseFloat(tokenBalance.stake);
+                }
+            }
         }
-        if (totalTokenMinerBalance) {
-            scotConfig.tokenStats.total_token_miner_balance = totalTokenMinerBalance;
+
+        if (scotConfig.tokenStats.total_token_balance) {
+            scotConfig.tokenStats.total_token_balance.circulatingSupply = circulating.toFixed(
+                scotConfig.tokenStats.total_token_balance.precision
+            );
+            scotConfig.tokenStats.total_token_balance.totalStaked = staking.toFixed(
+                scotConfig.tokenStats.total_token_balance.precision
+            );
+            scotConfig.tokenStats.token_burn_balance.balance = burn.toFixed(
+                scotConfig.tokenStats.total_token_balance.precision
+            );
         }
-        if (tokenMinerBurnBalance) {
-            scotConfig.tokenStats.token_miner_burn_balance = tokenMinerBurnBalance;
+
+        if (scotConfig.tokenStats.total_token_miner_balance) {
+            scotConfig.tokenStats.total_token_miner_balance.circulatingSupply = circulatingMiner.toFixed(
+                scotConfig.tokenStats.total_token_miner_balance.precision
+            );
+            scotConfig.tokenStats.total_token_miner_balance.totalStaked = stakingMiner.toFixed(
+                scotConfig.tokenStats.total_token_miner_balance.precision
+            );
+            scotConfig.tokenStats.token_miner_burn_balance.balance = burnMiner.toFixed(
+                scotConfig.tokenStats.total_token_miner_balance.precision
+            );
         }
-        if (totalTokenMegaMinerBalance) {
-            scotConfig.tokenStats.total_token_mega_miner_balance = totalTokenMegaMinerBalance;
+
+        if (scotConfig.tokenStats.total_token_mega_miner_balance) {
+            scotConfig.tokenStats.total_token_mega_miner_balance.circulatingSupply = circulatingMegaMiner.toFixed(
+                scotConfig.tokenStats.total_token_mega_miner_balance.precision
+            );
+            scotConfig.tokenStats.total_token_mega_miner_balance.totalStaked = stakingMegaMiner.toFixed(
+                scotConfig.tokenStats.total_token_mega_miner_balance.precision
+            );
+            scotConfig.tokenStats.token_mega_miner_burn_balance.balance = burnMegaMiner.toFixed(
+                scotConfig.tokenStats.total_token_mega_miner_balance.precision
+            );
         }
-        if (totalTokenMegaMinerBalance) {
-            scotConfig.tokenStats.token_mega_miner_burn_balance = tokenMegaMinerBurnBalance;
-        }
+
         this.cache.set(key, { info: scotInfo, config: scotConfig });
 
         console.info('Scot Config refreshed...');
