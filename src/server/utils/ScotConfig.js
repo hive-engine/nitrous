@@ -3,7 +3,6 @@ import NodeCache from 'node-cache';
 
 import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import { getScotDataAsync, getSteemPriceInfo } from 'app/utils/steemApi';
-
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 

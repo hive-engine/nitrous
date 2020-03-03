@@ -17,13 +17,13 @@ async function callApi(url, params) {
         })
         .catch(err => {
             console.error(`Could not fetch data, url: ${url}`);
-            return {};
+            return [];
         });
 }
 
 async function getSteemEngineAccountHistoryAsync(account) {
     const transfers = await callApi(
-        'https://api.steem-engine.com/accounts/history',
+        'https://history.steem-engine.com/accountHistory',
         {
             account,
             limit: 50,
