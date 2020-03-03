@@ -182,3 +182,5 @@ export const COMMUNITY_CATEGORY = 'hive-101145';
 export const POSTINGFEE_ACCOUNT = 'sct.postingfee';
 export const POSTINGFEE_AMOUNT = '1';
 export const POSTINGFEE_SYMBOL = 'SCT';
+export const SHOW_TOKEN_STATS = true;
+export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
