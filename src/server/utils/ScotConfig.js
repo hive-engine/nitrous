@@ -1,6 +1,7 @@
 import * as config from 'config';
 import NodeCache from 'node-cache';
 
+import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
@@ -84,12 +85,16 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const [totalTokenBalances, tokenBurnBalances] = await Promise.all([
+        const tokenList = [scotConfig.tokenStats.scotToken].concat(
+            scotConfig.tokenStats.scotMinerTokens
+        );
+
+        const [totalTokenBalances, tokenBalances] = await Promise.all([
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
             ssc.find('tokens', 'balances', {
-                account: 'null',
+                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),
         ]);

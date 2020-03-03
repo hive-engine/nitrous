@@ -349,3 +349,5 @@ export const DEBT_TOKEN_SHORT = 'SBD';
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap
 export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
+
+export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
