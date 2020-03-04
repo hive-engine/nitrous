@@ -16,6 +16,7 @@ export const SCOT_TAG = 'sct';
 export const APP_MAX_TAG = 10;
 export const SCT_API_BASE_URL = 'https://apisct.cloud';
 export const TAG_LIST = fromJSOrdered([
+    'hive-101145',
     'sct',
     'sct-kr',
     'sct-en',
