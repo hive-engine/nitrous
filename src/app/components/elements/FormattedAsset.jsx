@@ -17,7 +17,7 @@ const FormattedAsset = ({ amount, asset, postSummary = false, classname }) => {
             <span className="decimal">{amnt[1]}</span>
         </span>
     ) : !postSummary ? (
-        <span className="FormattedAsset">
+        <span className={`FormattedAsset ${classname}`}>
             <span className="integer">{amnt[0]}</span>
             <span className="decimal">{amnt[1]}</span>{' '}
             <span className="asset">{asset}</span>

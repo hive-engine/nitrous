@@ -264,6 +264,7 @@ class Voting extends React.Component {
         let scot_token_bene_payout = 0;
         let payout = 0;
         let promoted = 0;
+        let decline_payout = false;
         // Arbitrary invalid cash time (steem related behavior)
         const cashout_time =
             scotData && scotData.has('cashout_time')
@@ -303,6 +304,7 @@ class Voting extends React.Component {
                 scotData.get('beneficiaries_payout_value')
             );
             promoted = parseInt(scotData.get('promoted'));
+            decline_payout = scotData.get('decline_payout');
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_token_bene_payout;
             payout = cashout_active
@@ -557,7 +559,6 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         const payoutItems = [];
-
         if (promoted > 0) {
             payoutItems.push({
                 value: tt('voting_jsx.promotion_cost', {
@@ -568,7 +569,9 @@ class Voting extends React.Component {
             });
         }
 
-        if (cashout_active) {
+        if (decline_payout) {
+            payoutItems.push({ value: tt('voting_jsx.payout_declined') });
+        } else if (cashout_active) {
             payoutItems.push({
                 value: tt('voting_jsx.pending_payout', {
                     value: `${scot_pending_token.toFixed(scotPrecision)} ${
@@ -667,6 +670,7 @@ class Voting extends React.Component {
                         amount={payout}
                         asset={LIQUID_TOKEN_UPPERCASE}
                         postSummary={postSummary}
+                        classname={decline_payout ? 'strikethrough' : ''}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
