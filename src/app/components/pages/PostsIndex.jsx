@@ -25,10 +25,12 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
+import ExchangeNow from './ExchangeNow';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
+import Modal from 'react-overlays/lib/Modal';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
@@ -192,6 +194,10 @@ class PostsIndex extends React.Component {
         window.open('https://t.me/sct_notice');
     };
 
+    showExchangeModal = () => {
+        window.open('https://apisct.cloud/manager');
+    };
+
     buildCategories(cat, parent, categories) {
         if (!categories) return this.props.categories;
 
@@ -211,6 +217,20 @@ class PostsIndex extends React.Component {
     }
 
     render() {
+        var Iframe = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <iframe
+                            src={this.props.src}
+                            height={this.props.height}
+                            width={this.props.width}
+                        />
+                    </div>
+                );
+            },
+        });
+
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
@@ -410,6 +430,30 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
+
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.showExchangeModal}
+                    >
+                        Exchange Coin
+                    </button>
+
+                    <Modal
+                        backdrop={true}
+                        // transition={Transition}
+                        // onHide={onHide}
+                        show={false}
+                        backdropClassName={'reveal-overlay reveal-swap-overlay'}
+                        backdropStyle={{ display: 'block' }}
+                        // style={modalStyle}
+                    >
+                        <Iframe
+                            src="http://plnkr.co/"
+                            height="500"
+                            width="500"
+                        />
+                    </Modal>
 
                     {this.props.isBrowser &&
                         this.props.scotInfo && (

@@ -73,6 +73,11 @@ const SidePanel = ({
                     LIQUID_TOKEN_UPPERCASE
                 }/richlist`,
             },
+            {
+                value: 'exchangeNow',
+                label: 'Exchange Now',
+                link: '/exchangenow.html',
+            },
         ],
 
         exchanges: [
