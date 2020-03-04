@@ -72,7 +72,7 @@ class App extends React.Component {
     }
 
     goAd = () => {
-        window.open('https://www.travala.com/ref/HVJ8T9');
+        window.open('https://platinum.crypto.com/r/hz2dj9msp8');
     };
 
     setShowBannerFalse = () => {
@@ -181,7 +181,7 @@ class App extends React.Component {
                 ref="App_root"
             >
                 <div className="ad" onClick={this.goAd}>
-                    [AD]Travala 암호화폐로 유명호텔 싸게 예약하자
+                    [AD]MCO VISA 암호화폐로 결제하자
                 </div>
                 <ConnectedSidePanel alignment="right" />
 
