@@ -145,6 +145,10 @@ class SwapComponent extends Component {
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
+        console.log(amount);
+        if (amount == '') {
+            this.setState({ click_exchnage: 0 });
+        }
         this.calculateExchange();
     };
 
