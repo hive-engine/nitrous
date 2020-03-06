@@ -272,7 +272,7 @@ class swapConfig {
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
         var exchange_rate = estimated_output_amount / input_amount;
-        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
+        // exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
         estimated_output_amount = this.floorNumber(estimated_output_amount);
         return {
             estimated_output_amount,

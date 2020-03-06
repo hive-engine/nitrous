@@ -103,6 +103,7 @@ class SwapComponent extends Component {
 
     tokenClickCallback(parent, token) {
         console.log('tokenClickCallback', token);
+        parent.setState({ click_exchnage: 0 });
         if (parent.selected == 'input')
             parent.setState(
                 {
@@ -251,10 +252,7 @@ class SwapComponent extends Component {
         if (this.state.click_exchnage == 0) click_exchnage = 1;
         else click_exchnage = 0;
 
-        var exchange_rate = this.info.floorNumberWithNumber(
-            1 / this.state.exchange_rate,
-            5
-        );
+        var exchange_rate = 1 / this.state.exchange_rate;
         this.setState({ exchange_rate, click_exchnage });
     };
 
@@ -331,7 +329,10 @@ class SwapComponent extends Component {
                                           this.state.click_exchnage > 0
                                               ? this.state.output_token
                                               : this.state.input_token
-                                      } = ${this.state.exchange_rate} ${
+                                      } = ${this.info.floorNumberWithNumber(
+                                          this.state.exchange_rate,
+                                          5
+                                      )} ${
                                           this.state.click_exchnage > 0
                                               ? this.state.input_token
                                               : this.state.output_token
