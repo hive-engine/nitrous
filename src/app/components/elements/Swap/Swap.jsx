@@ -145,10 +145,6 @@ class SwapComponent extends Component {
         console.log('inputAmountChange', amount);
 
         this.input_amount = amount;
-        console.log(amount);
-        if (amount == '') {
-            this.setState({ click_exchnage: 0 });
-        }
         this.calculateExchange();
     };
 
@@ -244,6 +240,7 @@ class SwapComponent extends Component {
                 this.setState({
                     output_amount: 0,
                     exchange_rate: 0,
+                    click_exchnage: 0,
                     node_output_balance: results.node_output_balance,
                 });
             }
@@ -255,9 +252,7 @@ class SwapComponent extends Component {
         var click_exchnage = 0;
         if (this.state.click_exchnage == 0) click_exchnage = 1;
         else click_exchnage = 0;
-
-        var exchange_rate = 1 / this.state.exchange_rate;
-        this.setState({ exchange_rate, click_exchnage });
+        this.setState({ click_exchnage });
     };
 
     selectToken = token => {
@@ -334,13 +329,16 @@ class SwapComponent extends Component {
                                               ? this.state.output_token
                                               : this.state.input_token
                                       } = ${this.info.floorNumberWithNumber(
-                                          this.state.exchange_rate,
-                                          5
-                                      )} ${
                                           this.state.click_exchnage > 0
-                                              ? this.state.input_token
-                                              : this.state.output_token
-                                      }`
+                                              ? 1 / this.state.exchange_rate
+                                              : this.state.exchange_rate,
+                                          5
+                                      )} 
+                                        ${
+                                            this.state.click_exchnage > 0
+                                                ? this.state.input_token
+                                                : this.state.output_token
+                                        }`
                                     : '-'}
                             </dd>
                         </div>
