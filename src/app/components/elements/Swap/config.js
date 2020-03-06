@@ -42,8 +42,8 @@ async function getScotHolder(symbol, cnt, offset) {
 var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
-    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM'],
-    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM'],
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT'],
+    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM', 'KPSCT'],
 };
 
 var subnode = [
@@ -64,6 +64,12 @@ var subnode = [
         account: 'sct.kpsteem',
         tokens: ['KRWP', 'STEEM'],
         liquidity_token: 'KPSTEEM',
+    },
+    {
+        name: 'kpsct',
+        account: 'sct.kpsct',
+        tokens: ['KRWP', 'SCT'],
+        liquidity_token: 'KPSCT',
     },
 ];
 

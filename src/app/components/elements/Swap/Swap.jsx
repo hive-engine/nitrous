@@ -66,6 +66,7 @@ class SwapComponent extends Component {
             user_input_balance: 0,
             user_output_balance: 0,
             queue_size: 0,
+            click_exchnage: 0,
         };
         this.info = new swapinfo();
         this.selected = '';
@@ -206,6 +207,17 @@ class SwapComponent extends Component {
     calculateExchange = async () => {
         var exchange_rate = 0;
         const { input_token, output_token } = this.state;
+
+        var that = this;
+        this.info
+            .getTokenBalance(
+                this.props.currentUser.get('username'),
+                input_token
+            )
+            .then(balance => {
+                that.setState({ user_input_balance: balance });
+            });
+
         if (input_token != '' && output_token != '') {
             var results = await this.info.calculateExchangeAmount(
                 input_token,
@@ -214,25 +226,6 @@ class SwapComponent extends Component {
             );
 
             this.getSwapQueueInfoFromApi();
-
-            var that = this;
-            this.info
-                .getTokenBalance(
-                    this.props.currentUser.get('username'),
-                    input_token
-                )
-                .then(balance => {
-                    that.setState({ user_input_balance: balance });
-                });
-
-            this.info
-                .getTokenBalance(
-                    this.props.currentUser.get('username'),
-                    output_token
-                )
-                .then(balance => {
-                    that.setState({ user_output_balance: balance });
-                });
 
             if (this.input_amount > 0) {
                 this.output_amount = results.estimated_output_amount;
@@ -251,6 +244,18 @@ class SwapComponent extends Component {
             }
         }
         return exchange_rate;
+    };
+
+    chnageRate = () => {
+        var click_exchnage = 0;
+        if (this.state.click_exchnage == 0) click_exchnage = 1;
+        else click_exchnage = 0;
+
+        var exchange_rate = this.info.floorNumberWithNumber(
+            1 / this.state.exchange_rate,
+            5
+        );
+        this.setState({ exchange_rate, click_exchnage });
     };
 
     selectToken = token => {
@@ -318,13 +323,19 @@ class SwapComponent extends Component {
                         />
                     </div>
                     <dl className="exchange-rate">
-                        <div className="row-box">
+                        <div className="row-box" onClick={this.chnageRate}>
                             <dt>Exchange Rate</dt>
                             <dd>
                                 {this.state.exchange_rate > 0
-                                    ? `1 ${this.state.input_token} = ${
-                                          this.state.exchange_rate
-                                      } ${this.state.output_token}`
+                                    ? `1 ${
+                                          this.state.click_exchnage > 0
+                                              ? this.state.output_token
+                                              : this.state.input_token
+                                      } = ${this.state.exchange_rate} ${
+                                          this.state.click_exchnage > 0
+                                              ? this.state.input_token
+                                              : this.state.output_token
+                                      }`
                                     : '-'}
                             </dd>
                         </div>
