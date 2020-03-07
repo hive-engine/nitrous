@@ -229,22 +229,6 @@ class PostsIndex extends React.Component {
             },
         });
 
-        // src="https://changenow.io/embeds/exchange-widget/v1?amount=1&from=btc&link_id=00000000000000&to=xmr&hide_logo=true"
-        // src="https://changenow.io/dist/popup-widget.v1.js
-        {
-            /* <script type='text/javascript' src='https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js'></script> */
-        }
-
-        const script = document.createElement('script');
-        // script.src = "https://changenow.io/dist/popup-widget.v1.js";
-        script.src =
-            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        // {<script type="text/javascript" src="https://changenow.io/dist/popup-widget.v1.js"></script>}
-
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,

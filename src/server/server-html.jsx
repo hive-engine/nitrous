@@ -187,8 +187,14 @@ export default function ServerHTML({
                 ) : null}
                 <meta
                     name="google-site-verification"
-                    content="3NS6qyCTbLAg1fk-_jyjJ4oOmLelvOk0UZFrDue_yAU"
+                    content="3NS6qyCTbLAg1fk_jyjJ4oOmLelvOk0UZFrDue_yAU"
                 />
+                {adClient ? (
+                    <script
+                        async
+                        src="https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js"
+                    />
+                ) : null}
                 {adClient ? (
                     <script
                         async
