@@ -194,10 +194,6 @@ class PostsIndex extends React.Component {
         window.open('https://t.me/sct_notice');
     };
 
-    showExchangeModal = () => {
-        window.open('https://apisct.cloud/manager');
-    };
-
     buildCategories(cat, parent, categories) {
         if (!categories) return this.props.categories;
 
@@ -222,14 +218,32 @@ class PostsIndex extends React.Component {
                 return (
                     <div>
                         <iframe
+                            id="iframe-widget"
+                            name="widget"
                             src={this.props.src}
-                            height={this.props.height}
-                            width={this.props.width}
+                            height="350px"
+                            width="100%"
                         />
                     </div>
                 );
             },
         });
+
+        // src="https://changenow.io/embeds/exchange-widget/v1?amount=1&from=btc&link_id=00000000000000&to=xmr&hide_logo=true"
+        // src="https://changenow.io/dist/popup-widget.v1.js
+        {
+            /* <script type='text/javascript' src='https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js'></script> */
+        }
+
+        const script = document.createElement('script');
+        // script.src = "https://changenow.io/dist/popup-widget.v1.js";
+        script.src =
+            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        // {<script type="text/javascript" src="https://changenow.io/dist/popup-widget.v1.js"></script>}
 
         let {
             category,
@@ -431,29 +445,7 @@ class PostsIndex extends React.Component {
                         {tt('g.luckydraw')}
                     </button>
 
-                    <button
-                        type="button"
-                        className="c-sidebar--right--link"
-                        onClick={this.showExchangeModal}
-                    >
-                        Exchange Coin
-                    </button>
-
-                    <Modal
-                        backdrop={true}
-                        // transition={Transition}
-                        // onHide={onHide}
-                        show={false}
-                        backdropClassName={'reveal-overlay reveal-swap-overlay'}
-                        backdropStyle={{ display: 'block' }}
-                        // style={modalStyle}
-                    >
-                        <Iframe
-                            src="http://plnkr.co/"
-                            height="500"
-                            width="500"
-                        />
-                    </Modal>
+                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?link_id=390fe008f10e29" />
 
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
