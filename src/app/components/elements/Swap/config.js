@@ -42,8 +42,8 @@ async function getScotHolder(symbol, cnt, offset) {
 var mainnode = {
     name: 'main_node',
     account: 'sct.jcob',
-    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT'],
-    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM', 'KPSCT'],
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM'],
+    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM', 'KPSCT', 'KPSCTM'],
 };
 
 var subnode = [
@@ -71,6 +71,12 @@ var subnode = [
         tokens: ['KRWP', 'SCT'],
         liquidity_token: 'KPSCT',
     },
+    {
+        name: 'kpsctm',
+        account: 'sct.kpsctm',
+        tokens: ['KRWP', 'SCTM'],
+        liquidity_token: 'KPSCTM',
+    },
 ];
 
 class swapConfig {
@@ -81,6 +87,12 @@ class swapConfig {
         this.mainNode = mainnode;
 
         this.tokens = [];
+        this.tokens.push({
+            id: 'steem',
+            name: 'STEEM',
+            fullname: 'STEEM',
+            ico: '/images/tokens/steem.png',
+        });
         this.tokens.push({
             id: 'krwp',
             name: 'KRWP',
@@ -94,6 +106,12 @@ class swapConfig {
             ico: '/images/tokens/sct.png',
         });
         this.tokens.push({
+            id: 'sctm',
+            name: 'SCTM',
+            fullname: 'SCT Miner',
+            ico: '/images/tokens/sctm.png',
+        });
+        this.tokens.push({
             id: 'org',
             name: 'ORG',
             fullname: 'Orange Token',
@@ -104,12 +122,6 @@ class swapConfig {
             name: 'SVC',
             fullname: 'Steem Vote Coin',
             ico: '/images/tokens/svc.png',
-        });
-        this.tokens.push({
-            id: 'steem',
-            name: 'STEEM',
-            fullname: 'Steem',
-            ico: '/images/tokens/steem.png',
         });
     }
 
