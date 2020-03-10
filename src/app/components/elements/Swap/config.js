@@ -182,6 +182,12 @@ class swapConfig {
         }
     }
 
+    findNodes(input_token, output_token) {
+        var first_node = this.findNode(input_token, 'KRWP');
+        var second_node = this.findNode('KRWP', output_token);
+        return [first_node, second_node];
+    }
+
     findNode(input_token, output_token) {
         var validNode = null;
         for (const node of this.nodes) {

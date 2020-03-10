@@ -220,11 +220,16 @@ class SwapComponent extends Component {
             });
 
         if (input_token != '' && output_token != '') {
-            var results = await this.info.calculateExchangeAmount(
-                input_token,
-                output_token,
-                this.input_amount
-            );
+            var results = null;
+
+            if (input_token != 'KRWP' && output_token != 'KRWP') {
+            } else {
+                results = await this.info.calculateExchangeAmount(
+                    input_token,
+                    output_token,
+                    this.input_amount
+                );
+            }
 
             this.getSwapQueueInfoFromApi();
 
