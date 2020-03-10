@@ -275,7 +275,6 @@ class swapConfig {
     }
 
     async calculateExchangeAmount2(input_token, output_token, input_amount) {
-        var validNodes = this.findNodes(input_token, output_token);
         var result_one = await this.calculateExchangeAmount(
             input_token,
             'KRWP',
@@ -284,7 +283,7 @@ class swapConfig {
         var result_two = await this.calculateExchangeAmount(
             'KRWP',
             output_token,
-            result_one.estimated_output_amount_origin
+            result_one.estimated_output_amount
         );
 
         return {
