@@ -7,7 +7,7 @@ import swapinfo from './config';
 import SwapQueue from './SwapQueue';
 import { getSwapQueue } from 'app/utils/steemApi';
 
-var swap_node = 'sct.jcob';
+var swap_node = 'sct.swap';
 
 const SelectToken = props => {
     return (
