@@ -62,7 +62,7 @@
   "google_ad_enabled": true,
   "gpt_banned_tags": ["nsfw", "tante"],
   "google_ad_test": null,
-  "google_ad_client": "ca-pub-9129971884580895",
+  "google_ad_client": "ca-pub-1316865473229920",
   "google_ad_slots": {
     "market_1": {
       "slot_id": "2777377820"
