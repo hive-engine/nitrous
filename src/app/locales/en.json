@@ -271,7 +271,8 @@
             "Do you want to give this account %(amount)s %(LIQUID_TOKEN)s for this article? Click 'Confirm' to proceed.",
         "edited": "Edited",
         "noticeMessanger": "Notice Telegram",
-        "luckydraw": "Lucky Draw"
+        "luckydraw": "Lucky Draw",
+        "sctswap": "SCT SWAP"
     },
     "navigation": {
         "about": "About Steemit, Inc.",

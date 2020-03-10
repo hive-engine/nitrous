@@ -271,7 +271,8 @@
         "burn": "Burn",
         "staking": "Staking",
         "noticeMessanger": "Notice Telegram",
-        "luckydraw": "Lucky Draw"
+        "luckydraw": "Lucky Draw",
+        "sctswap": "SCT SWAP"
     },
     "navigation": {
         "about": "Sobre",

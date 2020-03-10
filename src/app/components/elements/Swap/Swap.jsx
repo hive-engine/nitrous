@@ -158,6 +158,44 @@ class SwapComponent extends Component {
         console.log('onClose');
     };
 
+    transferToken(input_token, input_amount, username, memo) {
+        if (input_token === 'SBD') {
+            this.props.dispatchTransfer({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess: null,
+            });
+        }
+        if (input_token === 'STEEM') {
+            this.props.dispatchTransfer({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess: null,
+            });
+        } else {
+            this.props.dispatchSubmit({
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
+                onClose: this.onClose,
+                currentUser: this.props.currentUser,
+                errorCallback: this.errorCallback,
+                onSuccess: null,
+            });
+        }
+    }
+
     onClickSwap = e => {
         console.log('transfer');
         const { input_token, output_token } = this.state;
@@ -167,40 +205,37 @@ class SwapComponent extends Component {
             input_token != '' &&
             output_token != ''
         ) {
-            // update queue
+            if (input_token != 'KRWP' && output_token != 'KRWP') {
+                console.log('1');
+                console.log(input_token, output_token);
 
-            var node = this.info.findNode(input_token, output_token);
-            if (input_token === 'SBD') {
-                this.props.dispatchTransfer({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
-            }
-            if (input_token === 'STEEM') {
-                this.props.dispatchTransfer({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
+                var node1 = this.info.findNode(input_token, 'KRWP');
+                var node2 = this.info.findNode('KRWP', output_token);
+                var name = this.props.currentUser.get('username');
+                var memo_1 = `@swap2:${input_token}:${'KRWP'}:${output_token}:${
+                    node1.name
+                }:${node2.name}:${name}`;
+                this.transferToken(
+                    input_token,
+                    this.input_amount,
+                    name,
+                    memo_1
+                );
             } else {
-                this.props.dispatchSubmit({
-                    amount: this.input_amount,
-                    asset: input_token,
-                    outputasset: output_token,
-                    nodeName: node.name,
-                    onClose: this.onClose,
-                    currentUser: this.props.currentUser,
-                    errorCallback: this.errorCallback,
-                });
+                console.log('2');
+                console.log(input_token, output_token);
+                var node1 = this.info.findNode(input_token, output_token);
+                var name = this.props.currentUser.get('username');
+                var memo_1 = `@swap:${input_token}:${output_token}:${
+                    node1.name
+                }:${name}`;
+
+                this.transferToken(
+                    input_token,
+                    this.input_amount,
+                    name,
+                    memo_1
+                );
             }
         }
     };
@@ -222,7 +257,14 @@ class SwapComponent extends Component {
         if (input_token != '' && output_token != '') {
             var results = null;
 
-            if (input_token != 'KRWP' && output_token != 'KRWP') {
+            if (input_token == output_token) {
+                results = 0;
+            } else if (input_token != 'KRWP' && output_token != 'KRWP') {
+                results = await this.info.calculateExchangeAmount2(
+                    input_token,
+                    output_token,
+                    this.input_amount
+                );
             } else {
                 results = await this.info.calculateExchangeAmount(
                     input_token,
@@ -234,7 +276,11 @@ class SwapComponent extends Component {
             this.getSwapQueueInfoFromApi();
 
             if (this.input_amount > 0) {
+                console.log(results.estimated_output_amount);
                 this.output_amount = results.estimated_output_amount;
+                if (results.estimated_output_amount == undefined)
+                    this.output_amount = 0;
+
                 exchange_rate = results.exchange_rate;
                 this.setState({
                     output_amount: this.output_amount,
@@ -387,18 +433,17 @@ export default connect(
         dispatchTransfer: ({
             amount,
             asset,
-            outputasset,
-            nodeName,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
 
@@ -406,7 +451,7 @@ export default connect(
                 from: username,
                 to: swap_node,
                 amount: parseFloat(amount).toFixed(3) + ' ' + asset,
-                memo: `@swap:${asset}:${outputasset}:${nodeName}:${username}`,
+                memo,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
                 },
@@ -423,18 +468,17 @@ export default connect(
         dispatchSubmit: ({
             amount,
             asset,
-            outputasset,
-            nodeName,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
             const transferOperation = {
@@ -444,9 +488,7 @@ export default connect(
                     symbol: asset,
                     to: swap_node,
                     quantity: amount,
-                    memo: `@swap:${asset}:${outputasset}:${nodeName}:${
-                        username
-                    }`,
+                    memo,
                 },
             };
             const operation = {

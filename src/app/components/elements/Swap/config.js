@@ -274,6 +274,27 @@ class swapConfig {
         };
     }
 
+    async calculateExchangeAmount2(input_token, output_token, input_amount) {
+        var validNodes = this.findNodes(input_token, output_token);
+        var result_one = await this.calculateExchangeAmount(
+            input_token,
+            'KRWP',
+            input_amount
+        );
+        var result_two = await this.calculateExchangeAmount(
+            'KRWP',
+            output_token,
+            result_one.estimated_output_amount_origin
+        );
+
+        return {
+            estimated_output_amount: result_two.estimated_output_amount,
+            node_output_balance: result_two.node_output_balance,
+            exchange_rate:
+                result_two.estimated_output_amount_origin / input_amount,
+        };
+    }
+
     async calculateExchangeAmount(input_token, output_token, input_amount) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
@@ -290,9 +311,11 @@ class swapConfig {
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
         var exchange_rate = estimated_output_amount / input_amount;
+        var estimated_output_amount_origin = estimated_output_amount;
         // exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
         estimated_output_amount = this.floorNumber(estimated_output_amount);
         return {
+            estimated_output_amount_origin,
             estimated_output_amount,
             node_output_balance: balance[1],
             exchange_rate,
