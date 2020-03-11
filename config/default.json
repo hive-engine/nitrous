@@ -50,8 +50,8 @@
     "auth_token": false
   },
   "upload_image": false,
-  "steemd_connection_client": "https://steemd.minnowsupportproject.org",
-  "steemd_connection_server": "https://steemd.minnowsupportproject.org",
+  "steemd_connection_client": "https://api.steemit.com",
+  "steemd_connection_server": "https://api.steemit.com",
   "steemd_use_appbase": false,
   "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
   "address_prefix": "STM",
