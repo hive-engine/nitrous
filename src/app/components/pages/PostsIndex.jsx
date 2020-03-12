@@ -71,6 +71,15 @@ class PostsIndex extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const script = document.createElement('script');
+
+        script.src =
+            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
+
+        document.body.appendChild(script);
+    }
+
     getPosts(order, category) {
         const pinned = this.props.pinned;
         const pinnedPosts = pinned
@@ -221,8 +230,8 @@ class PostsIndex extends React.Component {
                             id="iframe-widget"
                             name="widget"
                             src={this.props.src}
-                            height="350px"
-                            width="100%"
+                            width="250px"
+                            height="330px"
                         />
                     </div>
                 );
@@ -429,7 +438,7 @@ class PostsIndex extends React.Component {
                         {tt('g.luckydraw')}
                     </button>
 
-                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?link_id=390fe008f10e29" />
+                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" />
 
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
