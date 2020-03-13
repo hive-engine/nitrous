@@ -146,6 +146,7 @@ export default function ServerHTML({
                     rel="stylesheet"
                     type="text/css"
                 />
+                {/* <script type='text/javascript' src='https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js'></script> */}
                 {assets.style.map((href, idx) => (
                     <link
                         href={href}
@@ -187,7 +188,7 @@ export default function ServerHTML({
                 ) : null}
                 <meta
                     name="google-site-verification"
-                    content="3NS6qyCTbLAg1fk-_jyjJ4oOmLelvOk0UZFrDue_yAU"
+                    content="3NS6qyCTbLAg1fk_jyjJ4oOmLelvOk0UZFrDue_yAU"
                 />
                 {adClient ? (
                     <script

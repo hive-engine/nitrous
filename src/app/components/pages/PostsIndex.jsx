@@ -25,10 +25,12 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
+import ExchangeNow from './ExchangeNow';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
+import Modal from 'react-overlays/lib/Modal';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
@@ -67,6 +69,15 @@ class PostsIndex extends React.Component {
         ) {
             this.refs.list.fetchIfNeeded();
         }
+    }
+
+    componentDidMount() {
+        const script = document.createElement('script');
+
+        script.src =
+            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
+
+        document.body.appendChild(script);
     }
 
     getPosts(order, category) {
@@ -213,6 +224,22 @@ class PostsIndex extends React.Component {
     }
 
     render() {
+        var Iframe = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <iframe
+                            id="iframe-widget"
+                            name="widget"
+                            src={this.props.src}
+                            width="250px"
+                            height="330px"
+                        />
+                    </div>
+                );
+            },
+        });
+
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
@@ -419,6 +446,7 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.sctswap')}
                     </button>
+                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" />
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
                             <div>
