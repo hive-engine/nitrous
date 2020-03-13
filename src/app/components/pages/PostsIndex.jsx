@@ -194,7 +194,9 @@ class PostsIndex extends React.Component {
             return { par: parent, cats: null, found: false };
         }
     }
-
+    goSCTSWAP = () => {
+        window.open('https://steemcoinpan.com/market');
+    };
     goPicpPick = () => {
         window.open('https://apisct.cloud/manager');
     };
@@ -437,9 +439,14 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
-
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.goSCTSWAP}
+                    >
+                        {tt('g.sctswap')}
+                    </button>
                     <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" />
-
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
                             <div>

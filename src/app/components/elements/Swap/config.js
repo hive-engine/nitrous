@@ -41,9 +41,9 @@ async function getScotHolder(symbol, cnt, offset) {
 
 var mainnode = {
     name: 'main_node',
-    account: 'sct.jcob',
-    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM'],
-    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM'],
+    account: 'sct.swap',
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM'],
+    liquidity_token: ['KPORG', 'KPSVC', 'KPSTEEM', 'KPSCT', 'KPSCTM'],
 };
 
 var subnode = [
@@ -65,6 +65,18 @@ var subnode = [
         tokens: ['KRWP', 'STEEM'],
         liquidity_token: 'KPSTEEM',
     },
+    {
+        name: 'kpsct',
+        account: 'sct.kpsct',
+        tokens: ['KRWP', 'SCT'],
+        liquidity_token: 'KPSCT',
+    },
+    {
+        name: 'kpsctm',
+        account: 'sct.kpsctm',
+        tokens: ['KRWP', 'SCTM'],
+        liquidity_token: 'KPSCTM',
+    },
 ];
 
 class swapConfig {
@@ -75,6 +87,12 @@ class swapConfig {
         this.mainNode = mainnode;
 
         this.tokens = [];
+        this.tokens.push({
+            id: 'steem',
+            name: 'STEEM',
+            fullname: 'STEEM',
+            ico: '/images/tokens/steem.png',
+        });
         this.tokens.push({
             id: 'krwp',
             name: 'KRWP',
@@ -88,6 +106,12 @@ class swapConfig {
             ico: '/images/tokens/sct.png',
         });
         this.tokens.push({
+            id: 'sctm',
+            name: 'SCTM',
+            fullname: 'SCT Miner',
+            ico: '/images/tokens/sctm.png',
+        });
+        this.tokens.push({
             id: 'org',
             name: 'ORG',
             fullname: 'Orange Token',
@@ -98,12 +122,6 @@ class swapConfig {
             name: 'SVC',
             fullname: 'Steem Vote Coin',
             ico: '/images/tokens/svc.png',
-        });
-        this.tokens.push({
-            id: 'steem',
-            name: 'STEEM',
-            fullname: 'Steem',
-            ico: '/images/tokens/steem.png',
         });
     }
 
@@ -162,6 +180,12 @@ class swapConfig {
                 );
             });
         }
+    }
+
+    findNodes(input_token, output_token) {
+        var first_node = this.findNode(input_token, 'KRWP');
+        var second_node = this.findNode('KRWP', output_token);
+        return [first_node, second_node];
     }
 
     findNode(input_token, output_token) {
@@ -250,6 +274,26 @@ class swapConfig {
         };
     }
 
+    async calculateExchangeAmount2(input_token, output_token, input_amount) {
+        var result_one = await this.calculateExchangeAmount(
+            input_token,
+            'KRWP',
+            input_amount
+        );
+        var result_two = await this.calculateExchangeAmount(
+            'KRWP',
+            output_token,
+            result_one.estimated_output_amount
+        );
+
+        return {
+            estimated_output_amount: result_two.estimated_output_amount,
+            node_output_balance: result_two.node_output_balance,
+            exchange_rate:
+                result_two.estimated_output_amount_origin / input_amount,
+        };
+    }
+
     async calculateExchangeAmount(input_token, output_token, input_amount) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
@@ -266,9 +310,11 @@ class swapConfig {
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
         var exchange_rate = estimated_output_amount / input_amount;
-        exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
+        var estimated_output_amount_origin = estimated_output_amount;
+        // exchange_rate = this.floorNumberWithNumber(exchange_rate, 5);
         estimated_output_amount = this.floorNumber(estimated_output_amount);
         return {
+            estimated_output_amount_origin,
             estimated_output_amount,
             node_output_balance: balance[1],
             exchange_rate,
