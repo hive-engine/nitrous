@@ -3,50 +3,33 @@ import { fromJSOrdered } from './utils/immutable';
 export const CONFIG_MAP = {
     // testing heroku option
     'frozen-retreat-15997.herokuapp.com': {
-        APP_NAME: 'Steeming',
-        APP_ICON: 'steeming',
-        APP_ICON_WIDTH: '200px',
+        APP_NAME: 'InfoWars',
+        APP_ICON: 'infowars',
+        APP_ICON_WIDTH: '40px',
         APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://steeming.com',
-        APP_DOMAIN: 'steeming.com',
-        LIQUID_TOKEN: 'Pesos',
-        LIQUID_TOKEN_UPPERCASE: 'PESOS',
+        APP_URL: 'https://cryptowars.org',
+        APP_DOMAIN: 'cryptowars.org',
+        LIQUID_TOKEN: 'Infowars',
+        LIQUID_TOKEN_UPPERCASE: 'INFOWARS',
         APP_MAX_TAG: 10,
-        SCOT_TAG: 'steeming',
-        TAG_LIST: fromJSOrdered([
-            'pesos',
-            'steeming',
-            'pets',
-            'news',
-            'media',
-            'finance',
-            'travel',
-            'cybersecurity',
-            'games',
-            'myscoop',
-            'domainname',
-            'entertainment',
-            'sports',
-            'machinelearning',
-            'artificialintelligence',
-        ]),
+        SCOT_TAG: 'infowars',
+        TAG_LIST: fromJSOrdered(['infowars']),
         INTERLEAVE_PROMOTED: true,
         PROMOTED_POST_ACCOUNT: 'null',
-        VESTING_TOKEN: 'PESOS POWER',
+        VESTING_TOKEN: 'INFOWARS POWER',
         SITE_DESCRIPTION:
-            'Steeming is a social media platform where everyone gets paid for ' +
-            'creating and curating content. It leverages a robust digital points system, called PESOS, that ' +
+            'InfoWars is a social media platform where everyone gets paid for ' +
+            'creating and curating content. It leverages a robust digital points system, called INFOWARS, that ' +
             'supports real value for digital rewards through market price discovery and liquidity',
         // Revive Ads
         NO_ADS_STAKE_THRESHOLD: 9999999999,
         REVIVE_ADS: {},
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-        POST_FOOTER:
-            '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
+        POST_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
-        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-29',
+        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
     },
     'steeming.com': {
         APP_NAME: 'Steeming',

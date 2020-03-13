@@ -85,7 +85,7 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const [totalTokenBalances, tokenBalances] = await Promise.all([
+        const [totalTokenBalances, tokenBurnBalances] = await Promise.all([
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
