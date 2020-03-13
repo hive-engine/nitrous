@@ -17,16 +17,10 @@ deploy:
   script:
     bash docker_push
   on:
-    branch: scotty_weedcash
+    branch: scotty_multi
 
 # safelist
 branches:
   only:
   - master
-  - scotty_aaa
-  - scotty_actnearn
-  - scotty_bloque64
-  - scotty_pal
-  - scotty_spt
-  - scotty_steemcoinpan
-  - scotty_weedcash
+  - scotty_multi
