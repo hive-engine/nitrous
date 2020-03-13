@@ -85,10 +85,6 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const tokenList = [scotConfig.tokenStats.scotToken].concat(
-            scotConfig.tokenStats.scotMinerTokens
-        );
-
         const [totalTokenBalances, tokenBalances] = await Promise.all([
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
