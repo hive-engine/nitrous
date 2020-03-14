@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import tt from 'counterpart';
-import SSC from 'sscjs';
-const ssc = new SSC('https://api.steem-engine.com/rpc');
-
-import { api } from '@steemit/steem-js';
-
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
-const SWAP_ACCOUNT = 'sct.swap';
+
+import swapinfo from 'app/components/elements/Swap/config';
+const swap_node = 'sct.swap';
 
 const SelectToken = props => {
     var options = props.input_token_type.map(function(token_name, index) {
@@ -36,12 +32,12 @@ const SelectToken = props => {
                 disabled={props.inputDisabled}
             />
             <div className="pd-0 bg-x">
-                <select onChange={props.selectedChange}>{options}</select>
-                {/* <select>
-                    {props.input_token_type.map((token_name, i) => {
-                        return <option>{token_name}</option>;
-                    })}
-                </select> */}
+                <select
+                    value={props.selectedValue}
+                    onChange={props.selectedChange}
+                >
+                    {options}
+                </select>
             </div>
         </div>
     );
@@ -52,107 +48,27 @@ class SidebarSwap extends Component {
         // console.log(props);
         super(props);
         this.state = {
-            amount: 0,
+            selectedValue1: 0,
+            selectedValue2: 1,
+            loadToken: true,
             output_amount: 0,
-            selectedValue1: '',
-            selectedValue2: '',
-            loadToken: false,
-            providerBalance: {
-                SCT: 0 + ' ' + 'SCT',
-                SCTM: 0 + ' ' + 'SCTM',
-                KRWP: 0 + ' ' + 'KRWP',
-                SBD: '0 SBD',
-            },
-            swap_rate: 1,
-        };
-        const {
-            sct_to_steemp,
-            dec_to_steemp,
-            steem_to_dollor,
-            sctm_to_steem,
-            krwp_to_steem,
-            steem_to_krw_current,
-            sbd_to_krw_current,
-        } = this.props;
-        console.log(
-            sct_to_steemp,
-            steem_to_dollor,
-            sctm_to_steem,
-            krwp_to_steem
-        );
-
-        // console.log(sbd_to_dollor, steem_to_dollor);
-        // I should get ratio between tokens from .. api.
-        this.ratio_toke_by_steem = {
-            SCT: sct_to_steemp * 1,
-            SCTM: sctm_to_steem * 1,
-            KRWP: 1000.0 / steem_to_krw_current,
-            SBD: sbd_to_krw_current / steem_to_krw_current * 1,
-            STEEM: 1.0,
-            ORG: 250.0 / steem_to_krw_current,
-            SVC: 1000.0 / steem_to_krw_current,
-            DEC: dec_to_steemp * 1,
+            input_token: 'STEEM',
+            output_token: 'KRWP',
+            node_output_balance: 0,
+            user_input_balance: 0,
+            click_exchnage: 0,
         };
 
-        var that = this;
-        this.getSwapAccountInfo(SWAP_ACCOUNT).then(allInfo => {
-            var providerBalance = {
-                SCT: allInfo[0] + ' ' + 'SCT',
-                SCTM: allInfo[1] + ' ' + 'SCTM',
-                KRWP: allInfo[2] + ' ' + 'KRWP',
-                SBD: allInfo[3][0].sbd_balance,
-                STEEM: allInfo[3][0].balance,
-                ORG: allInfo[4] + ' ' + 'ORG',
-                SVC: allInfo[5] + ' ' + 'SVC',
-                DEC: allInfo[6] + ' ' + 'DEC',
-            };
-            that.setState({
-                providerBalance,
-                loadToken: true,
-            });
-        });
-
-        this.pair_token = [];
-        this.pair_token['SCT'] = ['KRWP'];
-        this.pair_token['SCTM'] = ['KRWP'];
-        this.pair_token['KRWP'] = [
-            'SCT',
-            'SCTM',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
-        this.pair_token['SBD'] = ['KRWP'];
-        this.pair_token['STEEM'] = ['KRWP'];
-        this.pair_token['ORG'] = ['KRWP'];
-        this.pair_token['SVC'] = ['KRWP'];
-        this.pair_token['DEC'] = ['KRWP'];
-
-        this.input_token_type = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
-        this.output_token_type = [
-            'SCT',
-            'SCTM',
-            'KRWP',
-            'SBD',
-            'STEEM',
-            'ORG',
-            'SVC',
-            'DEC',
-        ];
+        this.info = new swapinfo();
+        this.input_token_type = [];
+        for (const token of this.info.tokens) {
+            this.input_token_type.push(token.name);
+        }
+        this.output_token_type = this.input_token_type;
+        console.log(this.input_token_type);
 
         this.swap_fee = 3.0;
-        this.selected_token = [0, 0];
+        this.selected_token = [0, 1];
         this.input_amount = 0;
 
         // Functions
@@ -167,57 +83,41 @@ class SidebarSwap extends Component {
     inputSelected(e) {
         console.log('-- swap.inputSelected -->', e.target.value);
         this.selected_token[0] = e.target.value * 1;
-        this.output_token_type = this.pair_token[
-            this.input_token_type[this.selected_token[0]]
-        ];
-        if (this.output_token_type[this.selected_token[1]] == undefined)
-            this.selected_token[1] = 0;
-        if (this.input_token_type[this.selected_token[0]] == 'KRWP') {
-            this.output_token_type = [
-                'SCT',
-                'SCTM',
-                'KRWP',
-                'SBD',
-                'STEEM',
-                'ORG',
-                'SVC',
-                'DEC',
-            ];
-        }
-        this.calculateOutput();
+        this.setState({ selectedValue1: this.selected_token[0] });
+        this.calculateExchange();
     }
 
     outputSelected(e) {
         console.log('-- swap.outputSelected -->', e.target.value);
         this.selected_token[1] = e.target.value * 1;
-        this.input_token_type = this.pair_token[
-            this.output_token_type[this.selected_token[1]]
-        ];
-        if (this.output_token_type[this.selected_token[1]] != 'KRWP') {
-            this.selected_token[0] = 0;
-            this.input_token_type = ['KRWP'];
-        } else {
-            this.input_token_type = [
-                'SCT',
-                'SCTM',
-                'KRWP',
-                'SBD',
-                'STEEM',
-                'ORG',
-                'SVC',
-                'DEC',
-            ];
-        }
-
-        this.calculateOutput();
+        this.setState({ selectedValue2: this.selected_token[1] });
+        this.calculateExchange();
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        var that = this;
+        var input_token = this.input_token_type[this.selected_token[0]];
+        var output_token = this.output_token_type[this.selected_token[1]];
+        this.info
+            .getTokenBalance(
+                this.props.currentUser.get('username'),
+                input_token
+            )
+            .then(balance => {
+                that.setState({ user_input_balance: balance });
+            });
+
+        var node1 = this.info.findNode(input_token, output_token);
+
+        this.info.getTokenBalance(node1.account, output_token).then(balance => {
+            that.setState({ node_output_balance: balance });
+        });
+    }
 
     amountChange(e) {
         const amount = e.target.value;
         this.input_amount = amount;
-        this.calculateOutput();
+        this.calculateExchange();
     }
 
     errorCallback(estr) {
@@ -227,73 +127,162 @@ class SidebarSwap extends Component {
     onClose() {
         console.log('onClose');
     }
-
-    onClickSwap(e) {
-        console.log('onClickSwap', this.props.currentUser);
-        if (this.props.currentUser == null) return;
-
-        const username = this.props.currentUser.get('username');
+    onClickSwap = e => {
+        console.log('transfer');
+        var input_token = this.input_token_type[this.selected_token[0]];
+        var output_token = this.output_token_type[this.selected_token[1]];
         console.log(
-            'onClickSwap',
-            username,
-            this.input_token_type[this.selected_token[0]],
-            this.output_token_type[this.selected_token[1]]
+            this.input_amount,
+            this.output_amoun,
+            input_token,
+            output_token
         );
-        if (this.input_token_type[this.selected_token[0]] === 'SBD') {
+        if (
+            this.input_amount > 0 &&
+            this.output_amount > 0 &&
+            input_token != '' &&
+            output_token != ''
+        ) {
+            if (input_token != 'KRWP' && output_token != 'KRWP') {
+                console.log('1');
+                console.log(input_token, output_token);
+
+                var node1 = this.info.findNode(input_token, 'KRWP');
+                var node2 = this.info.findNode('KRWP', output_token);
+                var name = this.props.currentUser.get('username');
+                var memo_1 = `@swap2:${input_token}:${'KRWP'}:${output_token}:${
+                    node1.name
+                }:${node2.name}:${name}`;
+                this.transferToken(
+                    input_token,
+                    this.input_amount,
+                    name,
+                    memo_1
+                );
+            } else {
+                console.log('2');
+                console.log(input_token, output_token);
+                var node1 = this.info.findNode(input_token, output_token);
+                var name = this.props.currentUser.get('username');
+                var memo_1 = `@swap:${input_token}:${output_token}:${
+                    node1.name
+                }:${name}`;
+
+                this.transferToken(
+                    input_token,
+                    this.input_amount,
+                    name,
+                    memo_1
+                );
+            }
+        }
+    };
+
+    calculateExchange = async () => {
+        var exchange_rate = 0;
+        var input_token = this.input_token_type[this.selected_token[0]];
+        var output_token = this.output_token_type[this.selected_token[1]];
+
+        if (input_token != '' && output_token != '') {
+            var that = this;
+            this.info
+                .getTokenBalance(
+                    this.props.currentUser.get('username'),
+                    input_token
+                )
+                .then(balance => {
+                    that.setState({ user_input_balance: balance });
+                });
+            var results = null;
+            if (input_token == output_token) {
+                results = 0;
+            } else if (input_token != 'KRWP' && output_token != 'KRWP') {
+                results = await this.info.calculateExchangeAmount2(
+                    input_token,
+                    output_token,
+                    this.input_amount
+                );
+            } else {
+                results = await this.info.calculateExchangeAmount(
+                    input_token,
+                    output_token,
+                    this.input_amount
+                );
+            }
+            if (this.input_amount > 0) {
+                console.log(results.estimated_output_amount);
+                this.output_amount = results.estimated_output_amount;
+                if (results.estimated_output_amount == undefined)
+                    this.output_amount = 0;
+
+                exchange_rate = results.exchange_rate;
+                this.setState({
+                    output_amount: this.output_amount,
+                    exchange_rate,
+                    node_output_balance: results.node_output_balance,
+                });
+            } else {
+                this.setState({
+                    output_amount: 0,
+                    exchange_rate: 0,
+                    click_exchnage: 0,
+                    node_output_balance: results.node_output_balance,
+                });
+            }
+        }
+        return exchange_rate;
+    };
+
+    chnageRate = () => {
+        var click_exchnage = 0;
+        if (this.state.click_exchnage == 0) click_exchnage = 1;
+        else click_exchnage = 0;
+        this.setState({ click_exchnage });
+    };
+
+    transferToken(input_token, input_amount, username, memo) {
+        if (input_token === 'SBD') {
             this.props.dispatchTransfer({
-                amount: this.input_amount,
-                asset: this.input_token_type[this.selected_token[0]],
-                outputasset: this.output_token_type[this.selected_token[1]],
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
                 onClose: this.onClose,
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
+                onSuccess: null,
             });
         }
-        if (this.input_token_type[this.selected_token[0]] === 'STEEM') {
+        if (input_token === 'STEEM') {
             this.props.dispatchTransfer({
-                amount: this.input_amount,
-                asset: this.input_token_type[this.selected_token[0]],
-                outputasset: this.output_token_type[this.selected_token[1]],
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
                 onClose: this.onClose,
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
+                onSuccess: null,
             });
         } else {
             this.props.dispatchSubmit({
-                amount: this.input_amount,
-                asset: this.input_token_type[this.selected_token[0]],
-                outputasset: this.output_token_type[this.selected_token[1]],
+                amount: input_amount,
+                asset: input_token,
+                username,
+                memo,
                 onClose: this.onClose,
                 currentUser: this.props.currentUser,
                 errorCallback: this.errorCallback,
+                onSuccess: null,
             });
         }
-    }
-
-    calculateOutput() {
-        const amount = this.input_amount;
-        const input_symbol = this.input_token_type[this.selected_token[0]];
-        const output_symbol = this.output_token_type[this.selected_token[1]];
-        const a = this.ratio_toke_by_steem[input_symbol];
-        const b = this.ratio_toke_by_steem[output_symbol];
-
-        console.log('calculateOutput');
-        console.log(this.state.selectedValue1, this.state.selectedValue2);
-        console.log(this.selected_token[0], this.selected_token[1]);
-        console.log(input_symbol, output_symbol);
-        var output_amount =
-            amount * (1 * a / b) * (100.0 - this.swap_fee) / 100.0;
-        output_amount = output_amount.toFixed(3);
-        this.setState({
-            amount,
-            output_amount,
-            swap_rate: (1 * a / b).toFixed(3),
-        });
     }
 
     render() {
         const { amount, output_amount } = this.state;
         const styleToken = { color: 'rgb(0, 120, 167)' };
+        var input_token = this.input_token_type[this.selected_token[0]];
+        var output_token = this.output_token_type[this.selected_token[1]];
 
         return (
             <div className="c-sidebar__module">
@@ -305,7 +294,9 @@ class SidebarSwap extends Component {
                         <div className="swap-input">
                             {/* input component */}
                             <div className="c-sidebar__list-small">
-                                {'from:'}
+                                {`input: ${this.state.user_input_balance} ${
+                                    input_token
+                                }`}
                             </div>
                             <SelectToken
                                 amount={amount}
@@ -321,7 +312,11 @@ class SidebarSwap extends Component {
                                 {/* <Icon name="dropdown-arrow" /> */}
                                 {'▼'}
                             </div>
-                            <div className="c-sidebar__list-small">{'to:'}</div>
+                            <div className="c-sidebar__list-small">{`output: ${
+                                this.state.node_output_balance == undefined
+                                    ? 0
+                                    : this.state.node_output_balance
+                            } ${output_token}`}</div>
                             <SelectToken
                                 amount={output_amount}
                                 amountChange={this.amountChange}
@@ -337,7 +332,7 @@ class SidebarSwap extends Component {
                                 className="articles__icon-100"
                                 title={`Fee is ${
                                     this.swap_fee
-                                }%. The rate is based on the average token price traded for 3 days.`}
+                                }%. TThe exchange rate is based on balances of two tokens in the pool.`}
                             >
                                 <button className="button" disabled={true}>
                                     {'Fees'}
@@ -352,89 +347,32 @@ class SidebarSwap extends Component {
                                 {'Swap'}
                             </button>
                         </div>
-                        <div className="c-sidebar__list-small text-right">
-                            {`Available: ${
-                                this.state.providerBalance[
-                                    this.output_token_type[
-                                        this.selected_token[1]
-                                    ]
-                                ]
-                            }`}
-                        </div>
-                        <div className="c-sidebar__list-small text-right">
-                            {`1${
-                                this.input_token_type[this.selected_token[0]]
-                            }=${this.state.swap_rate}${
-                                this.output_token_type[this.selected_token[1]]
-                            }=${this.ratio_toke_by_steem[
-                                this.input_token_type[this.selected_token[0]]
-                            ].toFixed(3)}STEEM`}
+                        <div
+                            className="c-sidebar__list-small text-right"
+                            onClick={this.chnageRate}
+                        >
+                            {this.state.exchange_rate > 0
+                                ? `1 ${
+                                      this.state.click_exchnage > 0
+                                          ? output_token
+                                          : input_token
+                                  } = ${this.info.floorNumberWithNumber(
+                                      this.state.click_exchnage > 0
+                                          ? 1 / this.state.exchange_rate
+                                          : this.state.exchange_rate,
+                                      5
+                                  )} 
+                                    ${
+                                        this.state.click_exchnage > 0
+                                            ? input_token
+                                            : output_token
+                                    }`
+                                : '- '}
                         </div>
                     </div>
                 </div>
             </div>
         );
-    }
-
-    async getSwapAccountInfo(account) {
-        var allInfo = await Promise.all([
-            this.getTokenBalance(SWAP_ACCOUNT, 'SCT'),
-            this.getTokenBalance(SWAP_ACCOUNT, 'SCTM'),
-            this.getTokenBalance(SWAP_ACCOUNT, 'KRWP'),
-            new Promise((resolve, reject) => {
-                api.getAccounts([account], function(err, response) {
-                    if (err) reject(err);
-                    resolve(response);
-                });
-            }),
-            this.getTokenBalance(SWAP_ACCOUNT, 'ORG'),
-            this.getTokenBalance(SWAP_ACCOUNT, 'SVC'),
-            this.getTokenBalance(SWAP_ACCOUNT, 'DEC'),
-        ]);
-        return allInfo;
-    }
-
-    getTokenBalance(account, symbol) {
-        return new Promise((resolve, reject) => {
-            ssc.findOne(
-                'tokens',
-                'balances',
-                { account, symbol },
-                (err, result) => {
-                    if (err) reject(err);
-                    // console.log(result)
-                    if (result == null) resolve('0.0');
-                    else resolve(result.balance);
-                }
-            );
-        });
-    }
-
-    async getAllTokenInfo() {
-        var allInfo = await Promise.all([
-            this.getTokenPrice('SCT'),
-            this.getTokenPrice('SCTM'),
-            this.getTokenPrice('KRWP'),
-        ]);
-        // console.log(allInfo);
-        return allInfo;
-    }
-
-    getTokenPrice(symbol) {
-        return new Promise((resolve, reject) => {
-            ssc.find(
-                'market',
-                'metrics',
-                { symbol: symbol },
-                1000,
-                0,
-                [],
-                (err, result) => {
-                    if (err) reject(err);
-                    resolve(result[0].lastPrice);
-                }
-            );
-        });
     }
 }
 
@@ -455,25 +393,25 @@ export default connect(
         dispatchTransfer: ({
             amount,
             asset,
-            outputasset,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
 
             const operation = {
                 from: username,
-                to: SWAP_ACCOUNT,
-                amount: parseFloat(amount, 10).toFixed(3) + ' ' + asset,
-                memo: `@${username}:${asset}:${outputasset}`,
+                to: swap_node,
+                amount: parseFloat(amount).toFixed(3) + ' ' + asset,
+                memo,
                 __config: {
                     successMessage: 'Token transfer was successful.' + '.',
                 },
@@ -490,17 +428,17 @@ export default connect(
         dispatchSubmit: ({
             amount,
             asset,
-            outputasset,
-            currentUser,
+            username,
+            memo,
             onClose,
             errorCallback,
+            onSuccess,
         }) => {
-            const username = currentUser.get('username');
-
             const successCallback = () => {
                 dispatch(
                     globalActions.getState({ url: `@${username}/transfers` })
                 ); // refresh transfer history
+                if (onSuccess != null) onSuccess();
                 onClose();
             };
             const transferOperation = {
@@ -508,9 +446,9 @@ export default connect(
                 contractAction: 'transfer',
                 contractPayload: {
                     symbol: asset,
-                    to: SWAP_ACCOUNT,
+                    to: swap_node,
                     quantity: amount,
-                    memo: `@${username}:${asset}:${outputasset}`,
+                    memo,
                 },
             };
             const operation = {
