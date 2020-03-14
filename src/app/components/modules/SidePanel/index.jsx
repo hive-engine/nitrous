@@ -95,12 +95,11 @@ const SidePanel = ({
         ],
 
         external: [
-            /*
             {
                 label: tt('navigation.chat'),
                 link: 'https://steem.chat/home',
             },
-            */
+            /*
             {
                 label: tt('navigation.advertise'),
                 link: 'https://selfserve.steemit.com',
@@ -110,7 +109,6 @@ const SidePanel = ({
                 link:
                     'https://recruiting.paylocity.com/recruiting/jobs/List/3288/Steemit-Inc',
             },
-            /*
             {
                 label: tt('navigation.app_center'),
                 link: 'https://steemprojects.com/',
@@ -158,7 +156,7 @@ const SidePanel = ({
             },
             {
                 label: tt('g.sign_up'),
-                link: 'https://signup.steemit.com',
+                link: 'https://signup.hive.blog',
             },
         ],
     };
