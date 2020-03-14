@@ -1,3 +1,5 @@
+<center>![](https://cdn.steemitimages.com/DQmWRrKF1fzCH7v5MpWY1nhM59D2yung1zkWnh3VRppJFau/image.png)</center>
+
 Welcome to LASSECASH
 --
 
@@ -5,7 +7,7 @@ We created this place to be a more personal space for smaller content creators a
 
 Here you have the option to be part of something from the start and get a decent stake does not cost much here in the beginning stages.
 
-LASSECASH is like STEEM, you can blog from either www.lassecash.com, www.steemit.com or any other condesor site, as long as you use the ‘lassecash’ tag in your post’s tags box, then the post will appear at the STEEM blokchain and on the LASSECASH condenser site.
+LASSECASH is like STEEM, you can blog from either www.lassecash.com, www.steemit.com or any other condenser site, as long as you use the ‘lassecash’ tag in your post’s tags box, then the post will appear at the STEEM blokchain and on the LASSECASH condenser site.
 
 Purpose of LASSECASH
 --
