@@ -275,7 +275,11 @@
         "edited": "수정됨",
         "noticeMessanger": "공지사항 텔레그램방",
         "luckydraw": "행운의 뽑기",
-        "sctswap": "스팀코인판 스왑"
+        "sctswap": "토큰 스왑"
+    },
+    "swap": {
+        "loading_header": "공급하는 두 토큰을 모두 전송해주세요.",
+        "loading_content": "키체인 전송이 2번 실행됩니다. 잠시만 기다려주세요."
     },
     "navigation": {
         "about": "스팀이란?",

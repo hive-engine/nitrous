@@ -272,7 +272,11 @@
         "edited": "Edited",
         "noticeMessanger": "Notice Telegram",
         "luckydraw": "Lucky Draw",
-        "sctswap": "SCT SWAP"
+        "sctswap": "Token swap"
+    },
+    "swap": {
+        "loading_header": "Please send both tokens you supply.",
+        "loading_content": "Keychain transfer is executed twice. Please wait."
     },
     "navigation": {
         "about": "About Steemit, Inc.",

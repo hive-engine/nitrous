@@ -16,6 +16,7 @@ import RatePost from 'app/components/modules/RatePost';
 import RewardPost from 'app/components/modules/RewardPost';
 import SelectedPool from 'app/components/elements/Swap/SelectedPool';
 import SelectedToken from 'app/components/elements/Swap/SelectedToken';
+import Loading from 'app/components/elements/Swap/Loading';
 
 class Dialogs extends React.Component {
     static propTypes = {
@@ -59,6 +60,15 @@ class Dialogs extends React.Component {
                         <Reveal onHide={this['hide_' + k]} show>
                             <CloseButton onClick={this['hide_' + k]} />
                             <PromotePost
+                                onClose={this['hide_' + k]}
+                                {...v.get('params').toJS()}
+                            />
+                        </Reveal>
+                    </span>
+                ) : k === 'loading' ? (
+                    <span key={idx++}>
+                        <Reveal show>
+                            <Loading
                                 onClose={this['hide_' + k]}
                                 {...v.get('params').toJS()}
                             />

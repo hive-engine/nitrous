@@ -208,6 +208,8 @@ class PoolComponent extends Component {
             input_token != '' &&
             output_token != ''
         ) {
+            this.props.showLoadingSpinner(1);
+
             var node = this.info.findNode(input_token, output_token);
             var timestamp = new Date();
             var key = timestamp.getTime();
@@ -439,6 +441,14 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
+        showLoadingSpinner: loading => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'loading',
+                    params: { loading },
+                })
+            );
+        },
         showSelectToken: (parent, tokens, onTokenClick) => {
             dispatch(
                 globalActions.showDialog({
