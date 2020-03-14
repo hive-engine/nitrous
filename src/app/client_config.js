@@ -2,13 +2,13 @@ import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
     // testing heroku option
-    'frozen-retreat-15997.herokuapp.com': {
+    'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
         APP_ICON: 'infowars',
         APP_ICON_WIDTH: '40px',
         APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://cryptowars.org',
-        APP_DOMAIN: 'cryptowars.org',
+        APP_URL: 'https://www.cryptowars.me',
+        APP_DOMAIN: 'www.cryptowars.me',
         LIQUID_TOKEN: 'Infowars',
         LIQUID_TOKEN_UPPERCASE: 'INFOWARS',
         APP_MAX_TAG: 10,
