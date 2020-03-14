@@ -2,41 +2,20 @@
 # Condenser
 
 
-Condenser is the react.js web interface to the world's first and best
+Condenser is the react.js web interface to the world's first and used to be best
 blockchain-based social media platform, steemit.com.  It uses
-[STEEM](https://github.com/steemit/steem), a blockchain powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
+[Steen compatible blockchain](https://github.com/steemit/steem), powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
 applications.
 
-## Why would I want to use Condenser (steemit.com front-end)?
+## Why would I want to use Condenser?
 
-* Learning how to build blockchain-based web applications using STEEM as a
-  content storage mechanism in react.js
+* Learning how to build blockchain-based web applications using Steem compatible blockchain as a content storage mechanism in react.js
 * Reviewing the inner workings of the steemit.com social media platform
 * Assisting with software development for steemit.com
 
 ## Installation
 
 #### Docker
-
-We highly recommend using docker to run condenser in production. This is how we run the
-live steemit.com site and it is the most supported (and fastest) method of
-both building and running condenser. We will always have the latest version
-of condenser (master branch) available on Docker Hub. Configuration settings
-can be set using environment variables (see configuration section below for
-more information). If you need to install docker, you can get it at
-https://get.docker.com
-
-To bring up a running container it's as simple as this:
-
-```bash
-docker run -it -p 8080:8080 steemit/condenser
-```
-
-Environment variables can be added like this:
-
-```bash
-docker run -it -p 8080:8080 steemit/condenser
-```
 
 If you would like to modify, build, and run condenser using docker, it's as
 simple as pulling in the github repo and issuing one command to build it,
@@ -62,19 +41,10 @@ mkdir tmp
 
 #### Install dependencies
 
-Install at least Node v8.7 if you don't already have it. We recommend using
-`nvm` to do this as it's both the simplest way to install and manage
-installed version(s) of node. If you need `nvm`, you can get it at
-[https://github.com/creationix/nvm](https://github.com/creationix/nvm).
+Install at least Node.js v12 if you don't already have it.
 
-Condenser is known to successfully build using node 8.7, npm 5.4.2, and
-yarn 1.3.2.
-
-Using nvm, you would install like this:
-
-```bash
-nvm install v8.7
-```
+Condenser is known to successfully build using node 12.6, npm 6.13.4, and
+yarn 1.22.4.
 
 We use the yarn package manager instead of the default `npm`. There are
 multiple reasons for this, one being that we have `steem-js` built from
@@ -86,7 +56,7 @@ afterwards you will not need to use `npm` further.
 
 ```bash
 npm install -g yarn
-yarn global add babel-cli
+yarn add babel-cli
 yarn install --frozen-lockfile
 yarn run build
 ```
@@ -109,8 +79,8 @@ yarn run start
 It will take quite a bit longer to start in this mode (~60s) as it needs to
 build and start the webpack-dev-server.
 
-By default you will be connected to steemit.com's public steem node at
-`wss://steemd.steeemit.com`. This is actually on the real blockchain and
+By default you will be connected to community public api node at
+`https://api.steem.house`. This is actually on the real blockchain and
 you would use your regular account name and credentials to login - there is
 not an official separate testnet at this time. If you intend to run a
 full-fledged site relying on your own, we recommend looking into running a
@@ -134,8 +104,8 @@ stored in `config/defaults.json`.
 Environment variables using an example like this:
 
 ```bash
-export SDC_CLIENT_STEEMD_URL="wss://steemd.steemit.com"
-export SDC_SERVER_STEEMD_URL="wss://steemd.steemit.com"
+export SDC_CLIENT_STEEMD_URL="https://api.steem.house"
+export SDC_SERVER_STEEMD_URL="https://api.steem.house"
 ```
 
 Keep in mind environment variables only exist in your active session, so if
@@ -231,6 +201,6 @@ docker run --network container:condenser steemit/condenser-blackboxtest:latest
 
 To report a non-critical issue, please file an issue on this GitHub project.
 
-If you find a security issue please report details to: security@steemit.com
+If you find a security issue please report details to trusted community members.
 
 We will evaluate the risk and make a patch available before filing the issue.

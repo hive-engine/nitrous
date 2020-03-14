@@ -4,11 +4,11 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' 3speak.online emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "https://steemitimages.com 'self' hive.blog https://api.steem.house api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' img.3speakcontent.online emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
-      "frameSrc": "'self' googleads.g.doubleclick.net https:",
+      "frameSrc": "'self' https:",
       "imgSrc": "* data:",
       "objectSrc": "'none'",
       "pluginTypes": "application/pdf",
@@ -19,7 +19,7 @@
     "reportOnly": false,
     "setAllHeaders": true
   },
-  "img_proxy_prefix": "https://steemitdevimages.com/",
+  "img_proxy_prefix": "https://steemitimages.com/",
   "ipfs_prefix": false,
   "mixpanel": false,
   "notify": {
@@ -35,25 +35,25 @@
   "session_key": "steemses",
   "site_domain": "steemitdev.com",
   "upload_image": false,
-  "steemd_connection_client": "https://api.steemit.com",
-  "steemd_connection_server": "https://api.steemit.com",
+  "steemd_connection_client": "https://api.steem.house",
+  "steemd_connection_server": "https://api.steem.house",
   "steemd_use_appbase": false,
   "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
   "address_prefix": "STM",
   "conveyor_posting_wif": false,
   "conveyor_username": false,
   "special_posts_url": false,
-  "wallet_url": "https://wallet.steemitdev.com",
+  "wallet_url": "https://wallet.hive.blog",
   "gpt_banned_tags": ["nsfw", "tante"],
   "google_ad_enabled": null,
   "google_ad_test": null,
   "google_ad_client": null,
   "google_ad_slots": {
     "market_1": {
-      "slot_id": "2777377820"
+      "slot_id": "0"
     },
     "in_feed_1": {
-      "slot_id": "9514544128",
+      "slot_id": "0",
       "layout_key": "-fb+5w+4e-db+86",
       "every": 15
     }
