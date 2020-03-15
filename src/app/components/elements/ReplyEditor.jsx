@@ -1160,7 +1160,7 @@ export default formId =>
                     meta.links = rtags.links; // TODO: remove? save first?
                 else delete meta.links;
 
-                meta.app = 'steemit/0.2';
+                meta.app = 'hiveblog/0.1';
                 if (isStory) {
                     meta.format = isHtml ? 'html' : 'markdown';
                 }
