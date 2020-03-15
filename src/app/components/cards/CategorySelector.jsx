@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -129,7 +130,7 @@ export function validateCategory(category, required = true) {
     );
 }
 export default connect((state, ownProps) => {
-    const trending = state.global.getIn(['tag_idx', 'trending']);
+    const trending = state.app.getIn(['scotConfig', 'trendingTags'], List());
     // apply translations
     // they are used here because default prop can't acces intl property
     const placeholder = tt('category_selector_jsx.tag_your_story');
