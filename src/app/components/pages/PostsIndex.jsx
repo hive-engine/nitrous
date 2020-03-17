@@ -25,7 +25,6 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
-import ExchangeNow from './ExchangeNow';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
@@ -69,15 +68,6 @@ class PostsIndex extends React.Component {
         ) {
             this.refs.list.fetchIfNeeded();
         }
-    }
-
-    componentDidMount() {
-        const script = document.createElement('script');
-
-        script.src =
-            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
-
-        document.body.appendChild(script);
     }
 
     getPosts(order, category) {
@@ -195,7 +185,7 @@ class PostsIndex extends React.Component {
         }
     }
     goSCTSWAP = () => {
-        window.open('https://steemcoinpan.com/market');
+        window.open('/market');
     };
     goPicpPick = () => {
         window.open('https://apisct.cloud/manager');
@@ -203,6 +193,10 @@ class PostsIndex extends React.Component {
 
     goNoticeTelegram = () => {
         window.open('https://t.me/sct_notice');
+    };
+
+    goExchangeNow = () => {
+        window.open('/support.html');
     };
 
     buildCategories(cat, parent, categories) {
@@ -224,22 +218,6 @@ class PostsIndex extends React.Component {
     }
 
     render() {
-        var Iframe = React.createClass({
-            render: function() {
-                return (
-                    <div>
-                        <iframe
-                            id="iframe-widget"
-                            name="widget"
-                            src={this.props.src}
-                            width="250px"
-                            height="330px"
-                        />
-                    </div>
-                );
-            },
-        });
-
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
@@ -343,6 +321,9 @@ class PostsIndex extends React.Component {
                 case 'market':
                     page_title = tt('g.market');
                     break;
+                case 'exchangeNow':
+                    page_title = 'exchangeNow';
+                    break;
                 case 'review':
                     page_title = tt('g.review');
                     break;
@@ -439,6 +420,22 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
+                    {/* <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.goExchangeNow}쳑
+                    >
+                        {tt('g.exchangeNow')}
+                    </button> */}
+                    <img
+                        src="https://changenow.io/images/embeds/button.svg"
+                        alt="ChangeNOW button"
+                        style={{
+                            margin: '0px 0px 10px 0px',
+                            cursor: 'pointer',
+                        }}
+                        onClick={this.goExchangeNow}
+                    />
                     <button
                         type="button"
                         className="c-sidebar--right--link"
@@ -446,8 +443,6 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.sctswap')}
                     </button>
-
-                    {/* <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" /> */}
 
                     {this.props.isBrowser && (
                         <div>

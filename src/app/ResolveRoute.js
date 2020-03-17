@@ -45,7 +45,7 @@ export default function resolveRoute(path) {
         return { page: 'Search' };
     }
     if (path === '/support.html') {
-        return { page: 'Support' };
+        return { page: 'ExchangeNow' };
     }
     if (path === '/xss/test' && process.env.NODE_ENV === 'development') {
         return { page: 'XSSTest' };

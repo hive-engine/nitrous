@@ -1,35 +1,42 @@
 import React from 'react';
+import { Link } from 'react-router';
+import tt from 'counterpart';
 
-var Iframe = React.createClass({
-    render: function() {
+class ExchangeNow extends React.Component {
+    componentDidMount() {
+        const script = document.createElement('script');
+
+        script.src =
+            'https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js';
+
+        document.body.appendChild(script);
+    }
+
+    render() {
+        var Iframe = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <iframe
+                            id="iframe-widget"
+                            name="widget"
+                            src={this.props.src}
+                            width="100%"
+                            height="330px"
+                            style={{ border: '0px' }}
+                        />
+                    </div>
+                );
+            },
+        });
+
         return (
-            <div>
-                <iframe
-                    src={this.props.src}
-                    height={this.props.height}
-                    width={this.props.width}
-                />
-            </div>
+            <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" />
         );
-    },
-});
+    }
+}
 
-const ExchangeNow = ({ sct_to_steemp, steem_to_dollor, steem_to_krw }) => {
-    return (
-        <div className="c-sidebar__module">
-            <div />
-            <Iframe
-                width="480"
-                height="280"
-                src="https://changenow.io/embeds/exchange-widget/v1?amount=1&from=btc&link_id=390fe008f10e29&to=xmr"
-                frameborder="0"
-                scrolling="no"
-                style="overflow-y: hidden;"
-            >
-                Can't load widget
-            </Iframe>
-        </div>
-    );
+module.exports = {
+    path: '/support.html',
+    component: ExchangeNow,
 };
-
-export default ExchangeNow;
