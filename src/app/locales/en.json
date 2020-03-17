@@ -272,7 +272,8 @@
         "edited": "Edited",
         "noticeMessanger": "Notice Telegram",
         "luckydraw": "Lucky Draw",
-        "sctswap": "Token Swap"
+        "sctswap": "Token Swap",
+        "exchangeNow": "Exchange Coin"
     },
     "swap": {
         "loading_header": "Please send both tokens you supply.",

@@ -76,6 +76,10 @@ export default {
             require.ensure([], require => {
                 cb(null, [require('app/components/pages/SctSwap')]);
             });
+        } else if (route.page === 'ExchangeNow') {
+            require.ensure([], require => {
+                cb(null, [require('app/components/pages/ExchangeNow')]);
+            });
         } else if (route.page === 'Post') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/PostPage')]);
