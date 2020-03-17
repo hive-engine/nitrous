@@ -29,7 +29,6 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-import Modal from 'react-overlays/lib/Modal';
 
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
@@ -420,13 +419,6 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
-                    {/* <button
-                        type="button"
-                        className="c-sidebar--right--link"
-                        onClick={this.goExchangeNow}쳑
-                    >
-                        {tt('g.exchangeNow')}
-                    </button> */}
                     <img
                         src="https://changenow.io/images/embeds/button.svg"
                         alt="ChangeNOW button"
