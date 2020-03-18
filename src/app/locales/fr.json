@@ -188,9 +188,9 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "Les gains d'un article ne peuvent être accrus durant la dernière minute avant rétribution.",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "Un seul compte Steem est permis par adresse IP toutes les 10 minutes",
-        "resteem_this_post": "Resteemer cet article",
-        "reblog": "Resteem",
+            "Un seul compte Hive est permis par adresse IP toutes les 10 minutes",
+        "reblog_this_post": "Rebloger cet article",
+        "reblog": "Reblog",
         "write_your_story": "Ecris ton histoire",
         "remember_voting_and_posting_key":
             "Se souvenir de la clé de publication et de vote",
@@ -216,9 +216,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Les auteurs sont payés lorsque des personnes comme vous votent pour leur contenu",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "Si vous avez apprécié ce que vous avez lu ici, créez votre compte dès à présent et commencer par gagner immédiatement du STEEM",
-            "free_steem": "STEEM GRATUIT!",
-            "sign_up_earn_steem": "S'enregistrer pour gagner"
+                "Si vous avez apprécié ce que vous avez lu ici, créez votre compte dès à présent et commencer par gagner immédiatement du HIVE",
+            "free_hive": "HIVE GRATUIT!",
+            "sign_up_earn_hive": "S'enregistrer pour gagner"
         },
         "next_3_strings_together": {
             "show_more": "Révéler plus",
@@ -243,9 +243,9 @@
         },
         "post_key_warning": {
             "confirm":
-                "You are about to publish a STEEM private key or master password. You will probably lose control of the associated account and all its funds.",
+                "You are about to publish a HIVE private key or master password. You will probably lose control of the associated account and all its funds.",
             "warning":
-                "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
+                "Legitimate users, including employees of Hive, will never ask you for a private key or master password.",
             "checkbox": "I understand"
         }
     },
@@ -266,12 +266,12 @@
         "learn_more": "En savoir plus",
         "welcome": "Bienvenue",
         "faq": "FAQ",
-        "chat": "Salons de discussion Steemit",
-        "app_center": "Centre d'applications Steemit",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Documentation API sur Steemit",
-        "whitepaper": "Livre blanc sur le Steem",
-        "bluepaper": "Steem Bluepaper",
+        "chat": "Salons de discussion Hive",
+        "app_center": "Centre d'applications Hive",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Documentation API sur Hive",
+        "whitepaper": "Livre blanc sur le Hive",
+        "bluepaper": "Hive Bluepaper",
         "smt_whitepaper": "Livre blanc sur le SMT",
         "intro_tagline": "Présentations sur la monnaie",
         "intro_paragraph":
@@ -364,7 +364,7 @@
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
-            "Il est possible que la clé propriétaire d'un Steemien soit compromise. Le processus de récupération de comptes dérobés est autorisé pour l'utilisateur de droit pendant 30 jours à partir du moment où le voleur a modifié la clé propriétaire. La récupération de comptes dérobés ne peut être utilisée sur %(APP_URL)s que si le propriétaire du compte a ajouté '%(APP_NAME)s'comme mandataire de confiance et accepté les conditions d'utilisation de %(APP_NAME)s."
+            "Il est possible que la clé propriétaire d'un Hiveien soit compromise. Le processus de récupération de comptes dérobés est autorisé pour l'utilisateur de droit pendant 30 jours à partir du moment où le voleur a modifié la clé propriétaire. La récupération de comptes dérobés ne peut être utilisée sur %(APP_URL)s que si le propriétaire du compte a ajouté '%(APP_NAME)s'comme mandataire de confiance et accepté les conditions d'utilisation de %(APP_NAME)s."
     },
     "user_profile": {
         "unknown_account": "Compte inconnu",
@@ -400,7 +400,7 @@
             "one": "1 article",
             "other": "%(count)s articles"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -477,7 +477,7 @@
         "after_printing_write_down_your_user_name":
             "Après impression, veuillez indiquer votre identifiant"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "Vos %(DEBT_TOKEN)s existants sont en liquide et donc transférable. Vous pouvez par exemple ėchanger %(DEBT_TOKEN)s directement sur ce site via le lien %(link)s, ou les transférer vers un marché externe.",
         "this_is_a_price_feed_conversion":
@@ -497,8 +497,8 @@
             "%(VESTING_TOKEN)s est non transférable et demande 3 mois (13 paiements) pour être convertis en %(LIQUID_TOKEN)s. ",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Les %(VESTING_TOKEN)s convertis peuvent être envoyés soit à vous, soit à quelqu'un d'autre, mais ne peuvent pas être transférés à nouveau sans être convertis en %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Une partie de votre influence, ou STEEM POWER, est actuellement déléguée. La délégation est un don pour augmenter l'influence ou pour encourager les nouveaux utilisateurs à effectuer des actions sur Steemit. Le montant délégué peut varier."
+        "part_of_your_hive_power_is_currently_delegated":
+            "Une partie de votre influence, ou HIVE POWER, est actuellement déléguée. La délégation est un don pour augmenter l'influence ou pour encourager les nouveaux utilisateurs à effectuer des actions sur Hive. Le montant délégué peut varier."
     },
     "promote_post_jsx": {
         "promote_post": "Promouvoir un article",
@@ -512,7 +512,7 @@
     "about_jsx": {
         "about_app": "A propos de %(APP_NAME)s",
         "about_app_details":
-            "%(APP_NAME)s est une plateforme de réseau social où les utilisateurs sont payés pour créer et effecter la curation du contenu. Elle influence un système de points digitaux, appelé Steem, qui ont une valeur réelle en fonction des prix du marché et des liquidités disponibles.",
+            "%(APP_NAME)s est une plateforme de réseau social où les utilisateurs sont payés pour créer et effecter la curation du contenu. Elle influence un système de points digitaux, appelé Hive, qui ont une valeur réelle en fonction des prix du marché et des liquidités disponibles.",
         "learn_more_at_app_url": "Plus d'informations à %(APP_URL)s",
         "resources": "Ressources"
     },
@@ -521,8 +521,8 @@
             "Les images sont masqués en raison d'une faible évaluation."
     },
     "postsummary_jsx": {
-        "resteemed": "resteemé",
-        "resteemed_by": "Resteemé par",
+        "reblogged": "reblogé",
+        "reblogged_by": "Reblogé par",
         "reveal_it": "Révélez-le",
         "adjust_your": "Ajustez vos",
         "display_preferences": "préférences visuelles",
@@ -590,7 +590,7 @@
         "password_update_succes":
             "Le mot de passe pour%(accountName)sa été mis à jour avec succès.",
         "password_info":
-            "Ce mot de passe ou clé privée est incorrect. Il y a probablement une erreur d'écriture ou d'entrée des données. Indication : un mot de passe ou une clé privée générée par Steemit ne contiendra jamais aucun 0 (zéro), O (o majuscule), I (i majuscule) ou l (l minuscule).",
+            "Ce mot de passe ou clé privée est incorrect. Il y a probablement une erreur d'écriture ou d'entrée des données. Indication : un mot de passe ou une clé privée générée par Hive ne contiendra jamais aucun 0 (zéro), O (o majuscule), I (i majuscule) ou l (l minuscule).",
         "enter_your_username": "Entrez votre nom d'utilisateur",
         "password_or_wif": "Mot de passe ou WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -599,9 +599,9 @@
         "amazing_community": "communauté extraordinaire",
         "to_comment_and_reward_others":
             " pour commenter et récompenser les autres.",
-        "sign_up_get_steem": "Sign up. Get STEEM",
+        "sign_up_get_hive": "Sign up. Get HIVE",
         "signup_button": "Sign up now to earn ",
-        "signup_button_emphasis": "FREE STEEM!",
+        "signup_button_emphasis": "FREE HIVE!",
         "returning_users": "Utilisateurs de retour: ",
         "join_our": "Rejoignez notre",
         "sign_transfer": "Sign to complete transfer",
@@ -657,7 +657,7 @@
         "balance_subject_to_3_day_withdraw_waiting_period":
             "Le solde dépend de la période de 3 jours d'attente requise pour les retraits",
         "move_funds_to_another_account":
-            "Transférer des fonds vers un autre compte Steem ",
+            "Transférer des fonds vers un autre compte Hive ",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "Protéger les fonds en imposant une période de latence de 3 jours pour les retraits.",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -680,7 +680,7 @@
         "withdraw_LIQUID_TOKEN": "Retirer %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Retirer %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Des jetons d'environ 1.00$ de %(LIQUID_TICKER)s, actuellement donnant lieu à %(sbdInterest)s %% d'APR.",
+            "Des jetons d'environ 1.00$ de %(LIQUID_TICKER)s, actuellement donnant lieu à %(hbdInterest)s %% d'APR.",
         "savings": "EPARGNE",
         "estimated_account_value": "Valeur estimée du compte",
         "next_power_down_is_scheduled_to_happen":
@@ -689,7 +689,7 @@
             "Les transferts sont temporairement désactivés.",
         "history": "HISTORIQUE",
         "redeem_rewards": "Réclamer les gains (transférer vers le solde)",
-        "buy_steem_or_steem_power": "Acheter du STEEM ou du STEEM POWER"
+        "buy_hive_or_hive_power": "Acheter du HIVE ou du HIVE POWER"
     },
     "checkloginowner_jsx": {
         "your_password_permissions_were_reduced":

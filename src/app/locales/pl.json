@@ -177,9 +177,9 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "Nie można zwiększyć nagrody za post w ostatnich chwilach przed wypłatą",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "Dozwolone jest tylko jedno konto Steem dla danego adresu IP w ciągu 10 minut",
-        "resteem_this_post": "Resteemuj ten post",
-        "reblog": "Resteem",
+            "Dozwolone jest tylko jedno konto Hive dla danego adresu IP w ciągu 10 minut",
+        "reblog_this_post": "Rebloguj ten post",
+        "reblog": "Reblog",
         "write_your_story": "Napisz swoją historię",
         "remember_voting_and_posting_key":
             "Zapamiętaj klucze do głosowania i tworzenia wpisów",
@@ -204,9 +204,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Autorzy otrzymują wypłatę gdy ludzie tacy jak Ty głosują na ich wpisy",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "Jeśli podobało Ci się to o czym tu czytałeś, jeszcze dziś załóż tu konto i zacznij zarabiać DARMOWE TOKENY STEEM!",
-            "free_steem": "DARMOWE TOKENY STEEM",
-            "sign_up_earn_steem": "Zarejestruj się by zarabiać"
+                "Jeśli podobało Ci się to o czym tu czytałeś, jeszcze dziś załóż tu konto i zacznij zarabiać DARMOWE TOKENY HIVE!",
+            "free_hive": "DARMOWE TOKENY HIVE",
+            "sign_up_earn_hive": "Zarejestruj się by zarabiać"
         },
         "next_3_strings_together": {
             "show_more": "Pokaż więcej",
@@ -231,7 +231,7 @@
         }
     },
     "navigation": {
-        "about": "O Steem",
+        "about": "O Hive",
         "explore": "Przeglądaj",
         "APP_NAME_whitepaper": "%(APP_NAME)s Whitepaper",
         "buy_LIQUID_TOKEN": "Kup %(LIQUID_TOKEN)s",
@@ -247,11 +247,11 @@
         "learn_more": "Dowiedz się więcej",
         "welcome": "Witaj",
         "faq": "FAQ",
-        "chat": "Steem Chat",
-        "app_center": "Steemit App Center",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Dokumentacja Steemit API",
-        "whitepaper": "Steem Whitepaper",
+        "chat": "Hive Chat",
+        "app_center": "Hive App Center",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Dokumentacja Hive API",
+        "whitepaper": "Hive Whitepaper",
         "intro_tagline": "Pieniądze mają głos.",
         "intro_paragraph":
             "Twój głos ma wartość. Dołącz do społeczności, która płaci za publikowanie i głosowanie na wysokiej jakości treści."
@@ -370,7 +370,7 @@
             "one": "1 wpis",
             "other": "%(count)s wpisów"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -447,7 +447,7 @@
         "after_printing_write_down_your_user_name":
             "Po wydrukowaniu, zapisz swoją nazwę użytkownika"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "Twoje %(DEBT_TOKEN)s są płynne i mogą być przetransferowane. Możesz to zrobić pod tym linkiem %(link)s lub przetransferować na zewnętrzną giełdę.",
         "this_is_a_price_feed_conversion":
@@ -467,8 +467,8 @@
             "Jednostki %(VESTING_TOKEN)s są niezbywalne i wymagają 3 miesięcy (w 13 ratach) do konwersji z powrotem na tokeny %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Przekonwertowane jednostki %(VESTING_TOKEN)s możesz wysłać sobie lub komuś innemu ale nie możesz ich wysłać ponownie bez konwersji z powrotem do tokenów %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Część z Twoich jednostek wpływu STEEM POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Steemit. Kwota oddelegowanych jednostek może się zmieniać w czasie."
+        "part_of_your_hive_power_is_currently_delegated":
+            "Część z Twoich jednostek wpływu HIVE POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Hive. Kwota oddelegowanych jednostek może się zmieniać w czasie."
     },
     "promote_post_jsx": {
         "promote_post": "Promuj wpis",
@@ -482,7 +482,7 @@
     "about_jsx": {
         "about_app": "O %(APP_NAME)s",
         "about_app_details":
-            "%(APP_NAME)s jest platformą mediów społecznościowych gdzie wszyscy są opłacani za tworzenie i głosowanie na treści. Bazuje na solidnym systemie cyfrowych tokenów o nazwie Steem, który reprezentuje realną wartość żetonów cyfrowych, opierając się na płynności i wolnorynkowej wycenie.",
+            "%(APP_NAME)s jest platformą mediów społecznościowych gdzie wszyscy są opłacani za tworzenie i głosowanie na treści. Bazuje na solidnym systemie cyfrowych tokenów o nazwie Hive, który reprezentuje realną wartość żetonów cyfrowych, opierając się na płynności i wolnorynkowej wycenie.",
         "learn_more_at_app_url": "Dowiedz się więcej %(APP_URL)s",
         "resources": "Zasoby"
     },
@@ -491,8 +491,8 @@
             "Obrazki zostały ukryte z powodu niskich ocen."
     },
     "postsummary_jsx": {
-        "resteemed": "Resteemowane",
-        "resteemed_by": "Resteemowane przez",
+        "reblogged": "Reblogowane",
+        "reblogged_by": "Reblogowane przez",
         "this_post_is": "Ten post jest",
         "you_can": "Możesz",
         "reveal_it": "pokaż to",
@@ -560,7 +560,7 @@
         "password_update_succes":
             "Hasło %(accountName)s zostało zaktualizowane",
         "password_info":
-            "To hasło lub klucz prywatny zostało wprowadzone błędnie. Sprawdź poprawność zapisu. Wskazówka: Hasło lub klucz prywatny wygenerowany przez Steemit, nigdy nie będzie zawierał znaków: 0 (zero), O (duża litera o), I (duża litera i) i l (mała litera L).",
+            "To hasło lub klucz prywatny zostało wprowadzone błędnie. Sprawdź poprawność zapisu. Wskazówka: Hasło lub klucz prywatny wygenerowany przez Hive, nigdy nie będzie zawierał znaków: 0 (zero), O (duża litera o), I (duża litera i) i l (mała litera L).",
         "enter_your_username": "Podaj nazwę użytkownika",
         "password_or_wif": "Hasło lub WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -569,7 +569,7 @@
         "amazing_community": "niesamowitej społeczności",
         "to_comment_and_reward_others": " aby komentować i nagradzać innych.",
         "sign_up_now_to_earn": "Zarejestruj się aby zarabiać ",
-        "free_money": "DARMOWY STEEM!",
+        "free_money": "DARMOWY HIVE!",
         "returning_users": "Powracający użytkownicy: ",
         "join_our": "Dołącz do",
         "sign_transfer": "Sign to complete transfer",
@@ -622,7 +622,7 @@
         "balance_subject_to_3_day_withdraw_waiting_period":
             "Saldo zależy od 3-dniowego okresu karencji wymaganego do wycofania środków,",
         "move_funds_to_another_account":
-            "Przenieś fundusze na inne konto Steem.",
+            "Przenieś fundusze na inne konto Hive.",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "Chroni fundusze poprzez 3-dniowy okres karencji.",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -643,7 +643,7 @@
         "withdraw_LIQUID_TOKEN": "Wypłać %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Wypłać %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Tokeny warte około $1.00 z %(LIQUID_TICKER)s, aktualnie zbierają %(sbdInterest)s%% APR.",
+            "Tokeny warte około $1.00 z %(LIQUID_TICKER)s, aktualnie zbierają %(hbdInterest)s%% APR.",
         "savings": "OSZCZĘDNOŚCI",
         "estimated_account_value": "Szacowana wartość konta",
         "next_power_down_is_scheduled_to_happen":
@@ -651,7 +651,7 @@
         "transfers_are_temporary_disabled": "Transfery tymczasowo wyłączone.",
         "history": "HISTORIA",
         "redeem_rewards": "Odbierz nagrody (transfer do salda)",
-        "buy_steem_or_steem_power": "Kup STEEM lub STEEM POWER"
+        "buy_hive_or_hive_power": "Kup HIVE lub HIVE POWER"
     },
     "checkloginowner_jsx": {
         "your_password_permissions_were_reduced":

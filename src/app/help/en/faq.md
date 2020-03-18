@@ -137,7 +137,7 @@
 - <a href="#What_causes_my_reputation_score_to_go_down">What causes my reputation score to go down?</a>
 - <a href="#Why_does_my_reputation_score_matter">Why does my reputation score matter?</a>
 
-### <span id="Table_of_Contents_Followers__Feeds_and_Resteem">Followers, Feeds, and Resteem</span>
+### <span id="Table_of_Contents_Followers__Feeds_and_Resteem">Followers, Feeds, and Reblog</span>
 - <a href="#What_is_Resteeming">What is Resteeming?</a>
 - <a href="#Can_I_share_on_other_social_media">Can I share on other social media?</a>
 
@@ -1067,7 +1067,7 @@ Many Steemians glance at users’ reputation scores when deciding which articles
 It is worth noting that if your reputation score goes below 0, Steemit will hide your posts and comments making it very difficult to gain monetary rewards and followers. This incentivizes online etiquette and respect for your fellow Steemians.
 
 <a href="#Table_of_Contents_Reputation">^</a>
-# Followers, Feeds, and Resteem
+# Followers, Feeds, and Reblog
 
 ## <span id="What_is_Resteeming">What is Resteeming?</span>
 

@@ -1,5 +1,5 @@
 <span id="disable_router_nav_history_direction_check"></span>
-## Welcome to Steemit!
+## Welcome to Hive!
 
 ***
 
@@ -9,7 +9,7 @@ Now that you have an account, here's how to get started.
 
 ### 1. Backup your password
 
-Unlike centralized web services, **it is not possible to recover lost passwords on the Steem blockchain**.
+Unlike centralized web services, **it is not possible to recover lost passwords on the Hive blockchain**.
 
 You are entirely responsible for saving your password, backing it up, and keeping it secure.  
 Never put your password into unverified third party websites as they may steal your account.
@@ -23,7 +23,7 @@ Consider using a flash drive, secure cloud storage, or simply print it on paper.
 
 ### 3. Some ground rules
 
-1. It is free to post, comment, and vote on all content at Steemit.com.
+1. It is free to post, comment, and vote on all content at <a target="_blank" href="https://hive.blog">hive.blog</a>.
 2. Do not plagiarize, and be sure to cite sources, including copyrighted images.
 
 
@@ -46,7 +46,7 @@ from those profiles.
 A lot of users mingle and chat in [Steem.chat](https://steem.chat/). It is a
 great place to meet people!
 
-It's a separate account from your Steem account. Ask questions in the
+It's a separate account from your Hive account. Ask questions in the
 [\#help](https://steem.chat/channel/help) channel.
 
 
@@ -57,15 +57,15 @@ will fluctuate (up and down) and no payout is guaranteed. If a post receives
 enough votes for a payout, it will be split between the author (at least 50%)
 and voters ("curators").
 
-STEEM, Steem Power (SP) and Steem Dollars (SBD) are the three forms of digital
-currency used by the Steem Blockchain. More information
+HIVE, Hive Power (HP) and Hive Dollars (HBD) are the three forms of digital
+currency used by the Hive Blockchain. More information
 [here](https://steemit.com/faq.html#What_is_the_difference_between_STEEM__STEEM_Power__and_Steem_Dollars).
 
 
 ##### Additional resources
 
-- [FAQ](https://steemit.com/faq.html) - Answers to commonly asked questions
-- [Steem Bluepaper](https://steem.io/steem-bluepaper.pdf) - Explanation of how the platform works
-- [Steem Whitepaper](https://steem.io/SteemWhitePaper.pdf) - Technical details of the Steem blockchain
-- [Apps Built on Steem](https://steemprojects.com/) - Directory of apps, sites and tools built by Steem community
-- [Steem Block Explorer](https://steemd.com/) - Shows the raw Steem blockchain data 
+- [FAQ](https://hive.blog/faq.html) - Answers to commonly asked questions
+- [Hive Bluepaper](https://hive.io/hive-bluepaper.pdf) - Explanation of how the platform works
+- [Hive Whitepaper](https://hive.io/hive-whitepaper.pdf) - Technical details of the Hive blockchain
+- [Apps Built on Hive](https://steemprojects.com/) - Directory of apps, sites and tools built by Steem community
+- [Hive Block Explorer](https://steemd.com/) - Shows the raw Steem blockchain data 

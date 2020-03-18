@@ -78,7 +78,7 @@ class PostSummary extends React.Component {
                             <Icon name="reblog" />
                         </span>
                         <UserNames names={reblogged_by} />{' '}
-                        {tt('postsummary_jsx.resteemed')}
+                        {tt('postsummary_jsx.reblogged')}
                     </p>
                 </div>
             );

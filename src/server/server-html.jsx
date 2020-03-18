@@ -136,7 +136,7 @@ export default function ServerHTML({
                     href="/images/favicons/favicon-128.png"
                     sizes="128x128"
                 />
-                <meta name="application-name" content="Steemit" />
+                <meta name="application-name" content="Hive" />
                 <meta name="msapplication-TileColor" content="#FFFFFF" />
                 <meta
                     name="msapplication-TileImage"
