@@ -168,8 +168,8 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "在收到奖励前的最后一分钟内不能增加奖励",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "每10分钟一个IP地址只允许一个Steem账号",
-        "resteem_this_post": "转发这这篇文章",
+            "每10分钟一个IP地址只允许一个Hive账号",
+        "reblog_this_post": "转发这这篇文章",
         "reblog": "转发",
         "write_your_story": "写下你的故事",
         "remember_voting_and_posting_key": "记住密码",
@@ -194,9 +194,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "当你和其他人给帖子点赞时，作者会得到报酬",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "如果你喜欢阅读这里的内容，请立即创建你的帐户，并开始免费赚取STEEM！",
-            "free_steem": "免费的Steem代币！",
-            "sign_up_earn_steem": "现在注册来赚取"
+                "如果你喜欢阅读这里的内容，请立即创建你的帐户，并开始免费赚取HIVE！",
+            "free_hive": "免费的Hive代币！",
+            "sign_up_earn_hive": "现在注册来赚取"
         },
         "next_3_strings_together": {
             "show_more": "显示更多",
@@ -237,11 +237,11 @@
         "learn_more": "了解更多",
         "welcome": "欢迎",
         "faq": "常见问题",
-        "chat": "Steemit聊天",
-        "app_center": "Steemit应用中心",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Steemit API文档",
-        "whitepaper": "Steem白皮书",
+        "chat": "Hive聊天",
+        "app_center": "Hive应用中心",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Hive API文档",
+        "whitepaper": "Hive白皮书",
         "intro_tagline": "妙笔生金",
         "intro_paragraph":
             "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。"
@@ -322,7 +322,7 @@
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
-            "有时候，Steemit 的拥有者钥匙可能会被盗用。被盗帐户恢复给予合法的帐户所有者30天，从小偷更改其所有者密钥的时候恢复其帐户。盗用帐户恢复只能在%(APP_URL)s上使用，如果帐户所有者已经明确列出 %(APP_NAME)s作为其帐户受信任者，并遵守了 %(APP_NAME)s 的服务条款。"
+            "有时候，Hive 的拥有者钥匙可能会被盗用。被盗帐户恢复给予合法的帐户所有者30天，从小偷更改其所有者密钥的时候恢复其帐户。盗用帐户恢复只能在%(APP_URL)s上使用，如果帐户所有者已经明确列出 %(APP_NAME)s作为其帐户受信任者，并遵守了 %(APP_NAME)s 的服务条款。"
     },
     "user_profile": {
         "unknown_account": "未知的账户",
@@ -349,7 +349,7 @@
             "one": "1个帖子",
             "other": "%(count)s个帖子"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -420,7 +420,7 @@
         "APP_NAME_password_backup_required": "%(APP_NAME)s密码备份(必填)",
         "after_printing_write_down_your_user_name": "打印后，请写下你的用户名"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "你现有的%(DEBT_TOKEN)s是可流动和可转让的。你可以希望直接在本网站%(link)s交易%(DEBT_TOKEN)s或转移到外部市场。",
         "this_is_a_price_feed_conversion":
@@ -439,8 +439,8 @@
             "%(VESTING_TOKEN)s是不可转让的，需要3个月(13笔付款)才可换回%(LIQUID_TOKEN)s",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "%(VESTING_TOKEN)s可以转给你自己或其他人，但是只有转回%(LIQUID_TOKEN)s后，才可以进行下一次转账。",
-        "part_of_your_steem_power_is_currently_delegated":
-            "有一部分STEEM POWER是代理给你使用的。代理的STEEM POWER是为了帮助新用户在steemit上进行操作。你被代理的数量可能会有波动。"
+        "part_of_your_hive_power_is_currently_delegated":
+            "有一部分HIVE POWER是代理给你使用的。代理的HIVE POWER是为了帮助新用户在Hive上进行操作。你被代理的数量可能会有波动。"
     },
     "promote_post_jsx": {
         "promote_post": "推广帖子",
@@ -452,7 +452,7 @@
     "about_jsx": {
         "about_app": "关于%(APP_NAME)s",
         "about_app_details":
-            "%(APP_NAME)s是一个社交媒体平台，通过写文章和审查文章内容，每个人都可以得到赏金。它有一个强大的数字积分系统，称为Steem，其通过市场价格发现机制和流动性，来支撑数字奖励的真实价值。",
+            "%(APP_NAME)s是一个社交媒体平台，通过写文章和审查文章内容，每个人都可以得到赏金。它有一个强大的数字积分系统，称为Hive，其通过市场价格发现机制和流动性，来支撑数字奖励的真实价值。",
         "learn_more_at_app_url": "了解更多%(APP_URL)s",
         "resources": "资源"
     },
@@ -460,8 +460,8 @@
         "images_were_hidden_due_to_low_ratings": "图片由于评级不足而被隐藏。"
     },
     "postsummary_jsx": {
-        "resteemed": "已转发的",
-        "resteemed_by": "被转发的",
+        "reblogged": "已转发的",
+        "reblogged_by": "被转发的",
         "this_post_is": "这篇帖子是",
         "you_can": "你可以",
         "reveal_it": "显示它",
@@ -524,7 +524,7 @@
         "you_account_has_been_successfully_recovered": "您的帐号已经成功恢复!",
         "password_update_succes": "%(accountName)s的密码成功修改",
         "password_info":
-            "密码或私钥输入不正确。有可能是输入错误。提示：Steemit创建的密码或私钥中永远不包含 0(零)， O(大写O)， I(大写i)和l (小写L)。",
+            "密码或私钥输入不正确。有可能是输入错误。提示：Hive创建的密码或私钥中永远不包含 0(零)， O(大写O)， I(大写i)和l (小写L)。",
         "enter_your_username": "输入您的用户名",
         "password_or_wif": "密码或WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -584,7 +584,7 @@
         "convert_to_VESTING_TOKEN": "转换成%(VESTING_TOKEN)s",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "余额取决于3天的提款等待期，",
-        "move_funds_to_another_account": "将资金转移给另一个Steem的用户。",
+        "move_funds_to_another_account": "将资金转移给另一个Hive的用户。",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "通过设置3天的提款等待期来保护资金。",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -604,7 +604,7 @@
         "withdraw_LIQUID_TOKEN": "取出%(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "取出%(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "价值约为1.00美金的%(LIQUID_TICKER)s，目前正在获得%(sbdInterest)s%%的利息。",
+            "价值约为1.00美金的%(LIQUID_TICKER)s，目前正在获得%(hbdInterest)s%%的利息。",
         "savings": "储蓄",
         "estimated_account_value": "账户估值",
         "next_power_down_is_scheduled_to_happen":
@@ -612,7 +612,7 @@
         "transfers_are_temporary_disabled": "转移功能暂时被禁用。",
         "history": "历史",
         "redeem_rewards": "赎回奖励(转移至余额)",
-        "buy_steem_or_steem_power": "购买STEEM或STEEM Power"
+        "buy_hive_or_hive_power": "购买HIVE或HIVE Power"
     },
     "checkloginowner_jsx": {
         "your_password_permissions_were_reduced": "您的密码权限被减少",

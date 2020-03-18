@@ -235,7 +235,7 @@ export async function serverRender(
     } catch (e) {
         console.error('Routing error:', e.toString(), location);
         return {
-            title: 'Routing error - Steemit',
+            title: 'Routing error - Hive',
             statusCode: 500,
             body: renderToString(
                 ErrorPage ? <ErrorPage /> : <span>Routing error</span>
@@ -246,7 +246,7 @@ export async function serverRender(
     if (error || !renderProps) {
         console.error('Router error [404]', error, 'props?', !!renderProps);
         return {
-            title: 'Page Not Found - Steemit',
+            title: 'Page Not Found - Hive',
             statusCode: 404,
             body: renderToString(<NotFound />),
         };
@@ -268,7 +268,7 @@ export async function serverRender(
         ) {
             // protect for invalid account
             return {
-                title: 'User Not Found - Steemit',
+                title: 'User Not Found - Hive',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -299,7 +299,7 @@ export async function serverRender(
             } else {
                 // protect on invalid user pages (i.e /user/transferss)
                 return {
-                    title: 'Page Not Found - Steemit',
+                    title: 'Page Not Found - Hive',
                     statusCode: 404,
                     body: renderToString(<NotFound />),
                 };
@@ -332,7 +332,7 @@ export async function serverRender(
         if (location.match(routeRegex.UserProfile)) {
             console.error('User/not found: ', location);
             return {
-                title: 'Page Not Found - Steemit',
+                title: 'Page Not Found - Hive',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -342,7 +342,7 @@ export async function serverRender(
             const stack_trace = e.stack || '[no stack]';
             console.error('State/store error: ', msg, stack_trace);
             return {
-                title: 'Server error - Steemit',
+                title: 'Server error - Hive',
                 statusCode: 500,
                 body: renderToString(<ErrorPage />),
             };
@@ -369,8 +369,8 @@ export async function serverRender(
     }
 
     return {
-        title: 'Steemit',
-        titleBase: 'Steemit - ',
+        title: 'Hive',
+        titleBase: 'Hive - ',
         meta,
         statusCode: status,
         body: Iso.render(app, server_store.getState()),
