@@ -38,7 +38,7 @@ describe('resolveRoute', () => {
         ['/faq.html', { page: 'Faq' }],
         ['/login.html', { page: 'Login' }],
         ['/privacy.html', { page: 'Privacy' }],
-        ['/support.html', { page: 'Support' }],
+        ['/support.html', { page: 'ExchangeNow' }],
         ['/tos.html', { page: 'Tos' }],
         ['/submit.html', { page: 'SubmitPost' }],
         [
