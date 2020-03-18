@@ -106,13 +106,9 @@ const SidePanel = ({
         organizational: [
             {
                 value: 'lassecashinfo',
-                label: 'Info on LASSECASH',
-                link: 'https://scot.today/token/LASSECASH',
-            },
-            {
-                value: 'lassecashmakewallet',
-                label: 'Make wallet for LASSECASH',
-                link: 'https://anon.steem.network',
+                label: 'About LASSECASH',
+                link: '/welcome',
+                internal: true,
             },
             {
                 value: 'lassediscord',
