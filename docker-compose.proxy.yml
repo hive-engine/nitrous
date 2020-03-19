@@ -1,0 +1,18 @@
+version: "3"
+services:
+    proxy:
+        image: jwilder/nginx-proxy:latest
+        container_name: proxy
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+        networks:
+            - reverse-proxy
+        restart: always
+
+networks:
+    reverse-proxy:
+        driver: bridge
