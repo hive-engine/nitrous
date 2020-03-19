@@ -22,7 +22,7 @@ class ExchangeNow extends React.Component {
                             name="widget"
                             src={this.props.src}
                             width="100%"
-                            height="330px"
+                            height="500px"
                             style={{ border: '0px' }}
                         />
                     </div>
