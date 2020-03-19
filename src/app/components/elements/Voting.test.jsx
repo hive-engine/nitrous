@@ -19,8 +19,8 @@ configure({ adapter: new Adapter() });
 const mockGlobal = Map({
     props: Map({ sbd_print_rate: 99 }),
     feed_price: Map({
-        base: '5 SBD',
-        quote: '10 STEEM',
+        base: '5 HBD',
+        quote: '10 HIVE',
     }),
     content: Map({
         test: Map({
@@ -30,9 +30,9 @@ const mockGlobal = Map({
             stats: {
                 total_votes: 1,
             },
-            max_accepted_payout: '999999 SBD',
+            max_accepted_payout: '999999 HBD',
             percent_steem_dollars: 0,
-            pending_payout_value: '10 SBD',
+            pending_payout_value: '10 HBD',
             payout_at: '2018-03-30T10:00:00Z',
             pending_payout_sbd: 99,
         }),
@@ -45,9 +45,9 @@ const voteTestObj = fromJS({
     stats: {
         total_votes: 1,
     },
-    max_accepted_payout: '999999 SBD',
+    max_accepted_payout: '999999 HBD',
     percent_steem_dollars: 0,
-    pending_payout_value: '10 SBD',
+    pending_payout_value: '10 HBD',
     payout_at: '2018-03-30T10:00:00Z',
 });
 
@@ -165,14 +165,14 @@ describe('Voting', () => {
         );
     });
 
-    it('should show all SP if percent_steem_dollars is 0', () => {
+    it('should show all HP if percent_steem_dollars is 0', () => {
         const post_obj = fromJS({
             stats: {
                 total_votes: 1,
             },
-            max_accepted_payout: '999999 SBD',
+            max_accepted_payout: '999999 HBD',
             percent_steem_dollars: 0,
-            pending_payout_value: '10 SBD',
+            pending_payout_value: '10 HBD',
             payout_at: '2018-03-30T10:00:00Z',
         });
         const store = createStore(rootReducer);
@@ -189,19 +189,19 @@ describe('Voting', () => {
             </Provider>
         );
         expect(JSON.stringify(component.toJSON())).toContain(
-            '0.00 SBD, 10.00 SP'
+            '0.00 HBD, 10.00 HP'
         );
     });
 
-    it('should omit liquid steem if print rate is 10000', () => {
+    it('should omit liquid hive if print rate is 10000', () => {
         const store = createStore(rootReducer);
         const post_obj = fromJS({
             stats: {
                 total_votes: 1,
             },
-            max_accepted_payout: '999999 SBD',
+            max_accepted_payout: '999999 HBD',
             percent_steem_dollars: 10000,
-            pending_payout_value: '10 SBD',
+            pending_payout_value: '10 HBD',
             payout_at: '2018-03-30T10:00:00Z',
         });
         const component = renderer.create(
@@ -217,18 +217,18 @@ describe('Voting', () => {
             </Provider>
         );
         expect(JSON.stringify(component.toJSON())).toContain(
-            '5.00 SBD, 5.00 SP'
+            '5.00 HBD, 5.00 HP'
         );
     });
 
-    it('should show liquid steem if print rate is < 10000', () => {
+    it('should show liquid hive if print rate is < 10000', () => {
         const post_obj = fromJS({
             stats: {
                 total_votes: 1,
             },
-            max_accepted_payout: '999999 SBD',
+            max_accepted_payout: '999999 HBD',
             percent_steem_dollars: 10000,
-            pending_payout_value: '10 SBD',
+            pending_payout_value: '10 HBD',
             payout_at: '2018-03-30T10:00:00Z',
         });
         const store = createStore(rootReducer);
@@ -245,7 +245,7 @@ describe('Voting', () => {
             </Provider>
         );
         expect(JSON.stringify(component.toJSON())).toContain(
-            '2.50 SBD, 2.50 STEEM, 5.00 SP'
+            '2.50 HBD, 2.50 HIVE, 5.00 HP'
         );
     });
 });
