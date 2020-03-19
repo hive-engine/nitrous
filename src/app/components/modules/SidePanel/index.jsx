@@ -76,7 +76,7 @@ const SidePanel = ({
             {
                 value: 'exchangeNow',
                 label: 'Exchange Now',
-                link: '/exchangenow.html',
+                link: '/support.html',
             },
         ],
 
