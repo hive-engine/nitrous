@@ -300,7 +300,7 @@
         "welcome": "Welcome",
         "faq": "FAQ",
         "chat": "Hive Chat",
-        "app_center": "Apps Built on Hive",
+        "app_center": "Hive Dapps",
         "business_center": "Businesses Accepting Hive",
         "api_docs": "Developer Portal",
         "bluepaper": "Hive Bluepaper",
@@ -310,7 +310,9 @@
         "intro_paragraph":
             "Get paid for good content. Post and upvote articles on Hive to get your share of the daily rewards pool.",
         "jobs": "Jobs at Hive",
-        "hive_proposals": "Hive Proposals"
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "Hot",

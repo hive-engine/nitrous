@@ -264,7 +264,10 @@
         "whitepaper": "Hiveホワイトペーパー",
         "intro_tagline": "金がものを言う",
         "intro_paragraph":
-            "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。"
+            "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "ホット",

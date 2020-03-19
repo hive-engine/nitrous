@@ -264,7 +264,10 @@
         "whitepaper": "스팀 화이트페이퍼",
         "intro_tagline": "생각의 가치",
         "intro_paragraph":
-            "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요."
+            "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요.",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "인기글",

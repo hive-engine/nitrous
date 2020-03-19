@@ -244,7 +244,10 @@
         "whitepaper": "Hive白皮书",
         "intro_tagline": "妙笔生金",
         "intro_paragraph":
-            "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。"
+            "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "热门",

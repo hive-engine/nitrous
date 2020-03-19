@@ -254,7 +254,10 @@
         "whitepaper": "Hive Whitepaper",
         "intro_tagline": "Pieniądze mają głos.",
         "intro_paragraph":
-            "Twój głos ma wartość. Dołącz do społeczności, która płaci za publikowanie i głosowanie na wysokiej jakości treści."
+            "Twój głos ma wartość. Dołącz do społeczności, która płaci za publikowanie i głosowanie na wysokiej jakości treści.",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "gorące",

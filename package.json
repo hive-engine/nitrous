@@ -1,8 +1,8 @@
 {
-  "name": "steemit.com",
+  "name": "hive.blog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/steemit/steemit.com.git"
+    "url": "https://gitlab.com/hiveblog/tbd.git"
   },
   "version": "1.0.0",
   "description": "steemit.com is the koa web server & middleware and react.js in-browser code for the world's first blockchain content + social media monetization platform!",
@@ -20,7 +20,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-build": "build-storybook -c .storybook -o docs"
   },
-  "author": "Steemit, Inc.",
+  "author": "HiveBlog",
   "license": "MIT",
   "dependencies": {
     "@steem/crypto-session": "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb",
@@ -86,7 +86,7 @@
     "mixpanel": "0.5.0",
     "net": "1.0.2",
     "node-cache": "^4.2.0",
-    "node-sass": "4.13.1",
+    "node-sass": "^4.13.1",
     "os": "0.1.1",
     "picturefill": "3.0.2",
     "qrious": "^4.0.2",

@@ -114,7 +114,7 @@
 .Voting__button-up.votingUp {
   padding-right: 0.5rem;
   svg {
-    border: 1px solid $color-teal;
+    border: 1px solid $color-hive-red;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -330,7 +330,7 @@
       top: 50%;
       transform: translate3d(-50%,-50%,0);
       &:active {
-        background: $color-teal;
+        background: $color-hive-red;
         box-shadow: none;
       }
     }
@@ -343,7 +343,7 @@
     margin-top: 18px;
     .rangeslider__fill {
       height: 100%;
-      background: $color-teal;
+      background: $color-hive-red;
       box-shadow: none;
       left: 0;
     }

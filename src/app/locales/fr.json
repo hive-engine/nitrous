@@ -275,7 +275,10 @@
         "smt_whitepaper": "Livre blanc sur le SMT",
         "intro_tagline": "Présentations sur la monnaie",
         "intro_paragraph":
-            "Votre voix vaut quelque chose. Rejoignez la communauté qui vous rémunère pour vos articles et participez à la curation du contenu de qualité."
+            "Votre voix vaut quelque chose. Rejoignez la communauté qui vous rémunère pour vos articles et participez à la curation du contenu de qualité.",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?"
     },
     "main_menu": {
         "hot": "chaud",
