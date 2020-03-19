@@ -20,13 +20,13 @@ ul.PostsList__summaries > li {
     background-color: themed('moduleBackgroundColor');
   }
 
-  &:hover {
+  /* &:hover {
     @include MQ(L) {
       @include themify($themes) {
         box-shadow: 2px 2px 3px 0 themed('contentBorderAccent');
       }
     }
-  }
+  }*/
 }
 
 .PostSummary {

@@ -140,7 +140,7 @@ class Modals extends React.Component {
                                 </li>
                             </ol>
                             <button className="button" onClick={buySteemPower}>
-                                {tt('g.buy_steem_power')}
+                                {tt('g.buy_hive_power')}
                             </button>
                         </div>
                     </Reveal>

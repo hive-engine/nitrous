@@ -47,7 +47,7 @@
       background-color: transparent;
       color: $color-white;
       &:hover, &:focus {
-        background-color: $color-blue-black;
+        background-color: $color-hive-black;
       }
       &.active {
           @include themify($themes) {

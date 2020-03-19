@@ -17,7 +17,7 @@
   .VerticalMenu {
     a:hover {
       background-color: #f6f6f6;
-      color: $color-teal-dark;
+      color: $color-hive-red-dark;
     }     
   }
 }
@@ -115,7 +115,7 @@ tbody tr:nth-child(even) {
 }
 
 .reveal {
-  box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 $color-teal;   
+  box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 $color-hive-red;   
   border-radius: 0 30px;
   border: transparent;
   transition: 0.2s all ease-in-out;
@@ -146,7 +146,7 @@ tbody tr:nth-child(even) {
   border-radius: 3px;
   background-color:$color-border-light;
   div {
-    background-color: $color-teal;
+    background-color: $color-hive-red;
     border-radius: 3px;
     border: none;
     height: 8px;

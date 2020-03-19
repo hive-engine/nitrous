@@ -13,7 +13,7 @@ $menu-width: 250px;
   }
 
   > div {
-    background-color: $color-blue-black-darkest;
+    background-color: $color-hive-black-darkest;
     color: $color-white;
     padding-top: 3rem;
     .close-button {
@@ -22,16 +22,16 @@ $menu-width: 250px;
     .menu > li {
       > a {
         transition: 0.2s all ease-in-out;
-        border-top: 1px solid $color-blue-black;
+        border-top: 1px solid $color-hive-black;
         color: $color-white;
-        border-bottom: 1px solid $color-blue-black-darkest;
+        border-bottom: 1px solid $color-hive-black-darkest;
       }
       > a:hover, &:focus {
-        background-color:  $color-blue-black;
-        border-bottom: 1px solid $color-teal;
+        background-color:  $color-hive-black;
+        border-bottom: 1px solid $color-hive-red;
 
         path {
-          fill: $color-teal;
+          fill: $color-hive-red;
         }
       }
       path {
@@ -43,7 +43,7 @@ $menu-width: 250px;
       a.menu-section:hover, a.menu-section:focus {
         cursor: default;
         background-color: inherit;
-        border-bottom: 1px solid $color-blue-black-darkest;
+        border-bottom: 1px solid $color-hive-black-darkest;
       }
     }
     ul:nth-of-type(n+3) {

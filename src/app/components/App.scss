@@ -55,7 +55,7 @@
 .welcomeBanner {
   margin-top: -1rem;
   padding: 0;
-  background-color: $color-blue-black;
+  background-color: $color-hive-black;
   color: $color-white;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
@@ -101,16 +101,16 @@
     text-transform: initial;
     border-radius: 0;
     background-color: $color-white;
-    color: $color-blue-black;
+    color: $color-hive-black;
     border: none;
-    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0 0 $color-teal;
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0 0 $color-hive-red;
     padding: 16px;
     margin-right: 18px;
     @include font-size(16px);
     cursor: pointer;
     font-family: $font-primary;
     &:hover, &:focus {
-      background-color: $color-teal;
+      background-color: $color-hive-red;
       color: $color-white;
       box-shadow: 0px 0px 0px 0 rgba(0,0,0,0.1), 4px 4px 0 0 $color-white;
       text-shadow: 0 1px 0 rgba(0,0,0,0.20);
@@ -139,7 +139,7 @@
     box-shadow: 0px 0px 0px 0 #30414A, 2px 2px 0 0 #30414A;
     @include opacity(0);
     &:hover, &:focus {
-      box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 $color-teal;
+      box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 $color-hive-red;
     }
   }
 

@@ -21,21 +21,20 @@ form.search-input {
         transition: all 0.3s ease-in-out;
         font-size: 16px;
         background: transparent;
-        box-shadow: none;
+        box-shadow: none !important;
         width: 42px;
         height: 42px;
         color: transparent;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         font-family: $font-primary;
-        @include themify($themes) {
-            border: 1px solid rgba(202, 202, 202, 0.6);
-        }
+        border: 1px solid rgba(173, 173, 173, 0.6);
+        
         &::placeholder {
             color: transparent
         }
         &:hover {
-            background-color: $color-teal;
+            background-color: $color-hive-red;
         }
         &:focus {
             width: 180px;
@@ -43,8 +42,8 @@ form.search-input {
             @include themify($themes) {
                 border: themed('moduleBackgroundColor');
             }
-            border-color: $color-teal;
-            box-shadow: 0 0 5px rgba(109,207,246,.5);
+            border-color: $color-hive-red;
+            // box-shadow: 0 0 5px rgba(109,207,246,.5);
             width: 180px;
             padding-left: 2.5rem;
             @include themify($themes) {

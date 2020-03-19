@@ -282,7 +282,7 @@ class LoginForm extends Component {
                     className="button hollow"
                     onClick={this.SignUp}
                 >
-                    {tt('loginform_jsx.sign_up_get_steem')}
+                    {tt('loginform_jsx.sign_up_get_hive')}
                 </button>
             </div>
         );

@@ -34,7 +34,7 @@ if (cluster.isMaster) console.log('application server starting, please wait.');
 // import uploadImage from 'server/upload-image' //medium-editor
 
 const app = new Koa();
-app.name = 'Steemit app';
+app.name = 'Hive app';
 const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: true };

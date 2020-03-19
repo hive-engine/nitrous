@@ -6,11 +6,11 @@ const site_desc =
     'Communities without borders. A social network owned and operated by its users, powered by Steem.';
 
 function addSiteMeta(metas) {
-    metas.push({ title: 'Steemit' });
+    metas.push({ title: 'Hive' });
     metas.push({ name: 'description', content: site_desc });
     metas.push({ property: 'og:type', content: 'website' });
-    metas.push({ property: 'og:site_name', content: 'Steemit' });
-    metas.push({ property: 'og:title', content: 'Steemit' });
+    metas.push({ property: 'og:site_name', content: 'Hive' });
+    metas.push({ property: 'og:title', content: 'Hive' });
     metas.push({ property: 'og:description', content: site_desc });
     metas.push({
         property: 'og:image',
@@ -32,7 +32,7 @@ function addPostMeta(metas, content, profile) {
     const { category, created, body, json_metadata } = content;
     const isReply = content.depth > 0;
 
-    const title = content.title + ' — Steemit';
+    const title = content.title + ' — Hive';
     const desc = extractBodySummary(body, isReply) + ' by ' + content.author;
     const image_link = extractImageLink(json_metadata, body);
 
@@ -54,7 +54,7 @@ function addPostMeta(metas, content, profile) {
         content: image || 'https://steemit.com/images/steemit.png',
     });
     metas.push({ name: 'og:description', content: desc });
-    metas.push({ name: 'og:site_name', content: 'Steemit' });
+    metas.push({ name: 'og:site_name', content: 'Hive' });
     metas.push({ name: 'fb:app_id', content: $STM_Config.fb_app });
     metas.push({ name: 'article:tag', content: category });
     metas.push({
@@ -80,7 +80,7 @@ function addAccountMeta(metas, accountname, profile) {
     let { name, about, profile_image } = profile;
 
     name = name || accountname;
-    about = about || 'Steemit: Communities Without Borders.';
+    about = about || 'Hive: Communities Without Borders.';
     profile_image =
         profile_image || 'https://steemit.com/images/steemit-twshare-2.png';
 

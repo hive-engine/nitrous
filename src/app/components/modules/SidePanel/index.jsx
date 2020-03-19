@@ -89,7 +89,7 @@ const SidePanel = ({
                 link: `${walletUrl}/~witnesses`,
             },
             {
-                label: tt('navigation.steem_proposals'),
+                label: tt('navigation.hive_proposals'),
                 link: `${walletUrl}/proposals`,
             },
         ],
@@ -122,19 +122,19 @@ const SidePanel = ({
         organizational: [
             {
                 label: tt('navigation.api_docs'),
-                link: 'https://developers.steem.io/',
+                link: 'https://developers.hive.blog/',
             },
             {
                 label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                link: 'https://hive.io/hive-bluepaper.pdf',
             },
             {
                 label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
+                link: 'https://hive.io/hive-smt-whitepaper.pdf',
             },
             {
                 label: tt('navigation.whitepaper'),
-                link: 'https://steem.com/SteemWhitePaper.pdf',
+                link: 'https://hive.io/hive-whitepaper.pdf',
             },
         ],
 
