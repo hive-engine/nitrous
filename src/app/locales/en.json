@@ -46,7 +46,6 @@
         "email": "Email",
         "external_link_message": "This link will take you away from hive.blog",
         "affiliation_hive": "Hive Team",
-        "affiliation_sm": "Steem Monsters Team",
         "feed": "Feed",
         "flag": "Flag",
         "flag_this_post": "Flag this %(type)s",
