@@ -31,7 +31,7 @@ class ExchangeNow extends React.Component {
         });
 
         return (
-            <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html" />
+            <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?link_id=390fe008f10e29" />
         );
     }
 }
