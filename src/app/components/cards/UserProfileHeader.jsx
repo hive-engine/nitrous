@@ -118,7 +118,7 @@ class UserProfileHeader extends React.Component {
                                 {numberWithCommas(
                                     profile.getIn(['stats', 'sp'], 0)
                                 )}{' '}
-                                SP
+                                HP
                             </span>
                             {profile.getIn(['stats', 'rank'], 0) > 0 && (
                                 <span>
