@@ -31,9 +31,23 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
         sort = 'trade';
     }
 
+    if (topic == 'leopedia') {
+        tag = '';
+        sort = 'leopedia';
+    }
+
+    if (topic == 'threespeak') {
+        tag = '';
+        sort = 'trending';
+    }
+
     // If we are at the homepage, the sort order is 'trending'
     if (pathname === '/') {
         tag = '';
+        sort = 'trending';
+    }
+
+    if (pathname === '/trending/threespeak') {
         sort = 'trending';
     }
 
@@ -45,7 +59,10 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
         if (sort.value === 'dashboard') {
             path = sort.value;
         }
-        if (sort.value === 'shop') {
+        if (sort.value === 'threespeak') {
+            return '/trending/threespeak';
+        }
+        if (sort.value === 'leoshop') {
             path = sort.value;
         } else {
             path = makeRoute(tag, sort);
@@ -70,6 +87,26 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
                 label: tt('main_menu.hot'),
                 link: `/hot/${tag}`,
             },
+            {
+                value: 'threespeak',
+                label: tt('g.videos'),
+                link: `/trending/threespeak`,
+            },
+            {
+                value: 'leodex',
+                label: tt('g.trade'),
+                link: `/leodex`,
+            },
+            {
+                value: 'leoshop',
+                label: tt('g.shop'),
+                link: `/leoshop`,
+            },
+            {
+                value: 'leopedia',
+                label: tt('g.leopedia'),
+                link: `/leopedia`,
+            },
         ];
         if (username != null && username.length > 0) {
             tabs.push(
@@ -77,11 +114,6 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
                 value: 'dashboard',
                 label: tt('g.dashboard'),
                 link: `/@${username}/dashboard`,
-                },
-                {
-                value: 'shop',
-                label: tt('g.shop'),
-                link: `/leoshop`,
                 },
             );
         }

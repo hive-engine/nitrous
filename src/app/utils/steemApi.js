@@ -497,7 +497,7 @@ export async function getStateAsync(url) {
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded =
         !url.match(
-            /^[\/]?(trending|hot|created|promoted|payout|payout_comments|syndication|delegate-se-tokens)($|\/$|\/([^\/]+)\/?$)/
+            /^[\/]?(trending|hot|created|promoted|payout|payout_comments|syndication|faq|leopedia|delegatetokens|glossary|heytron|keychain|leoshop|mission|steem|leodex|communities|podcast|steemsoftfork|approachtodiversification|buffettonbitcoin)($|\/$|\/([^\/]+)\/?$)/
         ) &&
         !url.match(
             /^[\/]?@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/

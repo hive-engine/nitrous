@@ -27,6 +27,9 @@ export default function resolveRoute(path) {
     if (path === '/welcome') {
         return { page: 'Welcome' };
     }
+    if (path === '/leoshop') {
+        return { page: 'Leoshop' };
+    }
     if (path === '/syndication') {
         return { page: 'Syndication' };
     }
@@ -42,9 +45,6 @@ export default function resolveRoute(path) {
     if (path === '/delegatetokens') {
         return { page: 'Delegatetokens' };
     }
-    if (path === '/leoshop') {
-        return { page: 'Leoshop' };
-    }
     if (path === '/glossary') {
         return { page: 'Glossary' };
     }
@@ -53,6 +53,24 @@ export default function resolveRoute(path) {
     }
     if (path === '/heytron') {
         return { page: 'Heytron' };
+    }
+    if (path === '/communities') {
+        return { page: 'Communities' };
+    }
+    if (path === '/podcast') {
+        return { page: 'Podcast' };
+    }
+    if (path === '/steemsoftfork') {
+        return { page: 'Steemsoftfork' };
+    }
+    if (path === '/approachtodiversification') {
+        return { page: 'Approachtodiversification' };
+    }
+    if (path === '/buffettonbitcoin') {
+        return { page: 'Buffettonbitcoin' };
+    }
+    if (path === '/leodex') {
+        return { page: 'Leodex' };
     }
     if (path === '/faq.html') {
         return { page: 'Faq' };

@@ -19,6 +19,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Welcome')]);
             //});
+        } else if (route.page === 'Leoshop') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Leoshop')]);
+            //});
         } else if (route.page === 'Syndication') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Syndication')]);
@@ -35,10 +39,6 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Delegatetokens')]);
             //});
-        } else if (route.page === 'Leoshop') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Leoshop')]);
-            //});
         } else if (route.page === 'Glossary') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Glossary')]);
@@ -54,6 +54,30 @@ export default {
         } else if (route.page === 'Heytron') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Heytron')]);
+            //});
+        } else if (route.page === 'Communities') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Communities')]);
+            //});
+        } else if (route.page === 'Podcast') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Podcast')]);
+            //});
+        } else if (route.page === 'Steemsoftfork') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Steemsoftfork')]);
+            //});
+        } else if (route.page === 'Approachtodiversification') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Approachtodiversification')]);
+            //});
+        } else if (route.page === 'Buffettonbitcoin') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Buffettonbitcoin')]);
+            //});
+        } else if (route.page === 'Leodex') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Leodex')]);
             //});
         } else if (route.page === 'Login') {
             //require.ensure([], (require) => {
