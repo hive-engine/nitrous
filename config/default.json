@@ -4,7 +4,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' 3speak.online emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://steemitimages.com 'self' hive.blog https://api.steem.house api.blocktrades.us",
+      "connectSrc": "https://images.hive.blog 'self' hive.blog https://api.hive.blog api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' img.3speakcontent.online emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
@@ -19,7 +19,7 @@
     "reportOnly": false,
     "setAllHeaders": true
   },
-  "img_proxy_prefix": "https://steemitimages.com/",
+  "img_proxy_prefix": "https://images.hive.blog/",
   "ipfs_prefix": false,
   "mixpanel": false,
   "notify": {
@@ -43,7 +43,7 @@
   "conveyor_posting_wif": false,
   "conveyor_username": false,
   "special_posts_url": false,
-  "wallet_url": "https://wallet.hive.blog",
+  "wallet_url": "https://hive.io/wallets",
   "gpt_banned_tags": ["nsfw", "tante"],
   "google_ad_enabled": null,
   "google_ad_test": null,
