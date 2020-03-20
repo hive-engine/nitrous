@@ -126,6 +126,7 @@ class Header extends React.Component {
             logout,
             loggedIn,
             toggleNightmode,
+            nightmodeEnabled,
             showSidePanel,
             navigate,
             display_name,
@@ -329,7 +330,9 @@ class Header extends React.Component {
                         <nav className="row Header__nav">
                             <div className="small-6 medium-4 large-4 columns Header__logotype">
                                 <Link to={logo_link}>
-                                    <SteemLogo />
+                                    <SteemLogo
+                                        nightmodeEnabled={nightmodeEnabled}
+                                    />
                                 </Link>
                             </div>
 
