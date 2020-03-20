@@ -14,7 +14,7 @@ function addSiteMeta(metas) {
     metas.push({ property: 'og:description', content: site_desc });
     metas.push({
         property: 'og:image',
-        content: 'https://hive.blog/images/hive-blog-logo.png',
+        content: 'https://hive.blog/images/hive-blog-share.png',
     });
     metas.push({ property: 'fb:app_id', content: $STM_Config.fb_app });
     metas.push({ name: 'twitter:card', content: 'summary' });
@@ -23,7 +23,7 @@ function addSiteMeta(metas) {
     metas.push({ name: 'twitter:description', site_desc });
     metas.push({
         name: 'twitter:image',
-        content: 'https://hive.blog/images/hive-blog-logo.png',
+        content: 'https://hive.blog/images/hive-blog-twshare.png',
     });
 }
 
@@ -51,7 +51,7 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'og:url', content: localUrl });
     metas.push({
         name: 'og:image',
-        content: image || 'https://hive.blog/images/hive-blog-logo.png',
+        content: image || 'https://hive.blog/images/hive-blog-share.png',
     });
     metas.push({ name: 'og:description', content: desc });
     metas.push({ name: 'og:site_name', content: 'Hive' });
@@ -72,7 +72,7 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'twitter:description', content: desc });
     metas.push({
         name: 'twitter:image',
-        content: image || 'https://hive.blog/images/hive-blog-logo.png',
+        content: image || 'https://hive.blog/images/hive-blog-twshare.png',
     });
 }
 
@@ -82,7 +82,7 @@ function addAccountMeta(metas, accountname, profile) {
     name = name || accountname;
     about = about || 'Hive: Communities Without Borders.';
     profile_image =
-        profile_image || 'https://hive.blog/images/hive-blog-logo.png';
+        profile_image || 'https://hive.blog/images/hive-blog-twshare.png';
 
     // Set profile tags
     const title = `@${accountname}`;
