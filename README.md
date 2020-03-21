@@ -57,7 +57,7 @@ afterwards you will not need to use `npm` further.
 ```bash
 npm install -g yarn
 yarn add babel-cli
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --ignore-optional
 yarn run build
 ```
 To run condenser in production mode, run:

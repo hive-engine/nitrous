@@ -139,6 +139,7 @@
     "webpack": "3.7.1",
     "webpack-dev-middleware": "1.12.0",
     "webpack-isomorphic-tools": "3.0.5",
+    "webpack-livereload-plugin": "1",
     "websocket": "1.0.24",
     "whatwg-fetch": "0.11.1",
     "xmldom": "0.1.27"
@@ -201,5 +202,12 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     }
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
+  "resolutions": {
+    "fsevents": "1.2.9",
+    "**/fsevents": "1.2.9"
   }
 }
