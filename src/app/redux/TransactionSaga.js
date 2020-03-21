@@ -15,7 +15,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
+import { isLoggedInWithKeychain } from 'app/utils/HiveKeychain';
 import { callBridge } from 'app/utils/steemApi';
 
 export const transactionWatches = [
@@ -293,7 +293,7 @@ function* broadcastPayload({
                     );
                 } else {
                     const authType = needsActiveAuth ? 'active' : 'posting';
-                    window.steem_keychain.requestBroadcast(
+                    window.hive_keychain.requestBroadcast(
                         username,
                         operations,
                         authType,
