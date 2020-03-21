@@ -9,24 +9,29 @@ describe('makeCanonicalLink', () => {
     };
     const test_cases = [
         [
+            'handles posts from hive.blog',
+            { ...post_data, json_metadata: {} },
+            'https://hive.blog/testing/@test/test-post',
+        ],
+        [
             'handles posts without app',
             { ...post_data, json_metadata: {} },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles empty strings as app',
             { ...post_data, json_metadata: { app: '' } },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             "handles apps that don't exist",
             { ...post_data, json_metadata: { app: 'fakeapp/1.2.3' } },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             "handles app that don't exist without version",
             { ...post_data, json_metadata: { app: 'fakeapp' } },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles apps that do exist',
@@ -41,12 +46,12 @@ describe('makeCanonicalLink', () => {
         [
             'handles badly formatted app strings',
             { ...post_data, json_metadata: { app: 'fakeapp/0.0.1/a////' } },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles objects as apps',
             { ...post_data, json_metadata: { app: { this_is: 'an objct' } } },
-            'https://steemit.com/testing/@test/test-post',
+            'https://hive.blog/testing/@test/test-post',
         ],
     ];
     test_cases.forEach(v => {
