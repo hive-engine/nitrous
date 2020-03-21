@@ -55,6 +55,7 @@ export function makeCanonicalLink(post, metadata) {
             scheme = Apps[app] ? Apps[app].url_scheme : null;
         }
     }
-    if (!scheme) scheme = Apps['hive'].url_scheme;
+    // TOOD 'hive' does not exist in steemscript package. Need an update to handle it correctly
+    if (!scheme) scheme = Apps['steemit'].url_scheme;
     return build_scheme(scheme, post);
 }
