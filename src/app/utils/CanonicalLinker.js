@@ -31,8 +31,15 @@ function build_scheme(scheme, post) {
 }
 
 function allowed_app(app) {
-    // apps which follow (reciprocate) canonical URLs (as of 2019-10-15)
-    const whitelist = ['steemit', 'esteem', 'steempeak', 'travelfeed'];
+    // apps which follow (reciprocate) canonical URLs (as of 2020-03-21)
+    const whitelist = [
+        'hive',
+        'peakd',
+        'steemit',
+        'esteem',
+        'steempeak',
+        'travelfeed',
+    ];
     return whitelist.includes(app);
 }
 
@@ -48,6 +55,6 @@ export function makeCanonicalLink(post, metadata) {
             scheme = Apps[app] ? Apps[app].url_scheme : null;
         }
     }
-    if (!scheme) scheme = Apps['steemit'].url_scheme;
+    if (!scheme) scheme = Apps['hive'].url_scheme;
     return build_scheme(scheme, post);
 }
