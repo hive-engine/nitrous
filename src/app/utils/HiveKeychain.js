@@ -6,6 +6,7 @@ import { isLoggedIn, extractLoginData } from 'app/utils/UserUtil';
  */
 export function hasCompatibleKeychain() {
     return (
+        window.hive_keychain &&
         window.hive_keychain.requestSignBuffer &&
         window.hive_keychain.requestBroadcast &&
         window.hive_keychain.requestSignedCall
