@@ -25,6 +25,7 @@ import {
     APP_MAX_TAG,
     SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
     SCOT_DEFAULT_BENEFICIARY_PERCENT,
+    PREFER_HIVE,
 } from 'app/client_config';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
@@ -377,6 +378,7 @@ class ReplyEditor extends React.Component {
             defaultPayoutType,
             payoutType,
             beneficiaries,
+            hive,
         } = this.props;
         const {
             submitting,
@@ -418,6 +420,7 @@ class ReplyEditor extends React.Component {
             beneficiaries,
             successCallback: successCallbackWrapper,
             errorCallback,
+            useHive: hive,
         };
         const postLabel = username ? (
             <Tooltip t={tt('g.post_as_user', { username })}>
@@ -933,12 +936,17 @@ export default formId =>
                 successCallback,
                 errorCallback,
                 startLoadingIndicator,
+                useHive,
             }) => {
                 // const post = state.global.getIn(['content', author + '/' + permlink])
                 const username = state.user.getIn(['current', 'username']);
 
                 const isEdit = type === 'edit';
                 const isNew = /^submit_/.test(type);
+
+                if (isNew) {
+                    useHive = PREFER_HIVE;
+                }
 
                 // Wire up the current and parent props for either an Edit or a Submit (new post)
                 //'submit_story', 'submit_comment', 'edit'
@@ -1101,6 +1109,7 @@ export default formId =>
                         operation,
                         errorCallback,
                         successCallback,
+                        useHive,
                     })
                 );
             },
