@@ -13,7 +13,6 @@ import {
     browserHistory,
 } from 'react-router';
 import { Provider } from 'react-redux';
-import { api } from '@steemit/steem-js';
 
 import { APP_NAME } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
@@ -31,7 +30,7 @@ import Translator from 'app/Translator';
 import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
-import { getStateAsync } from 'app/utils/steemApi';
+import { getStateAsync, getContentAsync } from 'app/utils/steemApi';
 
 let get_state_perf,
     get_content_perf = false;
@@ -300,7 +299,10 @@ export async function serverRender(
             if (process.env.OFFLINE_SSR_TEST) {
                 content = get_content_perf;
             } else {
-                content = await api.getContentAsync(params[0], params[1]);
+                content = await getContentAsync(params[0], params[1]);
+                if (!content) {
+                    content = await getContentAsync(params[0], params[1], true);
+                }
             }
             if (content.author && content.permlink) {
                 // valid short post url
