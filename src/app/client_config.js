@@ -14,7 +14,20 @@ export const APP_DOMAIN = 'www.dporn.co';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'porn';
-export const TAG_LIST = fromJSOrdered(['porn', 'boudoir', 'erotica', 'blowjob', 'ass', 'pussy', 'lesbian', 'ebony', 'creampie', 'masturbation', 'fetish', 'milf']);
+export const TAG_LIST = fromJSOrdered([
+    'porn',
+    'boudoir',
+    'erotica',
+    'blowjob',
+    'ass',
+    'pussy',
+    'lesbian',
+    'ebony',
+    'creampie',
+    'masturbation',
+    'fetish',
+    'milf',
+]);
 export const LIQUID_TOKEN = 'Porn';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'PORN';
@@ -97,7 +110,8 @@ export const REVIVE_ADS = {
 // Other configurations
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-export const POST_FOOTER = '<div><center>Posted via <a href="https://www.dporn.co/">DPorn.co</a> | Get Rewards For Sex Content</center></div>';
+export const POST_FOOTER =
+    '<div><center>Posted via <a href="https://www.dporn.co/">DPorn.co</a> | Get Rewards For Sex Content</center></div>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
@@ -106,3 +120,4 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
+export const PREFER_HIVE = true;
