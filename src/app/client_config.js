@@ -1,7 +1,7 @@
 import { fromJSOrdered } from './utils/immutable';
 
 export const CONFIG_MAP = {
-    // testing heroku option
+    // testing heroku/local options
     'frozen-retreat-15997.herokuapp.com': {
         //'localhost:8080': {
         APP_NAME: 'WeedCash',

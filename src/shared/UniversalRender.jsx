@@ -233,7 +233,6 @@ export async function serverRender(
     const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const preferHive = hostConfig['PREFER_HIVE'];
     const APP_NAME = hostConfig['APP_NAME'];
-
     try {
         [error, redirect, renderProps] = await runRouter(location, RootRoute);
     } catch (e) {
@@ -267,8 +266,10 @@ export async function serverRender(
         // If a user profile URL is requested but no profile information is
         // included in the API response, return User Not Found.
         if (
-            (url.match(routeRegex.UserProfile1) ||
-                url.match(routeRegex.UserProfile3)) &&
+            url.match(
+                routeRegex.UserProfile1
+            ) /* ||
+                url.match(routeRegex.UserProfile3)*/ &&
             Object.getOwnPropertyNames(onchain.accounts).length === 0
         ) {
             // protect for invalid account
