@@ -157,6 +157,14 @@ export const TRADING_VIEW_CONFIG = {
                 description: 'Eos',
                 proName: 'COINBASE:EOSUSD',
             },
+            {
+                description: 'Gold',
+                proName: 'TVC:GOLD',
+            },
+            {
+                description: 'Silver',
+                proName: 'TVC:SILVER',
+            },
         ],
     },
     MARKET_OVERVIEW: {
@@ -194,6 +202,10 @@ export const TRADING_VIEW_CONFIG = {
                     {
                         s: 'TVC:GOLD',
                         d: 'Gold',
+                    },
+                    {
+                        s: 'TVC:SILVER',
+                        d: 'Silver',
                     },
                     {
                         s: 'NYMEX:CL1!',
