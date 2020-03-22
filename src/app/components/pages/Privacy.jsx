@@ -406,23 +406,7 @@ class Privacy extends React.Component {
                         <span>
                             You may access information that you have voluntarily
                             provided through your account on the Services, and
-                            to review, correct, or delete it by sending a
-                            request to privacy@hive.blog. You can request to
-                            change contact choices, opt-out of our sharing with
-                            others, and update your personal information and
-                            preferences. We may require that you are the you are
-                            the user who you say you are by proving that you
-                            have control of your posting key via our conveyor
-                            API. &nbsp;For more information about our conveyor
-                            API please see{' '}
-                        </span>
-                        <span className="c8 c12">
-                            <a
-                                className="c5"
-                                href="https://www.google.com/url?q=https://github.com/steemit/conveyor%23get_user_data-username&amp;sa=D&amp;ust=1527292847102000"
-                            >
-                                here
-                            </a>
+                            review, correct, or delete it.
                         </span>
                         <span className="c1">.</span>
                     </p>
@@ -743,16 +727,7 @@ class Privacy extends React.Component {
                             information or response to your requests regarding
                             your personal information, you may contact us at
                             privacy@hive.blog or submit a complaint to the
-                            data protection regulator in your jurisdiction. You
-                            can find your data protection regulator{' '}
-                        </span>
-                        <span className="c8 c12">
-                            <a
-                                className="c5"
-                                href="https://www.google.com/url?q=http://ec.europa.eu/justice/article-29/structure/data-protection-authorities/index_en.htm&amp;sa=D&amp;ust=1527292847107000"
-                            >
-                                here
-                            </a>
+                            data protection regulator in your jurisdiction.
                         </span>
                         <span className="c1">.</span>
                     </p>
