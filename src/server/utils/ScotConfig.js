@@ -176,6 +176,9 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.info.sct_to_steemp = allPrice.find(
                 data => data.symbol === 'SCT'
             ).price_average;
+            scotConfig.info.sct_to_steemp_current = allPrice.find(
+                data => data.symbol === 'SCT'
+            ).price;
             scotConfig.info.dec_to_steemp = allPrice.find(
                 data => data.symbol === 'DEC'
             ).price_average;

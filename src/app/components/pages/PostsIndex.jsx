@@ -443,7 +443,7 @@ class PostsIndex extends React.Component {
                             <div>
                                 <SidebarInfo
                                     sct_to_steemp={this.props.scotInfo.getIn([
-                                        'sct_to_steemp',
+                                        'sct_to_steemp_current',
                                     ])}
                                     steem_to_dollor={this.props.scotInfo.getIn([
                                         'steem_to_dollar_current',

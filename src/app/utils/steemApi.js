@@ -513,7 +513,7 @@ export async function getSwapQueue() {
 }
 
 export async function getSteemPriceInfo() {
-    const steemprice = await callApi('https://apisct.cloud/price');
+    const steemprice = await callApi('https://apisct.cloud/price/v2');
     // var steemPrice = callApi('https://postpromoter.net/api/prices');
     // var steemPriceOnUpbit = callApi(
     //     'https://crix-api-endpoint.upbit.com/v1/crix/candles/lines?code=CRIX.UPBIT.KRW-STEEM'
