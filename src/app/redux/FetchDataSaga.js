@@ -56,6 +56,9 @@ export function* fetchState(location_change_action) {
     const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
     );
+    const preferHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
 
     if (
         pathname === '/' ||
@@ -63,7 +66,7 @@ export function* fetchState(location_change_action) {
         pathname.indexOf('trending') !== -1 ||
         pathname.indexOf('hot') !== -1
     ) {
-        yield fork(getPromotedState, pathname, scotTokenSymbol);
+        yield fork(getPromotedState, pathname, scotTokenSymbol, preferHive);
     }
 
     // `ignore_fetch` case should only trigger on initial page load. No need to call
@@ -101,7 +104,12 @@ export function* fetchState(location_change_action) {
     yield put(appActions.fetchDataBegin());
     try {
         // handle trending/hot/promoted feeds differently.
-        const state = yield call(getStateAsync, url, scotTokenSymbol);
+        const state = yield call(
+            getStateAsync,
+            url,
+            scotTokenSymbol,
+            preferHive
+        );
 
         yield put(globalActions.receiveState(state));
         yield call(fetchScotInfo);
@@ -121,7 +129,7 @@ export function* fetchState(location_change_action) {
  *
  * @param {String} pathname
  */
-export function* getPromotedState(pathname, scotTokenSymbol) {
+export function* getPromotedState(pathname, scotTokenSymbol, preferHive) {
     const m = pathname.match(/^\/[a-z]*\/(.*)\/?/);
     const tag = m ? m[1] : '';
 
@@ -136,7 +144,8 @@ export function* getPromotedState(pathname, scotTokenSymbol) {
     const state = yield call(
         getStateAsync,
         `/promoted/${tag}`,
-        scotTokenSymbol
+        scotTokenSymbol,
+        preferHive
     );
     yield put(globalActions.receiveState(state));
 }
@@ -213,7 +222,14 @@ function* getAccounts(usernames) {
 }
 
 export function* fetchData(action) {
-    const { order, author, permlink, accountname, postFilter } = action.payload;
+    const {
+        order,
+        author,
+        permlink,
+        accountname,
+        postFilter,
+        useHive,
+    } = action.payload;
     let { category } = action.payload;
     if (!category) category = '';
     category = category.toLowerCase();
@@ -340,6 +356,7 @@ export function* fetchData(action) {
         while (!fetchDone) {
             let { feedData, endOfData, lastValue } = yield call(
                 fetchFeedDataAsync,
+                useHive,
                 call_name,
                 scotTokenSymbol,
                 ...args

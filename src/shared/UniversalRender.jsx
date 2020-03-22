@@ -13,7 +13,6 @@ import {
     browserHistory,
 } from 'react-router';
 import { Provider } from 'react-redux';
-import { api } from '@steemit/steem-js';
 
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
@@ -30,7 +29,7 @@ import Translator from 'app/Translator';
 import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
-import { getStateAsync } from 'app/utils/steemApi';
+import { getStateAsync, getContentAsync } from 'app/utils/steemApi';
 
 let get_state_perf,
     get_content_perf = false;
@@ -232,6 +231,7 @@ export async function serverRender(
     let error, redirect, renderProps;
     const hostConfig = initialState.app.hostConfig;
     const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const preferHive = hostConfig['PREFER_HIVE'];
     const APP_NAME = hostConfig['APP_NAME'];
 
     try {
@@ -261,7 +261,7 @@ export async function serverRender(
         const url = location;
 
         requestTimer.startTimer('apiGetState_ms');
-        onchain = await apiGetState(url, scotTokenSymbol);
+        onchain = await apiGetState(url, scotTokenSymbol, preferHive);
         requestTimer.stopTimer('apiGetState_ms');
 
         // If a user profile URL is requested but no profile information is
@@ -302,7 +302,15 @@ export async function serverRender(
             if (process.env.OFFLINE_SSR_TEST) {
                 content = get_content_perf;
             } else {
-                content = await api.getContentAsync(params[0], params[1]);
+                content = await getContentAsync(params[0], params[1]);
+                if (!content) {
+                    content = await getContentAsync(
+                        params[0],
+                        params[1],
+                        null,
+                        true
+                    );
+                }
             }
             if (content.author && content.permlink) {
                 // valid short post url
@@ -464,14 +472,14 @@ export function clientRender(initialState) {
     );
 }
 
-async function apiGetState(url, scotTokenSymbol) {
+async function apiGetState(url, scotTokenSymbol, preferHive) {
     let offchain;
 
     if (process.env.OFFLINE_SSR_TEST) {
         offchain = get_state_perf;
     }
 
-    offchain = await getStateAsync(url, scotTokenSymbol);
+    offchain = await getStateAsync(url, scotTokenSymbol, preferHive);
 
     return offchain;
 }

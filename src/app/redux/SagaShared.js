@@ -58,8 +58,16 @@ export function* getState({ payload: { url } }) {
     const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
     );
+    const preferHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     try {
-        const state = yield call(getStateAsync, url, scotTokenSymbol);
+        const state = yield call(
+            getStateAsync,
+            url,
+            scotTokenSymbol,
+            preferHive
+        );
         yield put(globalActions.receiveState(state));
     } catch (error) {
         console.error('~~ Saga getState error ~~>', url, error);
@@ -82,13 +90,17 @@ export function* getContent({ author, permlink, resolve, reject }) {
     const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
     );
+    const preferHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     let content;
     while (!content) {
         content = yield call(
             getContentAsync,
             author,
             permlink,
-            scotTokenSymbol
+            scotTokenSymbol,
+            preferHive
         );
         if (content['author'] == '') {
             // retry if content not found. #1870

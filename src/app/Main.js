@@ -10,6 +10,7 @@ import { clientRender } from 'shared/UniversalRender';
 import ConsoleExports from './utils/ConsoleExports';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import * as steem from '@steemit/steem-js';
+import * as hive from 'steem';
 import { determineViewMode } from 'app/utils/Links';
 import frontendLogger from 'app/utils/FrontendLogger';
 
@@ -87,6 +88,13 @@ function runApp(initial_state) {
     });
     steem.config.set('address_prefix', config.address_prefix);
     steem.config.set('chain_id', config.chain_id);
+    hive.api.setOptions({
+        url: config.hive_connection_client,
+        retry: true,
+        useAppbaseApi: !!config.steemd_use_appbase,
+    });
+    hive.config.set('address_prefix', config.address_prefix);
+    hive.config.set('chain_id', config.chain_id);
     window.$STM_Config = config;
     plugins(config, initial_state.app.hostConfig);
     if (initial_state.offchain.serverBusy) {

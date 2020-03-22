@@ -1,4 +1,5 @@
-import { api } from '@steemit/steem-js';
+import * as steem from '@steemit/steem-js';
+import * as hive from 'steem';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -51,20 +52,22 @@ export async function getScotAccountDataAsync(account) {
     return getScotDataAsync(`@${account}`, { v: new Date().getTime() });
 }
 
-async function getAccount(account) {
-    const accounts = await api.getAccountsAsync([account]);
+async function getAccount(account, useHive) {
+    const accounts = await (useHive ? hive.api : steem.api).getAccountsAsync([
+        account,
+    ]);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
 async function getGlobalProps() {
-    const gprops = await api.getDynamicGlobalPropertiesAsync();
+    const gprops = await steem.api.getDynamicGlobalPropertiesAsync();
     return gprops;
 }
 
 async function getAuthorRep(feedData) {
     const authors = feedData.map(d => d.author);
     const authorRep = {};
-    (await api.getAccountsAsync(authors)).forEach(a => {
+    (await steem.api.getAccountsAsync(authors)).forEach(a => {
         authorRep[a.name] = a.reputation;
     });
     return authorRep;
@@ -109,7 +112,8 @@ async function fetchMissingData(
     feedType,
     state,
     feedData,
-    scotTokenSymbol
+    scotTokenSymbol,
+    useHive
 ) {
     if (!state.content) {
         state.content = {};
@@ -122,7 +126,10 @@ async function fetchMissingData(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
             console.log('Unexpected missing: ' + authorPermlink);
-            return api.getContentAsync(authorPermlink[0], authorPermlink[1]);
+            return (useHive ? hive.api : steem.api).getContentAsync(
+                authorPermlink[0],
+                authorPermlink[1]
+            );
         })
     );
     missingContent.forEach(c => {
@@ -182,7 +189,7 @@ async function addAccountToState(state, account) {
     }
 }
 
-export async function attachScotData(url, state, scotTokenSymbol) {
+export async function attachScotData(url, state, scotTokenSymbol, useHive) {
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
@@ -202,7 +209,14 @@ export async function attachScotData(url, state, scotTokenSymbol) {
         }
         // first call feed.
         let feedData = await getScotDataAsync(callName, discussionQuery);
-        await fetchMissingData(tag, feedType, state, feedData, scotTokenSymbol);
+        await fetchMissingData(
+            tag,
+            feedType,
+            state,
+            feedData,
+            scotTokenSymbol,
+            useHive
+        );
         return;
     }
 
@@ -276,7 +290,8 @@ export async function attachScotData(url, state, scotTokenSymbol) {
             'feed',
             state,
             feedData,
-            scotTokenSymbol
+            scotTokenSymbol,
+            useHive
         );
         return;
     }
@@ -296,7 +311,8 @@ export async function attachScotData(url, state, scotTokenSymbol) {
             'blog',
             state,
             feedData,
-            scotTokenSymbol
+            scotTokenSymbol,
+            useHive
         );
         return;
     }
@@ -315,7 +331,8 @@ export async function attachScotData(url, state, scotTokenSymbol) {
             'comments',
             state,
             feedData,
-            scotTokenSymbol
+            scotTokenSymbol,
+            useHive
         );
         return;
     }
@@ -334,7 +351,8 @@ export async function attachScotData(url, state, scotTokenSymbol) {
             'recent_replies',
             state,
             feedData,
-            scotTokenSymbol
+            scotTokenSymbol,
+            useHive
         );
         return;
     }
@@ -350,7 +368,9 @@ export async function attachScotData(url, state, scotTokenSymbol) {
                     const k = entry[0];
                     const v = entry[1];
                     // Fetch SCOT data
-                    const scotData = await getScotDataAsync(`@${k}`);
+                    const scotData = await getScotDataAsync(`@${k}`, {
+                        hive: useHive ? '1' : '',
+                    });
                     mergeContent(
                         state.content[k],
                         scotData[scotTokenSymbol],
@@ -372,14 +392,53 @@ export async function attachScotData(url, state, scotTokenSymbol) {
     }
 }
 
-export async function getContentAsync(author, permlink, scotTokenSymbol) {
-    const content = await api.getContentAsync(author, permlink);
-    const scotData = await getScotDataAsync(`@${author}/${permlink}`);
+export async function getContentAsync(
+    author,
+    permlink,
+    scotTokenSymbol,
+    preferHive
+) {
+    let content;
+    let scotData;
+    const [steemitContent, hiveContent] = await Promise.all([
+        steem.api.getContentAsync(author, permlink),
+        hive.api.getContentAsync(author, permlink),
+    ]);
+    let useHive = false;
+    if (
+        steemitContent &&
+        steemitContent.author === author &&
+        steemitContent.permlink === permlink
+    ) {
+        content = steemitContent;
+    }
+    if (
+        (preferHive ||
+            !(
+                steemitContent &&
+                steemitContent.author === author &&
+                steemitContent.permlink === permlink
+            )) &&
+        (hiveContent &&
+            hiveContent.author === author &&
+            hiveContent.permlink === permlink)
+    ) {
+        content = hiveContent;
+        useHive = true;
+    }
+    if (useHive) {
+        scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
+    } else {
+        scotData = await getScotDataAsync(`@${author}/${permlink}`);
+    }
+    if (!content) {
+        return content;
+    }
     mergeContent(content, scotData[scotTokenSymbol], scotTokenSymbol);
     return content;
 }
 
-export async function getStateAsync(url, scotTokenSymbol) {
+export async function getStateAsync(url, scotTokenSymbol, preferHive) {
     // strip off query string
     let path = url.split('?')[0];
 
@@ -399,14 +458,30 @@ export async function getStateAsync(url, scotTokenSymbol) {
             /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers)?)?$/
         );
 
-    let raw = steemitApiStateNeeded
-        ? await api.getStateAsync(path)
-        : {
-              accounts: {},
-              content: {},
-          };
-    if (!raw) {
-        raw = {};
+    let raw = {
+        accounts: {},
+        content: {},
+    };
+    let useHive = false;
+    if (steemitApiStateNeeded) {
+        const [steemitState, hiveState] = await Promise.all([
+            steem.api.getStateAsync(path),
+            hive.api.getStateAsync(path),
+        ]);
+        if (steemitState && Object.keys(steemitState.content).length > 0) {
+            raw = steemitState;
+        }
+        if (
+            (preferHive ||
+                !(
+                    steemitState && Object.keys(steemitState.content).length > 0
+                )) &&
+            hiveState &&
+            Object.keys(hiveState.content).length > 0
+        ) {
+            raw = hiveState;
+            useHive = true;
+        }
     }
     if (!raw.accounts) {
         raw.accounts = {};
@@ -414,13 +489,18 @@ export async function getStateAsync(url, scotTokenSymbol) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, scotTokenSymbol);
+    await attachScotData(path, raw, scotTokenSymbol, useHive);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
 }
 
-export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
+export async function fetchFeedDataAsync(
+    useHive,
+    call_name,
+    scotTokenSymbol,
+    ...args
+) {
     const fetchSize = args[0].limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -463,10 +543,10 @@ export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
                 let content;
                 if (scotData.desc == null || scotData.children == null) {
-                    content = await api.getContentAsync(
-                        authorPermlink[0],
-                        authorPermlink[1]
-                    );
+                    content = await (useHive
+                        ? hive.api
+                        : steem.api
+                    ).getContentAsync(authorPermlink[0], authorPermlink[1]);
                 } else {
                     content = {
                         body: scotData.desc,
@@ -491,7 +571,7 @@ export async function fetchFeedDataAsync(call_name, scotTokenSymbol, ...args) {
         endOfData = feedData.length < fetchSize;
         lastValue = feedData.length > 0 ? feedData[feedData.length - 1] : null;
     } else {
-        feedData = await api[call_name](...args);
+        feedData = await (useHive ? hive.api : steem.api)[call_name](...args);
         feedData = await Promise.all(
             feedData.map(async post => {
                 const k = `${post.author}/${post.permlink}`;

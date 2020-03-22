@@ -49,6 +49,7 @@ export async function pinnedPosts() {
 
     for (const config of Object.values(CONFIG_MAP)) {
         const scotTokenSymbol = config['LIQUID_TOKEN_UPPERCASE'];
+        const preferHive = config['PREFER_HIVE'];
         console.info(`Loading pinned posts for ${scotTokenSymbol}`);
         const postData = await loadPinnedPosts(config['PINNED_POSTS_URL']);
         let loadedPostData = {
@@ -59,7 +60,12 @@ export async function pinnedPosts() {
         loadedPostData.announcement = postData.announcement;
         for (const url of postData.pinned_posts) {
             const [username, postId] = url.split('@')[1].split('/');
-            let post = await getContentAsync(username, postId, scotTokenSymbol);
+            let post = await getContentAsync(
+                username,
+                postId,
+                scotTokenSymbol,
+                preferHive
+            );
             post.pinned = true;
             loadedPostData.pinned_posts.push(post);
         }

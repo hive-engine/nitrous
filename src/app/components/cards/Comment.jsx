@@ -358,15 +358,16 @@ class CommentImpl extends React.Component {
         }
 
         let replies = null;
-        if (!this.state.collapsed && comment.children > 0) {
+        const numChildren = comment.replies.length;
+        if (!this.state.collapsed && numChildren > 0) {
             if (depth > 7) {
                 const comment_permlink = `/${comment.category}/@${
                     comment.author
                 }/${comment.permlink}`;
                 replies = (
                     <Link to={comment_permlink}>
-                        Show {comment.children} more{' '}
-                        {comment.children == 1 ? 'reply' : 'replies'}
+                        Show {numChildren} more{' '}
+                        {numChildren == 1 ? 'reply' : 'replies'}
                     </Link>
                 );
             } else {
@@ -479,10 +480,10 @@ class CommentImpl extends React.Component {
                             <Voting post={post} showList={false} />
                         )}
                         {this.state.collapsed &&
-                            comment.children > 0 && (
+                            numChildren > 0 && (
                                 <span className="marginLeft1rem">
                                     {tt('g.reply_count', {
-                                        count: comment.children,
+                                        count: numChildren,
                                     })}
                                 </span>
                             )}
