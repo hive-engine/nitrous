@@ -3,7 +3,7 @@ import koa_router from 'koa-router';
 const redirects = [
     // example: [/\/about(\d+)-(.+)/, '/about?$0:$1', 302],
     [/^\/recent\/?$/, '/created'],
-    [/^\/pick_account.*/, 'https://signup.hive.blog'],
+    [/^\/pick_account.*/, 'https://signup.hive.io'],
 ];
 
 export default function useRedirects(app) {

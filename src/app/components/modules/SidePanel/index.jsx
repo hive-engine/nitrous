@@ -156,7 +156,7 @@ const SidePanel = ({
             },
             {
                 label: tt('g.sign_up'),
-                link: 'https://signup.hive.blog',
+                link: 'https://signup.hive.io',
             },
         ],
     };
