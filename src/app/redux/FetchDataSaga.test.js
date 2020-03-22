@@ -226,8 +226,12 @@ describe('fetchState', () => {
         );
         const selectSymbol = generator.next().value;
         expect(selectSymbol.SELECT.selector(mockStore)).toEqual('TEST');
-        let next = generator.next('TEST');
-        expect(next.value).toEqual(fork(getPromotedState, pathname, 'TEST'));
+        const selectPreferHive = generator.next('TEST').value;
+        expect(selectPreferHive.SELECT.selector(mockStore)).toEqual(undefined);
+        let next = generator.next(undefined);
+        expect(next.value).toEqual(
+            fork(getPromotedState, pathname, 'TEST', undefined)
+        );
     });
 
     it('hot should get promoted state', () => {
@@ -242,8 +246,12 @@ describe('fetchState', () => {
         );
         const selectSymbol = generator.next().value;
         expect(selectSymbol.SELECT.selector(mockStore)).toEqual('TEST');
-        let next = generator.next('TEST');
-        expect(next.value).toEqual(fork(getPromotedState, pathname, 'TEST'));
+        const selectPreferHive = generator.next('TEST').value;
+        expect(selectPreferHive.SELECT.selector(mockStore)).toEqual(undefined);
+        let next = generator.next(undefined);
+        expect(next.value).toEqual(
+            fork(getPromotedState, pathname, 'TEST', undefined)
+        );
     });
 });
 
@@ -269,13 +277,13 @@ describe('getPromotedState', () => {
     });
     it('should call api if not fetched', () => {
         const pathname = '/trending';
-        const generator = getPromotedState(pathname, 'TEST');
+        const generator = getPromotedState(pathname, 'TEST', null);
 
         generator.next(); // SELECT
         // continue with empty data
         const callAction = generator.next();
         expect(callAction.value).toEqual(
-            call(getStateAsync, '/promoted/', 'TEST')
+            call(getStateAsync, '/promoted/', 'TEST', null)
         );
         const mockState = {};
         const putAction = generator.next(mockState);
@@ -285,7 +293,7 @@ describe('getPromotedState', () => {
     });
     it('should call api with tag', () => {
         const pathname = '/hot/food';
-        const generator = getPromotedState(pathname, 'TEST');
+        const generator = getPromotedState(pathname, 'TEST', null);
 
         const mockStore = {
             global: Map({}),
@@ -302,7 +310,7 @@ describe('getPromotedState', () => {
         // continue saga with empty data instead of mocked value
         const callAction = generator.next();
         expect(callAction.value).toEqual(
-            call(getStateAsync, '/promoted/food', 'TEST')
+            call(getStateAsync, '/promoted/food', 'TEST', null)
         );
         const mockState = {};
         const putAction = generator.next(mockState);

@@ -302,15 +302,12 @@ export async function serverRender(
             if (process.env.OFFLINE_SSR_TEST) {
                 content = get_content_perf;
             } else {
-                content = await getContentAsync(params[0], params[1]);
-                if (!content) {
-                    content = await getContentAsync(
-                        params[0],
-                        params[1],
-                        null,
-                        true
-                    );
-                }
+                content = await getContentAsync(
+                    params[0],
+                    params[1],
+                    scotTokenSymbol,
+                    preferHive
+                );
             }
             if (content.author && content.permlink) {
                 // valid short post url
