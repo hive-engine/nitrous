@@ -100,6 +100,7 @@ const map = {
      iamsozi : 'Verified Creator',
      'invest.porn' : 'Verified Creator',
       python13 : 'Verified Creator',
+     forced2orgasm : 'Verified Creator',
 };
 
 export default map;
