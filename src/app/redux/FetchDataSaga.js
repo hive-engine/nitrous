@@ -203,7 +203,14 @@ function* getAccounts(usernames) {
 }
 
 export function* fetchData(action) {
-    const { order, author, permlink, accountname, postFilter } = action.payload;
+    const {
+        order,
+        author,
+        permlink,
+        accountname,
+        postFilter,
+        useHive,
+    } = action.payload;
     let { category } = action.payload;
     if (!category) category = '';
     category = category.toLowerCase();
@@ -337,6 +344,7 @@ export function* fetchData(action) {
         while (!fetchDone) {
             let { feedData, endOfData, lastValue } = yield call(
                 fetchFeedDataAsync,
+                useHive,
                 call_name,
                 ...args
             );

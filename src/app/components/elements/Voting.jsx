@@ -93,7 +93,14 @@ class Voting extends React.Component {
             this.setState({ votingUp: up, votingDown: !up });
             if (this.state.showWeight) this.setState({ showWeight: false });
             const { myVote } = this.state;
-            const { author, permlink, username, is_comment } = this.props;
+            const {
+                author,
+                permlink,
+                username,
+                is_comment,
+                post_obj,
+            } = this.props;
+            const useHive = post_obj.get('hive');
 
             let weight;
             if (myVote > 0 || myVote < 0) {
@@ -116,6 +123,7 @@ class Voting extends React.Component {
                 username,
                 myVote,
                 isFlag,
+                useHive,
             });
         };
 
@@ -844,7 +852,10 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
-        vote: (weight, { author, permlink, username, myVote, isFlag }) => {
+        vote: (
+            weight,
+            { author, permlink, username, myVote, isFlag, useHive }
+        ) => {
             const confirm = () => {
                 if (myVote == null) return null;
                 if (weight === 0)
@@ -883,6 +894,7 @@ export default connect(
                     errorCallback: errorKey => {
                         console.log('Transaction Error:' + errorKey);
                     },
+                    useHive,
                 })
             );
         },
