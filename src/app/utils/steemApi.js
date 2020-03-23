@@ -78,9 +78,9 @@ async function getAuthorRep(feedData) {
     return authorRep;
 }
 
-function getAccountRC(account) {
+function getAccountRC(account, useHive) {
     return new Promise(resolve => {
-        api.send(
+        (useHive ? hive.api : steem.api).send(
             'rc_api',
             {
                 method: 'find_rc_accounts',
@@ -99,15 +99,14 @@ function getAccountRC(account) {
     });
 }
 
-async function getAccountCuration(args) {
+async function getAccountCuration(args, useHive) {
     let { account, start, limit, start_author, start_permlink } = args;
     start = start || -1;
     limit = limit || 20;
-    const history = await api.getAccountHistoryAsync(
-        account,
-        start,
-        limit * 10
-    );
+    const history = await (useHive
+        ? hive.api
+        : steem.api
+    ).getAccountHistoryAsync(account, start, limit * 10);
     let votes = history
         .filter(h => h[1].op[0] === 'vote' && h[1].op[1].voter === account)
         .map(h => h[1].op[1])
@@ -392,6 +391,7 @@ export async function attachScotData(url, state, useHive) {
             account: CURATOR_ACCOUNT,
             start: -1,
             limit: 20,
+            useHive,
         });
         await fetchMissingData(
             account,
@@ -422,7 +422,7 @@ export async function attachScotData(url, state, useHive) {
         console.log('fetch dashboard data -- token stats');
 
         // fetch resource credits
-        const rc = await getAccountRC(account);
+        const rc = await getAccountRC(account, useHive);
         state.accounts[account].rc = rc;
 
         console.log('fetch dashboard data -- rc');
@@ -611,8 +611,8 @@ export async function getStateAsync(url) {
     }
     await attachScotData(path, raw, useHive);
 
-    console.log('raw');
-    console.log(raw);
+    //console.log('raw');
+    //console.log(raw);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
@@ -660,6 +660,7 @@ export async function fetchFeedDataAsync(useHive, call_name, ...args) {
                 account: CURATOR_ACCOUNT,
                 start: -1,
                 ...discussionQuery,
+                useHive,
             });
         } else {
             feedData = await getScotDataAsync(callName, discussionQuery);
