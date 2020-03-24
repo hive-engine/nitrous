@@ -256,6 +256,10 @@
                 "Los usuarios legítimos, incluidos los empleados de Steemit Inc., nunca le pedirán una clave privada o contraseña maestra.",
             "checkbox": "Entiendo"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -280,6 +284,7 @@
         "change_account_password": "Cambia la contraseña de la cuenta",
         "vote_for_witnesses": "Vota a los testigos",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Política de Privacidad",
         "terms_of_service": "Términos del Servicio",
         "sign_up": "Unirse",
@@ -297,6 +302,7 @@
         "intro_paragraph":
             "Tu voz tiene valor. Únete a la comunidad que te paga por publicar y votar contenido de alta calidad",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "Testigos"
     },
     "main_menu": {
@@ -308,7 +314,7 @@
         "exceeds_maximum_length": "Excede la capacidad máxima (%(maxKb)sKB)",
         "including_the_category": "(incluyendo categoría '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo 5 tags en tu post y en la línea de categorías",
+            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo %(maxTags)s tags en tu post y en la línea de categorías",
         "are_you_sure_you_want_to_clear_this_form":
             "¿Estás seguro de que quieres limpiar este formulario?",
         "uploading": "Subiendo",
@@ -381,7 +387,8 @@
         "view_the_full_context": "Ver todo el contexto",
         "view_the_direct_parent": "Ver el comentario relacionado",
         "you_are_viewing_a_single_comments_thread_from":
-            "Estás viendo  los comentarios relacionados de"
+            "Estás viendo  los comentarios relacionados de",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

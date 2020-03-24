@@ -109,13 +109,11 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname, username }) => {
             },
         ];
         if (username != null && username.length > 0) {
-            tabs.push(
-                {
+            tabs.push({
                 value: 'dashboard',
                 label: tt('g.dashboard'),
                 link: `/@${username}/dashboard`,
-                },
-            );
+            });
         }
         return tabs;
     };

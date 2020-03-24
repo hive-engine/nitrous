@@ -118,8 +118,6 @@ class PostAdvancedSettings extends Component {
                             postTemplateName
                         );
                         this.props.hideAdvancedSettings();
-                    } else {
-                        this.setState({ beneficiaries: newBeneficiaries });
                     }
                 })}
             >

@@ -17,7 +17,8 @@ class NotFound extends React.Component {
                 <div className="NotFound float-center">
                     <div>
                         <h4 className="NotFound__header">
-                            Sorry! Either this page doesn't exist or you need to be logged in to view it.
+                            Sorry! Either this page doesn't exist or you need to
+                            be logged in to view it.
                         </h4>
                         <p>
                             Not to worry. You can head back to{' '}
@@ -43,7 +44,10 @@ class NotFound extends React.Component {
                             </li>
                         </ul>
                         <p>
-                            If you need help, please contact Steemleo on <a href="https://discord.gg/KgcVDKQ">Discord</a>, <a href="https://twitter.com/steemleo">Twitter</a> or Telegram (@khaleelkazi).
+                            If you need help, please contact Steemleo on{' '}
+                            <a href="https://discord.gg/KgcVDKQ">Discord</a>,{' '}
+                            <a href="https://twitter.com/steemleo">Twitter</a>{' '}
+                            or Telegram (@khaleelkazi).
                         </p>
                     </div>
                 </div>

@@ -69,7 +69,9 @@ export default {
             //});
         } else if (route.page === 'Approachtodiversification') {
             //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Approachtodiversification')]);
+            cb(null, [
+                require('app/components/pages/Approachtodiversification'),
+            ]);
             //});
         } else if (route.page === 'Buffettonbitcoin') {
             //require.ensure([], (require) => {

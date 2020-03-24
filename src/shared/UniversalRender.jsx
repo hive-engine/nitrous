@@ -13,7 +13,6 @@ import {
     browserHistory,
 } from 'react-router';
 import { Provider } from 'react-redux';
-import { api } from '@steemit/steem-js';
 
 import { APP_NAME } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
@@ -31,7 +30,7 @@ import Translator from 'app/Translator';
 import { routeRegex } from 'app/ResolveRoute';
 import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
-import { getStateAsync } from 'app/utils/steemApi';
+import { getStateAsync, getContentAsync } from 'app/utils/steemApi';
 
 let get_state_perf,
     get_content_perf = false;
@@ -256,7 +255,7 @@ export async function serverRender(
 
     let server_store, onchain;
     try {
-        const url = getUrlFromLocation(location);
+        const url = location;
 
         requestTimer.startTimer('apiGetState_ms');
         onchain = await apiGetState(url);
@@ -265,8 +264,7 @@ export async function serverRender(
         // If a user profile URL is requested but no profile information is
         // included in the API response, return User Not Found.
         if (
-            (url.match(routeRegex.UserProfile1) ||
-                url.match(routeRegex.UserProfile3)) &&
+            url.match(routeRegex.UserProfile1) &&
             Object.getOwnPropertyNames(onchain.accounts).length === 0
         ) {
             // protect for invalid account
@@ -280,7 +278,6 @@ export async function serverRender(
         // If we are not loading a post, truncate state data to bring response size down.
         if (!url.match(routeRegex.Post)) {
             for (var key in onchain.content) {
-                //onchain.content[key]['body'] = onchain.content[key]['body'].substring(0, 1024) // TODO: can be removed. will be handled by steemd
                 // Count some stats then remove voting data. But keep current user's votes. (#1040)
                 onchain.content[key]['stats'] = contentStats(
                     onchain.content[key]
@@ -302,7 +299,10 @@ export async function serverRender(
             if (process.env.OFFLINE_SSR_TEST) {
                 content = get_content_perf;
             } else {
-                content = await api.getContentAsync(params[0], params[1]);
+                content = await getContentAsync(params[0], params[1]);
+                if (!content) {
+                    content = await getContentAsync(params[0], params[1], true);
+                }
             }
             if (content.author && content.permlink) {
                 // valid short post url
@@ -456,24 +456,6 @@ export function clientRender(initialState) {
         </Provider>,
         document.getElementById('content')
     );
-}
-
-/**
- * Do some pre-state-fetch url rewriting.
- *
- * @param {string} location
- * @returns {string}
- */
-function getUrlFromLocation(location) {
-    let url = location === '/' ? 'trending' : location;
-    // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
-    // to resolve data correctly
-    if (url.indexOf('/curation-rewards') !== -1)
-        url = url.replace(/\/curation-rewards$/, '/transfers');
-    if (url.indexOf('/author-rewards') !== -1)
-        url = url.replace(/\/author-rewards$/, '/transfers');
-
-    return url;
 }
 
 async function apiGetState(url) {

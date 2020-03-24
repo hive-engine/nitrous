@@ -13,23 +13,24 @@ import Userpic from 'app/components/elements/Userpic';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import tt from 'counterpart';
-import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
+import { repLog10, parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
+import { allowDelete } from 'app/utils/StateFunctions';
 
 // returns true if the comment has a 'hide' flag AND has no descendants w/ positive payout
 function hideSubtree(cont, c) {
     return cont.getIn([c, 'stats', 'hide']) && !hasPositivePayout(cont, c);
 }
 
-function hasPositivePayout(cont, c) {
-    const post = cont.get(c);
-    if (post.getIn(['stats', 'hasPendingPayout'])) {
+function hasPositivePayout(postmap, post_url) {
+    const post = postmap.get(post_url);
+    if (parseFloat(post.get('net_rshares')) > 0) {
         return true;
     }
-    if (post.get('replies').find(reply => hasPositivePayout(cont, reply))) {
+    if (post.get('replies').find(url => hasPositivePayout(postmap, url))) {
         return true;
     }
     return false;
@@ -269,7 +270,8 @@ class CommentImpl extends React.Component {
             console.error('Comment -- missing stats object');
             comment.stats = {};
         }
-        const { allowDelete, authorRepLog10, gray } = comment.stats;
+        const { gray } = comment.stats;
+        const authorRepLog10 = repLog10(comment.author_reputation);
         const { author, json_metadata } = comment;
         const {
             username,
@@ -313,8 +315,6 @@ class CommentImpl extends React.Component {
         } catch (error) {
             // console.error('Invalid json metadata string', json_metadata, 'in post', this.props.content);
         }
-        // const get_asset_value = ( asset_str ) => { return parseFloat( asset_str.split(' ')[0] ); }
-        // const steem_supply = this.props.global.getIn(['props','current_supply']);
 
         // hide images if author is in blacklist
         const hideImages = ImageUserBlockList.includes(author);
@@ -322,7 +322,7 @@ class CommentImpl extends React.Component {
         const _isPaidout = comment.cashout_time === '1969-12-31T23:59:59'; // TODO: audit after HF19. #1259
         const showEditOption = username === author;
         const showDeleteOption =
-            username === author && allowDelete && !_isPaidout;
+            username === author && allowDelete(comment) && !_isPaidout;
         const showReplyOption = username !== undefined && comment.depth < 255;
 
         let body = null;
@@ -357,15 +357,16 @@ class CommentImpl extends React.Component {
         }
 
         let replies = null;
-        if (!this.state.collapsed && comment.children > 0) {
+        const numChildren = comment.replies.length;
+        if (!this.state.collapsed && numChildren > 0) {
             if (depth > 7) {
                 const comment_permlink = `/${comment.category}/@${
                     comment.author
                 }/${comment.permlink}`;
                 replies = (
                     <Link to={comment_permlink}>
-                        Show {comment.children} more{' '}
-                        {comment.children == 1 ? 'reply' : 'replies'}
+                        Show {numChildren} more{' '}
+                        {numChildren == 1 ? 'reply' : 'replies'}
                     </Link>
                 );
             } else {
@@ -473,10 +474,10 @@ class CommentImpl extends React.Component {
                             <Voting post={post} showList={false} />
                         )}
                         {this.state.collapsed &&
-                            comment.children > 0 && (
+                            numChildren > 0 && (
                                 <span className="marginLeft1rem">
                                     {tt('g.reply_count', {
-                                        count: comment.children,
+                                        count: numChildren,
                                     })}
                                 </span>
                             )}

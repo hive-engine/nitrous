@@ -249,6 +249,10 @@
                 "Steemit Inc.의 직원을 포함한 합법적 인 사용자는 어떠한 경우에도 개인 키 또는 마스터 비밀번호를 요구하지 않습니다.",
             "checkbox": "네 이해합니다."
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "%(app_name)s에서 작성되었습니다.",
         "all_claim_started":
             "전체 토큰의 클레임 요청을 시작합니다. 약 %(seconds)s 초 후에 완료됩니다.",
@@ -275,6 +279,7 @@
         "change_account_password": "비밀번호 변경",
         "vote_for_witnesses": "증인 투표",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "개인정보 방침",
         "terms_of_service": "이용 약관",
         "sign_up": "가입",
@@ -292,6 +297,7 @@
         "intro_paragraph":
             "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요.",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "증인"
     },
     "main_menu": {
@@ -303,7 +309,7 @@
         "exceeds_maximum_length": "최대 용량 초과 (%(maxKb)sKB)",
         "including_the_category": " ('%(rootCategory)s' 포함)",
         "use_limited_amount_of_tags":
-            "You have %(tagsLength)s tags total%(includingCategory)s. Please use only 5 in your post and category line.",
+            "You have %(tagsLength)s tags total%(includingCategory)s. Please use only %(maxTags)s in your post and category line.",
         "are_you_sure_you_want_to_clear_this_form":
             "Are you sure you want to exit the comment editor?",
         "uploading": "Uploading",

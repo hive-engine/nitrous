@@ -259,6 +259,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -283,6 +287,7 @@
         "change_account_password": "Changement de mot de passe",
         "vote_for_witnesses": "Voter pour les témoins",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Politique de confidentialité",
         "terms_of_service": "Conditions d'utilisation",
         "sign_up": "Rejoindre",
@@ -300,6 +305,7 @@
         "intro_paragraph":
             "Votre voix vaut quelque chose. Rejoignez la communauté qui vous rémunère pour vos articles et participez à la curation du contenu de qualité.",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "Témoins"
     },
     "main_menu": {
@@ -312,7 +318,7 @@
             "Dépassement de la taille maximale ( %(maxKb)s KB)",
         "including_the_category": "(incluant la catégorie '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Vous avez un total de %(tagsLength)s mots clés %(includingCategory)s. Veuillez en utiliser seulement 5, autant pour l'article que pour le champ dédié aux mots clés.",
+            "Vous avez un total de %(tagsLength)s mots clés %(includingCategory)s. Veuillez en utiliser seulement %(maxTags)s, autant pour l'article que pour le champ dédié aux mots clés.",
         "are_you_sure_you_want_to_clear_this_form":
             "Etes-vous sûr de vouloir effacer ce formulaire ?",
         "uploading": "Téléchargement en cours",
@@ -386,7 +392,8 @@
         "view_the_full_context": "Voir le contexte complet",
         "view_the_direct_parent": "Voir le message précédent",
         "you_are_viewing_a_single_comments_thread_from":
-            "Vous visualisez un commentaire unique de l'article"
+            "Vous visualisez un commentaire unique de l'article",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":

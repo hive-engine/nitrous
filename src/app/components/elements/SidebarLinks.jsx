@@ -45,8 +45,8 @@ const SidebarLinks = ({ username }) => (
                     >
                         FAQ
                     </a>
-                </li>        
-               
+                </li>
+
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
@@ -54,8 +54,8 @@ const SidebarLinks = ({ username }) => (
                     >
                         Guide to SteemLeo
                     </a>
-                </li>                
-                
+                </li>
+
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"

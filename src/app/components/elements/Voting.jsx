@@ -93,7 +93,14 @@ class Voting extends React.Component {
             this.setState({ votingUp: up, votingDown: !up });
             if (this.state.showWeight) this.setState({ showWeight: false });
             const { myVote } = this.state;
-            const { author, permlink, username, is_comment } = this.props;
+            const {
+                author,
+                permlink,
+                username,
+                is_comment,
+                post_obj,
+            } = this.props;
+            const useHive = post_obj.get('hive');
 
             let weight;
             if (myVote > 0 || myVote < 0) {
@@ -116,6 +123,7 @@ class Voting extends React.Component {
                 username,
                 myVote,
                 isFlag,
+                useHive,
             });
         };
 
@@ -260,6 +268,7 @@ class Voting extends React.Component {
         let scot_token_bene_payout = 0;
         let payout = 0;
         let promoted = 0;
+        let decline_payout = false;
         // Arbitrary invalid cash time (steem related behavior)
         const cashout_time =
             scotData && scotData.has('cashout_time')
@@ -299,6 +308,7 @@ class Voting extends React.Component {
                 scotData.get('beneficiaries_payout_value')
             );
             promoted = parseInt(scotData.get('promoted'));
+            decline_payout = scotData.get('decline_payout');
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_token_bene_payout;
             payout = cashout_active
@@ -490,7 +500,6 @@ class Voting extends React.Component {
             (votingUpActive ? ' votingUp' : '');
 
         const payoutItems = [];
-
         if (promoted > 0) {
             payoutItems.push({
                 value: `Promotion Cost ${promoted.toFixed(scotPrecision)} ${
@@ -498,7 +507,9 @@ class Voting extends React.Component {
                 }`,
             });
         }
-        if (cashout_active) {
+        if (decline_payout) {
+            payoutItems.push({ value: tt('voting_jsx.payout_declined') });
+        } else if (cashout_active) {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
                 value: `${scot_pending_token.toFixed(scotPrecision)} ${
@@ -508,7 +519,9 @@ class Voting extends React.Component {
             payoutItems.push({
                 value: <TimeAgoWrapper date={cashout_time} />,
             });
-        } else if (scot_total_author_payout) {
+        } else if (!cashout_active && payout > 0) {
+            // - payout instead of total_author_payout: total_author_payout can be zero with 100% beneficiary
+            // - !cashout_active is needed to avoid the info is also shown for pending posts.
             payoutItems.push({
                 value: `Past Token Payouts ${payout.toFixed(scotPrecision)} ${
                     LIQUID_TOKEN_UPPERCASE
@@ -585,6 +598,7 @@ class Voting extends React.Component {
                     <FormattedAsset
                         amount={payout}
                         asset={LIQUID_TOKEN_UPPERCASE}
+                        classname={decline_payout ? 'strikethrough' : ''}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
                 </span>
@@ -838,7 +852,10 @@ export default connect(
 
     // mapDispatchToProps
     dispatch => ({
-        vote: (weight, { author, permlink, username, myVote, isFlag }) => {
+        vote: (
+            weight,
+            { author, permlink, username, myVote, isFlag, useHive }
+        ) => {
             const confirm = () => {
                 if (myVote == null) return null;
                 if (weight === 0)
@@ -877,6 +894,7 @@ export default connect(
                     errorCallback: errorKey => {
                         console.log('Transaction Error:' + errorKey);
                     },
+                    useHive,
                 })
             );
         },

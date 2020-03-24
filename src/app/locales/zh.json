@@ -242,6 +242,10 @@
                 "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
@@ -266,6 +270,7 @@
         "change_account_password": "更改帐户密码",
         "vote_for_witnesses": "投票给见证人",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "隐私政策",
         "terms_of_service": "服务条款",
         "sign_up": "注册",
@@ -283,6 +288,7 @@
         "intro_paragraph":
             "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。",
         "jobs": "Jobs at Steemit",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "见证人"
     },
     "main_menu": {
@@ -294,7 +300,7 @@
         "exceeds_maximum_length": "超过最大长度(%(maxKb)sKB)",
         "including_the_category": "(包括类别'%(rootCategory)s ')",
         "use_limited_amount_of_tags":
-            "你总共可以标记%(tagsLength)s个标签%(includingCategory)s。请在你的文章分类栏中最多使用5个标签。",
+            "你总共可以标记%(tagsLength)s个标签%(includingCategory)s。请在你的文章分类栏中最多使用%(maxTags)s个标签。",
         "are_you_sure_you_want_to_clear_this_form": "你确定要清除这个表格吗?",
         "uploading": "上传",
         "draft_saved": "草稿已保存。",
@@ -358,7 +364,8 @@
         "view_the_full_context": "查看全文",
         "view_the_direct_parent": "查看上一级",
         "you_are_viewing_a_single_comments_thread_from":
-            "你正在查看单个评论的主题"
+            "你正在查看单个评论的主题",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
