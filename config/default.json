@@ -5,7 +5,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://history.steem-engine.com https://servedby.revive-adserver.net https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
+      "connectSrc": "https://history.steem-engine.com https://servedby.revive-adserver.net https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com https://api.hive.blog api.blocktrades.us",
       "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
@@ -52,6 +52,8 @@
   "upload_image": false,
   "steemd_connection_client": "https://api.steemit.com",
   "steemd_connection_server": "https://api.steemit.com",
+  "hive_connection_client": "https://api.hive.blog",
+  "hive_connection_server": "https://api.hive.blog",
   "steemd_use_appbase": false,
   "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
   "address_prefix": "STM",
