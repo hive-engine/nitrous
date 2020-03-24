@@ -285,7 +285,13 @@ class PostFull extends React.Component {
             hostConfig['APP_DOMAIN']
         );
         const content = post_content.toJS();
-        const { author, permlink, parent_author, parent_permlink } = content;
+        const {
+            author,
+            permlink,
+            parent_author,
+            parent_permlink,
+            hive,
+        } = content;
         const jsonMetadata = this.state.showReply ? null : p.json_metadata;
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
@@ -327,6 +333,7 @@ class PostFull extends React.Component {
             category,
             title,
             body,
+            hive,
         };
 
         this.share_params = {
