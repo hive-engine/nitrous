@@ -428,6 +428,7 @@ export const CONFIG_MAP = {
         SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
         SHOW_AUTHOR_RECENT_POSTS: true,
         POSTED_VIA_NITROUS_ICON: 'weedcash',
+        PREFER_HIVE: true,
     },
 };
 
