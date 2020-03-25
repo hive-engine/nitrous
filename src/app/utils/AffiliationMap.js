@@ -1,9 +1,9 @@
 const map = {
     //steemit
-    brumest: 'PhotoStreem Curator',
+    
     swedishdragon: 'PhotoStreem Founder',
     wwwiebe: 'Photostreem Curator',
-    nelyp: 'PhotoStreem Curator',
+   
     aleister: 'PhotoStreem Curator',
     bambuka: 'PhotoStreem Curator',
     davidesimoncini: 'PhotoStreem Curator',
@@ -18,6 +18,7 @@ const map = {
 };
 
 export default map;
+
 
 
 
