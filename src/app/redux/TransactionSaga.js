@@ -316,22 +316,30 @@ function* broadcastPayload({
                     );
                 } else {
                     const authType = needsActiveAuth ? 'active' : 'posting';
-                    (useHive
+                    const keychain = useHive
                         ? window.hive_keychain
-                        : window.steem_keychain
-                    ).requestBroadcast(
-                        username,
-                        operations,
-                        authType,
-                        response => {
-                            if (!response.success) {
-                                reject(response.message);
-                            } else {
-                                broadcastedEvent();
-                                resolve(response.result);
+                        : window.steem_keychain;
+                    if (!keychain) {
+                        reject(
+                            `${
+                                useHive ? 'Hive' : 'Steem'
+                            } keychain not available for operation. Please install or use private key.`
+                        );
+                    } else {
+                        keychain.requestBroadcast(
+                            username,
+                            operations,
+                            authType,
+                            response => {
+                                if (!response.success) {
+                                    reject(response.message);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve(response.result);
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 }
             }
         });
