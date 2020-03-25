@@ -234,7 +234,8 @@ class PostFull extends React.Component {
         if (!post_content) return;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
-        this.props.showPromotePost(author, permlink);
+        const hive = post_content.get('hive');
+        this.props.showPromotePost(author, permlink, hive);
     };
 
     showExplorePost = () => {
@@ -605,11 +606,11 @@ export default connect(
                 })
             );
         },
-        showPromotePost: (author, permlink) => {
+        showPromotePost: (author, permlink, hive) => {
             dispatch(
                 globalActions.showDialog({
                     name: 'promotePost',
-                    params: { author, permlink },
+                    params: { author, permlink, hive },
                 })
             );
         },
