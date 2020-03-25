@@ -1,81 +1,82 @@
 import { fromJSOrdered } from './utils/immutable';
 
+const WEEDCASH = {
+    APP_NAME: 'WeedCash',
+    APP_ICON: 'weedcash',
+    APP_ICON_WIDTH: '140px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.weedcash.network',
+    APP_DOMAIN: 'www.weedcash.network',
+    LIQUID_TOKEN: 'Weed',
+    LIQUID_TOKEN_UPPERCASE: 'WEED',
+    APP_MAX_TAG: 15,
+    SCOT_TAG: 'weedcash',
+    COMMUNITY_CATEGORY: 'hive-195708',
+    TAG_LIST: fromJSOrdered([
+        'weedcash',
+        'weed',
+        'cannabis',
+        'hemp',
+        'psychedelic',
+        'review',
+        'naturalmedicine',
+        'concentrate',
+        'edibles',
+        'breeding',
+        'glass',
+        'canna-curate',
+        'hash',
+        'cbd',
+        'news',
+        'props4crops',
+        'ganja',
+        'psilocybin',
+        'dmt',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'WEED POWER',
+    SITE_DESCRIPTION:
+        'Weedcash is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {
+        header_banner: {
+            zoneId: '3167',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        sidebar_left: {
+            zoneId: '3168',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        sidebar_right: {
+            zoneId: '3169',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        feed_small: {
+            zoneId: '3170',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+    },
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [weedcash.network](${POST_URL})</sub></center>',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: 'https://richardcrill.github.io',
+    SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'canna-community',
+    SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
+    SHOW_AUTHOR_RECENT_POSTS: true,
+    POSTED_VIA_NITROUS_ICON: 'weedcash',
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    //'frozen-retreat-15997.herokuapp.com': {
-    //    //'localhost:8080': {
-    //    APP_NAME: 'WeedCash',
-    //    APP_ICON: 'weedcash',
-    //    APP_ICON_WIDTH: '140px',
-    //    APP_ICON_HEIGHT: '40px',
-    //    APP_URL: 'https://www.weedcash.network',
-    //    APP_DOMAIN: 'www.weedcash.network',
-    //    LIQUID_TOKEN: 'Weed',
-    //    LIQUID_TOKEN_UPPERCASE: 'WEED',
-    //    APP_MAX_TAG: 15,
-    //    SCOT_TAG: 'weedcash',
-    //    COMMUNITY_CATEGORY: 'hive-195708',
-    //    TAG_LIST: fromJSOrdered([
-    //        'weedcash',
-    //        'weed',
-    //        'cannabis',
-    //        'hemp',
-    //        'psychedelic',
-    //        'review',
-    //        'naturalmedicine',
-    //        'concentrate',
-    //        'edibles',
-    //        'breeding',
-    //        'glass',
-    //        'canna-curate',
-    //        'hash',
-    //        'cbd',
-    //        'news',
-    //        'props4crops',
-    //        'ganja',
-    //        'psilocybin',
-    //        'dmt',
-    //    ]),
-    //    INTERLEAVE_PROMOTED: true,
-    //    PROMOTED_POST_ACCOUNT: 'null',
-    //    VESTING_TOKEN: 'WEED POWER',
-    //    SITE_DESCRIPTION:
-    //        'Weedcash is a social media platform where everyone gets paid for ' +
-    //        'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
-    //        'supports real value for digital rewards through market price discovery and liquidity',
-    //    // Revive Ads
-    //    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    //    REVIVE_ADS: {
-    //        header_banner: {
-    //            zoneId: '3167',
-    //            reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //        },
-    //        sidebar_left: {
-    //            zoneId: '3168',
-    //            reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //        },
-    //        sidebar_right: {
-    //            zoneId: '3169',
-    //            reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //        },
-    //        feed_small: {
-    //            zoneId: '3170',
-    //            reviveId: '727bec5e09208690b050ccfc6a45d384',
-    //        },
-    //    },
-    //    ALLOW_MASTER_PW: false,
-    //    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    //    POST_FOOTER:
-    //        '\n\n---\n\n<center><sub>Posted via [weedcash.network](${POST_URL})</sub></center>',
-    //    SCOT_TAG_FIRST: false,
-    //    PINNED_POSTS_URL: 'https://richardcrill.github.io',
-    //    SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
-    //    SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'canna-community',
-    //    SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
-    //    SHOW_AUTHOR_RECENT_POSTS: true,
-    //    POSTED_VIA_NITROUS_ICON: 'weedcash',
-    //    PREFER_HIVE: true,
-    //},
+    'localhost:8080': WEEDCASH,
+    'frozen-retreat-15997.herokuapp.com': WEEDCASH,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
         APP_ICON: 'infowars',
@@ -357,78 +358,7 @@ export const CONFIG_MAP = {
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
         GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
     },
-    'weedcash.network': {
-        APP_NAME: 'WeedCash',
-        APP_ICON: 'weedcash',
-        APP_ICON_WIDTH: '140px',
-        APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://www.weedcash.network',
-        APP_DOMAIN: 'www.weedcash.network',
-        LIQUID_TOKEN: 'Weed',
-        LIQUID_TOKEN_UPPERCASE: 'WEED',
-        APP_MAX_TAG: 15,
-        SCOT_TAG: 'weedcash',
-        COMMUNITY_CATEGORY: 'hive-195708',
-        TAG_LIST: fromJSOrdered([
-            'weedcash',
-            'weed',
-            'cannabis',
-            'hemp',
-            'psychedelic',
-            'review',
-            'naturalmedicine',
-            'concentrate',
-            'edibles',
-            'breeding',
-            'glass',
-            'canna-curate',
-            'hash',
-            'cbd',
-            'news',
-            'props4crops',
-            'ganja',
-            'psilocybin',
-            'dmt',
-        ]),
-        INTERLEAVE_PROMOTED: true,
-        PROMOTED_POST_ACCOUNT: 'null',
-        VESTING_TOKEN: 'WEED POWER',
-        SITE_DESCRIPTION:
-            'Weedcash is a social media platform where everyone gets paid for ' +
-            'creating and curating content. It leverages a robust digital points system, called WEED, that ' +
-            'supports real value for digital rewards through market price discovery and liquidity',
-        // Revive Ads
-        NO_ADS_STAKE_THRESHOLD: 9999999999,
-        REVIVE_ADS: {
-            header_banner: {
-                zoneId: '3167',
-                reviveId: '727bec5e09208690b050ccfc6a45d384',
-            },
-            sidebar_left: {
-                zoneId: '3168',
-                reviveId: '727bec5e09208690b050ccfc6a45d384',
-            },
-            sidebar_right: {
-                zoneId: '3169',
-                reviveId: '727bec5e09208690b050ccfc6a45d384',
-            },
-            feed_small: {
-                zoneId: '3170',
-                reviveId: '727bec5e09208690b050ccfc6a45d384',
-            },
-        },
-        ALLOW_MASTER_PW: false,
-        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-        POST_FOOTER:
-            '\n\n---\n\n<center><sub>Posted via [weedcash.network](${POST_URL})</sub></center>',
-        SCOT_TAG_FIRST: false,
-        PINNED_POSTS_URL: 'https://richardcrill.github.io',
-        SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
-        SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'canna-community',
-        SCOT_DEFAULT_BENEFICIARY_PERCENT: 4.2, // between 0 amd 100
-        SHOW_AUTHOR_RECENT_POSTS: true,
-        POSTED_VIA_NITROUS_ICON: 'weedcash',
-    },
+    'weedcash.network': WEEDCASH,
 };
 
 // FIXME figure out best way to do this on both client and server from env
