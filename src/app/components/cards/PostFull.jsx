@@ -234,7 +234,8 @@ class PostFull extends React.Component {
         if (!post_content) return;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
-        this.props.showPromotePost(author, permlink);
+        const hive = post_content.get('hive');
+        this.props.showPromotePost(author, permlink, hive);
     };
 
     showExplorePost = () => {
@@ -464,7 +465,6 @@ class PostFull extends React.Component {
             contentBody = <LoadingIndicator type="circle-strong" />;
         } else {
             contentBody = (
-                
                 <MarkdownViewer
                     formId={formId + '-viewer'}
                     text={content_body}
@@ -494,7 +494,7 @@ class PostFull extends React.Component {
                                 authorRepLog10={authorRepLog10}
                             />
                         </div>
-                        <div className="PostFull__body entry-content">                           
+                        <div className="PostFull__body entry-content">
                             {contentBody}
                         </div>
                         {SHOW_AUTHOR_RECENT_POSTS && (
@@ -605,11 +605,11 @@ export default connect(
                 })
             );
         },
-        showPromotePost: (author, permlink) => {
+        showPromotePost: (author, permlink, hive) => {
             dispatch(
                 globalActions.showDialog({
                     name: 'promotePost',
-                    params: { author, permlink },
+                    params: { author, permlink, hive },
                 })
             );
         },
