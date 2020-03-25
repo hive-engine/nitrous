@@ -43,9 +43,11 @@ class PromotePost extends Component {
         const {
             author,
             permlink,
-            onClose,
+            hive,
             scotTokenSymbol,
             promotedPostAccount,
+            currentUser,
+            onClose,
         } = this.props;
         const { amount } = this.state;
         this.setState({ loading: true });
@@ -56,8 +58,10 @@ class PromotePost extends Component {
             amount,
             author,
             permlink,
+            hive,
+            currentUser,
+            promotedPostAccount,
             onClose,
-            currentUser: this.props.currentUser,
             errorCallback: this.errorCallback,
         });
     }
@@ -153,10 +157,10 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
-        const promotedPostAccount = state.app.getIn([
-            'hostConfig',
-            'PROMOTED_POST_ACCOUNT',
-        ]);
+        const promotedPostAccount = state.app.getIn(
+            ['scotConfig', 'config', 'promoted_post_account'],
+            'null'
+        );
         return {
             ...ownProps,
             currentUser,
@@ -169,11 +173,12 @@ export default connect(
     dispatch => ({
         dispatchSubmit: ({
             scotTokenSymbol,
-            promotedPostAccount,
             amount,
             author,
             permlink,
+            hive,
             currentUser,
+            promotedPostAccount,
             onClose,
             errorCallback,
         }) => {
@@ -192,7 +197,7 @@ export default connect(
                     symbol: scotTokenSymbol,
                     to: promotedPostAccount,
                     quantity: amount,
-                    memo: `@${author}/${permlink}`,
+                    memo: `${hive ? 'h' : ''}@${author}/${permlink}`,
                 },
             };
             const operation = {
