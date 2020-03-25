@@ -1,6 +1,5 @@
 const map = {
     //steemit
-    
     swedishdragon: 'PhotoStreem Founder',
     wwwiebe: 'Photostreem Curator',
    
@@ -18,6 +17,8 @@ const map = {
 };
 
 export default map;
+
+
 
 
 
