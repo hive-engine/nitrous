@@ -20,20 +20,20 @@ class ExplorePost extends Component {
         };
         this.onCopy = this.onCopy.bind(this);
         this.onCopyMD = this.onCopyMD.bind(this);
-        this.Steemd = this.Steemd.bind(this);
-        this.Steemdb = this.Steemdb.bind(this);
-        this.Busy = this.Busy.bind(this);
+        this.Hiveblocks = this.Hiveblocks.bind(this);
+        this.Hivedb = this.Hivedb.bind(this);
+        this.Peakd = this.Peakd.bind(this);
     }
 
-    Steemd() {
+    Hiveblocks() {
         serverApiRecordEvent('SteemdView', this.props.permlink);
     }
 
-    Steemdb() {
+    Hivedb() {
         serverApiRecordEvent('SteemdbView', this.props.permlink);
     }
 
-    Busy() {
+    Peakd() {
         serverApiRecordEvent('Busy view', this.props.permlink);
     }
 
@@ -52,11 +52,11 @@ class ExplorePost extends Component {
     render() {
         const link = this.props.permlink;
         const title = this.props.title;
-        const steemd = 'https://steemd.com' + link;
-        const steemdb = 'https://steemdb.com' + link;
-        const busy = 'https://busy.org' + link;
-        const steemit = 'https://steemit.com' + link;
-        const steemitmd = '[' + title + '](https://steemit.com' + link + ')';
+        const hiveblocks = 'https://hiveblocks.com' + link;
+        const hivedb = 'https://hive-db.com' + link;
+        const peakd = 'https://peakd.com' + link;
+        const hiveblog = 'https://hive.blog' + link;
+        const hiveblogMd = '[' + title + '](https://hive.blog' + link + ')';
         let text =
             this.state.copied == true
                 ? tt('explorepost_jsx.copied')
@@ -69,30 +69,32 @@ class ExplorePost extends Component {
             <span className="ExplorePost">
                 <h4>{tt('g.share_this_post')}</h4>
                 <hr />
+                <div>URL to this post:</div>
                 <div className="input-group">
                     <input
                         className="input-group-field share-box"
                         type="text"
-                        value={steemit}
+                        value={hiveblog}
                         onChange={e => e.preventDefault()}
                     />
                     <CopyToClipboard
-                        text={steemit}
+                        text={hiveblog}
                         onCopy={this.onCopy}
                         className="ExplorePost__copy-button input-group-label"
                     >
                         <span>{text}</span>
                     </CopyToClipboard>
                 </div>
+                <div>Markdown code for a link to this post:</div>
                 <div className="input-group">
                     <input
                         className="input-group-field share-box"
                         type="text"
-                        value={steemitmd}
+                        value={hiveblogMd}
                         onChange={e => e.preventDefault()}
                     />
                     <CopyToClipboard
-                        text={steemitmd}
+                        text={hiveblogMd}
                         onCopy={this.onCopyMD}
                         className="ExplorePost__copy-button input-group-label"
                     >
@@ -103,32 +105,32 @@ class ExplorePost extends Component {
                 <ul>
                     <li>
                         <a
-                            href={steemd}
-                            onClick={this.Steemd}
+                            href={hiveblocks}
+                            onClick={this.Hiveblocks}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            steemd.com <Icon name="extlink" />
+                            hiveblocks.com <Icon name="extlink" />
                         </a>
                     </li>
                     <li>
                         <a
-                            href={steemdb}
-                            onClick={this.Steemdb}
+                            href={hivedb}
+                            onClick={this.Hivedb}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            steemdb.com <Icon name="extlink" />
+                            hive-db.com <Icon name="extlink" />
                         </a>
                     </li>
                     <li>
                         <a
-                            href={busy}
-                            onClick={this.Busy}
+                            href={peakd}
+                            onClick={this.Peakd}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            busy.org <Icon name="extlink" />
+                            peakd.com <Icon name="extlink" />
                         </a>
                     </li>
                 </ul>
