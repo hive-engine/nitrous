@@ -47,7 +47,6 @@ export const SCOT_DENOM = 100000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'MARLIANS POWER';
 export const INTERLEAVE_PROMOTED = true;
-export const PROMOTED_POST_ACCOUNT = 'marlians';
 export const CERTIFIED_POST_ACCOUNT = 'uloggers';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
@@ -130,7 +129,7 @@ export const REVIVE_ADS = {
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
-    "---\n<center><sub>Posted via [Marlians.com](${POST_URL})</sub></center>";
+    '---\n<center><sub>Posted via [Marlians.com](${POST_URL})</sub></center>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
@@ -139,3 +138,5 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
+export const PREFER_HIVE = true;
+export const DISABLE_HIVE = false;
