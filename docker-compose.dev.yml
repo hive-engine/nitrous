@@ -1,24 +1,29 @@
 version: "3"
 services:
-  condenser:
-    build: .
-    image: hive/condenser:latest
-    container_name: condenser
-    ports:
-      - 80:8080
-      - 8080:8080
-    environment:
-      SDC_CLIENT_STEEMD_URL: https://steemd.minnowsupportproject.org
-      SDC_SERVER_STEEMD_URL: https://steemd.minnowsupportproject.org
-      SDC_DISABLE_SIGNUPS: 1
-      SDC_SITE_DOMAIN: steemit.local
-      SDC_IMAGE_PROXY_PREFIX: https://steemitimages.com/
-      SDC_HELMET_CONNECTSRC: "'self' steemit.local https://steemd.minnowsupportproject.org https://steemit.local http://steemit.local https://steemitimages.com"
-      SDC_UPLOAD_IMAGE_URL: "https://steemitimages.com"
-    volumes:
-      - ./yarn.lock:/var/app/yarn.lock
-      - ./package.json:/var/app/package.json
-      - ./dev-start.sh:/var/app/dev-start.sh:delegated
-      - ./dev-ssr.sh:/var/app/dev-ssr.sh:delegated
-      - ./src:/var/app/src:delegated
-    command: bash dev-start.sh
+    hive_condenser:
+        build: .
+        image: hive/condenser:latest
+        container_name: hive_condenser
+        ports:
+          - 80:8080
+          - 8080:8080
+          - 35729:35729
+        environment:
+          SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+          SDC_SERVER_STEEMD_URL: https://api.hive.blog
+          SDC_DISABLE_SIGNUPS: 1
+
+          # add to your /etc/hosts
+          # 127.0.0.1     hiveblog.local
+          SDC_SITE_DOMAIN: hiveblog.local
+
+          SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+          SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+          SDC_HELMET_CONNECTSRC: "'self' http://hiveblog.local https://api.hive.blog https://images.hive.blog"
+        volumes:
+          - ./yarn.lock:/var/app/yarn.lock
+          - ./package.json:/var/app/package.json
+          - ./dev-start.sh:/var/app/dev-start.sh:delegated
+          - ./dev-ssr.sh:/var/app/dev-ssr.sh:delegated
+          - ./src:/var/app/src:delegated
+        command: bash dev-start.sh
