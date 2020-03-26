@@ -31,7 +31,6 @@ export const SCOT_DENOM = 100000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'LASSECASH POWER';
 export const INTERLEAVE_PROMOTED = true;
-export const PROMOTED_POST_ACCOUNT = 'null';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
@@ -114,3 +113,5 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = false;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = ['lassecash'];
+export const PREFER_HIVE = true;
+export const DISABLE_HIVE = false;

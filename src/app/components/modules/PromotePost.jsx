@@ -5,10 +5,7 @@ import ReactDOM from 'react-dom';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    PROMOTED_POST_ACCOUNT,
-} from 'app/client_config';
+import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import tt from 'counterpart';
 
 class PromotePost extends Component {
@@ -44,7 +41,14 @@ class PromotePost extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const { author, permlink, onClose } = this.props;
+        const {
+            author,
+            permlink,
+            hive,
+            currentUser,
+            promotedPostAccount,
+            onClose,
+        } = this.props;
         const { amount } = this.state;
         this.setState({ loading: true });
         console.log('-- PromotePost.onSubmit -->');
@@ -53,8 +57,10 @@ class PromotePost extends Component {
             asset: LIQUID_TOKEN_UPPERCASE,
             author,
             permlink,
+            hive,
+            currentUser,
+            promotedPostAccount,
             onClose,
-            currentUser: this.props.currentUser,
             errorCallback: this.errorCallback,
         });
     }
@@ -157,7 +163,11 @@ class PromotePost extends Component {
 export default connect(
     (state, ownProps) => {
         const currentUser = state.user.getIn(['current']);
-        return { ...ownProps, currentUser };
+        const promotedPostAccount = state.app.getIn(
+            ['scotConfig', 'config', 'promoted_post_account'],
+            'null'
+        );
+        return { ...ownProps, promotedPostAccount, currentUser };
     },
 
     // mapDispatchToProps
@@ -167,7 +177,9 @@ export default connect(
             asset,
             author,
             permlink,
+            hive,
             currentUser,
+            promotedPostAccount,
             onClose,
             errorCallback,
         }) => {
@@ -184,9 +196,9 @@ export default connect(
                 contractAction: 'transfer',
                 contractPayload: {
                     symbol: LIQUID_TOKEN_UPPERCASE,
-                    to: PROMOTED_POST_ACCOUNT,
+                    to: promotedPostAccount,
                     quantity: amount,
-                    memo: `@${author}/${permlink}`,
+                    memo: `${hive ? 'h' : ''}@${author}/${permlink}`,
                 },
             };
             const operation = {

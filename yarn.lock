@@ -9290,6 +9290,30 @@ stealthy-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
+steem@0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/steem/-/steem-0.7.5.tgz#d0aff313bb39fa4ef7b0f0ec38af9fa3dfcbb122"
+  integrity sha512-krAkPZBo/GGhzrbcYSUrvgCnCbJUTXb4nYdrvrEu9pl/J4YIc2EI3BkNqWv8PyC3h3/5jNW7Woe1SlKuxuAq8w==
+  dependencies:
+    "@steemit/rpc-auth" "^1.1.1"
+    bigi "^1.4.2"
+    bluebird "^3.4.6"
+    browserify-aes "^1.0.6"
+    bs58 "^4.0.0"
+    buffer "^5.0.6"
+    bytebuffer "^5.0.1"
+    create-hash "^1.1.2"
+    create-hmac "^1.1.4"
+    cross-env "^5.0.0"
+    cross-fetch "^1.1.1"
+    debug "^2.6.8"
+    detect-node "^2.0.3"
+    ecurve "^1.0.5"
+    lodash "^4.16.4"
+    retry "^0.12.0"
+    secure-random "^1.1.1"
+    ws "^3.3.2"
+
 steemscript@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/steemscript/-/steemscript-1.1.1.tgz#c7fee04f8e9b50774c84f66529262d29b038a6b7"
