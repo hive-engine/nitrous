@@ -13,7 +13,7 @@ import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
 import { APP_URL } from 'app/client_config';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
 

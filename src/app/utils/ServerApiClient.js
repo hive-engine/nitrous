@@ -1,4 +1,4 @@
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 
 const request_base = {
     method: 'post',

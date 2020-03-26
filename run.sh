@@ -124,7 +124,7 @@ while test $# -gt 0; do
         ;;
 
         *)
-            echo "Usagge: ./run.sh <start|stop|log> <prod|dev>"
+            echo "Usage: ./run.sh <start|stop|log> <prod|dev>"
             exit 1
         ;;
     esac

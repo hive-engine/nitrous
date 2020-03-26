@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey } from '@hiveio/hive-js/lib/auth/ecc';
 import QRious from 'qrious';
 
 function image2canvas(image, bgcolor) {

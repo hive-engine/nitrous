@@ -39,7 +39,7 @@ module.exports = {
             'react',
             'react-dom',
             'react-router',
-            '@steemit/steem-js',
+            '@hiveio/hive-js',
             'slate',
             'slate-drop-or-paste-images',
             'slate-insert-block-on-enter',

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { config } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
+import { config } from '@hiveio/hive-js';
 
 export const browserTests = {};
 

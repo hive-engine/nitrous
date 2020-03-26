@@ -1,7 +1,7 @@
 import { fromJS, Set, List } from 'immutable';
 import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
-import { api, auth } from '@steemit/steem-js';
-import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
+import { api, auth } from '@hiveio/hive-js';
+import { PrivateKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';

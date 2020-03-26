@@ -1,4 +1,4 @@
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import { ifHive } from 'app/utils/Community';
 import stateCleaner from 'app/redux/stateCleaner';
 

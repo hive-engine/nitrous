@@ -1,5 +1,5 @@
 import constants from 'app/redux/constants';
-import { formatter } from '@steemit/steem-js';
+import { formatter } from '@hiveio/hive-js';
 
 export const numberWithCommas = x =>
     String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ',');

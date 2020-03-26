@@ -10,28 +10,10 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@steem/crypto-session@git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb":
-  version "1.0.3"
-  resolved "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb"
-  dependencies:
-    koa-session "3"
-    libsodium "^0.4.8"
-    libsodium-wrappers "^0.4.8"
-
-"@steemit/libcrypto@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@steemit/libcrypto/-/libcrypto-1.0.1.tgz#c31ab3e5deb667628169b3d54d746b015de31a79"
-
-"@steemit/rpc-auth@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@steemit/rpc-auth/-/rpc-auth-1.1.1.tgz#8f6239e89783d2b251b49e9e1b9486b5d167f944"
-  dependencies:
-    "@steemit/libcrypto" "^1.0.1"
-
-"@steemit/steem-js@0.7.9":
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/@steemit/steem-js/-/steem-js-0.7.9.tgz#eab4e9b2b7b73205c99620c65608d525f35f72bd"
-  integrity sha512-7k/2JV+FdNDHZvzJ8l+dgll+6tuhuWNfpt6tEvb/nbRKl6duInAcqtF0QzxW43pMv78uQ4nMCIbvtq9KZkPGWA==
+"@hiveio/hive-js@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.0.1.tgz#2acdce5550adc3f2cc23cb3aad17539360770549"
+  integrity sha512-aFX58gzLzZvZnPJdEafGRkVYNwQY6Lfqqr5yjr/yFNRXahPd2+m/f/n0e84R894DXB1HcgYASsxR/VwOpNscVg==
   dependencies:
     "@steemit/rpc-auth" "^1.1.1"
     bigi "^1.4.2"
@@ -51,6 +33,24 @@
     retry "^0.12.0"
     secure-random "^1.1.2"
     ws "^3.3.2"
+
+"@steem/crypto-session@git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb":
+  version "1.0.3"
+  resolved "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb"
+  dependencies:
+    koa-session "3"
+    libsodium "^0.4.8"
+    libsodium-wrappers "^0.4.8"
+
+"@steemit/libcrypto@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@steemit/libcrypto/-/libcrypto-1.0.1.tgz#c31ab3e5deb667628169b3d54d746b015de31a79"
+
+"@steemit/rpc-auth@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@steemit/rpc-auth/-/rpc-auth-1.1.1.tgz#8f6239e89783d2b251b49e9e1b9486b5d167f944"
+  dependencies:
+    "@steemit/libcrypto" "^1.0.1"
 
 "@storybook/addon-actions@^3.2.19":
   version "3.3.12"

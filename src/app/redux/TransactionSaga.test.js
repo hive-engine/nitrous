@@ -1,7 +1,7 @@
 /* global describe, it, before, beforeEach, after, afterEach */
 
 import { call, select, all, takeEvery } from 'redux-saga/effects';
-import steem, { api, broadcast } from '@steemit/steem-js';
+import steem, { api, broadcast } from '@hiveio/hive-js';
 import { callBridge } from 'app/utils/steemApi';
 import { cloneableGenerator } from 'redux-saga/utils';
 import * as transactionActions from 'app/redux/TransactionReducer';

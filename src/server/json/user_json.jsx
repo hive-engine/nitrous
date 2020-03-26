@@ -1,7 +1,7 @@
 import koa_router from 'koa-router';
 import React from 'react';
 import { routeRegex } from 'app/ResolveRoute';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import GDPRUserList from 'app/utils/GDPRUserList';
 
 export default function useUserJson(app) {
