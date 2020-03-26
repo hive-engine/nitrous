@@ -21,7 +21,6 @@ import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
 import { Map } from 'immutable';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
-import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 
 class Header extends React.Component {
     static propTypes = {
@@ -328,7 +327,7 @@ class Header extends React.Component {
                         </div>
 
                         <nav className="row Header__nav">
-                            <div className="small-6 medium-4 large-4 columns Header__logotype">
+                            <div className="small-6 medium-4 large-3 columns Header__logotype">
                                 <Link to={logo_link}>
                                     <SteemLogo
                                         nightmodeEnabled={nightmodeEnabled}
@@ -336,18 +335,31 @@ class Header extends React.Component {
                                 </Link>
                             </div>
 
-                            <div className="large-1 columns show-for-large large-centered Header__sort">
-                                {/*
-                                <SortOrder
-                                    sortOrder={order}
-                                    topic={category === 'feed' ? '' : category}
-                                    horizontal
-                                    pathname={pathname}
-                                />
-                                */}
+                            <div className="large-4 columns show-for-large large-centered Header__sort">
+                                <ul className="nav__block-list">
+                                    <li className={`nav__block-list-item`}>
+                                        <Link to={'/'}>Posts</Link>
+                                    </li>
+                                    <li className={`nav__block-list-item`}>
+                                        <Link
+                                            to={`${walletUrl}/proposals`}
+                                            target={'_blank'}
+                                        >
+                                            Proposals
+                                        </Link>
+                                    </li>
+                                    <li className={`nav__block-list-item`}>
+                                        <Link
+                                            to={`${walletUrl}/~witnesses`}
+                                            target={'_blank'}
+                                        >
+                                            Witnesses
+                                        </Link>
+                                    </li>
+                                </ul>
                             </div>
 
-                            <div className="small-6 medium-8 large-7 columns Header__buttons">
+                            <div className="small-6 medium-8 large-5 columns Header__buttons">
                                 {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                                 {!loggedIn && (
                                     <span className="Header__user-signup show-for-medium">
