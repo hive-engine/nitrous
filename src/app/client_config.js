@@ -60,7 +60,6 @@ export const SCOT_DENOM = 1000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'NATRL POWER';
 export const INTERLEAVE_PROMOTED = true;
-export const PROMOTED_POST_ACCOUNT = 'naturalpromo';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
@@ -143,3 +142,4 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = 'hive-155415';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
+export const PREFER_HIVE = false;
