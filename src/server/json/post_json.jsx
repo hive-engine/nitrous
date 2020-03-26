@@ -1,7 +1,8 @@
 import koa_router from 'koa-router';
 import React from 'react';
 import { routeRegex } from 'app/ResolveRoute';
-import { api } from '@steemit/steem-js';
+import * as steem from '@steemit/steem-js';
+import * as hive from 'steem';
 import GDPRUserList from 'app/utils/GDPRUserList';
 
 export default function usePostJson(app) {
@@ -13,7 +14,10 @@ export default function usePostJson(app) {
         const author = this.url.match(/(\@[\w\d\.-]+)/)[0].replace('@', '');
         const permalink = this.url.match(/(\@[\w\d\.-]+)\/?([\w\d-]+)/)[2];
         let status = '';
-        let post = yield api.getContentAsync(author, permalink);
+        let post = yield steem.api.getContentAsync(author, permalink);
+        if (!post) {
+            post = yield hive.api.getContentAsync(author, permalink);
+        }
 
         if (GDPRUserList.includes(post.author)) {
             post = 'Content unavailable';
