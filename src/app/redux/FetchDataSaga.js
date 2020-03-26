@@ -6,7 +6,7 @@ import {
     takeLatest,
     takeEvery,
 } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import { loadFollows } from 'app/redux/FollowSaga';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';

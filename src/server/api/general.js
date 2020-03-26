@@ -5,8 +5,8 @@ import config from 'config';
 import { getRemoteIp, rateLimitReq, checkCSRF } from 'server/utils/misc';
 import coBody from 'co-body';
 import Mixpanel from 'mixpanel';
-import { PublicKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
-import { api } from '@steemit/steem-js';
+import { PublicKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
+import { api } from '@hiveio/hive-js';
 import fetch from 'node-fetch';
 
 const ACCEPTED_TOS_TAG = 'accepted_tos_20180614';

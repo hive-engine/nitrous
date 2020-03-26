@@ -4,8 +4,8 @@ import tt from 'counterpart';
 import getSlug from 'speakingurl';
 import base58 from 'bs58';
 import secureRandom from 'secure-random';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast, auth, memo } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
+import { api, broadcast, auth, memo } from '@hiveio/hive-js';
 
 import { getAccount, getContent } from 'app/redux/SagaShared';
 import { postingOps, findSigningKey } from 'app/redux/AuthSaga';

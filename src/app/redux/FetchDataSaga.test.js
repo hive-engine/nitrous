@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import { callBridge } from 'app/utils/steemApi';
 import * as appActions from './AppReducer';
 import * as globalActions from './GlobalReducer';
