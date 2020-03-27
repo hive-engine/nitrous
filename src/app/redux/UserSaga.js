@@ -851,7 +851,15 @@ function* lookupVotingPower({ payload: { account } }) {
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData[scotTokenSymbol],
+            ...accountData.data[scotTokenSymbol],
         })
     );
+    if (accountData.hiveData) {
+        yield put(
+            userActions.setHiveVotingPower({
+                account,
+                ...accountData.hiveData[scotTokenSymbol],
+            })
+        );
+    }
 }

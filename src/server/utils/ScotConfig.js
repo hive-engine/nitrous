@@ -134,6 +134,7 @@ ScotConfig.prototype.refresh = async function() {
             }
         }
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
+
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);
