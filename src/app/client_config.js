@@ -387,3 +387,4 @@ export const ALLOWED_CURRENCIES = ['USD'];
 
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
 export const PREFER_HIVE = false;
+export const DISABLE_HIVE = false;

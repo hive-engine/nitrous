@@ -92,8 +92,8 @@ class Voting extends React.Component {
                 username,
                 is_comment,
                 post_obj,
+                useHive,
             } = this.props;
-            const useHive = post_obj.get('hive');
 
             let weight;
             if (myVote > 0 || myVote < 0) {
@@ -236,6 +236,7 @@ class Voting extends React.Component {
             hostConfig,
             tokenBeneficiary,
             downvoteEnabled,
+            useHive,
         } = this.props;
         const {
             votingUp,
@@ -776,13 +777,14 @@ export default connect(
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
         const is_comment = post.get('parent_author') !== '';
+        const useHive = post.get('hive');
 
         const current_account = state.user.get('current');
         const username = current_account
             ? current_account.get('username')
             : null;
         const votingData = current_account
-            ? current_account.get('voting')
+            ? current_account.get(useHive ? 'hive_voting' : 'voting')
             : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
@@ -821,6 +823,7 @@ export default connect(
                 ['config', 'disable_downvoting'],
                 false
             ),
+            useHive,
         };
     },
 
