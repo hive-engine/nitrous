@@ -174,6 +174,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_balance.totalStaked = staking.toFixed(
                 scotConfig.tokenStats.total_token_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_burn_balance) {
             scotConfig.tokenStats.token_burn_balance.balance = burn.toFixed(
                 scotConfig.tokenStats.total_token_balance.precision
             );
@@ -186,6 +188,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_miner_balance.totalStaked = stakingMiner.toFixed(
                 scotConfig.tokenStats.total_token_miner_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_miner_burn_balance) {
             scotConfig.tokenStats.token_miner_burn_balance.balance = burnMiner.toFixed(
                 scotConfig.tokenStats.total_token_miner_balance.precision
             );
@@ -198,6 +202,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_mega_miner_balance.totalStaked = stakingMegaMiner.toFixed(
                 scotConfig.tokenStats.total_token_mega_miner_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_mega_miner_burn_balance) {
             scotConfig.tokenStats.token_mega_miner_burn_balance.balance = burnMegaMiner.toFixed(
                 scotConfig.tokenStats.total_token_mega_miner_balance.precision
             );
