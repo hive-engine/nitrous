@@ -44,6 +44,7 @@ const HIDE_ANNOUNCEMENT = 'user/HIDE_ANNOUNCEMENT';
 const SHOW_ANNOUNCEMENT = 'user/SHOW_ANNOUNCEMENT';
 export const VOTING_POWER_LOOKUP = 'user/VOTING_POWER_LOOKUP';
 const SET_VOTING_POWER = 'user/SET_VOTING_POWER';
+const SET_HIVE_VOTING_POWER = 'user/SET_HIVE_VOTING_POWER';
 
 // Saga-related
 export const UPLOAD_IMAGE = 'user/UPLOAD_IMAGE';
@@ -284,6 +285,16 @@ export default function reducer(state = defaultState, action) {
             return state;
         }
 
+        case SET_HIVE_VOTING_POWER: {
+            if (state.get('current')) {
+                state = state.setIn(
+                    ['current', 'hive_voting'],
+                    fromJS(payload)
+                );
+            }
+            return state;
+        }
+
         case SET_DELEGATIONS:
             return state.set('delegations', fromJS(payload));
 
@@ -496,6 +507,11 @@ export const lookupVotingPower = payload => ({
 
 export const setVotingPower = payload => ({
     type: SET_VOTING_POWER,
+    payload,
+});
+
+export const setHiveVotingPower = payload => ({
+    type: SET_HIVE_VOTING_POWER,
     payload,
 });
 

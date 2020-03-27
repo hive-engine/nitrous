@@ -50,11 +50,15 @@ async function getSteemEngineAccountHistoryAsync(account) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return callApi(`https://scot-api.steem-engine.com/${path}`, params);
+    return await callApi(`https://scot-api.steem-engine.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
-    return getScotDataAsync(`@${account}`, { v: new Date().getTime() });
+    const data = await getScotDataAsync(`@${account}`, {});
+    const hiveData = DISABLE_HIVE
+        ? null
+        : await getScotDataAsync(`@${account}`, { hive: 1 });
+    return { data, hiveData };
 }
 
 async function getAccount(account, useHive) {
