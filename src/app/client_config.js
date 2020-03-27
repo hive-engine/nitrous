@@ -299,6 +299,7 @@ export const CONFIG_MAP = {
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-27',
         GOOGLE_AD_CLIENT: 'ca-pub-1391439792985803',
         COMMUNITY_CATEGORY: 'hive-120586',
+        PREFER_HIVE: true,
     },
     'vit.global': {
         APP_NAME: 'VisionIndustry',
@@ -386,4 +387,3 @@ export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
-export const PREFER_HIVE = false;
