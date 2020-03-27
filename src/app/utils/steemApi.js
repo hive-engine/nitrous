@@ -1,6 +1,10 @@
 import * as steem from '@steemit/steem-js';
 import * as hive from 'steem';
-import { LIQUID_TOKEN_UPPERCASE, PREFER_HIVE } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    PREFER_HIVE,
+    DISABLE_HIVE,
+} from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
@@ -46,11 +50,15 @@ async function getSteemEngineAccountHistoryAsync(account) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return callApi(`https://scot-api.steem-engine.com/${path}`, params);
+    return await callApi(`https://scot-api.steem-engine.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
-    return getScotDataAsync(`@${account}`, { v: new Date().getTime() });
+    const data = await getScotDataAsync(`@${account}`, {});
+    const hiveData = DISABLE_HIVE
+        ? null
+        : await getScotDataAsync(`@${account}`, { hive: 1 });
+    return { data, hiveData };
 }
 
 async function getAccount(account, useHive) {
@@ -360,7 +368,9 @@ export async function getContentAsync(author, permlink) {
     let scotData;
     const [steemitContent, hiveContent] = await Promise.all([
         steem.api.getContentAsync(author, permlink),
-        hive.api.getContentAsync(author, permlink),
+        DISABLE_HIVE
+            ? Promise.resolve(null)
+            : hive.api.getContentAsync(author, permlink),
     ]);
     let useHive = false;
     if (
@@ -424,7 +434,7 @@ export async function getStateAsync(url) {
     if (steemitApiStateNeeded) {
         const [steemitState, hiveState] = await Promise.all([
             steem.api.getStateAsync(path),
-            hive.api.getStateAsync(path),
+            DISABLE_HIVE ? Promise.resolve(null) : hive.api.getStateAsync(path),
         ]);
         if (steemitState && Object.keys(steemitState.content).length > 0) {
             raw = steemitState;
