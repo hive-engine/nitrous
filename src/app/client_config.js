@@ -111,5 +111,5 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
-export const PREFER_HIVE = false;
+export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
