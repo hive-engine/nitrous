@@ -951,7 +951,7 @@ export default formId =>
                 const isEdit = type === 'edit';
                 const isNew = /^submit_/.test(type);
 
-                if (isNew) {
+                if (isNew && !author) {
                     useHive = hostConfig['PREFER_HIVE'];
                 }
 
