@@ -619,8 +619,8 @@ class ReplyEditor extends React.Component {
                                         {...title.props}
                                     />
                                     <div
-                                        className="float-right secondary"
-                                        style={{ marginRight: '1rem' }}
+                                        className="float-left primary"
+                                        style={{ margin: '0.8rem 0 0 0' }}
                                     >
                                         {rte && (
                                             <a
@@ -628,8 +628,12 @@ class ReplyEditor extends React.Component {
                                                 onClick={this.toggleRte}
                                             >
                                                 {body.value
-                                                    ? 'Raw HTML'
-                                                    : 'Markdown'}
+                                                    ? `👁️ ${tt(
+                                                          'reply_editor.view_html_source'
+                                                      )}`
+                                                    : `🗒️ ${tt(
+                                                          'reply_editor.enable_markdown_editor'
+                                                      )}`}
                                             </a>
                                         )}
                                         {!rte &&
@@ -638,7 +642,9 @@ class ReplyEditor extends React.Component {
                                                     href="#"
                                                     onClick={this.toggleRte}
                                                 >
-                                                    {tt('reply_editor.editor')}
+                                                    {`📰 ${tt(
+                                                        'reply_editor.editor'
+                                                    )}`}
                                                 </a>
                                             )}
                                     </div>

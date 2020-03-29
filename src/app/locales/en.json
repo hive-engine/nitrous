@@ -328,7 +328,9 @@
             "Are you sure you want to exit the comment editor?",
         "uploading": "Uploading...",
         "draft_saved": "Draft saved.",
-        "editor": "Editor",
+        "editor": "Enable WYSIWYG Editor",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "Insert images by dragging & dropping, ",
         "pasting_from_the_clipboard": "pasting from the clipboard, ",
@@ -341,11 +343,12 @@
             "Check this to auto-upvote your post",
         "markdown_styling_guide": "Markdown Styling Guide",
         "or_by": "or by",
-        "title": "Title",
+        "title": "Title of your story",
         "update_post": "Update Post",
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
