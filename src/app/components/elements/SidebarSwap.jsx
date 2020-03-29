@@ -143,7 +143,22 @@ class SidebarSwap extends Component {
             input_token != '' &&
             output_token != ''
         ) {
-            if (input_token != 'KRWP' && output_token != 'KRWP') {
+            if (input_token == 'HIVE' || output_token == 'HIVE') {
+                console.log('2');
+                console.log(input_token, output_token);
+                var node1 = this.info.findNode(input_token, output_token);
+                var name = this.props.currentUser.get('username');
+                var memo_1 = `@swap:${input_token}:${output_token}:${
+                    node1.name
+                }:${name}`;
+
+                this.transferToken(
+                    input_token,
+                    this.input_amount,
+                    name,
+                    memo_1
+                );
+            } else if (input_token != 'KRWP' && output_token != 'KRWP') {
                 console.log('1');
                 console.log(input_token, output_token);
 
@@ -196,6 +211,12 @@ class SidebarSwap extends Component {
             var results = null;
             if (input_token == output_token) {
                 results = 0;
+            } else if (input_token == 'HIVE' || output_token == 'HIVE') {
+                results = await this.info.calculateExchangeAmount(
+                    input_token,
+                    output_token,
+                    this.input_amount
+                );
             } else if (input_token != 'KRWP' && output_token != 'KRWP') {
                 results = await this.info.calculateExchangeAmount2(
                     input_token,

@@ -126,15 +126,31 @@ class PoolComponent extends Component {
     tokenClickCallback(parent, token) {
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
-            parent.setState(
-                {
-                    input_token: token.name,
-                    input_token_symbol: token.ico,
-                },
-                () => {
-                    parent.calculateRemove();
-                }
-            );
+            if (token.name == 'HIVE') {
+                parent.setState(
+                    {
+                        input_token: token.name,
+                        input_token_symbol: token.ico,
+                        output_token: 'STEEM',
+                        output_token_symbol: 'images/tokens/steem.png',
+                    },
+                    () => {
+                        parent.calculateRemove();
+                    }
+                );
+            } else {
+                parent.setState(
+                    {
+                        input_token: token.name,
+                        input_token_symbol: token.ico,
+                        output_token: 'KRWP',
+                        output_token_symbol: '/images/tokens/noimage.png',
+                    },
+                    () => {
+                        parent.calculateRemove();
+                    }
+                );
+            }
     }
 
     componentDidMount() {
@@ -232,11 +248,19 @@ class PoolComponent extends Component {
         const { input_token } = this.state;
         if (input_token != '') {
             this.getSwapQueueInfoFromApi();
-
-            var results = await this.info.calculateRemoveAmount(
-                input_token,
-                this.props.currentUser.get('username')
-            );
+            var results = 0;
+            if (input_token == 'HIVE') {
+                results = await this.info.calculateRemoveAmount(
+                    input_token,
+                    this.props.currentUser.get('username'),
+                    'STEEM'
+                );
+            } else {
+                results = await this.info.calculateRemoveAmount(
+                    input_token,
+                    this.props.currentUser.get('username')
+                );
+            }
             console.log(results);
             var liquidity_token_rate =
                 100 *
@@ -380,8 +404,7 @@ class PoolComponent extends Component {
                                       } + ${this.info.floorNumber(
                                           this.state.rate_input_token *
                                               this.state.user_input_balance
-                                      )} ${this.state.input_token}
-                                    ${this.state.output_token} (${
+                                      )} ${this.state.input_token} (${
                                           this.state.liquidity_token_rate
                                       }%)`
                                     : '-'}

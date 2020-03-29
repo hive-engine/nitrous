@@ -4,7 +4,22 @@ import TokenList from 'app/components/elements/Swap/TokenList';
 class SelectedToken extends Component {
     constructor(props) {
         super(props);
+        this.tokens = this.props.tokens;
+        console.log(this.tokens);
+        this.state = {
+            updated: 0,
+        };
     }
+
+    onSearchTokenCallback = e => {
+        console.log('swap search', e.target.value);
+        var t = this.props.tokens.filter(
+            a => a.id.indexOf(e.target.value) != -1
+        );
+        console.log(t);
+        this.tokens = t;
+        this.setState({ updated: this.tokens.length });
+    };
 
     componentDidMount() {}
 
@@ -22,12 +37,17 @@ class SelectedToken extends Component {
                                 />
                             </span>
                         </p>
-                        <input type="text" placeholder="Search Token Name" />
+                        <input
+                            type="text"
+                            placeholder="Search Token Name"
+                            onChange={this.onSearchTokenCallback}
+                        />
                     </form>
                 </div>
                 <TokenList
+                    updated={this.state.updated}
                     parent={this.props.parent}
-                    tokens={this.props.tokens}
+                    tokens={this.tokens}
                     onTokenClick={this.props.onTokenClick}
                     onClose={this.props.onClose}
                 />

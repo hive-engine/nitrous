@@ -4,7 +4,7 @@ import tt from 'counterpart';
 class TokenList extends Component {
     constructor(props) {
         super(props);
-        this.tokens = this.props.tokens;
+        // this.tokens = this.props.tokens;
         this.state = {};
     }
 
@@ -27,7 +27,8 @@ class TokenList extends Component {
     };
 
     render() {
-        const listItems = this.tokens.map((token, i) => (
+        console.log(this.props.updated);
+        const listItems = this.props.tokens.map((token, i) => (
             <li key={i} data-id={token.id}>
                 <button
                     type="button"
