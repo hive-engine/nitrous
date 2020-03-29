@@ -143,14 +143,18 @@ export default class UserProfile extends React.Component {
         const _state = status ? status.getIn([category, order]) : null;
         const fetching = (_state && _state.fetching) || this.props.loading;
 
-        if (profile) {
-        } else if (fetching) {
+        if (
+            !profile &&
+            (fetching ||
+                (this.props.section === 'notifications' &&
+                    !this.props.notifications))
+        ) {
             return (
                 <center>
                     <LoadingIndicator type="circle" />
                 </center>
             );
-        } else {
+        } else if (!profile) {
             return (
                 <div>
                     <center>{tt('user_profile.unknown_account')}</center>
