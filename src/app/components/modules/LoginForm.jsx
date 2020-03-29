@@ -16,6 +16,19 @@ import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+
+if (!firebase.apps.length) {
+    firebase.initializeApp({
+        apiKey: 'AIzaSyCqITw-tiTb9h4kJ6fskDHY1UG9_uo943c',
+        projectId: 'coin-on',
+        databaseURL: 'https://coin-on.firebaseio.com',
+        authDomain: 'coin-on.firebaseapp.com',
+        appId: '1:524327920305:web:01212afa29097fea1f7890',
+    });
+}
 
 class LoginForm extends Component {
     static propTypes = {
@@ -61,6 +74,14 @@ class LoginForm extends Component {
             });
         };
         this.initForm(props);
+        this.uiConfig = {
+            signInFlow: 'popup',
+            signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+            callbacks: {
+                signInSuccessWithAuthResult: () => false,
+            },
+        };
+        this.state.isSignedInGoogle = false;
     }
 
     componentDidMount() {
@@ -68,6 +89,15 @@ class LoginForm extends Component {
             this.refs.username.focus();
         if (this.refs.username && this.refs.username.value)
             this.refs.pw.focus();
+        this.unregisterAuthObserver = firebase
+            .auth()
+            .onAuthStateChanged(user => {
+                this.setState({ isSignedInGoogle: !!user });
+            });
+    }
+
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
     }
 
     shouldComponentUpdate = shouldComponentUpdate(this, 'LoginForm');
@@ -405,6 +435,23 @@ class LoginForm extends Component {
                         </button>
                     )}
                 </div>
+                {!this.state.isSignedInGoogle && (
+                    <div>
+                        <StyledFirebaseAuth
+                            uiConfig={this.uiConfig}
+                            firebaseAuth={firebase.auth()}
+                        />
+                    </div>
+                )}
+                {this.state.isSignedInGoogle && (
+                    <div>
+                        Logged In with Google ID:{' '}
+                        {firebase.auth().currentUser.displayName}.
+                        <a onClick={() => firebase.auth().signOut()}>
+                            Sign-out
+                        </a>
+                    </div>
+                )}
                 {signupLink}
             </form>
         );

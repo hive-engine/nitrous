@@ -9,9 +9,23 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import reactForm from 'app/utils/ReactForm';
 import UserList from 'app/components/elements/UserList';
 import Dropzone from 'react-dropzone';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+
+if (!firebase.apps.length) {
+    firebase.initializeApp({
+        apiKey: 'AIzaSyCqITw-tiTb9h4kJ6fskDHY1UG9_uo943c',
+        projectId: 'coin-on',
+        databaseURL: 'https://coin-on.firebaseio.com',
+        authDomain: 'coin-on.firebaseapp.com',
+        appId: '1:524327920305:web:01212afa29097fea1f7890',
+    });
+}
 
 class Settings extends React.Component {
     constructor(props) {
+        console.log('props:', props);
         super(props);
         this.state = {
             errorMessage: '',
@@ -20,6 +34,14 @@ class Settings extends React.Component {
         };
         this.initForm(props);
         this.onNsfwPrefChange = this.onNsfwPrefChange.bind(this);
+        this.uiConfig = {
+            signInFlow: 'popup',
+            signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+            callbacks: {
+                signInSuccessWithAuthResult: () => false,
+            },
+        };
+        this.state.isSignedInGoogle = false;
     }
 
     initForm(props) {
@@ -216,6 +238,22 @@ class Settings extends React.Component {
         this.props.setUserPreferences(userPreferences);
     };
 
+    connectGoogleSteem = () => {
+        console.log('GGgg');
+    };
+
+    componentDidMount() {
+        this.unregisterAuthObserver = firebase
+            .auth()
+            .onAuthStateChanged(user => {
+                this.setState({ isSignedInGoogle: !!user });
+            });
+    }
+
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
+    }
+
     render() {
         const { state, props } = this;
 
@@ -241,6 +279,30 @@ class Settings extends React.Component {
 
         return (
             <div className="Settings">
+                <div className="row">
+                    {!this.state.isSignedInGoogle && (
+                        <div>
+                            <StyledFirebaseAuth
+                                uiConfig={this.uiConfig}
+                                firebaseAuth={firebase.auth()}
+                            />
+                        </div>
+                    )}
+                    {this.state.isSignedInGoogle && (
+                        <div>
+                            <p>
+                                Logged In with Google ID:{' '}
+                                {firebase.auth().currentUser.displayName}
+                            </p>
+                            <a onClick={this.connectGoogleSteem}>
+                                Connect {this.props.accountname}
+                            </a>
+                            <a onClick={() => firebase.auth().signOut()}>
+                                Sign-out
+                            </a>
+                        </div>
+                    )}
+                </div>
                 <div className="row">
                     <form
                         onSubmit={this.handleSubmitForm}
