@@ -456,11 +456,11 @@ class PostFull extends React.Component {
                     )}
                 {!isReply && <TagList post={post} />}
                 <div className="PostFull__footer row">
-                    <div className="columns medium-12 large-8">
+                    <div className="columns medium-12 large-9">
                         <TimeAuthorCategory post={post} />
                         <Voting post={post} />
                     </div>
-                    <div className="RightShare__Menu small-11 medium-12 large-4 columns">
+                    <div className="RightShare__Menu small-11 medium-12 large-3 columns">
                         {canReblog && (
                             <Reblog author={author} permlink={permlink} />
                         )}
