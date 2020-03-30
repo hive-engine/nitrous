@@ -74,10 +74,41 @@ const WEEDCASH = {
     PREFER_HIVE: true,
 };
 
+const TIX = {
+    APP_NAME: 'TrafficInsider',
+    APP_ICON: 'trafficinsider',
+    APP_ICON_WIDTH: '230px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.trafficinsider.org',
+    APP_DOMAIN: 'www.trafficinsider.org',
+    LIQUID_TOKEN: 'TIX',
+    LIQUID_TOKEN_UPPERCASE: 'TIX',
+    APP_MAX_TAG: 15,
+    SCOT_TAG: 'trafficinsider',
+    COMMUNITY_CATEGORY: '',
+    TAG_LIST: fromJSOrdered(['trafficinsider']),
+    INTERLEAVE_PROMOTED: true,
+    VESTING_TOKEN: 'TIX POWER',
+    SITE_DESCRIPTION:
+        'TrafficInsider is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called TIX, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-31',
+    PREFER_HIVE: false,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
-    'frozen-retreat-15997.herokuapp.com': WEEDCASH,
+    'localhost:8080': TIX,
+    'frozen-retreat-15997.herokuapp.com': TIX,
+    'www.trafficinsider.org': TIX,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
         APP_ICON: 'infowars',
