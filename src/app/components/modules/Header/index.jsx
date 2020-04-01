@@ -358,7 +358,7 @@ class Header extends React.Component {
                                     </li>
                                     <li className={`nav__block-list-item`}>
                                         <Link
-                                            to="https://hiveprojects.io"
+                                            to="https://hive.io/eco/"
                                             target={'_blank'}
                                         >
                                             Our dApps
