@@ -335,7 +335,7 @@ class Header extends React.Component {
                                 </Link>
                             </div>
 
-                            <div className="large-4 columns show-for-large large-centered Header__sort">
+                            <div className="large-5 columns show-for-large large-centered Header__sort">
                                 <ul className="nav__block-list">
                                     <li className={`nav__block-list-item`}>
                                         <Link to={'/'}>Posts</Link>
@@ -356,10 +356,18 @@ class Header extends React.Component {
                                             Witnesses
                                         </Link>
                                     </li>
+                                    <li className={`nav__block-list-item`}>
+                                        <Link
+                                            to="https://hiveprojects.io"
+                                            target={'_blank'}
+                                        >
+                                            Our dApps
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
 
-                            <div className="small-6 medium-8 large-5 columns Header__buttons">
+                            <div className="small-6 medium-8 large-4 columns Header__buttons">
                                 {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                                 {!loggedIn && (
                                     <span className="Header__user-signup show-for-medium">
