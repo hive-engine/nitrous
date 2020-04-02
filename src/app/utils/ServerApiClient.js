@@ -32,13 +32,13 @@ export function serverApiRecordEvent(type, val, rate_limit_ms = 5000) {
     if (last_call && new Date() - last_call < rate_limit_ms) return;
     last_call = new Date();
     const value = val && val.stack ? `${val.toString()} | ${val.stack}` : val;
-    api.call(
-        'overseer.collect',
-        { collection: 'event', metadata: { type, value } },
-        error => {
-            // if (error) console.warn('overseer error', error, error.data);
-        }
-    );
+    //api.call(
+    //    'overseer.collect',
+    //    { collection: 'event', metadata: { type, value } },
+    //    error => {
+    //        // if (error) console.warn('overseer error', error, error.data);
+    //    }
+    //);
 }
 
 let last_page;
