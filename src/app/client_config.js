@@ -101,7 +101,7 @@ const TIX = {
     POST_FOOTER: '',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-31',
-    PREFER_HIVE: false,
+    PREFER_HIVE: true,
 };
 
 export const CONFIG_MAP = {
