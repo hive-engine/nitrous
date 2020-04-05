@@ -116,9 +116,9 @@ Up to 50% of the reward for each post goes to the people who upvoted on it. Thes
 
 <a href="#Table_of_Contents">^</a>
 
-### <span id="Steem,_Steempower,_ SteemDollars_and_Lotus_-What_do_They_ Mean?">HIVE, HIVEPOWER, HBD and LOTUS - What Do They Mean?</span>
+### <span id="HIVE,_HIVEpower,_ HBD_and_Lotus_-What_do_They_ Mean?">HIVE, HIVEPOWER, HBD and LOTUS - What Do They Mean?</span>
 
-HIVE is the primary token of the Steem Blockchain and often a reward on posts. Lotus is our token, and exchangeable for HIVE. 
+HIVE is the primary token of the HIVE Blockchain and often a reward on posts. Lotus is our token, and exchangeable for HIVE. 
 
 When you publish and engage on NaturalMedicine.io, you’ll also be earning HIVE rewards. If someone on another HIVE frontend like PEAKD upvotes you, you will earn the token they have staked (or invested. If you’re not sure how to ‘stake’ the tokens you have earnt, read [this post](https://www.naturalmedicine.io/tokens/@naturalmedicine/how-to-stake-power-up-your-lotus-coin)).
 
