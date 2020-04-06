@@ -13,7 +13,9 @@ const SelectToken = props => {
     return (
         <div>
             <div className="able-coin">{`Balance: ${
-                props.balance == undefined ? '0' : props.balance
+                props.balance == undefined
+                    ? '0'
+                    : (props.balance * 1).toFixed(3)
             }`}</div>
             <input
                 type="text"
@@ -402,9 +404,9 @@ class PoolComponent extends Component {
                                 {this.state.exchange_rate > 0
                                     ? `${this.state.node_input_balance} ${
                                           this.state.input_token
-                                      } + ${this.state.node_output_balance} ${
-                                          this.state.output_token
-                                      }`
+                                      } + ${(
+                                          this.state.node_output_balance * 1
+                                      ).toFixed(3)} ${this.state.output_token}`
                                     : '-'}
                             </dd>
                         </div>

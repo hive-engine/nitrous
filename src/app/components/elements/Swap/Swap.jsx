@@ -13,7 +13,9 @@ const SelectToken = props => {
     return (
         <div>
             <div className="able-coin">{`Balance: ${
-                props.balance == undefined ? '0' : props.balance
+                props.balance == undefined
+                    ? '0'
+                    : (props.balance * 1).toFixed(3)
             }`}</div>
             <input
                 type="text"

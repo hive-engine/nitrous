@@ -15,7 +15,9 @@ const SelectToken = props => {
                 {props.showTokenListCallback == null
                     ? ''
                     : `Balance: ${
-                          props.balance == undefined ? '0' : props.balance
+                          props.balance == undefined
+                              ? '0'
+                              : (props.balance * 1).toFixed(3)
                       }`}
             </div>
             <input
@@ -386,9 +388,9 @@ class PoolComponent extends Component {
                                 {this.state.exchange_rate > 0
                                     ? `${this.state.node_krwp_balance} ${
                                           this.state.output_token
-                                      } + ${this.state.node_token_balance} ${
-                                          this.state.input_token
-                                      }`
+                                      } + ${(
+                                          this.state.node_token_balance * 1
+                                      ).toFixed(3)} ${this.state.input_token}`
                                     : '-'}
                             </dd>
                         </div>

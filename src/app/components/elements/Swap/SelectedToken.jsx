@@ -13,9 +13,9 @@ class SelectedToken extends Component {
 
     onSearchTokenCallback = e => {
         console.log('swap search', e.target.value);
-        var t = this.props.tokens.filter(
-            a => a.id.indexOf(e.target.value) != -1
-        );
+        var search_val = e.target.value.toLowerCase();
+
+        var t = this.props.tokens.filter(a => a.id.indexOf(search_val) != -1);
         console.log(t);
         this.tokens = t;
         this.setState({ updated: this.tokens.length });
