@@ -278,7 +278,8 @@ class SwapComponent extends Component {
                 results = await this.info.calculateExchangeAmount(
                     input_token,
                     output_token,
-                    this.input_amount
+                    this.input_amount,
+                    2
                 );
             } else if (input_token != 'KRWP' && output_token != 'KRWP') {
                 results = await this.info.calculateExchangeAmount2(

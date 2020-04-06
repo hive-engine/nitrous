@@ -316,7 +316,12 @@ class swapConfig {
         };
     }
 
-    async calculateExchangeAmount(input_token, output_token, input_amount) {
+    async calculateExchangeAmount(
+        input_token,
+        output_token,
+        input_amount,
+        swap_fee = 3
+    ) {
         var validNode = this.findNode(input_token, output_token);
         if (validNode == null) return 0;
         console.log(validNode);
@@ -328,7 +333,7 @@ class swapConfig {
         console.log('calculateExchangeAmount', balance);
         var alpha = input_amount / balance[0];
 
-        var rate_fee = (100.0 - this.swap_fee) / 100.0;
+        var rate_fee = (100.0 - swap_fee) / 100.0;
         var estimated_output_amount =
             balance[1] * (alpha * rate_fee) / (1 + alpha * rate_fee); // transfer this to user
         var exchange_rate = estimated_output_amount / input_amount;

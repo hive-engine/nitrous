@@ -113,15 +113,31 @@ class PoolComponent extends Component {
     tokenClickCallback(parent, token) {
         console.log('tokenClickCallback', token);
         if (parent.selected == 'output') {
-            parent.setState(
-                {
-                    output_token: token.name,
-                    output_token_symbol: token.ico,
-                },
-                () => {
-                    parent.calculateDeposit();
-                }
-            );
+            if (token.name == 'HIVEP') {
+                parent.setState(
+                    {
+                        input_token: 'STEEM',
+                        input_token_symbol: '/images/tokens/steem.png',
+                        output_token: token.name,
+                        output_token_symbol: token.ico,
+                    },
+                    () => {
+                        parent.calculateDeposit();
+                    }
+                );
+            } else {
+                parent.setState(
+                    {
+                        input_token: 'KRWP',
+                        input_token_symbol: '/images/tokens/krwp.png',
+                        output_token: token.name,
+                        output_token_symbol: token.ico,
+                    },
+                    () => {
+                        parent.calculateDeposit();
+                    }
+                );
+            }
         }
     }
 
