@@ -143,7 +143,7 @@ class SidebarSwap extends Component {
             input_token != '' &&
             output_token != ''
         ) {
-            if (input_token == 'HIVE' || output_token == 'HIVE') {
+            if (input_token == 'HIVEP' || output_token == 'HIVEP') {
                 console.log('2');
                 console.log(input_token, output_token);
                 var node1 = this.info.findNode(input_token, output_token);
@@ -211,7 +211,7 @@ class SidebarSwap extends Component {
             var results = null;
             if (input_token == output_token) {
                 results = 0;
-            } else if (input_token == 'HIVE' || output_token == 'HIVE') {
+            } else if (input_token == 'HIVEP' || output_token == 'HIVEP') {
                 results = await this.info.calculateExchangeAmount(
                     input_token,
                     output_token,

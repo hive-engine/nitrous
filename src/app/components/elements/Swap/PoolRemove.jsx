@@ -126,7 +126,7 @@ class PoolComponent extends Component {
     tokenClickCallback(parent, token) {
         console.log('tokenClickCallback', token);
         if (parent.selected == 'input')
-            if (token.name == 'HIVE') {
+            if (token.name == 'HIVEP') {
                 parent.setState(
                     {
                         input_token: token.name,
@@ -249,7 +249,7 @@ class PoolComponent extends Component {
         if (input_token != '') {
             this.getSwapQueueInfoFromApi();
             var results = 0;
-            if (input_token == 'HIVE') {
+            if (input_token == 'HIVEP') {
                 results = await this.info.calculateRemoveAmount(
                     input_token,
                     this.props.currentUser.get('username'),

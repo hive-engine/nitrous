@@ -42,7 +42,7 @@ async function getScotHolder(symbol, cnt, offset) {
 var mainnode = {
     name: 'main_node',
     account: 'sct.swap',
-    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM', 'HIVE'],
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM', 'HIVEP'],
     liquidity_token: [
         'KPORG',
         'KPSVC',
@@ -86,8 +86,8 @@ var subnode = [
     },
     {
         name: 'steemhive',
-        account: 'sct.jcob',
-        tokens: ['STEEM', 'HIVE'],
+        account: 'sct.pay',
+        tokens: ['STEEM', 'HIVEP'],
         liquidity_token: 'STEEMHIVE',
     },
 ];
@@ -113,9 +113,9 @@ class swapConfig {
             ico: '/images/tokens/krwp.png',
         });
         this.tokens.push({
-            id: 'hive',
-            name: 'HIVE',
-            fullname: 'HIVE',
+            id: 'hivep',
+            name: 'HIVEP',
+            fullname: 'HIVE Pegged',
             ico: '/images/tokens/hive.png',
         });
         this.tokens.push({
@@ -160,7 +160,6 @@ class swapConfig {
     }
 
     getSteemBalance(account) {
-        api.setOptions({ url: 'https://api.steemit.com' });
         return new Promise((resolve, reject) => {
             api.getAccounts([account], function(err, response) {
                 console.log(response[0]);
@@ -174,7 +173,6 @@ class swapConfig {
     }
 
     getSBDBalance(account) {
-        api.setOptions({ url: 'https://api.steemit.com' });
         return new Promise((resolve, reject) => {
             api.getAccounts([account], function(err, response) {
                 if (err) reject(err);
@@ -183,25 +181,9 @@ class swapConfig {
         });
     }
 
-    getHiveBalance(account) {
-        api.setOptions({ url: 'https://api.hive.blog' });
-        return new Promise((resolve, reject) => {
-            api.getAccounts([account], function(err, response) {
-                console.log('getHiveBalance', response[0]);
-                if (err) reject(err);
-                console.log(response[0].balance);
-                var hive_balance = response[0].balance.split(' ')[0];
-                console.log(hive_balance);
-                api.setOptions({ url: 'https://api.steemit.com' });
-                resolve(hive_balance);
-            });
-        });
-    }
-
     getTokenBalance(account, symbol) {
         if (symbol == 'STEEM') return this.getSteemBalance(account);
         else if (symbol == 'SBD') return this.getSBDBalance(account);
-        else if (symbol == 'HIVE') return this.getHiveBalance(account);
         else {
             return new Promise((resolve, reject) => {
                 ssc.findOne(
