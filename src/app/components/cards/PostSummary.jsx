@@ -157,7 +157,7 @@ class PostSummary extends React.Component {
                                     className="articles__icon-100"
                                     title={tt('g.powered_up_100')}
                                 >
-                                    <Icon name="steempower" />
+                                    <Icon name="hivepower" />
                                 </span>
                             )}
                             {post.getIn(['stats', 'is_pinned'], false) && (
