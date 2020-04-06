@@ -70,7 +70,7 @@ class Post extends React.Component {
             return (
                 <div className="NotFound float-center">
                     <div>
-                        <Icon name="steem" size="4x" />
+                        <Icon name="hive" size="4x" />
                         <h4 className="NotFound__header">
                             Sorry! This page doesnt exist.
                         </h4>
