@@ -458,7 +458,7 @@ class PostsIndex extends React.Component {
                         {tt('g.sctswap')}
                     </button>
 
-                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?link_id=390fe008f10e29" />
+                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" />
 
                     {this.props.isBrowser && (
                         <div>
