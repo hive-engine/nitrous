@@ -223,21 +223,21 @@ class PostsIndex extends React.Component {
     }
 
     render() {
-        var Iframe = React.createClass({
-            render: function() {
-                return (
-                    <div>
-                        <iframe
-                            id="iframe-widget"
-                            name="widget"
-                            src={this.props.src}
-                            width="250px"
-                            height="330px"
-                        />
-                    </div>
-                );
-            },
-        });
+        // var Iframe = React.createClass({
+        //     render: function() {
+        //         return (
+        //             <div>
+        //                 <iframe
+        //                     id="iframe-widget"
+        //                     name="widget"
+        //                     src={this.props.src}
+        //                     width="250px"
+        //                     height="330px"
+        //                 />
+        //             </div>
+        //         );
+        //     },
+        // });
 
         let {
             category,
@@ -441,7 +441,7 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
-                    {/* <img
+                    <img
                         src="https://changenow.io/images/embeds/button.svg"
                         alt="ChangeNOW button"
                         style={{
@@ -449,7 +449,7 @@ class PostsIndex extends React.Component {
                             cursor: 'pointer',
                         }}
                         onClick={this.goExchangeNow}
-                    /> */}
+                    />
                     <button
                         type="button"
                         className="c-sidebar--right--link"
@@ -458,7 +458,7 @@ class PostsIndex extends React.Component {
                         {tt('g.sctswap')}
                     </button>
 
-                    <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" />
+                    {/* <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" /> */}
 
                     {this.props.isBrowser && (
                         <div>
