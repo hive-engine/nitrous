@@ -3,7 +3,11 @@ import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
-import { ALLOW_MASTER_PW, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    ALLOW_MASTER_PW,
+    LIQUID_TOKEN_UPPERCASE,
+    PREFER_HIVE,
+} from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -458,17 +462,16 @@ function* usernamePasswordLogin2({
             const challenge = { token: challengeString };
             const buf = JSON.stringify(challenge, null, 0);
             const bufSha = hash.sha256(buf);
+            const useHive = PREFER_HIVE;
 
             if (useKeychain) {
                 const response = yield new Promise(resolve => {
-                    window.steem_keychain.requestSignBuffer(
-                        username,
-                        buf,
-                        'Posting',
-                        response => {
-                            resolve(response);
-                        }
-                    );
+                    (useHive
+                        ? window.hive_keychain
+                        : window.steem_keychain
+                    ).requestSignBuffer(username, buf, 'Posting', response => {
+                        resolve(response);
+                    });
                 });
                 if (response.success) {
                     signatures['posting'] = response.result;
@@ -506,7 +509,11 @@ function* usernamePasswordLogin2({
             }
 
             console.log('Logging in as', username);
-            const response = yield serverApiLogin(username, signatures);
+            const response = yield serverApiLogin(
+                username,
+                signatures,
+                useHive
+            );
             const body = yield response.json();
         }
     } catch (error) {
