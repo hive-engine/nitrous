@@ -5,6 +5,7 @@ import axios from 'axios';
 import SSC from 'sscjs';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 async function callApi(url, params) {
     return await axios({
@@ -21,9 +22,11 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account, symbol) {
+async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
     const transfers = await callApi(
-        'https://history.steem-engine.com/accountHistory',
+        hive
+            ? 'https://accounts.hive-engine.com/accountHistory'
+            : 'https://history.steem-engine.com/accountHistory',
         {
             account,
             limit: 50,
@@ -193,10 +196,11 @@ async function addAccountToState(state, account) {
     }
 }
 
-export async function attachScotData(url, state, scotTokenSymbol, useHive) {
+export async function attachScotData(url, state, hostConfig, useHive) {
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -225,6 +229,8 @@ export async function attachScotData(url, state, scotTokenSymbol, useHive) {
     }
 
     urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
+    const hiveEngine = hostConfig['HIVE_ENGINE'];
+    const engineApi = hiveEngine ? hiveSsc : ssc;
     if (urlParts) {
         const account = urlParts[1];
         const [
@@ -233,23 +239,25 @@ export async function attachScotData(url, state, scotTokenSymbol, useHive) {
             tokenStatuses,
             transferHistory,
             tokenDelegations,
-            snaxBalance,
         ] = await Promise.all([
             // modified to get all tokens. - by anpigon
-            ssc.find('tokens', 'balances', {
+            engineApi.find('tokens', 'balances', {
                 account,
             }),
-            ssc.findOne('tokens', 'pendingUnstakes', {
+            engineApi.findOne('tokens', 'pendingUnstakes', {
                 account,
                 symbol: scotTokenSymbol,
             }),
             getScotAccountDataAsync(account),
-            getSteemEngineAccountHistoryAsync(account, scotTokenSymbol),
-            ssc.find('tokens', 'delegations', {
+            getSteemEngineAccountHistoryAsync(
+                account,
+                scotTokenSymbol,
+                hiveEngine
+            ),
+            engineApi.find('tokens', 'delegations', {
                 $or: [{ from: account }, { to: account }],
                 symbol: scotTokenSymbol,
             }),
-            fetchSnaxBalanceAsync(account),
         ]);
 
         await addAccountToState(state, account);
@@ -274,9 +282,6 @@ export async function attachScotData(url, state, scotTokenSymbol, useHive) {
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
-        }
-        if (snaxBalance) {
-            state.accounts[account].snax_balance = snaxBalance;
         }
         return;
     }
@@ -444,7 +449,7 @@ export async function getContentAsync(
     return content;
 }
 
-export async function getStateAsync(url, scotTokenSymbol, preferHive) {
+export async function getStateAsync(url, hostConfig) {
     // strip off query string
     let path = url.split('?')[0];
 
@@ -478,7 +483,7 @@ export async function getStateAsync(url, scotTokenSymbol, preferHive) {
             raw = steemitState;
         }
         if (
-            (preferHive ||
+            (hostConfig['PREFER_HIVE'] ||
                 !(
                     steemitState && Object.keys(steemitState.content).length > 0
                 )) &&
@@ -495,7 +500,7 @@ export async function getStateAsync(url, scotTokenSymbol, preferHive) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, scotTokenSymbol, useHive);
+    await attachScotData(path, raw, hostConfig, useHive);
 
     const cleansed = stateCleaner(raw);
     return cleansed;

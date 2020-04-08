@@ -102,6 +102,7 @@ const TIX = {
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-31',
     PREFER_HIVE: true,
+    HIVE_ENGINE: true,
 };
 
 export const CONFIG_MAP = {

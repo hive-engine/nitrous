@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import tt from 'counterpart';
 import { api } from '@steemit/steem-js';
@@ -55,19 +55,11 @@ export function* getAccount(username, force = false) {
 
 /** Manual refreshes.  The router is in FetchDataSaga. */
 export function* getState({ payload: { url } }) {
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
-    );
-    const preferHive = yield select(state =>
-        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
     );
     try {
-        const state = yield call(
-            getStateAsync,
-            url,
-            scotTokenSymbol,
-            preferHive
-        );
+        const state = yield call(getStateAsync, url, hostConfig);
         yield put(globalActions.receiveState(state));
     } catch (error) {
         console.error('~~ Saga getState error ~~>', url, error);

@@ -219,6 +219,7 @@ class TransferForm extends Component {
         const LIQUID_TOKEN = hostConfig['LIQUID_TOKEN'];
         const LIQUID_TOKEN_UPPERCASE = hostConfig['LIQUID_TOKEN_UPPERCASE'];
         const VESTING_TOKEN = hostConfig['VESTING_TOKEN'];
+        const useHive = hostConfig['HIVE_ENGINE'];
         const transferTips = {
             'Transfer to Account': tt(
                 'transfer_jsx.move_funds_to_another_account',
@@ -248,6 +249,7 @@ class TransferForm extends Component {
                         toVesting,
                         transferType,
                         symbol: LIQUID_TOKEN_UPPERCASE,
+                        useHive,
                     });
                 })}
                 onChange={this.clearError}
@@ -600,6 +602,7 @@ export default connect(
             symbol,
             currentUser,
             errorCallback,
+            useHive,
         }) => {
             if (!toVesting && !/Transfer to Account/.test(transferType))
                 throw new Error(
@@ -637,7 +640,7 @@ export default connect(
                       },
                   };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
             };
@@ -661,6 +664,7 @@ export default connect(
                     successCallback,
                     errorCallback,
                     confirm,
+                    useHive,
                 })
             );
         },

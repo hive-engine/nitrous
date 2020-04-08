@@ -260,7 +260,7 @@ export async function serverRender(
         const url = location;
 
         requestTimer.startTimer('apiGetState_ms');
-        onchain = await apiGetState(url, scotTokenSymbol, preferHive);
+        onchain = await apiGetState(url, hostConfig);
         requestTimer.stopTimer('apiGetState_ms');
 
         // If a user profile URL is requested but no profile information is
@@ -467,14 +467,14 @@ export function clientRender(initialState) {
     );
 }
 
-async function apiGetState(url, scotTokenSymbol, preferHive) {
+async function apiGetState(url, hostConfig) {
     let offchain;
 
     if (process.env.OFFLINE_SSR_TEST) {
         offchain = get_state_perf;
     }
 
-    offchain = await getStateAsync(url, scotTokenSymbol, preferHive);
+    offchain = await getStateAsync(url, hostConfig);
 
     return offchain;
 }

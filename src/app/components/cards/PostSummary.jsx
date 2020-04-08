@@ -127,6 +127,7 @@ class PostSummary extends React.Component {
             promoted.contains(
                 `${content.get('author')}/${content.get('permlink')}`
             );
+        const hive = content.get('hive');
         const p = extractContent(immutableAccessor, content, appDomain);
         const desc = p.desc;
 
@@ -287,6 +288,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+                            hive={hive}
                         />
                     )}
                     <span className="show-for-medium">{author_category}</span>
@@ -304,6 +306,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+                            hive={hive}
                         />
                     )}
                 </span>

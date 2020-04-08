@@ -48,6 +48,7 @@ class PromotePost extends Component {
             promotedPostAccount,
             currentUser,
             onClose,
+            hiveEngine,
         } = this.props;
         const { amount } = this.state;
         this.setState({ loading: true });
@@ -63,6 +64,7 @@ class PromotePost extends Component {
             promotedPostAccount,
             onClose,
             errorCallback: this.errorCallback,
+            hiveEngine,
         });
     }
 
@@ -157,6 +159,7 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
+        const hiveEngine = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
         const promotedPostAccount = state.app.getIn(
             ['scotConfig', 'config', 'promoted_post_account'],
             'null'
@@ -166,6 +169,7 @@ export default connect(
             currentUser,
             scotTokenSymbol,
             promotedPostAccount,
+            hiveEngine,
         };
     },
 
@@ -181,6 +185,7 @@ export default connect(
             promotedPostAccount,
             onClose,
             errorCallback,
+            hiveEngine,
         }) => {
             const username = currentUser.get('username');
 
@@ -197,11 +202,13 @@ export default connect(
                     symbol: scotTokenSymbol,
                     to: promotedPostAccount,
                     quantity: amount,
-                    memo: `${hive ? 'h' : ''}@${author}/${permlink}`,
+                    memo: `${hive && !hiveEngine ? 'h' : ''}@${author}/${
+                        permlink
+                    }`,
                 },
             };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: hiveEngine ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
                 __config: {
@@ -217,6 +224,7 @@ export default connect(
                     operation,
                     successCallback,
                     errorCallback,
+                    useHive: hiveEngine,
                 })
             );
         },

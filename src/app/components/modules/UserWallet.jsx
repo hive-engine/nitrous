@@ -60,20 +60,21 @@ class UserWallet extends React.Component {
 
     handleClaimRewards = account => {
         const scotTokenSymbol = this.props.scotTokenSymbol;
+        const useHive = this.props.useHive;
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account, scotTokenSymbol);
+        this.props.claimRewards(account, scotTokenSymbol, useHive);
     };
     handleClaimTokenRewards = token => {
-        const { account, claimTokenRewards } = this.props;
-        claimTokenRewards(account, token);
+        const { account, claimTokenRewards, useHive } = this.props;
+        claimTokenRewards(account, token, useHive);
     };
     handleClaimAllTokensRewards = () => {
-        const { account, claimAllTokensRewards } = this.props;
+        const { account, claimAllTokensRewards, useHive } = this.props;
         const allTokenStatus = account.get('all_token_status').toJS();
         const pendingTokenSymbols = Object.values(allTokenStatus)
             .filter(e => parseFloat(e.pending_token))
             .map(({ symbol }) => symbol);
-        claimAllTokensRewards(account, pendingTokenSymbols);
+        claimAllTokensRewards(account, pendingTokenSymbols, useHive);
     };
     render() {
         const {
@@ -89,6 +90,7 @@ class UserWallet extends React.Component {
             scotTokenName,
             scotTokenSymbol,
             scotVestingToken,
+            useHive,
         } = this.props;
 
         // do not render if account is not loaded or available
@@ -171,6 +173,7 @@ class UserWallet extends React.Component {
             this.props.cancelUnstake({
                 account: name,
                 transactionId: tokenUnstakes.txID,
+                useHive,
             });
         };
 
@@ -545,7 +548,7 @@ class UserWallet extends React.Component {
                     </div>
                 </div>
                 <hr />
-                {/* Steem Engine Tokens */}
+                {/* Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div
                         className={classNames('UserWallet__balance', 'row', {
@@ -553,11 +556,7 @@ class UserWallet extends React.Component {
                         })}
                     >
                         <div className="column small-12 medium-9">
-                            Steem Engine Token
-                            <FormattedHTMLMessage
-                                className="secondary"
-                                id="tips_js.steem_engine_tokens"
-                            />
+                            {useHive ? 'Hive' : 'Steem'} Engine Tokens
                         </div>
                         {isMyAccount && (
                             <div className="column small-12 medium-3">
@@ -657,6 +656,8 @@ export default connect(
             'hostConfig',
             'VESTING_TOKEN',
         ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
+
         return {
             ...ownProps,
             gprops: gprops ? gprops.toJS() : {},
@@ -664,11 +665,12 @@ export default connect(
             scotTokenName,
             scotTokenSymbol,
             scotVestingToken,
+            useHive,
         };
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: (account, scotTokenSymbol) => {
+        claimRewards: (account, scotTokenSymbol, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -689,11 +691,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimTokenRewards: (account, symbol) => {
+        claimTokenRewards: (account, symbol, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -717,11 +720,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimAllTokensRewards: (account, symbols) => {
+        claimAllTokensRewards: (account, symbols, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -753,6 +757,7 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },

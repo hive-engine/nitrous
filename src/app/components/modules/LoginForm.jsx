@@ -569,6 +569,7 @@ export default connect(
                     operation,
                     successCallback,
                     errorCallback,
+                    useHive,
                 } = loginBroadcastOperation.toJS();
                 dispatch(
                     transactionActions.broadcastOperation({
@@ -579,6 +580,7 @@ export default connect(
                         useKeychain,
                         successCallback,
                         errorCallback,
+                        useHive,
                     })
                 );
                 dispatch(

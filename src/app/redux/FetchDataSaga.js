@@ -53,11 +53,8 @@ export function* fetchState(location_change_action) {
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
     }
 
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
-    );
-    const preferHive = yield select(state =>
-        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
     );
 
     if (
@@ -66,7 +63,7 @@ export function* fetchState(location_change_action) {
         pathname.indexOf('trending') !== -1 ||
         pathname.indexOf('hot') !== -1
     ) {
-        yield fork(getPromotedState, pathname, scotTokenSymbol, preferHive);
+        yield fork(getPromotedState, pathname, hostConfig);
     }
 
     // `ignore_fetch` case should only trigger on initial page load. No need to call
@@ -104,12 +101,7 @@ export function* fetchState(location_change_action) {
     yield put(appActions.fetchDataBegin());
     try {
         // handle trending/hot/promoted feeds differently.
-        const state = yield call(
-            getStateAsync,
-            url,
-            scotTokenSymbol,
-            preferHive
-        );
+        const state = yield call(getStateAsync, url, hostConfig);
 
         yield put(globalActions.receiveState(state));
         yield call(fetchScotInfo);
@@ -129,7 +121,7 @@ export function* fetchState(location_change_action) {
  *
  * @param {String} pathname
  */
-export function* getPromotedState(pathname, scotTokenSymbol, preferHive) {
+export function* getPromotedState(pathname, hostConfig) {
     const m = pathname.match(/^\/[a-z]*\/(.*)\/?/);
     const tag = m ? m[1] : '';
 
@@ -141,12 +133,7 @@ export function* getPromotedState(pathname, scotTokenSymbol, preferHive) {
         return;
     }
 
-    const state = yield call(
-        getStateAsync,
-        `/promoted/${tag}`,
-        scotTokenSymbol,
-        preferHive
-    );
+    const state = yield call(getStateAsync, `/promoted/${tag}`, hostConfig);
     yield put(globalActions.receiveState(state));
 }
 
@@ -431,11 +418,13 @@ function* fetchJson({
 }
 
 function* fetchScotInfo() {
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
     );
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const scotInfo = yield call(getScotDataAsync, 'info', {
         token: scotTokenSymbol,
+        hive: hostConfig['HIVE_ENGINE'],
     });
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }

@@ -27,6 +27,7 @@ class Powerdown extends React.Component {
             delegatedStake,
             scotPrecision,
             scotTokenSymbol,
+            useHive,
         } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
@@ -64,6 +65,7 @@ class Powerdown extends React.Component {
                 unstakeAmount,
                 errorCallback,
                 successCallback,
+                useHive,
             });
         };
 
@@ -145,6 +147,7 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
 
         return {
             ...ownProps,
@@ -154,6 +157,7 @@ export default connect(
             state,
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
             scotTokenSymbol,
+            useHive,
         };
     },
     // mapDispatchToProps
@@ -172,6 +176,7 @@ export default connect(
             unstakeAmount,
             errorCallback,
             successCallback,
+            useHive,
         }) => {
             const successCallbackWrapper = (...args) => {
                 dispatch(
@@ -188,7 +193,7 @@ export default connect(
                 },
             };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [account],
                 json: JSON.stringify(unstakeOperation),
             };
@@ -198,6 +203,7 @@ export default connect(
                     operation,
                     successCallback: successCallbackWrapper,
                     errorCallback,
+                    useHive,
                 })
             );
         },
