@@ -1,4 +1,4 @@
-import { fromJS, Set, List } from 'immutable';
+import { fromJS, Set, List, Map } from 'immutable';
 import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
@@ -148,6 +148,9 @@ function* usernamePasswordLogin(action) {
     // take a while on slow computers.
     yield call(usernamePasswordLogin2, action.payload);
     const current = yield select(state => state.user.get('current'));
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     if (current) {
         const username = current.get('username');
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
@@ -271,6 +274,10 @@ function* usernamePasswordLogin2({
         return;
     }
 
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+
     let private_keys;
     if (!useKeychain) {
         try {
@@ -326,9 +333,7 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        const allowMasterPassword = yield select(state =>
-            state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
-        );
+        const allowMasterPassword = hostConfig['ALLOW_MASTER_PW'];
         if (!allowMasterPassword && hasOwnerAuth) {
             console.log('Rejecting due to detected owner auth');
             yield put(userActions.loginError({ error: 'owner_login_blocked' }));
@@ -466,17 +471,16 @@ function* usernamePasswordLogin2({
             const challenge = { token: challengeString };
             const buf = JSON.stringify(challenge, null, 0);
             const bufSha = hash.sha256(buf);
+            const useHive = hostConfig['PREFER_HIVE'];
 
             if (useKeychain) {
                 const response = yield new Promise(resolve => {
-                    window.steem_keychain.requestSignBuffer(
-                        username,
-                        buf,
-                        'Posting',
-                        response => {
-                            resolve(response);
-                        }
-                    );
+                    (useHive
+                        ? window.hive_keychain
+                        : window.steem_keychain
+                    ).requestSignBuffer(username, buf, 'Posting', response => {
+                        resolve(response);
+                    });
                 });
                 if (response.success) {
                     signatures['posting'] = response.result;
@@ -514,7 +518,11 @@ function* usernamePasswordLogin2({
             }
 
             console.log('Logging in as', username);
-            const response = yield serverApiLogin(username, signatures);
+            const response = yield serverApiLogin(
+                username,
+                signatures,
+                useHive
+            );
             const body = yield response.json();
         }
     } catch (error) {
