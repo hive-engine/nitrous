@@ -1,4 +1,4 @@
-import Apps from 'hivescript/apps.json';
+import Apps from '@hivechain/hivescript/apps.json';
 
 function read_md_app(metadata) {
     return metadata &&
