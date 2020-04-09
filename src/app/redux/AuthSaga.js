@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { Set, Map, fromJS, List } from 'immutable';
 import { api as steemApi } from '@steemit/steem-js';
-import { api as hiveApi } from '@steem';
+import { api as hiveApi } from 'steem';
 import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
