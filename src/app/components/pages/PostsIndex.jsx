@@ -406,6 +406,7 @@ class PostsIndex extends React.Component {
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         ['total_token_balance', 'totalStaked']
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -437,6 +438,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -468,6 +470,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -542,6 +545,7 @@ module.exports = {
         (state, ownProps) => {
             const hostConfig = state.app.get('hostConfig', Map());
             const scotTokenSymbol = hostConfig.get('LIQUID_TOKEN_UPPERCASE');
+            const useHive = hostConfig.get('HIVE_ENGINE');
             const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;

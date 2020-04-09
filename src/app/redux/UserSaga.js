@@ -1,6 +1,7 @@
 import { fromJS, Set, List, Map } from 'immutable';
 import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
-import { api, auth } from '@steemit/steem-js';
+import { steemApi, steemAuth } from '@steemit/steem-js';
+import { hiveApi, hiveAuth } from 'steem';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
 import { accountAuthLookup } from 'app/redux/AuthSaga';
@@ -26,14 +27,11 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
-    takeLatest(
-        'user/lookupPreviousOwnerAuthority',
-        lookupPreviousOwnerAuthority
-    ),
     takeLatest(userActions.CHECK_KEY_TYPE, checkKeyType),
     takeLatest(userActions.USERNAME_PASSWORD_LOGIN, usernamePasswordLogin),
     takeLatest(userActions.SAVE_LOGIN, saveLogin_localStorage),
@@ -50,7 +48,10 @@ export const userWatches = [
     takeLatest(userActions.VOTING_POWER_LOOKUP, lookupVotingPower),
     function* getLatestFeedPrice() {
         try {
-            const history = yield call([api, api.getFeedHistoryAsync]);
+            const history = yield call([
+                steemApi,
+                steemApi.getFeedHistoryAsync,
+            ]);
             const feed = history.price_history;
             const last = fromJS(feed[feed.length - 1]);
             yield put(userActions.setLatestFeedPrice(last));
@@ -84,7 +85,7 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     }
 }
 
-function* shouldShowLoginWarning({ username, password }) {
+function* shouldShowLoginWarning({ username, password }, useHive) {
     // If it's a high-security login page, don't show the warning.
     if (yield isHighSecurityPage()) {
         return false;
@@ -94,8 +95,10 @@ function* shouldShowLoginWarning({ username, password }) {
     const allowMasterPassword = yield select(state =>
         state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
     );
-    if (!allowMasterPassword && !auth.isWif(password)) {
-        const account = (yield api.getAccountsAsync([username]))[0];
+    if (!allowMasterPassword && !hiveAuth.isWif(password)) {
+        const account = (yield (useHive ? hiveApi : steemApi).getAccountsAsync([
+            username,
+        ]))[0];
         const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
             .toPublicKey()
             .toString();
@@ -115,7 +118,10 @@ function* shouldShowLoginWarning({ username, password }) {
         owner, posting keys.
 */
 function* checkKeyType(action) {
-    if (yield call(shouldShowLoginWarning, action.payload)) {
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
+    if (yield call(shouldShowLoginWarning, action.payload, useHive)) {
         yield put(userActions.showLoginWarning(action.payload));
     } else {
         yield put(userActions.usernamePasswordLogin(action.payload));
@@ -171,6 +177,9 @@ function* usernamePasswordLogin2({
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
 }) {
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
     const user = yield select(state => state.user);
     const loginType = user.get('login_type');
     const justLoggedIn = loginType === 'basic';
@@ -227,7 +236,7 @@ function* usernamePasswordLogin2({
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
-    const account = yield call(getAccount, username);
+    const account = yield call(getAccount, username, hostConfig['PREFER_HIVE']);
     if (!account) {
         console.log('No account');
         yield put(userActions.loginError({ error: 'Username does not exist' }));
@@ -242,9 +251,8 @@ function* usernamePasswordLogin2({
         return;
     }
     // fetch SCOT stake
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
-    );
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const ssc = hostConfig['HIVE_ENGINE'] ? hiveSsc : steemSsc;
     const token_balances = yield call(
         [ssc, ssc.findOne],
         'tokens',
@@ -254,9 +262,9 @@ function* usernamePasswordLogin2({
             symbol: scotTokenSymbol,
         }
     );
-    // return if already logged in using steem keychain
+    // return if already logged in using keychain
     if (login_with_keychain) {
-        console.log('Logged in using steem keychain');
+        console.log('Logged in using keychain');
         yield put(
             userActions.setUser({
                 username,
@@ -273,10 +281,6 @@ function* usernamePasswordLogin2({
         yield put(userActions.lookupVotingPower({ account: username }));
         return;
     }
-
-    const hostConfig = yield select(state =>
-        state.app.get('hostConfig', Map()).toJS()
-    );
 
     let private_keys;
     if (!useKeychain) {
@@ -317,6 +321,7 @@ function* usernamePasswordLogin2({
                 account,
                 private_keys,
                 login_owner_pubkey,
+                useHive: hostConfig['PREFER_HIVE'],
             },
         });
         let authority = yield select(state =>
@@ -581,7 +586,7 @@ function* getFeatureFlags(username, posting_private) {
             });
         } else {
             flags = yield call(
-                [api, api.signedCallAsync],
+                [steemApi, steemApi.signedCallAsync],
                 'conveyor.get_feature_flags',
                 { account: username },
                 username,
@@ -692,55 +697,6 @@ function* loginError({
     },
 }) {
     serverApiLogout();
-}
-
-/**
-    If the owner key was changed after the login owner key, this function will
-    find the next owner key history record after the change and store it under
-    user.previous_owner_authority.
-*/
-function* lookupPreviousOwnerAuthority({ payload: {} }) {
-    const current = yield select(state => state.user.getIn(['current']));
-    if (!current) return;
-
-    const login_owner_pubkey = current.get('login_owner_pubkey');
-    if (!login_owner_pubkey) return;
-
-    const username = current.get('username');
-    const key_auths = yield select(state =>
-        state.global.getIn(['accounts', username, 'owner', 'key_auths'])
-    );
-    if (key_auths && key_auths.find(key => key.get(0) === login_owner_pubkey)) {
-        return;
-    }
-    // Owner history since this index was installed July 14
-    let owner_history = fromJS(
-        yield call([api, api.getOwnerHistoryAsync], username)
-    );
-    if (owner_history.count() === 0) return;
-    owner_history = owner_history.sort((b, a) => {
-        // Sort decending
-        const aa = a.get('last_valid_time');
-        const bb = b.get('last_valid_time');
-        return aa < bb ? -1 : aa > bb ? 1 : 0;
-    });
-    const previous_owner_authority = owner_history.find(o => {
-        const auth = o.get('previous_owner_authority');
-        const weight_threshold = auth.get('weight_threshold');
-        const key3 = auth
-            .get('key_auths')
-            .find(
-                key2 =>
-                    key2.get(0) === login_owner_pubkey &&
-                    key2.get(1) >= weight_threshold
-            );
-        return key3 ? auth : null;
-    });
-    if (!previous_owner_authority) {
-        console.log('UserSaga ---> Login owner does not match owner history');
-        return;
-    }
-    yield put(userActions.setUser({ previous_owner_authority }));
 }
 
 function* uploadImage({

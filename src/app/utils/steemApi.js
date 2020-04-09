@@ -66,17 +66,22 @@ async function getAccount(account, useHive) {
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
-async function getGlobalProps() {
-    const gprops = await steem.api.getDynamicGlobalPropertiesAsync();
+async function getGlobalProps(useHive) {
+    const gprops = await (useHive
+        ? hive.api
+        : steem.api
+    ).getDynamicGlobalPropertiesAsync();
     return gprops;
 }
 
-async function getAuthorRep(feedData) {
+async function getAuthorRep(feedData, useHive) {
     const authors = feedData.map(d => d.author);
     const authorRep = {};
-    (await steem.api.getAccountsAsync(authors)).forEach(a => {
-        authorRep[a.name] = a.reputation;
-    });
+    (await (useHive ? hive.api : steem.api).getAccountsAsync(authors)).forEach(
+        a => {
+            authorRep[a.name] = a.reputation;
+        }
+    );
     return authorRep;
 }
 
@@ -148,7 +153,7 @@ async function fetchMissingData(
     }
     const discussionIndex = [];
     const filteredContent = {};
-    const authorRep = await getAuthorRep(feedData);
+    const authorRep = await getAuthorRep(feedData, useHive);
     feedData.forEach(d => {
         const key = d.authorperm.substr(1);
         if (!state.content[key]) {
@@ -262,7 +267,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
 
         await addAccountToState(state, account);
         if (!state.props) {
-            state.props = await getGlobalProps();
+            state.props = await getGlobalProps(useHive);
         }
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;

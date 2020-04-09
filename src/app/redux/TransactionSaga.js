@@ -19,7 +19,8 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
@@ -160,6 +161,7 @@ export function* broadcastOperation({
                     needsActiveAuth,
                     username,
                     password,
+                    useHive,
                 });
                 if (signingKey) payload.keys.push(signingKey);
                 else {
@@ -343,10 +345,12 @@ function* broadcastPayload({
                 }
             }
         });
+        const ssc = useHive ? hiveSsc : steemSsc;
         if (
             operations.length == 1 &&
             operations[0][0] === 'custom_json' &&
-            operations[0][1].id === 'ssc-mainnet1'
+            operations[0][1].id ===
+                (useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1')
         ) {
             // Wait for finish.
             for (let i = 0; i < 15; i++) {

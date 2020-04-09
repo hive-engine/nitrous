@@ -13,6 +13,7 @@ const SidePanel = ({
     username,
     walletUrl,
     scotTokenSymbol,
+    useHive,
 }) => {
     if (process.env.BROWSER) {
         visible && document.addEventListener('click', hideSidePanel);
@@ -52,9 +53,11 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'steemengine',
-                label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${scotTokenSymbol}`,
+                value: 'engine',
+                label: useHive ? 'Hive Engine' : 'Steem Engine',
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
         ],
         exchanges: [
@@ -244,9 +247,11 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
         return {
             walletUrl,
             scotTokenSymbol,
+            useHive,
             ...ownProps,
         };
     },

@@ -216,7 +216,9 @@ class UserWallet extends React.Component {
         if (isMyAccount) {
             balance_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: `https://steem-engine.com/?p=market&t=${scotTokenSymbol}`,
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
             });
         }
         let power_menu = [
