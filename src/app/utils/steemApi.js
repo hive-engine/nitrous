@@ -75,7 +75,7 @@ async function getGlobalProps(useHive) {
 }
 
 async function getAuthorRep(feedData, useHive) {
-    const authors = feedData.map(d => d.author);
+    const authors = Array.from(new Set(feedData.map(d => d.author)));
     const authorRep = {};
     (await (useHive ? hive.api : steem.api).getAccountsAsync(authors)).forEach(
         a => {
@@ -192,12 +192,12 @@ async function fetchMissingData(
     }
 }
 
-async function addAccountToState(state, account) {
+async function addAccountToState(state, account, useHive) {
     if (!state.accounts) {
         state.accounts = {};
     }
     if (!state.accounts[account]) {
-        state.accounts[account] = await getAccount(account);
+        state.accounts[account] = await getAccount(account, useHive);
     }
 }
 
@@ -265,7 +265,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
             }),
         ]);
 
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         if (!state.props) {
             state.props = await getGlobalProps(useHive);
         }
@@ -319,7 +319,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
             limit: 20,
             include_reblogs: true,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
             'blog',
@@ -339,7 +339,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
             tag: account,
             limit: 20,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
             'comments',
@@ -359,7 +359,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
             tag: account,
             limit: 20,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
             'recent_replies',
@@ -578,7 +578,7 @@ export async function fetchFeedDataAsync(
             })
         );
         // fill in author rep
-        const authorRep = await getAuthorRep(feedData);
+        const authorRep = await getAuthorRep(feedData, useHive);
         feedData.forEach(d => {
             d.author_reputation = authorRep[d.author];
         });

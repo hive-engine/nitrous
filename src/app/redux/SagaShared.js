@@ -2,7 +2,7 @@ import { fromJS, Map } from 'immutable';
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import tt from 'counterpart';
 import { api as steemApi } from '@steemit/steem-js';
-import { hive as hiveApi } from 'steem';
+import { api as hiveApi } from 'steem';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import * as transactionActions from './TransactionReducer';

@@ -1,7 +1,7 @@
 import { fromJS, Set, List, Map } from 'immutable';
 import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
-import { steemApi, steemAuth } from '@steemit/steem-js';
-import { hiveApi, hiveAuth } from 'steem';
+import { api as steemApi, auth as steemAuth } from '@steemit/steem-js';
+import { api as hiveApi, auth as hiveAuth } from 'steem';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
 import { accountAuthLookup } from 'app/redux/AuthSaga';
@@ -95,7 +95,10 @@ function* shouldShowLoginWarning({ username, password }, useHive) {
     const allowMasterPassword = yield select(state =>
         state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
     );
-    if (!allowMasterPassword && !hiveAuth.isWif(password)) {
+    if (
+        !allowMasterPassword &&
+        !(useHive ? hiveAuth : steemAuth).isWif(password)
+    ) {
         const account = (yield (useHive ? hiveApi : steemApi).getAccountsAsync([
             username,
         ]))[0];
