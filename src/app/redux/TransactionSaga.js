@@ -37,7 +37,7 @@ const hook = {
     accepted_delete_comment,
     accepted_vote,
 };
-export function* preBroadcast_transfer({ operation }) {
+export function* preBroadcast_transfer({ operation, useHive }) {
     let memoStr = operation.memo;
     if (memoStr) {
         memoStr = toStringUtf8(memoStr);
@@ -50,7 +50,7 @@ export function* preBroadcast_transfer({ operation }) {
                 throw new Error(
                     'Unable to encrypt memo, missing memo private key'
                 );
-            const account = yield call(getAccount, operation.to);
+            const account = yield call(getAccount, operation.to, useHive);
             if (!account) throw new Error(`Unknown to account ${operation.to}`);
             const memo_key = account.get('memo_key');
             memoStr = steem.memo.encode(memo_private, memo_key, memoStr);

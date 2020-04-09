@@ -429,7 +429,6 @@ function* fetchScotInfo() {
     const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const scotInfo = yield call(getScotDataAsync, 'info', {
         token: scotTokenSymbol,
-        hive: hostConfig['HIVE_ENGINE'],
     });
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }

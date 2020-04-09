@@ -77,6 +77,9 @@ async function getGlobalProps(useHive) {
 async function getAuthorRep(feedData, useHive) {
     const authors = Array.from(new Set(feedData.map(d => d.author)));
     const authorRep = {};
+    if (authors.length === 0) {
+        return authorRep;
+    }
     (await (useHive ? hive.api : steem.api).getAccountsAsync(authors)).forEach(
         a => {
             authorRep[a.name] = a.reputation;
@@ -498,6 +501,9 @@ export async function getStateAsync(url, hostConfig) {
             raw = hiveState;
             useHive = true;
         }
+    } else {
+        // Use Prefer HIVE setting
+        useHive = hostConfig['PREFER_HIVE'];
     }
     if (!raw.accounts) {
         raw.accounts = {};
