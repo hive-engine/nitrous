@@ -15,10 +15,10 @@
   resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.3.tgz#9142447cba2edfe7cb08c50ecefa9a8d87983570"
   integrity sha512-B3JeGq/SXbQdFZCvw5m0cpjXR61i8oclx7XuQq/pv/Y64e/sYzE0FMnGee3LFB7iKd3r+q77U+dZLXu9cT9dpg==
 
-"@hiveio/hive-js@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.0.1.tgz#2acdce5550adc3f2cc23cb3aad17539360770549"
-  integrity sha512-aFX58gzLzZvZnPJdEafGRkVYNwQY6Lfqqr5yjr/yFNRXahPd2+m/f/n0e84R894DXB1HcgYASsxR/VwOpNscVg==
+"@hiveio/hive-js@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.0.2.tgz#6f4a6fa133a1528534d410ad5f9bd4fee2b738aa"
+  integrity sha512-eHNAuYynOTXLTNBpftKEu3raWc2Ot6kj5Fti2OkQdSZaFFryl0hwjI8pH8fTmFnOg7YULOFonYs1Zo+4qhOMeQ==
   dependencies:
     "@steemit/rpc-auth" "^1.1.1"
     bigi "^1.4.2"

@@ -648,7 +648,9 @@
         "profile_name": "Отображаемое имя",
         "profile_about": "О себе",
         "profile_location": "Местоположение",
-        "profile_website": "Веб-сайт"
+        "profile_website": "Веб-сайт",
+        "choose_preferred_api_endpoint":
+            "Выберите свой предпочтительный узел API"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Сумма должна быть в формате 99999.999",
