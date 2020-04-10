@@ -154,7 +154,7 @@ class Settings extends React.Component {
         if (!metaData.profile.location) delete metaData.profile.location;
         if (!metaData.profile.website) delete metaData.profile.website;
 
-        const { account, updateAccount } = this.props;
+        const { account, updateAccount, useHive } = this.props;
         this.setState({ loading: true });
         updateAccount({
             json_metadata: JSON.stringify(metaData),
@@ -186,6 +186,7 @@ class Settings extends React.Component {
                 setTimeout(() => this.setState({ successMessage: '' }), 4000);
                 updateInitialValues();
             },
+            useHive,
         });
     };
 
@@ -508,6 +509,7 @@ export default connect(
             metaData = o2j.ifStringParseJSON(metaData); // issue #1237
         const profile = metaData && metaData.profile ? metaData.profile : {};
         const user_preferences = state.app.get('user_preferences').toJS();
+        const useHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
 
         return {
             account,
@@ -517,6 +519,7 @@ export default connect(
             profile,
             follow: state.global.get('follow'),
             user_preferences,
+            useHive,
             ...ownProps,
         };
     },
@@ -526,12 +529,18 @@ export default connect(
         },
         uploadImage: (file, progress) =>
             dispatch(userActions.uploadImage({ file, progress })),
-        updateAccount: ({ successCallback, errorCallback, ...operation }) => {
+        updateAccount: ({
+            successCallback,
+            errorCallback,
+            useHive,
+            ...operation
+        }) => {
             const options = {
                 type: 'account_update',
                 operation,
                 successCallback,
                 errorCallback,
+                useHive,
             };
             dispatch(transactionActions.broadcastOperation(options));
         },

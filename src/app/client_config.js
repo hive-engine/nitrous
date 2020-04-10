@@ -112,3 +112,4 @@ export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
 export const PREFER_HIVE = false;
 export const DISABLE_HIVE = false;
+export const HIVE_ENGINE = false;

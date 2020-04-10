@@ -403,6 +403,7 @@ class PostsIndex extends React.Component {
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         ['total_token_balance', 'totalStaked']
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -434,6 +435,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -465,6 +467,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.useHive}
                                 />
                             </div>
                         )}
@@ -537,6 +540,7 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const useHive = HIVE_ENGINE;
             const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;
@@ -570,6 +574,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviveEnabled: state.app.get('reviveEnabled'),
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+                useHive,
             };
         },
         dispatch => {

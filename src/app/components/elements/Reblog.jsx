@@ -40,7 +40,14 @@ export default class Reblog extends React.Component {
         e.preventDefault();
         if (this.state.active) return;
         this.setState({ loading: true });
-        const { reblog, account, author, parent_author, permlink } = this.props;
+        const {
+            reblog,
+            account,
+            author,
+            parent_author,
+            permlink,
+            hive,
+        } = this.props;
         reblog(
             account,
             author,
@@ -51,7 +58,8 @@ export default class Reblog extends React.Component {
             },
             () => {
                 this.setState({ active: false, loading: false });
-            }
+            },
+            hive
         );
     };
 
@@ -95,7 +103,14 @@ module.exports = connect(
         return { ...ownProps, account };
     },
     dispatch => ({
-        reblog: (account, author, permlink, successCallback, errorCallback) => {
+        reblog: (
+            account,
+            author,
+            permlink,
+            successCallback,
+            errorCallback,
+            useHive
+        ) => {
             const json = ['reblog', { account, author, permlink }];
             dispatch(
                 transactionActions.broadcastOperation({
@@ -109,6 +124,7 @@ module.exports = connect(
                     },
                     successCallback,
                     errorCallback,
+                    useHive,
                 })
             );
         },
