@@ -33,15 +33,14 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
             offset: 0,
             type: 'user',
             symbol,
-            v: new Date().getTime(),
         }
     );
     const history = await getScotDataAsync('get_account_history', {
         account,
         token: symbol,
         limit: 50,
-        startTime: new Date().getTime(),
     });
+    transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
         .concat(history)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
