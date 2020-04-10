@@ -109,7 +109,7 @@ ScotConfig.prototype.refresh = async function() {
             }),
         ]);
         const totalTokenBalances = steemTotalTokenBalances.concat(hiveTotalTokenBalances);
-        const totalBurnBalances = steemTotalTokenBalances.concat(hiveTokenBurnBalances);
+        const tokenBurnBalances = steemTokenBurnBalances.concat(hiveTokenBurnBalances);
 
         for (const totalTokenBalance of totalTokenBalances) {
             if (minerTokenToToken[totalTokenBalance.symbol]) {
