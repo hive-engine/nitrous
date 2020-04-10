@@ -5,6 +5,7 @@ import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
@@ -58,6 +59,7 @@ ScotConfig.prototype.refresh = async function() {
         const scotInfo = await getScotDataAsync('info', {});
         const scotConfigMap = {};
         let tokenList = [];
+        let hiveTokenList = [];
         const minerTokenToToken = {};
 
         const configTokens = new Set(
@@ -68,8 +70,13 @@ ScotConfig.prototype.refresh = async function() {
                 const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
                 c.tokenStats = { scotToken: c.token, scotMinerTokens };
                 scotConfigMap[c.token] = c;
-                tokenList.push(c.token);
-                tokenList = tokenList.concat(scotMinerTokens);
+                if (c['HIVE_ENGINE']) {
+                    hiveTokenList.push(c.token);
+                    hiveTokenList = hiveTokenList.concat(scotMinerTokens);
+                } else {
+                    tokenList.push(c.token);
+                    tokenList = tokenList.concat(scotMinerTokens);
+                }
                 if (scotMinerTokens.length > 0) {
                     minerTokenToToken[scotMinerTokens[0]] = {
                         token: c.token,
@@ -85,7 +92,7 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const [totalTokenBalances, tokenBurnBalances] = await Promise.all([
+        const [steemTotalTokenBalances, steemTokenBurnBalances, hiveTotalTokenBalances, hiveTokenBurnBalances] = await Promise.all([
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
@@ -93,7 +100,16 @@ ScotConfig.prototype.refresh = async function() {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),
+            hiveSsc.find('tokens', 'tokens', {
+                symbol: { $in: hiveTokenList },
+            }),
+            hiveSsc.find('tokens', 'balances', {
+                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
+                symbol: { $in: hiveTokenList },
+            }),
         ]);
+        const totalTokenBalances = steemTotalTokenBalances.concat(hiveTotalTokenBalances);
+        const totalBurnBalances = steemTotalTokenBalances.concat(hiveTokenBurnBalances);
 
         for (const totalTokenBalance of totalTokenBalances) {
             if (minerTokenToToken[totalTokenBalance.symbol]) {
