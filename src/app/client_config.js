@@ -101,6 +101,7 @@ const TIX = {
     POST_FOOTER: '',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-31',
+    COMMUNITY_CATEGORY: 'hive-177225',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
 };
