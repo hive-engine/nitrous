@@ -36,7 +36,6 @@ export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'BUILD POWER';
 export const INTERLEAVE_PROMOTED = true;
-export const PROMOTED_POST_ACCOUNT = 'null';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';
@@ -119,3 +118,5 @@ export const POSTED_VIA_NITROUS_ICON = 'buildcaravan'; // put corresponding svg 
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
+export const PREFER_HIVE = true;
+export const DISABLE_HIVE = false;

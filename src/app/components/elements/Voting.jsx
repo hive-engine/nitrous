@@ -93,7 +93,14 @@ class Voting extends React.Component {
             this.setState({ votingUp: up, votingDown: !up });
             if (this.state.showWeight) this.setState({ showWeight: false });
             const { myVote } = this.state;
-            const { author, permlink, username, is_comment } = this.props;
+            const {
+                author,
+                permlink,
+                username,
+                is_comment,
+                post_obj,
+                useHive,
+            } = this.props;
 
             let weight;
             if (myVote > 0 || myVote < 0) {
@@ -116,6 +123,7 @@ class Voting extends React.Component {
                 username,
                 myVote,
                 isFlag,
+                useHive,
             });
         };
 
@@ -233,6 +241,7 @@ class Voting extends React.Component {
             voteRegenSec,
             rewardData,
             tokenBeneficiary,
+            useHive,
         } = this.props;
         const {
             votingUp,
@@ -769,13 +778,14 @@ export default connect(
         const permlink = post.get('permlink');
         const active_votes = post.get('active_votes');
         const is_comment = post.get('parent_author') !== '';
+        const useHive = post.get('hive');
 
         const current_account = state.user.get('current');
         const username = current_account
             ? current_account.get('username')
             : null;
         const votingData = current_account
-            ? current_account.get('voting')
+            ? current_account.get(useHive ? 'hive_voting' : 'voting')
             : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
@@ -812,12 +822,16 @@ export default connect(
                 ['config', 'beneficiaries_account'],
                 ''
             ),
+            useHive,
         };
     },
 
     // mapDispatchToProps
     dispatch => ({
-        vote: (weight, { author, permlink, username, myVote, isFlag }) => {
+        vote: (
+            weight,
+            { author, permlink, username, myVote, isFlag, useHive }
+        ) => {
             const confirm = () => {
                 if (myVote == null) return null;
                 if (weight === 0)
@@ -856,6 +870,7 @@ export default connect(
                     errorCallback: errorKey => {
                         console.log('Transaction Error:' + errorKey);
                     },
+                    useHive,
                 })
             );
         },

@@ -837,7 +837,15 @@ function* lookupVotingPower({ payload: { account } }) {
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData[LIQUID_TOKEN_UPPERCASE],
+            ...accountData.data[LIQUID_TOKEN_UPPERCASE],
         })
     );
+    if (accountData.hiveData) {
+        yield put(
+            userActions.setHiveVotingPower({
+                account,
+                ...accountData.hiveData[LIQUID_TOKEN_UPPERCASE],
+            })
+        );
+    }
 }
