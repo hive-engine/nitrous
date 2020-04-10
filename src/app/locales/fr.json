@@ -645,7 +645,8 @@
         "profile_name": "Nom à afficher",
         "profile_about": "A propos",
         "profile_location": "Lieu",
-        "profile_website": "Site internet"
+        "profile_website": "Site internet",
+        "choose_preferred_api_endpoint": "Choisissez votre nœud d'API préféré"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Montant dans le format 99999.999",

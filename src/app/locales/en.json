@@ -712,7 +712,8 @@
         "profile_about": "About",
         "profile_location": "Location",
         "profile_website": "Website",
-        "saved": "Saved!"
+        "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",
