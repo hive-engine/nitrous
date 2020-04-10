@@ -584,6 +584,7 @@ module.exports = {
                 scotTokenSymbol,
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
                 showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
+                useHive,
             };
         },
         dispatch => {
