@@ -20,7 +20,7 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -199,9 +199,7 @@ function* syncPinnedPosts() {
  * @param {Iterable} usernames
  */
 function* getAccounts(usernames) {
-    const useHive = yield select(state =>
-        state.app.getIn(['hostConfig', 'HIVE_ENGINE'])
-    );
+    const useHive = HIVE_ENGINE;
     const api = useHive ? hiveApi : steemApi;
     const accounts = yield call([api, api.getAccountsAsync], usernames);
     yield put(globalActions.receiveAccounts({ accounts }));

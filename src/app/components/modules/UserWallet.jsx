@@ -21,6 +21,7 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
     USE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';

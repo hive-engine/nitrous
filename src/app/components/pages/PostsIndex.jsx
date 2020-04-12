@@ -8,7 +8,6 @@ import { List, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -25,7 +24,12 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import SidebarToken from 'app/components/elements/SidebarToken';
-import { SHOW_TOKEN_STATS } from 'app/client_config';
+import {
+    HIVE_ENGINE,
+    INTERLEAVE_PROMOTED,
+    SHOW_TOKEN_STATS,
+    TAG_LIST,
+} from 'app/client_config';
 
 class PostsIndex extends React.Component {
     static propTypes = {

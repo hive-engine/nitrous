@@ -21,7 +21,7 @@ const postLink = (socialUrl, author, permlink) => (
 
 class TransferHistoryRow extends React.Component {
     render() {
-        const { op, context } = this.props;
+        const { op, context, scotTokenSymbol } = this.props;
         // context -> account perspective
 
         /*  all transfers involve up to 2 accounts, context and 1 other. */
@@ -45,7 +45,7 @@ class TransferHistoryRow extends React.Component {
                             'from_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.to)}
                 </span>
@@ -60,7 +60,7 @@ class TransferHistoryRow extends React.Component {
                             'to_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.from)}
                 </span>
@@ -123,7 +123,7 @@ class TransferHistoryRow extends React.Component {
                         amount: `${formatScotAmount(
                             op.int_amount,
                             op.precision
-                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                        )} ${scotTokenSymbol}`,
                     })}
                 </span>
             );
@@ -139,7 +139,7 @@ class TransferHistoryRow extends React.Component {
                         amount: `${formatScotAmount(
                             op.int_amount,
                             op.precision
-                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                        )} ${scotTokenSymbol}`,
                     })}
                     {op.type != 'mining_reward' &&
                         postLink(APP_URL, op.author, op.permlink)}
@@ -180,8 +180,10 @@ const otherAccountLink = username =>
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
         return {
             ...ownProps,
+            scotTokenSymbol,
         };
     }
 )(TransferHistoryRow);

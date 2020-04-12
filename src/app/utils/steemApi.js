@@ -4,6 +4,7 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     PREFER_HIVE,
     DISABLE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
@@ -205,7 +206,7 @@ export async function attachScotData(url, state, useHive) {
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
-    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -227,7 +228,7 @@ export async function attachScotData(url, state, useHive) {
     }
 
     urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
-    const hiveEngine = hostConfig['HIVE_ENGINE'];
+    const hiveEngine = HIVE_ENGINE;
     const engineApi = hiveEngine ? hiveSsc : ssc;
     if (urlParts) {
         const account = urlParts[1];
@@ -460,7 +461,7 @@ export async function getStateAsync(url) {
         }
     } else {
         // Use Prefer HIVE setting
-        useHive = hostConfig['PREFER_HIVE'];
+        useHive = PREFER_HIVE;
     }
     if (!raw.accounts) {
         raw.accounts = {};

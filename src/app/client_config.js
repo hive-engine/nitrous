@@ -22,7 +22,7 @@ export const TAG_LIST = fromJSOrdered([
 ]);
 export const LIQUID_TOKEN = 'Weed';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'WEED';
+export const LIQUID_TOKEN_UPPERCASE = 'FOODIE';
 // used as backup
 export const SCOT_DENOM = 100000000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
@@ -110,6 +110,6 @@ export const POSTED_VIA_NITROUS_ICON = ''; // put corresponding svg in src/app/a
 export const COMMUNITY_CATEGORY = '';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
-export const PREFER_HIVE = false;
+export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
-export const HIVE_ENGINE = false;
+export const HIVE_ENGINE = true;

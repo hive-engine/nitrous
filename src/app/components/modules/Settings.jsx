@@ -9,6 +9,7 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import reactForm from 'app/utils/ReactForm';
 import UserList from 'app/components/elements/UserList';
 import Dropzone from 'react-dropzone';
+import { PREFER_HIVE } from 'app/client_config';
 
 class Settings extends React.Component {
     constructor(props) {
@@ -509,7 +510,7 @@ export default connect(
             metaData = o2j.ifStringParseJSON(metaData); // issue #1237
         const profile = metaData && metaData.profile ? metaData.profile : {};
         const user_preferences = state.app.get('user_preferences').toJS();
-        const useHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+        const useHive = PREFER_HIVE;
 
         return {
             account,

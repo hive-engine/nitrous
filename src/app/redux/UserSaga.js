@@ -8,6 +8,7 @@ import {
     ALLOW_MASTER_PW,
     LIQUID_TOKEN_UPPERCASE,
     HIVE_ENGINE,
+    PREFER_HIVE,
 } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
@@ -120,9 +121,7 @@ function* shouldShowLoginWarning({ username, password }, useHive) {
         owner, posting keys.
 */
 function* checkKeyType(action) {
-    const useHive = yield select(state =>
-        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
-    );
+    const useHive = PREFER_HIVE;
     if (yield call(shouldShowLoginWarning, action.payload, useHive)) {
         yield put(userActions.showLoginWarning(action.payload));
     } else {
@@ -156,9 +155,7 @@ function* usernamePasswordLogin(action) {
     // take a while on slow computers.
     yield call(usernamePasswordLogin2, action.payload);
     const current = yield select(state => state.user.get('current'));
-    const useHive = yield select(state =>
-        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
-    );
+    const useHive = PREFER_HIVE;
     if (current) {
         const username = current.get('username');
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
@@ -179,9 +176,6 @@ function* usernamePasswordLogin2({
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
 }) {
-    const hostConfig = yield select(state =>
-        state.app.get('hostConfig', Map()).toJS()
-    );
     const user = yield select(state => state.user);
     const loginType = user.get('login_type');
     const justLoggedIn = loginType === 'basic';
@@ -238,7 +232,7 @@ function* usernamePasswordLogin2({
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
-    const account = yield call(getAccount, username, hostConfig['PREFER_HIVE']);
+    const account = yield call(getAccount, username, PREFER_HIVE);
     if (!account) {
         console.log('No account');
         yield put(userActions.loginError({ error: 'Username does not exist' }));
@@ -322,7 +316,7 @@ function* usernamePasswordLogin2({
                 account,
                 private_keys,
                 login_owner_pubkey,
-                useHive: hostConfig['PREFER_HIVE'],
+                useHive: PREFER_HIVE,
             },
         });
         let authority = yield select(state =>
@@ -476,7 +470,7 @@ function* usernamePasswordLogin2({
             const challenge = { token: challengeString };
             const buf = JSON.stringify(challenge, null, 0);
             const bufSha = hash.sha256(buf);
-            const useHive = hostConfig['PREFER_HIVE'];
+            const useHive = PREFER_HIVE;
 
             if (useKeychain) {
                 const response = yield new Promise(resolve => {

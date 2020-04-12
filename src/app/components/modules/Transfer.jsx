@@ -22,6 +22,7 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
+    HIVE_ENGINE,
 } from 'app/client_config';
 
 /** Warning .. This is used for Power UP too. */
