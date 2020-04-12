@@ -115,3 +115,4 @@ export const SHOW_TOKEN_STATS = false;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = ['lassecash'];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
+export const HIVE_ENGINE = true;

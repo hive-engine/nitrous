@@ -1,7 +1,8 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import tt from 'counterpart';
-import { api } from '@steemit/steem-js';
+import { api as steemApi } from '@steemit/steem-js';
+import { api as hiveApi } from 'steem';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import * as transactionActions from './TransactionReducer';
@@ -26,7 +27,7 @@ export const sharedWatches = [
     takeEvery('transaction/ERROR', showTransactionErrorNotification),
 ];
 
-export function* getAccount(username, force = false) {
+export function* getAccount(username, useHive, force = false) {
     let account = yield select(state =>
         state.global.get('accounts').get(username)
     );
@@ -44,6 +45,7 @@ export function* getAccount(username, force = false) {
             isLite
         );
 
+        const api = useHive ? hiveApi : steemApi;
         [account] = yield call([api, api.getAccountsAsync], [username]);
         if (account) {
             account = fromJS(account);
