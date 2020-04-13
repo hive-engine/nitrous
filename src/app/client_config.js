@@ -44,8 +44,6 @@ export const TAG_LIST = fromJSOrdered([
     'sct-cartoon',
     'sct-meetup',
     'sct-suggest',
-    'palnet',
-    'steemleo',
     'zzan',
 ]);
 export const MAIN_TAG_LIST = fromJSOrdered(['hive-101145']);
