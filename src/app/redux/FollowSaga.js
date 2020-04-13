@@ -1,6 +1,6 @@
 import { fromJS, Map, Set, OrderedSet } from 'immutable';
 import { call, put, select } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { getScotDataAsync } from 'app/utils/steemApi';
 
 import * as globalActions from 'app/redux/GlobalReducer';
 
@@ -10,7 +10,9 @@ import * as globalActions from 'app/redux/GlobalReducer';
 
 //fetch for follow/following count
 export function* fetchFollowCount(account) {
-    const counts = yield call([api, api.getFollowCountAsync], account);
+    const counts = yield call(getScotDataAsync, 'get_follow_count', {
+        account,
+    });
     yield put(
         globalActions.update({
             key: ['follow_count', account],
@@ -56,7 +58,13 @@ export function* loadFollows(method, account, type, force = false) {
 }
 
 function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
-    const res = fromJS(yield api[method](account, start, type, limit));
+    const params = { account, start, status: type, limit };
+    if (method === 'getFollowingAsync') {
+        params['follower'] = account;
+    } else {
+        params['following'] = account;
+    }
+    const res = fromJS(yield call(getScotDataAsync, 'get_following', params));
     // console.log('res.toJS()', res.toJS())
 
     let cnt = 0;
@@ -71,7 +79,6 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                 res.forEach(value => {
                     cnt += 1;
 
-                    const whatList = value.get('what');
                     const accountNameKey =
                         method === 'getFollowingAsync'
                             ? 'following'
@@ -79,10 +86,7 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                     const accountName = (lastAccountName = value.get(
                         accountNameKey
                     ));
-                    whatList.forEach(what => {
-                        //currently this is always true: what === type
-                        m.update(what, OrderedSet(), s => s.add(accountName));
-                    });
+                    m.update(type, OrderedSet(), s => s.add(accountName));
                 });
                 return m.asImmutable();
             },

@@ -6,7 +6,11 @@ import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { LIQUID_TOKEN_UPPERCASE, VESTING_TOKEN } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    VESTING_TOKEN,
+    HIVE_ENGINE,
+} from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
@@ -27,6 +31,7 @@ class Powerdown extends React.Component {
             stakeBalance,
             delegatedStake,
             scotPrecision,
+            useHive,
         } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
@@ -63,6 +68,7 @@ class Powerdown extends React.Component {
                 unstakeAmount,
                 errorCallback,
                 successCallback,
+                useHive,
             });
         };
 
@@ -140,7 +146,7 @@ export default connect(
         const stakeBalance = parseFloat(values.get('stakeBalance'));
         const delegatedStake = parseFloat(values.get('delegatedStake'));
         const scotConfig = state.app.get('scotConfig');
-
+        const useHive = HIVE_ENGINE;
         return {
             ...ownProps,
             account,
@@ -148,6 +154,7 @@ export default connect(
             delegatedStake,
             state,
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            useHive,
         };
     },
     // mapDispatchToProps
@@ -165,6 +172,7 @@ export default connect(
             unstakeAmount,
             errorCallback,
             successCallback,
+            useHive,
         }) => {
             const successCallbackWrapper = (...args) => {
                 dispatch(
@@ -181,7 +189,7 @@ export default connect(
                 },
             };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [account],
                 json: JSON.stringify(unstakeOperation),
             };
@@ -191,6 +199,7 @@ export default connect(
                     operation,
                     successCallback: successCallbackWrapper,
                     errorCallback,
+                    useHive,
                 })
             );
         },

@@ -20,6 +20,8 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
+    USE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -64,19 +66,19 @@ class UserWallet extends React.Component {
 
     handleClaimRewards = account => {
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account);
+        this.props.claimRewards(account, useHive);
     };
     handleClaimTokenRewards = token => {
-        const { account, claimTokenRewards } = this.props;
-        claimTokenRewards(account, token);
+        const { account, claimTokenRewards, useHive } = this.props;
+        claimTokenRewards(account, token, useHive);
     };
     handleClaimAllTokensRewards = () => {
-        const { account, claimAllTokensRewards } = this.props;
+        const { account, claimAllTokensRewards, useHive } = this.props;
         const allTokenStatus = account.get('all_token_status').toJS();
         const pendingTokenSymbols = Object.values(allTokenStatus)
             .filter(e => parseFloat(e.pending_token))
             .map(({ symbol }) => symbol);
-        claimAllTokensRewards(account, pendingTokenSymbols);
+        claimAllTokensRewards(account, pendingTokenSymbols, useHive);
     };
     render() {
         const {
@@ -84,7 +86,13 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops, scotPrecision } = this.props;
+        const {
+            account,
+            current_user,
+            gprops,
+            scotPrecision,
+            useHive,
+        } = this.props;
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -166,6 +174,7 @@ class UserWallet extends React.Component {
             this.props.cancelUnstake({
                 account: name,
                 transactionId: tokenUnstakes.txID,
+                useHive,
             });
         };
 
@@ -208,9 +217,9 @@ class UserWallet extends React.Component {
         if (isMyAccount) {
             balance_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${LIQUID_TOKEN_UPPERCASE}`,
             });
         }
         let power_menu = [
@@ -542,7 +551,7 @@ class UserWallet extends React.Component {
                     </div>
                 </div>
                 <hr />
-                {/* Steem Engine Tokens */}
+                {/* Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div
                         className={classNames('UserWallet__balance', 'row', {
@@ -550,11 +559,7 @@ class UserWallet extends React.Component {
                         })}
                     >
                         <div className="column small-12 medium-9">
-                            Steem Engine Token
-                            <FormattedHTMLMessage
-                                className="secondary"
-                                id="tips_js.steem_engine_tokens"
-                            />
+                            {useHive ? 'Hive' : 'Steem'} Engine Tokens
                         </div>
                         {isMyAccount && (
                             <div className="column small-12 medium-3">
@@ -645,15 +650,18 @@ export default connect(
     (state, ownProps) => {
         const gprops = state.global.get('props');
         const scotConfig = state.app.get('scotConfig');
+        const useHive = HIVE_ENGINE;
+
         return {
             ...ownProps,
             gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            useHive,
         };
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: account => {
+        claimRewards: (account, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -674,11 +682,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimTokenRewards: (account, symbol) => {
+        claimTokenRewards: (account, symbol, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -702,11 +711,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimAllTokensRewards: (account, symbols) => {
+        claimAllTokensRewards: (account, symbols, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -738,6 +748,7 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },

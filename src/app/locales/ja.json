@@ -672,7 +672,12 @@
             "Comment benefactor reward: %(amount)s for ",
         "staking_reward": "Staking reward: %(amount)s",
         "mining_reward": "Mining reward: %(amount)s",
-        "request_id": "Request ID: %(request_id)s"
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)",
+        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "issue_from": "Issued %(amount)s from "
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "引き出し依頼をキャンセルしますか？",

@@ -174,7 +174,11 @@ class CommentImpl extends React.Component {
         this.onDeletePost = () => {
             const { props: { deletePost } } = this;
             const content = this.props.cont.get(this.props.content);
-            deletePost(content.get('author'), content.get('permlink'));
+            deletePost(
+                content.get('author'),
+                content.get('permlink'),
+                content.get('hive')
+            );
         };
         this.toggleCollapsed = this.toggleCollapsed.bind(this);
     }
@@ -555,12 +559,13 @@ const Comment = connect(
         unlock: () => {
             dispatch(userActions.showLogin());
         },
-        deletePost: (author, permlink) => {
+        deletePost: (author, permlink, hive) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
+                    useHive: hive,
                 })
             );
         },

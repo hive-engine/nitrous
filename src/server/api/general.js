@@ -6,7 +6,8 @@ import { getRemoteIp, rateLimitReq, checkCSRF } from 'server/utils/misc';
 import coBody from 'co-body';
 import Mixpanel from 'mixpanel';
 import { PublicKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast } from '@steemit/steem-js';
+import * as steem from '@steemit/steem-js';
+import * as hive from 'steem';
 
 const ACCEPTED_TOS_TAG = 'accepted_tos_20180614';
 
@@ -48,7 +49,7 @@ export default function useGeneralApi(app) {
     router.post('/login_account', koaBody, function*() {
         // if (rateLimitReq(this, this.req)) return;
         const params = this.request.body;
-        const { csrf, account, signatures } =
+        const { csrf, account, signatures, useHive } =
             typeof params === 'string' ? JSON.parse(params) : params;
         if (!checkCSRF(this, csrf)) return;
 
@@ -60,9 +61,10 @@ export default function useGeneralApi(app) {
                         '/login_account missing this.session.login_challenge'
                     );
                 } else {
-                    const [chainAccount] = yield api.getAccountsAsync([
-                        account,
-                    ]);
+                    const [chainAccount] = yield (useHive
+                        ? hive
+                        : steem
+                    ).api.getAccountsAsync([account]);
                     if (!chainAccount) {
                         console.error(
                             '/login_account missing blockchain account',
@@ -250,7 +252,7 @@ export default function useGeneralApi(app) {
         }
 
         try {
-            const res = yield api.signedCallAsync(
+            const res = yield steem.api.signedCallAsync(
                 'conveyor.get_tags_for_user',
                 [this.session.a],
                 config.get('conveyor_username'),
@@ -281,7 +283,7 @@ export default function useGeneralApi(app) {
             return;
         }
         try {
-            yield api.signedCallAsync(
+            yield steem.api.signedCallAsync(
                 'conveyor.assign_tag',
                 {
                     uid: this.session.a,
