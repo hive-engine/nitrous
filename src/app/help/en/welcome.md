@@ -41,7 +41,7 @@ accounts (Twitter, Facebook, etc.) by sharing the link to your Steem account
 from those profiles.
 
 
-### 5. Sign up for Steem Chat
+### 5. Sign up for Hive Chat
 
 A lot of users mingle and chat in [Steem.chat](https://steem.chat/). It is a
 great place to meet people!
@@ -59,7 +59,7 @@ and voters ("curators").
 
 HIVE, Hive Power (HP) and Hive Dollars (HBD) are the three forms of digital
 currency used by the Hive Blockchain. More information
-[here](https://steemit.com/faq.html#What_is_the_difference_between_STEEM__STEEM_Power__and_Steem_Dollars).
+[here](https://hive.blog/faq.html#What_is_the_difference_between_STEEM__STEEM_Power__and_Steem_Dollars).
 
 
 ##### Additional resources
@@ -67,5 +67,5 @@ currency used by the Hive Blockchain. More information
 - [FAQ](https://hive.blog/faq.html) - Answers to commonly asked questions
 - [Hive Bluepaper](https://hive.io/hive-bluepaper.pdf) - Explanation of how the platform works
 - [Hive Whitepaper](https://hive.io/hive-whitepaper.pdf) - Technical details of the Hive blockchain
-- [Apps Built on Hive](https://steemprojects.com/) - Directory of apps, sites and tools built by Steem community
-- [Hive Block Explorer](https://steemd.com/) - Shows the raw Steem blockchain data 
+- [Apps Built on Hive](https://hiverojects.com/) - Directory of apps, sites and tools built by Hive community
+- [Hive Block Explorer](https://hiveblocks.com/) - Shows the raw Hive blockchain data 
