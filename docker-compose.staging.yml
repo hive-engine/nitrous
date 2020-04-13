@@ -1,0 +1,25 @@
+version: "3"
+services:
+  hive_condenser_stg:
+     build: .
+     image: hive/condenser:staging
+     container_name: hive_condenser_stg
+     environment:
+         VIRTUAL_HOST: staging-blog.hive.io
+         VIRTUAL_PORT: 8080
+         SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+         SDC_SERVER_STEEMD_URL: https://api.hive.blog
+         SDC_DISABLE_SIGNUPS: 1
+         SDC_SITE_DOMAIN: staging-blog.hive.io
+         SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+         SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+         SDC_HELMET_CONNECTSRC: "'self' https://api.hive.blog https://staging.hive.blog https://images.hive.blog"
+         WALLET_URL: https://wallet.hive.blog
+     networks:
+         - condenser_reverse-proxy
+     restart: always
+
+networks:
+    condenser_reverse-proxy:
+        external:
+            name: condenser_reverse-proxy
