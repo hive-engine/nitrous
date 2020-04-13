@@ -25,9 +25,10 @@ services:
             - nginx-proxy
         environment:
           NGINX_PROXY_CONTAINER: proxy
-        volumes_from:
-            - proxy
         volumes:
+            - /etc/nginx/certs
+            - /etc/nginx/vhost.d
+            - /usr/share/nginx/html
             - /var/run/docker.sock:/var/run/docker.sock:ro
         networks:
             - reverse-proxy
