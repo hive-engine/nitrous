@@ -22,7 +22,7 @@ services:
         image: jrcs/letsencrypt-nginx-proxy-companion:latest
         container_name: letsencrypt
         depends_on:
-            - nginx-proxy
+            - proxy
         environment:
           NGINX_PROXY_CONTAINER: proxy
         volumes:
