@@ -18,7 +18,7 @@ services:
             - reverse-proxy
         restart: always
 
-    letsencrypt: 
+    letsencrypt:
         image: jrcs/letsencrypt-nginx-proxy-companion:latest
         container_name: letsencrypt
         volumes:
@@ -26,10 +26,7 @@ services:
             - /etc/nginx/vhost.d
             - /usr/share/nginx/html
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
-
-
-
+            - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
     reverse-proxy:
