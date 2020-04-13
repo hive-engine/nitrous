@@ -113,7 +113,7 @@
 - <a href="#What_is_considered_spam_or_abuse">What is considered spam or abuse?</a>
 - <a href="#What_are_Hive_s_policies_on_plagiarism">What are Hive.blog’s policies on plagiarism?</a>
 - <a href="#Is_it_okay_to_use_random_pictures_from_the_internet">Is it okay to use random pictures from the internet?</a>
-- <a href="#What_is_Steemcleaners">What is Steemcleaners?</a>
+- <a href="#What_is_Hivewatchers">What is Hivewatchers?</a>
 - <a href="#What_is__cheetah">What is @cheetah?</a>
 - <a href="#Where_do_I_report_a_post_or_comment_that_contains_plagiarism__spam__or_abuse">Where do I report a post or comment that contains plagiarism, spam, or abuse?</a>
 
@@ -124,8 +124,8 @@
 - <a href="#What_causes_my_reputation_score_to_go_down">What causes my reputation score to go down?</a>
 - <a href="#Why_does_my_reputation_score_matter">Why does my reputation score matter?</a>
 
-### <span id="Table_of_Contents_Followers__Feeds_and_Resteem">Followers, Feeds, and Resteem</span>
-- <a href="#What_is_Rehiving">What is Rehiving?</a>
+### <span id="Table_of_Contents_Followers__Feeds_and_Reblog">Followers, Feeds, and Reblog</span>
+- <a href="#What_is_Reblogging">What is Reblogging?</a>
 - <a href="#Can_I_share_on_other_social_media">Can I share on other social media?</a>
 
 ### <span id="Table_of_Contents_Blockchain">Blockchain</span>
@@ -197,10 +197,10 @@ Each account has multiple keys, which each have different levels of authority: o
 <a href="#Table_of_Contents_General">^</a>
 ## <span id="Does_it_cost_anything_to_post__comment__or_vote">Does it cost anything to post, comment, or vote?</span>
 
-No. It is free to post, comment, and vote on content on steemit.com. You might even get paid for it!
+No. It is free to post, comment, and vote on content on hive.blog. You might even get paid for it!
 
 <a href="#Table_of_Contents_General">^</a>
-## <span id="Can_I_earn_digital_tokens_on_Steemit_How">Can I earn digital tokens on Hive? How?</span>
+## <span id="Can_I_earn_digital_tokens_on_Hive_How">Can I earn digital tokens on Hive? How?</span>
 
 You can earn digital tokens on Hive by:
 
@@ -253,9 +253,9 @@ Accounts can not be deactivated or deleted. The account along with all of its ac
 
 Verification is a process where users give evidence to show that they are the person that they claim to be.  This is to reduce fraud and people impersonating known figures. If you would like to remain anonymous, that is perfectly fine. However if you claim to be someone specific, the community may expect that you verify you are who you say you are.
 
-There are a number of ways to do this. The most common way to verify your identity is by posting a link to your Steemit profile on a website or social media account which you are already known for having such as Twitter, Facebook, LinkedIn, a blog, or photography site.
+There are a number of ways to do this. The most common way to verify your identity is by posting a link to your Hive profile on a website or social media account which you are already known for having such as Twitter, Facebook, LinkedIn, a blog, or photography site.
 
-Many users also like to post a photo or a video which shows them holding up a sheet of paper with the current date and their Steem account name handwritten on it. This is a great way to add a personal touch to verifying.
+Many users also like to post a photo or a video which shows them holding up a sheet of paper with the current date and their Hive account name handwritten on it. This is a great way to add a personal touch to verifying.
 
 <a href="#Table_of_Contents_Community">^</a>
 # Site Navigation
@@ -286,13 +286,13 @@ You can get to your account menu by clicking on the avatar icon in the top-right
 
 **Feed** - Here is where you go to see the most recent posts from the people you follow.
 
-**Blog** - Here is where you go to see all of your posts and resteems. It is also where you go to see your profile page that is viewable by other users.
+**Blog** - Here is where you go to see all of your posts and reblogs. It is also where you go to see your profile page that is viewable by other users.
 
 **Comments** - Here is where you go to see all of the comments and replies you have made.
 
 **Replies** - Here is where you go to see all replies other users have made to your posts and comments.
 
-**Toggle Night Mode** - This will toggle the steemit.com website views between "night" and "day" mode themes.
+**Toggle Night Mode** - This will toggle the hive.blog website views between "night" and "day" mode themes.
 
 **Wallet** - This will take you to your wallet, where you go to see your wallet balances, make transfers, exchange HIVE or Hive Dollars, manage your account, and Power Up.
 
@@ -524,7 +524,7 @@ You can promote your own posts, or posts that you like from other users.
 <a href="#Table_of_Contents_Posting">^</a>
 ## <span id="How_do_I_promote_a_post">How do I promote a post?</span>
 
-At the bottom of each post is a button to "Promote". After clicking the button, type the number of Steem Dollars that you want to spend and click “PROMOTE”. The operation will require your master password or active key.
+At the bottom of each post is a button to "Promote". After clicking the button, type the number of Hive Dollars that you want to spend and click “PROMOTE”. The operation will require your master password or active key.
 
 <a href="#Table_of_Contents_Posting">^</a>
 # Comments
@@ -659,9 +659,9 @@ If you paid using bitcoin, the third party website <a href="https://bitcoinfees.
 <a href="#Table_of_Contents_Economics">^</a>
 ## <span id="What_is_powering_up_and_down">What is powering up and down?</span>
 
-**Powering up** - If you have HIVE tokens, you can Power Up to Hive Power to get more voting influence on posts and comments. Having more Hive Power also increases the amount of curation rewards and new vested tokens that you can earn. More HP also grants more influence on approving Steem witnesses.
+**Powering up** - If you have HIVE tokens, you can Power Up to Hive Power to get more voting influence on posts and comments. Having more Hive Power also increases the amount of curation rewards and new vested tokens that you can earn. More HP also grants more influence on approving Hive witnesses.
 
-**Powering down** - If you have Hive Power, you can power down to turn it into liquid HIVE over a period of time. The system will transfer 1/13 of your Steem Power to HIVE each week for about three months (13 weeks), starting 1 week from the time it is started. However, you will lose your influence in the network proportionally to how much is powered down, so think about it carefully. Power downs can be stopped at any time.
+**Powering down** - If you have Hive Power, you can power down to turn it into liquid HIVE over a period of time. The system will transfer 1/13 of your Hive Power to HIVE each week for about three months (13 weeks), starting 1 week from the time it is started. However, you will lose your influence in the network proportionally to how much is powered down, so think about it carefully. Power downs can be stopped at any time.
 
 <a href="#Table_of_Contents_Economics">^</a>
 ## <span id="What_do_the_dollar_amounts_for_pending_payouts_represent">What do the dollar amounts for pending payouts represent?</span>
@@ -706,12 +706,12 @@ You can exchange them. Visit the internal Market, found in the main menu. There 
 <a href="#Table_of_Contents_Economics">^</a>
 ## <span id="What_is_a_MVEST">What is a MVEST?</span>
 
-A VEST is a unit of measurement for Steem Power. A MVEST is one million VESTS. The amount of Hive Power in one MVEST can be found on <a href="https://hiveblocks.com/">hiveblocks.com</a> as `hive_per_mvests`.
+A VEST is a unit of measurement for Hive Power. A MVEST is one million VESTS. The amount of Hive Power in one MVEST can be found on <a href="https://hiveblocks.com/">hiveblocks.com</a> as `hive_per_mvests`.
 
 <a href="#Table_of_Contents_Economics">^</a>
 ## <span id="Can_I_sell_goods_and_services_on_Hive">Can I sell goods and services on Hive?</span>
 
-Other than making a post and making sales manually, there is no interface for selling items directly on steemit.com. You can list goods and services on the third-party websites and accept payment in Hive Dollars or HIVE. You also have the option to advertise your items through Hive posts.
+Other than making a post and making sales manually, there is no interface for selling items directly on hive.blog. You can list goods and services on the third-party websites and accept payment in Hive Dollars or HIVE. You also have the option to advertise your items through Hive posts.
 
 <a href="#Table_of_Contents_Economics">^</a>
 ## <span id="How_can_I_withdraw_my_HIVE_or_HBD_coins">How can I withdraw my HIVE or HBD coins?</span>
@@ -761,7 +761,7 @@ New users can only upvote and downvote with 100% voting strength.
 
 Once you reach about 500 Hive Power, you will see a vote slider appear when you vote. You can use the slider to adjust the weight of your vote, between 1% and 100% voting strength. Voting with less than 100% voting weight will use up less voting mana, but it will also have less of an influence on the post or comment's rewards.
 
-<img src="https://steemitimages.com/DQmV6c21tzSrgXwPHx4tvuc1UiCXBEvzkLBH9QCZHtVN6Ma/image.png">
+<img src="https://images.hive.blog/DQmV6c21tzSrgXwPHx4tvuc1UiCXBEvzkLBH9QCZHtVN6Ma/image.png">
 
 <a href="#Table_of_Contents_Voting_and_Curating">^</a>
 ## <span id="Where_can_I_check_my_voting_mana">Where can I check my voting mana?</span>
@@ -831,7 +831,7 @@ Not necessarily. See: <a href="#What_causes_my_reputation_score_to_go_down">What
 
 ## <span id="What_is_considered_spam_or_abuse">What is considered spam or abuse?</span>
 
-- Asking for money, views, upvotes, follows, or resteems.
+- Asking for money, views, upvotes, follows, or reblogs.
 - Leaving nearly identical or materially similar comments on multiple posts.
 - Comments that are unrelated to the topic of discussion.
 - Sending unsolicited links or requests to users via wallet memos.
@@ -842,7 +842,7 @@ Not necessarily. See: <a href="#What_causes_my_reputation_score_to_go_down">What
 - Threatening users with any type of physical violence.
 - Not citing sources when using someone else’s material.
 - Posting ‘not safe for work’ content without using the “nsfw” tag.
-- Selling or offering to buy votes/resteems/follows, or schemes that facilitate this.
+- Selling or offering to buy votes/reblogs/follows, or schemes that facilitate this.
 - Scams or Fraudulent offers.
 
 <a href="#Table_of_Contents_Plagiarism__Spam__and_Abuse">^</a>
@@ -1019,7 +1019,7 @@ The password has to be long and random for maximum account security.
 <a href="#Table_of_Contents_Security">^</a>
 ## <span id="What_are_my_different_keys_for">What are my different keys for?</span>
 
-**Posting key** - The posting key allows accounts to post, comment, edit, vote, resteem, and follow or mute other accounts. Most users should be logging into Hive every day with the posting key. You are more likely to have your password or key compromised the more you use it so a limited posting key exists to restrict the damage that a compromised account key would cause.
+**Posting key** - The posting key allows accounts to post, comment, edit, vote, reblog, and follow or mute other accounts. Most users should be logging into Hive every day with the posting key. You are more likely to have your password or key compromised the more you use it so a limited posting key exists to restrict the damage that a compromised account key would cause.
 
 **Active key** - The active key is meant for more sensitive tasks such as transferring funds, power up/down transactions, converting Hive Dollars, voting for witnesses, updating profile details and avatar, and placing a market order.
 
