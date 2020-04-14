@@ -5,10 +5,12 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     SCOT_DENOM,
     TOKEN_STATS_EXCLUDE_ACCOUNTS,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
@@ -87,11 +89,12 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.scotMinerTokens
         );
 
+        const engineApi = HIVE_ENGINE ? hiveSsc : ssc;
         const [totalTokenBalances, tokenBalances] = await Promise.all([
-            ssc.find('tokens', 'tokens', {
+            engineApi.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
-            ssc.find('tokens', 'balances', {
+            engineApi.find('tokens', 'balances', {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),

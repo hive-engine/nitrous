@@ -7,7 +7,8 @@ import {
     takeLatest,
     takeEvery,
 } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api as hiveApi } from 'steem';
+import { api as steemApi } from '@steemit/steem-js';
 import { loadFollows, fetchFollowCount } from 'app/redux/FollowSaga';
 import { getContent } from 'app/redux/SagaShared';
 import * as globalActions from './GlobalReducer';
@@ -19,7 +20,7 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -198,6 +199,8 @@ function* syncPinnedPosts() {
  * @param {Iterable} usernames
  */
 function* getAccounts(usernames) {
+    const useHive = HIVE_ENGINE;
+    const api = useHive ? hiveApi : steemApi;
     const accounts = yield call([api, api.getAccountsAsync], usernames);
     yield put(globalActions.receiveAccounts({ accounts }));
 }
