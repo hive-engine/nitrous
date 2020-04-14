@@ -537,7 +537,7 @@ class Privacy extends React.Component {
                             information, which are described in the table below.
                             If you have questions about the legal bases under
                             which we process your personal information, contact
-                            us at legal@hive.blog.
+                            us at legal@hive.io.
                         </span>
                     </p>
                     <p className="c0">
@@ -595,7 +595,7 @@ class Privacy extends React.Component {
                             Where our use of your personal information is based
                             upon your consent, you have the right to withdraw it
                             anytime in the manner indicated in the Service or by
-                            contacting us at privacy@hive.blog
+                            contacting us at privacy@hive.io
                         </span>
                     </p>
                     <p className="c0">
@@ -717,7 +717,7 @@ class Privacy extends React.Component {
                     <p className="c2">
                         <span>
                             You can submit these requests by email to 
-                            privacy@hive.blog. We may request specific
+                            privacy@hive.io. We may request specific
                             information from you to help us confirm your
                             identity and process your request. Applicable law
                             may require or permit us to decline your request. If
@@ -726,7 +726,7 @@ class Privacy extends React.Component {
                             submit a complaint about our use of your personal
                             information or response to your requests regarding
                             your personal information, you may contact us at
-                            privacy@hive.blog or submit a complaint to the
+                            privacy@hive.io or submit a complaint to the
                             data protection regulator in your jurisdiction.
                         </span>
                         <span className="c1">.</span>
