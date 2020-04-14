@@ -418,7 +418,7 @@ class Privacy extends React.Component {
                         <span className="c1">
                             &nbsp;We welcome your comments or questions about
                             this Policy, and you may contact us at:
-                            privacy@hive.blog.
+                            privacy@hive.io.
                         </span>
                     </p>
                     <p className="c0">
