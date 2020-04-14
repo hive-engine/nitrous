@@ -1,9 +1,28 @@
-before_script:
-  - "ls -l"
-  - docker info
-  - "ls -l /"
+stages:
+  # - build
+  - restart_staging
+  # - push_image
+  # - rollback
 
-build:
-  stage: build
+
+# build:
+#   stage: build
+#   script:
+#     - echo "Testing stopping current condenser image"
+#     - ls -l
+#     - ./run.sh stop stg
+#   environment:
+#     name: staging
+#   only:
+#     - develop
+
+restart_staging:
+  stage: restart_staging
   script:
+    - echo "Testing stopping current condenser image"
     - ls -l
+    - ./run.sh stop stg
+  environment:
+    name: staging
+  only:
+    - develop
