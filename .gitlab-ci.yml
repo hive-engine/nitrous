@@ -1,7 +1,7 @@
 stages:
   - build_staging
   - restart_staging
-  # - push_image
+  - clean_up
 
 build_staging:
   stage: build_staging
@@ -22,6 +22,20 @@ restart_staging:
     - ./run.sh start stg
   dependencies:
     - build_staging
+  environment:
+    name: staging
+  only:
+    - develop
+
+clean_up:
+  stage: clean_up
+  script:
+    - echo "Cleanup filespace / unused images / containers / networks"
+    - docker image prune -f
+    - docker container prune -f
+    - docker network prune -f
+  dependencies:
+    - restart_staging
   environment:
     name: staging
   only:
