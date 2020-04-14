@@ -1044,7 +1044,7 @@ If your tokens are in Hive Power, it is impossible for a hacker to take out more
 <a href="#Table_of_Contents_Security">^</a>
 ## <span id="How_do_I_report_a_security_vulnerability">How do I report a security vulnerability?</span>
 
-If you find a security issue please report the details to security@hive.io.
+If you find a security issue please report the details to privacy@hive.io.
 
 <a href="#Table_of_Contents_Security">^</a>
 # Developers
