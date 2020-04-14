@@ -22,6 +22,7 @@ restart_staging:
     - echo "Testing stopping current condenser image"
     - ls -l
     - ./run.sh stop stg
+    - ./run.sh start stg
   environment:
     name: staging
   only:
