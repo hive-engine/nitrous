@@ -311,7 +311,7 @@ to the DMCA. A DMCA request can be sent to us via the contact information below:
 Copyright Agent
 
 
-legal@hive.blog
+legal@hive.io
 
 Please send our Copyright Agent the following information:
 
@@ -475,6 +475,6 @@ Services after a change to this agreement, you agree to those changes.
 
 ## 25. Contact Information
 
-Notices to this site’s operators should be directed to legal@hive.blog.
+Notices to this site’s operators should be directed to legal@hive.io.
 
 
