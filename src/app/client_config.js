@@ -1,11 +1,11 @@
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'Nobel';
+export const APP_NAME = 'Chary';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'Nobel';
-export const APP_NAME_UPPERCASE = 'NOBEL';
+export const APP_NAME_LATIN = 'Chary';
+export const APP_NAME_UPPERCASE = 'CHARY';
 export const APP_ICON = 'nobel';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
@@ -13,15 +13,15 @@ export const APP_URL = 'https://www.nobel.charity';
 export const APP_DOMAIN = 'www.nobel.charity';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
-export const SCOT_TAG = 'nobel';
-export const TAG_LIST = fromJSOrdered(['nobel']);
-export const LIQUID_TOKEN = 'Nobel';
+export const SCOT_TAG = 'chary';
+export const TAG_LIST = fromJSOrdered(['chary']);
+export const LIQUID_TOKEN = 'Chary';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'NOBEL';
+export const LIQUID_TOKEN_UPPERCASE = 'CHARY';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'NOBEL POWER';
+export const VESTING_TOKEN = 'CHARY POWER';
 export const INTERLEAVE_PROMOTED = true;
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
@@ -53,8 +53,8 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
 export const SITE_DESCRIPTION =
-    'Nobel is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called NOBEL, that ' +
+    'Chary is a social media platform where everyone gets paid for ' +
+    'creating and curating content. It leverages a robust digital points system, called CHARY, that ' +
     'supports real value for digital rewards through market price discovery and liquidity';
 
 // various
@@ -107,3 +107,4 @@ export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
+export const HIVE_ENGINE = true;

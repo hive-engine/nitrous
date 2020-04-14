@@ -4,12 +4,14 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     PREFER_HIVE,
     DISABLE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
 
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 async function callApi(url, params) {
     return await axios({
@@ -26,24 +28,25 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account) {
+async function getSteemEngineAccountHistoryAsync(account, hive) {
     const transfers = await callApi(
-        'https://history.steem-engine.com/accountHistory',
+        hive
+            ? 'https://accounts.hive-engine.com/accountHistory'
+            : 'https://history.steem-engine.com/accountHistory',
         {
             account,
             limit: 50,
             offset: 0,
             type: 'user',
             symbol: LIQUID_TOKEN_UPPERCASE,
-            v: new Date().getTime(),
         }
     );
     const history = await getScotDataAsync('get_account_history', {
         account,
         token: LIQUID_TOKEN_UPPERCASE,
         limit: 50,
-        startTime: new Date().getTime(),
     });
+    transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
         .concat(history)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
@@ -68,17 +71,25 @@ async function getAccount(account, useHive) {
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
-async function getGlobalProps() {
-    const gprops = await steem.api.getDynamicGlobalPropertiesAsync();
+async function getGlobalProps(useHive) {
+    const gprops = await (useHive
+        ? hive.api
+        : steem.api
+    ).getDynamicGlobalPropertiesAsync();
     return gprops;
 }
 
-async function getAuthorRep(feedData) {
-    const authors = feedData.map(d => d.author);
+async function getAuthorRep(feedData, useHive) {
+    const authors = Array.from(new Set(feedData.map(d => d.author)));
     const authorRep = {};
-    (await steem.api.getAccountsAsync(authors)).forEach(a => {
-        authorRep[a.name] = a.reputation;
-    });
+    if (authors.length === 0) {
+        return authorRep;
+    }
+    (await (useHive ? hive.api : steem.api).getAccountsAsync(authors)).forEach(
+        a => {
+            authorRep[a.name] = a.reputation;
+        }
+    );
     return authorRep;
 }
 
@@ -143,7 +154,7 @@ async function fetchMissingData(tag, feedType, state, feedData, useHive) {
     }
     const discussionIndex = [];
     const filteredContent = {};
-    const authorRep = await getAuthorRep(feedData);
+    const authorRep = await getAuthorRep(feedData, useHive);
     feedData.forEach(d => {
         const key = d.authorperm.substr(1);
         if (!state.content[key]) {
@@ -182,12 +193,12 @@ async function fetchMissingData(tag, feedType, state, feedData, useHive) {
     }
 }
 
-async function addAccountToState(state, account) {
+async function addAccountToState(state, account, useHive) {
     if (!state.accounts) {
         state.accounts = {};
     }
     if (!state.accounts[account]) {
-        state.accounts[account] = await getAccount(account);
+        state.accounts[account] = await getAccount(account, useHive);
     }
 }
 
@@ -195,6 +206,7 @@ export async function attachScotData(url, state, useHive) {
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
+    const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -216,6 +228,8 @@ export async function attachScotData(url, state, useHive) {
     }
 
     urlParts = url.match(/^[\/]?@([^\/]+)\/transfers[\/]?$/);
+    const hiveEngine = HIVE_ENGINE;
+    const engineApi = hiveEngine ? hiveSsc : ssc;
     if (urlParts) {
         const account = urlParts[1];
         const [
@@ -224,28 +238,26 @@ export async function attachScotData(url, state, useHive) {
             tokenStatuses,
             transferHistory,
             tokenDelegations,
-            snaxBalance,
         ] = await Promise.all([
             // modified to get all tokens. - by anpigon
-            ssc.find('tokens', 'balances', {
+            engineApi.find('tokens', 'balances', {
                 account,
             }),
-            ssc.findOne('tokens', 'pendingUnstakes', {
+            engineApi.findOne('tokens', 'pendingUnstakes', {
                 account,
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
             getScotAccountDataAsync(account),
-            getSteemEngineAccountHistoryAsync(account),
-            ssc.find('tokens', 'delegations', {
+            getSteemEngineAccountHistoryAsync(account, hiveEngine),
+            engineApi.find('tokens', 'delegations', {
                 $or: [{ from: account }, { to: account }],
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
-            fetchSnaxBalanceAsync(account),
         ]);
 
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         if (!state.props) {
-            state.props = await getGlobalProps();
+            state.props = await getGlobalProps(useHive);
         }
         if (tokenBalances) {
             state.accounts[account].token_balances = tokenBalances;
@@ -263,9 +275,6 @@ export async function attachScotData(url, state, useHive) {
         }
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
-        }
-        if (snaxBalance) {
-            state.accounts[account].snax_balance = snaxBalance;
         }
         return;
     }
@@ -291,7 +300,7 @@ export async function attachScotData(url, state, useHive) {
             limit: 20,
             include_reblogs: true,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(account, 'blog', state, feedData, useHive);
         return;
     }
@@ -304,7 +313,7 @@ export async function attachScotData(url, state, useHive) {
             tag: account,
             limit: 20,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(account, 'comments', state, feedData, useHive);
         return;
     }
@@ -317,7 +326,7 @@ export async function attachScotData(url, state, useHive) {
             tag: account,
             limit: 20,
         });
-        await addAccountToState(state, account);
+        await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
             'recent_replies',
@@ -450,6 +459,9 @@ export async function getStateAsync(url) {
             raw = hiveState;
             useHive = true;
         }
+    } else {
+        // Use Prefer HIVE setting
+        useHive = PREFER_HIVE;
     }
     if (!raw.accounts) {
         raw.accounts = {};
@@ -525,7 +537,7 @@ export async function fetchFeedDataAsync(useHive, call_name, ...args) {
             })
         );
         // fill in author rep
-        const authorRep = await getAuthorRep(feedData);
+        const authorRep = await getAuthorRep(feedData, useHive);
         feedData.forEach(d => {
             d.author_reputation = authorRep[d.author];
         });
