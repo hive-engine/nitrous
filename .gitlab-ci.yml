@@ -1,4 +1,4 @@
-before:
+before_script:
   - "ls -l"
   - docker info
   - "ls -l /"
