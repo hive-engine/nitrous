@@ -1,4 +1,9 @@
-before_script:
+before:
   - "ls -l"
   - docker info
   - "ls -l /"
+
+build:
+  stage: build
+  script:
+    - ls -l
