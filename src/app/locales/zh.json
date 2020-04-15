@@ -644,7 +644,7 @@
         "stake_from": "Staked %(amount)s from ",
         "unstake": "Started unstake of %(amount)",
         "cancel_unstake": "Cancelled unstaked on %(amount)",
-        "issue_from": "Issued %(amount)s from "
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "确认取消提款请求吗？",
