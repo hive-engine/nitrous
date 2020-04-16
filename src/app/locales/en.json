@@ -574,6 +574,7 @@
     "postsummary_jsx": {
         "reblogged": "reblogged",
         "reblogged_by": "Reblogged by",
+        "crossposted": "cross-posted",
         "reveal_it": "Reveal this post",
         "adjust_your": "adjust your",
         "display_preferences": "display preferences",

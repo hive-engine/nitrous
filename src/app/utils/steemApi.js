@@ -1,6 +1,7 @@
 import { api } from '@hiveio/hive-js';
 import { ifHive } from 'app/utils/Community';
 import stateCleaner from 'app/redux/stateCleaner';
+import { settlePromises } from 'app/utils/StateFunctions';
 
 export async function callBridge(method, params) {
     console.log(
@@ -95,13 +96,68 @@ async function loadPosts(sort, tag, observer) {
         posts = await callBridge('get_ranked_posts', params);
     }
 
+    const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br><br>\.\.\./;
+    const crossPostPromises = [];
     let content = {};
     let keys = [];
-    for (var idx in posts) {
-        const post = posts[idx];
-        const key = post['author'] + '/' + post['permlink'];
-        content[key] = post;
-        keys.push(key);
+
+    for (let idx in posts) {
+        if (posts.hasOwnProperty(idx)) {
+            const post = posts[idx];
+
+            const crossPostMatches = crossPostRegex.exec(post.body);
+            if (crossPostMatches) {
+                const [, crossPostAuthor, crossPostPermlink] = crossPostMatches;
+                const crossPostParams = {
+                    author: crossPostAuthor,
+                    permlink: crossPostPermlink,
+                    observer,
+                };
+                crossPostPromises.push(callBridge('get_post', crossPostParams));
+                post.cross_post_author = crossPostAuthor;
+                post.cross_post_permlink = crossPostPermlink;
+                post.cross_posted_by = post.author;
+                post.cross_post_key = `${crossPostAuthor}/${crossPostPermlink}`;
+            }
+
+            const key = post['author'] + '/' + post['permlink'];
+            content[key] = post;
+            keys.push(key);
+        }
+    }
+
+    const crossPosts = {};
+    try {
+        const responses = await settlePromises(crossPostPromises);
+
+        for (let ri = 0; ri < responses.length; ri += 1) {
+            const response = responses[ri];
+
+            if (response.state === 'resolved') {
+                const crossPost = response.value;
+                const key = crossPost['author'] + '/' + crossPost['permlink'];
+                crossPosts[key] = crossPost;
+            } else {
+                console.error('cross post error', response);
+            }
+        }
+
+        resolve(crossPosts);
+    } catch (error) {
+        console.error('Failed fetching cross posts', error.message);
+    }
+
+    if (Object.keys(crossPosts).length > 0) {
+        for (let ki = 0; ki < keys.length; ki += 1) {
+            const contentKey = keys[ki];
+            const post = content[contentKey];
+
+            if (post.hasOwnProperty('cross_post_key')) {
+                post.body = crossPosts[post.cross_post_key].body;
+                post.cross_post_category =
+                    crossPosts[post.cross_post_key].category;
+            }
+        }
     }
 
     let discussion_idx = {};

@@ -84,6 +84,33 @@ class PostSummary extends React.Component {
             );
         }
 
+        let crossPostedBy = post.get('cross_posted_by');
+
+        if (crossPostedBy) {
+            const crossPostAuthor = post.get('cross_post_author');
+            const crossPostPermlink = post.get('cross_post_permlink');
+            const crossPostCategory = `/${post.get('cross_post_category', '')}`;
+
+            crossPostedBy = (
+                <div className="articles__crosspost">
+                    <p className="articles__crosspost-text">
+                        <span className="articles__crosspost-icon">
+                            <Icon name="reblog" />
+                        </span>
+                        <UserNames names={[crossPostedBy]} />{' '}
+                        {tt('postsummary_jsx.crossposted')}{' '}
+                        <Link
+                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                                crossPostPermlink
+                            }`}
+                        >
+                            @{crossPostAuthor}/{crossPostPermlink}
+                        </Link>
+                    </p>
+                </div>
+            );
+        }
+
         const gray = post.getIn(['stats', 'gray']);
         const isNsfw = hasNsfwTag(post);
         const isReply = post.get('depth') > 0;
@@ -289,6 +316,7 @@ class PostSummary extends React.Component {
         return (
             <div className="articles__summary">
                 {reblogged_by}
+                {crossPostedBy}
                 {summary_header}
                 <div
                     className={

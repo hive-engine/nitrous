@@ -64,3 +64,14 @@ export function pricePerSteem(state) {
     }
     return undefined;
 }
+
+export function settlePromises(arr) {
+    return Promise.all(
+        arr.map(promise => {
+            return promise.then(
+                value => ({ state: 'resolved', value }),
+                value => ({ state: 'rejected', value })
+            );
+        })
+    );
+}
