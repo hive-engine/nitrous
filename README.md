@@ -1,17 +1,16 @@
 
 # Condenser
 
-
-Condenser is the react.js web interface to the world's first and used to be best
-blockchain-based social media platform, steemit.com.  It uses
-[Steen compatible blockchain](https://github.com/steemit/steem), powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
+Condenser is the react.js web interface to the
+blockchain-based social media platform, Hive.blog.  It uses a
+[Hive compatible blockchain](https://gitlab.syncad.com/hive/hive), powered by DPoS Governance and ChainBase DB to store JSON-based content for a plethora of web
 applications.
 
 ## Why would I want to use Condenser?
 
-* Learning how to build blockchain-based web applications using Steem compatible blockchain as a content storage mechanism in react.js
-* Reviewing the inner workings of the steemit.com social media platform
-* Assisting with software development for steemit.com
+* Learning how to build blockchain-based web applications using Hive compatible blockchain as a content storage mechanism in react.js
+* Reviewing the inner workings of the Hive.blog social media platform
+* Assisting with software development for Hive.blog and Hive.io
 
 ## Installation
 
@@ -22,10 +21,22 @@ simple as pulling in the github repo and issuing one command to build it,
 like this:
 
 ```bash
-git clone https://github.com/steemit/condenser
+git clone https://gitlab.syncad.com/hive/condenser
 cd condenser
 docker build -t="myname/condenser:mybranch" .
 docker run -it -p 8080:8080 myname/condenser:mybranch
+```
+
+#### Docker Compose
+
+If you like to run and build condenser and additionally a reverse-proxy using an Nginx Docker image, with companion Letsencrypt (SSL) support, you can simple launch the Docker-compose files via the included `run.sh`-scripts.
+
+```bash
+git clone https://gitlab.syncad.com/hive/condenser
+cd condenser
+./run.sh start proxy            # to start the nginx reverse proxy (with ssl support)
+./run.sh start (prod|dev|stg)   # to build and start the condensor image
+./run.sh logs (prod|dev|stg)    # (optionally) to attach to the condensor image and inspect its logs
 ```
 
 ## Building from source without docker (the 'traditional' way):
@@ -34,7 +45,7 @@ docker run -it -p 8080:8080 myname/condenser:mybranch
 #### Clone the repository and make a tmp folder
 
 ```bash
-git clone https://github.com/steemit/condenser
+git clone https://gitlab.syncad.com/hive/condenser
 cd condenser
 mkdir tmp
 ```
@@ -47,8 +58,8 @@ Condenser is known to successfully build using node 12.6, npm 6.13.4, and
 yarn 1.22.4.
 
 We use the yarn package manager instead of the default `npm`. There are
-multiple reasons for this, one being that we have `steem-js` built from
-source pulling the github repo as part of the build process and yarn
+multiple reasons for this, one being that we have `hive-js` built from
+source pulling the gitlab repo as part of the build process and yarn
 supports this. This way the library that handles keys can be loaded by
 commit hash instead of a version name and cryptographically verified to be
 exactly what we expect it to be. Yarn can be installed with `npm`, but
@@ -80,12 +91,12 @@ It will take quite a bit longer to start in this mode (~60s) as it needs to
 build and start the webpack-dev-server.
 
 By default you will be connected to community public api node at
-`https://api.steem.house`. This is actually on the real blockchain and
+`https://api.hive.blog`. This is actually on the real blockchain and
 you would use your regular account name and credentials to login - there is
 not an official separate testnet at this time. If you intend to run a
 full-fledged site relying on your own, we recommend looking into running a
-copy of `steemd` locally instead
-[https://github.com/steemit/steem](https://github.com/steemit/steem).
+copy of `hive (steemd)` locally instead
+[https://gitlab.syncad.com/hive/hive](https://gitlab.syncad.com/hive/hive).
 
 #### Debugging SSR code
 
@@ -104,8 +115,8 @@ stored in `config/defaults.json`.
 Environment variables using an example like this:
 
 ```bash
-export SDC_CLIENT_STEEMD_URL="https://api.steem.house"
-export SDC_SERVER_STEEMD_URL="https://api.steem.house"
+export SDC_CLIENT_STEEMD_URL="https://api.hive.blog"
+export SDC_SERVER_STEEMD_URL="https://api.hive.blog"
 ```
 
 Keep in mind environment variables only exist in your active session, so if
@@ -186,16 +197,6 @@ OFFLINE_SSR_TEST=true NODE_ENV=production node --prof lib/server/index.js
 ```
 
 This will read data from the blobs in `api_mockdata` directory. If you want to use another set of mock data, create a similar directory to that one and add an argument `OFFLINE_SSR_TEST_DATA_DIR` pointing to your new directory.
-
-### Run blackbox tests using nightwatch
-
-To run a Selenium test suite, start the condenser docker image with a name `condenser` (like `docker run --name condenser -itp 8080:8080 steemit/condenser:latest`) and then run the blackboxtest image attached to the condneser image's network:
-
-```
-docker build -t=steemit/condenser-blackboxtest blackboxtest/
-docker run --network container:condenser steemit/condenser-blackboxtest:latest
-
-```
 
 ## Issues
 
