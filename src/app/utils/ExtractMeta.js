@@ -51,7 +51,9 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'og:url', content: localUrl });
     metas.push({
         name: 'og:image',
-        content: image || 'https://hive.blog/images/hive-blog-share.png',
+        content:
+            `https://images.hive.blog/1200x630/${image}` ||
+            'https://hive.blog/images/hive-blog-share.png',
     });
     metas.push({ name: 'og:description', content: desc });
     metas.push({ name: 'og:site_name', content: 'Hive' });
@@ -72,7 +74,9 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'twitter:description', content: desc });
     metas.push({
         name: 'twitter:image',
-        content: image || 'https://hive.blog/images/hive-blog-twshare.png',
+        content:
+            `https://images.hive.blog/1200x630/${image}` ||
+            'https://hive.blog/images/hive-blog-twshare.png',
     });
 }
 
@@ -102,7 +106,6 @@ function addAccountMeta(metas, accountname, profile) {
 }
 
 function readProfile(chain_data, account) {
-    const profiles = chain_data.profiles;
     if (!chain_data.profiles[account]) return {};
     return chain_data.profiles[account]['metadata']['profile'];
 }
