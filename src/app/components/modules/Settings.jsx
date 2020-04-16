@@ -238,24 +238,6 @@ class Settings extends React.Component {
     render() {
         const { state, props } = this;
 
-        const { submitting, valid, touched } = this.state.accountSettings;
-        const disabled =
-            !props.isOwnAccount ||
-            state.loading ||
-            submitting ||
-            !valid ||
-            !touched;
-
-        const {
-            profile_image,
-            cover_image,
-            name,
-            about,
-            location,
-            website,
-            progress,
-        } = this.state;
-
         const {
             ignores,
             accountname,
