@@ -1,6 +1,6 @@
 import { fromJS, Map, Set, OrderedSet } from 'immutable';
 import { call, put, select } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { getScotDataAsync } from 'app/utils/steemApi';
 
 import * as globalActions from 'app/redux/GlobalReducer';
 
@@ -9,8 +9,11 @@ import * as globalActions from 'app/redux/GlobalReducer';
 */
 
 //fetch for follow/following count
-export function* fetchFollowCount(account) {
-    const counts = yield call([api, api.getFollowCountAsync], account);
+export function* fetchFollowCount(account, useHive) {
+    const counts = yield call(getScotDataAsync, 'get_follow_count', {
+        account,
+        hive: useHive,
+    });
     yield put(
         globalActions.update({
             key: ['follow_count', account],
@@ -24,7 +27,7 @@ export function* fetchFollowCount(account) {
 }
 
 // Test limit with 2 (not 1, infinate looping)
-export function* loadFollows(method, account, type, force = false) {
+export function* loadFollows(method, account, type, useHive, force = false) {
     if (
         yield select(state =>
             state.global.getIn(['follow', method, account, type + '_loading'])
@@ -52,11 +55,27 @@ export function* loadFollows(method, account, type, force = false) {
         })
     );
 
-    yield loadFollowsLoop(method, account, type);
+    yield loadFollowsLoop(method, account, type, useHive);
 }
 
-function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
-    const res = fromJS(yield api[method](account, start, type, limit));
+function* loadFollowsLoop(
+    method,
+    account,
+    type,
+    useHive,
+    start = '',
+    limit = 1000
+) {
+    const params = { account, start, status: type, limit };
+    if (method === 'getFollowingAsync') {
+        params['follower'] = account;
+    } else {
+        params['following'] = account;
+    }
+    if (useHive) {
+        params['hive'] = '1';
+    }
+    const res = fromJS(yield call(getScotDataAsync, 'get_following', params));
     // console.log('res.toJS()', res.toJS())
 
     let cnt = 0;
@@ -71,7 +90,6 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                 res.forEach(value => {
                     cnt += 1;
 
-                    const whatList = value.get('what');
                     const accountNameKey =
                         method === 'getFollowingAsync'
                             ? 'following'
@@ -79,10 +97,7 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
                     const accountName = (lastAccountName = value.get(
                         accountNameKey
                     ));
-                    whatList.forEach(what => {
-                        //currently this is always true: what === type
-                        m.update(what, OrderedSet(), s => s.add(accountName));
-                    });
+                    m.update(type, OrderedSet(), s => s.add(accountName));
                 });
                 return m.asImmutable();
             },
@@ -91,7 +106,14 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
 
     if (cnt === limit) {
         // This is paging each block of up to limit results
-        yield call(loadFollowsLoop, method, account, type, lastAccountName);
+        yield call(
+            loadFollowsLoop,
+            method,
+            account,
+            type,
+            useHive,
+            lastAccountName
+        );
     } else {
         // This condition happens only once at the very end of the list.
         // Every account has a different followers and following list for: blog, ignore

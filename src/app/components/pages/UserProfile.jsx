@@ -645,7 +645,7 @@ module.exports = {
                 dispatch(userActions.setPowerdownDefaults(powerdownDefaults));
                 dispatch(userActions.showPowerdown());
             },
-            cancelUnstake: ({ account, transactionId }) => {
+            cancelUnstake: ({ account, transactionId, useHive }) => {
                 const cancelUnstakeOp = {
                     contractName: 'tokens',
                     contractAction: 'cancelUnstake',
@@ -654,7 +654,7 @@ module.exports = {
                     },
                 };
                 const operation = {
-                    id: 'ssc-mainnet1',
+                    id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                     required_auths: [account],
                     json: JSON.stringify(cancelUnstakeOp),
                 };
@@ -668,6 +668,7 @@ module.exports = {
                         type: 'custom_json',
                         operation,
                         successCallback,
+                        useHive,
                     })
                 );
             },

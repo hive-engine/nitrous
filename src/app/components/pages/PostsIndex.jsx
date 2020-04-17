@@ -8,7 +8,6 @@ import { List, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
@@ -25,7 +24,13 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import SidebarToken from 'app/components/elements/SidebarToken';
-import { SHOW_TOKEN_STATS } from 'app/client_config';
+import {
+    PREFER_HIVE,
+    HIVE_ENGINE,
+    INTERLEAVE_PROMOTED,
+    SHOW_TOKEN_STATS,
+    TAG_LIST,
+} from 'app/client_config';
 
 class PostsIndex extends React.Component {
     static propTypes = {
@@ -142,6 +147,7 @@ class PostsIndex extends React.Component {
             order,
             category,
             accountname,
+            useHive: PREFER_HIVE,
         });
     }
     onShowSpam = () => {
@@ -407,6 +413,7 @@ class PostsIndex extends React.Component {
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         ['total_token_balance', 'totalStaked']
                                     )}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -438,6 +445,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -469,6 +477,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -541,6 +550,7 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const hiveEngine = HIVE_ENGINE;
             const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;
@@ -574,6 +584,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviveEnabled: state.app.get('reviveEnabled'),
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+                hiveEngine,
             };
         },
         dispatch => {
