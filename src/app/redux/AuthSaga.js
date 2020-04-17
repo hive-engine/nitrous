@@ -10,7 +10,7 @@ import { ALLOW_MASTER_PW } from 'app/client_config';
 
 // operations that require only posting authority
 export const postingOps = Set(
-    `vote, comment, delete_comment, custom_json, claim_reward_balance`
+    `vote, comment, delete_comment, custom_json, claim_reward_balance, account_update2`
         .trim()
         .split(/,\s*/)
 );

@@ -25,6 +25,7 @@ import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import SidebarToken from 'app/components/elements/SidebarToken';
 import {
+    PREFER_HIVE,
     HIVE_ENGINE,
     INTERLEAVE_PROMOTED,
     SHOW_TOKEN_STATS,
@@ -146,6 +147,7 @@ class PostsIndex extends React.Component {
             order,
             category,
             accountname,
+            useHive: PREFER_HIVE,
         });
     }
     onShowSpam = () => {
@@ -407,7 +409,7 @@ class PostsIndex extends React.Component {
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         ['total_token_balance', 'totalStaked']
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -439,7 +441,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -471,7 +473,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -544,7 +546,7 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
-            const useHive = HIVE_ENGINE;
+            const hiveEngine = HIVE_ENGINE;
             const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;
@@ -578,7 +580,7 @@ module.exports = {
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 reviveEnabled: state.app.get('reviveEnabled'),
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
-                useHive,
+                hiveEngine,
             };
         },
         dispatch => {

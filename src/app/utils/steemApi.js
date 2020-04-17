@@ -265,10 +265,15 @@ export async function attachScotData(url, state, useHive) {
         if (tokenUnstakes) {
             state.accounts[account].token_unstakes = tokenUnstakes;
         }
-        if (tokenStatuses && tokenStatuses[LIQUID_TOKEN_UPPERCASE]) {
-            state.accounts[account].token_status =
-                tokenStatuses[LIQUID_TOKEN_UPPERCASE];
-            state.accounts[account].all_token_status = tokenStatuses;
+        if (tokenStatuses) {
+            const tokenStatusData = useHive
+                ? tokenStatuses.hiveData
+                : tokenStatuses.data;
+            if (tokenStatusData[LIQUID_TOKEN_UPPERCASE]) {
+                state.accounts[account].token_status =
+                    tokenStatusData[LIQUID_TOKEN_UPPERCASE];
+                state.accounts[account].all_token_status = tokenStatusData;
+            }
         }
         if (transferHistory) {
             state.accounts[account].transfer_history = transferHistory;
