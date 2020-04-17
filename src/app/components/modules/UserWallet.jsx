@@ -359,6 +359,8 @@ class UserWallet extends React.Component {
 
         const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
         const power_balance_str = numberWithCommas(vesting_steem.toFixed(3));
+        const native_token_str = useHive ? 'Hive' : 'Steem';
+        const native_token_str_upper = useHive ? 'HIVE' : 'STEEM';
 
         return (
             <div className="UserWallet">
@@ -463,13 +465,15 @@ class UserWallet extends React.Component {
                 {/* STEEM */}
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM
+                        {native_token_str_upper}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.liquid_token"
                             params={{
-                                LIQUID_TOKEN: 'Steem',
-                                VESTING_TOKEN: 'STEEM POWER',
+                                LIQUID_TOKEN: native_token_str,
+                                VESTING_TOKEN: `${
+                                    native_token_str_upper
+                                } POWER`,
                             }}
                         />
                     </div>
@@ -479,17 +483,19 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={steem_menu}
                                 el="li"
-                                selected={`${steem_balance_str} STEEM`}
+                                selected={`${steem_balance_str} ${
+                                    native_token_str_upper
+                                }`}
                             />
                         ) : (
-                            `${steem_balance_str} STEEM`
+                            `${steem_balance_str} ${native_token_str_upper}`
                         )}
                     </div>
                 </div>
                 {/* STEEM POWER */}
                 <div className="UserWallet__balance row zebra">
                     <div className="column small-12 medium-8">
-                        STEEM POWER
+                        {native_token_str_upper} POWER
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.influence_token"
@@ -509,10 +515,12 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={steem_power_menu}
                                 el="li"
-                                selected={power_balance_str + ' STEEM'}
+                                selected={`${power_balance_str}  ${
+                                    native_token_str_upper
+                                }`}
                             />
                         ) : (
-                            power_balance_str + ' STEEM'
+                            `${power_balance_str}  ${native_token_str_upper}`
                         )}
                         {delegated_steem != 0 ? (
                             <div
@@ -522,8 +530,13 @@ class UserWallet extends React.Component {
                                         : null,
                                 }}
                             >
-                                <Tooltip t="STEEM POWER delegated to/from this account">
-                                    ({received_power_balance_str} STEEM)
+                                <Tooltip
+                                    t={`${
+                                        native_token_str_upper
+                                    } POWER delegated to/from this account`}
+                                >
+                                    ({received_power_balance_str}{' '}
+                                    {native_token_str_upper})
                                 </Tooltip>
                             </div>
                         ) : null}
@@ -532,7 +545,7 @@ class UserWallet extends React.Component {
                 {/* Steem Dollars */}
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM DOLLARS
+                        {native_token_str_upper} DOLLARS
                         <div className="secondary">
                             {tt('userwallet_jsx.tradeable_tokens_transferred')}
                         </div>
@@ -559,7 +572,7 @@ class UserWallet extends React.Component {
                         })}
                     >
                         <div className="column small-12 medium-9">
-                            {useHive ? 'Hive' : 'Steem'} Engine Tokens
+                            {native_token_str} Engine Tokens
                         </div>
                         {isMyAccount && (
                             <div className="column small-12 medium-3">
