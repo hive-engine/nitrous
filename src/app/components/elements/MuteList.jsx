@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Link } from 'react-router';
 import * as transactionActions from 'app/redux/TransactionReducer';
+import { PREFER_HIVE } from 'app/client_config';
 
 class MuteList extends React.Component {
     constructor(props) {
@@ -64,6 +65,7 @@ module.exports = connect(
                     },
                     successCallback: done,
                     errorCallback: done,
+                    useHive: PREFER_HIVE,
                 })
             );
         },

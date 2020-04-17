@@ -16,7 +16,7 @@ import tt from 'counterpart';
 import { repLog10, parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { PREFER_HIVE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import { allowDelete } from 'app/utils/StateFunctions';
 
@@ -575,6 +575,7 @@ const Comment = connect(
                     method: 'getFollowingAsync',
                     account,
                     type: 'ignore',
+                    useHive: PREFER_HIVE,
                 })
             );
         },
