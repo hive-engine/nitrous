@@ -7,7 +7,7 @@ We created this place to be a more personal space for smaller content creators a
 
 Here you have the option to be part of something from the start and get a decent stake does not cost much here in the beginning stages.
 
-LASSECASH is like HIVE, you can blog from either www.lassecash.com, www.steemit.com or any other condenser site, as long as you use the ‘lassecash’ tag in your post’s tags box, then the post will appear at the STEEM blokchain and on the LASSECASH condenser site.
+LASSECASH is like HIVE, you can blog from either www.lassecash.com, hive.blog or any other condenser site, as long as you use the ‘lassecash’ tag in your post’s tags box, then the post will appear at the HIVE blokchain and on the LASSECASH condenser site.
 
 Purpose of LASSECASH
 --
@@ -30,7 +30,7 @@ If you compare to any other tribe, even the APPICS token, then they have a huge 
 Scotbot parameters
 --
 
-You can see the active parameters at all times at http://scot.today/token/LASSECASH and then click “SCOTSetting”. I tried to tweak the parameters to be more successful then HIVE. The most important changes from the HIVE, is that LASSECASH has 14 days reward window (meaning you receive your author and curator rewards for a post, 14 days after the post is made) and that the powerdown time is 13 payments every 14 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
+I tried to tweak the parameters to be more successful then HIVE. The most important changes from the HIVE, is that LASSECASH has 14 days reward window (meaning you receive your author and curator rewards for a post, 14 days after the post is made) and that the powerdown time is 13 payments every 14 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
 
 Lasse as leader of LASSECASH
 --
