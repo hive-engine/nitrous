@@ -1,7 +1,7 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
 # The Chary Whitepaper
-(Until april 2020 known as "The Nobel Whitepaper")* <br> <br>
+*(NOBEL worked very well on the Steem platform from summer 2019 until April 2020. With the fork to Hive, NOBEL is not supported anymore. Instead I created the new similar token "CHARY")* <br> 
 written by Achim Mertens <br>
 
 (Under Construction. Status: 2020/04/17)
@@ -16,7 +16,7 @@ With CHARY, donators have the ability to spend their money in a most efficient w
    <br>
 _(Sketch by Achim Mertens)_ 
 
-'* NOBEL worked on the Steem platform until April 2020. With the fork to Hive, Nobel is not supported anymore. Instead I created a new similar token "CHARY"
+
 
 
 # Content:
