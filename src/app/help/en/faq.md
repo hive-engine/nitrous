@@ -1,16 +1,22 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
 # The Chary Whitepaper
-written by Achim Mertens
+(Until april 2020 known as "The Nobel Whitepaper")* <br> <br>
+written by Achim Mertens <br>
 
 (Under Construction. Status: 2020/04/17)
 
-The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either support their favorite beneficence helpers directly or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
+The purpose of the [CHARY](https://chary.org) token is to support people, that do good things to others. This can be charity helpers or even a person, that helps needy people in the neighborhood. 
+These people, writing about it on the hive platform and using the hashtag “chary”, get upvoted by CHARY-holders. With that the authors earn these tokens.
+They can sell it on a marketplace into their local currency. <br>
+With CHARY, donators have the ability to spend their money in a most efficient way. With these posts the donators get a good “Proof Of Charity”. A community of CHARY-holders decides which people shall get the most tokens. No NGO or middleman is needed. <br>
+[HIVE](https://peakd.com/) (the base of CHARY) is a great blockchain platform with an experienced and good minded community, that creates value by connecting the right people. 
 
+![chary.png](https://images.hive.blog/0x0/https://files.peakd.com/file/peakd-hive/achimmertens/K55ZCuxg-CHARY.png)
+   <br>
+_(Sketch by Achim Mertens)_ 
 
-
-[![](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)](https://greensniper.files.wordpress.com/2019/07/alfred_nobel-1.png)    <br>
-_(Sketch of Alfred Nobel by Achim Mertens)_ 
+'* NOBEL worked on the Steem platform until April 2020. With the fork to Hive, Nobel is not supported anymore. Instead I created a new similar token "CHARY"
 
 
 # Content:
