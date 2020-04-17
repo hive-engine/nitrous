@@ -1,6 +1,8 @@
 import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
-import { objAccessor } from 'app/utils/Accessors';
 import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
+import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
+
+const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
 
 const site_desc =
     'Communities without borders. A social network owned and operated by its users, powered by Hive.';
@@ -52,7 +54,7 @@ function addPostMeta(metas, content, profile) {
     metas.push({
         name: 'og:image',
         content:
-            `https://images.hive.blog/1200x630/${image}` ||
+            proxify(image, '1200x630') ||
             'https://hive.blog/images/hive-blog-share.png',
     });
     metas.push({ name: 'og:description', content: desc });
@@ -75,7 +77,7 @@ function addPostMeta(metas, content, profile) {
     metas.push({
         name: 'twitter:image',
         content:
-            `https://images.hive.blog/1200x630/${image}` ||
+            proxify(image, '1200x630') ||
             'https://hive.blog/images/hive-blog-twshare.png',
     });
 }
