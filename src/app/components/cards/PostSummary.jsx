@@ -295,10 +295,18 @@ class PostSummary extends React.Component {
             }
         }
 
-        const image_link = extractImageLink(
+        let image_link = extractImageLink(
             post.get('json_metadata'),
             post.get('body')
         );
+
+        if (crossPostedBy) {
+            image_link = extractImageLink(
+                post.get('cross_post_json_metadata'),
+                post.get('cross_post_body')
+            );
+        }
+
         let thumb = null;
         if (!gray && image_link && !ImageUserBlockList.includes(author)) {
             // on mobile, we always use blog layout style -- there's no toggler
