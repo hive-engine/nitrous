@@ -1,8 +1,9 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
-# The NOBEL Whitepaper
+# The Chary Whitepaper
 written by Achim Mertens
 
+(Under Construction. Status: 2020/04/17)
 
 The purpose of the NOBEL-token is to honour the people that Alfred Nobel would appreciate. People, that do good things to other people, should be rewarded with this coin. The NOBEL is an high effective charity distribution tool, where the donators either support their favorite beneficence helpers directly or leave it up to the community to care about, that the money goes to the right places. The beneficence helpers do “Proof of Charity” by writing blogs about their work. [STEEM](https://steemit.com/) (the base of NOBEL) is a great blockchain platform with a big and good minded community, that creates value by connecting the right people. No NGO or middleman is needed.
 
