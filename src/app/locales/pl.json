@@ -676,7 +676,7 @@
         "stake_from": "Staked %(amount)s from ",
         "unstake": "Started unstake of %(amount)",
         "cancel_unstake": "Cancelled unstaked on %(amount)",
-        "issue_from": "Issued %(amount)s from "
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "Anulować zlecenie wypłaty?",
@@ -746,7 +746,7 @@
         "to_comment_and_reward_others": " aby komentować i nagradzać innych.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "sign_up_get_steem": "Sign up. Get STEEM!",
+        "sign_up_get_steem": "Sign up.",
         "returning_users": "Powracający użytkownicy: ",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":

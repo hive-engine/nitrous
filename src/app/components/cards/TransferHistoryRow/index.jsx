@@ -113,7 +113,6 @@ class TransferHistoryRow extends React.Component {
                     {tt(['transferhistoryrow_jsx', 'issue_from'], {
                         amount: `${op.quantity} ${scotTokenSymbol}`,
                     })}
-                    {otherAccountLink(op.account)}
                 </span>
             );
         } else if (op.type === 'staking_reward') {
