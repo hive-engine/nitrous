@@ -1,17 +1,17 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
 # The Chary Whitepaper
-*(NOBEL worked very well on the Steem platform from summer 2019 until April 2020. With the fork to Hive, NOBEL is not supported anymore. Instead I have created the new similar token "CHARY")* 
+*(NOBEL worked very well on the Steem platform from Summer 2019 until April 2020. With the fork to Hive, NOBEL is not supported anymore. Instead I have created the new similar token "CHARY")* 
 <br> 
 Written by Achim Mertens <br>
 
 (Under Construction. Status: 2020/04/17)
 
-The purpose of the [CHARY](https://chary.org) token is to support people, that do good things to others. This can be charity helpers or even a person, that helps needy people in the neighborhood. 
-These people, writing about it on the hive platform and using the hashtag “chary”, get upvoted by CHARY-holders. With that the authors earn these tokens.
-They can sell it on a marketplace into their local currency. <br>
-With CHARY, donators have the ability to spend their money in a most efficient way. With these posts the donators get a good “Proof Of Charity”. A community of CHARY-holders decides which people shall get the most tokens. No NGO or middleman is needed. <br>
-[HIVE](https://peakd.com/) (the base of CHARY) is a great blockchain platform with an experienced and good minded community, that creates value by connecting the right people. 
+The purpose of the [CHARY](https://chary.org) token is to support people, that do good things to others. These can be charity helpers or even a person, that helps needy people in the neighborhood. 
+These people, writing about it on the [Hive](https://peakd.com/) platform and using the hashtag “chary”, get upvoted by CHARY-holders. With that, the authors earn these tokens.
+They can sell it on a marketplace into their local currency. <br>
+By buying CHARY, donators have the ability to spend their money in a most efficient way. With the posts the donators get a good “Proof Of Charity”. A community of CHARY-holders decides which people shall get the most tokens. No NGO or middleman is needed. <br>
+Hive (the base of Chary) is a great blockchain platform with an experienced and good minded community, that creates value by connecting the right people. 
 
 ![chary.png](https://images.hive.blog/0x0/https://files.peakd.com/file/peakd-hive/achimmertens/K55ZCuxg-CHARY.png)
    <br>
