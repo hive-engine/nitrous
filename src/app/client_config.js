@@ -32,10 +32,6 @@ export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'LASSECASH POWER';
 export const INTERLEAVE_PROMOTED = true;
 
-export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
-export const INVEST_TOKEN_SHORT = 'SP';
-export const DEBT_TOKEN = 'STEEM DOLLAR';
-export const DEBT_TOKENS = 'STEEM DOLLARS';
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
 export const LANDING_PAGE_URL = 'https://steem.io/';
@@ -116,3 +112,10 @@ export const TOKEN_STATS_EXCLUDE_ACCOUNTS = ['lassecash'];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
+
+export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
+    ? 'HIVE POWER'
+    : 'STEEM POWER';
+export const INVEST_TOKEN_SHORT = HIVE_ENGINE ? 'HP' : 'SP';
+export const DEBT_TOKEN = HIVE_ENGINE ? 'HIVE DOLLAR' : 'STEEM DOLLAR';
+export const DEBT_TOKENS = HIVE_ENGINE ? 'HIVE DOLLARS' : 'STEEM DOLLARS';

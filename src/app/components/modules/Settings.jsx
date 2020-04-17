@@ -9,6 +9,8 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import reactForm from 'app/utils/ReactForm';
 import UserList from 'app/components/elements/UserList';
 import Dropzone from 'react-dropzone';
+import MuteList from 'app/components/elements/MuteList';
+import { isLoggedIn } from 'app/utils/UserUtil';
 import { PREFER_HIVE } from 'app/client_config';
 
 class Settings extends React.Component {
@@ -21,6 +23,20 @@ class Settings extends React.Component {
         };
         this.initForm(props);
         this.onNsfwPrefChange = this.onNsfwPrefChange.bind(this);
+    }
+
+    componentWillMount() {
+        const { account } = this.props;
+        if (account) {
+            this.initForm(this.props);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        const { account } = this.props;
+        if (prevProps.account !== account && account) {
+            this.initForm(this.props);
+        }
     }
 
     initForm(props) {
@@ -145,6 +161,7 @@ class Settings extends React.Component {
         metaData.profile.about = about.value;
         metaData.profile.location = location.value;
         metaData.profile.website = website.value;
+        metaData.profile.version = 2; // signal upgrade to posting_json_metadata
 
         // Remove empty keys
         if (!metaData.profile.profile_image)
@@ -158,9 +175,9 @@ class Settings extends React.Component {
         const { account, updateAccount, useHive } = this.props;
         this.setState({ loading: true });
         updateAccount({
-            json_metadata: JSON.stringify(metaData),
-            account: account.name,
-            memo_key: account.memo_key,
+            account: account.get('name'),
+            json_metadata: '',
+            posting_json_metadata: JSON.stringify(metaData),
             errorCallback: e => {
                 if (e === 'Canceled') {
                     this.setState({
@@ -221,6 +238,14 @@ class Settings extends React.Component {
     render() {
         const { state, props } = this;
 
+        const {
+            ignores,
+            accountname,
+            isOwnAccount,
+            user_preferences,
+            follow,
+        } = this.props;
+
         const { submitting, valid, touched } = this.state.accountSettings;
         const disabled =
             !props.isOwnAccount ||
@@ -239,152 +264,164 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        const { ignores, account, isOwnAccount, user_preferences } = this.props;
-
         return (
             <div className="Settings">
                 <div className="row">
-                    <form
-                        onSubmit={this.handleSubmitForm}
-                        className="small-12 medium-6 large-4 columns"
-                    >
-                        <h4>{tt('settings_jsx.public_profile_settings')}</h4>
-                        {progress.message && (
-                            <div className="info">{progress.message}</div>
-                        )}
-                        {progress.error && (
-                            <div className="error">
-                                {tt('reply_editor.image_upload')}
-                                {': '}
-                                {progress.error}
-                            </div>
-                        )}
-                        <label>
-                            {tt('settings_jsx.profile_image_url')}
-                            <Dropzone
-                                onDrop={this.onDrop}
-                                className={'none'}
-                                disableClick
-                                multiple={false}
-                                accept="image/*"
-                                ref={node => {
-                                    this.dropzone = node;
-                                }}
+                    {isLoggedIn() &&
+                        isOwnAccount && (
+                            <form
+                                onSubmit={this.handleSubmitForm}
+                                className="small-12 medium-6 large-4 columns"
                             >
-                                <input
-                                    type="url"
-                                    {...profile_image.props}
-                                    autoComplete="off"
-                                />
-                            </Dropzone>
-                            <a
-                                onClick={() =>
-                                    this.onOpenClick('profile_image')
-                                }
-                            >
-                                {tt('settings_jsx.upload_image')}
-                            </a>
-                        </label>
-                        <div className="error">
-                            {profile_image.blur &&
-                                profile_image.touched &&
-                                profile_image.error}
-                        </div>
-                        <label>
-                            {tt('settings_jsx.cover_image_url')}
-                            <input
-                                type="url"
-                                {...cover_image.props}
-                                autoComplete="off"
-                            />
-                            <a onClick={() => this.onOpenClick('cover_image')}>
-                                {tt('settings_jsx.upload_image')}
-                            </a>
-                        </label>
-                        <div className="error">
-                            {cover_image.blur &&
-                                cover_image.touched &&
-                                cover_image.error}
-                        </div>
-                        <label>
-                            {tt('settings_jsx.profile_name')}
-                            <input
-                                type="text"
-                                {...name.props}
-                                maxLength="20"
-                                autoComplete="off"
-                            />
-                        </label>
-                        <div className="error">
-                            {name.touched && name.error}
-                        </div>
-                        <label>
-                            {tt('settings_jsx.profile_about')}
-                            <input
-                                type="text"
-                                {...about.props}
-                                maxLength="160"
-                                autoComplete="off"
-                            />
-                        </label>
-                        <div className="error">
-                            {about.touched && about.error}
-                        </div>
-                        <label>
-                            {tt('settings_jsx.profile_location')}
-                            <input
-                                type="text"
-                                {...location.props}
-                                maxLength="30"
-                                autoComplete="off"
-                            />
-                        </label>
-                        <div className="error">
-                            {location.touched && location.error}
-                        </div>
-                        <label>
-                            {tt('settings_jsx.profile_website')}
-                            <input
-                                type="url"
-                                {...website.props}
-                                maxLength="100"
-                                autoComplete="off"
-                            />
-                        </label>
-                        <div className="error">
-                            {website.blur && website.touched && website.error}
-                        </div>
-                        <br />
-                        {state.loading && (
-                            <span>
-                                <LoadingIndicator type="circle" />
-                                <br />
-                            </span>
+                                <h4>
+                                    {tt('settings_jsx.public_profile_settings')}
+                                </h4>
+                                {progress.message && (
+                                    <div className="info">
+                                        {progress.message}
+                                    </div>
+                                )}
+                                {progress.error && (
+                                    <div className="error">
+                                        {tt('reply_editor.image_upload')}
+                                        {': '}
+                                        {progress.error}
+                                    </div>
+                                )}
+                                <label>
+                                    {tt('settings_jsx.profile_image_url')}
+                                    <Dropzone
+                                        onDrop={this.onDrop}
+                                        className={'none'}
+                                        disableClick
+                                        multiple={false}
+                                        accept="image/*"
+                                        ref={node => {
+                                            this.dropzone = node;
+                                        }}
+                                    >
+                                        <input
+                                            type="url"
+                                            {...profile_image.props}
+                                            autoComplete="off"
+                                        />
+                                    </Dropzone>
+                                    <a
+                                        onClick={() =>
+                                            this.onOpenClick('profile_image')
+                                        }
+                                    >
+                                        {tt('settings_jsx.upload_image')}
+                                    </a>
+                                </label>
+                                <div className="error">
+                                    {profile_image.blur &&
+                                        profile_image.touched &&
+                                        profile_image.error}
+                                </div>
+                                <label>
+                                    {tt('settings_jsx.cover_image_url')}
+                                    <input
+                                        type="url"
+                                        {...cover_image.props}
+                                        autoComplete="off"
+                                    />
+                                    <a
+                                        onClick={() =>
+                                            this.onOpenClick('cover_image')
+                                        }
+                                    >
+                                        {tt('settings_jsx.upload_image')}
+                                    </a>
+                                </label>
+                                <div className="error">
+                                    {cover_image.blur &&
+                                        cover_image.touched &&
+                                        cover_image.error}
+                                </div>
+                                <label>
+                                    {tt('settings_jsx.profile_name')}
+                                    <input
+                                        type="text"
+                                        {...name.props}
+                                        maxLength="20"
+                                        autoComplete="off"
+                                    />
+                                </label>
+                                <div className="error">
+                                    {name.touched && name.error}
+                                </div>
+                                <label>
+                                    {tt('settings_jsx.profile_about')}
+                                    <input
+                                        type="text"
+                                        {...about.props}
+                                        maxLength="160"
+                                        autoComplete="off"
+                                    />
+                                </label>
+                                <div className="error">
+                                    {about.touched && about.error}
+                                </div>
+                                <label>
+                                    {tt('settings_jsx.profile_location')}
+                                    <input
+                                        type="text"
+                                        {...location.props}
+                                        maxLength="30"
+                                        autoComplete="off"
+                                    />
+                                </label>
+                                <div className="error">
+                                    {location.touched && location.error}
+                                </div>
+                                <label>
+                                    {tt('settings_jsx.profile_website')}
+                                    <input
+                                        type="url"
+                                        {...website.props}
+                                        maxLength="100"
+                                        autoComplete="off"
+                                    />
+                                </label>
+                                <div className="error">
+                                    {website.blur &&
+                                        website.touched &&
+                                        website.error}
+                                </div>
+                                {state.loading && (
+                                    <span>
+                                        <br />
+                                        <LoadingIndicator type="circle" />
+                                        <br />
+                                    </span>
+                                )}
+                                {!state.loading && (
+                                    <input
+                                        type="submit"
+                                        className="button slim"
+                                        value={tt('settings_jsx.update')}
+                                        disabled={disabled}
+                                    />
+                                )}{' '}
+                                {state.errorMessage ? (
+                                    <small className="error">
+                                        {state.errorMessage}
+                                    </small>
+                                ) : state.successMessage ? (
+                                    <small className="success uppercase">
+                                        {state.successMessage}
+                                    </small>
+                                ) : null}
+                            </form>
                         )}
-                        {!state.loading && (
-                            <input
-                                type="submit"
-                                className="button"
-                                value={tt('settings_jsx.update')}
-                                disabled={disabled}
-                            />
-                        )}{' '}
-                        {state.errorMessage ? (
-                            <small className="error">
-                                {state.errorMessage}
-                            </small>
-                        ) : state.successMessage ? (
-                            <small className="success uppercase">
-                                {state.successMessage}
-                            </small>
-                        ) : null}
-                    </form>
                 </div>
 
                 {isOwnAccount && (
                     <div className="row">
-                        <br />
                         <div className="small-12 medium-4 large-4 columns">
+                            <br />
+                            <br />
                             <h4>{tt('settings_jsx.preferences')}</h4>
 
                             <label>
@@ -484,9 +521,9 @@ class Settings extends React.Component {
                         <div className="row">
                             <div className="small-12 medium-6 large-6 columns">
                                 <br />
-                                <br />
-                                <UserList
-                                    title={tt('settings_jsx.muted_users')}
+                                <h4>Muted Users</h4>
+                                <MuteList
+                                    account={accountname}
                                     users={ignores}
                                 />
                             </div>
@@ -497,17 +534,38 @@ class Settings extends React.Component {
     }
 }
 
+function read_profile_v2(account) {
+    if (!account) return {};
+
+    // use new `posting_json_md` if {version: 2} is present
+    let md = o2j.ifStringParseJSON(account.get('posting_json_metadata'));
+    if (md && md.profile && md.profile.version) return md;
+
+    // otherwise, fall back to `json_metadata`
+    md = o2j.ifStringParseJSON(account.get('json_metadata'));
+    if (typeof md === 'string') md = o2j.ifStringParseJSON(md); // issue #1237, double-encoded
+    return md;
+}
+
 export default connect(
+    // mapStateToProps
     (state, ownProps) => {
         const { accountname } = ownProps.routeParams;
-        const account = state.global.getIn(['accounts', accountname]).toJS();
+        const isOwnAccount =
+            state.user.getIn(['current', 'username'], '') == accountname;
+        const ignores =
+            isOwnAccount &&
+            state.global.getIn([
+                'follow',
+                'getFollowingAsync',
+                accountname,
+                'ignore_result',
+            ]);
+        const account = state.global.getIn(['accounts', accountname]);
         const current_user = state.user.get('current');
         const username = current_user ? current_user.get('username') : '';
-        let metaData = account
-            ? o2j.ifStringParseJSON(account.json_metadata)
-            : {};
-        if (typeof metaData === 'string')
-            metaData = o2j.ifStringParseJSON(metaData); // issue #1237
+
+        const metaData = read_profile_v2(account);
         const profile = metaData && metaData.profile ? metaData.profile : {};
         const user_preferences = state.app.get('user_preferences').toJS();
         const useHive = PREFER_HIVE;
@@ -516,7 +574,9 @@ export default connect(
             account,
             metaData,
             accountname,
-            isOwnAccount: username == accountname,
+            isOwnAccount,
+            ignores,
+            user_preferences: state.app.get('user_preferences').toJS(),
             profile,
             follow: state.global.get('follow'),
             user_preferences,
@@ -524,6 +584,7 @@ export default connect(
             ...ownProps,
         };
     },
+    // mapDispatchToProps
     dispatch => ({
         changeLanguage: language => {
             dispatch(userActions.changeLanguage(language));
@@ -537,7 +598,7 @@ export default connect(
             ...operation
         }) => {
             const options = {
-                type: 'account_update',
+                type: 'account_update2',
                 operation,
                 successCallback,
                 errorCallback,

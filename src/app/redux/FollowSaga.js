@@ -9,9 +9,10 @@ import * as globalActions from 'app/redux/GlobalReducer';
 */
 
 //fetch for follow/following count
-export function* fetchFollowCount(account) {
+export function* fetchFollowCount(account, useHive) {
     const counts = yield call(getScotDataAsync, 'get_follow_count', {
         account,
+        hive: useHive,
     });
     yield put(
         globalActions.update({
@@ -26,7 +27,7 @@ export function* fetchFollowCount(account) {
 }
 
 // Test limit with 2 (not 1, infinate looping)
-export function* loadFollows(method, account, type, force = false) {
+export function* loadFollows(method, account, type, useHive, force = false) {
     if (
         yield select(state =>
             state.global.getIn(['follow', method, account, type + '_loading'])
@@ -54,15 +55,25 @@ export function* loadFollows(method, account, type, force = false) {
         })
     );
 
-    yield loadFollowsLoop(method, account, type);
+    yield loadFollowsLoop(method, account, type, useHive);
 }
 
-function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
+function* loadFollowsLoop(
+    method,
+    account,
+    type,
+    useHive,
+    start = '',
+    limit = 1000
+) {
     const params = { account, start, status: type, limit };
     if (method === 'getFollowingAsync') {
         params['follower'] = account;
     } else {
         params['following'] = account;
+    }
+    if (useHive) {
+        params['hive'] = '1';
     }
     const res = fromJS(yield call(getScotDataAsync, 'get_following', params));
     // console.log('res.toJS()', res.toJS())
@@ -95,7 +106,14 @@ function* loadFollowsLoop(method, account, type, start = '', limit = 1000) {
 
     if (cnt === limit) {
         // This is paging each block of up to limit results
-        yield call(loadFollowsLoop, method, account, type, lastAccountName);
+        yield call(
+            loadFollowsLoop,
+            method,
+            account,
+            type,
+            useHive,
+            lastAccountName
+        );
     } else {
         // This condition happens only once at the very end of the list.
         // Every account has a different followers and following list for: blog, ignore
