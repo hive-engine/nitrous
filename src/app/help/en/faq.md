@@ -1,8 +1,9 @@
 <span id="disable_router_nav_history_direction_check"></span>
 
 # The Chary Whitepaper
-*(NOBEL worked very well on the Steem platform from summer 2019 until April 2020. With the fork to Hive, NOBEL is not supported anymore. Instead I created the new similar token "CHARY")* <br> 
-written by Achim Mertens <br>
+*(NOBEL worked very well on the Steem platform from summer 2019 until April 2020. With the fork to Hive, NOBEL is not supported anymore. Instead I have created the new similar token "CHARY")* 
+<br> 
+Written by Achim Mertens <br>
 
 (Under Construction. Status: 2020/04/17)
 
