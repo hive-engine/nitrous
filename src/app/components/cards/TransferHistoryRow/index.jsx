@@ -21,18 +21,21 @@ const postLink = (socialUrl, author, permlink) => (
 
 class TransferHistoryRow extends React.Component {
     render() {
-        const { op, context } = this.props;
+        const { op, context, scotTokenSymbol } = this.props;
         // context -> account perspective
 
         /*  all transfers involve up to 2 accounts, context and 1 other. */
 
         let message = '';
+        let memo = op.memo;
 
         let description_start = '';
         let other_account = null;
         let description_end = '';
 
-        if (op.from === context) {
+        if (op.operation && op.operation.startsWith('market')) {
+            return null;
+        } else if (op.operation === 'tokens_transfer' && op.from === context) {
             message = (
                 <span>
                     {tt(
@@ -42,12 +45,12 @@ class TransferHistoryRow extends React.Component {
                             'from_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.to)}
                 </span>
             );
-        } else if (op.to === context) {
+        } else if (op.operation === 'tokens_transfer' && op.to === context) {
             message = (
                 <span>
                     {tt(
@@ -57,9 +60,59 @@ class TransferHistoryRow extends React.Component {
                             'to_self',
                             'not_savings',
                         ],
-                        { amount: `${op.quantity} ${LIQUID_TOKEN_UPPERCASE}` }
+                        { amount: `${op.quantity} ${scotTokenSymbol}` }
                     )}
                     {otherAccountLink(op.from)}
+                </span>
+            );
+        } else if (op.operation === 'tokens_stake' && op.from === context) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'stake_to'], {
+                        amount: `${op.quantity} ${scotTokenSymbol}`,
+                    })}
+                    {otherAccountLink(op.to)}
+                </span>
+            );
+        } else if (op.operation === 'tokens_stake' && op.to === context) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'stake_from'], {
+                        amount: `${op.quantity} ${scotTokenSymbol}`,
+                    })}
+                    {otherAccountLink(op.from)}
+                </span>
+            );
+        } else if (
+            op.operation === 'tokens_cancelUnstake' &&
+            op.account === context
+        ) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'cancel_unstake'], {
+                        amount: `${op.quantityReturned} ${scotTokenSymbol}`,
+                    })}
+                </span>
+            );
+            memo = op.unstakeTxID;
+        } else if (
+            op.operation === 'tokens_unstakeStart' &&
+            op.account === context
+        ) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'unstake'], {
+                        amount: `${op.quantity} ${scotTokenSymbol}`,
+                    })}
+                </span>
+            );
+            memo = op.unstakeTxID;
+        } else if (op.operation === 'tokens_issue' && op.to === context) {
+            message = (
+                <span>
+                    {tt(['transferhistoryrow_jsx', 'issue_from'], {
+                        amount: `${op.quantity} ${scotTokenSymbol}`,
+                    })}
                 </span>
             );
         } else if (op.type === 'staking_reward') {
@@ -69,7 +122,7 @@ class TransferHistoryRow extends React.Component {
                         amount: `${formatScotAmount(
                             op.int_amount,
                             op.precision
-                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                        )} ${scotTokenSymbol}`,
                     })}
                 </span>
             );
@@ -85,9 +138,10 @@ class TransferHistoryRow extends React.Component {
                         amount: `${formatScotAmount(
                             op.int_amount,
                             op.precision
-                        )} ${LIQUID_TOKEN_UPPERCASE}`,
+                        )} ${scotTokenSymbol}`,
                     })}
-                    {postLink(APP_URL, op.author, op.permlink)}
+                    {op.type != 'mining_reward' &&
+                        postLink(APP_URL, op.author, op.permlink)}
                 </span>
             );
         } else {
@@ -108,7 +162,7 @@ class TransferHistoryRow extends React.Component {
                     className="show-for-medium"
                     style={{ maxWidth: '40rem', wordWrap: 'break-word' }}
                 >
-                    <Memo text={op.memo} username={context} />
+                    <Memo text={memo} username={context} />
                 </td>
             </tr>
         );
@@ -125,8 +179,10 @@ const otherAccountLink = username =>
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
         return {
             ...ownProps,
+            scotTokenSymbol,
         };
     }
 )(TransferHistoryRow);
