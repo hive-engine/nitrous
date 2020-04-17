@@ -117,10 +117,10 @@ class PostSummary extends React.Component {
         const showReblog = !isReply;
         const full_power = post.get('percent_steem_dollars') === 0;
 
-        const author = post.get('author');
-        const permlink = post.get('permlink');
-        const category = post.get('category');
-        const post_url = `/${category}/@${author}/${permlink}`;
+        let author = post.get('author');
+        let permlink = post.get('permlink');
+        let category = post.get('category');
+        let post_url = `/${category}/@${author}/${permlink}`;
 
         const summary = extractBodySummary(post.get('body'), isReply);
         const content_body = (
@@ -138,14 +138,24 @@ class PostSummary extends React.Component {
             </h2>
         );
 
+        const summaryAuthor = crossPostedBy
+            ? post.get('cross_post_author')
+            : post.get('author');
+
         // New Post Summary heading
         const summary_header = (
             <div className="articles__summary-header">
                 <div className="user">
                     {!isNsfw ? (
                         <div className="user__col user__col--left">
-                            <a className="user__link" href={'/@' + author}>
-                                <Userpic account={author} size={SIZE_SMALL} />
+                            <a
+                                className="user__link"
+                                href={`/@${summaryAuthor}`}
+                            >
+                                <Userpic
+                                    account={summaryAuthor}
+                                    size={SIZE_SMALL}
+                                />
                             </a>
                         </div>
                     ) : null}
@@ -155,6 +165,7 @@ class PostSummary extends React.Component {
                                 post={post}
                                 follow={false}
                                 hideEditor={true}
+                                resolveCrossPost
                             />
                         </span>
 

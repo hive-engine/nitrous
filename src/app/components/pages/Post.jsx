@@ -122,7 +122,6 @@ class Post extends React.Component {
                 </div>
             );
         } else {
-            console.log('post', post, content);
             postBody = <PostFull post={post} cont={content} />;
         }
 

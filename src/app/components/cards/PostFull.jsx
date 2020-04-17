@@ -10,12 +10,10 @@ import Voting from 'app/components/elements/Voting';
 import Reblog from 'app/components/elements/Reblog';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 import ReplyEditor from 'app/components/elements/ReplyEditor';
-import { immutableAccessor } from 'app/utils/Accessors';
 import { extractBodySummary } from 'app/utils/ExtractContent';
 import Tag from 'app/components/elements/Tag';
 import TagList from 'app/components/elements/TagList';
 import Author from 'app/components/elements/Author';
-import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import DMCAList from 'app/utils/DMCAList';
 import ShareMenu from 'app/components/elements/ShareMenu';
 import MuteButton from 'app/components/elements/MuteButton';
@@ -28,8 +26,9 @@ import userIllegalContent from 'app/utils/userIllegalContent';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import { allowDelete } from 'app/utils/StateFunctions';
-import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import { Role } from 'app/utils/Community';
+import UserNames from 'app/components/elements/UserNames';
+import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 
 function TimeAuthorCategory({ post }) {
     return (
@@ -43,17 +42,28 @@ function TimeAuthorCategory({ post }) {
 }
 
 function TimeAuthorCategoryLarge({ post }) {
+    const crossPostedBy = post.get('cross_posted_by');
+    let author = post.get('author');
+    let created = post.get('created');
+    let updated = post.get('updated');
+
+    if (crossPostedBy) {
+        author = post.get('cross_post_author');
+        created = post.get('cross_post_created');
+        updated = post.get('cross_post_updated');
+    }
+
     return (
         <span className="PostFull__time_author_category_large vcard">
-            <Userpic account={post.get('author')} />
+            <Userpic account={author} />
             <div className="right-side">
-                <Author post={post} showAffiliation />
+                <Author post={post} showAffiliation resolveCrossPost />
                 {tt('g.in')} <Tag post={post} />
                 {' • '}
-                <TimeAgoWrapper date={post.get('created')} />{' '}
+                <TimeAgoWrapper date={created} />{' '}
                 <ContentEditedWrapper
-                    createDate={post.get('created')}
-                    updateDate={post.get('updated')}
+                    createDate={created}
+                    updateDate={updated}
                 />
             </div>
         </span>
@@ -77,7 +87,6 @@ class PostFull extends React.Component {
 
     constructor(props) {
         super(props);
-        const { post } = this.props;
 
         this.fbShare = this.fbShare.bind(this);
         this.twitterShare = this.twitterShare.bind(this);
@@ -249,14 +258,54 @@ class PostFull extends React.Component {
         } = this;
         if (!post) return null;
         const content = post.toJS();
-        const { author, permlink, parent_author, parent_permlink } = content;
+        const {
+            author,
+            permlink,
+            parent_author,
+            parent_permlink,
+            community_title,
+            cross_posted_by,
+            cross_post_author: crossPostAuthor,
+            cross_post_permlink: crossPostPermlink,
+            cross_post_category: crossPostCategory,
+        } = content;
         const { category, title } = content;
         const link = `/${category}/@${author}/${permlink}`;
+
+        let crossPostedBy = cross_posted_by;
+        if (crossPostedBy) {
+            crossPostedBy = (
+                <div className="articles__crosspost">
+                    <p className="articles__crosspost-text">
+                        <span className="articles__crosspost-icon">
+                            <Icon name="reblog" />
+                        </span>
+                        <UserNames names={[author]} />{' '}
+                        {tt('postsummary_jsx.crossposted')}{' '}
+                        <Link
+                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                                crossPostPermlink
+                            }`}
+                        >
+                            this post
+                        </Link>{' '}
+                        {tt('g.in')}{' '}
+                        <Link to={`/created/${community}`}>
+                            {community_title}
+                        </Link>{' '}
+                        <TimeAgoWrapper date={post.get('created')} />
+                    </p>
+                    <hr />
+                </div>
+            );
+        }
 
         if (process.env.BROWSER && title)
             document.title = title + ' — ' + APP_NAME;
 
-        let content_body = post.get('body');
+        let content_body = crossPostedBy
+            ? post.get('cross_post_body')
+            : post.get('body');
         const bDMCAStop = DMCAList.includes(link);
         const bIllegalContentUser = userIllegalContent.includes(author);
         if (bDMCAStop) {
@@ -353,14 +402,17 @@ class PostFull extends React.Component {
         const isReply = post.get('depth') > 0;
 
         let post_header = (
-            <h1 className="entry-title">
-                {post.get('title')}
-                {full_power && (
-                    <span title={tt('g.powered_up_100')}>
-                        <Icon name="hivepower" />
-                    </span>
-                )}
-            </h1>
+            <div>
+                {crossPostedBy}
+                <h1 className="entry-title">
+                    {post.get('title')}
+                    {full_power && (
+                        <span title={tt('g.powered_up_100')}>
+                            <Icon name="hivepower" />
+                        </span>
+                    )}
+                </h1>
+            </div>
         );
 
         if (isReply) {

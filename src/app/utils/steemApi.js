@@ -78,9 +78,112 @@ export async function getStateAsync(url, observer, ssr = false) {
     return cleansed;
 }
 
+async function fetchCrossPosts(posts, observer) {
+    const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br><br>\.\.\./;
+    const crossPostPromises = [];
+
+    let content = {};
+    let keys = [];
+
+    for (let idx in posts) {
+        const post = posts[idx];
+        const crossPostMatches = crossPostRegex.exec(post.body);
+
+        if (crossPostMatches) {
+            const [, crossPostAuthor, crossPostPermlink] = crossPostMatches;
+            const crossPostParams = {
+                author: crossPostAuthor,
+                permlink: crossPostPermlink,
+                observer,
+            };
+            crossPostPromises.push(callBridge('get_post', crossPostParams));
+            post.cross_post_key = `${crossPostAuthor}/${crossPostPermlink}`;
+        }
+
+        const key = post['author'] + '/' + post['permlink'];
+        content[key] = post;
+        keys.push(key);
+    }
+
+    const crossPosts = {};
+    try {
+        const responses = await settlePromises(crossPostPromises);
+
+        for (let ri = 0; ri < responses.length; ri += 1) {
+            const response = responses[ri];
+
+            if (response.state === 'resolved') {
+                const crossPost = response.value;
+                const crossPostKey = `${crossPost.author}/${
+                    crossPost.permlink
+                }`;
+                crossPosts[crossPostKey] = crossPost;
+            } else {
+                console.error('cross post error', response);
+            }
+        }
+    } catch (error) {
+        console.error('Failed fetching cross posts', error.message);
+    }
+
+    return {
+        content,
+        keys,
+        crossPosts,
+    };
+}
+
+function augmentContentWithCrossPost(post, crossPost) {
+    if (!crossPost) {
+        return post;
+    }
+
+    const fieldsToAugment = [
+        'body',
+        'author',
+        'permlink',
+        'author_reputation',
+        'created',
+        'category',
+        'community',
+        'community_title',
+        'json_metadata',
+        'updated',
+    ];
+
+    for (let fi = 0; fi < fieldsToAugment.length; fi += 1) {
+        const fieldToRewrite = fieldsToAugment[fi];
+
+        if (crossPost.hasOwnProperty(fieldToRewrite)) {
+            post[`cross_post_${fieldToRewrite}`] = crossPost[fieldToRewrite];
+        }
+    }
+
+    post.cross_posted_by = post.author;
+
+    return post;
+}
+
 async function loadThread(account, permlink) {
     const author = account.slice(1);
     const content = await callBridge('get_discussion', { author, permlink });
+
+    if (content) {
+        const {
+            content: preppedContent,
+            keys,
+            crossPosts,
+        } = await fetchCrossPosts([Object.values(content)[0]], author);
+        if (crossPosts) {
+            const crossPostKey = content[keys[0]].cross_post_key;
+            content[keys[0]] = preppedContent[keys[0]];
+            content[keys[0]] = augmentContentWithCrossPost(
+                content[keys[0]],
+                crossPosts[crossPostKey]
+            );
+        }
+    }
+
     return { content };
 }
 
@@ -96,66 +199,21 @@ async function loadPosts(sort, tag, observer) {
         posts = await callBridge('get_ranked_posts', params);
     }
 
-    const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br><br>\.\.\./;
-    const crossPostPromises = [];
-    let content = {};
-    let keys = [];
-
-    for (let idx in posts) {
-        if (posts.hasOwnProperty(idx)) {
-            const post = posts[idx];
-
-            const crossPostMatches = crossPostRegex.exec(post.body);
-            if (crossPostMatches) {
-                const [, crossPostAuthor, crossPostPermlink] = crossPostMatches;
-                const crossPostParams = {
-                    author: crossPostAuthor,
-                    permlink: crossPostPermlink,
-                    observer,
-                };
-                crossPostPromises.push(callBridge('get_post', crossPostParams));
-                post.cross_post_author = crossPostAuthor;
-                post.cross_post_permlink = crossPostPermlink;
-                post.cross_posted_by = post.author;
-                post.cross_post_key = `${crossPostAuthor}/${crossPostPermlink}`;
-            }
-
-            const key = post['author'] + '/' + post['permlink'];
-            content[key] = post;
-            keys.push(key);
-        }
-    }
-
-    const crossPosts = {};
-    try {
-        const responses = await settlePromises(crossPostPromises);
-
-        for (let ri = 0; ri < responses.length; ri += 1) {
-            const response = responses[ri];
-
-            if (response.state === 'resolved') {
-                const crossPost = response.value;
-                const key = crossPost['author'] + '/' + crossPost['permlink'];
-                crossPosts[key] = crossPost;
-            } else {
-                console.error('cross post error', response);
-            }
-        }
-
-        resolve(crossPosts);
-    } catch (error) {
-        console.error('Failed fetching cross posts', error.message);
-    }
+    const { content, keys, crossPosts } = await fetchCrossPosts(
+        posts,
+        observer
+    );
 
     if (Object.keys(crossPosts).length > 0) {
         for (let ki = 0; ki < keys.length; ki += 1) {
             const contentKey = keys[ki];
-            const post = content[contentKey];
+            let post = content[contentKey];
 
             if (post.hasOwnProperty('cross_post_key')) {
-                post.body = crossPosts[post.cross_post_key].body;
-                post.cross_post_category =
-                    crossPosts[post.cross_post_key].category;
+                post = augmentContentWithCrossPost(
+                    post,
+                    crossPosts[post.cross_post_key]
+                );
             }
         }
     }
