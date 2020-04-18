@@ -6,14 +6,14 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
-import { hasCompatibleKeychain } from 'app/utils/SteemKeychain';
+import { hasCompatibleKeychain } from 'app/utils/HiveKeychain';
 import runTests from 'app/utils/BrowserTests';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
 import { APP_URL } from 'app/client_config';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
 
@@ -282,7 +282,7 @@ class LoginForm extends Component {
                     className="button hollow"
                     onClick={this.SignUp}
                 >
-                    {tt('loginform_jsx.sign_up_get_steem')}
+                    {tt('loginform_jsx.sign_up_get_hive')}
                 </button>
             </div>
         );
@@ -406,7 +406,7 @@ class LoginForm extends Component {
                         </button>
                     )}
                 </div>
-                {signupLink}
+                {/*signupLink*/}
             </form>
         );
 

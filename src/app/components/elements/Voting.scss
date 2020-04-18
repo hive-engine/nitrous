@@ -5,8 +5,8 @@
   }
   .dropdown-pane {
     @include themify($themes) {
-      border: themed('borderDark');  
-    }    
+      border: themed('borderDark');
+    }
   }
 }
 
@@ -28,31 +28,31 @@
 
 .Voting__about-flag {
   margin-right: 30px;
-  .button {  
+  .button {
     text-decoration: none;
     font-weight: bold;
     transition: 0.2s all ease-in-out;
     text-transform: capitalize;
     border-radius: 0;
-    @include font-size(18px);       
+    @include font-size(18px);
     @include themify($themes) {
-      background-color: themed('buttonBackground');  
-      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 themed('buttonBoxShadow');   
+      background-color: themed('buttonBackground');
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 themed('buttonBoxShadow');
       color: themed('buttonText');
     }
     &:hover, &:focus {
       @include themify($themes) {
-        background-color: themed('buttonBackgroundHover');  
-        box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 themed('buttonBoxShadowHover');   
+        background-color: themed('buttonBackgroundHover');
+        box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 themed('buttonBoxShadowHover');
         color: themed('buttonTextHover');
         text-shadow: 0 1px 0 rgba(0,0,0,0.20);
       }
     }
     &:visited, &:active {
       @include themify($themes) {
-        color: themed('buttonText');  
-      } 
-    } 
+        color: themed('buttonText');
+      }
+    }
   }
 }
 
@@ -70,12 +70,12 @@
   path {
     @include themify($themes) {
       fill: themed('textColorAccent');
-    }       
+    }
   }
   circle {
       @include themify($themes) {
         stroke: themed('textColorAccent');
-      }       
+      }
   }
   // exclude small devices
   @media screen and (min-width: 39.9375em) {
@@ -103,7 +103,7 @@
         @include themify($themes) {
           fill: themed('colorAccent');
           stroke: themed('colorAccent');
-        }   
+        }
     }
     svg {
         background-size: contain;
@@ -114,7 +114,7 @@
 .Voting__button-up.votingUp {
   padding-right: 0.5rem;
   svg {
-    border: 1px solid $color-teal;
+    border: 1px solid $color-hive-red;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -141,13 +141,13 @@
   }
 
   a path {
-    fill: #f99;
+    fill: #000;
   }
   a circle {
-    stroke: #f99;
+    stroke: #000;
   }
   a:hover circle {
-    fill: #f66;
+    fill: #555;
   }
   a:hover path {
     fill: #fff;
@@ -197,9 +197,20 @@
   fill: $color-red;
 }
 
-.Voting .DropdownMenu ul {
+
+.PostFull .Voting .DropdownMenu.Voting__voters_list {
+    /* reserve enough space for dropdown (otherwise overflow) */
+    min-width: 140px;
+}
+
+.Voting .DropdownMenu.Voting__pane ul {
   width: auto;
   min-width: 260px;
+}
+
+.Voting .DropdownMenu ul {
+  width: auto;
+  min-width: 140px;
   max-width: 360px;
 
   li > a {
@@ -214,24 +225,22 @@
 }
 
 .DropdownMenu.Voting__voters_list ul {
-  li > a {
-    //font-weight: 200;
-  }
+  min-width: 140px;
 
   li > span {
     padding: 0.25rem 0.5rem;
     font-size: 82.5%;
     display: block;
     @include themify($themes) {
-      color: themed('textColorSecondary');  
-    }  
+      color: themed('textColorSecondary');
+    }
   }
 }
 
 .Voting__inner {
   @include themify($themes) {
-    border-right: themed('borderLight'); 
-  } 
+    border-right: themed('borderLight');
+  }
   padding-right: .8rem;
   margin-right: .6rem;
   .DropdownMenu .Icon.dropdown-arrow {
@@ -255,8 +264,8 @@
     @extend .Voting__adjust_weight;
 
     @include themify($themes) {
-      background-color: themed('backgroundColor'); 
-    } 
+      background-color: themed('backgroundColor');
+    }
 
     right: 0;
     width: auto !important;
@@ -321,7 +330,7 @@
       top: 50%;
       transform: translate3d(-50%,-50%,0);
       &:active {
-        background: $color-teal;
+        background: $color-hive-red;
         box-shadow: none;
       }
     }
@@ -334,7 +343,7 @@
     margin-top: 18px;
     .rangeslider__fill {
       height: 100%;
-      background: $color-teal;
+      background: $color-hive-red;
       box-shadow: none;
       left: 0;
     }

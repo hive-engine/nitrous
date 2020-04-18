@@ -1,7 +1,7 @@
 import koa_router from 'koa-router';
 import React from 'react';
 import { routeRegex } from 'app/ResolveRoute';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import GDPRUserList from 'app/utils/GDPRUserList';
 
 export default function useUserJson(app) {
@@ -10,9 +10,8 @@ export default function useUserJson(app) {
 
     router.get(routeRegex.UserJson, function*() {
         // validate and build user details in JSON
-        const segments = this.url.split('/');
-        const user_name = segments[1]
-            .match(routeRegex.UserNameJson)[0]
+        const user_name = this.url
+            .match(routeRegex.UserJson)[1]
             .replace('@', '');
         let user = '';
         let status = '';

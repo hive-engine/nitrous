@@ -13,7 +13,7 @@ import {
     browserHistory,
 } from 'react-router';
 import { Provider } from 'react-redux';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
@@ -28,9 +28,8 @@ import { component as NotFound } from 'app/components/pages/NotFound';
 import extractMeta from 'app/utils/ExtractMeta';
 import Translator from 'app/Translator';
 import { routeRegex } from 'app/ResolveRoute';
-import { contentStats } from 'app/utils/StateFunctions';
 import ScrollBehavior from 'scroll-behavior';
-import { getStateAsync } from 'app/utils/steemApi';
+import { callBridge, getStateAsync } from 'app/utils/steemApi';
 
 let get_state_perf,
     get_content_perf = false;
@@ -236,7 +235,7 @@ export async function serverRender(
     } catch (e) {
         console.error('Routing error:', e.toString(), location);
         return {
-            title: 'Routing error - Steemit',
+            title: 'Routing error - Hive',
             statusCode: 500,
             body: renderToString(
                 ErrorPage ? <ErrorPage /> : <span>Routing error</span>
@@ -245,9 +244,9 @@ export async function serverRender(
     }
 
     if (error || !renderProps) {
-        // debug('error')('Router error', error);
+        console.error('Router error [404]', error, 'props?', !!renderProps);
         return {
-            title: 'Page Not Found - Steemit',
+            title: 'Page Not Found - Hive',
             statusCode: 404,
             body: renderToString(<NotFound />),
         };
@@ -257,20 +256,19 @@ export async function serverRender(
     try {
         const url = location;
 
-        requestTimer.startTimer('apiGetState_ms');
-        onchain = await apiGetState(url);
-        requestTimer.stopTimer('apiGetState_ms');
+        requestTimer.startTimer('apiFetchState_ms');
+        onchain = await apiFetchState(url);
+        requestTimer.stopTimer('apiFetchState_ms');
 
         // If a user profile URL is requested but no profile information is
         // included in the API response, return User Not Found.
         if (
-            (url.match(routeRegex.UserProfile1) ||
-                url.match(routeRegex.UserProfile3)) &&
-            Object.getOwnPropertyNames(onchain.accounts).length === 0
+            url.match(routeRegex.UserProfile) &&
+            Object.getOwnPropertyNames(onchain.profiles).length === 0
         ) {
             // protect for invalid account
             return {
-                title: 'User Not Found - Steemit',
+                title: 'User Not Found - Hive',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -279,35 +277,29 @@ export async function serverRender(
         // If we are not loading a post, truncate state data to bring response size down.
         if (!url.match(routeRegex.Post)) {
             for (var key in onchain.content) {
-                // Count some stats then remove voting data. But keep current user's votes. (#1040)
-                onchain.content[key]['stats'] = contentStats(
-                    onchain.content[key]
-                );
                 onchain.content[key]['active_votes'] = null;
             }
         }
-
         // Are we loading an un-category-aliased post?
         if (
-            !url.match(routeRegex.PostsIndex) &&
-            !url.match(routeRegex.UserProfile1) &&
-            !url.match(routeRegex.UserProfile2) &&
+            !url.match(routeRegex.UserProfile) &&
             url.match(routeRegex.PostNoCategory)
         ) {
-            const params = url.substr(2, url.length - 1).split('/');
-            let content;
+            let header;
             if (process.env.OFFLINE_SSR_TEST) {
-                content = get_content_perf;
+                header = get_content_perf;
             } else {
-                content = await api.getContentAsync(params[0], params[1]);
+                const postref = url.substr(2, url.length - 1).split('/');
+                const params = { author: postref[0], permlink: postref[1] };
+                header = await callBridge('get_post_header', params);
             }
-            if (content.author && content.permlink) {
-                // valid short post url
-                onchain.content[url.substr(2, url.length - 1)] = content;
+            if (header && header.author && header.permlink && header.category) {
+                const { author, permlink, category } = header;
+                return { redirectUrl: `/${category}/@${author}/${permlink}` };
             } else {
                 // protect on invalid user pages (i.e /user/transferss)
                 return {
-                    title: 'Page Not Found - Steemit',
+                    title: 'Page Not Found - Hive',
                     statusCode: 404,
                     body: renderToString(<NotFound />),
                 };
@@ -316,21 +308,18 @@ export async function serverRender(
 
         // Insert the special posts into the list of posts, so there is no
         // jumping of content.
-        offchain.special_posts.featured_posts.forEach(featuredPost => {
-            onchain.content[
-                `${featuredPost.author}/${featuredPost.permlink}`
-            ] = featuredPost;
+        offchain.special_posts.featured_posts.forEach(post => {
+            onchain.content[`${post.author}/${post.permlink}`] = post;
         });
 
-        offchain.special_posts.promoted_posts.forEach(promotedPost => {
-            onchain.content[
-                `${promotedPost.author}/${promotedPost.permlink}`
-            ] = promotedPost;
+        offchain.special_posts.promoted_posts.forEach(post => {
+            onchain.content[`${post.author}/${post.permlink}`] = post;
         });
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
             global: onchain,
+            userProfiles: { profiles: onchain['profiles'] },
             offchain,
         });
         server_store.dispatch({
@@ -340,10 +329,10 @@ export async function serverRender(
         server_store.dispatch(appActions.setUserPreferences(userPreferences));
     } catch (e) {
         // Ensure 404 page when username not found
-        if (location.match(routeRegex.UserProfile1)) {
+        if (location.match(routeRegex.UserProfile)) {
             console.error('User/not found: ', location);
             return {
-                title: 'Page Not Found - Steemit',
+                title: 'Page Not Found - Hive',
                 statusCode: 404,
                 body: renderToString(<NotFound />),
             };
@@ -353,7 +342,7 @@ export async function serverRender(
             const stack_trace = e.stack || '[no stack]';
             console.error('State/store error: ', msg, stack_trace);
             return {
-                title: 'Server error - Steemit',
+                title: 'Server error - Hive',
                 statusCode: 500,
                 body: renderToString(<ErrorPage />),
             };
@@ -380,8 +369,8 @@ export async function serverRender(
     }
 
     return {
-        title: 'Steemit',
-        titleBase: 'Steemit - ',
+        title: 'Hive',
+        titleBase: 'Hive - ',
         meta,
         statusCode: status,
         body: Iso.render(app, server_store.getState()),
@@ -461,14 +450,30 @@ export function clientRender(initialState) {
     );
 }
 
-async function apiGetState(url) {
-    let offchain;
+async function apiFetchState(url) {
+    let onchain;
 
     if (process.env.OFFLINE_SSR_TEST) {
-        offchain = get_state_perf;
+        onchain = get_state_perf;
     }
 
-    offchain = await getStateAsync(url);
+    onchain = await getStateAsync(url, null, true);
 
-    return offchain;
+    try {
+        const history = await api.getFeedHistoryAsync();
+        const feed = history.price_history;
+        const last = feed[feed.length - 1];
+        onchain['feed_price'] = last;
+    } catch (error) {
+        console.error('Error fetching feed price:', error);
+    }
+
+    try {
+        const dgpo = await api.getDynamicGlobalPropertiesAsync();
+        onchain['props'] = { sbd_print_rate: dgpo['sbd_print_rate'] };
+    } catch (error) {
+        console.error('Error fetching dgpo:', error);
+    }
+
+    return onchain;
 }

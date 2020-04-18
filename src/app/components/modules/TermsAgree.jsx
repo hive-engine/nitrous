@@ -56,7 +56,7 @@ class TermsAgree extends Component {
                             checked={this.state.tosChecked}
                             onChange={this.handleInputChange}
                         />
-                        {tt('termsagree_jsx.i_agree_to_steemits')}{' '}
+                        {tt('termsagree_jsx.i_agree_to_hives')}{' '}
                         <a
                             target="_blank"
                             rel="noopener noreferrer"
@@ -74,7 +74,7 @@ class TermsAgree extends Component {
                             checked={this.state.privacyChecked}
                             onChange={this.handleInputChange}
                         />
-                        {tt('termsagree_jsx.i_agree_to_steemits')}{' '}
+                        {tt('termsagree_jsx.i_agree_to_hives')}{' '}
                         <a
                             target="_blank"
                             rel="noopener noreferrer"

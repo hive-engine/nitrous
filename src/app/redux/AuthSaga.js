@@ -1,14 +1,14 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { Set, Map, fromJS, List } from 'immutable';
-import { api } from '@steemit/steem-js';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
+import { api } from '@hiveio/hive-js';
+import { PrivateKey } from '@hiveio/hive-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
 
 // operations that require only posting authority
 export const postingOps = Set(
-    `vote, comment, delete_comment, custom_json, claim_reward_balance`
+    `vote, comment, delete_comment, custom_json, claim_reward_balance, account_update2`
         .trim()
         .split(/,\s*/)
 );

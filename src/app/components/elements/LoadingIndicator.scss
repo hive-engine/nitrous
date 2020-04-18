@@ -94,8 +94,8 @@
 // three bounce
 
 .three-bounce > div {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background-color: #777;
 
   border-radius: 100%;
@@ -138,7 +138,7 @@
         padding-bottom:2em;
         div {
             border-width:1px;
-            border-color: $color-teal;
+            border-color: $color-hive-red;
             border-right-color: transparent;
             border-top-color: transparent;
         }
@@ -148,7 +148,7 @@
         width: $circle-radius;
         height: $circle-radius;
         margin: 4px;
-        border: 1px solid $color-teal;
+        border: 1px solid $color-hive-red;
         border-radius: 50%;
         border-right-color: transparent;
         border-top-color: transparent;

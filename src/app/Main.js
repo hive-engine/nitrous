@@ -9,7 +9,7 @@ import Iso from 'iso';
 import { clientRender } from 'shared/UniversalRender';
 import ConsoleExports from './utils/ConsoleExports';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import * as steem from '@steemit/steem-js';
+import * as steem from '@hiveio/hive-js';
 import { determineViewMode } from 'app/utils/Links';
 import frontendLogger from 'app/utils/FrontendLogger';
 
@@ -25,7 +25,7 @@ try {
         ConsoleExports.init(window);
     }
 } catch (e) {
-    console.error(e);
+    console.error('console_export', e);
 }
 
 function runApp(initial_state) {
@@ -65,6 +65,10 @@ function runApp(initial_state) {
         }
     };
 
+    window.onunhandledrejection = function(evt) {
+        console.error('unhandled rejection', evt ? evt.toString() : '<null>');
+    };
+
     window.document.body.onkeypress = e => {
         buff.shift();
         buff.push(e.key);
@@ -81,12 +85,22 @@ function runApp(initial_state) {
 
     const config = initial_state.offchain.config;
     steem.api.setOptions({
-        url: config.steemd_connection_client,
+        url:
+            localStorage.getItem('user_preferred_api_endpoint') === null
+                ? config.steemd_connection_client
+                : localStorage.getItem('user_preferred_api_endpoint'),
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
+        alternative_api_endpoints: config.alternative_api_endpoints,
+        failover_threshold: config.failover_threshold,
     });
     steem.config.set('address_prefix', config.address_prefix);
     steem.config.set('chain_id', config.chain_id);
+    steem.config.set('failover_threshold', config.failover_threshold);
+    steem.config.set(
+        'alternative_api_endpoints',
+        config.alternative_api_endpoints
+    );
     window.$STM_Config = config;
     plugins(config);
     if (initial_state.offchain.serverBusy) {
@@ -118,7 +132,7 @@ function runApp(initial_state) {
     try {
         clientRender(initial_state);
     } catch (error) {
-        console.error(error);
+        console.error('render_error', error);
         serverApiRecordEvent('client_error', error);
     }
 }

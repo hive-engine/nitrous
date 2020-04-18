@@ -1,0 +1,44 @@
+version: "3"
+services:
+    hive_condenser:
+        build: .
+        image: hive/condenser:latest
+        container_name: hive_condenser
+        environment:
+            VIRTUAL_HOST: hive.blog
+            VIRTUAL_PORT: 8080
+            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+            SDC_SERVER_STEEMD_URL: https://api.hive.blog
+            SDC_DISABLE_SIGNUPS: 1
+            SDC_SITE_DOMAIN: hive.blog
+            SDC_IMAGE_PROXY_PREFIX: https://steemitimages.com/
+            SDC_UPLOAD_IMAGE_URL: https://steemitimages.com
+            SDC_HELMET_CONNECTSRC: "'self' steemit.com https://api.hive.blog api.blocktrades.us https://hive.blog https://steemitimages.com"
+            WALLET_URL: https://wallet.hive.blog
+        networks:
+            - condenser_reverse-proxy
+        restart: always
+
+#    condenser_stg:
+#        build: .
+#        image: hive/condenser:staging
+#        container_name: condenser_stg
+#        environment:
+#            VIRTUAL_HOST: staging.hive.blog
+#            VIRTUAL_PORT: 8080
+#            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+#            SDC_SERVER_STEEMD_URL: https://api.hive.blog
+#            SDC_DISABLE_SIGNUPS: 1
+#            SDC_SITE_DOMAIN: staging.hive.blog
+#            SDC_IMAGE_PROXY_PREFIX: https://steemitimages.com/
+#            SDC_UPLOAD_IMAGE_URL: https://steemitimages.com
+#            SDC_HELMET_CONNECTSRC: "'self' https://api.hive.blog https://staging.hive.blog https://steemitimages.com"
+#            WALLET_URL: https://wallet.hive.blog
+#        networks:
+#            - condenser_reverse-proxy
+#        restart: always
+
+networks:
+    condenser_reverse-proxy:
+        external:
+            name: condenser_reverse-proxy

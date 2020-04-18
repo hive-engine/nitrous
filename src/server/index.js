@@ -1,6 +1,6 @@
 import config from 'config';
 
-import * as steem from '@steemit/steem-js';
+import * as steem from '@hiveio/hive-js';
 
 const path = require('path');
 const ROOT = path.join(__dirname, '../..');
@@ -30,6 +30,8 @@ global.$STM_Config = {
     site_domain: config.get('site_domain'),
     google_analytics_id: config.get('google_analytics_id'),
     wallet_url: config.get('wallet_url'),
+    failover_threshold: config.get('failover_threshold'),
+    alternative_api_endpoints: config.get('alternative_api_endpoints'),
 };
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
@@ -50,9 +52,16 @@ global.webpackIsomorphicTools.server(ROOT, () => {
             randomize: true,
         },
         useAppbaseApi: !!config.steemd_use_appbase,
+        alternative_api_endpoints: config.get('alternative_api_endpoints'),
+        failover_threshold: config.get('failover_threshold'),
     });
     steem.config.set('address_prefix', config.get('address_prefix'));
     steem.config.set('chain_id', config.get('chain_id'));
+    steem.config.set(
+        'alternative_api_endpoints',
+        config.get('alternative_api_endpoints')
+    );
+    steem.config.set('failover_threshold', config.get('failover_threshold'));
 
     // const CliWalletClient = require('shared/api_client/CliWalletClient').default;
     // if (process.env.NODE_ENV === 'production') connect_promises.push(CliWalletClient.instance().connect_promise());
