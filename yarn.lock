@@ -11,9 +11,9 @@
     js-tokens "^3.0.0"
 
 "@hivechain/hivescript@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.3.tgz#9142447cba2edfe7cb08c50ecefa9a8d87983570"
-  integrity sha512-B3JeGq/SXbQdFZCvw5m0cpjXR61i8oclx7XuQq/pv/Y64e/sYzE0FMnGee3LFB7iKd3r+q77U+dZLXu9cT9dpg==
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.6.tgz#af2cded24dfc685c7374a0daf3b2f2cb6e7a952d"
+  integrity sha512-2gyG/GLSjPh0H5x3o+/4qO/+aOhWuQZU0PLWjM1Q3gefY5AwHTCCqd9TLrinoHw2jsuhN9nnR4LK37QHPA8nIg==
 
 "@hiveio/hive-js@^0.0.2":
   version "0.0.2"
