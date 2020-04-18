@@ -14,7 +14,7 @@ Lasse Ehlers contributed with the name, idea and face for LASSECASH. LASSECASH i
 
 ## <span id="Do_I_need_wallet">Do I need a wallet to use and hold LASSECASH?</span>
 
-Yes, you need a HIVE wallet, which you can get through [hive.blog](https://signup.hive.io/).
+Yes, you need a HIVE wallet, there are several ways to [create a HIVE wallet](https://signup.hive.io/).
 
 
 ## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
