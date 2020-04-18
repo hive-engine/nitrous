@@ -1,0 +1,42 @@
+stages:
+  - build_staging
+  - restart_staging
+  - clean_up
+
+build_staging:
+  stage: build_staging
+  script:
+    - echo "Building current develop branch"
+    - ./run.sh build stg
+  environment:
+    name: staging
+  only:
+    - develop
+
+restart_staging:
+  stage: restart_staging
+  script:
+    - echo "Stopping current condenser image"
+    - ./run.sh stop stg
+    - echo "Starting latest condenser image"
+    - ./run.sh start stg
+  dependencies:
+    - build_staging
+  environment:
+    name: staging
+  only:
+    - develop
+
+clean_up:
+  stage: clean_up
+  script:
+    - echo "Cleanup filespace / unused images / containers / networks"
+    - docker image prune -f
+    - docker container prune -f
+    - docker network prune -f
+  dependencies:
+    - restart_staging
+  environment:
+    name: staging
+  only:
+    - develop
