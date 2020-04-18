@@ -627,7 +627,8 @@
         "profile_name": "表示名",
         "profile_about": "概要",
         "profile_location": "場所",
-        "profile_website": "ウェブサイト"
+        "profile_website": "ウェブサイト",
+        "choose_preferred_api_endpoint": "優先APIノードを選択してください"
     },
     "transfer_jsx": {
         "amount_is_in_form": "金額は99999.999の形式です",

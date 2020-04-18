@@ -630,7 +630,8 @@
         "profile_name": "Mostra nome",
         "profile_about": "About",
         "profile_location": "Località",
-        "profile_website": "Sito"
+        "profile_website": "Sito",
+        "choose_preferred_api_endpoint": "Scegli il tuo nodo API preferito"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La quantita deve essere della forma 99999.999",

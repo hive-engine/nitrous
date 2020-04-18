@@ -10,6 +10,7 @@ import reactForm from 'app/utils/ReactForm';
 import Dropzone from 'react-dropzone';
 import MuteList from 'app/components/elements/MuteList';
 import { isLoggedIn } from 'app/utils/UserUtil';
+import * as api from '@hiveio/hive-js';
 
 class Settings extends React.Component {
     constructor(props) {
@@ -232,6 +233,36 @@ class Settings extends React.Component {
         this.props.setUserPreferences(userPreferences);
     };
 
+    generateAPIEndpointOptions = () => {
+        let endpoints = api.config.get('alternative_api_endpoints');
+        let preferred_api_endpoint = '';
+        if (typeof window !== 'undefined')
+            preferred_api_endpoint =
+                localStorage.getItem('user_preferred_api_endpoint') === null
+                    ? 'https://api.hive.blog'
+                    : localStorage.getItem('user_preferred_api_endpoint');
+        if (endpoints === null || endpoints === undefined) {
+            return null;
+        }
+        let entries = [];
+        for (var endpoint of endpoints) {
+            if (endpoint === preferred_api_endpoint) continue; //this one is always present even if the api config call fails
+            let entry = <option value={endpoint}>{endpoint}</option>;
+            entries.push(entry);
+        }
+        return entries;
+    };
+
+    handlePreferredAPIEndpointChange = event => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(
+                'user_preferred_api_endpoint',
+                event.target.value
+            );
+            api.api.setOptions({ url: event.target.value });
+        }
+    };
+
     render() {
         const { state, props } = this;
         const {
@@ -260,6 +291,14 @@ class Settings extends React.Component {
             website,
             progress,
         } = this.state;
+
+        let preferred_api_endpoint = 'https://api.hive.blog';
+        if (typeof window !== 'undefined') {
+            preferred_api_endpoint =
+                localStorage.getItem('user_preferred_api_endpoint') === null
+                    ? 'https://api.hive.blog'
+                    : localStorage.getItem('user_preferred_api_endpoint');
+        }
 
         return (
             <div className="Settings">
@@ -509,6 +548,24 @@ class Settings extends React.Component {
                                     <option value="100%">
                                         {tt('reply_editor.power_up_100')}
                                     </option>
+                                </select>
+                            </label>
+
+                            <label>
+                                {tt(
+                                    'settings_jsx.choose_preferred_api_endpoint'
+                                )}
+                                <select
+                                    defaultValue={preferred_api_endpoint}
+                                    onChange={
+                                        this.handlePreferredAPIEndpointChange
+                                    }
+                                >
+                                    <option value={preferred_api_endpoint}>
+                                        {preferred_api_endpoint}
+                                    </option>
+
+                                    {this.generateAPIEndpointOptions()}
                                 </select>
                             </label>
                             <br />

@@ -623,7 +623,8 @@
         "profile_name": "Nombre de visualización",
         "profile_about": "Sobre",
         "profile_location": "Localización",
-        "profile_website": "Página Web"
+        "profile_website": "Página Web",
+        "choose_preferred_api_endpoint": "Elija su nodo de API preferido"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La cantidad está en el formato 99999.999",
