@@ -122,7 +122,7 @@ const SidePanel = ({
         organizational: [
             {
                 label: tt('navigation.api_docs'),
-                link: 'https://developers.hive.blog/',
+                link: 'https://developers.hive.io/',
             },
             {
                 label: tt('navigation.bluepaper'),
