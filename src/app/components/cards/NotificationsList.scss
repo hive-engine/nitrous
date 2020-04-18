@@ -29,17 +29,24 @@
     font-weight: bold;
 }
 
+.notification__item.even {
+    @include themify($themes) {
+        background-color: themed('tableRowEvenBackgroundColor');
+    }
+}
+
 .notification__item {
+    @include themify($themes) {
+        background-color: themed('tableRowOddBackgroundColor');
+    }
     align-items: center;
     padding: 0.5em 1rem;
+    margin-bottom: 2px;
     position: relative;
-    @include themify($themes) {
-        border-bottom: themed('border');
-    }
 
     .notification__unread {
         position: absolute;
-        right: 1em;
+        left: 0.4em;
         top: 0.75em;
         font-size: 2em;
         @include themify($themes) {
@@ -75,6 +82,33 @@
     .notification__message {
         padding-bottom: 0.5em;
         padding-right: 0.5em;
+    }
+
+    .notification__message a {
+        @include themify($themes) {
+            color: themed('textColorPrimary');
+        }
+    }
+
+    .notification__message a:visited {
+        @include themify($themes) {
+            color: themed('textColorSecondary');
+        }
+    }
+
+    .notification__score {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 4px;
+        width: 35px;
+        background-color: lightgray;
+    }
+
+    .notification__score_bar {
+        height: 100%;
+        position: relative;
+        background-color: $color-text-hive-red;
     }
 }
 
