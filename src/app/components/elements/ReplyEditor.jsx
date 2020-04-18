@@ -25,6 +25,7 @@ import { fromJS, Set, OrderedSet } from 'immutable';
 import Remarkable from 'remarkable';
 import Dropzone from 'react-dropzone';
 import tt from 'counterpart';
+import { loadUserTemplates, saveUserTemplates } from 'app/utils/UserTemplates';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -75,6 +76,7 @@ class ReplyEditor extends React.Component {
         body: PropTypes.string, // initial value
         defaultPayoutType: PropTypes.string,
         payoutType: PropTypes.string,
+        postTemplateName: PropTypes.string,
     };
 
     static defaultProps = {
@@ -190,6 +192,70 @@ class ReplyEditor extends React.Component {
             const ns = nextState;
             const tp = this.props;
             const np = nextProps;
+
+            if (
+                typeof nextProps.postTemplateName !== 'undefined' &&
+                nextProps.postTemplateName !== null
+            ) {
+                const { formId } = tp;
+
+                if (nextProps.postTemplateName.indexOf('create_') === 0) {
+                    const { username } = tp;
+                    const { body, title, tags } = ns;
+                    const { payoutType, beneficiaries } = np;
+                    const userTemplates = loadUserTemplates(username);
+                    const newTemplateName = nextProps.postTemplateName.replace(
+                        'create_',
+                        ''
+                    );
+                    const newTemplate = {
+                        name: nextProps.postTemplateName.replace('create_', ''),
+                        beneficiaries,
+                        payoutType,
+                        markdown: body !== undefined ? body.value : '',
+                        title: title !== undefined ? title.value : '',
+                        tags: tags !== undefined ? tags.value : '',
+                    };
+
+                    let updated = false;
+                    for (let ui = 0; ui < userTemplates.length; ui += 1) {
+                        if (userTemplates[ui].name === newTemplateName) {
+                            userTemplates[ui] = newTemplate;
+                            updated = true;
+                        }
+                    }
+
+                    if (updated === false) {
+                        userTemplates.push(newTemplate);
+                    }
+
+                    saveUserTemplates(username, userTemplates);
+
+                    this.props.setPostTemplateName(formId, null);
+                } else {
+                    const userTemplates = loadUserTemplates(nextProps.username);
+
+                    for (let ti = 0; ti < userTemplates.length; ti += 1) {
+                        const template = userTemplates[ti];
+                        if (template.name === nextProps.postTemplateName) {
+                            this.state.body.props.onChange(template.markdown);
+                            this.state.title.props.onChange(template.title);
+                            this.state.tags.props.onChange(template.tags);
+                            this.props.setPayoutType(
+                                formId,
+                                template.payoutType
+                            );
+                            this.props.setBeneficiaries(
+                                formId,
+                                template.beneficiaries
+                            );
+
+                            this.props.setPostTemplateName(formId, null);
+                            break;
+                        }
+                    }
+                }
+            }
 
             // Save curent draft to localStorage
             if (
@@ -1024,6 +1090,12 @@ export default formId =>
                 formId,
                 'beneficiaries',
             ]);
+            const postTemplateName = state.user.getIn([
+                'current',
+                'post',
+                formId,
+                'postTemplateName',
+            ]);
             beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
 
             // Post full
@@ -1056,6 +1128,7 @@ export default formId =>
                 defaultPayoutType,
                 payoutType,
                 beneficiaries,
+                postTemplateName,
                 initialValues: { title, body, tags },
                 formId,
             };
@@ -1079,6 +1152,13 @@ export default formId =>
                     userActions.set({
                         key: ['current', 'post', formId, 'beneficiaries'],
                         value: fromJS(beneficiaries),
+                    })
+                ),
+            setPostTemplateName: (formId, postTemplateName) =>
+                dispatch(
+                    userActions.set({
+                        key: ['current', 'post', formId, 'postTemplateName'],
+                        value: postTemplateName,
                     })
                 ),
             reply: ({
