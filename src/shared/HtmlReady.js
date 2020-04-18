@@ -4,6 +4,11 @@ import linksRe, { any as linksAny } from 'app/utils/Links';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import * as Phishing from 'app/utils/Phishing';
+import {
+    embedNode as EmbeddedPlayerEmbedNode,
+    preprocessHtml,
+} from 'app/components/elements/EmbeddedPlayers';
+import { extractContentId as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 export const getPhishingWarningMessage = () => tt('g.phishy_message');
 export const getExternalLinkWarningMessage = () =>
@@ -124,13 +129,6 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
     }
 }
 
-function preprocessHtml(html) {
-    // Replacing 3Speak Image/Anchor tag with an embedded player
-    html = embedThreeSpeakNode(html);
-
-    return html;
-}
-
 function traverse(node, state, depth = 0) {
     if (!node || !node.childNodes) return;
     Array(...node.childNodes).forEach(child => {
@@ -181,6 +179,8 @@ function link(state, child) {
 // wrap iframes in div.videoWrapper to control size/aspect ratio
 function iframe(state, child) {
     const url = child.getAttribute('src');
+
+    // @TODO move this into the centralized EmbeddedPlayer code
     if (url) {
         const { images, links } = state;
         const yt = youTubeId(url);
@@ -245,11 +245,8 @@ function linkifyNode(child, state) {
 
         const { mutate } = state;
         if (!child.data) return;
-        child = embedYouTubeNode(child, state.links, state.images);
-        child = embedVimeoNode(child, state.links, state.images);
-        child = embedTwitchNode(child, state.links, state.images);
-        child = embedDTubeNode(child, state.links, state.images);
-        child = embedThreeSpeakNode(child, state.links, state.images);
+
+        child = EmbeddedPlayerEmbedNode(child, state.links, state.images);
 
         const data = XMLSerializer.serializeToString(child);
         const content = linkify(
@@ -323,206 +320,6 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
         return `<a href="${ipfsPrefix(ln)}">${ln}</a>`;
     });
     return content;
-}
-
-function embedYouTubeNode(child, links, images) {
-    try {
-        const data = child.data;
-        const yt = youTubeId(data);
-        if (!yt) return child;
-
-        if (yt.startTime) {
-            child.data = data.replace(
-                yt.url,
-                `~~~ embed:${yt.id} youtube ${yt.startTime} ~~~`
-            );
-        } else {
-            child.data = data.replace(yt.url, `~~~ embed:${yt.id} youtube ~~~`);
-        }
-
-        if (links) links.add(yt.url);
-        if (images) images.add(yt.thumbnail);
-    } catch (error) {
-        console.error('yt_node', error);
-    }
-    return child;
-}
-
-/** @return {id, url} or <b>null</b> */
-function youTubeId(data) {
-    if (!data) return null;
-
-    const m1 = data.match(linksRe.youTube);
-    const url = m1 ? m1[0] : null;
-    if (!url) return null;
-
-    const m2 = url.match(linksRe.youTubeId);
-    const id = m2 && m2.length >= 2 ? m2[1] : null;
-    if (!id) return null;
-
-    const startTime = url.match(/t=(\d+)s?/);
-
-    return {
-        id,
-        url,
-        startTime: startTime ? startTime[1] : 0,
-        thumbnail: 'https://img.youtube.com/vi/' + id + '/0.jpg',
-    };
-}
-
-/** @return {id, url} or <b>null</b> */
-function getThreeSpeakId(data) {
-    if (!data) return null;
-
-    const match = data.match(linksRe.threespeak);
-    const url = match ? match[0] : null;
-    if (!url) return null;
-    const fullId = match[1];
-    const id = fullId.split('/').pop();
-
-    return {
-        id,
-        fullId,
-        url,
-        thumbnail: `https://img.3speakcontent.online/${id}/post.png`,
-    };
-}
-
-function embedThreeSpeakNode(child, links, images) {
-    try {
-        if (typeof child === 'string') {
-            // If typeof child is a string, this means we are trying to process the HTML
-            // to replace the image/anchor tag created by 3Speak dApp
-            const threespeakId = getThreeSpeakId(child);
-            if (threespeakId) {
-                child = child.replace(
-                    linksRe.threespeakImageLink,
-                    `~~~ embed:${threespeakId.fullId} threespeak ~~~`
-                );
-            }
-        } else {
-            // If child is not a string, we are processing plain text
-            // to replace a bare URL
-            const data = child.data;
-            const threespeakId = getThreeSpeakId(data);
-            if (!threespeakId) return child;
-
-            child.data = data.replace(
-                threespeakId.url,
-                `~~~ embed:${threespeakId.fullId} threespeak ~~~`
-            );
-
-            if (links) links.add(threespeakId.url);
-            if (images) images.add(threespeakId.thumbnail);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-
-    return child;
-}
-
-function embedVimeoNode(child, links /*images*/) {
-    try {
-        const data = child.data;
-        const vimeo = vimeoId(data);
-        if (!vimeo) return child;
-
-        const vimeoRegex = new RegExp(`${vimeo.url}(#t=${vimeo.startTime}s?)?`);
-        if (vimeo.startTime > 0) {
-            child.data = data.replace(
-                vimeoRegex,
-                `~~~ embed:${vimeo.id} vimeo ${vimeo.startTime} ~~~`
-            );
-        } else {
-            child.data = data.replace(
-                vimeoRegex,
-                `~~~ embed:${vimeo.id} vimeo ~~~`
-            );
-        }
-
-        if (links) links.add(vimeo.canonical);
-        // if(images) images.add(vimeo.thumbnail) // not available
-    } catch (error) {
-        console.error('vimeo_embed', error);
-    }
-    return child;
-}
-
-function vimeoId(data) {
-    if (!data) return null;
-    const m = data.match(linksRe.vimeo);
-    if (!m || m.length < 2) return null;
-
-    const startTime = m.input.match(/t=(\d+)s?/);
-
-    return {
-        id: m[1],
-        url: m[0],
-        startTime: startTime ? startTime[1] : 0,
-        canonical: `https://player.vimeo.com/video/${m[1]}`,
-        // thumbnail: requires a callback - http://stackoverflow.com/questions/1361149/get-img-thumbnails-from-vimeo
-    };
-}
-
-function embedTwitchNode(child, links /*images*/) {
-    try {
-        const data = child.data;
-        const twitch = twitchId(data);
-        if (!twitch) return child;
-
-        child.data = data.replace(
-            twitch.url,
-            `~~~ embed:${twitch.id} twitch ~~~`
-        );
-
-        if (links) links.add(twitch.canonical);
-    } catch (error) {
-        console.error('twitch_error', error);
-    }
-    return child;
-}
-
-function twitchId(data) {
-    if (!data) return null;
-    const m = data.match(linksRe.twitch);
-    if (!m || m.length < 3) return null;
-
-    return {
-        id: m[1] === `videos` ? `?video=${m[2]}` : `?channel=${m[2]}`,
-        url: m[0],
-        canonical:
-            m[1] === `videos`
-                ? `https://player.twitch.tv/?video=${m[2]}`
-                : `https://player.twitch.tv/?channel=${m[2]}`,
-    };
-}
-
-function embedDTubeNode(child, links /*images*/) {
-    try {
-        const data = child.data;
-        const dtube = dtubeId(data);
-        if (!dtube) return child;
-
-        child.data = data.replace(dtube.url, `~~~ embed:${dtube.id} dtube ~~~`);
-
-        if (links) links.add(dtube.canonical);
-    } catch (error) {
-        console.error('dtube_embed', error);
-    }
-    return child;
-}
-
-function dtubeId(data) {
-    if (!data) return null;
-    const m = data.match(linksRe.dtube);
-    if (!m || m.length < 2) return null;
-
-    return {
-        id: m[1],
-        url: m[0],
-        canonical: `https://emb.d.tube/#!/${m[1]}`,
-    };
 }
 
 function ipfsPrefix(url) {
