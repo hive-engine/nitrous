@@ -37,6 +37,7 @@ class Author extends React.Component {
         role: string,
         title: string,
         community: string,
+        showRole: bool,
     };
     static defaultProps = {
         follow: true,
@@ -107,7 +108,7 @@ class Author extends React.Component {
             mute,
             showAffiliation,
             blacklists,
-
+            showRole,
             community,
             permlink,
             role,
@@ -128,7 +129,7 @@ class Author extends React.Component {
                         community={community}
                         author={author}
                         permlink={permlink}
-                        role={role}
+                        role={showRole ? role : null}
                         title={title}
                         hideEdit={this.props.hideEditor}
                     />
@@ -218,5 +219,6 @@ export default connect((state, props) => {
         role: post.get('author_role'), // UserTitle
         title: post.get('author_title'), // UserTitle
         blacklists: blacklists.length > 0 ? blacklists : null,
+        showRole: props.showRole,
     };
 })(Author);
