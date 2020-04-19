@@ -706,6 +706,8 @@
         "location_is_too_long": "Location is too long",
         "website_url_is_too_long": "Website URL is too long",
         "public_profile_settings": "Public Profile Settings",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Preferences",
         "not_safe_for_work_nsfw_content": "Not safe for work (NSFW) content",
         "always_hide": "Always hide",
@@ -723,6 +725,10 @@
         "profile_about": "About",
         "profile_location": "Location",
         "profile_website": "Website",
+        "profile_witness_owner":
+            "If witness owner is a another account, which one is it?",
+        "profile_witness_description":
+            "If this is a witness account, describe your witness.",
         "saved": "Saved!",
         "choose_preferred_api_endpoint": "Choose Your Preferred API Node"
     },
