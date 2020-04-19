@@ -14,7 +14,7 @@ export default class PageViewsCounter extends React.Component {
     }
 
     componentDidMount() {
-        this.pageView();
+        // this.pageView();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
