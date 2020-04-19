@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.vscode
 coverage
 node_modules
 *.log
@@ -8,4 +9,3 @@ vendor/*
 tmp/*
 .vagrant
 lib
-
