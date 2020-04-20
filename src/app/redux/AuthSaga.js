@@ -174,7 +174,7 @@ export function* findSigningKey({
     const private_keys =
         currentUsername === username ? currentUser.get('private_keys') : Map();
 
-    const account = yield call(getAccount, useHive, username);
+    const account = yield call(getAccount, username, useHive);
     if (!account) throw new Error('Account not found');
 
     for (const authType of authTypes) {

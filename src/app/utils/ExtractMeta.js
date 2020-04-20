@@ -114,6 +114,9 @@ export default function extractMeta(chain_data, rp, hostConfig) {
         // user profile root
         const account = chain_data.accounts[rp.accountname];
         let { name, about, profile_image } = normalizeProfile(account);
+        if (!account) {
+            return metas;
+        }
         if (name == null) name = account.name;
         if (about == null)
             about = `Join thousands on ${
