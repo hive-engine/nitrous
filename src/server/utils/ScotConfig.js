@@ -101,7 +101,7 @@ ScotConfig.prototype.refresh = async function() {
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
-            engineApi.find('tokens', 'balances', {
+            ssc.find('tokens', 'balances', {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),

@@ -72,6 +72,7 @@ const WEEDCASH = {
     SHOW_AUTHOR_RECENT_POSTS: true,
     POSTED_VIA_NITROUS_ICON: 'weedcash',
     PREFER_HIVE: true,
+    HIVE_ENGINE: true,
 };
 
 const TIX = {
@@ -188,8 +189,8 @@ const FOODIE = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': TIX,
-    'frozen-retreat-15997.herokuapp.com': FOODIE,
+    'localhost:8080': WEEDCASH,
+    'frozen-retreat-15997.herokuapp.com': WEEDCASH,
     'www.trafficinsider.org': TIX,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
