@@ -770,7 +770,6 @@ export default connect(
             accountname,
             isOwnAccount,
             ignores,
-            user_preferences: state.app.get('user_preferences').toJS(),
             walletUrl: state.app.get('walletUrl'),
             profile,
             follow: state.global.get('follow'),
