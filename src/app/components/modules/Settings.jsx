@@ -234,7 +234,8 @@ class Settings extends React.Component {
     };
 
     generateAPIEndpointOptions = () => {
-        let endpoints = api.config.get('alternative_api_endpoints');
+        let endpoints = api.config.get('alternative_api_endpoints').split(' ');
+        console.log('alt endpoints', endpoints);
         let preferred_api_endpoint = '';
         if (typeof window !== 'undefined')
             preferred_api_endpoint =
