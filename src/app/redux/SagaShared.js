@@ -44,7 +44,17 @@ export function* getAccount(username, force = false) {
         );
 
         [account] = yield call([api, api.getAccountsAsync], [username]);
+        const accountWitness = yield call(
+            [api, api.callAsync],
+            'condenser_api.get_witness_by_account',
+            [username]
+        );
+
         if (account) {
+            if (accountWitness) {
+                account.account_is_witness = true;
+            }
+
             account = fromJS(account);
             yield put(globalActions.receiveAccount({ account }));
         }

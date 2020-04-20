@@ -51,6 +51,7 @@ class Settings extends React.Component {
                 'website',
                 'witness_owner',
                 'witness_description',
+                'account_is_witness',
             ],
             initialValues: props.profile,
             validation: values => {
@@ -270,7 +271,11 @@ class Settings extends React.Component {
         let entries = [];
         for (var endpoint of endpoints) {
             if (endpoint === preferred_api_endpoint) continue; //this one is always present even if the api config call fails
-            let entry = <option value={endpoint}>{endpoint}</option>;
+            let entry = (
+                <option key={endpoint} value={endpoint}>
+                    {endpoint}
+                </option>
+            );
             entries.push(entry);
         }
         return entries;
@@ -315,6 +320,7 @@ class Settings extends React.Component {
             witness_owner,
             witness_description,
             progress,
+            account_is_witness,
         } = this.state;
 
         let preferred_api_endpoint = 'https://api.hive.blog';
@@ -478,40 +484,44 @@ class Settings extends React.Component {
                                                 website.error}
                                         </div>
                                     </div>
-                                    <div className="form__field column small-12 medium-6 large-4">
-                                        <label>
-                                            {tt(
-                                                'settings_jsx.profile_witness_description'
-                                            )}
-                                            <input
-                                                type="text"
-                                                {...witness_description.props}
-                                                maxLength="160"
-                                                autoComplete="off"
-                                            />
-                                        </label>
-                                        <div className="error">
-                                            {witness_description.touched &&
-                                                witness_description.error}
+                                    {account_is_witness.value && (
+                                        <div className="form__field column small-12 medium-6 large-4">
+                                            <label>
+                                                {tt(
+                                                    'settings_jsx.profile_witness_description'
+                                                )}
+                                                <input
+                                                    type="text"
+                                                    {...witness_description.props}
+                                                    maxLength="160"
+                                                    autoComplete="off"
+                                                />
+                                            </label>
+                                            <div className="error">
+                                                {witness_description.touched &&
+                                                    witness_description.error}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="form__field column small-12 medium-6 large-4">
-                                        <label>
-                                            {tt(
-                                                'settings_jsx.profile_witness_owner'
-                                            )}
-                                            <input
-                                                type="text"
-                                                {...witness_owner.props}
-                                                maxLength="30"
-                                                autoComplete="off"
-                                            />
-                                        </label>
-                                        <div className="error">
-                                            {witness_owner.touched &&
-                                                witness_owner.error}
+                                    )}
+                                    {account_is_witness.value && (
+                                        <div className="form__field column small-12 medium-6 large-4">
+                                            <label>
+                                                {tt(
+                                                    'settings_jsx.profile_witness_owner'
+                                                )}
+                                                <input
+                                                    type="text"
+                                                    {...witness_owner.props}
+                                                    maxLength="30"
+                                                    autoComplete="off"
+                                                />
+                                            </label>
+                                            <div className="error">
+                                                {witness_owner.touched &&
+                                                    witness_owner.error}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                                 {state.loading && (
                                     <span>
@@ -718,9 +728,11 @@ class Settings extends React.Component {
 
 function read_profile_v2(account) {
     if (!account) return {};
+    const accountIsWitness = account.get('account_is_witness');
 
     // use new `posting_json_md` if {version: 2} is present
     let md = o2j.ifStringParseJSON(account.get('posting_json_metadata'));
+    md.profile.account_is_witness = accountIsWitness;
     if (md && md.profile && md.profile.version) return md;
 
     // otherwise, fall back to `json_metadata`

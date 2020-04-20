@@ -725,10 +725,8 @@
         "profile_about": "About",
         "profile_location": "Location",
         "profile_website": "Website",
-        "profile_witness_owner":
-            "If witness owner is a another account, which one is it?",
-        "profile_witness_description":
-            "If this is a witness account, describe your witness.",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Saved!",
         "choose_preferred_api_endpoint": "Choose Your Preferred API Node"
     },
