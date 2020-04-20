@@ -142,6 +142,7 @@ class PostsIndex extends React.Component {
             order,
             category,
             accountname,
+            useHive: this.props.preferHive,
         });
     }
     onShowSpam = () => {
@@ -406,7 +407,7 @@ class PostsIndex extends React.Component {
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         ['total_token_balance', 'totalStaked']
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -438,7 +439,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -470,7 +471,7 @@ class PostsIndex extends React.Component {
                                             'totalStaked',
                                         ]
                                     )}
-                                    useHive={this.props.useHive}
+                                    useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
@@ -545,7 +546,8 @@ module.exports = {
         (state, ownProps) => {
             const hostConfig = state.app.get('hostConfig', Map());
             const scotTokenSymbol = hostConfig.get('LIQUID_TOKEN_UPPERCASE');
-            const useHive = hostConfig.get('HIVE_ENGINE');
+            const hiveEngine = hostConfig.get('HIVE_ENGINE');
+            const preferHive = hostConfig.get('PREFER_HIVE');
             const scotConfig = state.app.get('scotConfig');
             // special case if user feed (vs. trending, etc)
             let feed_posts;
@@ -584,7 +586,8 @@ module.exports = {
                 scotTokenSymbol,
                 tokenStats: scotConfig.getIn(['config', 'tokenStats']),
                 showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
-                useHive,
+                preferHive,
+                hiveEngine,
             };
         },
         dispatch => {

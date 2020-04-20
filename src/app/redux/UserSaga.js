@@ -162,8 +162,14 @@ function* usernamePasswordLogin(action) {
     );
     if (current) {
         const username = current.get('username');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'ignore');
+        yield fork(loadFollows, 'getFollowingAsync', username, 'blog', useHive);
+        yield fork(
+            loadFollows,
+            'getFollowingAsync',
+            username,
+            'ignore',
+            useHive
+        );
     }
 }
 

@@ -92,11 +92,16 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const [steemTotalTokenBalances, steemTokenBurnBalances, hiveTotalTokenBalances, hiveTokenBurnBalances] = await Promise.all([
+        const [
+            steemTotalTokenBalances,
+            steemTokenBurnBalances,
+            hiveTotalTokenBalances,
+            hiveTokenBurnBalances,
+        ] = await Promise.all([
             ssc.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
-            ssc.find('tokens', 'balances', {
+            engineApi.find('tokens', 'balances', {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),
@@ -108,8 +113,12 @@ ScotConfig.prototype.refresh = async function() {
                 symbol: { $in: hiveTokenList },
             }),
         ]);
-        const totalTokenBalances = steemTotalTokenBalances.concat(hiveTotalTokenBalances);
-        const tokenBurnBalances = steemTokenBurnBalances.concat(hiveTokenBurnBalances);
+        const totalTokenBalances = steemTotalTokenBalances.concat(
+            hiveTotalTokenBalances
+        );
+        const tokenBurnBalances = steemTokenBurnBalances.concat(
+            hiveTokenBurnBalances
+        );
 
         for (const totalTokenBalance of totalTokenBalances) {
             if (minerTokenToToken[totalTokenBalance.symbol]) {

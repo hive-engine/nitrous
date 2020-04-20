@@ -194,9 +194,14 @@ class CommentImpl extends React.Component {
         }
 
         // Client-side only when using componentDidMount
-        const { tribeMuteAccount, tribeIgnoreList, fetchFollows } = this.props;
+        const {
+            tribeMuteAccount,
+            tribeIgnoreList,
+            fetchFollows,
+            preferHive,
+        } = this.props;
         if (tribeMuteAccount && !tribeIgnoreList) {
-            fetchFollows(tribeMuteAccount);
+            fetchFollows(tribeMuteAccount, preferHive);
         }
     }
 
@@ -555,6 +560,8 @@ const Comment = connect(
             'LIQUID_TOKEN_UPPERCASE',
         ]);
 
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+
         return {
             ...ownProps,
             anchor_link: '#@' + content, // Using a hash here is not standard but intentional; see issue #124 for details
@@ -563,6 +570,7 @@ const Comment = connect(
             tribeMuteAccount,
             tribeIgnoreList,
             scotTokenSymbol,
+            preferHive,
         };
     },
 
@@ -581,12 +589,13 @@ const Comment = connect(
                 })
             );
         },
-        fetchFollows: account => {
+        fetchFollows: (account, preferHive) => {
             dispatch(
                 fetchDataSagaActions.fetchFollows({
                     method: 'getFollowingAsync',
                     account,
                     type: 'ignore',
+                    useHive: preferHive,
                 })
             );
         },

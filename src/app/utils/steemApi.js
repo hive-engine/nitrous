@@ -278,11 +278,14 @@ export async function attachScotData(url, state, hostConfig, useHive) {
             state.accounts[account].token_unstakes = tokenUnstakes;
         }
         if (tokenStatuses) {
+            const tokenStatusData = useHive
+                ? tokenStatuses.hiveData
+                : tokenStatuses.data;
             if (tokenStatuses[scotTokenSymbol]) {
                 state.accounts[account].token_status =
-                    tokenStatuses[scotTokenSymbol];
+                    tokenStatusData[scotTokenSymbol];
             }
-            state.accounts[account].all_token_status = tokenStatuses;
+            state.accounts[account].all_token_status = tokenStatusData;
         }
         if (transferHistory) {
             state.accounts[account].transfer_history = transferHistory;

@@ -7,6 +7,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { Set, Map } from 'immutable';
 import tt from 'counterpart';
+import { PREFER_HIVE } from 'app/client_config';
 
 const { string, bool, any } = PropTypes;
 

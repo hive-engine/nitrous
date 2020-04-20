@@ -112,7 +112,6 @@ class TransferHistoryRow extends React.Component {
                     {tt(['transferhistoryrow_jsx', 'issue_from'], {
                         amount: `${op.quantity} ${scotTokenSymbol}`,
                     })}
-                    {otherAccountLink(op.account)}
                 </span>
             );
         } else if (op.type === 'staking_reward') {
@@ -179,13 +178,14 @@ const otherAccountLink = username =>
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
         return {
             ...ownProps,
-            scotTokenSymbol: state.app.getIn([
-                'hostConfig',
-                'LIQUID_TOKEN_UPPERCASE',
-            ]),
             appUrl: state.app.getIn(['hostConfig', 'APP_URL']),
+            scotTokenSymbol,
         };
     }
 )(TransferHistoryRow);

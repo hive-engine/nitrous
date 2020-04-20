@@ -47,16 +47,27 @@ let is_initial_state = true;
 export function* fetchState(location_change_action) {
     const { pathname } = location_change_action.payload;
     const m = pathname.match(/^\/@([a-z0-9\.-]+)/);
-    if (m && m.length === 2) {
-        const username = m[1];
-        yield fork(fetchFollowCount, username);
-        yield fork(loadFollows, 'getFollowersAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
-    }
-
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
     );
+    if (m && m.length === 2) {
+        const username = m[1];
+        yield fork(fetchFollowCount, username, hostConfig['PREFER_HIVE']);
+        yield fork(
+            loadFollows,
+            'getFollowersAsync',
+            username,
+            'blog',
+            hostConfig['PREFER_HIVE']
+        );
+        yield fork(
+            loadFollows,
+            'getFollowingAsync',
+            username,
+            'blog',
+            hostConfig['PREFER_HIVE']
+        );
+    }
 
     if (
         pathname === '/' ||
@@ -437,7 +448,8 @@ function* fetchFollows(action) {
     yield loadFollows(
         action.payload.method,
         action.payload.account,
-        action.payload.type
+        action.payload.type,
+        action.payload.useHive
     );
 }
 
