@@ -1,44 +1,40 @@
-version: "3"
+version: "3.7"
 services:
-    hive_condenser:
-        build: .
-        image: hive/condenser:latest
-        container_name: hive_condenser
+    condenser:
+        image: hiveio/condenser:latest
+        deploy:
+            mode: replicated
+            replicas: 4
+            resources:
+                limits:
+                    cpus: "0.9"
+                    memory: 2048M
+            restart_policy:
+                condition: any
+                delay: 5s
+            update_config:
+                parallelism: 1
+                delay: 10s
+                failure_action: rollback
+                order: start-first
+            rollback_config:
+                parallelism: 1
+                delay: 5s
         environment:
             VIRTUAL_HOST: hive.blog
             VIRTUAL_PORT: 8080
+            DISABLE_CLUSTERING: true
             SDC_CLIENT_STEEMD_URL: https://api.hive.blog
             SDC_SERVER_STEEMD_URL: https://api.hive.blog
-            SDC_DISABLE_SIGNUPS: 1
             SDC_SITE_DOMAIN: hive.blog
-            SDC_IMAGE_PROXY_PREFIX: https://steemitimages.com/
-            SDC_UPLOAD_IMAGE_URL: https://steemitimages.com
-            SDC_HELMET_CONNECTSRC: "'self' steemit.com https://api.hive.blog api.blocktrades.us https://hive.blog https://steemitimages.com"
+            SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+            SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+            SDC_HELMET_CONNECTSRC: "'self' hive.blog https://hive.blog https://api.hive.blog https://anyx.io api.blocktrades.us https://images.hive.blog"
             WALLET_URL: https://wallet.hive.blog
         networks:
-            - condenser_reverse-proxy
-        restart: always
-
-#    condenser_stg:
-#        build: .
-#        image: hive/condenser:staging
-#        container_name: condenser_stg
-#        environment:
-#            VIRTUAL_HOST: staging.hive.blog
-#            VIRTUAL_PORT: 8080
-#            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
-#            SDC_SERVER_STEEMD_URL: https://api.hive.blog
-#            SDC_DISABLE_SIGNUPS: 1
-#            SDC_SITE_DOMAIN: staging.hive.blog
-#            SDC_IMAGE_PROXY_PREFIX: https://steemitimages.com/
-#            SDC_UPLOAD_IMAGE_URL: https://steemitimages.com
-#            SDC_HELMET_CONNECTSRC: "'self' https://api.hive.blog https://staging.hive.blog https://steemitimages.com"
-#            WALLET_URL: https://wallet.hive.blog
-#        networks:
-#            - condenser_reverse-proxy
-#        restart: always
+            - reverse-proxy
 
 networks:
-    condenser_reverse-proxy:
+    reverse-proxy:
         external:
-            name: condenser_reverse-proxy
+            name: reverse-proxy

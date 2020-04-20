@@ -1,39 +1,43 @@
-FROM node:8.7
+FROM node:12.16.2 as development
+
+WORKDIR /var/app
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --non-interactive --frozen-lockfile --ignore-optional
+
+COPY . .
+
+RUN mkdir tmp && yarn build
+
+CMD [ "yarn", "run", "start" ]
+
+### REMOVE DEV DEPENDENCIES ##
+FROM development as dependencies
+
+RUN yarn install --non-interactive --frozen-lockfile --ignore-optional --production
+
+### BUILD MINIFIED PRODUCTION ##
+FROM node:12.16.2-alpine as production
+
+WORKDIR /var/app
 
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT ${SOURCE_COMMIT}
 ARG DOCKER_TAG
 ENV DOCKER_TAG ${DOCKER_TAG}
 
-# yarn > npm
-#RUN npm install --global yarn
+COPY --from=dependencies /var/app/package.json /var/app/package.json
+COPY --from=dependencies /var/app/config /var/app/config
+COPY --from=dependencies /var/app/dist /var/app/dist
+COPY --from=dependencies /var/app/lib /var/app/lib
+COPY --from=dependencies /var/app/src /var/app/src
+COPY --from=dependencies /var/app/tmp /var/app/tmp
+COPY --from=dependencies /var/app/webpack /var/app/webpack
+COPY --from=dependencies /var/app/node_modules /var/app/node_modules
 
-RUN npm install -g yarn
+COPY --from=dependencies /var/app/healthcheck.js /var/app/healthcheck.js
 
-WORKDIR /var/app
-RUN mkdir -p /var/app
-ADD package.json yarn.lock /var/app/
-RUN yarn install --non-interactive --frozen-lockfile --ignore-optional
-
-COPY . /var/app
-
-# FIXME TODO: fix eslint warnings
-
-#RUN mkdir tmp && \
-#  npm test && \
-#  ./node_modules/.bin/eslint . && \
-#  npm run build
-
-RUN mkdir tmp && \
-    yarn test && yarn build
-
-ENV PORT 8080
-ENV NODE_ENV production
-
-EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=5 CMD node /var/app/healthcheck.js
 
 CMD [ "yarn", "run", "production" ]
-
-# uncomment the lines below to run it in development mode
-# ENV NODE_ENV development
-# CMD [ "yarn", "run", "start" ]
