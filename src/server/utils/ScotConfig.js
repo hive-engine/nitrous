@@ -5,10 +5,12 @@ import {
     LIQUID_TOKEN_UPPERCASE,
     SCOT_DENOM,
     TOKEN_STATS_EXCLUDE_ACCOUNTS,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
@@ -87,11 +89,12 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.scotMinerTokens
         );
 
+        const engineApi = HIVE_ENGINE ? hiveSsc : ssc;
         const [totalTokenBalances, tokenBalances] = await Promise.all([
-            ssc.find('tokens', 'tokens', {
+            engineApi.find('tokens', 'tokens', {
                 symbol: { $in: tokenList },
             }),
-            ssc.find('tokens', 'balances', {
+            engineApi.find('tokens', 'balances', {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
                 symbol: { $in: tokenList },
             }),
@@ -174,6 +177,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_balance.totalStaked = staking.toFixed(
                 scotConfig.tokenStats.total_token_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_burn_balance) {
             scotConfig.tokenStats.token_burn_balance.balance = burn.toFixed(
                 scotConfig.tokenStats.total_token_balance.precision
             );
@@ -186,6 +191,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_miner_balance.totalStaked = stakingMiner.toFixed(
                 scotConfig.tokenStats.total_token_miner_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_miner_burn_balance) {
             scotConfig.tokenStats.token_miner_burn_balance.balance = burnMiner.toFixed(
                 scotConfig.tokenStats.total_token_miner_balance.precision
             );
@@ -198,6 +205,8 @@ ScotConfig.prototype.refresh = async function() {
             scotConfig.tokenStats.total_token_mega_miner_balance.totalStaked = stakingMegaMiner.toFixed(
                 scotConfig.tokenStats.total_token_mega_miner_balance.precision
             );
+        }
+        if (scotConfig.tokenStats.token_mega_miner_burn_balance) {
             scotConfig.tokenStats.token_mega_miner_burn_balance.balance = burnMegaMiner.toFixed(
                 scotConfig.tokenStats.total_token_mega_miner_balance.precision
             );

@@ -10,6 +10,7 @@ const SidebarToken = ({
     scotTokenCirculating,
     scotTokenBurn,
     scotTokenStaking,
+    useHive,
 }) => {
     if (scotTokenCirculating && typeof scotTokenCirculating === 'string') {
         scotTokenCirculating = parsePayoutAmount(scotTokenCirculating);
@@ -41,7 +42,17 @@ const SidebarToken = ({
         <div className="c-sidebar__module">
             <div className="c-sidebar__header">
                 <div className="SidebarToken__header">
-                    <h3 className="c-sidebar__h3">{scotToken}</h3>
+                    <h3 className="c-sidebar__h3">
+                        <a
+                            href={`https://${
+                                useHive ? 'hive' : 'steem'
+                            }-engine.com/?p=market&t=${scotToken}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {scotToken}
+                        </a>
+                    </h3>
                 </div>
             </div>
             <div className="c-sidebar__content">

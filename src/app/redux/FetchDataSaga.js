@@ -7,7 +7,8 @@ import {
     takeLatest,
     takeEvery,
 } from 'redux-saga/effects';
-import { api } from '@steemit/steem-js';
+import { api as hiveApi } from 'steem';
+import { api as steemApi } from '@steemit/steem-js';
 import { loadFollows, fetchFollowCount } from 'app/redux/FollowSaga';
 import { getContent } from 'app/redux/SagaShared';
 import * as globalActions from './GlobalReducer';
@@ -19,7 +20,11 @@ import {
     getStateAsync,
     getScotDataAsync,
 } from 'app/utils/steemApi';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    PREFER_HIVE,
+    HIVE_ENGINE,
+    LIQUID_TOKEN_UPPERCASE,
+} from 'app/client_config';
 
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const GET_CONTENT = 'fetchDataSaga/GET_CONTENT';
@@ -49,9 +54,21 @@ export function* fetchState(location_change_action) {
     const m = pathname.match(/^\/@([a-z0-9\.-]+)/);
     if (m && m.length === 2) {
         const username = m[1];
-        yield fork(fetchFollowCount, username);
-        yield fork(loadFollows, 'getFollowersAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
+        yield fork(fetchFollowCount, username, PREFER_HIVE);
+        yield fork(
+            loadFollows,
+            'getFollowersAsync',
+            username,
+            'blog',
+            PREFER_HIVE
+        );
+        yield fork(
+            loadFollows,
+            'getFollowingAsync',
+            username,
+            'blog',
+            PREFER_HIVE
+        );
     }
 
     if (
@@ -198,12 +215,21 @@ function* syncPinnedPosts() {
  * @param {Iterable} usernames
  */
 function* getAccounts(usernames) {
+    const useHive = HIVE_ENGINE;
+    const api = useHive ? hiveApi : steemApi;
     const accounts = yield call([api, api.getAccountsAsync], usernames);
     yield put(globalActions.receiveAccounts({ accounts }));
 }
 
 export function* fetchData(action) {
-    const { order, author, permlink, accountname, postFilter } = action.payload;
+    const {
+        order,
+        author,
+        permlink,
+        accountname,
+        postFilter,
+        useHive,
+    } = action.payload;
     let { category } = action.payload;
     if (!category) category = '';
     category = category.toLowerCase();
@@ -327,6 +353,7 @@ export function* fetchData(action) {
         while (!fetchDone) {
             let { feedData, endOfData, lastValue } = yield call(
                 fetchFeedDataAsync,
+                useHive,
                 call_name,
                 ...args
             );
@@ -410,7 +437,8 @@ function* fetchFollows(action) {
     yield loadFollows(
         action.payload.method,
         action.payload.account,
-        action.payload.type
+        action.payload.type,
+        action.payload.useHive
     );
 }
 

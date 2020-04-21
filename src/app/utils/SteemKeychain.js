@@ -6,10 +6,14 @@ import { isLoggedIn, extractLoginData } from 'app/utils/UserUtil';
  */
 export function hasCompatibleKeychain() {
     return (
-        window.steem_keychain &&
-        window.steem_keychain.requestSignBuffer &&
-        window.steem_keychain.requestBroadcast &&
-        window.steem_keychain.requestSignedCall
+        (window.steem_keychain &&
+            window.steem_keychain.requestSignBuffer &&
+            window.steem_keychain.requestBroadcast &&
+            window.steem_keychain.requestSignedCall) ||
+        (window.hive_keychain &&
+            window.hive_keychain.requestSignBuffer &&
+            window.hive_keychain.requestBroadcast &&
+            window.hive_keychain.requestSignedCall)
     );
 }
 
