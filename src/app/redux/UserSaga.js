@@ -770,7 +770,10 @@ function* uploadImage({
     let sig;
     if (keychainLogin) {
         const response = yield new Promise(resolve => {
-            window.steem_keychain.requestSignBuffer(
+            (PREFER_HIVE
+                ? window.hive_keychain
+                : window.steem_keychain
+            ).requestSignBuffer(
                 username,
                 JSON.stringify(buf),
                 'Posting',
