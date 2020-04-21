@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import tt from 'counterpart';
 
 class PromotePost extends Component {
@@ -48,6 +48,7 @@ class PromotePost extends Component {
             currentUser,
             promotedPostAccount,
             onClose,
+            hiveEngine,
         } = this.props;
         const { amount } = this.state;
         this.setState({ loading: true });
@@ -62,6 +63,7 @@ class PromotePost extends Component {
             promotedPostAccount,
             onClose,
             errorCallback: this.errorCallback,
+            hiveEngine,
         });
     }
 
@@ -163,11 +165,17 @@ class PromotePost extends Component {
 export default connect(
     (state, ownProps) => {
         const currentUser = state.user.getIn(['current']);
+        const hiveEngine = HIVE_ENGINE;
         const promotedPostAccount = state.app.getIn(
             ['scotConfig', 'config', 'promoted_post_account'],
             'null'
         );
-        return { ...ownProps, promotedPostAccount, currentUser };
+        return {
+            ...ownProps,
+            currentUser,
+            promotedPostAccount,
+            hiveEngine,
+        };
     },
 
     // mapDispatchToProps
@@ -182,6 +190,7 @@ export default connect(
             promotedPostAccount,
             onClose,
             errorCallback,
+            hiveEngine,
         }) => {
             const username = currentUser.get('username');
 
@@ -198,11 +207,13 @@ export default connect(
                     symbol: LIQUID_TOKEN_UPPERCASE,
                     to: promotedPostAccount,
                     quantity: amount,
-                    memo: `${hive ? 'h' : ''}@${author}/${permlink}`,
+                    memo: `${hive && !hiveEngine ? 'h' : ''}@${author}/${
+                        permlink
+                    }`,
                 },
             };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: hiveEngine ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
                 __config: {
@@ -218,6 +229,7 @@ export default connect(
                     operation,
                     successCallback,
                     errorCallback,
+                    useHive: hiveEngine,
                 })
             );
         },

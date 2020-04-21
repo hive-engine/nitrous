@@ -10,10 +10,10 @@ const request_base = {
     },
 };
 
-export function serverApiLogin(account, signatures) {
+export function serverApiLogin(account, signatures, useHive) {
     if (!process.env.BROWSER || window.$STM_ServerBusy) return;
     const request = Object.assign({}, request_base, {
-        body: JSON.stringify({ account, signatures, csrf: $STM_csrf }),
+        body: JSON.stringify({ account, signatures, useHive, csrf: $STM_csrf }),
     });
     return fetch('/api/v1/login_account', request);
 }
