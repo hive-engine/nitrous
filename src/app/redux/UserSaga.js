@@ -769,8 +769,11 @@ function* uploadImage({
 
     let sig;
     if (keychainLogin) {
+        const useHive = yield select(state =>
+            state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+        );
         const response = yield new Promise(resolve => {
-            (PREFER_HIVE
+            (useHive
                 ? window.hive_keychain
                 : window.steem_keychain
             ).requestSignBuffer(
