@@ -40,6 +40,7 @@ module.exports = {
             'react-dom',
             'react-router',
             '@steemit/steem-js',
+            'steem',
             'bytebuffer',
             'immutable',
             'autolinker',

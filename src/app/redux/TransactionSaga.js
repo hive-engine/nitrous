@@ -5,7 +5,8 @@ import getSlug from 'speakingurl';
 import base58 from 'bs58';
 import secureRandom from 'secure-random';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast, auth, memo } from '@steemit/steem-js';
+import * as steem from '@steemit/steem-js';
+import * as hive from 'steem';
 
 import { getAccount, getContent } from 'app/redux/SagaShared';
 import { postingOps, findSigningKey } from 'app/redux/AuthSaga';
@@ -18,7 +19,8 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
@@ -35,7 +37,7 @@ const hook = {
     accepted_delete_comment,
     accepted_vote,
 };
-export function* preBroadcast_transfer({ operation }) {
+export function* preBroadcast_transfer({ operation, useHive }) {
     let memoStr = operation.memo;
     if (memoStr) {
         memoStr = toStringUtf8(memoStr);
@@ -48,10 +50,10 @@ export function* preBroadcast_transfer({ operation }) {
                 throw new Error(
                     'Unable to encrypt memo, missing memo private key'
                 );
-            const account = yield call(getAccount, operation.to);
+            const account = yield call(getAccount, operation.to, useHive);
             if (!account) throw new Error(`Unknown to account ${operation.to}`);
             const memo_key = account.get('memo_key');
-            memoStr = memo.encode(memo_private, memo_key, memoStr);
+            memoStr = steem.memo.encode(memo_private, memo_key, memoStr);
             operation.memo = memoStr;
         }
     }
@@ -90,6 +92,7 @@ export function* broadcastOperation({
         successCallback,
         errorCallback,
         allowPostUnsafe,
+        useHive,
     },
 }) {
     const operationParam = {
@@ -102,6 +105,7 @@ export function* broadcastOperation({
         successCallback,
         errorCallback,
         allowPostUnsafe,
+        useHive,
     };
     console.log('broadcastOperation', operationParam);
     const needsActiveAuth =
@@ -125,6 +129,7 @@ export function* broadcastOperation({
     const payload = {
         operations: [[type, operation]],
         needsActiveAuth,
+        useHive,
         keys,
         username,
         successCallback,
@@ -156,6 +161,7 @@ export function* broadcastOperation({
                     needsActiveAuth,
                     username,
                     password,
+                    useHive,
                 });
                 if (signingKey) payload.keys.push(signingKey);
                 else {
@@ -215,6 +221,7 @@ function hasPrivateKeys(payload) {
 function* broadcastPayload({
     payload: {
         needsActiveAuth,
+        useHive,
         operations,
         keys,
         username,
@@ -238,6 +245,7 @@ function* broadcastPayload({
                 const op = yield call(hook['preBroadcast_' + type], {
                     operation,
                     username,
+                    useHive,
                 });
                 if (Array.isArray(op)) for (const o of op) newOps.push(o);
                 else newOps.push([type, op]);
@@ -295,7 +303,7 @@ function* broadcastPayload({
                 }, 2000);
             } else {
                 if (!isLoggedInWithKeychain()) {
-                    broadcast.send(
+                    (useHive ? hive : steem).broadcast.send(
                         { extensions: [], operations },
                         keys,
                         (err, result) => {
@@ -310,26 +318,39 @@ function* broadcastPayload({
                     );
                 } else {
                     const authType = needsActiveAuth ? 'active' : 'posting';
-                    window.steem_keychain.requestBroadcast(
-                        username,
-                        operations,
-                        authType,
-                        response => {
-                            if (!response.success) {
-                                reject(response.message);
-                            } else {
-                                broadcastedEvent();
-                                resolve(response.result);
+                    const keychain = useHive
+                        ? window.hive_keychain
+                        : window.steem_keychain;
+                    if (!keychain) {
+                        reject(
+                            `${
+                                useHive ? 'Hive' : 'Steem'
+                            } keychain not available for operation. Please install or use private key.`
+                        );
+                    } else {
+                        keychain.requestBroadcast(
+                            username,
+                            operations,
+                            authType,
+                            response => {
+                                if (!response.success) {
+                                    reject(response.message);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve(response.result);
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 }
             }
         });
+        const ssc = useHive ? hiveSsc : steemSsc;
         if (
             operations.length == 1 &&
             operations[0][0] === 'custom_json' &&
-            operations[0][1].id === 'ssc-mainnet1'
+            operations[0][1].id ===
+                (useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1')
         ) {
             // Wait for finish.
             for (let i = 0; i < 15; i++) {
@@ -471,7 +492,7 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
     yield put(userActions.lookupVotingPower({ account: username }));
 }
 
-export function* preBroadcast_comment({ operation, username }) {
+export function* preBroadcast_comment({ operation, username, useHive }) {
     if (!operation.author) operation.author = username;
     let permlink = operation.permlink;
     const { author, __config: { originalBody, comment_options } } = operation;
@@ -484,7 +505,7 @@ export function* preBroadcast_comment({ operation, username }) {
 
     body = body.trim();
 
-    if (!permlink) permlink = yield createPermlink(title, author);
+    if (!permlink) permlink = yield createPermlink(title, author, useHive);
 
     const postUrl = `${APP_URL}/@${author}/${permlink}`;
     // Add footer
@@ -549,7 +570,7 @@ export function* preBroadcast_comment({ operation, username }) {
     return comment_op;
 }
 
-export function* createPermlink(title, author) {
+export function* createPermlink(title, author, useHive) {
     let permlink;
     if (title && title.trim() !== '') {
         let s = slug(title);
@@ -560,6 +581,7 @@ export function* createPermlink(title, author) {
         s = s.toLowerCase().replace(/[^a-z0-9-]+/g, '');
 
         // ensure the permlink is unique
+        const api = useHive ? hive.api : steem.api;
         const slugState = yield call([api, api.getContentAsync], author, s);
         if (slugState.body !== '') {
             const noise = base58

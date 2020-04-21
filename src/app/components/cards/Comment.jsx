@@ -16,7 +16,7 @@ import tt from 'counterpart';
 import { repLog10, parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { PREFER_HIVE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import { allowDelete } from 'app/utils/StateFunctions';
 
@@ -174,7 +174,11 @@ class CommentImpl extends React.Component {
         this.onDeletePost = () => {
             const { props: { deletePost } } = this;
             const content = this.props.cont.get(this.props.content);
-            deletePost(content.get('author'), content.get('permlink'));
+            deletePost(
+                content.get('author'),
+                content.get('permlink'),
+                content.get('hive')
+            );
         };
         this.toggleCollapsed = this.toggleCollapsed.bind(this);
     }
@@ -357,15 +361,16 @@ class CommentImpl extends React.Component {
         }
 
         let replies = null;
-        if (!this.state.collapsed && comment.children > 0) {
+        const numChildren = comment.replies.length;
+        if (!this.state.collapsed && numChildren > 0) {
             if (depth > 7) {
                 const comment_permlink = `/${comment.category}/@${
                     comment.author
                 }/${comment.permlink}`;
                 replies = (
                     <Link to={comment_permlink}>
-                        Show {comment.children} more{' '}
-                        {comment.children == 1 ? 'reply' : 'replies'}
+                        Show {numChildren} more{' '}
+                        {numChildren == 1 ? 'reply' : 'replies'}
                     </Link>
                 );
             } else {
@@ -473,10 +478,10 @@ class CommentImpl extends React.Component {
                             <Voting post={post} showList={false} />
                         )}
                         {this.state.collapsed &&
-                            comment.children > 0 && (
+                            numChildren > 0 && (
                                 <span className="marginLeft1rem">
                                     {tt('g.reply_count', {
-                                        count: comment.children,
+                                        count: numChildren,
                                     })}
                                 </span>
                             )}
@@ -554,12 +559,13 @@ const Comment = connect(
         unlock: () => {
             dispatch(userActions.showLogin());
         },
-        deletePost: (author, permlink) => {
+        deletePost: (author, permlink, hive) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
+                    useHive: hive,
                 })
             );
         },
@@ -569,6 +575,7 @@ const Comment = connect(
                     method: 'getFollowingAsync',
                     account,
                     type: 'ignore',
+                    useHive: PREFER_HIVE,
                 })
             );
         },
