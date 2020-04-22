@@ -187,10 +187,41 @@ const FOODIE = {
     HIVE_ENGINE: true,
 };
 
+const KANDA = {
+    APP_NAME: 'Telokanda',
+    APP_ICON: 'kanda',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://telokanda.com',
+    APP_DOMAIN: 'telokanda.com',
+    LIQUID_TOKEN: 'Kanda',
+    LIQUID_TOKEN_UPPERCASE: 'KANDA',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'telokanda',
+    TAG_LIST: fromJSOrdered(['telokanda']),
+    INTERLEAVE_PROMOTED: true,
+    VESTING_TOKEN: 'KANDA POWER',
+    SITE_DESCRIPTION:
+        'Telokanda is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called KANDA, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-32',
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
-    'frozen-retreat-15997.herokuapp.com': WEEDCASH,
+    'localhost:8080': KANDA,
+    'frozen-retreat-15997.herokuapp.com': KANDA,
     'www.trafficinsider.org': TIX,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',

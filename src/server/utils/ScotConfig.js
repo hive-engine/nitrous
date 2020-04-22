@@ -70,7 +70,7 @@ ScotConfig.prototype.refresh = async function() {
                 const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
                 c.tokenStats = { scotToken: c.token, scotMinerTokens };
                 scotConfigMap[c.token] = c;
-                if (c['HIVE_ENGINE']) {
+                if (c['hive_engine_enabled']) {
                     hiveTokenList.push(c.token);
                     hiveTokenList = hiveTokenList.concat(scotMinerTokens);
                 } else {
