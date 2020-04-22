@@ -234,22 +234,29 @@ class Settings extends React.Component {
     };
 
     generateAPIEndpointOptions = () => {
-        let endpoints = api.config.get('alternative_api_endpoints').split(' ');
-        console.log('alt endpoints', endpoints);
-        let preferred_api_endpoint = '';
-        if (typeof window !== 'undefined')
-            preferred_api_endpoint =
-                localStorage.getItem('user_preferred_api_endpoint') === null
-                    ? 'https://api.hive.blog'
-                    : localStorage.getItem('user_preferred_api_endpoint');
+        const endpoints = api.config
+            .get('alternative_api_endpoints')
+            .split(' ');
         if (endpoints === null || endpoints === undefined) {
             return null;
         }
-        let entries = [];
-        for (var endpoint of endpoints) {
-            if (endpoint === preferred_api_endpoint) continue; //this one is always present even if the api config call fails
-            let entry = <option value={endpoint}>{endpoint}</option>;
-            entries.push(entry);
+
+        let preferred_api_endpoint = '';
+        if (typeof window !== 'undefined') {
+            preferred_api_endpoint =
+                localStorage.getItem('user_preferred_api_endpoint') ||
+                endpoints[0];
+        }
+
+        const entries = [];
+        for (let ei = 0; ei < endpoints.length; ei += 1) {
+            const endpoint = endpoints[ei];
+
+            //this one is always present even if the api config call fails
+            if (endpoint !== preferred_api_endpoint) {
+                const entry = <option value={endpoint}>{endpoint}</option>;
+                entries.push(entry);
+            }
         }
         return entries;
     };
