@@ -640,7 +640,12 @@
             "Comment benefactor reward: %(amount)s for ",
         "staking_reward": "Staking reward: %(amount)s",
         "mining_reward": "Mining reward: %(amount)s",
-        "request_id": "Request ID: %(request_id)s"
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)",
+        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "确认取消提款请求吗？",
@@ -705,7 +710,7 @@
         "to_comment_and_reward_others": "评论和奖励他人。",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "sign_up_get_steem": "Sign up. Get STEEM!",
+        "sign_up_get_steem": "Sign up.",
         "returning_users": "返回用户:",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
