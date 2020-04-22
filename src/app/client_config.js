@@ -220,6 +220,8 @@ export const CONFIG_MAP = {
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
+        PREFER_HIVE: true,
+        HIVE_ENGINE: true,
     },
     'steeming.com': {
         APP_NAME: 'Steeming',
