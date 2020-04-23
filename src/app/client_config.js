@@ -251,6 +251,7 @@ export const CONFIG_MAP = {
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
+        COMMUNITY_CATEGORY: 'hive-172447',
         PREFER_HIVE: true,
         HIVE_ENGINE: true,
     },
