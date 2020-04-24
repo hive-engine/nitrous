@@ -222,6 +222,7 @@ export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': KANDA,
     'frozen-retreat-15997.herokuapp.com': KANDA,
+    'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
