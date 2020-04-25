@@ -9,8 +9,8 @@ export const APP_NAME_UPPERCASE = 'SAND';
 export const APP_ICON = 'sandiego';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.steemsandiego.com';
-export const APP_DOMAIN = 'www.steemsandiego.com';
+export const APP_URL = 'https://app.sandiegocoin.org';
+export const APP_DOMAIN = 'app.sandiegocoin.org';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'sandiego';
