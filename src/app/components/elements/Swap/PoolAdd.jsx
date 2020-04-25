@@ -115,7 +115,7 @@ class PoolComponent extends Component {
     tokenClickCallback(parent, token) {
         console.log('tokenClickCallback', token);
         if (parent.selected == 'output') {
-            if (token.name == 'HIVEP') {
+            if (token.name == 'HIVEP' || token.name == 'ZZAN') {
                 parent.setState(
                     {
                         input_token: 'STEEM',

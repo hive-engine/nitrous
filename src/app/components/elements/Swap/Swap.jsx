@@ -207,7 +207,12 @@ class SwapComponent extends Component {
             input_token != '' &&
             output_token != ''
         ) {
-            if (input_token == 'HIVEP' || output_token == 'HIVEP') {
+            if (
+                input_token == 'HIVEP' ||
+                output_token == 'HIVEP' ||
+                input_token == 'ZZAN' ||
+                output_token == 'ZZAN'
+            ) {
                 console.log('2');
                 console.log(input_token, output_token);
                 var node1 = this.info.findNode(input_token, output_token);
@@ -282,6 +287,13 @@ class SwapComponent extends Component {
                     output_token,
                     this.input_amount,
                     2
+                );
+            } else if (input_token == 'ZZAN' || output_token == 'ZZAN') {
+                results = await this.info.calculateExchangeAmount(
+                    input_token,
+                    output_token,
+                    this.input_amount,
+                    4
                 );
             } else if (input_token != 'KRWP' && output_token != 'KRWP') {
                 results = await this.info.calculateExchangeAmount2(

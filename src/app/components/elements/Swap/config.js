@@ -42,7 +42,7 @@ async function getScotHolder(symbol, cnt, offset) {
 var mainnode = {
     name: 'main_node',
     account: 'sct.swap',
-    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM', 'HIVEP'],
+    tokens: ['KRWP', 'ORG', 'SVC', 'STEEM', 'SCT', 'SCTM', 'HIVEP', 'ZZAN'],
     liquidity_token: [
         'KPORG',
         'KPSVC',
@@ -50,6 +50,7 @@ var mainnode = {
         'KPSCT',
         'KPSCTM',
         'STEEMHIVE',
+        'ZZANSTEEM',
     ],
 };
 
@@ -89,6 +90,12 @@ var subnode = [
         account: 'sct.pay',
         tokens: ['STEEM', 'HIVEP'],
         liquidity_token: 'STEEMHIVE',
+    },
+    {
+        name: 'zzansteem',
+        account: 'zzansteem',
+        tokens: ['STEEM', 'ZZAN'],
+        liquidity_token: 'ZZANSTEEM',
     },
 ];
 
@@ -141,6 +148,12 @@ class swapConfig {
             name: 'SVC',
             fullname: 'Steem Vote Coin',
             ico: '/images/tokens/svc.png',
+        });
+        this.tokens.push({
+            id: 'zzan',
+            name: 'ZZAN',
+            fullname: 'Steemzzang Token',
+            ico: '/images/tokens/zzan.png',
         });
     }
 
