@@ -55,7 +55,6 @@ class Settings extends React.Component {
             ],
             initialValues: props.profile,
             validation: values => {
-                console.log('values', values);
                 return {
                     profile_image:
                         values.profile_image &&
