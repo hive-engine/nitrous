@@ -120,12 +120,6 @@ class swapConfig {
             ico: '/images/tokens/krwp.png',
         });
         this.tokens.push({
-            id: 'hivep',
-            name: 'HIVEP',
-            fullname: 'HIVE Pegged',
-            ico: '/images/tokens/hive.png',
-        });
-        this.tokens.push({
             id: 'sct',
             name: 'SCT',
             fullname: 'SteemCoinpan Token',
@@ -138,10 +132,16 @@ class swapConfig {
             ico: '/images/tokens/sctm.png',
         });
         this.tokens.push({
-            id: 'org',
-            name: 'ORG',
-            fullname: 'Orange Token',
-            ico: '/images/tokens/org.png',
+            id: 'hivep',
+            name: 'HIVEP',
+            fullname: 'HIVE Pegged',
+            ico: '/images/tokens/hive.png',
+        });
+        this.tokens.push({
+            id: 'zzan',
+            name: 'ZZAN',
+            fullname: 'Steemzzang Token',
+            ico: '/images/tokens/zzan.png',
         });
         this.tokens.push({
             id: 'svc',
@@ -150,10 +150,10 @@ class swapConfig {
             ico: '/images/tokens/svc.png',
         });
         this.tokens.push({
-            id: 'zzan',
-            name: 'ZZAN',
-            fullname: 'Steemzzang Token',
-            ico: '/images/tokens/zzan.png',
+            id: 'org',
+            name: 'ORG',
+            fullname: 'Orange Token',
+            ico: '/images/tokens/org.png',
         });
     }
 
