@@ -36,6 +36,7 @@ export default function extractContent(get, content, appDomain) {
         created,
         net_rshares,
         children,
+        hive,
     } = get(
         content,
         'author',
@@ -47,7 +48,8 @@ export default function extractContent(get, content, appDomain) {
         'title',
         'created',
         'net_rshares',
-        'children'
+        'children',
+        'hive'
     );
     const author_link = '/@' + get(content, 'author');
     let link = `/@${author}/${permlink}`;
@@ -82,7 +84,11 @@ export default function extractContent(get, content, appDomain) {
                           '(html comment removed: $1)'
                       )
                   );
-            rtags = HtmlReady(htmlText, { mutate: false, appDomain });
+            rtags = HtmlReady(htmlText, {
+                mutate: false,
+                appDomain,
+                useHive: hive,
+            });
         }
 
         [image_link] = Array.from(rtags.images);

@@ -503,7 +503,13 @@ export default class UserProfile extends React.Component {
         if (cover_image) {
             cover_image_style = {
                 backgroundImage:
-                    'url(' + proxifyImageUrl(cover_image, '2048x512') + ')',
+                    'url(' +
+                    proxifyImageUrl(
+                        cover_image,
+                        this.props.preferHive,
+                        '2048x512'
+                    ) +
+                    ')',
             };
         }
         const accountAffiliation = getAffiliation(scotTokenSymbol, accountname);
@@ -521,7 +527,11 @@ export default class UserProfile extends React.Component {
                             </div>
                         </div>
                         <h1>
-                            <Userpic account={account.name} hideIfDefault />
+                            <Userpic
+                                account={account.name}
+                                hive={this.props.preferHive}
+                                hideIfDefault
+                            />
                             {name || account.name}{' '}
                             <Tooltip
                                 t={tt(
@@ -614,6 +624,7 @@ module.exports = {
                 'hostConfig',
                 'LIQUID_TOKEN_UPPERCASE',
             ]);
+            const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
 
             return {
                 discussions: state.global.get('discussion_idx'),
@@ -627,6 +638,7 @@ module.exports = {
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 walletUrl,
                 scotTokenSymbol,
+                preferHive,
             };
         },
         dispatch => ({

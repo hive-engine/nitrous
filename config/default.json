@@ -20,7 +20,8 @@
     "reportOnly": false,
     "setAllHeaders": true
   },
-  "img_proxy_prefix": "https://steemitdevimages.com/",
+  "img_proxy_prefix": "https://steemitimages.com/",
+  "hive_img_proxy_prefix": "https://images.hive.blog/",
   "ipfs_prefix": false,
   "mixpanel": false,
   "notify": {

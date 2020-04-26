@@ -173,12 +173,13 @@ class PostSummary extends React.Component {
         // author and category
         const author_category = (
             <span className="vcard">
-                <Userpic account={p.author} />
+                <Userpic account={p.author} hive={hive} />
                 <Author
                     author={p.author}
                     authorRepLog10={authorRepLog10}
                     follow={false}
                     mute={false}
+                    hive={hive}
                     showAffiliation
                 />
                 {} {tt('g.in')}{' '}
@@ -204,6 +205,7 @@ class PostSummary extends React.Component {
                                 <Userpic
                                     account={p.author}
                                     size={avatarSize.small}
+                                    hive={hive}
                                 />
                             </a>
                         </div>
@@ -215,6 +217,7 @@ class PostSummary extends React.Component {
                                 authorRepLog10={authorRepLog10}
                                 follow={false}
                                 mute={false}
+                                hive={hive}
                                 showAffiliation
                             />
                         </span>
@@ -378,10 +381,11 @@ class PostSummary extends React.Component {
             // which has the 256x512 for whatever the large breakpoint is where the list layout is used
             // and the 640 for lower than that
 
-            const blogSize = proxifyImageUrl(p.image_link, '640x480').replace(
-                / /g,
-                '%20'
-            );
+            const blogSize = proxifyImageUrl(
+                p.image_link,
+                hive,
+                '640x480'
+            ).replace(/ /g, '%20');
 
             if (this.props.blogmode) {
                 thumb = (
@@ -392,6 +396,7 @@ class PostSummary extends React.Component {
             } else {
                 const listSize = proxifyImageUrl(
                     p.image_link,
+                    hive,
                     '256x512'
                 ).replace(/ /g, '%20');
 

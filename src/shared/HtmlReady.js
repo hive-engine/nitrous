@@ -81,7 +81,7 @@ const XMLSerializer = new xmldom.XMLSerializer();
 */
 export default function(
     html,
-    { mutate = true, hideImages = false, appDomain = '' } = {}
+    { mutate = true, hideImages = false, appDomain = '', useHive = false } = {}
 ) {
     const state = { mutate };
     state.hashtags = new Set();
@@ -105,7 +105,7 @@ export default function(
                     image.parentNode.replaceChild(pre, image);
                 }
             } else {
-                proxifyImages(doc, appDomain);
+                proxifyImages(doc, appDomain, useHive);
             }
         }
         // console.log('state', state)
@@ -219,12 +219,12 @@ function img(state, child) {
 }
 
 // For all img elements with non-local URLs, prepend the proxy URL (e.g. `https://img0.steemit.com/0x0/`)
-function proxifyImages(doc, appDomain) {
+function proxifyImages(doc, appDomain, useHive) {
     if (!doc) return;
     [...doc.getElementsByTagName('img')].forEach(node => {
         const url = node.getAttribute('src');
         if (!linksRe.local(appDomain).test(url))
-            node.setAttribute('src', proxifyImageUrl(url, true));
+            node.setAttribute('src', proxifyImageUrl(url, useHive, true));
     });
 }
 

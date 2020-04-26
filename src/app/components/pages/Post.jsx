@@ -56,7 +56,7 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder, scotTokenSymbol } = this.props;
+        const { content, sortOrder, appDomain, scotTokenSymbol } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
         let post = this.props.post;
         if (!post) {
@@ -109,7 +109,7 @@ class Post extends React.Component {
 
         // TODO: This data model needs some help.
         const post_content = content.get(post);
-        const p = extractContent(immutableAccessor, post_content);
+        const p = extractContent(immutableAccessor, post_content, appDomain);
         const tags = p.json_metadata.tags;
 
         // A post should be hidden if it is not special, is not told to "show
@@ -319,5 +319,6 @@ export default connect((state, ownProps) => {
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]),
+        appDomain: state.app.getIn(['hostConfig', 'APP_DOMAIN']),
     };
 })(Post);

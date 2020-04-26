@@ -26,7 +26,7 @@ const AuthorDropdown = props => {
             <div className="Author__container">
                 <div className="Author__dropdown">
                     <Link to={'/@' + props.author}>
-                        <Userpic account={props.author} />
+                        <Userpic account={props.author} hive={props.hive} />
                     </Link>
                     <Link to={'/@' + props.author} className="Author__name">
                         {props.name}

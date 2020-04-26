@@ -36,6 +36,7 @@ function TimeAuthorCategory({
     appName,
     authorRepLog10,
     showTags,
+    hive,
 }) {
     return (
         <span className="PostFull__time_author_category vcard">
@@ -45,6 +46,7 @@ function TimeAuthorCategory({
             <Author
                 author={content.author}
                 authorRepLog10={authorRepLog10}
+                hive={hive}
                 showAffiliation
             />
             {showTags && (
@@ -68,14 +70,16 @@ function TimeAuthorCategoryLarge({
     hiveTag,
     appName,
     authorRepLog10,
+    hive,
 }) {
     return (
         <span className="PostFull__time_author_category_large vcard">
-            <Userpic account={content.author} />
+            <Userpic account={content.author} hive={hive} />
             <div className="right-side">
                 <Author
                     author={content.author}
                     authorRepLog10={authorRepLog10}
+                    hive={hive}
                     showAffiliation
                 />
                 <span>
@@ -526,6 +530,7 @@ class PostFull extends React.Component {
                                 hiveTag={hostConfig['COMMUNITY_CATEGORY']}
                                 appName={hostConfig['APP_NAME']}
                                 authorRepLog10={authorRepLog10}
+                                hive={hive}
                             />
                         </div>
                         <div className="PostFull__body entry-content">
@@ -561,6 +566,7 @@ class PostFull extends React.Component {
                             hiveTag={hostConfig['COMMUNITY_CATEGORY']}
                             appName={hostConfig['APP_NAME']}
                             authorRepLog10={authorRepLog10}
+                            hive={hive}
                         />
                     </div>
                     <div className="columns medium-12 large-2 ">

@@ -264,6 +264,7 @@ class ReplyEditor extends React.Component {
         e.preventDefault();
         const hostConfig = this.props.hostConfig;
         const appDomain = hostConfig['APP_DOMAIN'];
+        const preferHive = hostConfig['PREFER_HIVE'];
         const state = { rte: !this.state.rte };
         if (state.rte) {
             const { body } = this.state;
@@ -272,7 +273,8 @@ class ReplyEditor extends React.Component {
                 : stateFromMarkdown(
                       this.props.richTextEditor,
                       body.value,
-                      appDomain
+                      appDomain,
+                      preferHive
                   );
         }
         this.setState(state);
@@ -822,11 +824,11 @@ function stateFromHtml(RichTextEditor, html = null) {
         : RichTextEditor.createEmptyValue();
 }
 
-function stateFromMarkdown(RichTextEditor, markdown, appDomain) {
+function stateFromMarkdown(RichTextEditor, markdown, appDomain, preferHive) {
     let html;
     if (markdown && markdown.trim() !== '') {
         html = remarkable.render(markdown);
-        html = HtmlReady(html, { appDomain }).html; // TODO: option to disable youtube conversion, @-links, img proxy
+        html = HtmlReady(html, { appDomain, useHive: preferHive }).html; // TODO: option to disable youtube conversion, @-links, img proxy
         //html = htmlclean(html) // normalize whitespace
         console.log('markdown converted to:', html);
     }
@@ -947,6 +949,7 @@ export default formId =>
                 const username = state.user.getIn(['current', 'username']);
                 const hostConfig = state.app.get('hostConfig', Map()).toJS();
                 const appDomain = hostConfig['APP_DOMAIN'];
+                const preferHive = hostConfig['PREFER_HIVE'];
 
                 const isEdit = type === 'edit';
                 const isNew = /^submit_/.test(type);
@@ -983,7 +986,11 @@ export default formId =>
                 let rtags;
                 {
                     const html = isHtml ? body : remarkable.render(body);
-                    rtags = HtmlReady(html, { mutate: false, appDomain });
+                    rtags = HtmlReady(html, {
+                        mutate: false,
+                        appDomain,
+                        useHive: preferHive,
+                    });
                 }
 
                 allowedTags.forEach(tag => {

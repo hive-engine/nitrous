@@ -98,6 +98,7 @@ class Author extends React.Component {
             authorRepLog10,
             showAffiliation,
             scotTokenSymbol,
+            hive,
         } = this.props; // html
         const { username } = this.props; // redux
         const { name, about } = this.props.account
@@ -166,6 +167,7 @@ class Author extends React.Component {
                         name={name}
                         about={about}
                         username={username}
+                        hive={hive}
                     />
                 </Overlay>
             </span>
@@ -176,7 +178,7 @@ class Author extends React.Component {
 import { connect } from 'react-redux';
 
 export default connect((state, ownProps) => {
-    const { author, follow, mute, authorRepLog10 } = ownProps;
+    const { author, follow, mute, authorRepLog10, hive } = ownProps;
     const username = state.user.getIn(['current', 'username']);
     const account = state.global.getIn(['accounts', author]);
     const scotTokenSymbol = state.app.getIn([
@@ -192,5 +194,6 @@ export default connect((state, ownProps) => {
         username,
         account,
         scotTokenSymbol,
+        hive,
     };
 })(Author);

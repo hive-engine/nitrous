@@ -794,7 +794,10 @@ function* uploadImage({
     } else {
         sig = Signature.signBufferSha256(bufSha, d).toHex();
     }
-    const postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
+    const baseUploadUrl = useHive
+        ? $STM_Config.hive_upload_image
+        : $STM_Config.upload_image;
+    const postUrl = `${baseUploadUrl}/${username}/${sig}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', postUrl);

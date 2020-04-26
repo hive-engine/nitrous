@@ -20,7 +20,7 @@ class Userpic extends Component {
     shouldComponentUpdate = shouldComponentUpdate(this, 'Userpic');
 
     render() {
-        let { account } = this.props;
+        let { account, hive } = this.props;
         const { json_metadata, size } = this.props;
         const hideIfDefault = this.props.hideIfDefault || false;
         const avSize = size && sizeList.indexOf(size) > -1 ? '/' + size : '';
@@ -40,7 +40,7 @@ class Userpic extends Component {
 
         const style = {
             backgroundImage:
-                'url(' + imageProxy() + `u/${account}/avatar${avSize})`,
+                'url(' + imageProxy(hive) + `u/${account}/avatar${avSize})`,
         };
 
         return <div className="Userpic" style={style} />;
@@ -52,7 +52,7 @@ Userpic.propTypes = {
 };
 
 export default connect((state, ownProps) => {
-    const { account, hideIfDefault } = ownProps;
+    const { account, hideIfDefault, hive } = ownProps;
     return {
         account,
         json_metadata: state.global.getIn([
@@ -61,5 +61,6 @@ export default connect((state, ownProps) => {
             'json_metadata',
         ]),
         hideIfDefault,
+        hive,
     };
 })(Userpic);

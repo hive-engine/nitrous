@@ -127,6 +127,7 @@ class Header extends React.Component {
             account_meta,
             walletUrl,
             appName,
+            preferHive,
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
@@ -382,7 +383,10 @@ class Header extends React.Component {
                                 >
                                     <li className={'Header__userpic '}>
                                         <span title={username}>
-                                            <Userpic account={username} />
+                                            <Userpic
+                                                account={username}
+                                                hive={preferHive}
+                                            />
                                         </span>
                                     </li>
                                 </DropdownMenu>
@@ -446,6 +450,7 @@ const mapStateToProps = (state, ownProps) => {
         gptEnabled,
         walletUrl,
         appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+        preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE']),
         ...ownProps,
     };
 };

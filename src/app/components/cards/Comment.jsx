@@ -291,6 +291,7 @@ class CommentImpl extends React.Component {
             tribeIgnoreList,
             noImage,
             scotTokenSymbol,
+            preferHive,
         } = this.props;
         const { onShowReply, onShowEdit, onDeletePost } = this;
         const post = comment.author + '/' + comment.permlink;
@@ -455,7 +456,7 @@ class CommentImpl extends React.Component {
             >
                 <div className={innerCommentClass}>
                     <div className="Comment__Userpic show-for-medium">
-                        <Userpic account={comment.author} />
+                        <Userpic account={comment.author} hive={preferHive} />
                     </div>
                     <div className="Comment__header">
                         <div className="Comment__header_collapse">
@@ -473,6 +474,7 @@ class CommentImpl extends React.Component {
                             <Author
                                 author={comment.author}
                                 authorRepLog10={authorRepLog10}
+                                hive={preferHive}
                                 showAffiliation
                             />
                         </span>
