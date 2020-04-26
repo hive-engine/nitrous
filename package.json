@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@hivechain/hivescript": "1.1.7",
-    "@hiveio/hive-js": "0.0.2",
+    "@hiveio/hive-js": "0.0.5",
     "@steem/crypto-session": "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb",
     "axios": "0.18.0",
     "blueimp-file-upload": "9.12.6",
