@@ -16,6 +16,10 @@ require('module').Module._initPaths();
 // Load Intl polyfill
 // require('utils/intl-polyfill')(require('./config/init').locales);
 
+const alternativeApiEndpoints = config
+    .get('alternative_api_endpoints')
+    .split(' ');
+
 global.$STM_Config = {
     fb_app: config.get('facebook_app_id'),
     steemd_connection_client: config.get('steemd_connection_client'),
@@ -31,7 +35,7 @@ global.$STM_Config = {
     google_analytics_id: config.get('google_analytics_id'),
     wallet_url: config.get('wallet_url'),
     failover_threshold: config.get('failover_threshold'),
-    alternative_api_endpoints: config.get('alternative_api_endpoints'),
+    alternative_api_endpoints: alternativeApiEndpoints,
 };
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
@@ -52,16 +56,11 @@ global.webpackIsomorphicTools.server(ROOT, () => {
             randomize: true,
         },
         useAppbaseApi: !!config.steemd_use_appbase,
-        alternative_api_endpoints: config.get('alternative_api_endpoints'),
+        alternative_api_endpoints: alternativeApiEndpoints,
         failover_threshold: config.get('failover_threshold'),
     });
     steem.config.set('address_prefix', config.get('address_prefix'));
     steem.config.set('chain_id', config.get('chain_id'));
-    steem.config.set(
-        'alternative_api_endpoints',
-        config.get('alternative_api_endpoints')
-    );
-    steem.config.set('failover_threshold', config.get('failover_threshold'));
 
     // const CliWalletClient = require('shared/api_client/CliWalletClient').default;
     // if (process.env.NODE_ENV === 'production') connect_promises.push(CliWalletClient.instance().connect_promise());

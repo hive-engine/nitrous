@@ -233,21 +233,29 @@ class Settings extends React.Component {
         this.props.setUserPreferences(userPreferences);
     };
 
+    getPreferredApiEndpoint = () => {
+        let preferred_api_endpoint = $STM_Config.steemd_connection_client;
+
+        if (
+            typeof window !== 'undefined' &&
+            localStorage.getItem('user_preferred_api_endpoint')
+        ) {
+            preferred_api_endpoint = localStorage.getItem(
+                'user_preferred_api_endpoint'
+            );
+        }
+
+        return preferred_api_endpoint;
+    };
+
     generateAPIEndpointOptions = () => {
-        const endpoints = api.config
-            .get('alternative_api_endpoints')
-            .split(' ');
+        const endpoints = api.config.get('alternative_api_endpoints');
+
         if (endpoints === null || endpoints === undefined) {
             return null;
         }
 
-        let preferred_api_endpoint = '';
-        if (typeof window !== 'undefined') {
-            preferred_api_endpoint =
-                localStorage.getItem('user_preferred_api_endpoint') ||
-                endpoints[0];
-        }
-
+        const preferred_api_endpoint = this.getPreferredApiEndpoint();
         const entries = [];
         for (let ei = 0; ei < endpoints.length; ei += 1) {
             const endpoint = endpoints[ei];
@@ -300,13 +308,7 @@ class Settings extends React.Component {
             progress,
         } = this.state;
 
-        let preferred_api_endpoint = 'https://api.hive.blog';
-        if (typeof window !== 'undefined') {
-            preferred_api_endpoint =
-                localStorage.getItem('user_preferred_api_endpoint') === null
-                    ? 'https://api.hive.blog'
-                    : localStorage.getItem('user_preferred_api_endpoint');
-        }
+        const preferred_api_endpoint = this.getPreferredApiEndpoint();
 
         return (
             <div className="Settings">
