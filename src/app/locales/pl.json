@@ -856,6 +856,7 @@
         "power_up": "Zwiększ moc",
         "power_down": "Zmniejsz moc",
         "market": "Giełda",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Zamień na %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Wypłać %(LIQUID_TOKEN)s",
