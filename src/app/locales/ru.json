@@ -876,6 +876,7 @@
         "power_up": "Усилить силу голоса",
         "power_down": "Уменьшить силу голоса",
         "market": "Биржа",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Перевести в %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Снять %(LIQUID_TOKEN)s",

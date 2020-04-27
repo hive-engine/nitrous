@@ -850,6 +850,7 @@
         "power_up": "파워 업",
         "power_down": "파워 다운",
         "market": "거래소",
+        "wallet": "Wallet",
         "steem_wallet": "Steem 지갑",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)s 으로 전환",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)s 출금",

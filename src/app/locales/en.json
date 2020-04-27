@@ -807,6 +807,7 @@
         "power_up": "Stake",
         "power_down": "Unstake",
         "market": "Market",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Convert to %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Withdraw %(LIQUID_TOKEN)s",
