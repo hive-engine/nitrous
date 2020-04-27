@@ -870,6 +870,7 @@
         "power_up": "Augmenter son influence",
         "power_down": "Diminuer son influence",
         "market": "Marché",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Convertir en %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Retirer %(LIQUID_TOKEN)s",
