@@ -460,11 +460,11 @@ class PostsIndex extends React.Component {
 
                     {/* <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" /> */}
 
-                    {this.props.isBrowser && (
+                    {/* {this.props.isBrowser && (
                         <div>
                             <SidebarSwap />
                         </div>
-                    )}
+                    )} */}
                     {this.props.isBrowser &&
                         this.props.scotInfo && (
                             <div>
