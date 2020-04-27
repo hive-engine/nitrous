@@ -50,7 +50,8 @@
     "account_sid": false,
     "auth_token": false
   },
-  "upload_image": false,
+  "upload_image": "https://steemitimages.com",
+  "hive_upload_image": "https://images.hive.blog",
   "steemd_connection_client": "https://api.steemit.com",
   "steemd_connection_server": "https://api.steemit.com",
   "hive_connection_client": "https://anyx.io",

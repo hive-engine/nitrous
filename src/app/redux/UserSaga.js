@@ -768,10 +768,10 @@ function* uploadImage({
     }
 
     let sig;
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     if (keychainLogin) {
-        const useHive = yield select(state =>
-            state.app.getIn(['hostConfig', 'PREFER_HIVE'])
-        );
         const response = yield new Promise(resolve => {
             (useHive
                 ? window.hive_keychain
