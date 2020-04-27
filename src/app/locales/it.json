@@ -860,6 +860,7 @@
         "power_up": "Power Up",
         "power_down": "Power Down",
         "market": "Market",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Converti in %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Preleva %(LIQUID_TOKEN)s",
