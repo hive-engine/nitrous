@@ -86,7 +86,6 @@ const TIX = {
     LIQUID_TOKEN_UPPERCASE: 'TIX',
     APP_MAX_TAG: 15,
     SCOT_TAG: 'trafficinsider',
-    COMMUNITY_CATEGORY: '',
     TAG_LIST: fromJSOrdered(['trafficinsider']),
     INTERLEAVE_PROMOTED: true,
     VESTING_TOKEN: 'TIX POWER',
@@ -214,6 +213,7 @@ const KANDA = {
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-32',
+    COMMUNITY_CATEGORY: 'hive-182425',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
 };
