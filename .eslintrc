@@ -12,11 +12,6 @@ find node_modules/eslint-config-airbnb -name '*.js'|xargs sed -i "s/': 2/': 1/"
         "node": true,
         "es6": true
     },
-    "ignorePatterns": [
-        "jsPDF.min.js",
-        "SlateEditor/",
-        "assets"
-    ],
     "rules": {
         "max-len": 0,
         /*[1, 160, 4],*/
