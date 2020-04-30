@@ -10,10 +10,10 @@ const request_base = {
     },
 };
 
-export function serverApiLogin(account, signatures) {
+export function serverApiLogin(account, signatures, useHive) {
     if (!process.env.BROWSER || window.$STM_ServerBusy) return;
     const request = Object.assign({}, request_base, {
-        body: JSON.stringify({ account, signatures, csrf: $STM_csrf }),
+        body: JSON.stringify({ account, signatures, useHive, csrf: $STM_csrf }),
     });
     return fetch('/api/v1/login_account', request);
 }
@@ -32,13 +32,13 @@ export function serverApiRecordEvent(type, val, rate_limit_ms = 5000) {
     if (last_call && new Date() - last_call < rate_limit_ms) return;
     last_call = new Date();
     const value = val && val.stack ? `${val.toString()} | ${val.stack}` : val;
-    api.call(
-        'overseer.collect',
-        { collection: 'event', metadata: { type, value } },
-        error => {
-            // if (error) console.warn('overseer error', error, error.data);
-        }
-    );
+    //api.call(
+    //    'overseer.collect',
+    //    { collection: 'event', metadata: { type, value } },
+    //    error => {
+    //        // if (error) console.warn('overseer error', error, error.data);
+    //    }
+    //);
 }
 
 let last_page;
