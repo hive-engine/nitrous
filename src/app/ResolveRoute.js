@@ -65,9 +65,9 @@ export default function resolveRoute(path) {
     if (path === '/recover_account_step_1') {
         return { page: 'RecoverAccountStep1' };
     }
-    // if (path === '/market') {
-    //     return { page: 'Market' };
-    // }
+    if (path === '/market') {
+        return { page: 'Market' };
+    }
     if (path === '/~witnesses') {
         return { page: 'Witnesses' };
     }
