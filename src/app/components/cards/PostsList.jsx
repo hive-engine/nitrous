@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import tt from 'counterpart';
 import { List } from 'immutable';
-import * as userActions from 'app/redux/UserReducer';
+import debounce from 'lodash.debounce';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import PostSummary from 'app/components/cards/PostSummary';
-import Post from 'app/components/pages/Post';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import debounce from 'lodash.debounce';
-import { findParent } from 'app/utils/DomUtils';
-import Icon from 'app/components/elements/Icon';
 import GptAd from 'app/components/elements/GptAd';
 import VideoAd from 'app/components/elements/VideoAd';
-
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 
 function topPosition(domElt) {

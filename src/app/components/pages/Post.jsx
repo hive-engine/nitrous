@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import tt from 'counterpart';
+import { SIGNUP_URL } from 'shared/constants';
 import Comment from 'app/components/cards/Comment';
 import PostFull from 'app/components/cards/PostFull';
-import { immutableAccessor } from 'app/utils/Accessors';
-import { connect } from 'react-redux';
-
+import NotFoundMessage from 'app/components/cards/NotFoundMessage';
 import { parseJsonTags } from 'app/utils/StateFunctions';
 import { sortComments } from 'app/components/cards/Comment';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { Set } from 'immutable';
-import tt from 'counterpart';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { INVEST_TOKEN_UPPERCASE } from 'app/client_config';
-import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
-
-import Icon from 'app/components/elements/Icon';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 
 function isEmptyPost(post) {
     // check if the post doesn't exist
@@ -34,6 +30,7 @@ class Post extends React.Component {
         content: PropTypes.object.isRequired,
         dis: PropTypes.object,
         sortOrder: PropTypes.string,
+        loading: PropTypes.bool,
     };
     constructor() {
         super();
@@ -63,34 +60,18 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder, post, dis } = this.props;
+        const { content, sortOrder, post, dis, loading } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
 
-        if (isEmptyPost(dis))
+        if (loading) {
             return (
-                <div className="NotFound float-center">
-                    <div>
-                        <Icon name="hive" size="4x" />
-                        <h4 className="NotFound__header">
-                            Sorry! This page doesnt exist.
-                        </h4>
-                        <p>
-                            Not to worry. You can head back to{' '}
-                            <a style={{ fontWeight: 800 }} href="/">
-                                our homepage
-                            </a>, or check out some great posts.
-                        </p>
-                        <ul className="NotFound__menu">
-                            <li>
-                                <a href="/trending">trending posts</a>
-                            </li>
-                            <li>
-                                <a href="/hot">hot posts</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <center>
+                    <LoadingIndicator type="circle" />
+                </center>
             );
+        } else if (isEmptyPost(dis)) {
+            return <NotFoundMessage />;
+        }
 
         const gptTags = parseJsonTags(dis);
 
@@ -272,7 +253,6 @@ class Post extends React.Component {
     }
 }
 
-const emptySet = Set();
 export default connect((state, ownProps) => {
     const currLocation = ownProps.router.getCurrentLocation();
     const { username, slug } = ownProps.routeParams;
@@ -286,5 +266,6 @@ export default connect((state, ownProps) => {
         dis,
         sortOrder: currLocation.query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+        loading: state.app.get('loading'),
     };
 })(Post);

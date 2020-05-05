@@ -29,7 +29,8 @@ services:
             SDC_SITE_DOMAIN: hive.blog
             SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
             SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
-            SDC_HELMET_CONNECTSRC: "'self' hive.blog https://hive.blog https://api.hive.blog https://anyx.io api.blocktrades.us https://images.hive.blog"
+            SDC_ALT_API_ENDPOINTS: "https://api.hive.blog https://anyx.io https://api.openhive.network https://api.hivekings.com"
+            SDC_HELMET_CONNECTSRC: "'self' hive.blog https://hive.blog https://images.hive.blog https://api.hive.blog https://anyx.io https://api.openhive.network https://api.hivekings.com"
             WALLET_URL: https://wallet.hive.blog
         networks:
             - reverse-proxy

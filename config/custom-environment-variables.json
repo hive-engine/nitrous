@@ -33,6 +33,7 @@
   "steemd_connection_server": "SDC_SERVER_STEEMD_URL",
   "steemd_use_appbase": "SDC_USE_APPBASE",
   "chain_id": "SDC_CHAIN_ID",
+  "alternative_api_endpoints": "SDC_ALT_API_ENDPOINTS",
   "address_prefix": "SDC_ADDRESS_PREFIX",
   "conveyor_posting_wif": "CONVEYOR_POSTING_WIF",
   "conveyor_username": "CONVEYOR_USERNAME",
@@ -47,5 +48,5 @@
   "steem_market_token": "STEEM_MARKET_TOKEN",
   "cookie_consent_enabled": "SDC_ENABLE_COOKIE_CONSENT",
   "cookie_consent_api_key": "SDC_COOKIE_CONSENT_KEY",
-  "esteem_elastic_search_api_key": "ESTEEM_ELASTIC_SEARCH_API_KEY" 
+  "esteem_elastic_search_api_key": "ESTEEM_ELASTIC_SEARCH_API_KEY"
 }
