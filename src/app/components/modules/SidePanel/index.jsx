@@ -62,6 +62,10 @@ const SidePanel = ({
                 label: tt('navigation.faq'),
                 link: `/faq.html`,
             },
+            {
+                label: tt('navigation.block_explorer'),
+                link: `https://hiveblocks.com`,
+            },
             /*
             {
                 label: tt('navigation.explore'),
