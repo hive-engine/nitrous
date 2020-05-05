@@ -237,8 +237,8 @@ export function* fetchData(action) {
     if (!category) category = '';
     category = category.toLowerCase();
 
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
     );
     yield put(globalActions.fetchingData({ order, category }));
     let call_name, args;
@@ -361,7 +361,7 @@ export function* fetchData(action) {
                 fetchFeedDataAsync,
                 useHive,
                 call_name,
-                scotTokenSymbol,
+                hostConfig,
                 ...args
             );
 

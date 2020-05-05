@@ -39,6 +39,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
         account,
         token: symbol,
         limit: 50,
+        hive: hive ? '1' : '0',
     });
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
@@ -203,6 +204,15 @@ async function addAccountToState(state, account, useHive) {
     }
 }
 
+function setFeedHiveParam(feedParams, hostConfig) {
+    if (hostConfig['DISABLE_HIVE']) {
+        feedParams.hive = '0';
+    }
+    if (hostConfig['DISABLE_STEEM']) {
+        feedParams.hive = '1';
+    }
+}
+
 export async function attachScotData(url, state, hostConfig, useHive) {
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
@@ -218,6 +228,7 @@ export async function attachScotData(url, state, hostConfig, useHive) {
         if (tag) {
             discussionQuery.tag = tag;
         }
+        setFeedHiveParam(discussionQuery, hostConfig);
         let callName = `get_discussions_by_${feedType}`;
         if (feedType === 'payout_comments') {
             callName = 'get_comment_discussions_by_payout';
@@ -299,11 +310,13 @@ export async function attachScotData(url, state, hostConfig, useHive) {
     urlParts = url.match(/^[\/]?@([^\/]+)\/feed[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_feed', {
+        const feedParams = {
             token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        setFeedHiveParam(feedParams, hostConfig);
+        let feedData = await getScotDataAsync('get_feed', feedParams);
         await fetchMissingData(
             account,
             'feed',
@@ -318,12 +331,17 @@ export async function attachScotData(url, state, hostConfig, useHive) {
     urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_blog', {
+        const feedParams = {
             token: scotTokenSymbol,
             tag: account,
             limit: 20,
             include_reblogs: true,
-        });
+        };
+        setFeedHiveParam(feedParams, hostConfig);
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_blog',
+            feedParams
+        );
         await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
@@ -339,11 +357,16 @@ export async function attachScotData(url, state, hostConfig, useHive) {
     urlParts = url.match(/^[\/]?@([^\/]+)(\/comments)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_comments', {
+        const feedParams = {
             token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        setFeedHiveParam(feedParams, hostConfig);
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_comments',
+            feedParams
+        );
         await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
@@ -359,11 +382,16 @@ export async function attachScotData(url, state, hostConfig, useHive) {
     urlParts = url.match(/^[\/]?@([^\/]+)(\/recent-replies)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_replies', {
+        const feedParams = {
             token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        setFeedHiveParam(feedParams, hostConfig);
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_replies',
+            feedParams
+        );
         await addAccountToState(state, account, useHive);
         await fetchMissingData(
             account,
@@ -522,9 +550,10 @@ export async function getStateAsync(url, hostConfig) {
 export async function fetchFeedDataAsync(
     useHive,
     call_name,
-    scotTokenSymbol,
+    hostConfig,
     ...args
 ) {
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const fetchSize = args[0].limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -561,6 +590,7 @@ export async function fetchFeedDataAsync(
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
+        setFeedHiveParam(discussionQuery, hostConfig);
         feedData = await getScotDataAsync(callName, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
