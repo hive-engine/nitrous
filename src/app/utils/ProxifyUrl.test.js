@@ -144,7 +144,7 @@ describe('ProxifyUrl', () => {
 });
 
 const testCase = (inputUrl, outputDims, expectedUrl) => {
-    const outputUrl = proxifyImageUrl(inputUrl, outputDims);
+    const outputUrl = proxifyImageUrl(inputUrl, false, outputDims);
     assert.equal(
         outputUrl,
         expectedUrl,
