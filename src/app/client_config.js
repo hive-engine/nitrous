@@ -266,10 +266,60 @@ const STEEMING = {
     DISABLE_HIVE: true,
 };
 
+const ONLINEBUZZ = {
+    APP_NAME: 'OnlineBuzz',
+    APP_ICON: 'onlinebuzz',
+    APP_ICON_WIDTH: '200px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://onlinebuzz.com',
+    APP_DOMAIN: 'onlinebuzz.com',
+    LIQUID_TOKEN: 'Pesos',
+    LIQUID_TOKEN_UPPERCASE: 'PESOS',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'onlinebuzz',
+    TAG_LIST: fromJSOrdered([
+        'pesos',
+        'onlinebuzz',
+        'pets',
+        'news',
+        'media',
+        'finance',
+        'travel',
+        'cybersecurity',
+        'games',
+        'myscoop',
+        'domainname',
+        'entertainment',
+        'sports',
+        'machinelearning',
+        'artificialintelligence',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'PESOS POWER',
+    SITE_DESCRIPTION:
+        'OnlineBuzz is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called PESOS, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: '',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': STEEMING,
-    'frozen-retreat-15997.herokuapp.com': KANDA,
+    'localhost:8080': ONLINEBUZZ,
+    'frozen-retreat-15997.herokuapp.com': ONLINEBUZZ,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
     'www.cryptowars.me': {

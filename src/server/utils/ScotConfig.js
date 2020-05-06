@@ -68,12 +68,24 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.forEach(c => {
             if (configTokens.has(c.token)) {
                 const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
-                c.tokenStats = { scotToken: c.token, scotMinerTokens };
+                c.tokenStats = {
+                    scotToken: c.token,
+                    scotMinerTokens,
+                    total_token_balance_circulating: 0,
+                    token_burn_balance: 0,
+                    total_token_balance_staked: 0,
+                    total_token_miner_balance_circulating: 0,
+                    token_burn_miner_balance: 0,
+                    total_token_miner_balance_staked: 0,
+                    total_token_mega_miner_balance_circulating: 0,
+                    token_burn_mega_miner_balance: 0,
+                    total_token_mega_miner_balance_staked: 0,
+                };
                 scotConfigMap[c.token] = c;
                 if (c['hive_engine_enabled']) {
                     hiveTokenList.push(c.token);
                     hiveTokenList = hiveTokenList.concat(scotMinerTokens);
-                } else {
+                } else if (c['steem_engine_enabled']) {
                     tokenList.push(c.token);
                     tokenList = tokenList.concat(scotMinerTokens);
                 }
@@ -127,16 +139,31 @@ ScotConfig.prototype.refresh = async function() {
                 if (minerTokenInfo.megaMiner) {
                     scotConfigMap[
                         minerTokenInfo.token
-                    ].tokenStats.total_token_mega_miner_balance = totalTokenBalance;
+                    ].tokenStats.total_token_mega_miner_balance_circulating +=
+                        totalTokenBalance.circulatingSupply;
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.total_token_mega_miner_balance_staked +=
+                        totalTokenBalance.totalStaked;
                 } else {
                     scotConfigMap[
                         minerTokenInfo.token
-                    ].tokenStats.total_token_miner_balance = totalTokenBalance;
+                    ].tokenStats.total_token_miner_balance_circulating +=
+                        totalTokenBalance.circulatingSupply;
+                    scotConfigMap[
+                        minerTokenInfo.token
+                    ].tokenStats.total_token_miner_balance_staked +=
+                        totalTokenBalance.totalStaked;
                 }
             } else {
                 scotConfigMap[
                     totalTokenBalance.symbol
-                ].tokenStats.total_token_balance = totalTokenBalance;
+                ].tokenStats.total_token_balance_circulating +=
+                    totalTokenBalance.circulatingSupply;
+                scotConfigMap[
+                    totalTokenBalance.symbol
+                ].tokenStats.total_token_balance_staked +=
+                    totalTokenBalance.totalStaked;
             }
         }
         for (const tokenBurnBalance of tokenBurnBalances) {
@@ -146,16 +173,19 @@ ScotConfig.prototype.refresh = async function() {
                 if (minerTokenInfo.megaMiner) {
                     scotConfigMap[
                         minerTokenInfo.token
-                    ].tokenStats.token_burn_mega_miner_balance = tokenBurnBalance;
+                    ].tokenStats.token_burn_mega_miner_balance +=
+                        tokenBurnBalance.balance;
                 } else {
                     scotConfigMap[
                         minerTokenInfo.token
-                    ].tokenStats.token_burn_miner_balance = tokenBurnBalance;
+                    ].tokenStats.token_burn_miner_balance +=
+                        tokenBurnBalance.balance;
                 }
             } else {
                 scotConfigMap[
                     tokenBurnBalance.symbol
-                ].tokenStats.token_burn_balance = tokenBurnBalance;
+                ].tokenStats.token_burn_balance +=
+                    tokenBurnBalance.balance;
             }
         }
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });

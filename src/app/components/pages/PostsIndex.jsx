@@ -393,19 +393,15 @@ class PostsIndex extends React.Component {
                                         'scotToken',
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_balance',
-                                            'circulatingSupply',
-                                        ]
+                                        ['total_token_balance_circulating']
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
                                             'token_burn_balance',
-                                            'balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
-                                        ['total_token_balance', 'totalStaked']
+                                        ['total_token_balance_staked']
                                     )}
                                     useHive={this.props.hiveEngine}
                                 />
@@ -423,21 +419,16 @@ class PostsIndex extends React.Component {
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_miner_balance',
-                                            'circulatingSupply',
+                                            'total_token_miner_balance_circulating',
                                         ]
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
-                                            'token_miner_burn_balance',
-                                            'balance',
+                                            'token_burn_miner_balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_miner_balance',
-                                            'totalStaked',
-                                        ]
+                                        ['total_token_miner_balance_staked']
                                     )}
                                     useHive={this.props.hiveEngine}
                                 />
@@ -455,20 +446,17 @@ class PostsIndex extends React.Component {
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_mega_miner_balance',
-                                            'circulatingSupply',
+                                            'total_token_mega_miner_balance_circulating',
                                         ]
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
-                                            'token_mega_miner_burn_balance',
-                                            'balance',
+                                            'token_burn_mega_miner_balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_mega_miner_balance',
-                                            'totalStaked',
+                                            'total_token_mega_miner_balance_staked',
                                         ]
                                     )}
                                     useHive={this.props.hiveEngine}

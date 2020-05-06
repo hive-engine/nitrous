@@ -1163,3 +1163,23 @@ $themes: (
     }
   }
 }
+
+.theme-pesos-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-pesos-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pesos;
+      color: $color-pesos;
+      outline-color: $color-pesos;
+    }
+  }
+}
