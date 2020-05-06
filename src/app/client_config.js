@@ -189,7 +189,7 @@ const FOODIE = {
 const KANDA = {
     APP_NAME: 'Telokanda',
     APP_ICON: 'kanda',
-    APP_ICON_WIDTH: '40px',
+    APP_ICON_WIDTH: '156px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://nitrous.telokanda.com',
     APP_DOMAIN: 'nitrous.telokanda.com',
