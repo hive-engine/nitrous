@@ -322,6 +322,7 @@ export const CONFIG_MAP = {
     'frozen-retreat-15997.herokuapp.com': ONLINEBUZZ,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
+    'onlinebuzz.com': ONLINEBUZZ,
     'www.cryptowars.me': {
         APP_NAME: 'InfoWars',
         APP_ICON: 'infowars',
