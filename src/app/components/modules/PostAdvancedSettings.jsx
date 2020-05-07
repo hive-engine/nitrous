@@ -22,6 +22,8 @@ class PostAdvancedSettings extends Component {
         this.state = {
             payoutType: props.initialPayoutType,
             postTemplateName: null,
+            maxAcceptedPayoutType: 'no_max',
+            maxAcceptedPayout: props.initialMaxAcceptedPayout,
         };
         this.initForm(props);
     }
@@ -95,14 +97,55 @@ class PostAdvancedSettings extends Component {
         this.setState({ postTemplateName: null });
     };
 
+    handleMaxAcceptedPayoutSelect = event => {
+        const { payoutType, maxAcceptedPayout } = this.state;
+        const { defaultPayoutType } = this.props;
+        const maxAcceptedPayoutType = event.target.value;
+
+        this.setState({ maxAcceptedPayoutType });
+
+        if (maxAcceptedPayoutType === 'no_max') {
+            this.setState({
+                maxAcceptedPayout: null,
+                payoutType:
+                    maxAcceptedPayout === 0 ? defaultPayoutType : payoutType,
+            });
+        } else if (maxAcceptedPayoutType === '0') {
+            this.setState({ maxAcceptedPayout: 0, payoutType: '0%' });
+        } else {
+            this.setState({
+                maxAcceptedPayout: 100,
+                payoutType:
+                    maxAcceptedPayout === 0 ? defaultPayoutType : payoutType,
+            });
+        }
+    };
+
+    handleMaxAcceptedPayoutCustom = event => {
+        const customValue = event.target.value;
+
+        if (customValue > 0) {
+            this.setState({ maxAcceptedPayout: parseInt(customValue) });
+        } else if (customValue) {
+            this.setState({ maxAcceptedPayout: 100 });
+        }
+    };
+
     render() {
         const {
             formId,
             username,
             defaultPayoutType,
             initialPayoutType,
+            initialMaxAcceptedPayout,
         } = this.props;
-        const { beneficiaries, payoutType, postTemplateName } = this.state;
+        const {
+            beneficiaries,
+            payoutType,
+            postTemplateName,
+            maxAcceptedPayout,
+            maxAcceptedPayoutType,
+        } = this.state;
         const loadingTemplate =
             postTemplateName && postTemplateName.indexOf('create_') === -1;
         const { submitting, valid, handleSubmit } = this.state.advancedSettings;
@@ -112,8 +155,20 @@ class PostAdvancedSettings extends Component {
             !(
                 valid ||
                 payoutType !== initialPayoutType ||
-                postTemplateName !== null
+                postTemplateName !== null ||
+                maxAcceptedPayout !== initialMaxAcceptedPayout
             );
+        let defaultMaxAcceptedPayoutType;
+
+        if (maxAcceptedPayout === null) {
+            defaultMaxAcceptedPayoutType = maxAcceptedPayoutType;
+        } else if (maxAcceptedPayout <= 0) {
+            defaultMaxAcceptedPayoutType = '0';
+        } else if (maxAcceptedPayout === null) {
+            defaultMaxAcceptedPayoutType = 'no_max';
+        } else {
+            defaultMaxAcceptedPayoutType = 'custom';
+        }
 
         const form = (
             <form
@@ -130,10 +185,65 @@ class PostAdvancedSettings extends Component {
                             formId,
                             postTemplateName
                         );
+                        this.props.setMaxAcceptedPayout(
+                            formId,
+                            maxAcceptedPayout
+                        );
                         this.props.hideAdvancedSettings();
                     }
                 })}
             >
+                <div className="row">
+                    <div className="column">
+                        <h4>
+                            {tt(
+                                'post_advanced_settings_jsx.max_accepted_payout'
+                            )}
+                        </h4>
+                        <p>
+                            {tt(
+                                'post_advanced_settings_jsx.max_accepted_payout_description'
+                            )}
+                        </p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="small-12 medium-6 large-12 columns">
+                        <div>
+                            <select
+                                defaultValue={defaultMaxAcceptedPayoutType}
+                                onChange={this.handleMaxAcceptedPayoutSelect}
+                            >
+                                <option value="no_max">
+                                    {tt('post_advanced_settings_jsx.unlimited')}
+                                </option>
+                                <option value="0">
+                                    {tt('reply_editor.decline_payout')}
+                                </option>
+                                <option value="custom">
+                                    {tt(
+                                        'post_advanced_settings_jsx.custom_value'
+                                    )}
+                                </option>
+                            </select>
+                        </div>
+                        {defaultMaxAcceptedPayoutType === 'custom' && (
+                            <div>
+                                <input
+                                    id="custom_max_accepted_payout"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    onChange={
+                                        this.handleMaxAcceptedPayoutCustom
+                                    }
+                                    value={maxAcceptedPayout || ''}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <br />
                 <div className="row">
                     <div className="column">
                         <h4>
@@ -154,9 +264,6 @@ class PostAdvancedSettings extends Component {
                             value={payoutType}
                             onChange={this.handlePayoutChange}
                         >
-                            <option value="0%">
-                                {tt('reply_editor.decline_payout')}
-                            </option>
                             <option value="50%">
                                 {tt('reply_editor.default_50_50')}
                             </option>
@@ -274,6 +381,12 @@ export default connect(
             formId,
             'payoutType',
         ]);
+        const initialMaxAcceptedPayout = state.user.getIn([
+            'current',
+            'post',
+            formId,
+            'maxAcceptedPayout',
+        ]);
         let beneficiaries = state.user.getIn([
             'current',
             'post',
@@ -286,6 +399,7 @@ export default connect(
             fields: ['beneficiaries'],
             defaultPayoutType,
             initialPayoutType,
+            initialMaxAcceptedPayout,
             username,
             initialValues: { beneficiaries },
         };
@@ -318,5 +432,13 @@ export default connect(
                         : postTemplateName,
                 })
             ),
+        setMaxAcceptedPayout: (formId, maxAcceptedPayout) => {
+            dispatch(
+                userActions.set({
+                    key: ['current', 'post', formId, 'maxAcceptedPayout'],
+                    value: maxAcceptedPayout,
+                })
+            );
+        },
     })
 )(PostAdvancedSettings);
