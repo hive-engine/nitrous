@@ -365,7 +365,7 @@
     "post_template_selector_jsx": {
         "templates": "Post templates",
         "templates_description":
-            "You can create post templates locally and load them to create a new blog post. All advanced settings will also be saved and loaded.",
+            "Manage your post templates, other settings here will also be saved/loaded.",
         "choose_template": "-- Choose a template to load --",
         "create_template_first": "Please create a template first",
         "new_template_name": "Name of a new template",
@@ -398,7 +398,7 @@
         "delete_template": "Delete template",
         "max_accepted_payout": "Maximum Accepted Payout",
         "max_accepted_payout_description":
-            "SBD value of the maximum payout this post will receive.",
+            "HBD value of the maximum payout this post will receive.",
         "unlimited": "No limit",
         "custom_value": "Custom value"
     },

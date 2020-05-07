@@ -349,7 +349,7 @@ class PostAdvancedSettings extends Component {
             </form>
         );
         return (
-            <div>
+            <div className="post_advanced_settings">
                 <div className="row">
                     <h3 className="column">
                         {tt('reply_editor.advanced_settings')}
