@@ -101,6 +101,7 @@ const map = {
      'invest.porn' : 'Verified Creator',
       python13 : 'Verified Creator',
      forced2orgasm : 'Verified Creator',
+     gressylove23 : 'Verified Creator',
 };
 
 export default map;
