@@ -878,7 +878,7 @@ class ReplyEditor extends React.Component {
                                                             this.props
                                                                 .maxAcceptedPayout
                                                         }{' '}
-                                                        SBD
+                                                        HBD
                                                     </div>
                                                 )}
                                             <div>
@@ -1347,7 +1347,7 @@ export default formId =>
                     switch (payoutType) {
                         case '0%': // decline payout
                             __config.comment_options.max_accepted_payout =
-                                '0.000 SBD';
+                                '0.000 HBD';
                             break;
                         case '100%': // 100% steem power payout
                             __config.comment_options.percent_steem_dollars = 0; // 10000 === 100% (of 50%)
@@ -1357,7 +1357,7 @@ export default formId =>
                     if (maxAcceptedPayout !== null && maxAcceptedPayout !== 0) {
                         __config.comment_options.max_accepted_payout = `${maxAcceptedPayout.toFixed(
                             3
-                        )} SBD`;
+                        )} HBD`;
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
                         __config.comment_options.extensions = [
