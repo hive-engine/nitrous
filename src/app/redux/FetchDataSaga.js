@@ -14,6 +14,11 @@ import * as transactionActions from './TransactionReducer';
 import constants from './constants';
 import { fromJS, Map, Set } from 'immutable';
 import { getStateAsync, callBridge } from 'app/utils/steemApi';
+import {
+    fetchCrossPosts,
+    augmentContentWithCrossPost,
+} from 'app/utils/CrossPosts';
+
 const REQUEST_DATA = 'fetchDataSaga/REQUEST_DATA';
 const FETCH_STATE = 'fetchDataSaga/FETCH_STATE';
 const GET_POST_HEADER = 'fetchDataSaga/GET_POST_HEADER';
@@ -356,6 +361,7 @@ export function* fetchData(action) {
             observer,
         };
     } else {
+        console.log('fetch saga ranked posts');
         call_name = 'get_ranked_posts';
         args = {
             sort: order,
@@ -375,9 +381,36 @@ export function* fetchData(action) {
         let fetchDone = false;
         let batch = 0;
         while (!fetchDone) {
-            const data = yield call(callBridge, call_name, args);
+            const posts = yield call(callBridge, call_name, args);
+            endOfData = posts.length < constants.FETCH_DATA_BATCH_SIZE;
 
-            endOfData = data.length < constants.FETCH_DATA_BATCH_SIZE;
+            const { content, keys, crossPosts } = yield call(
+                fetchCrossPosts,
+                posts,
+                observer
+            );
+
+            const data = [];
+            if (Object.keys(crossPosts).length > 0) {
+                for (let ki = 0; ki < keys.length; ki += 1) {
+                    const contentKey = keys[ki];
+                    let post = content[contentKey];
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            post,
+                            'cross_post_key'
+                        )
+                    ) {
+                        post = augmentContentWithCrossPost(
+                            post,
+                            crossPosts[post.cross_post_key]
+                        );
+                    }
+
+                    data.push(post);
+                }
+            }
 
             batch++;
             fetchLimitReached = batch >= constants.MAX_BATCHES;
