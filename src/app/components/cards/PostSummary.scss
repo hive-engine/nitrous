@@ -265,4 +265,25 @@ ul.PostsList__summaries > li {
     padding-top: 0;
     margin-top: 0;
   }
+
+  .articles__crosspost {
+    padding: 5px 10px 5px 10px;
+    margin: 5px 0;
+    font-size: 0.85rem;
+    border-radius: 3px;
+
+    @include themify($themes) {
+      background-color: themed('backgroundColor');
+    }
+  }
+
+  .articles__crosspost-icon {
+    margin-right: 5px;
+  }
+
+  .articles__crosspost-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

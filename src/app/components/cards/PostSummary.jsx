@@ -102,9 +102,9 @@ class PostSummary extends React.Component {
 
             crossPostedBy = (
                 <div className="articles__crosspost">
-                    <p className="articles__crosspost-text">
+                    <div className="articles__crosspost-text">
                         <span className="articles__crosspost-icon">
-                            <Icon name="reblog" />
+                            <Icon name="cross-post" />
                         </span>
                         <UserNames names={[crossPostedBy]} />{' '}
                         {tt('postsummary_jsx.crossposted')}{' '}
@@ -115,7 +115,7 @@ class PostSummary extends React.Component {
                         >
                             @{crossPostAuthor}/{crossPostPermlink}
                         </Link>
-                    </p>
+                    </div>
                 </div>
             );
         }

@@ -278,7 +278,7 @@ class PostFull extends React.Component {
                 <div className="articles__crosspost">
                     <p className="articles__crosspost-text">
                         <span className="articles__crosspost-icon">
-                            <Icon name="reblog" />
+                            <Icon name="cross-post" />
                         </span>
                         <UserNames names={[author]} />{' '}
                         {tt('postsummary_jsx.crossposted')}{' '}
@@ -567,7 +567,7 @@ class PostFull extends React.Component {
                             </button>
                         </div>
                         {crossPostedBy && (
-                            <div className="PostFull__cross_post_footer columns large-12">
+                            <div className="PostFull__crosspost-footer columns large-12">
                                 <Link
                                     className="button"
                                     to={`/${crossPostCategory}/@${

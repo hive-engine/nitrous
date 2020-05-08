@@ -153,12 +153,12 @@
       border-right: themed('border');
     }
   }
-  .PostFull__cross_post_footer {
+  .PostFull__crosspost-footer {
     padding-top: 15px;
     text-align: center;
   }
 
-  .PostFull__cross_post_footer .button {
+  .PostFull__crosspost-footer .button {
     @extend .e-btn;
     @extend .e-btn--black;
     min-width: 100px;

@@ -88,7 +88,6 @@ async function fetchCrossPosts(posts, observer) {
     for (let idx in posts) {
         const post = posts[idx];
         const crossPostMatches = crossPostRegex.exec(post.body);
-        console.log('crossPostMatches', crossPostMatches, post.body);
 
         if (crossPostMatches) {
             const [, crossPostAuthor, crossPostPermlink] = crossPostMatches;
