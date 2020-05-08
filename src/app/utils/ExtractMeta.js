@@ -1,6 +1,8 @@
 import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
-import { objAccessor } from 'app/utils/Accessors';
 import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
+import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
+
+const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
 
 const site_desc =
     'Communities without borders. A social network owned and operated by its users, powered by Hive.';
@@ -51,7 +53,9 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'og:url', content: localUrl });
     metas.push({
         name: 'og:image',
-        content: image || 'https://hive.blog/images/hive-blog-share.png',
+        content:
+            proxify(image, '1200x630') ||
+            'https://hive.blog/images/hive-blog-share.png',
     });
     metas.push({ name: 'og:description', content: desc });
     metas.push({ name: 'og:site_name', content: 'Hive' });
@@ -72,7 +76,9 @@ function addPostMeta(metas, content, profile) {
     metas.push({ name: 'twitter:description', content: desc });
     metas.push({
         name: 'twitter:image',
-        content: image || 'https://hive.blog/images/hive-blog-twshare.png',
+        content:
+            proxify(image, '1200x630') ||
+            'https://hive.blog/images/hive-blog-twshare.png',
     });
 }
 
@@ -102,7 +108,6 @@ function addAccountMeta(metas, accountname, profile) {
 }
 
 function readProfile(chain_data, account) {
-    const profiles = chain_data.profiles;
     if (!chain_data.profiles[account]) return {};
     return chain_data.profiles[account]['metadata']['profile'];
 }

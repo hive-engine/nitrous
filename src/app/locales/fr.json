@@ -278,7 +278,8 @@
             "Votre voix vaut quelque chose. Rejoignez la communauté qui vous rémunère pour vos articles et participez à la curation du contenu de qualité.",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Explorateur de blocs"
     },
     "main_menu": {
         "hot": "chaud",
@@ -645,7 +646,8 @@
         "profile_name": "Nom à afficher",
         "profile_about": "A propos",
         "profile_location": "Lieu",
-        "profile_website": "Site internet"
+        "profile_website": "Site internet",
+        "choose_preferred_api_endpoint": "Choisissez votre nœud d'API préféré"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Montant dans le format 99999.999",

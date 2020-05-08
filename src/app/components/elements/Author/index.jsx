@@ -39,6 +39,7 @@ class Author extends React.Component {
         crossPostedBy: string,
         crossPostAuthor: string,
         resolveCrossPost: bool,
+        showRole: bool,
     };
     static defaultProps = {
         follow: true,
@@ -113,6 +114,7 @@ class Author extends React.Component {
             mute,
             showAffiliation,
             blacklists,
+            showRole,
             community,
             permlink,
             role,
@@ -133,7 +135,7 @@ class Author extends React.Component {
                         community={community}
                         author={author}
                         permlink={permlink}
-                        role={role}
+                        role={showRole ? role : null}
                         title={title}
                         hideEdit={this.props.hideEditor}
                     />
@@ -232,5 +234,6 @@ export default connect((state, props) => {
         blacklists: blacklists.length > 0 ? blacklists : null,
         crossPostedBy: post.get('cross_posted_by'),
         crossPostAuthor: post.get('cross_post_author'),
+        showRole: props.showRole,
     };
 })(Author);

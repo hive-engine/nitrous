@@ -10,6 +10,10 @@ function start {
             docker-compose -f docker-compose.prod.yml up -d
         ;;
 
+        "stg")
+            docker-compose -f docker-compose.staging.yml up -d
+        ;;
+
         "dev")
             docker-compose -f docker-compose.dev.yml up
         ;;
@@ -29,6 +33,10 @@ function stop {
 
         "prod")
             docker-compose -f docker-compose.prod.yml down
+        ;;
+
+        "stg")
+            docker-compose -f docker-compose.staging.yml down
         ;;
 
         "dev")
@@ -52,6 +60,10 @@ function logs {
             docker-compose -f docker-compose.prod.yml logs --tail 30 --follow
         ;;
 
+        "stg")
+            docker-compose -f docker-compose.staging.yml logs --tail 30 --follow
+        ;;
+
         "*")
             echo Unknown environment
             exit 1
@@ -68,6 +80,10 @@ function build {
 
         "prod")
             docker-compose -f docker-compose.prod.yml build
+        ;;
+
+        "stg")
+            docker-compose -f docker-compose.staging.yml build
         ;;
 
         "*")
@@ -124,7 +140,7 @@ while test $# -gt 0; do
         ;;
 
         *)
-            echo "Usage: ./run.sh <start|stop|log> <prod|dev>"
+            echo "Usage: ./run.sh <start|stop|log> <prod|stg|dev>"
             exit 1
         ;;
     esac

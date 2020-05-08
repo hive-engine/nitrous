@@ -83,14 +83,23 @@ function runApp(initial_state) {
         cmd(CMD_LOG_O);
     }
 
-    const config = initial_state.offchain.config;
+    const { config } = initial_state.offchain;
+    const alternativeApiEndpoints = config.alternative_api_endpoints;
+    const currentApiEndpoint =
+        localStorage.getItem('user_preferred_api_endpoint') === null
+            ? config.steemd_connection_client
+            : localStorage.getItem('user_preferred_api_endpoint');
+
     steem.api.setOptions({
-        url: config.steemd_connection_client,
+        url: currentApiEndpoint,
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
+        alternative_api_endpoints: alternativeApiEndpoints,
+        failover_threshold: config.failover_threshold,
     });
     steem.config.set('address_prefix', config.address_prefix);
     steem.config.set('chain_id', config.chain_id);
+
     window.$STM_Config = config;
     plugins(config);
     if (initial_state.offchain.serverBusy) {

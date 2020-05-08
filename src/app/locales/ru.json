@@ -270,7 +270,8 @@
             "Ваше мнение имеет цену. Присоединяйтесь к сообществу, которое платит за контент и за работу по отбору самого лучшего контента.",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer"
     },
     "main_menu": {
         "hot": "актуальное",
@@ -648,7 +649,9 @@
         "profile_name": "Отображаемое имя",
         "profile_about": "О себе",
         "profile_location": "Местоположение",
-        "profile_website": "Веб-сайт"
+        "profile_website": "Веб-сайт",
+        "choose_preferred_api_endpoint":
+            "Выберите свой предпочтительный узел API"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Сумма должна быть в формате 99999.999",

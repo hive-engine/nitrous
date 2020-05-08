@@ -133,11 +133,19 @@ class NotificationsList extends React.Component {
             'notification__item'
         );
 
+        let visibleCount = 0;
         for (let ni = 0; ni < notificationElements.length; ni += 1) {
             const notificationElement = notificationElements[ni];
 
             if (notificationFilter === 'all') {
                 notificationElement.classList.remove('hide');
+
+                visibleCount += 1;
+                if (visibleCount % 2 === 0) {
+                    notificationElement.classList.add('even');
+                } else {
+                    notificationElement.classList.remove('even');
+                }
             } else if (
                 this.notificationFilterToTypes.hasOwnProperty(
                     notificationFilter
@@ -163,6 +171,13 @@ class NotificationsList extends React.Component {
                     notificationElement.classList.add('hide');
                 } else {
                     notificationElement.classList.remove('hide');
+                    visibleCount += 1;
+                }
+
+                if (visibleCount % 2 === 0) {
+                    notificationElement.classList.add('even');
+                } else {
+                    notificationElement.classList.remove('even');
                 }
             }
         }
@@ -218,10 +233,13 @@ class NotificationsList extends React.Component {
                     className={`notification__item flex-body notification__${
                         item.type
                     }`}
-                    style={{
-                        background: 'rgba(225,255,225,' + item.score + '%)',
-                    }}
                 >
+                    <div className="notification__score">
+                        <div
+                            className="notification__score_bar"
+                            style={{ width: `${item.score}%` }}
+                        />
+                    </div>
                     <div className="flex-row">
                         {mentions && participants && participants[0]}
                     </div>

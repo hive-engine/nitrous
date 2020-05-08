@@ -35,13 +35,13 @@ describe('makeCanonicalLink', () => {
         ],
         [
             'handles apps that do exist',
-            { ...post_data, json_metadata: { app: 'steempeak/1.1.1' } },
-            'https://steempeak.com/testing/@test/test-post',
+            { ...post_data, json_metadata: { app: 'peakd/1.1.1' } },
+            'https://peakd.com/testing/@test/test-post',
         ],
         [
-            'handles posts from steemit',
-            { ...post_data, json_metadata: { app: 'steemit/0.1' } },
-            'https://steemit.com/testing/@test/test-post',
+            'handles posts from hive blog',
+            { ...post_data, json_metadata: { app: 'hiveblog/0.1' } },
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles badly formatted app strings',
@@ -50,7 +50,7 @@ describe('makeCanonicalLink', () => {
         ],
         [
             'handles objects as apps',
-            { ...post_data, json_metadata: { app: { this_is: 'an objct' } } },
+            { ...post_data, json_metadata: { app: { this_is: 'an object' } } },
             'https://hive.blog/testing/@test/test-post',
         ],
     ];

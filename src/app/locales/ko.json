@@ -625,7 +625,8 @@
         "profile_name": "닉네임",
         "profile_about": "한 줄 소개",
         "profile_location": "지역",
-        "profile_website": "웹사이트"
+        "profile_website": "웹사이트",
+        "choose_preferred_api_endpoint": "기본 API 노드 선택"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

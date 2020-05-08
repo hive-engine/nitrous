@@ -316,7 +316,8 @@
         "jobs": "Praca w Hive",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer"
     },
     "main_menu": {
         "hot": "Gorące",
@@ -724,7 +725,8 @@
         "profile_about": "Opis",
         "profile_location": "Lokalizacja",
         "profile_website": "Strona www",
-        "saved": "Zapisano!"
+        "saved": "Zapisano!",
+        "choose_preferred_api_endpoint": "Wybierz preferowany węzeł API"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Podana kwota musi być w formacie 99999.999",
