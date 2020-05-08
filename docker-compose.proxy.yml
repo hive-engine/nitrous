@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
     proxy:
         image: jwilder/nginx-proxy:latest
@@ -14,7 +14,7 @@ services:
             - nginx-html:/usr/share/nginx/html
             - nginx-conf:/etc/nginx/conf.d
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+            - ./proxy/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
         networks:
             - reverse-proxy
         restart: always

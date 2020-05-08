@@ -73,6 +73,7 @@
                 padding: 0.6rem;
                 text-transform: none;
                 margin: 0 0.75rem 0 .5rem;
+                white-space: nowrap;
             }
             &.Header__login-link {
                 @extend .link;

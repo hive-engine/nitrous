@@ -23,9 +23,12 @@ like this:
 ```bash
 git clone https://gitlab.syncad.com/hive/condenser
 cd condenser
-docker build -t="myname/condenser:mybranch" .
-docker run -it -p 8080:8080 myname/condenser:mybranch
+./run.sh start dev
 ```
+
+To build developer image manually, you can use:
+
+`docker build --target development --tag condenser:dev .`
 
 #### Docker Compose
 
