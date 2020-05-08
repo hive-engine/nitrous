@@ -79,7 +79,7 @@ export async function getStateAsync(url, observer, ssr = false) {
 }
 
 async function fetchCrossPosts(posts, observer) {
-    const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br><br>\.\.\./;
+    const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br>/;
     const crossPostPromises = [];
 
     let content = {};
@@ -88,6 +88,7 @@ async function fetchCrossPosts(posts, observer) {
     for (let idx in posts) {
         const post = posts[idx];
         const crossPostMatches = crossPostRegex.exec(post.body);
+        console.log('crossPostMatches', crossPostMatches, post.body);
 
         if (crossPostMatches) {
             const [, crossPostAuthor, crossPostPermlink] = crossPostMatches;

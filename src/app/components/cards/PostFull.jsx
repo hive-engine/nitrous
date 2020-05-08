@@ -283,7 +283,7 @@ class PostFull extends React.Component {
                         <UserNames names={[author]} />{' '}
                         {tt('postsummary_jsx.crossposted')}{' '}
                         <Link
-                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                            to={`/${crossPostCategory}/@${crossPostAuthor}/${
                                 crossPostPermlink
                             }`}
                         >
@@ -566,6 +566,20 @@ class PostFull extends React.Component {
                                 <Icon name="link" className="chain-right" />
                             </button>
                         </div>
+                        {crossPostedBy && (
+                            <div className="PostFull__cross_post_footer columns large-12">
+                                <Link
+                                    className="button"
+                                    to={`/${crossPostCategory}/@${
+                                        crossPostAuthor
+                                    }/${crossPostPermlink}`}
+                                >
+                                    Browse to the original post by @{
+                                        crossPostAuthor
+                                    }
+                                </Link>
+                            </div>
+                        )}
                     </div>
                     <div className="row comment-editor">
                         <div className="column large-12 medium-10 small-12">
