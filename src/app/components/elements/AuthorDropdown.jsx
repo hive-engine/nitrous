@@ -106,7 +106,7 @@ class AuthorDropdown extends Component {
                             </div>
                             <div className="columns small-4">
                                 {spv}
-                                {unit} SP<br />
+                                {unit} HP<br />
                                 <small>
                                     {rank > 0
                                         ? `#${numberWithCommas(rank)}`

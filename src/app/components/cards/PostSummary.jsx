@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import tt from 'counterpart';
+import { List } from 'immutable';
+import _ from 'lodash';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Icon from 'app/components/elements/Icon';
-import { connect } from 'react-redux';
 import Reblog from 'app/components/elements/Reblog';
+import resolveRoute from 'app/ResolveRoute';
 import Voting from 'app/components/elements/Voting';
-import { immutableAccessor } from 'app/utils/Accessors';
 import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
 import VotesAndComments from 'app/components/elements/VotesAndComments';
-import { List, Map } from 'immutable';
 import Author from 'app/components/elements/Author';
 import Tag from 'app/components/elements/Tag';
 import UserNames from 'app/components/elements/UserNames';
-import tt from 'counterpart';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import Userpic, { SIZE_SMALL } from 'app/components/elements/Userpic';
@@ -61,8 +62,16 @@ class PostSummary extends React.Component {
     }
 
     render() {
+        let requestedCategory;
+        if (typeof window !== 'undefined') {
+            const route = resolveRoute(window.location.pathname);
+            if (route.page === 'PostsIndex') {
+                requestedCategory = _.get(route, 'params[1]');
+            }
+        }
+
         const { ignore, hideCategory, net_vests } = this.props;
-        const { post, onClose } = this.props;
+        const { post } = this.props;
         if (!post) return null;
 
         let reblogged_by;
@@ -94,6 +103,7 @@ class PostSummary extends React.Component {
         const permlink = post.get('permlink');
         const category = post.get('category');
         const post_url = `/${category}/@${author}/${permlink}`;
+        const showCommunityLabels = requestedCategory === category;
 
         const summary = extractBodySummary(post.get('body'), isReply);
         const content_body = (
@@ -128,6 +138,7 @@ class PostSummary extends React.Component {
                                 post={post}
                                 follow={false}
                                 hideEditor={true}
+                                showRole={showCommunityLabels}
                             />
                         </span>
 
@@ -160,9 +171,10 @@ class PostSummary extends React.Component {
                                     <Icon name="hivepower" />
                                 </span>
                             )}
-                            {post.getIn(['stats', 'is_pinned'], false) && (
-                                <span className="FeaturedTag">Pinned</span>
-                            )}
+                            {showCommunityLabels &&
+                                post.getIn(['stats', 'is_pinned'], false) && (
+                                    <span className="FeaturedTag">Pinned</span>
+                                )}
                         </Link>
                     </div>
                 </div>

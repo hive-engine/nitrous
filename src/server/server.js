@@ -334,7 +334,7 @@ if (env !== 'test') {
 
     const port = process.env.PORT ? parseInt(process.env.PORT) : 8080;
 
-    if (env === 'production') {
+    if (env === 'production' && process.env.DISABLE_CLUSTERING !== 'true') {
         if (cluster.isMaster) {
             for (var i = 0; i < numProcesses; i++) {
                 cluster.fork();
