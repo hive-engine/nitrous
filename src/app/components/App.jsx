@@ -11,7 +11,6 @@ import Dialogs from 'app/components/modules/Dialogs';
 import Modals from 'app/components/modules/Modals';
 import WelcomePanel from 'app/components/elements/WelcomePanel';
 import tt from 'counterpart';
-import PageViewsCounter from 'app/components/elements/PageViewsCounter';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
 
 class App extends React.Component {
@@ -197,7 +196,6 @@ class App extends React.Component {
                 </div>
                 <Dialogs />
                 <Modals />
-                <PageViewsCounter />
             </div>
         );
     }

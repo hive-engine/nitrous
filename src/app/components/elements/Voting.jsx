@@ -283,7 +283,7 @@ class Voting extends React.Component {
                 (votingDownActive ? ' votingDown' : '');
             // myVote === current vote
 
-            const invokeFlag = (
+            let dropdown = (
                 <a
                     href="#"
                     onClick={
@@ -309,17 +309,17 @@ class Voting extends React.Component {
                 </a>
             );
 
-            let dropdown = invokeFlag;
             if (enable_slider) {
                 dropdown = (
                     <Dropdown
-                        show={showWeight && showWeightDir == 'down'}
+                        show={showWeight && showWeightDir === 'down'}
                         onHide={() => this.setState({ showWeight: false })}
                         onShow={() => {
                             this.setState({ showWeight: true });
                             this.readSliderWeight();
+                            this.toggleWeightDown();
                         }}
-                        title={invokeFlag}
+                        title={down}
                         position={'right'}
                     >
                         <div className="Voting__adjust_weight_down">
@@ -350,6 +350,7 @@ class Voting extends React.Component {
                     </Dropdown>
                 );
             }
+
             downVote = (
                 <span className={classDown}>
                     {myVote === null || myVote === 0 ? dropdown : revokeFlag}
