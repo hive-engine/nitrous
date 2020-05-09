@@ -76,6 +76,7 @@
         "price": "가격",
         "print": "출력",
         "promote": "홍보",
+        "krwp_service": "KRWP 구독요청",
         "promoted": "홍보글",
         "market": "마켓(판매)",
         "review": "마켓(구매)",
@@ -595,7 +596,12 @@
         "you_successfully_promoted_this_post":
             "이 글에 대한 홍보가 정상 처리되었습니다",
         "this_post_was_hidden_due_to_low_ratings":
-            "다운보팅에 의해 블라인드 처리 되었습니다."
+            "다운보팅에 의해 블라인드 처리 되었습니다.",
+        "krwp_service_post": "KRWP 구독 요청하기",
+        "spend_your_DEBT_TOKEN_to_krwp_service_this_post":
+            "KRWP 구독을 요청하시려면 %(DEBT_TOKEN)s로 비용을 납부하셔야 합니다.",
+        "you_successfully_krwp_service_this_post":
+            "이 글에 대한 KRWP 요청이 처리되었습니다."
     },
     "about_jsx": {
         "about_app": "About %(APP_NAME)s",

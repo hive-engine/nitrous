@@ -85,6 +85,7 @@ export const TOPIC_TAG_LIST = fromJSOrdered([
 export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';
+export const LIQUID_TOKEN_KRWP_UPPERCASE = 'KRWP';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;

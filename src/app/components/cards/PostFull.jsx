@@ -278,6 +278,14 @@ class PostFull extends React.Component {
         this.props.showPromotePost(author, permlink);
     };
 
+    showRequestKRWPVoting = () => {
+        const post_content = this.props.cont.get(this.props.post);
+        if (!post_content) return;
+        const author = post_content.get('author');
+        const permlink = post_content.get('permlink');
+        this.props.showRequestKRWPVoting(author, permlink);
+    };
+
     showRatePost = rating => {
         // hide rating reminder
         this.hideRatingReminder();
@@ -666,6 +674,14 @@ class PostFull extends React.Component {
                         {tt('g.promote')}
                     </button>
                 )}
+                {showPromote && (
+                    <button
+                        className="Promote__button float-right button hollow tiny"
+                        onClick={this.showRequestKRWPVoting}
+                    >
+                        KRWP 구독요청
+                    </button>
+                )}
                 <TagList post={content} scotTokens={scotTokens} horizontal />
                 <div className="PostFull__footer row">
                     <div className="columns medium-12 large-5">
@@ -839,6 +855,14 @@ export default connect(
             dispatch(
                 globalActions.showDialog({
                     name: 'promotePost',
+                    params: { author, permlink },
+                })
+            );
+        },
+        showRequestKRWPVoting: (author, permlink) => {
+            dispatch(
+                globalActions.showDialog({
+                    name: 'requestKRWPVoting',
                     params: { author, permlink },
                 })
             );
