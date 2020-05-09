@@ -6,6 +6,7 @@ import * as globalActions from './GlobalReducer';
 import constants from './constants';
 
 import { fetchData } from './FetchDataSaga';
+import { fetchCrossPosts } from 'app/utils/CrossPosts';
 
 describe('FetchDataSaga', () => {
     describe('should fetch multiple and filter', () => {
@@ -59,6 +60,23 @@ describe('FetchDataSaga', () => {
                 },
             ]).value;
             expect(actual).toEqual(
+                call(
+                    fetchCrossPosts,
+                    [
+                        {
+                            author: 'alice',
+                        },
+                        {
+                            author: 'bob',
+                            permlink: 'post1',
+                        },
+                    ],
+                    undefined
+                )
+            );
+
+            actual = gen.next().value;
+            expect(actual).toEqual(
                 put(
                     globalActions.receiveData({
                         data: [
@@ -92,6 +110,20 @@ describe('FetchDataSaga', () => {
                     permlink: 'post2',
                 },
             ]).value;
+            expect(actual).toEqual(
+                call(
+                    fetchCrossPosts,
+                    [
+                        {
+                            author: 'bob',
+                            permlink: 'post2',
+                        },
+                    ],
+                    undefined
+                )
+            );
+
+            actual = gen.next().value;
             expect(actual).toEqual(
                 put(
                     globalActions.receiveData({
@@ -159,6 +191,22 @@ describe('FetchDataSaga', () => {
             },
         ]).value;
         expect(actual).toEqual(
+            call(
+                fetchCrossPosts,
+                [
+                    {
+                        author: 'alice',
+                    },
+                    {
+                        author: 'alice',
+                    },
+                ],
+                undefined
+            )
+        );
+
+        actual = gen.next().value;
+        expect(actual).toEqual(
             put(
                 globalActions.receiveData({
                     data: [{ author: 'alice' }, { author: 'alice' }],
@@ -189,6 +237,23 @@ describe('FetchDataSaga', () => {
                 author: 'alice',
             },
         ]).value;
+
+        expect(actual).toEqual(
+            call(
+                fetchCrossPosts,
+                [
+                    {
+                        author: 'alice',
+                    },
+                    {
+                        author: 'alice',
+                    },
+                ],
+                undefined
+            )
+        );
+
+        actual = gen.next().value;
         expect(actual).toEqual(
             put(
                 globalActions.receiveData({

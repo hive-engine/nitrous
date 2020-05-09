@@ -384,32 +384,34 @@ export function* fetchData(action) {
             const posts = yield call(callBridge, call_name, args);
             endOfData = posts.length < constants.FETCH_DATA_BATCH_SIZE;
 
-            const { content, keys, crossPosts } = yield call(
-                fetchCrossPosts,
-                posts,
-                observer
-            );
+            const response = yield call(fetchCrossPosts, posts, observer);
 
-            const data = [];
-            if (Object.keys(crossPosts).length > 0) {
-                for (let ki = 0; ki < keys.length; ki += 1) {
-                    const contentKey = keys[ki];
-                    let post = content[contentKey];
+            let data = [];
+            if (response) {
+                const { content, keys, crossPosts } = response;
 
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            post,
-                            'cross_post_key'
-                        )
-                    ) {
-                        post = augmentContentWithCrossPost(
-                            post,
-                            crossPosts[post.cross_post_key]
-                        );
+                if (Object.keys(crossPosts).length > 0) {
+                    for (let ki = 0; ki < keys.length; ki += 1) {
+                        const contentKey = keys[ki];
+                        let post = content[contentKey];
+
+                        if (
+                            Object.prototype.hasOwnProperty.call(
+                                post,
+                                'cross_post_key'
+                            )
+                        ) {
+                            post = augmentContentWithCrossPost(
+                                post,
+                                crossPosts[post.cross_post_key]
+                            );
+                        }
+
+                        data.push(post);
                     }
-
-                    data.push(post);
                 }
+            } else {
+                data = posts;
             }
 
             batch++;
