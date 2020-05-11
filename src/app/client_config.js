@@ -86,12 +86,15 @@ export const LIQUID_TOKEN = 'Sct';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SCT';
 export const LIQUID_TOKEN_KRWP_UPPERCASE = 'KRWP';
+export const LIQUID_TOKEN_SCTM_UPPERCASE = 'SCTM';
 // used as backup
 export const SCOT_DENOM = 1000;
 export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'SCT POWER';
 export const INTERLEAVE_PROMOTED = false;
 export const PROMOTED_POST_ACCOUNT = 'null';
+export const KRWP_SERVICE_ACCOUNT = 'krwp.burn';
+export const SCTM_BURN_ACCOUNT = 'sctm.burn';
 
 export const INVEST_TOKEN_UPPERCASE = 'STEEM POWER';
 export const INVEST_TOKEN_SHORT = 'SP';

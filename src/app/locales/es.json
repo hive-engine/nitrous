@@ -1006,5 +1006,12 @@
         "witness_proxy_set": "Crear proxy",
         "witness_proxy_clear": "Borrar proxy",
         "proxy_update_error": "Tu proxy no fue actualizado"
+    },
+    "sctmburn": {
+        "title": "SCTM Burn Service",
+        "content":
+            "When you send SCTMs, you can get KRWP worth of it. Price of SCTM is %(SCTM_PRICE)s STEEM now.",
+        "request": "Request SCTM Burn",
+        "successfully_msg": "You successfully sent SCTM for this service"
     }
 }

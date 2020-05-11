@@ -932,5 +932,12 @@
     },
     "delegations_jsx": {
         "delegations": "Delegations"
+    },
+    "sctmburn": {
+        "title": "SCTM Burn Service",
+        "content":
+            "When you send SCTMs, you can get KRWP worth of it. Price of SCTM is %(SCTM_PRICE)s STEEM now.",
+        "request": "Request SCTM Burn",
+        "successfully_msg": "You successfully sent SCTM for this service"
     }
 }

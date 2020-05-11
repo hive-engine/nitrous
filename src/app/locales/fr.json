@@ -1021,5 +1021,12 @@
         "witness_proxy_set": "Donner une procuration",
         "witness_proxy_clear": "Annuler la procuration",
         "proxy_update_error": "Votre procuration n'a pas été mise à jour"
+    },
+    "sctmburn": {
+        "title": "SCTM Burn Service",
+        "content":
+            "When you send SCTMs, you can get KRWP worth of it. Price of SCTM is %(SCTM_PRICE)s STEEM now.",
+        "request": "Request SCTM Burn",
+        "successfully_msg": "You successfully sent SCTM for this service"
     }
 }

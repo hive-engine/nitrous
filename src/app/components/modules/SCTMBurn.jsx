@@ -6,16 +6,13 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import {
-    LIQUID_TOKEN_KRWP_UPPERCASE,
-    KRWP_SERVICE_ACCOUNT,
+    LIQUID_TOKEN_SCTM_UPPERCASE,
+    SCTM_BURN_ACCOUNT,
 } from 'app/client_config';
 import tt from 'counterpart';
 
-class RequestKRWPVoting extends Component {
-    static propTypes = {
-        author: PropTypes.string.isRequired,
-        permlink: PropTypes.string.isRequired,
-    };
+class SCTMBurn extends Component {
+    static propTypes = {};
 
     constructor(props) {
         super(props);
@@ -49,7 +46,7 @@ class RequestKRWPVoting extends Component {
         console.log('-- PromotePost.onSubmit -->');
         this.props.dispatchSubmit({
             amount,
-            asset: LIQUID_TOKEN_KRWP_UPPERCASE,
+            asset: LIQUID_TOKEN_SCTM_UPPERCASE,
             author,
             permlink,
             onClose,
@@ -66,8 +63,9 @@ class RequestKRWPVoting extends Component {
     render() {
         const { amount, loading, amountError, trxError } = this.state;
         const { currentUser } = this.props;
-        const balance = currentUser.has('krwp_token_balances')
-            ? parseFloat(currentUser.getIn(['krwp_token_balances', 'balance']))
+        const sctm_price = this.props.scotInfo.getIn(['sctm_price']);
+        const balance = currentUser.has('sctm_token_balances')
+            ? parseFloat(currentUser.getIn(['sctm_token_balances', 'balance']))
             : 0;
 
         const submitDisabled = !amount;
@@ -79,12 +77,10 @@ class RequestKRWPVoting extends Component {
                         onSubmit={this.onSubmit}
                         onChange={() => this.setState({ trxError: '' })}
                     >
-                        <h4>{tt('promote_post_jsx.krwp_service_post')}</h4>
+                        <h4>{tt('sctmburn.title')}</h4>
                         <p>
-                            {tt(
-                                'promote_post_jsx.spend_your_DEBT_TOKEN_to_krwp_service_this_post',
-                                { DEBT_TOKEN: LIQUID_TOKEN_KRWP_UPPERCASE }
-                            )}
+                            {/* {tt('sctmburn.content')} */}
+                            {tt('sctmburn.content', { SCTM_PRICE: sctm_price })}
                         </p>
                         <hr />
                         <div className="row">
@@ -102,7 +98,7 @@ class RequestKRWPVoting extends Component {
                                         onChange={this.amountChange}
                                     />
                                     <span className="input-group-label">
-                                        {LIQUID_TOKEN_KRWP_UPPERCASE}
+                                        {LIQUID_TOKEN_SCTM_UPPERCASE}
                                     </span>
                                     <div className="error">{amountError}</div>
                                 </div>
@@ -111,7 +107,7 @@ class RequestKRWPVoting extends Component {
                         <div>
                             {tt('g.balance', {
                                 balanceValue: `${balance} ${
-                                    LIQUID_TOKEN_KRWP_UPPERCASE
+                                    LIQUID_TOKEN_SCTM_UPPERCASE
                                 }`,
                             })}
                         </div>
@@ -132,7 +128,7 @@ class RequestKRWPVoting extends Component {
                                     className="button"
                                     disabled={submitDisabled}
                                 >
-                                    {tt('g.krwp_service')}
+                                    {tt('sctmburn.request')}
                                 </button>
                             </span>
                         )}
@@ -149,7 +145,14 @@ class RequestKRWPVoting extends Component {
 export default connect(
     (state, ownProps) => {
         const currentUser = state.user.getIn(['current']);
-        return { ...ownProps, currentUser };
+        const scotConfig = state.app.get('scotConfig');
+
+        return {
+            ...ownProps,
+            currentUser,
+            scotBurn: scotConfig.getIn(['config', 'burn']),
+            scotInfo: scotConfig.getIn(['config', 'info']),
+        };
     },
 
     // mapDispatchToProps
@@ -175,10 +178,10 @@ export default connect(
                 contractName: 'tokens',
                 contractAction: 'transfer',
                 contractPayload: {
-                    symbol: LIQUID_TOKEN_KRWP_UPPERCASE,
-                    to: KRWP_SERVICE_ACCOUNT,
+                    symbol: LIQUID_TOKEN_SCTM_UPPERCASE,
+                    to: SCTM_BURN_ACCOUNT,
                     quantity: amount,
-                    memo: `@${author}/${permlink}`,
+                    memo: `SCTM Burn`,
                 },
             };
             const operation = {
@@ -186,10 +189,7 @@ export default connect(
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
                 __config: {
-                    successMessage:
-                        tt(
-                            'promote_post_jsx.you_successfully_krwp_service_this_post'
-                        ) + '.',
+                    successMessage: tt('sctmburn.successfully_msg') + '.',
                 },
             };
             dispatch(
@@ -202,4 +202,4 @@ export default connect(
             );
         },
     })
-)(RequestKRWPVoting);
+)(SCTMBurn);

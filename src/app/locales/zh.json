@@ -963,5 +963,12 @@
         "witness_proxy_set": "设置投票代理",
         "witness_proxy_clear": "清除投票代理",
         "proxy_update_error": "你的投票代理未更新"
+    },
+    "sctmburn": {
+        "title": "SCTM Burn Service",
+        "content":
+            "When you send SCTMs, you can get KRWP worth of it. Price of SCTM is %(SCTM_PRICE)s STEEM now.",
+        "request": "Request SCTM Burn",
+        "successfully_msg": "You successfully sent SCTM for this service"
     }
 }

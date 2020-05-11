@@ -7,6 +7,7 @@ import {
     ALLOW_MASTER_PW,
     LIQUID_TOKEN_UPPERCASE,
     LIQUID_TOKEN_KRWP_UPPERCASE,
+    LIQUID_TOKEN_SCTM_UPPERCASE,
 } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
@@ -261,6 +262,16 @@ function* usernamePasswordLogin2({
         }
     );
 
+    const sctm_token_balances = yield call(
+        [ssc, ssc.findOne],
+        'tokens',
+        'balances',
+        {
+            account: username,
+            symbol: LIQUID_TOKEN_SCTM_UPPERCASE,
+        }
+    );
+
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
@@ -274,6 +285,7 @@ function* usernamePasswordLogin2({
                 username,
                 token_balances,
                 krwp_token_balances,
+                sctm_token_balances,
                 login_with_keychain: true,
                 vesting_shares: account.get('vesting_shares'),
                 received_vesting_shares: account.get('received_vesting_shares'),
