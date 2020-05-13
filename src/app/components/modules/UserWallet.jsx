@@ -20,6 +20,8 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
+    USE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
@@ -64,19 +66,19 @@ class UserWallet extends React.Component {
 
     handleClaimRewards = account => {
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account);
+        this.props.claimRewards(account, useHive);
     };
     handleClaimTokenRewards = token => {
-        const { account, claimTokenRewards } = this.props;
-        claimTokenRewards(account, token);
+        const { account, claimTokenRewards, useHive } = this.props;
+        claimTokenRewards(account, token, useHive);
     };
     handleClaimAllTokensRewards = () => {
-        const { account, claimAllTokensRewards } = this.props;
+        const { account, claimAllTokensRewards, useHive } = this.props;
         const allTokenStatus = account.get('all_token_status').toJS();
         const pendingTokenSymbols = Object.values(allTokenStatus)
             .filter(e => parseFloat(e.pending_token))
             .map(({ symbol }) => symbol);
-        claimAllTokensRewards(account, pendingTokenSymbols);
+        claimAllTokensRewards(account, pendingTokenSymbols, useHive);
     };
     render() {
         const {
@@ -84,7 +86,13 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops, scotPrecision } = this.props;
+        const {
+            account,
+            current_user,
+            gprops,
+            scotPrecision,
+            useHive,
+        } = this.props;
 
         // do not render if account is not loaded or available
         if (!account) return null;
@@ -166,6 +174,7 @@ class UserWallet extends React.Component {
             this.props.cancelUnstake({
                 account: name,
                 transactionId: tokenUnstakes.txID,
+                useHive,
             });
         };
 
@@ -208,9 +217,9 @@ class UserWallet extends React.Component {
         if (isMyAccount) {
             balance_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${LIQUID_TOKEN_UPPERCASE}`,
             });
         }
         let power_menu = [
@@ -325,31 +334,30 @@ class UserWallet extends React.Component {
 
         const sbd_balance_str = numberWithCommas('$' + sbd_balance.toFixed(3)); // formatDecimal(account.sbd_balance, 3)
 
+        const walletUrl = useHive ? 'wallet.hive.blog' : 'steemitwallet.com';
         const steem_menu = [
             {
-                value: tt('userwallet_jsx.steem_wallet'),
-                link: `https://steemitwallet.com/@${account.get(
-                    'name'
-                )}/transfers`,
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
             },
         ];
         if (isMyAccount) {
             steem_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: 'https://steemitwallet.com/market',
+                link: `https://${walletUrl}/market`,
             });
         }
         const steem_power_menu = [
             {
-                value: tt('userwallet_jsx.steem_wallet'),
-                link: `https://steemitwallet.com/@${account.get(
-                    'name'
-                )}/transfers`,
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
             },
         ];
 
         const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
         const power_balance_str = numberWithCommas(vesting_steem.toFixed(3));
+        const native_token_str = useHive ? 'Hive' : 'Steem';
+        const native_token_str_upper = useHive ? 'HIVE' : 'STEEM';
 
         return (
             <div className="UserWallet">
@@ -454,13 +462,15 @@ class UserWallet extends React.Component {
                 {/* STEEM */}
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM
+                        {native_token_str_upper}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.liquid_token"
                             params={{
-                                LIQUID_TOKEN: 'Steem',
-                                VESTING_TOKEN: 'STEEM POWER',
+                                LIQUID_TOKEN: native_token_str,
+                                VESTING_TOKEN: `${
+                                    native_token_str_upper
+                                } POWER`,
                             }}
                         />
                     </div>
@@ -470,17 +480,19 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={steem_menu}
                                 el="li"
-                                selected={`${steem_balance_str} STEEM`}
+                                selected={`${steem_balance_str} ${
+                                    native_token_str_upper
+                                }`}
                             />
                         ) : (
-                            `${steem_balance_str} STEEM`
+                            `${steem_balance_str} ${native_token_str_upper}`
                         )}
                     </div>
                 </div>
                 {/* STEEM POWER */}
                 <div className="UserWallet__balance row zebra">
                     <div className="column small-12 medium-8">
-                        STEEM POWER
+                        {native_token_str_upper} POWER
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.influence_token"
@@ -500,10 +512,12 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={steem_power_menu}
                                 el="li"
-                                selected={power_balance_str + ' STEEM'}
+                                selected={`${power_balance_str}  ${
+                                    native_token_str_upper
+                                }`}
                             />
                         ) : (
-                            power_balance_str + ' STEEM'
+                            `${power_balance_str}  ${native_token_str_upper}`
                         )}
                         {delegated_steem != 0 ? (
                             <div
@@ -513,8 +527,13 @@ class UserWallet extends React.Component {
                                         : null,
                                 }}
                             >
-                                <Tooltip t="STEEM POWER delegated to/from this account">
-                                    ({received_power_balance_str} STEEM)
+                                <Tooltip
+                                    t={`${
+                                        native_token_str_upper
+                                    } POWER delegated to/from this account`}
+                                >
+                                    ({received_power_balance_str}{' '}
+                                    {native_token_str_upper})
                                 </Tooltip>
                             </div>
                         ) : null}
@@ -523,7 +542,7 @@ class UserWallet extends React.Component {
                 {/* Steem Dollars */}
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        STEEM DOLLARS
+                        {native_token_str_upper} DOLLARS
                         <div className="secondary">
                             {tt('userwallet_jsx.tradeable_tokens_transferred')}
                         </div>
@@ -542,7 +561,7 @@ class UserWallet extends React.Component {
                     </div>
                 </div>
                 <hr />
-                {/* Steem Engine Tokens */}
+                {/* Engine Tokens */}
                 {otherTokenBalances && otherTokenBalances.length ? (
                     <div
                         className={classNames('UserWallet__balance', 'row', {
@@ -550,11 +569,7 @@ class UserWallet extends React.Component {
                         })}
                     >
                         <div className="column small-12 medium-9">
-                            Steem Engine Token
-                            <FormattedHTMLMessage
-                                className="secondary"
-                                id="tips_js.steem_engine_tokens"
-                            />
+                            {native_token_str} Engine Tokens
                         </div>
                         {isMyAccount && (
                             <div className="column small-12 medium-3">
@@ -645,15 +660,18 @@ export default connect(
     (state, ownProps) => {
         const gprops = state.global.get('props');
         const scotConfig = state.app.get('scotConfig');
+        const useHive = HIVE_ENGINE;
+
         return {
             ...ownProps,
             gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            useHive,
         };
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: account => {
+        claimRewards: (account, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -674,11 +692,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimTokenRewards: (account, symbol) => {
+        claimTokenRewards: (account, symbol, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -702,11 +721,12 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
 
-        claimAllTokensRewards: (account, symbols) => {
+        claimAllTokensRewards: (account, symbols, useHive) => {
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
@@ -738,6 +758,7 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },

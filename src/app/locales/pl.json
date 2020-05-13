@@ -670,7 +670,12 @@
             "Comment benefactor reward: %(amount)s for ",
         "staking_reward": "Staking reward: %(amount)s",
         "mining_reward": "Mining reward: %(amount)s",
-        "request_id": "Request ID: %(request_id)s"
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)",
+        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "Anulować zlecenie wypłaty?",
@@ -740,7 +745,7 @@
         "to_comment_and_reward_others": " aby komentować i nagradzać innych.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE STEEM!",
-        "sign_up_get_steem": "Sign up. Get STEEM!",
+        "sign_up_get_steem": "Sign up.",
         "returning_users": "Powracający użytkownicy: ",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
@@ -851,6 +856,7 @@
         "power_up": "Zwiększ moc",
         "power_down": "Zmniejsz moc",
         "market": "Giełda",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Zamień na %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Wypłać %(LIQUID_TOKEN)s",
