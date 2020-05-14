@@ -6,7 +6,7 @@ import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
-import { SIGNUP_URL } from ' src/shared/constants.js';
+import { SIGNUP_URL } from 'shared/constants.js';
 
 const SidePanel = ({
     alignment,
