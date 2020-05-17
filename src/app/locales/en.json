@@ -218,7 +218,7 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Authors get paid when people like you upvote their post",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "If you enjoyed what you read here, create your account today and start earning FREE STEEM!",
+                "If you enjoyed what you read here, create your account today and start earning!",
             "free_steem": "FREE STEEM!",
             "sign_up_earn_steem": "Sign up now to earn "
         },
@@ -547,8 +547,8 @@
             "Images were hidden due to low ratings."
     },
     "postsummary_jsx": {
-        "resteemed": "resteemed",
-        "resteemed_by": "Resteemed by",
+        "resteemed": "reblogged",
+        "resteemed_by": "Reblogged by",
         "reveal_it": "Reveal this post",
         "adjust_your": "adjust your",
         "display_preferences": "display preferences",
