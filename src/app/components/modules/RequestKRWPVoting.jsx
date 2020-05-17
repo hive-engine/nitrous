@@ -186,10 +186,9 @@ export default connect(
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
                 __config: {
-                    successMessage:
-                        tt(
-                            'promote_post_jsx.you_successfully_krwp_service_this_post'
-                        ) + '.',
+                    successMessage: tt(
+                        'promote_post_jsx.you_successfully_krwp_service_this_post'
+                    ),
                 },
             };
             dispatch(
