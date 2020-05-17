@@ -467,13 +467,6 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.sctswap')}
                     </button>
-                    <button
-                        type="button"
-                        className="c-sidebar--right--link"
-                        onClick={this.showSCTMBurn}
-                    >
-                        {tt('sctmburn.title')}
-                    </button>
 
                     {/* <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" /> */}
 
@@ -521,6 +514,13 @@ class PostsIndex extends React.Component {
                                 />
                             </div>
                         )}
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.showSCTMBurn}
+                    >
+                        {tt('sctmburn.title')}
+                    </button>
                     {this.props.isBrowser &&
                         this.props.scotBurn && (
                             <div>
