@@ -679,7 +679,7 @@ class PostFull extends React.Component {
                         className="Promote__button float-right button hollow tiny"
                         onClick={this.showRequestKRWPVoting}
                     >
-                        KRWP 구독요청
+                        {tt('g.krwp_service')}
                     </button>
                 )}
                 <TagList post={content} scotTokens={scotTokens} horizontal />
