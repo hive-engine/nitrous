@@ -27,6 +27,8 @@ import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
 
+import * as globalActions from 'app/redux/GlobalReducer';
+
 import SidebarBurn from 'app/components/elements/SidebarBurn';
 import SidebarInfo from 'app/components/elements/SidebarInfo';
 import SidebarSwap from 'app/components/elements/SidebarSwap';
@@ -202,6 +204,14 @@ class PostsIndex extends React.Component {
 
     goExchangeNow = () => {
         window.open('/support.html');
+    };
+
+    showSCTMBurn = () => {
+        // const post_content = this.props.cont.get(this.props.post);
+        // if (!post_content) return;
+        // const author = post_content.get('author');
+        // const permlink = post_content.get('permlink');
+        this.props.showSCTMBurn();
     };
 
     buildCategories(cat, parent, categories) {
@@ -457,6 +467,13 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.sctswap')}
                     </button>
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.showSCTMBurn}
+                    >
+                        {tt('sctmburn.title')}
+                    </button>
 
                     {/* <Iframe src="https://changenow.io/embeds/exchange-widget/v2/widget.html?amount=0.1&link_id=390fe008f10e29" /> */}
 
@@ -670,6 +687,14 @@ module.exports = {
             return {
                 requestData: args =>
                     dispatch(fetchDataSagaActions.requestData(args)),
+                showSCTMBurn: () => {
+                    dispatch(
+                        globalActions.showDialog({
+                            name: 'SCTMBurn',
+                            params: {},
+                        })
+                    );
+                },
             };
         }
     )(PostsIndex),

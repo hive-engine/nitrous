@@ -76,6 +76,7 @@
         "price": "Цена",
         "print": "Распечатать",
         "promote": "Продвинуть",
+        "krwp_service": "KRWP Service",
         "promoted": "продвигаемое",
         "re": "RE",
         "re_to": "RE: %(topic)s",
@@ -581,7 +582,12 @@
         "you_successfully_promoted_this_post":
             "Операция продвижения успешно завершена",
         "this_post_was_hidden_due_to_low_ratings":
-            "Этот пост был скрыт из-за низкого рейтинга"
+            "Этот пост был скрыт из-за низкого рейтинга",
+        "krwp_service_post": "Request KRWP Service",
+        "spend_your_DEBT_TOKEN_to_krwp_service_this_post":
+            "Spend your %(DEBT_TOKEN)s's to use KRWP service for this post",
+        "you_successfully_krwp_service_this_post":
+            "You successfully sent KRWP for this post"
     },
     "about_jsx": {
         "about_app": "О %(APP_NAME)s",
@@ -998,5 +1004,12 @@
         "witness_proxy_set": "Установить прокси",
         "witness_proxy_clear": "Очистить прокси",
         "proxy_update_error": "Ваш прокси не был обновлен"
+    },
+    "sctmburn": {
+        "title": "SCTM Burn Service",
+        "content":
+            "When you send SCTMs, you can get KRWP worth of it. Price of SCTM is %(SCTM_PRICE)s STEEM now.",
+        "request": "Request SCTM Burn",
+        "successfully_msg": "You successfully sent SCTM for this service"
     }
 }

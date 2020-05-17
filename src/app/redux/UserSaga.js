@@ -3,7 +3,12 @@ import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
 import { api, auth } from '@steemit/steem-js';
 import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
 
-import { ALLOW_MASTER_PW, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    ALLOW_MASTER_PW,
+    LIQUID_TOKEN_UPPERCASE,
+    LIQUID_TOKEN_KRWP_UPPERCASE,
+    LIQUID_TOKEN_SCTM_UPPERCASE,
+} from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -246,13 +251,41 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
+
+    const krwp_token_balances = yield call(
+        [ssc, ssc.findOne],
+        'tokens',
+        'balances',
+        {
+            account: username,
+            symbol: LIQUID_TOKEN_KRWP_UPPERCASE,
+        }
+    );
+
+    const sctm_token_balances = yield call(
+        [ssc, ssc.findOne],
+        'tokens',
+        'balances',
+        {
+            account: username,
+            symbol: LIQUID_TOKEN_SCTM_UPPERCASE,
+        }
+    );
+
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using steem keychain');
+        console.log(
+            `Logged in using steem keychain:${token_balances}, ${
+                krwp_token_balances
+            }`
+        );
         yield put(
             userActions.setUser({
                 username,
                 token_balances,
+                krwp_token_balances,
+                sctm_token_balances,
                 login_with_keychain: true,
                 vesting_shares: account.get('vesting_shares'),
                 received_vesting_shares: account.get('received_vesting_shares'),

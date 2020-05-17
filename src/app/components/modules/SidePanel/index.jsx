@@ -69,9 +69,7 @@ const SidePanel = ({
             {
                 value: 'richlist',
                 label: 'Rich list',
-                link: `https://steem-engine.rocks/tokens/${
-                    LIQUID_TOKEN_UPPERCASE
-                }/richlist`,
+                link: `https://jacobyu.net/scot-manager/`,
             },
             {
                 value: 'exchangeNow',
