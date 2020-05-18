@@ -60,12 +60,29 @@ const SidePanel = ({
                 }`,
             },
         ],
-        internal_support: [
+        explorer: [
             {
                 value: 'steemengineblockexplorer',
                 label: 'Steem Engine Block Explorer',
                 link: `https://steem-engine.rocks/@${username}`,
             },
+            {
+                value: 'sctExplorer',
+                label: 'SCT 탐색기',
+                link: `https://steem-engine.rocks/transactions?utf8=%E2%9C%93&search=SCT`,
+            },
+            {
+                value: 'krwpService',
+                label: 'KRWP 서비스 탐색기',
+                link: `https://steem-engine.rocks/@krwp.burn`,
+            },
+            {
+                value: 'sctmBurn',
+                label: 'SCTM 환매 서비스 탐색기',
+                link: `https://steem-engine.rocks/@sctm.burn`,
+            },
+        ],
+        internal_support: [
             {
                 value: 'richlist',
                 label: 'Rich list',
@@ -77,7 +94,6 @@ const SidePanel = ({
                 link: '/support.html',
             },
         ],
-
         exchanges: [
             {
                 value: 'blocktrades',
@@ -190,6 +206,10 @@ const SidePanel = ({
                         </a>
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
+                    <li>
+                        <a className="menu-section">Explorer</a>
+                    </li>
+                    {sidePanelLinks['explorer'].map(makeLink)}
                     <li>
                         <a className="menu-section">
                             Support {LIQUID_TOKEN_UPPERCASE}
