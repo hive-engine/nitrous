@@ -36,9 +36,7 @@ export function extractImageLink(json_metadata, body = null) {
                           '(html comment removed: $1)'
                       )
                   );
-            console.log('htmlText', htmlText);
             rtags = HtmlReady(htmlText, { mutate: false });
-            console.log('rtags', rtags);
         }
 
         [image_link] = Array.from(rtags.images);
