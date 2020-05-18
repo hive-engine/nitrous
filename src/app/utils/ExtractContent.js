@@ -1,5 +1,4 @@
 import remarkableStripper from 'app/utils/RemarkableStripper';
-import links from 'app/utils/Links';
 import sanitize from 'sanitize-html';
 import { htmlDecode } from 'app/utils/Html';
 import HtmlReady from 'shared/HtmlReady';
@@ -37,7 +36,9 @@ export function extractImageLink(json_metadata, body = null) {
                           '(html comment removed: $1)'
                       )
                   );
+            console.log('htmlText', htmlText);
             rtags = HtmlReady(htmlText, { mutate: false });
+            console.log('rtags', rtags);
         }
 
         [image_link] = Array.from(rtags.images);
