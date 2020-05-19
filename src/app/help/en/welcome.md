@@ -29,7 +29,7 @@ The Scotbot is a creation of the HIVE ENGINE team and they distribute LASSECASH 
 
 11 million is allocated for promotion and profit for Lasse Ehlers (@lasseehlers). As we write this there are ~9.4 million in @lasseehlers's account, so already ~1.6 million has been used for promotions.
 
-If HIVE SMTs or any other project show a better technology then current HIVE ENGINE tribes, then LASSECASH can be swapped to such a new technology, but for now I am very happy with the HIVE ENGINE tribe technology.
+If HIVE SMTs or any other project show a better technology then current HIVE ENGINE tribes, then LASSECASH can be swapped to such a new technology, but for now we are very happy with the HIVE ENGINE tribe technology.
 
 If you compare to any other tribe, even the APPICS token, then they all have a huge token supply, often issued millions or billions more then LASSECASH. This is in our view not serious, as scarcity of a token is very important for the tribemembers valutation of the token. As an example Bitcoin has 21 million max coins ever and with LASSECASH its MAX 51 millions tokens ever. In effect LASSECASH is much more scares then HIVE and all other tribes (including APPICS), which all have an ever expanding token supply with inflation.
 
