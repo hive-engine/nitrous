@@ -857,6 +857,7 @@
         "power_up": "パワーアップ",
         "power_down": "パワーダウン",
         "market": "取引所",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)sに変換",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)sを引き出す",
