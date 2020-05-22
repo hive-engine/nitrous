@@ -1,5 +1,5 @@
 import Apps from 'steemscript/apps.json';
-import { APP_URL } from 'app/client_config';
+import { APP_URL, PREFER_HIVE } from 'app/client_config';
 
 function read_md_app(metadata) {
     return metadata &&
@@ -51,5 +51,5 @@ export function makeCanonicalLink(d) {
             }
         }
     }
-    return 'https://steemit.com' + d.link;
+    return (PREFER_HIVE ? 'https://hive.blog' : 'https://steemit.com') + d.link;
 }
