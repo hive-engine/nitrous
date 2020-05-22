@@ -356,6 +356,9 @@ export async function attachScotData(url, state, useHive) {
                     const scotData = await getScotDataAsync(`@${k}`, {
                         hive: useHive ? '1' : '',
                     });
+                    if (useHive) {
+                        state.content[k].hive = true;
+                    }
                     mergeContent(
                         state.content[k],
                         scotData[LIQUID_TOKEN_UPPERCASE]
