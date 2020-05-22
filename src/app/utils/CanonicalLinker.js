@@ -1,5 +1,9 @@
-import Apps from 'steemscript/apps.json';
+import SteemApps from 'steemscript/apps.json';
+import HiveApps from '@hivechain/hivescript/apps.json';
 import { APP_URL, PREFER_HIVE } from 'app/client_config';
+
+const Apps = PREFER_HIVE ? HiveApps : SteemApps;
+const FallbackApps = PREFER_HIVE ? SteemApps : HiveApps;
 
 function read_md_app(metadata) {
     return metadata &&
@@ -45,7 +49,11 @@ export function makeCanonicalLink(d) {
 
         const app = read_md_app(metadata);
         if (app && allowed_app(app)) {
-            const scheme = Apps[app] ? Apps[app].url_scheme : null;
+            let scheme = Apps[app] ? Apps[app].url_scheme : null;
+            scheme =
+                !scheme && FallbackApps[app]
+                    ? FallbackApps[app].url_scheme
+                    : scheme;
             if (scheme && d.category) {
                 return build_scheme(scheme, d);
             }
