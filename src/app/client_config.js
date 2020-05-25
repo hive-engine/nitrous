@@ -4,13 +4,13 @@ import { fromJSOrdered } from './utils/immutable';
 export const APP_NAME = 'DPorn';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'DPorn';
+export const APP_NAME_LATIN = 'DPorn — Get Rewards for Sexual Content';
 export const APP_NAME_UPPERCASE = 'DPORN';
 export const APP_ICON = 'dporn';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.dporn.co';
-export const APP_DOMAIN = 'www.dporn.co';
+export const APP_URL = 'https://www.dporn.co','dporn.co';
+export const APP_DOMAIN = 'www.dporn.co','dporn.co';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'porn';
