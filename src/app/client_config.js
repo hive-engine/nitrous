@@ -10,7 +10,7 @@ export const APP_ICON = 'dporn';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.dporn.co';
-export const APP_DOMAIN = 'www.dporn.co', 'dporn.co';
+export const APP_DOMAIN = 'www.dporn.co';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'porn';
