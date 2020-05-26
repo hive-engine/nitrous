@@ -30,6 +30,15 @@
   .ReplyEditor {
     margin-top: 1rem;
   }
+
+  .ReplyEditor .column.large-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+  }
+
+  .ReplyEditor .side-by-side {
+      height: auto;
+  }
 }
 
 .PostFull__time_author_category {
