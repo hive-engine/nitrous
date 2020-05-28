@@ -10,8 +10,6 @@ import {
 
 import { validateIframeUrl as validateEmbbeddedPlayerIframeUrl } from 'app/components/elements/EmbeddedPlayers';
 
-import { APP_DOMAIN } from 'app/client_config';
-
 export const noImageText = '(Image not shown due to low ratings)';
 export const allowedTags = `
     div, iframe, del,
