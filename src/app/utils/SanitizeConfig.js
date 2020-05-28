@@ -10,6 +10,8 @@ import {
 
 import { validateIframeUrl as validateEmbbeddedPlayerIframeUrl } from 'app/components/elements/EmbeddedPlayers';
 
+import { APP_DOMAIN } from 'app/client_config';
+
 export const noImageText = '(Image not shown due to low ratings)';
 export const allowedTags = `
     div, iframe, del,
@@ -148,7 +150,9 @@ export default ({
             href = href.trim();
             const attys = { href };
             // If it's not a (relative or absolute) hive URL...
-            if (!href.match(/^(\/(?!\/)|https:\/\/hive.blog)/)) {
+            if (
+                !href.match(`^(\/(?!\/)|https:\/\/${$STM_Config.site_domain})`)
+            ) {
                 // attys.target = '_blank' // pending iframe impl https://mathiasbynens.github.io/rel-noopener/
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();
