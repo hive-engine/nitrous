@@ -13,7 +13,7 @@ import tt from 'counterpart';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { INVEST_TOKEN_UPPERCASE } from 'app/client_config';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
@@ -33,10 +33,6 @@ class Post extends React.Component {
         this.state = {
             showNegativeComments: false,
         };
-        this.showSignUp = () => {
-            serverApiRecordEvent('SignUp', 'Post Promo');
-            window.location = SIGNUP_URL;
-        };
     }
 
     toggleNegativeReplies = e => {
@@ -44,6 +40,10 @@ class Post extends React.Component {
             showNegativeComments: !this.state.showNegativeComments,
         });
         e.preventDefault();
+    };
+
+    showSignUp = () => {
+        window.location = this.props.preferHive ? HIVE_SIGNUP_URL : SIGNUP_URL;
     };
 
     onHideComment = () => {

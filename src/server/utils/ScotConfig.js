@@ -68,24 +68,39 @@ ScotConfig.prototype.refresh = async function() {
         scotConfig.forEach(c => {
             if (configTokens.has(c.token)) {
                 const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
-                c.tokenStats = {
-                    scotToken: c.token,
-                    scotMinerTokens,
-                    total_token_balance_circulating: 0,
-                    token_burn_balance: 0,
-                    total_token_balance_staked: 0,
-                    total_token_miner_balance_circulating: 0,
-                    token_burn_miner_balance: 0,
-                    total_token_miner_balance_staked: 0,
-                    total_token_mega_miner_balance_circulating: 0,
-                    token_burn_mega_miner_balance: 0,
-                    total_token_mega_miner_balance_staked: 0,
-                };
+
                 scotConfigMap[c.token] = c;
                 if (c['hive_engine_enabled']) {
+                    c.hiveTokenStats = {
+                        scotToken: c.token,
+                        scotMinerTokens,
+                        total_token_balance_circulating: 0,
+                        token_burn_balance: 0,
+                        total_token_balance_staked: 0,
+                        total_token_miner_balance_circulating: 0,
+                        token_burn_miner_balance: 0,
+                        total_token_miner_balance_staked: 0,
+                        total_token_mega_miner_balance_circulating: 0,
+                        token_burn_mega_miner_balance: 0,
+                        total_token_mega_miner_balance_staked: 0,
+                    };
                     hiveTokenList.push(c.token);
                     hiveTokenList = hiveTokenList.concat(scotMinerTokens);
-                } else if (c['steem_engine_enabled']) {
+                }
+                if (c['steem_engine_enabled']) {
+                    c.tokenStats = {
+                        scotToken: c.token,
+                        scotMinerTokens,
+                        total_token_balance_circulating: 0,
+                        token_burn_balance: 0,
+                        total_token_balance_staked: 0,
+                        total_token_miner_balance_circulating: 0,
+                        token_burn_miner_balance: 0,
+                        total_token_miner_balance_staked: 0,
+                        total_token_mega_miner_balance_circulating: 0,
+                        token_burn_mega_miner_balance: 0,
+                        total_token_mega_miner_balance_staked: 0,
+                    };
                     tokenList.push(c.token);
                     tokenList = tokenList.concat(scotMinerTokens);
                 }
@@ -125,69 +140,73 @@ ScotConfig.prototype.refresh = async function() {
                 symbol: { $in: hiveTokenList },
             }),
         ]);
-        const totalTokenBalances = steemTotalTokenBalances.concat(
-            hiveTotalTokenBalances
-        );
-        const tokenBurnBalances = steemTokenBurnBalances.concat(
-            hiveTokenBurnBalances
-        );
 
-        for (const totalTokenBalance of totalTokenBalances) {
-            if (minerTokenToToken[totalTokenBalance.symbol]) {
-                const minerTokenInfo =
-                    minerTokenToToken[totalTokenBalance.symbol];
-                if (minerTokenInfo.megaMiner) {
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.total_token_mega_miner_balance_circulating +=
-                        totalTokenBalance.circulatingSupply;
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.total_token_mega_miner_balance_staked +=
-                        totalTokenBalance.totalStaked;
+        const populateTokenBalanceStats = (totalTokenBalances, statsField) => {
+            for (const totalTokenBalance of totalTokenBalances) {
+                if (minerTokenToToken[totalTokenBalance.symbol]) {
+                    const minerTokenInfo =
+                        minerTokenToToken[totalTokenBalance.symbol];
+                    if (minerTokenInfo.megaMiner) {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_mega_miner_balance_circulating =
+                            totalTokenBalance.circulatingSupply;
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_mega_miner_balance_staked =
+                            totalTokenBalance.totalStaked;
+                    } else {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_miner_balance_circulating =
+                            totalTokenBalance.circulatingSupply;
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_miner_balance_staked =
+                            totalTokenBalance.totalStaked;
+                    }
                 } else {
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.total_token_miner_balance_circulating +=
+                    scotConfigMap[totalTokenBalance.symbol][
+                        statsField
+                    ].total_token_balance_circulating =
                         totalTokenBalance.circulatingSupply;
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.total_token_miner_balance_staked +=
+                    scotConfigMap[totalTokenBalance.symbol][
+                        statsField
+                    ].total_token_balance_staked =
                         totalTokenBalance.totalStaked;
                 }
-            } else {
-                scotConfigMap[
-                    totalTokenBalance.symbol
-                ].tokenStats.total_token_balance_circulating +=
-                    totalTokenBalance.circulatingSupply;
-                scotConfigMap[
-                    totalTokenBalance.symbol
-                ].tokenStats.total_token_balance_staked +=
-                    totalTokenBalance.totalStaked;
             }
-        }
-        for (const tokenBurnBalance of tokenBurnBalances) {
-            if (minerTokenToToken[tokenBurnBalance.symbol]) {
-                const minerTokenInfo =
-                    minerTokenToToken[tokenBurnBalance.symbol];
-                if (minerTokenInfo.megaMiner) {
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.token_burn_mega_miner_balance +=
-                        tokenBurnBalance.balance;
+        };
+        populateTokenBalanceStats(steemTotalTokenBalances, 'tokenStats');
+        populateTokenBalanceStats(hiveTotalTokenBalances, 'hiveTokenStats');
+
+        const populateBurnBalanceStats = (tokenBurnBalances, statsField) => {
+            for (const tokenBurnBalance of tokenBurnBalances) {
+                if (minerTokenToToken[tokenBurnBalance.symbol]) {
+                    const minerTokenInfo =
+                        minerTokenToToken[tokenBurnBalance.symbol];
+                    if (minerTokenInfo.megaMiner) {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].token_burn_mega_miner_balance =
+                            tokenBurnBalance.balance;
+                    } else {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].token_burn_miner_balance =
+                            tokenBurnBalance.balance;
+                    }
                 } else {
-                    scotConfigMap[
-                        minerTokenInfo.token
-                    ].tokenStats.token_burn_miner_balance +=
+                    scotConfigMap[tokenBurnBalance.symbol][
+                        statsField
+                    ].token_burn_balance =
                         tokenBurnBalance.balance;
                 }
-            } else {
-                scotConfigMap[
-                    tokenBurnBalance.symbol
-                ].tokenStats.token_burn_balance +=
-                    tokenBurnBalance.balance;
             }
-        }
+        };
+        populateBurnBalanceStats(steemTokenBurnBalances, 'tokenStats');
+        populateBurnBalanceStats(hiveTokenBurnBalances, 'hiveTokenStats');
+
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
 
         console.info('Scot Config refreshed...');

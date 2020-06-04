@@ -13,7 +13,7 @@ import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
 import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
 
 class LoginForm extends Component {
@@ -100,8 +100,9 @@ class LoginForm extends Component {
     SignUp() {
         const onType = document.getElementsByClassName('OpAction')[0]
             .textContent;
-        serverApiRecordEvent('FreeMoneySignUp', onType);
-        window.location.href = SIGNUP_URL;
+        window.location.href = this.props.preferHive
+            ? HIVE_SIGNUP_URL
+            : SIGNUP_URL;
     }
 
     useKeychainToggle = () => {
@@ -508,6 +509,7 @@ export default connect(
     state => {
         const walletUrl = state.app.get('walletUrl');
         const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
         const showLoginWarning = state.user.get('show_login_warning');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
@@ -549,6 +551,7 @@ export default connect(
             initialUsername,
             msg,
             appUrl,
+            preferHive,
             offchain_user: state.offchain.get('user'),
         };
     },
