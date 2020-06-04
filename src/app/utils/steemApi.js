@@ -418,6 +418,9 @@ export async function attachScotData(url, state, hostConfig, useHive) {
                     const scotData = await getScotDataAsync(`@${k}`, {
                         hive: useHive ? '1' : '',
                     });
+                    if (useHive) {
+                        state.content[k].hive = true;
+                    }
                     mergeContent(
                         state.content[k],
                         scotData[scotTokenSymbol],

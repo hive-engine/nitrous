@@ -5,6 +5,7 @@ import tt from 'counterpart';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
+import { SIGNUP_URL } from 'shared/constants.js';
 
 const SidePanel = ({
     alignment,
@@ -152,6 +153,28 @@ const SidePanel = ({
                 link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
             },
         ],
+        organizational_KANDA: [
+            {
+                value: 'kanda_discord',
+                label: 'Discord',
+                link: 'https://discord.telokanda.com',
+            },
+            {
+                value: 'kanda_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/telokanda',
+            },
+            {
+                value: 'telos',
+                label: 'Telos',
+                link: 'https://app.telos.net',
+            },
+            {
+                value: 'SQRL',
+                label: 'SQRL',
+                link: 'https://sqrlwallet.io',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',
@@ -173,7 +196,7 @@ const SidePanel = ({
             {
                 value: 'signup',
                 label: tt('g.sign_up'),
-                link: 'https://signup.steemit.com',
+                link: SIGNUP_URL,
             },
             {
                 value: 'post',
