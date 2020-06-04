@@ -57,7 +57,7 @@ export default function extractMeta(chain_data, rp, hostConfig) {
                 hostConfig['APP_DOMAIN']
             );
             const url = hostConfig['APP_URL'] + d.link;
-            const canonicalUrl = makeCanonicalLink(d);
+            const canonicalUrl = makeCanonicalLink(d, hostConfig);
             const title = d.title + ` — ${hostConfig['APP_NAME']}`;
             const desc = d.desc + ' by ' + d.author;
             const image = d.image_link || profile.profile_image;

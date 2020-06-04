@@ -1,4 +1,5 @@
-import Apps from 'steemscript/apps.json';
+import SteemApps from 'steemscript/apps.json';
+import HiveApps from '@hivechain/hivescript/apps.json';
 
 function read_md_app(metadata) {
     return metadata &&
@@ -32,23 +33,41 @@ function build_scheme(scheme, post) {
 
 function allowed_app(app) {
     // apps which follow (reciprocate) canonical URLs (as of 2019-10-15)
-    const whitelist = ['steemit', 'esteem', 'steempeak', 'travelfeed'];
+    const whitelist = [
+        'hive',
+        'hiveblog',
+        'peakd',
+        'steemit',
+        'esteem',
+        'steempeak',
+        'travelfeed',
+    ];
     return whitelist.includes(app);
 }
 
-export function makeCanonicalLink(d) {
+export function makeCanonicalLink(d, hostConfig) {
     const metadata = d.json_metadata;
+    const Apps = hostConfig['PREFER_HIVE'] ? HiveApps : SteemApps;
+    const FallbackApps = hostConfig['PREFER_HIVE'] ? SteemApps : HiveApps;
     if (metadata) {
         const canonUrl = read_md_canonical(metadata);
         if (canonUrl) return canonUrl;
 
         const app = read_md_app(metadata);
         if (app && allowed_app(app)) {
-            const scheme = Apps[app] ? Apps[app].url_scheme : null;
+            let scheme = Apps[app] ? Apps[app].url_scheme : null;
+            scheme =
+                !scheme && FallbackApps[app]
+                    ? FallbackApps[app].url_scheme
+                    : scheme;
             if (scheme && d.category) {
                 return build_scheme(scheme, d);
             }
         }
     }
-    return 'https://steemit.com' + d.link;
+    return (
+        (hostConfig['PREFER_HIVE']
+            ? 'https://hive.blog'
+            : 'https://steemit.com') + d.link
+    );
 }
