@@ -152,6 +152,28 @@ const SidePanel = ({
                 link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
             },
         ],
+        organizational_KANDA: [
+            {
+                value: 'kanda_discord',
+                label: 'Discord',
+                link: 'https://discord.telokanda.com',
+            },
+            {
+                value: 'kanda_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/telokanda',
+            },
+            {
+                value: 'telos',
+                label: 'Telos',
+                link: 'https://app.telos.net',
+            },
+            {
+                value: 'SQRL',
+                label: 'SQRL',
+                link: 'https://sqrlwallet.io',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',
