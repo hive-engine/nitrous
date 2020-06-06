@@ -342,41 +342,46 @@ export async function attachScotData(url, state, useHive) {
         return;
     }
 
-    // Do not do this merging except on client side.
-    if (state.content && process.env.BROWSER) {
-        await Promise.all(
+    if (state.content) {
+        Object.entries(state.content).forEach(entry => {
+            if (useHive) {
+                entry[1].hive = true;
+            }
+        });
+
+        // Do not do this merging except on client side.
+        if (process.env.BROWSER) {
+            await Promise.all(
+                Object.entries(state.content)
+                    .filter(entry => {
+                        return entry[0].match(/[a-z0-9\.-]+\/.*?/);
+                    })
+                    .map(async entry => {
+                        const k = entry[0];
+                        const v = entry[1];
+                        // Fetch SCOT data
+                        const scotData = await getScotDataAsync(`@${k}`, {
+                            hive: useHive ? '1' : '',
+                        });
+                        mergeContent(
+                            state.content[k],
+                            scotData[LIQUID_TOKEN_UPPERCASE]
+                        );
+                    })
+            );
+            const filteredContent = {};
             Object.entries(state.content)
-                .filter(entry => {
-                    return entry[0].match(/[a-z0-9\.-]+\/.*?/);
-                })
-                .map(async entry => {
-                    const k = entry[0];
-                    const v = entry[1];
-                    // Fetch SCOT data
-                    const scotData = await getScotDataAsync(`@${k}`, {
-                        hive: useHive ? '1' : '',
-                    });
-                    if (useHive) {
-                        state.content[k].hive = true;
-                    }
-                    mergeContent(
-                        state.content[k],
-                        scotData[LIQUID_TOKEN_UPPERCASE]
-                    );
-                })
-        );
-        const filteredContent = {};
-        Object.entries(state.content)
-            .filter(
-                entry =>
-                    (entry[1].scotData &&
-                        entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
-                    (entry[1].parent_author && entry[1].parent_permlink)
-            )
-            .forEach(entry => {
-                filteredContent[entry[0]] = entry[1];
-            });
-        state.content = filteredContent;
+                .filter(
+                    entry =>
+                        (entry[1].scotData &&
+                            entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
+                        (entry[1].parent_author && entry[1].parent_permlink)
+                )
+                .forEach(entry => {
+                    filteredContent[entry[0]] = entry[1];
+                });
+            state.content = filteredContent;
+        }
     }
 }
 
