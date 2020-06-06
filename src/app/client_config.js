@@ -307,7 +307,7 @@ const ONLINEBUZZ = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
-        '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
+        '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: '',
@@ -359,7 +359,7 @@ export const CONFIG_MAP = {
     'steemdiamond.com': {
         APP_NAME: 'SteemDiamond',
         APP_ICON: 'steemdiamond',
-        APP_ICON_WIDTH: '110px',
+        APP_ICON_WIDTH: '140px',
         APP_ICON_HEIGHT: '40px',
         APP_URL: 'https://steemdiamond.com',
         APP_DOMAIN: 'steemdiamond.com',

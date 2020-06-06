@@ -19,7 +19,7 @@ import tt from 'counterpart';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import proxifyImageUrl from 'app/utils/ProxifyUrl';
 import Userpic, { avatarSize } from 'app/components/elements/Userpic';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import { hasNsfwTag } from 'app/utils/StateFunctions';
 import { repLog10 } from 'app/utils/ParsersAndFormatters';
 
@@ -354,7 +354,11 @@ class PostSummary extends React.Component {
                                 </span>
                             ) : (
                                 <span>
-                                    <a href={SIGNUP_URL}>
+                                    <a
+                                        href={
+                                            hive ? HIVE_SIGNUP_URL : SIGNUP_URL
+                                        }
+                                    >
                                         {tt(
                                             'postsummary_jsx.create_an_account'
                                         )}

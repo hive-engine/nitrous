@@ -14,7 +14,7 @@ import DropdownMenu from 'app/components/elements/DropdownMenu';
 import * as userActions from 'app/redux/UserReducer';
 import * as appActions from 'app/redux/AppReducer';
 import Userpic from 'app/components/elements/Userpic';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import AppLogo from 'app/components/elements/AppLogo';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
@@ -362,7 +362,11 @@ class Header extends React.Component {
                                     </a>
                                     <a
                                         className="Header__signup-link"
-                                        href={SIGNUP_URL}
+                                        href={
+                                            preferHive
+                                                ? HIVE_SIGNUP_URL
+                                                : SIGNUP_URL
+                                        }
                                     >
                                         {tt('g.sign_up')}
                                     </a>

@@ -572,7 +572,10 @@ module.exports = {
                     false
                 ),
                 scotTokenSymbol,
-                tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+                tokenStats: scotConfig.getIn([
+                    'config',
+                    hiveEngine ? 'hiveTokenStats' : 'tokenStats',
+                ]),
                 showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
                 preferHive,
                 hiveEngine,

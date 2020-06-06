@@ -1,6 +1,6 @@
 import React from 'react';
 import tt from 'counterpart';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 
 const SidebarNewUsers = () => (
     <div className="c-sidebar__module">
