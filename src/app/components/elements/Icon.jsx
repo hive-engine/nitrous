@@ -12,6 +12,7 @@ export const icons = [
     'chatbox',
     'close',
     'facebook',
+    'hive',
     'twitter',
     'reddit',
     'linkedin',
