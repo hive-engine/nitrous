@@ -407,7 +407,7 @@ class PostFull extends React.Component {
                     )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
-                        <Icon name="steempower" />
+                        <Icon name={hive ? 'hive' : 'steempower'} />
                     </span>
                 )}
             </h1>
