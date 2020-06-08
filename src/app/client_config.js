@@ -353,6 +353,7 @@ export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': HIVELIST,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
+    'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
     'onlinebuzz.com': ONLINEBUZZ,
