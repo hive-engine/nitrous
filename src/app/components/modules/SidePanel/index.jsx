@@ -175,6 +175,23 @@ const SidePanel = ({
                 link: 'https://sqrlwallet.io',
             },
         ],
+        organizational_LIST: [
+            {
+                value: 'HiveList_Main',
+                label: 'HiveList',
+                link: 'https://hivelist.io/',
+            },
+            {
+                value: 'HiveList_Chat',
+                label: 'Chat and Discussions',
+                link: 'https://hivelist.io/discussion/',
+            },
+            {
+                value: 'HiveList_Discord',
+                label: 'Discord',
+                link: 'https://discord.gg/824taY',
+            },
+        ],
         legal: [
             {
                 value: 'privacy',

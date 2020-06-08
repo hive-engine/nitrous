@@ -310,7 +310,40 @@ const ONLINEBUZZ = {
         '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
-    SDC_GTAG_MEASUREMENT_ID: '',
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-33',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
+const HIVELIST = {
+    APP_NAME: 'HiveList',
+    APP_ICON: 'hivelist',
+    APP_ICON_WIDTH: '170px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://hivelist.org',
+    APP_DOMAIN: 'hivelist.org',
+    LIQUID_TOKEN: 'List',
+    LIQUID_TOKEN_UPPERCASE: 'LIST',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'hivelist',
+    TAG_LIST: fromJSOrdered(['hivelist']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'LIST POWER',
+    SITE_DESCRIPTION:
+        'HiveList is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called LIST, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-34',
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
@@ -318,8 +351,8 @@ const ONLINEBUZZ = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': ONLINEBUZZ,
-    'frozen-retreat-15997.herokuapp.com': ONLINEBUZZ,
+    'localhost:8080': HIVELIST,
+    'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
     'onlinebuzz.com': ONLINEBUZZ,
