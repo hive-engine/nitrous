@@ -108,7 +108,7 @@ const SidePanel = ({
         organizational_WEED: [
             {
                 value: 'orgsite',
-                label: 'About Weedcash',
+                label: 'About WeedCash',
                 link: 'https://weedcash.org/',
             },
             {
@@ -117,9 +117,9 @@ const SidePanel = ({
                 link: 'https://discord.gg/jMHX3d8',
             },
             {
-                value: 'video',
-                label: 'Weedcash Video',
-                link: 'https://video.weedcash.network',
+                value: 'weed_store',
+                label: 'WeedCash Store',
+                link: 'https://weedcash.store',
             },
         ],
         organizational_LAGO: [
