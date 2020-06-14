@@ -816,6 +816,7 @@
         "power_up": "Power Up",
         "power_down": "Power Down",
         "market": "市场",
+        "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "转换为%(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "取出%(LIQUID_TOKEN)s",

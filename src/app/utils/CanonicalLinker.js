@@ -1,5 +1,9 @@
-import Apps from 'steemscript/apps.json';
-import { APP_URL } from 'app/client_config';
+import SteemApps from 'steemscript/apps.json';
+import HiveApps from '@hivechain/hivescript/apps.json';
+import { APP_URL, PREFER_HIVE } from 'app/client_config';
+
+const Apps = PREFER_HIVE ? HiveApps : SteemApps;
+const FallbackApps = PREFER_HIVE ? SteemApps : HiveApps;
 
 function read_md_app(metadata) {
     return metadata &&
@@ -32,8 +36,17 @@ function build_scheme(scheme, post) {
 }
 
 function allowed_app(app) {
-    // apps which follow (reciprocate) canonical URLs (as of 2019-10-15)
-    const whitelist = ['steemit', 'esteem', 'steempeak', 'travelfeed'];
+    // apps which follow (reciprocate) canonical URLs
+    const whitelist = [
+        'hive',
+        'hiveblog',
+        'peakd',
+        'steemit',
+        'esteem',
+        'steempeak',
+        'travelfeed',
+    ];
+
     return whitelist.includes(app);
 }
 
@@ -45,11 +58,15 @@ export function makeCanonicalLink(d) {
 
         const app = read_md_app(metadata);
         if (app && allowed_app(app)) {
-            const scheme = Apps[app] ? Apps[app].url_scheme : null;
+            let scheme = Apps[app] ? Apps[app].url_scheme : null;
+            scheme =
+                !scheme && FallbackApps[app]
+                    ? FallbackApps[app].url_scheme
+                    : scheme;
             if (scheme && d.category) {
                 return build_scheme(scheme, d);
             }
         }
     }
-    return 'https://steemit.com' + d.link;
+    return (PREFER_HIVE ? 'https://hive.blog' : 'https://steemit.com') + d.link;
 }
