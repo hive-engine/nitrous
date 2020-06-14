@@ -147,8 +147,10 @@ export default ({
             if (!href) href = '#';
             href = href.trim();
             const attys = { href };
-            // If it's not a (relative or absolute) steemit URL...
-            if (!href.match(/^(\/(?!\/)|https:\/\/steemit.com)/)) {
+            // If it's not a (relative or absolute) hive URL...
+            if (
+                !href.match(`^(\/(?!\/)|https:\/\/${$STM_Config.site_domain})`)
+            ) {
                 // attys.target = '_blank' // pending iframe impl https://mathiasbynens.github.io/rel-noopener/
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();
