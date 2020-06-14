@@ -334,26 +334,23 @@ class UserWallet extends React.Component {
 
         const sbd_balance_str = numberWithCommas('$' + sbd_balance.toFixed(3)); // formatDecimal(account.sbd_balance, 3)
 
+        const walletUrl = useHive ? 'wallet.hive.blog' : 'steemitwallet.com';
         const steem_menu = [
             {
-                value: tt('userwallet_jsx.steem_wallet'),
-                link: `https://steemitwallet.com/@${account.get(
-                    'name'
-                )}/transfers`,
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
             },
         ];
         if (isMyAccount) {
             steem_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: 'https://steemitwallet.com/market',
+                link: `https://${walletUrl}/market`,
             });
         }
         const steem_power_menu = [
             {
-                value: tt('userwallet_jsx.steem_wallet'),
-                link: `https://steemitwallet.com/@${account.get(
-                    'name'
-                )}/transfers`,
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
             },
         ];
 
