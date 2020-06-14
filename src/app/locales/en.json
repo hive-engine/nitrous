@@ -729,7 +729,10 @@
         "profile_witness_owner": "Witness owner",
         "profile_witness_description": "Witness description",
         "saved": "Saved!",
-        "choose_preferred_api_endpoint": "Choose Your Preferred API Node"
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

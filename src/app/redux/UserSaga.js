@@ -359,6 +359,18 @@ function* usernamePasswordLogin2({
         }
         if (username) feedURL = '/@' + username + '/feed';
 
+        let defaultBeneficiaries;
+        try {
+            const json_metadata = JSON.parse(account.get('json_metadata'));
+            if (json_metadata.beneficiaries) {
+                defaultBeneficiaries = json_metadata.beneficiaries;
+            } else {
+                defaultBeneficiaries = [];
+            }
+        } catch (error) {
+            defaultBeneficiaries = [];
+        }
+
         // If user is signing operation by operaion and has no saved login, don't save to RAM
         if (!operationType || saveLogin) {
             // Keep the posting key in RAM but only when not signing an operation.
@@ -369,6 +381,7 @@ function* usernamePasswordLogin2({
                     private_keys,
                     login_owner_pubkey,
                     effective_vests: effectiveVests(account),
+                    defaultBeneficiaries,
                 })
             );
         } else {
@@ -376,6 +389,7 @@ function* usernamePasswordLogin2({
                 userActions.setUser({
                     username,
                     effective_vests: effectiveVests(account),
+                    defaultBeneficiaries,
                 })
             );
         }
