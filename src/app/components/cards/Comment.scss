@@ -11,6 +11,15 @@
       margin-bottom: 0.2rem;
     }
   }
+
+  .ReplyEditor .column.large-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+  }
+
+  .ReplyEditor .side-by-side {
+      height: auto;
+  }
 }
 
 .Comment__Userpic {
