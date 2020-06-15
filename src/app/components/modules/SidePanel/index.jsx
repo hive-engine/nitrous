@@ -101,7 +101,7 @@ const SidePanel = ({
         external: [
             {
                 label: tt('navigation.chat'),
-                link: 'https://steem.chat/home',
+                link: 'https://openhive.chat/home',
             },
             /*
             {

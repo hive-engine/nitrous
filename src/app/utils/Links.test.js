@@ -44,13 +44,13 @@ describe('Links', () => {
     it('by domain', () => {
         const locals = [
             'https://localhost/',
-            'http://steemit.com',
-            'http://steemit.com/group',
+            'http://hive.blog',
+            'http://hive.blog/group',
         ];
         match(linksRe.local(), locals);
         matchNot(linksRe.remote(), locals);
 
-        const remotes = ['https://example.com/', 'http://abc.co'];
+        const remotes = ['https://steemit.com/', 'http://abc.co'];
         match(linksRe.remote(), remotes);
         matchNot(linksRe.local(), remotes);
         // match(linksRe({external: false}), largeData + 'https://steemit.com2/next', 'https://steemit.com2/next')

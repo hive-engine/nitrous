@@ -37,17 +37,17 @@ This includes your display name, location, about information, and website.
 
 The tradition for new users is to create an "introduceyourself" post in order
 to let the community get to know you. You can verify other social media
-accounts (Twitter, Facebook, etc.) by sharing the link to your Steem account
+accounts (Twitter, Facebook, etc.) by sharing the link to your Hive account
 from those profiles.
 
 
 ### 5. Sign up for Hive Chat
 
-A lot of users mingle and chat in [Steem.chat](https://steem.chat/). It is a
+A lot of users mingle and chat in [OpenHive.Chat](https://openhive.chat/). It is a
 great place to meet people!
 
-It's a separate account from your Hive account. Ask questions in the
-[\#help](https://steem.chat/channel/help) channel.
+You log in with your Hive account, using Private Posting Key to confirm your identity.
+Ask questions in the [\#help](https://openhive.chat/channel/help) channel.
 
 
 ### 6. Voting and Tokens
@@ -59,7 +59,7 @@ and voters ("curators").
 
 HIVE, Hive Power (HP) and Hive Dollars (HBD) are the three forms of digital
 currency used by the Hive Blockchain. More information
-[here](https://hive.blog/faq.html#What_is_the_difference_between_STEEM__STEEM_Power__and_Steem_Dollars).
+[here](https://hive.blog/faq.html#What_is_the_difference_between_HIVE__HIVE_Power__and_Hive_Dollars).
 
 
 ##### Additional resources
@@ -68,4 +68,4 @@ currency used by the Hive Blockchain. More information
 - [Hive Bluepaper](https://hive.io/hive-bluepaper.pdf) - Explanation of how the platform works
 - [Hive Whitepaper](https://hive.io/hive-whitepaper.pdf) - Technical details of the Hive blockchain
 - [Apps Built on Hive](https://hiverojects.com/) - Directory of apps, sites and tools built by Hive community
-- [Hive Block Explorer](https://hiveblocks.com/) - Shows the raw Hive blockchain data 
+- [Hive Block Explorer](https://hiveblocks.com/) - Shows the raw Hive blockchain data

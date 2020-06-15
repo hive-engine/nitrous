@@ -42,6 +42,15 @@
   .articles__crosspost-icon {
     margin-right: 5px;
   }
+
+  .ReplyEditor .column.large-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+  }
+
+  .ReplyEditor .side-by-side {
+      height: auto;
+  }
 }
 
 .PostFull__time_author_category {
