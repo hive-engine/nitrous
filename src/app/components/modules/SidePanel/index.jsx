@@ -182,6 +182,16 @@ const SidePanel = ({
                 link: 'https://hivelist.io/',
             },
             {
+                value: 'HiveList_Store',
+                label: 'Store',
+                link: 'https://hivelist.store',
+            },
+            {
+                value: 'HiveList_Services',
+                label: 'Services',
+                link: 'https://hivelist.io/hivecommerce-website-services/',
+            },
+            {
                 value: 'HiveList_Chat',
                 label: 'Chat and Discussions',
                 link: 'https://hivelist.io/discussion/',
