@@ -209,7 +209,8 @@ const KANDA = {
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '\n\n---\n\n<center><sub>Posted from [Telokanda Hive Dapp](${POST_URL})</sub></center>',
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted from [Telokanda Hive Dapp](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-32',
@@ -376,10 +377,44 @@ const HIVELIST = {
     HIVE_ENGINE: true,
 };
 
+const ARCHON = {
+    APP_NAME: 'ArchonApp',
+    APP_ICON: 'archon',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://archonapp.net',
+    APP_DOMAIN: 'archonapp.net',
+    LIQUID_TOKEN: 'Archon',
+    LIQUID_TOKEN_UPPERCASE: 'ARCHON',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'archon',
+    TAG_LIST: fromJSOrdered(['archon', 'upfundme']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'ARCHON POWER',
+    SITE_DESCRIPTION:
+        'ArchonApp is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called ARCHON, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-35',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': HIVELIST,
-    'frozen-retreat-15997.herokuapp.com': HIVELIST,
+    'localhost:8080': ARCHON,
+    'frozen-retreat-15997.herokuapp.com': ARCHON,
+    'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
