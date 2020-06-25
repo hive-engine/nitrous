@@ -860,7 +860,7 @@ Using random pictures from the internet without giving credit is discouraged. Yo
 <a href="#Table_of_Contents_Plagiarism__Spam__and_Abuse">^</a>
 ## <span id="Where_do_I_report_a_post_or_comment_that_contains_plagiarism__spam__or_abuse">Where do I report a post or comment that contains plagiarism, spam, or abuse?</span>
 
-You can report any abusive content to the <a href="https://openhive.chat/channel/hiveabuse">#hiveabuse</a> channel on <a href="https://openhive.chat/home">openhive.chat</a>.
+You can report any abusive content to the <a href="https://openhive.chat/channel/hiveabuse">#hiveabuse</a> channel on <a href="https://openhive.chat/home">OpenHive.Chat</a>.
 
 <a href="#Table_of_Contents_Plagiarism__Spam__and_Abuse">^</a>
 # Reputation
@@ -1100,7 +1100,7 @@ Each account can vote for up to 30 witnesses.
 
 ## <span id="Where_can_I_ask_for_help_if_my_question_was_not_answered_here">Where can I ask for help if my question was not answered here?</span>
 
-If you post your question in the <a href="https://openhive.chat/channel/help">#help</a> channel on <a href="https://openhive.chat/home">openhive.chat</a>, the users there may be able to help.
+If you post your question in the <a href="https://openhive.chat/channel/help">#help</a> channel on <a href="https://openhive.chat/home">OpenHive.Chat</a>, the users there may be able to help.
 Alternatively, there is a <a href="https://discord.gg/ZcG7jgX">Hive Discord</a> channel that may be able to answer your questions.
 
 You can also create a post on hive.blog with the tag #help, and someone in the community may be able to answer it.

@@ -51,7 +51,7 @@ export function normalizeEmbedUrl(url) {
  * @param data
  * @returns {null|{id: *, canonical: string, url: *}}
  */
-export function extractContentId(data) {
+export function extractMetadata(data) {
     if (!data) return null;
 
     const m1 = data.match(regex.main);
@@ -69,6 +69,7 @@ export function extractContentId(data) {
     return {
         id,
         url,
+        canonical: url,
         startTime: startTime ? startTime[1] : 0,
         thumbnail: 'https://img.youtube.com/vi/' + id + '/0.jpg',
     };
@@ -82,7 +83,7 @@ export function extractContentId(data) {
  */
 export function embedNode(child, links, images) {
     try {
-        const yt = extractContentId(child.data);
+        const yt = extractMetadata(child.data);
 
         if (!yt) return child;
 

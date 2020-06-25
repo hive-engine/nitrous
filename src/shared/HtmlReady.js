@@ -8,7 +8,7 @@ import {
     embedNode as EmbeddedPlayerEmbedNode,
     preprocessHtml,
 } from 'app/components/elements/EmbeddedPlayers';
-import { extractContentId as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
+import { extractMetadata as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 export const getPhishingWarningMessage = () => tt('g.phishy_message');
 export const getExternalLinkWarningMessage = () =>
