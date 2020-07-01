@@ -146,7 +146,6 @@ export default function ServerHTML({
                     rel="stylesheet"
                     type="text/css"
                 />
-                {/* <script type='text/javascript' src='https://changenow.io/embeds/exchange-widget/v2/stepper-connector.js'></script> */}
                 {assets.style.map((href, idx) => (
                     <link
                         href={href}
