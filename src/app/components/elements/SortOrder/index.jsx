@@ -79,16 +79,16 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 label: tt('g.promoted'),
                 link: `/promoted/`,
             },
-            {
-                value: 'market',
-                label: tt('g.market'),
-                link: `/created/sct-producer`,
-            },
-            {
-                value: 'review',
-                label: tt('g.review'),
-                link: `/created/sct-consumer`,
-            },
+            // {
+            //     value: 'market',
+            //     label: tt('g.market'),
+            //     link: `/created/sct-producer`,
+            // },
+            // {
+            //     value: 'review',
+            //     label: tt('g.review'),
+            //     link: `/created/sct-consumer`,
+            // },
             {
                 value: 'suggest',
                 label: tt('g.suggest'),

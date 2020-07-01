@@ -349,15 +349,15 @@ class PostsIndex extends React.Component {
                 case 'promoted':
                     page_title = tt('g.promoted');
                     break;
-                case 'market':
-                    page_title = tt('g.market');
-                    break;
+                // case 'market':
+                //     page_title = tt('g.market');
+                //     break;
                 case 'exchangeNow':
                     page_title = 'exchangeNow';
                     break;
-                case 'review':
-                    page_title = tt('g.review');
-                    break;
+                // case 'review':
+                //     page_title = tt('g.review');
+                //     break;
             }
             if (typeof category !== 'undefined') {
                 page_title = `${page_title}: ${category}`; // maybe todo: localize the colon?

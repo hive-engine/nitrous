@@ -91,6 +91,21 @@ class App extends React.Component {
             order,
         } = this.props;
 
+        var Iframe = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <iframe
+                            id="iframe-widget"
+                            name="widget"
+                            src={this.props.src}
+                            width="100%"
+                        />
+                    </div>
+                );
+            },
+        });
+
         const whistleView = viewMode === VIEW_MODE_WHISTLE;
         const headerHidden = whistleView;
         const params_keys = Object.keys(params);
@@ -180,9 +195,14 @@ class App extends React.Component {
                 })}
                 ref="App_root"
             >
-                <div className="ad" onClick={this.goAd}>
-                    [AD]MCO VISA 암호화폐로 결제하자
-                </div>
+                <Iframe
+                    id="ticker"
+                    scrolling="no"
+                    allowtransparency="true"
+                    frameborder="0"
+                    src="https://s.tradingview.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22title%22%3A%22S%26P%20500%22%2C%22proName%22%3A%22OANDA%3ASPX500USD%22%7D%2C%7B%22description%22%3A%22Nasdaq%22%2C%22proName%22%3A%22NASDAQ%3ANDAQ%22%7D%2C%7B%22description%22%3A%22Bitcoin%22%2C%22proName%22%3A%22COINBASE%3ABTCUSD%22%7D%2C%7B%22description%22%3A%22Ethereum%22%2C%22proName%22%3A%22COINBASE%3AETHUSD%22%7D%2C%7B%22description%22%3A%22Steem%22%2C%22proName%22%3A%22BITTREX%3ASTEEMUSD%22%7D%2C%7B%22description%22%3A%22SBD%22%2C%22proName%22%3A%22BITTREX%3ASBDUSD%22%7D%2C%7B%22description%22%3A%22Hive%22%2C%22proName%22%3A%22BITTREX%3AHIVEUSD%22%7D%2C%7B%22description%22%3A%22HBD%22%2C%22proName%22%3A%22BITTREX%3AHBDUSD%22%7D%2C%7B%22description%22%3A%22Litecoin%22%2C%22proName%22%3A%22COINBASE%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22Binance%20Coin%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22Basic%20Attention%20Token%22%2C%22proName%22%3A%22BINANCE%3ABATUSD%22%7D%2C%7B%22description%22%3A%22Eos%22%2C%22proName%22%3A%22COINBASE%3AEOSUSD%22%7D%2C%7B%22description%22%3A%22Gold%22%2C%22proName%22%3A%22TVC%3AGOLD%22%7D%2C%7B%22description%22%3A%22Silver%22%2C%22proName%22%3A%22TVC%3ASILVER%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22adaptive%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A46%2C%22utm_source%22%3A%22www.steemcoinpan.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%7D"
+                    style="box-sizing: border-box; height: 46px; width: 100%;"
+                />
                 <ConnectedSidePanel alignment="right" />
 
                 {headerHidden ? null : (

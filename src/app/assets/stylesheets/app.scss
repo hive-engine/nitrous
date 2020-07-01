@@ -33,6 +33,7 @@
   }
 }
 
+
 a, path, circle {
   transition: opacity, fill, stroke .3s ease 0s;
 }
@@ -235,3 +236,7 @@ a[rel="nofollow noopener"]:after {
     color: themed('buttonText');
   }
 }
+
+  #iframe-widget{
+    height:66px;
+  }
