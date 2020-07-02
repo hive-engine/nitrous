@@ -200,7 +200,7 @@ const KANDA = {
     TAG_LIST: fromJSOrdered([
         'telokanda',
         'africa',
-        'nigeria'
+        'nigeria',
         'ghana',
         'money',
         'music',
