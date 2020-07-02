@@ -60,7 +60,18 @@ const SidePanel = ({
                     useHive ? 'hive' : 'steem'
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
-        ],
+        ].concat(scotTokenSymbol == 'KANDA' ? [
+            {
+                value: 'KANDA_Alcordex',
+                label: 'Alcor Dex',
+                link: 'https://telos.alcor.exchange/markets/KANDA-telokandaone',
+            },
+            {
+                value: 'KANDA_vapaeedex',
+                label: 'Vapaee Dex',
+                link: 'https://vapaee.io/exchange/trade/kanda.tlos',
+            },
+        ] : []),
         exchanges: [
             {
                 value: 'blocktrades',
@@ -155,6 +166,11 @@ const SidePanel = ({
         ],
         organizational_KANDA: [
             {
+                value: 'telokanda_site',
+                label: 'Telokanda.com',
+                link: 'https://telokanda.com',
+            },
+            {
                 value: 'kanda_discord',
                 label: 'Discord',
                 link: 'https://discord.telokanda.com',
@@ -173,6 +189,11 @@ const SidePanel = ({
                 value: 'SQRL',
                 label: 'SQRL',
                 link: 'https://sqrlwallet.io',
+            },
+            {
+                value: 'kanda_challengedapp',
+                label: 'Earn More: ChallengeDapp GPS EOS and Kanda for Africa',
+                link: 'https://challengedapp.io/',
             },
         ],
         organizational_LIST: [
