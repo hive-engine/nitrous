@@ -867,13 +867,16 @@ a#changeLayout:focus {
 }
 
 
-.articles__resteem .username {
+.articles__resteem .username,
+.articles__crosspost .username,
+{
   @extend .link;
   @extend .link--secondary;
   text-decoration: none;
 }
 
 
-.articles__resteem-icon path {
+.articles__resteem-icon path,
+.articles__crosspost-icon path {
   fill: #cacaca;
 }
