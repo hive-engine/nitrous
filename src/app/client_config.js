@@ -197,7 +197,14 @@ const KANDA = {
     LIQUID_TOKEN_UPPERCASE: 'KANDA',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'telokanda',
-    TAG_LIST: fromJSOrdered(['telokanda']),
+    TAG_LIST: fromJSOrdered([
+        'telokanda',
+        'africa',
+        'nigeria'
+        'ghana',
+        'money',
+        'music',
+    ]),
     INTERLEAVE_PROMOTED: true,
     VESTING_TOKEN: 'KANDA POWER',
     SITE_DESCRIPTION:
