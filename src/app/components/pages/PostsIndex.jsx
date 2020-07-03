@@ -224,6 +224,22 @@ class PostsIndex extends React.Component {
     }
 
     render() {
+        var Iframe = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <iframe
+                            id="converterSteem"
+                            name="widget"
+                            src={this.props.src}
+                            width="100%"
+                            height="300px"
+                        />
+                    </div>
+                );
+            },
+        });
+
         let {
             category,
             order = constants.DEFAULT_SORT_ORDER,
@@ -585,6 +601,11 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small> */}
+
+                    <Iframe
+                        title="Rfdax Converter"
+                        src="https://rfdax.steemscan.com/"
+                    />
                     {this.props.gptEnabled && allowAdsOnContent ? (
                         <div>
                             <div className="sidebar-ad">
