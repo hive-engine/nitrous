@@ -34,6 +34,7 @@ export const icons = [
     'flag1',
     'flag2',
     'reblog',
+    'cross-post',
     'photo',
     'line',
     'video',
