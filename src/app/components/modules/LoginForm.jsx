@@ -118,6 +118,10 @@ class LoginForm extends Component {
         saveLogin.props.onChange(saveLoginDefault); // change UI
     };
 
+    loginWithHiveSigner = () => {
+        console.log('login with hive signer');
+    };
+
     render() {
         if (!process.env.BROWSER) {
             return (
@@ -462,12 +466,34 @@ class LoginForm extends Component {
             </form>
         );
 
+        const moreLoginMethods = (
+            <div>
+                <br />
+                <a
+                    id="btn-hivesigner"
+                    className="button"
+                    onClick={this.loginWithHiveSigner}
+                    disabled={submitting}
+                >
+                    <img src="/images/hivesigner.svg" />
+                </a>
+            </div>
+        );
+
         return (
-            <div className="LoginForm row">
-                <div className="column">
-                    {message}
-                    {showLoginWarning ? loginWarningTitleText : titleText}
-                    {showLoginWarning ? loginWarningForm : form}
+            <div className="LoginForm">
+                <div className="row">
+                    <div className="column">
+                        {message}
+                        {showLoginWarning ? loginWarningTitleText : titleText}
+                        {showLoginWarning ? loginWarningForm : form}
+                    </div>
+                </div>
+                <div className="divider">
+                    <span>{tt('loginform_jsx.more_login_methods')}</span>
+                </div>
+                <div className="row">
+                    <div className="column">{moreLoginMethods}</div>
                 </div>
             </div>
         );
