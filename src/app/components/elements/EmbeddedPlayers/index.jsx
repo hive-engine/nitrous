@@ -41,6 +41,7 @@ import {
     validateIframeUrl as validateTwitterIframeUrl,
     normalizeEmbedUrl as normalizeTwitterEmbedUrl,
     embedNode as embedTwitterNode,
+    preprocessHtml as preprocessTwitterHtml,
 } from 'app/components/elements/EmbeddedPlayers/twitter';
 
 const supportedProviders = [
@@ -195,30 +196,36 @@ function getProviderIds() {
 export function generateMd(section, idx, large) {
     let markdown = null;
     const supportedProvidersIds = getProviderIds();
-    const regex = new RegExp(
-        `^([A-Za-z0-9\\?\\=\\_\\-\\/\\.]+) (${supportedProvidersIds.join(
-            '|'
-        )})\\s?(\\d+)? ~~~`
-    );
+    const regexString = `^([A-Za-z0-9\\?\\=\\_\\-\\/\\.]+) (${supportedProvidersIds.join(
+        '|'
+    )})\\s?(.*?) ~~~`;
+    const regex = new RegExp(regexString);
     const match = section.match(regex);
 
     if (match && match.length >= 3) {
         const id = match[1];
         const type = match[2];
-        const startTime = match[3] ? parseInt(match[3]) : 0;
+        const metadataString = match[3];
+        let metadata;
+        if (metadataString.indexOf('metadata:') === -1) {
+            metadata = match[3] ? parseInt(match[3]) : 0;
+        } else {
+            metadata = metadataString.substring(9);
+        }
+
         const w = large ? 640 : 480,
             h = large ? 360 : 270;
 
         const provider = getProviderById(type);
         if (provider) {
-            markdown = provider.genIframeMdFn(idx, id, w, h, startTime);
+            markdown = provider.genIframeMdFn(idx, id, w, h, metadata);
         } else {
             console.error('MarkdownViewer unknown embed type', type);
         }
 
         if (match[3]) {
             section = section.substring(
-                `${id} ${type} ${startTime} ~~~`.length
+                `${id} ${type} ${metadataString} ~~~`.length
             );
         } else {
             section = section.substring(`${id} ${type} ~~~`.length);
@@ -240,5 +247,6 @@ export function generateMd(section, idx, large) {
  */
 export function preprocessHtml(html) {
     html = preprocess3SpeakHtml(html);
+    html = preprocessTwitterHtml(html);
     return html;
 }

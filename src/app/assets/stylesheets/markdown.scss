@@ -109,6 +109,10 @@
     max-height: 75vw;
   }
 
+  .tweetWrapper iframe {
+      max-height: inherit;
+  }
+
   div.pull-right {
     float: right;
     padding-left: 1rem;
