@@ -14,7 +14,8 @@ export const packLoginData = (
     password,
     memoWif,
     login_owner_pubkey,
-    login_with_keychain
+    login_with_keychain,
+    login_with_hive_signer
 ) =>
     new Buffer(
         `${username}\t${password}\t${memoWif || ''}\t${login_owner_pubkey ||
@@ -23,7 +24,8 @@ export const packLoginData = (
 
 /**
  *
- * @returns {array} [username, password, memoWif, login_owner_pubkey, login_with_keychain]
+ * @returns {array} [username, password, memoWif, login_owner_pubkey, login_with_keychain,
+ * login_with_hive_signer]
  */
 export const extractLoginData = data =>
     new Buffer(data, 'hex').toString().split('\t');

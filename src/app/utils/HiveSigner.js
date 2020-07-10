@@ -1,10 +1,16 @@
 import { isLoggedIn, extractLoginData } from 'app/utils/UserUtil';
 import hivesigner from 'hivesigner';
+import { APP_URL } from 'app/client_config';
+
+const HOST_URL =
+    typeof window !== 'undefined'
+        ? window.location.protocol + '//' + window.location.host
+        : APP_URL;
 
 export const hiveSignerClient = new hivesigner.Client({
-    app: 'hive.blog',
-    callbackURL: 'http://localhost:8080',
-    scope: ['vote', 'comment'],
+    app: 'demo',
+    callbackURL: `${HOST_URL}/login/hivesigner`,
+    // scope: ['vote', 'comment'],
 });
 
 /**

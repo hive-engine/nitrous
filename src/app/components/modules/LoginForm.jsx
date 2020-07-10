@@ -7,6 +7,7 @@ import * as globalActions from 'app/redux/GlobalReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { hasCompatibleKeychain } from 'app/utils/HiveKeychain';
+import { hiveSignerClient } from 'app/utils/HiveSigner';
 import runTests from 'app/utils/BrowserTests';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
@@ -16,6 +17,7 @@ import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
+import { getQueryStringParams } from 'app/utils/Links';
 
 class LoginForm extends Component {
     static propTypes = {
@@ -62,6 +64,10 @@ class LoginForm extends Component {
             });
         };
         this.initForm(props);
+    }
+
+    componentWillMount() {
+        this.loginWithHiveSigner();
     }
 
     componentDidMount() {
@@ -118,8 +124,37 @@ class LoginForm extends Component {
         saveLogin.props.onChange(saveLoginDefault); // change UI
     };
 
+    onClickHiveSignerBtn = () => {
+        const { saveLogin } = this.state;
+        const { afterLoginRedirectToWelcome } = this.props;
+        hiveSignerClient.login({
+            state: JSON.stringify({
+                saveLogin: saveLogin.value,
+                afterLoginRedirectToWelcome,
+            }),
+        });
+    };
+
     loginWithHiveSigner = () => {
-        console.log('login with hive signer');
+        const path = window.location.pathname;
+        if (path === '/login/hivesigner') {
+            const params = getQueryStringParams(window.location.search);
+            const { username, access_token, expires_in, state } = params;
+            const { saveLogin, afterLoginRedirectToWelcome } = JSON.parse(
+                state
+            );
+            const { reallySubmit, loginBroadcastOperation } = this.props;
+            const data = {
+                username,
+                password: access_token,
+                saveLogin,
+                loginBroadcastOperation,
+            };
+            console.log('login:hivesigner', data);
+            // reallySubmit(data, afterLoginRedirectToWelcome);
+        } else {
+            console.log('login:login.html', path);
+        }
     };
 
     render() {
@@ -472,7 +507,7 @@ class LoginForm extends Component {
                 <a
                     id="btn-hivesigner"
                     className="button"
-                    onClick={this.loginWithHiveSigner}
+                    onClick={this.onClickHiveSignerBtn}
                     disabled={submitting}
                 >
                     <img src="/images/hivesigner.svg" />
