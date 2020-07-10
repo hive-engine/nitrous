@@ -98,7 +98,11 @@ export function embedNode(child, links /*images*/) {
  * @returns {*}
  */
 export function genIframeMd(idx, id, w, h) {
-    const url = `https://player.twitch.tv/${id}`;
+    let parentDomain = $STM_Config.site_domain;
+    if (typeof window !== 'undefined') {
+        parentDomain = window.location.hostname;
+    }
+    const url = `https://player.twitch.tv/${id}&parent=${parentDomain}`;
     return (
         <div key={`twitch-${id}-${idx}`} className="videoWrapper">
             <iframe
