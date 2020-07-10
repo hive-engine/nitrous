@@ -36,6 +36,13 @@ import {
     preprocessHtml as preprocess3SpeakHtml,
 } from 'app/components/elements/EmbeddedPlayers/threespeak';
 
+import {
+    genIframeMd as genTwitterIframeMd,
+    validateIframeUrl as validateTwitterIframeUrl,
+    normalizeEmbedUrl as normalizeTwitterEmbedUrl,
+    embedNode as embedTwitterNode,
+} from 'app/components/elements/EmbeddedPlayers/twitter';
+
 const supportedProviders = [
     {
         id: 'dtube',
@@ -78,6 +85,13 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeThreespeakEmbedUrl,
         embedNodeFn: embedThreeSpeakNode,
         genIframeMdFn: genThreespeakIframeMd,
+    },
+    {
+        id: 'twitter',
+        validateIframeUrlFn: validateTwitterIframeUrl,
+        normalizeEmbedUrlFn: normalizeTwitterEmbedUrl,
+        embedNodeFn: embedTwitterNode,
+        genIframeMdFn: genTwitterIframeMd,
     },
 ];
 

@@ -4,6 +4,7 @@ import links, * as linksRe from 'app/utils/Links';
 import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
 import youtubeRegex from 'app/components/elements/EmbeddedPlayers/youtube';
 import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak';
+import twitterRegex from 'app/components/elements/EmbeddedPlayers/twitter';
 
 describe('Links', () => {
     it('all', () => {
@@ -311,6 +312,16 @@ describe('Performance', () => {
         match(
             threespeakRegex.htmlReplacement,
             '<a href="https://3speak.online/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/640x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+        );
+    });
+    it('twitter', () => {
+        match(
+            twitterRegex.main,
+            'https://twitter.com/quochuync/status/1274676558641299459'
+        );
+        match(
+            twitterRegex.sanitize,
+            'https://twitter.com/quochuync/status/1274676558641299459?ref_src=something'
         );
     });
 });

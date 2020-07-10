@@ -151,15 +151,18 @@
       top: 0;
     }
   }
+  div.tweetWrapper {
+    padding-bottom: 0;
+  }
   blockquote {
     @include themify($themes) {
       border-left: themed('borderDark');
-    }       
+    }
   }
   blockquote > p {
     @include themify($themes) {
       color: themed('textColorSecondary');
-    }    
+    }
   }
 }
 
