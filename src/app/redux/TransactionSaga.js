@@ -17,6 +17,10 @@ import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/HiveKeychain';
 import { callBridge } from 'app/utils/steemApi';
+import {
+    isLoggedInWithHiveSigner,
+    hiveSignerClient,
+} from 'app/utils/HiveSigner';
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
@@ -116,7 +120,7 @@ export function* broadcastOperation({
         return;
     }
     try {
-        if (!isLoggedInWithKeychain()) {
+        if (!isLoggedInWithKeychain() && !isLoggedInWithHiveSigner()) {
             if (!keys || keys.length === 0) {
                 payload.keys = [];
                 // user may already be logged in, or just enterend a signing passowrd or wif
@@ -278,20 +282,7 @@ function* broadcastPayload({
                     broadcastedEvent();
                 }, 2000);
             } else {
-                if (!isLoggedInWithKeychain()) {
-                    broadcast.send(
-                        { extensions: [], operations },
-                        keys,
-                        err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                broadcastedEvent();
-                                resolve();
-                            }
-                        }
-                    );
-                } else {
+                if (isLoggedInWithKeychain()) {
                     const authType = needsActiveAuth ? 'active' : 'posting';
                     window.hive_keychain.requestBroadcast(
                         username,
@@ -300,6 +291,46 @@ function* broadcastPayload({
                         response => {
                             if (!response.success) {
                                 reject(response.message);
+                            } else {
+                                broadcastedEvent();
+                                resolve();
+                            }
+                        }
+                    );
+                } else if (isLoggedInWithHiveSigner()) {
+                    if (!needsActiveAuth) {
+                        hiveSignerClient.broadcast(operations, function(
+                            err,
+                            result
+                        ) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                broadcastedEvent();
+                                resolve();
+                            }
+                        });
+                    } else {
+                        hiveSignerClient.sendOperations(
+                            operations,
+                            {},
+                            function(err, result) {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve();
+                                }
+                            }
+                        );
+                    }
+                } else {
+                    broadcast.send(
+                        { extensions: [], operations },
+                        keys,
+                        err => {
+                            if (err) {
+                                reject(err);
                             } else {
                                 broadcastedEvent();
                                 resolve();
