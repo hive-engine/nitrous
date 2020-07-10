@@ -3,10 +3,6 @@ import LoginForm from 'app/components/modules/LoginForm';
 import tt from 'counterpart';
 
 class HiveSignerLogin extends React.Component {
-    componentDidMount() {
-        console.log('login with hivesigner', window.location);
-    }
-
     render() {
         if (!process.env.BROWSER) {
             // don't render this page on the server

@@ -7,7 +7,6 @@ import * as globalActions from 'app/redux/GlobalReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { hasCompatibleKeychain } from 'app/utils/HiveKeychain';
-import { hiveSignerClient } from 'app/utils/HiveSigner';
 import runTests from 'app/utils/BrowserTests';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
@@ -17,6 +16,7 @@ import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
+import { hiveSignerClient } from 'app/utils/HiveSigner';
 import { getQueryStringParams } from 'app/utils/Links';
 
 class LoginForm extends Component {
@@ -34,6 +34,7 @@ class LoginForm extends Component {
         super();
         const cryptoTestResult = runTests();
         let cryptographyFailure = false;
+        const isHiveSigner = false;
         this.SignUp = this.SignUp.bind(this);
         if (cryptoTestResult !== undefined) {
             console.error(
@@ -42,7 +43,7 @@ class LoginForm extends Component {
             );
             cryptographyFailure = true;
         }
-        this.state = { cryptographyFailure };
+        this.state = { cryptographyFailure, isHiveSigner };
         this.usernameOnChange = e => {
             const value = e.target.value.toLowerCase();
             this.state.username.props.onChange(value);
@@ -129,6 +130,7 @@ class LoginForm extends Component {
         const { afterLoginRedirectToWelcome } = this.props;
         hiveSignerClient.login({
             state: JSON.stringify({
+                lastPath: window.location.pathname,
                 saveLogin: saveLogin.value,
                 afterLoginRedirectToWelcome,
             }),
@@ -138,22 +140,28 @@ class LoginForm extends Component {
     loginWithHiveSigner = () => {
         const path = window.location.pathname;
         if (path === '/login/hivesigner') {
+            this.setState({
+                isHiveSigner: true,
+            });
             const params = getQueryStringParams(window.location.search);
             const { username, access_token, expires_in, state } = params;
-            const { saveLogin, afterLoginRedirectToWelcome } = JSON.parse(
-                state
-            );
+            const {
+                saveLogin,
+                afterLoginRedirectToWelcome,
+                lastPath,
+            } = JSON.parse(state);
             const { reallySubmit, loginBroadcastOperation } = this.props;
             const data = {
                 username,
-                password: access_token,
+                access_token,
+                expires_in,
                 saveLogin,
                 loginBroadcastOperation,
+                useHiveSigner: true,
+                lastPath,
             };
             console.log('login:hivesigner', data);
-            // reallySubmit(data, afterLoginRedirectToWelcome);
-        } else {
-            console.log('login:login.html', path);
+            reallySubmit(data, afterLoginRedirectToWelcome);
         }
     };
 
@@ -221,7 +229,9 @@ class LoginForm extends Component {
             msg,
         } = this.props;
         const { username, password, useKeychain, saveLogin } = this.state;
-        const { submitting, valid, handleSubmit } = this.state.login;
+        const { valid, handleSubmit } = this.state.login;
+        const submitting =
+            this.state.login.submitting || this.state.isHiveSigner;
         const { usernameOnChange, onCancel /*qrReader*/ } = this;
         const disabled = submitting || !valid;
         const opType = loginBroadcastOperation
@@ -668,7 +678,16 @@ export default connect(
             }
         },
         reallySubmit: (
-            { username, password, saveLogin, loginBroadcastOperation },
+            {
+                username,
+                password,
+                saveLogin,
+                loginBroadcastOperation,
+                access_token,
+                expires_in,
+                useHiveSigner,
+                lastPath,
+            },
             afterLoginRedirectToWelcome
         ) => {
             const { type } = loginBroadcastOperation
@@ -681,6 +700,10 @@ export default connect(
                 userActions.usernamePasswordLogin({
                     username,
                     password,
+                    access_token,
+                    expires_in,
+                    lastPath,
+                    useHiveSigner,
                     saveLogin,
                     afterLoginRedirectToWelcome,
                 })

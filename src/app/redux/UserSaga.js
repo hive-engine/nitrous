@@ -23,6 +23,7 @@ import {
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
+import { setHiveSignerAccessToken } from 'app/utils/HiveSigner';
 
 export const userWatches = [
     takeLatest(
@@ -129,6 +130,10 @@ function* usernamePasswordLogin2({
     username,
     password,
     useKeychain,
+    access_token,
+    expires_in,
+    useHiveSigner,
+    lastPath,
     saveLogin,
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
@@ -151,7 +156,8 @@ function* usernamePasswordLogin2({
         memoWif,
         login_owner_pubkey,
         login_wif_owner_pubkey,
-        login_with_keychain;
+        login_with_keychain,
+        login_with_hivesigner;
     if (!username && !password) {
         const data = localStorage.getItem('autopost2');
         if (data) {
@@ -164,13 +170,25 @@ function* usernamePasswordLogin2({
                 memoWif,
                 login_owner_pubkey,
                 login_with_keychain,
+                login_with_hivesigner,
+                access_token,
+                expires_in,
             ] = extractLoginData(data);
             memoWif = clean(memoWif);
             login_owner_pubkey = clean(login_owner_pubkey);
         }
     }
     // no saved password
-    if (!username || !(password || useKeychain || login_with_keychain)) {
+    if (
+        !username ||
+        !(
+            password ||
+            useKeychain ||
+            login_with_keychain ||
+            useHiveSigner ||
+            login_with_hivesigner
+        )
+    ) {
         console.log('No saved password');
         const offchain_account = yield select(state =>
             state.offchain.get('account')
@@ -216,8 +234,26 @@ function* usernamePasswordLogin2({
         return;
     }
 
+    // return if already logged in using HiveSigner
+    if (login_with_hivesigner) {
+        console.log('Logged in using HiveSigner');
+        if (access_token) {
+            setHiveSignerAccessToken(username, access_token, expires_in);
+            yield put(
+                userActions.setUser({
+                    username,
+                    login_with_hivesigner: true,
+                    access_token,
+                    expires_in,
+                    effective_vests: effectiveVests(account),
+                })
+            );
+        }
+        return;
+    }
+
     let private_keys;
-    if (!useKeychain) {
+    if (!useKeychain && !useHiveSigner) {
         try {
             const private_key = PrivateKey.fromWif(password);
             login_wif_owner_pubkey = private_key.toPublicKey().toString();
@@ -420,6 +456,27 @@ function* usernamePasswordLogin2({
                         effective_vests: effectiveVests(account),
                     })
                 );
+            } else if (useHiveSigner) {
+                if (access_token) {
+                    // redirect url
+                    feedURL = '/@' + username + '/feed';
+                    // set access setHiveSignerAccessToken
+                    setHiveSignerAccessToken(
+                        username,
+                        access_token,
+                        expires_in
+                    );
+                    // set user data
+                    yield put(
+                        userActions.setUser({
+                            username,
+                            login_with_hivesigner: true,
+                            access_token,
+                            expires_in,
+                            effective_vests: effectiveVests(account),
+                        })
+                    );
+                }
             } else {
                 const sign = (role, d) => {
                     console.log('Sign before');
@@ -443,25 +500,30 @@ function* usernamePasswordLogin2({
 
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
     // Feature Flags
-    if (useKeychain || private_keys.get('posting_private')) {
+    if (useKeychain || useHiveSigner || private_keys.get('posting_private')) {
         yield fork(
             getFeatureFlags,
             username,
-            useKeychain ? null : private_keys.get('posting_private').toString()
+            useKeychain || useHiveSigner
+                ? null
+                : private_keys.get('posting_private').toString()
         );
     }
     // TOS acceptance
     yield fork(promptTosAcceptance, username);
 
     // Redirect user to the appropriate page after login.
+    const path = useHiveSigner ? lastPath : document.location.pathname;
     if (afterLoginRedirectToWelcome) {
         console.log('Redirecting to welcome page');
         browserHistory.push('/welcome');
-    } else if (feedURL && document.location.pathname === '/login.html') {
+    } else if (feedURL && path === '/login.html') {
         browserHistory.push('/trending/my');
-    } else if (feedURL && document.location.pathname === '/') {
+    } else if (feedURL && path === '/') {
         //browserHistory.push(feedURL);
         browserHistory.push('/trending/my');
+    } else if (useHiveSigner && lastPath) {
+        browserHistory.push(lastPath);
     }
 }
 
@@ -523,11 +585,17 @@ function* saveLogin_localStorage() {
         private_keys,
         login_owner_pubkey,
         login_with_keychain,
+        login_with_hivesigner,
+        access_token,
+        expires_in,
     ] = yield select(state => [
         state.user.getIn(['current', 'username']),
         state.user.getIn(['current', 'private_keys']),
         state.user.getIn(['current', 'login_owner_pubkey']),
         state.user.getIn(['current', 'login_with_keychain']),
+        state.user.getIn(['current', 'login_with_hivesigner']),
+        state.user.getIn(['current', 'access_token']),
+        state.user.getIn(['current', 'expires_in']),
     ]);
     if (!username) {
         console.error('Not logged in');
@@ -535,7 +603,7 @@ function* saveLogin_localStorage() {
     }
     // Save the lowest security key
     const posting_private = private_keys && private_keys.get('posting_private');
-    if (!login_with_keychain && !posting_private) {
+    if (!login_with_keychain && !login_with_hivesigner && !posting_private) {
         console.error('No posting key to save?');
         return;
     }
@@ -573,7 +641,10 @@ function* saveLogin_localStorage() {
         postingPrivateWif,
         memoWif,
         login_owner_pubkey,
-        login_with_keychain
+        login_with_keychain,
+        login_with_hivesigner,
+        access_token,
+        expires_in
     );
     // autopost is a auto login for a low security key (like the posting key)
     localStorage.setItem('autopost2', data);
