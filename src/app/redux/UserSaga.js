@@ -23,7 +23,11 @@ import {
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
-import { setHiveSignerAccessToken } from 'app/utils/HiveSigner';
+import {
+    setHiveSignerAccessToken,
+    isLoggedInWithHiveSigner,
+    hiveSignerClient,
+} from 'app/utils/HiveSigner';
 
 export const userWatches = [
     takeLatest(
@@ -733,12 +737,13 @@ function* uploadImage({
     const stateUser = yield select(state => state.user);
     const username = stateUser.getIn(['current', 'username']);
     const keychainLogin = isLoggedInWithKeychain();
+    const hiveSignerLogin = isLoggedInWithHiveSigner();
     const d = stateUser.getIn(['current', 'private_keys', 'posting_private']);
     if (!username) {
         progress({ error: 'Please login first.' });
         return;
     }
-    if (!(keychainLogin || d)) {
+    if (!(keychainLogin || hiveSignerLogin || d)) {
         progress({ error: 'Login with your posting key' });
         return;
     }
@@ -782,27 +787,35 @@ function* uploadImage({
     }
 
     let sig;
-    if (keychainLogin) {
-        const response = yield new Promise(resolve => {
-            window.hive_keychain.requestSignBuffer(
-                username,
-                JSON.stringify(buf),
-                'Posting',
-                response => {
-                    resolve(response);
-                }
-            );
-        });
-        if (response.success) {
-            sig = response.result;
-        } else {
-            progress({ error: response.message });
-            return;
-        }
+    let postUrl;
+    if (hiveSignerLogin) {
+        // verify user with access_token for HiveSigner login
+        postUrl = `${$STM_Config.upload_image}/hs/${
+            hiveSignerClient.accessToken
+        }`;
     } else {
-        sig = Signature.signBufferSha256(bufSha, d).toHex();
+        if (keychainLogin) {
+            const response = yield new Promise(resolve => {
+                window.hive_keychain.requestSignBuffer(
+                    username,
+                    JSON.stringify(buf),
+                    'Posting',
+                    response => {
+                        resolve(response);
+                    }
+                );
+            });
+            if (response.success) {
+                sig = response.result;
+            } else {
+                progress({ error: response.message });
+                return;
+            }
+        } else {
+            sig = Signature.signBufferSha256(bufSha, d).toHex();
+        }
+        postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
     }
-    const postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', postUrl);
