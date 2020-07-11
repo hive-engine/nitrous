@@ -117,10 +117,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hivechain/hivescript@1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.7.tgz#24d89ef8b0984c6e496934b626a72a374618338a"
-  integrity sha512-hS/negE2DoPqPYzY14+WLqNrdV+4R9pt3AhKkabW6m8auNXOp6i48+ckTMRWT5/lU4/avhjKgOgdqvTAMbXRAg==
+"@hivechain/hivescript@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.8.tgz#2b302dd2ba796a1a3fa91ba6e7ee92358b6adcd0"
+  integrity sha512-e2wKVzUK1zIiGI89h/DBY4XDqdmXWHz/6pjNbi+v5SnssO6eoUBh91FlOAXDQbWkC30XIuhCgOkkC127T51a9g==
 
 "@hiveio/hive-js@0.0.5":
   version "0.0.5"
