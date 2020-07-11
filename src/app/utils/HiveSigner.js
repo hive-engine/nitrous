@@ -42,3 +42,5 @@ export const setHiveSignerAccessToken = (
     console.log(`HiveSigner: set access token for @${username}`);
     hiveSignerClient.setAccessToken(access_token);
 };
+
+export const sendOperationsWithHiveSigner = hivesigner.sendOperations;

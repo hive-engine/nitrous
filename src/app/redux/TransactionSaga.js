@@ -20,6 +20,7 @@ import { callBridge } from 'app/utils/steemApi';
 import {
     isLoggedInWithHiveSigner,
     hiveSignerClient,
+    sendOperationsWithHiveSigner,
 } from 'app/utils/HiveSigner';
 
 export const transactionWatches = [
@@ -311,18 +312,17 @@ function* broadcastPayload({
                             }
                         });
                     } else {
-                        hiveSignerClient.sendOperations(
-                            operations,
-                            {},
-                            function(err, result) {
-                                if (err) {
-                                    reject(err);
-                                } else {
-                                    broadcastedEvent();
-                                    resolve();
-                                }
+                        sendOperationsWithHiveSigners(operations, {}, function(
+                            err,
+                            result
+                        ) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                broadcastedEvent();
+                                resolve();
                             }
-                        );
+                        });
                     }
                 } else {
                     broadcast.send(
