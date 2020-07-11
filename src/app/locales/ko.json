@@ -1041,7 +1041,7 @@
         "proxy_update_error": "Your proxy was not updated"
     },
     "sctmburn": {
-        "title": "SCTM 환매서비스",
+        "title": "SCTM 환매",
         "content":
             "SCTM을 전송하면 해당 가치만큼의 KRWP를 받을 수 있습니다. SCTM의 현재 가격 %(SCTM_PRICE)s STEEM 입니다.",
         "request": "SCTM 환매 요청",

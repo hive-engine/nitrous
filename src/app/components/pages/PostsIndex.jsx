@@ -194,7 +194,7 @@ class PostsIndex extends React.Component {
     };
 
     goExchangeNow = () => {
-        window.open('/support.html');
+        // window.open('/support.html');
     };
 
     showSCTMBurn = () => {
@@ -426,8 +426,6 @@ class PostsIndex extends React.Component {
                 </article>
 
                 <aside className="c-sidebar c-sidebar--right">
-                    <Notices notices={this.props.notices} />
-
                     <button
                         type="button"
                         className="c-sidebar--right--link"
@@ -442,7 +440,7 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.luckydraw')}
                     </button>
-                    <img
+                    {/* <img
                         src="https://changenow.io/images/embeds/button.svg"
                         alt="ChangeNOW button"
                         style={{
@@ -450,7 +448,7 @@ class PostsIndex extends React.Component {
                             cursor: 'pointer',
                         }}
                         onClick={this.goExchangeNow}
-                    />
+                    /> */}
                     <button
                         type="button"
                         className="c-sidebar--right--link"
@@ -458,58 +456,12 @@ class PostsIndex extends React.Component {
                     >
                         {tt('g.sctswap')}
                     </button>
-                    <button
-                        type="button"
-                        className="c-sidebar--right--link"
-                        onClick={this.showSCTMBurn}
-                    >
-                        {tt('sctmburn.title')}
-                    </button>
 
                     {this.props.isBrowser && (
                         <div>
                             <SidebarSwap />
                         </div>
                     )}
-                    {this.props.isBrowser &&
-                        this.props.scotInfo && (
-                            <div>
-                                <SidebarInfo
-                                    sct_to_steemp={this.props.scotInfo.getIn([
-                                        'sct_to_steemp_current',
-                                    ])}
-                                    steem_to_dollor={this.props.scotInfo.getIn([
-                                        'steem_to_dollar_current',
-                                    ])}
-                                    steem_to_krw={this.props.scotInfo.getIn([
-                                        'steem_to_krw_current',
-                                    ])}
-                                />
-                            </div>
-                        )}
-                    {this.props.isBrowser &&
-                        this.props.scotBurn && (
-                            <div>
-                                <SidebarBurn
-                                    scotToken={this.props.scotBurn.getIn([
-                                        'scotToken',
-                                    ])}
-                                    scotTokenCirculating={this.props.scotBurn.getIn(
-                                        [
-                                            'total_token_balance',
-                                            'circulatingSupply',
-                                        ]
-                                    )}
-                                    scotTokenBurn={this.props.scotBurn.getIn([
-                                        'token_burn_balance',
-                                        'balance',
-                                    ])}
-                                    scotTokenStaking={this.props.scotBurn.getIn(
-                                        ['total_token_balance', 'totalStaked']
-                                    )}
-                                />
-                            </div>
-                        )}
                     {this.props.isBrowser &&
                         this.props.scotBurn && (
                             <div>
@@ -552,8 +504,57 @@ class PostsIndex extends React.Component {
                                         'krwp_balance',
                                     ])}
                                 />
+
+                                <button
+                                    type="button"
+                                    className="c-sidebar--right--link"
+                                    onClick={this.showSCTMBurn}
+                                >
+                                    {tt('sctmburn.title')}
+                                </button>
                             </div>
                         )}
+                    {this.props.isBrowser &&
+                        this.props.scotInfo && (
+                            <div>
+                                <SidebarInfo
+                                    sct_to_steemp={this.props.scotInfo.getIn([
+                                        'sct_to_steemp_current',
+                                    ])}
+                                    steem_to_dollor={this.props.scotInfo.getIn([
+                                        'steem_to_dollar_current',
+                                    ])}
+                                    steem_to_krw={this.props.scotInfo.getIn([
+                                        'steem_to_krw_current',
+                                    ])}
+                                />
+                            </div>
+                        )}
+
+                    {this.props.isBrowser &&
+                        this.props.scotBurn && (
+                            <div>
+                                <SidebarBurn
+                                    scotToken={this.props.scotBurn.getIn([
+                                        'scotToken',
+                                    ])}
+                                    scotTokenCirculating={this.props.scotBurn.getIn(
+                                        [
+                                            'total_token_balance',
+                                            'circulatingSupply',
+                                        ]
+                                    )}
+                                    scotTokenBurn={this.props.scotBurn.getIn([
+                                        'token_burn_balance',
+                                        'balance',
+                                    ])}
+                                    scotTokenStaking={this.props.scotBurn.getIn(
+                                        ['total_token_balance', 'totalStaked']
+                                    )}
+                                />
+                            </div>
+                        )}
+
                     {this.props.isBrowser &&
                         this.props.scotThumbsup && (
                             <div>
@@ -582,6 +583,13 @@ class PostsIndex extends React.Component {
                     ) : null}
                 </aside>
                 <aside className="c-sidebar c-sidebar--left">
+                    <Notices notices={this.props.notices} />
+
+                    <Iframe
+                        title="Rfdax Converter"
+                        src="https://rfdax.steemscan.com?account_name=sct.admin"
+                    />
+
                     <Topics
                         order={topics_order}
                         current={category}
@@ -602,10 +610,6 @@ class PostsIndex extends React.Component {
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small> */}
 
-                    <Iframe
-                        title="Rfdax Converter"
-                        src="https://rfdax.steemscan.com/"
-                    />
                     {this.props.gptEnabled && allowAdsOnContent ? (
                         <div>
                             <div className="sidebar-ad">
