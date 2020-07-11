@@ -9,7 +9,7 @@ import _ from 'lodash';
 const regex = {
     main: /(?:https?:\/\/(?:(?:twitter\.com\/(.*?)\/status\/(.*))))/i,
     sanitize: /(?:https?:\/\/(?:(?:twitter\.com\/(.*?)\/status\/(.*))))/i,
-    htmlReplacement: /<blockquote class="twitter-tweet"><p lang="en" dir="ltr">(.*?)<\/p>\&mdash; (.*?) <a href="(https:\/\/twitter.com\/.*?(.*?\/status\/(.*?))\?.*?)">(.*?)<\/a><\/blockquote> <script async src="https:\/\/platform\.twitter\.com\/widgets\.js" charset="utf-8"><\/script>/i,
+    htmlReplacement: /<blockquote[^>]*?><p[^>]*?>(.*?)<\/p>.*?mdash; (.*)<a href="(https:\/\/twitter.com\/.*?(.*?\/status\/(.*?))\?.*?)">(.*?)<\/a><\/blockquote>/i,
 };
 
 export default regex;
