@@ -323,6 +323,14 @@ describe('Performance', () => {
             twitterRegex.sanitize,
             'https://twitter.com/quochuync/status/1274676558641299459?ref_src=something'
         );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&mdash; 🇮🇱Dr BrianofLondon.me (@brianoflondon) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw">January 21, 2020</a></blockquote>'
+        );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote><p>Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&amp;mdash; 🇮🇱Dr BrianofLondon.me (<a href="/@brianoflondon" class="keychainify-checked">@brianoflondon</a>) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw" rel="nofollow noopener" title="This link will take you away from hive.blog">January 21, 2020</a></blockquote>'
+        );
     });
 });
 
