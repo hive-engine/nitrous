@@ -1,11 +1,15 @@
 import { isLoggedIn, extractLoginData } from 'app/utils/UserUtil';
 import hivesigner from 'hivesigner';
 import { APP_URL, HIVE_SIGNER_APP } from 'app/client_config';
+import { encodeOps } from 'hive-uri';
 
-const HOST_URL =
-    typeof window !== 'undefined'
-        ? window.location.protocol + '//' + window.location.host
-        : APP_URL;
+const isBrowser = () => typeof window !== 'undefined' && window;
+
+const HOST_URL = isBrowser()
+    ? window.location.protocol + '//' + window.location.host
+    : APP_URL;
+
+const HIVE_SIGNER_URL = 'https://hivesigner.com';
 
 export const hiveSignerClient = new hivesigner.Client({
     app: HIVE_SIGNER_APP,
@@ -43,4 +47,15 @@ export const setHiveSignerAccessToken = (
     hiveSignerClient.setAccessToken(access_token);
 };
 
-export const sendOperationsWithHiveSigner = hivesigner.sendOperations;
+export const sendOperationsWithHiveSigner = (ops, params, cb) => {
+    if (!params) params = {};
+    if (!params.callback) {
+        params.callback = window.location.href;
+    }
+    const uri = encodeOps(ops, params);
+    const webUrl = uri.replace('hive://', `${HIVE_SIGNER_URL}/`);
+    if (cb && isBrowser()) {
+        window.location = webUrl;
+    }
+    return webUrl;
+};
