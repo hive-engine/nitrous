@@ -49,7 +49,7 @@ export const setHiveSignerAccessToken = (
 
 export const sendOperationsWithHiveSigner = (ops, params, cb) => {
     if (!params) params = {};
-    if (!params.callback) {
+    if (!params.callback && isBrowser()) {
         params.callback = window.location.href;
     }
     const uri = encodeOps(ops, params);
