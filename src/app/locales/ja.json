@@ -593,7 +593,8 @@
         "returning_users": "再",
         "join_our": "",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "more_login_methods": "その他のログイン方法"
     },
     "chainvalidation_js": {
         "account_name_should": "アカウント名",

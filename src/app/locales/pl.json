@@ -675,7 +675,8 @@
             "Otwórz mój Portfel Hive, żeby uzyskać dostęp i zobaczyć klucz do publikowania",
         "join_our": "Dołącz do",
         "sign_transfer": "Podpisz, aby dokończyć przelew",
-        "use_keychain": "Użyj rozszerzenia Hive Keychain"
+        "use_keychain": "Użyj rozszerzenia Hive Keychain",
+        "more_login_methods": "więcej metod logowania"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty":

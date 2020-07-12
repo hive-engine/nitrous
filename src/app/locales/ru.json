@@ -612,7 +612,8 @@
         "returning_users": "Вернувшиеся пользователи: ",
         "join_our": "Присоединяйтесь к нашему",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "more_login_methods": "больше методов входа"
     },
     "chainvalidation_js": {
         "account_name_should": "Имя аккаунта должно быть ",
