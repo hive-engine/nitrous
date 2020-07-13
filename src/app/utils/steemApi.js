@@ -22,6 +22,7 @@ export async function callBridge(method, params) {
 }
 
 export async function getStateAsync(url, observer, ssr = false) {
+    console.log('getStateAsync');
     if (observer === undefined) observer = null;
 
     const { page, tag, sort, key } = parsePath(url);
@@ -105,6 +106,7 @@ async function loadThread(account, permlink) {
 }
 
 async function loadPosts(sort, tag, observer) {
+    console.log('loadPosts');
     const account = tag && tag[0] == '@' ? tag.slice(1) : null;
 
     let posts;

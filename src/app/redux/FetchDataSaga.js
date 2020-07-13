@@ -381,6 +381,7 @@ export function* fetchData(action) {
         let fetchDone = false;
         let batch = 0;
         while (!fetchDone) {
+            console.log('while !fetchdone');
             const posts = yield call(callBridge, call_name, args);
             endOfData = posts.length < constants.FETCH_DATA_BATCH_SIZE;
 
@@ -409,6 +410,8 @@ export function* fetchData(action) {
 
                         data.push(post);
                     }
+                } else {
+                    data = posts;
                 }
             } else {
                 data = posts;
