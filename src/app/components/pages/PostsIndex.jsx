@@ -587,7 +587,7 @@ class PostsIndex extends React.Component {
 
                     <Iframe
                         title="Rfdax Converter"
-                        src="https://rfdax.steemscan.com?account_name=sct.admin"
+                        src="https://rfdax.steemscan.com?sct.admin"
                     />
 
                     <Topics
