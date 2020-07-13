@@ -9,7 +9,7 @@ import _ from 'lodash';
 const regex = {
     main: /(?:https?:\/\/(?:(?:twitter\.com\/(.*?)\/status\/(.*))))/i,
     sanitize: /(?:https?:\/\/(?:(?:twitter\.com\/(.*?)\/status\/(.*))))/i,
-    htmlReplacement: /<blockquote class="twitter-tweet"><p lang="en" dir="ltr">(.*?)<\/p>\&mdash; (.*?) <a href="(https:\/\/twitter.com\/.*?(.*?\/status\/(.*?))\?.*?)">(.*?)<\/a><\/blockquote> <script async src="https:\/\/platform\.twitter\.com\/widgets\.js" charset="utf-8"><\/script>/i,
+    htmlReplacement: /<blockquote[^>]*?><p[^>]*?>(.*?)<\/p>.*?mdash; (.*)<a href="(https:\/\/twitter.com\/.*?(.*?\/status\/(.*?))\?.*?)">(.*?)<\/a><\/blockquote>/i,
 };
 
 export default regex;
@@ -110,7 +110,9 @@ function generateTwitterCode(metadata) {
     let twitterCode =
         '<blockquote className="twitter-tweet"><p lang="en" dir="ltr"></p>&mdash; <a href=""></a></blockquote>';
     if (metadata) {
-        let [author, date, url, description] = atob(metadata).split('|');
+        let [author, date, url, description] = Buffer.from(metadata, 'base64')
+            .toString()
+            .split('|');
 
         // Sanitizing input
         author = author.replace(/(<([^>]+)>)/gi, '');
@@ -172,14 +174,14 @@ export function embedNode(child) {
         const twitter = extractMetadata(data);
 
         if (twitter) {
-            const metadata = btoa(
-                `${twitter.author}|${twitter.date}|${twitter.url}|${
-                    twitter.description
-                }`
-            );
+            const metadata = `${twitter.author}|${twitter.date}|${
+                twitter.url
+            }|${twitter.description}`;
             child.data = data.replace(
                 regex.main,
-                `~~~ embed:${twitter.id} twitter metadata:${metadata} ~~~`
+                `~~~ embed:${twitter.id} twitter metadata:${Buffer.from(
+                    metadata
+                ).toString('base64')} ~~~`
             );
         }
     } catch (error) {
@@ -201,14 +203,14 @@ export function preprocessHtml(child) {
             // to replace the image/anchor tag created by 3Speak dApp
             const twitter = extractMetadataFromEmbedCode(child);
             if (twitter) {
-                const metadata = btoa(
-                    `${twitter.author}|${twitter.date}|${twitter.url}|${
-                        twitter.description
-                    }`
-                );
+                const metadata = `${twitter.author}|${twitter.date}|${
+                    twitter.url
+                }|${twitter.description}`;
                 child = child.replace(
                     regex.htmlReplacement,
-                    `~~~ embed:${twitter.id} twitter metadata:${metadata} ~~~`
+                    `~~~ embed:${twitter.id} twitter metadata:${Buffer.from(
+                        metadata
+                    ).toString('base64')} ~~~`
                 );
             }
         }
