@@ -53,7 +53,7 @@ export function normalizeEmbedUrl(url) {
  * @param data
  * @returns {null|{id: *, canonical: string, url: *}}
  */
-function extractContentId(data) {
+function extractMetadata(data) {
     if (!data) return null;
 
     const m = data.match(regex.main);
@@ -72,8 +72,8 @@ function extractContentId(data) {
 
 export function embedNode(child, links /*images*/) {
     try {
-        const data = child.data;
-        const twitch = extractContentId(data);
+        const { data } = child;
+        const twitch = extractMetadata(data);
         if (!twitch) return child;
 
         child.data = data.replace(
@@ -98,7 +98,11 @@ export function embedNode(child, links /*images*/) {
  * @returns {*}
  */
 export function genIframeMd(idx, id, w, h) {
-    const url = `https://player.twitch.tv/${id}`;
+    let parentDomain = $STM_Config.site_domain;
+    if (typeof window !== 'undefined') {
+        parentDomain = window.location.hostname;
+    }
+    const url = `https://player.twitch.tv/${id}&parent=${parentDomain}`;
     return (
         <div key={`twitch-${id}-${idx}`} className="videoWrapper">
             <iframe

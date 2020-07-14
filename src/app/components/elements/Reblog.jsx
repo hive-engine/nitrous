@@ -72,11 +72,17 @@ export default class Reblog extends React.Component {
     render() {
         const state = this.state.active ? 'active' : 'inactive';
         const loading = this.state.loading ? ' loading' : '';
+        const { author, permlink } = this.props;
+
         return (
             <span
                 className={'Reblog__button Reblog__button-' + state + loading}
             >
-                <a href="#" onClick={this.reblog} title={tt('g.reblog')}>
+                <a
+                    href="#"
+                    onClick={this.reblog}
+                    title={`${tt('g.reblog')} @${author}/${permlink}`}
+                >
                     <Icon name="reblog" />
                 </a>
             </span>

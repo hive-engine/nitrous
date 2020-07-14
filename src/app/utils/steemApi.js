@@ -1,6 +1,10 @@
 import { api } from '@hiveio/hive-js';
 import { ifHive } from 'app/utils/Community';
 import stateCleaner from 'app/redux/stateCleaner';
+import {
+    fetchCrossPosts,
+    augmentContentWithCrossPost,
+} from 'app/utils/CrossPosts';
 
 export async function callBridge(method, params) {
     console.log(
@@ -18,6 +22,7 @@ export async function callBridge(method, params) {
 }
 
 export async function getStateAsync(url, observer, ssr = false) {
+    console.log('getStateAsync');
     if (observer === undefined) observer = null;
 
     const { page, tag, sort, key } = parsePath(url);
@@ -80,10 +85,28 @@ export async function getStateAsync(url, observer, ssr = false) {
 async function loadThread(account, permlink) {
     const author = account.slice(1);
     const content = await callBridge('get_discussion', { author, permlink });
+
+    if (content) {
+        const {
+            content: preppedContent,
+            keys,
+            crossPosts,
+        } = await fetchCrossPosts([Object.values(content)[0]], author);
+        if (crossPosts) {
+            const crossPostKey = content[keys[0]].cross_post_key;
+            content[keys[0]] = preppedContent[keys[0]];
+            content[keys[0]] = augmentContentWithCrossPost(
+                content[keys[0]],
+                crossPosts[crossPostKey]
+            );
+        }
+    }
+
     return { content };
 }
 
 async function loadPosts(sort, tag, observer) {
+    console.log('loadPosts');
     const account = tag && tag[0] == '@' ? tag.slice(1) : null;
 
     let posts;
@@ -95,16 +118,26 @@ async function loadPosts(sort, tag, observer) {
         posts = await callBridge('get_ranked_posts', params);
     }
 
-    let content = {};
-    let keys = [];
-    for (var idx in posts) {
-        const post = posts[idx];
-        const key = post['author'] + '/' + post['permlink'];
-        content[key] = post;
-        keys.push(key);
+    const { content, keys, crossPosts } = await fetchCrossPosts(
+        posts,
+        observer
+    );
+
+    if (Object.keys(crossPosts).length > 0) {
+        for (let ki = 0; ki < keys.length; ki += 1) {
+            const contentKey = keys[ki];
+            let post = content[contentKey];
+
+            if (Object.prototype.hasOwnProperty.call(post, 'cross_post_key')) {
+                post = augmentContentWithCrossPost(
+                    post,
+                    crossPosts[post.cross_post_key]
+                );
+            }
+        }
     }
 
-    let discussion_idx = {};
+    const discussion_idx = {};
     discussion_idx[tag] = {};
     discussion_idx[tag][sort] = keys;
 

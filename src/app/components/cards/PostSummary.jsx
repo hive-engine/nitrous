@@ -93,6 +93,33 @@ class PostSummary extends React.Component {
             );
         }
 
+        let crossPostedBy = post.get('cross_posted_by');
+
+        if (crossPostedBy) {
+            const crossPostAuthor = post.get('cross_post_author');
+            const crossPostPermlink = post.get('cross_post_permlink');
+            const crossPostCategory = `/${post.get('cross_post_category', '')}`;
+
+            crossPostedBy = (
+                <div className="articles__crosspost">
+                    <div className="articles__crosspost-text">
+                        <span className="articles__crosspost-icon">
+                            <Icon name="cross-post" />
+                        </span>
+                        <UserNames names={[crossPostedBy]} />{' '}
+                        {tt('postsummary_jsx.crossposted')}{' '}
+                        <Link
+                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                                crossPostPermlink
+                            }`}
+                        >
+                            @{crossPostAuthor}/{crossPostPermlink}
+                        </Link>
+                    </div>
+                </div>
+            );
+        }
+
         const gray = post.getIn(['stats', 'gray']);
         const isNsfw = hasNsfwTag(post);
         const isReply = post.get('depth') > 0;
@@ -121,14 +148,24 @@ class PostSummary extends React.Component {
             </h2>
         );
 
+        const summaryAuthor = crossPostedBy
+            ? post.get('cross_post_author')
+            : post.get('author');
+
         // New Post Summary heading
         const summary_header = (
             <div className="articles__summary-header">
                 <div className="user">
                     {!isNsfw ? (
                         <div className="user__col user__col--left">
-                            <a className="user__link" href={'/@' + author}>
-                                <Userpic account={author} size={SIZE_SMALL} />
+                            <a
+                                className="user__link"
+                                href={`/@${summaryAuthor}`}
+                            >
+                                <Userpic
+                                    account={summaryAuthor}
+                                    size={SIZE_SMALL}
+                                />
                             </a>
                         </div>
                     ) : null}
@@ -138,6 +175,7 @@ class PostSummary extends React.Component {
                                 post={post}
                                 follow={false}
                                 hideEditor={true}
+                                resolveCrossPost
                                 showRole={showCommunityLabels}
                             />
                         </span>
@@ -269,10 +307,18 @@ class PostSummary extends React.Component {
             }
         }
 
-        const image_link = extractImageLink(
+        let image_link = extractImageLink(
             post.get('json_metadata'),
             post.get('body')
         );
+
+        if (crossPostedBy) {
+            image_link = extractImageLink(
+                post.get('cross_post_json_metadata'),
+                post.get('cross_post_body')
+            );
+        }
+
         let thumb = null;
         if (!gray && image_link && !ImageUserBlockList.includes(author)) {
             // on mobile, we always use blog layout style -- there's no toggler
@@ -301,6 +347,7 @@ class PostSummary extends React.Component {
         return (
             <div className="articles__summary">
                 {reblogged_by}
+                {crossPostedBy}
                 {summary_header}
                 <div
                     className={

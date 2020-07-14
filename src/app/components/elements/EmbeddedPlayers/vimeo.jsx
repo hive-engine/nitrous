@@ -48,7 +48,7 @@ export function normalizeEmbedUrl(url) {
  * @param data
  * @returns {null|{id: *, canonical: string, url: *}}
  */
-function extractContentId(data) {
+function extractMetadata(data) {
     if (!data) return null;
     const m = data.match(regex.main);
     if (!m || m.length < 2) return null;
@@ -72,8 +72,8 @@ function extractContentId(data) {
  */
 export function embedNode(child, links /*images*/) {
     try {
-        const data = child.data;
-        const vimeo = extractContentId(data);
+        const { data } = child;
+        const vimeo = extractMetadata(data);
         if (!vimeo) return child;
 
         const vimeoRegex = new RegExp(`${vimeo.url}(#t=${vimeo.startTime}s?)?`);

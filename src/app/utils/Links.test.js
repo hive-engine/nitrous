@@ -4,6 +4,7 @@ import links, * as linksRe from 'app/utils/Links';
 import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
 import youtubeRegex from 'app/components/elements/EmbeddedPlayers/youtube';
 import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak';
+import twitterRegex from 'app/components/elements/EmbeddedPlayers/twitter';
 
 describe('Links', () => {
     it('all', () => {
@@ -44,13 +45,13 @@ describe('Links', () => {
     it('by domain', () => {
         const locals = [
             'https://localhost/',
-            'http://steemit.com',
-            'http://steemit.com/group',
+            'http://hive.blog',
+            'http://hive.blog/group',
         ];
         match(linksRe.local(), locals);
         matchNot(linksRe.remote(), locals);
 
-        const remotes = ['https://example.com/', 'http://abc.co'];
+        const remotes = ['https://steemit.com/', 'http://abc.co'];
         match(linksRe.remote(), remotes);
         matchNot(linksRe.local(), remotes);
         // match(linksRe({external: false}), largeData + 'https://steemit.com2/next', 'https://steemit.com2/next')
@@ -311,6 +312,24 @@ describe('Performance', () => {
         match(
             threespeakRegex.htmlReplacement,
             '<a href="https://3speak.online/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/640x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+        );
+    });
+    it('twitter', () => {
+        match(
+            twitterRegex.main,
+            'https://twitter.com/quochuync/status/1274676558641299459'
+        );
+        match(
+            twitterRegex.sanitize,
+            'https://twitter.com/quochuync/status/1274676558641299459?ref_src=something'
+        );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&mdash; 🇮🇱Dr BrianofLondon.me (@brianoflondon) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw">January 21, 2020</a></blockquote>'
+        );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote><p>Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&amp;mdash; 🇮🇱Dr BrianofLondon.me (<a href="/@brianoflondon" class="keychainify-checked">@brianoflondon</a>) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw" rel="nofollow noopener" title="This link will take you away from hive.blog">January 21, 2020</a></blockquote>'
         );
     });
 });

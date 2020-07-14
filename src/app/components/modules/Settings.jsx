@@ -292,7 +292,11 @@ class Settings extends React.Component {
 
             //this one is always present even if the api config call fails
             if (endpoint !== preferred_api_endpoint) {
-                const entry = <option value={endpoint}>{endpoint}</option>;
+                const entry = (
+                    <option key={endpoint} value={endpoint}>
+                        {endpoint}
+                    </option>
+                );
                 entries.push(entry);
             }
         }
@@ -770,8 +774,9 @@ function read_profile_v2(account) {
 
     // use new `posting_json_md` if {version: 2} is present
     let md = o2j.ifStringParseJSON(account.get('posting_json_metadata'));
-    if (md && md.profile && md.profile.account_is_witness)
+    if (md && md.profile && md.profile.account_is_witness) {
         md.profile.account_is_witness = accountIsWitness;
+    }
     if (md && md.profile && md.profile.version) return md;
 
     // otherwise, fall back to `json_metadata`

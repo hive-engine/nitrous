@@ -73,7 +73,7 @@ export function normalizeEmbedUrl(url) {
  * @param data
  * @returns {null|{id: *, canonical: string, url: *}}
  */
-function extractContentId(data) {
+function extractMetadata(data) {
     if (!data) return null;
 
     const m = data.match(regex.main);
@@ -94,8 +94,8 @@ function extractContentId(data) {
  */
 export function embedNode(child, links /*images*/) {
     try {
-        const data = child.data;
-        const dtube = extractContentId(data);
+        const { data } = child;
+        const dtube = extractMetadata(data);
         if (!dtube) return child;
 
         child.data = data.replace(dtube.url, `~~~ embed:${dtube.id} dtube ~~~`);
