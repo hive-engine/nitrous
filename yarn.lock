@@ -117,11 +117,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hivechain/hivescript@1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.7.tgz#24d89ef8b0984c6e496934b626a72a374618338a"
-  integrity sha512-hS/negE2DoPqPYzY14+WLqNrdV+4R9pt3AhKkabW6m8auNXOp6i48+ckTMRWT5/lU4/avhjKgOgdqvTAMbXRAg==
-
 "@hiveio/hive-js@0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.0.5.tgz#f8619016636657d61128874d8978f19629b52f70"
@@ -145,6 +140,11 @@
     retry "^0.12.0"
     secure-random "^1.1.2"
     ws "^3.3.2"
+
+"@hiveio/hivescript@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@hiveio/hivescript/-/hivescript-1.2.0.tgz#fe05d189e5bba89aa191b5320610027115c6eb04"
+  integrity sha512-X4YFE+duQlgr9WqaZqsVUCldBZ3RJph89CakQk/kNF6MjsOHG8QUMbFmbL2NB1Y/DzeM5TvnDQybBd2wyGoiWA==
 
 "@steem/crypto-session@git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb":
   version "1.0.3"
