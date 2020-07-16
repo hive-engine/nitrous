@@ -43,6 +43,7 @@ export default function resolveRoute(path) {
 
     // general functions
     if (path === '/login.html') return { page: 'Login' };
+    if (path === '/login/hivesigner') return { page: 'HiveSignerLogin' };
     if (path === '/submit.html') return { page: 'SubmitPost' };
     if (path === '/communities') return { page: 'Communities' };
     if (path === '/tags') return { page: 'Tags' };

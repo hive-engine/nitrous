@@ -40,6 +40,7 @@
     "cpu-stat": "2.0.1",
     "diff-match-patch": "1.0.4",
     "disk-stat": "1.0.4",
+    "hivesigner": "^3.2.0",
     "humanize-number": "0.0.2",
     "intl": "1.2.5",
     "iso": "5.2.0",

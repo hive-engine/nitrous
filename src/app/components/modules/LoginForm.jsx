@@ -16,6 +16,8 @@ import { APP_URL } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
+import { hiveSignerClient } from 'app/utils/HiveSigner';
+import { getQueryStringParams } from 'app/utils/Links';
 
 class LoginForm extends Component {
     static propTypes = {
@@ -32,6 +34,7 @@ class LoginForm extends Component {
         super();
         const cryptoTestResult = runTests();
         let cryptographyFailure = false;
+        const isHiveSigner = false;
         this.SignUp = this.SignUp.bind(this);
         if (cryptoTestResult !== undefined) {
             console.error(
@@ -40,7 +43,7 @@ class LoginForm extends Component {
             );
             cryptographyFailure = true;
         }
-        this.state = { cryptographyFailure };
+        this.state = { cryptographyFailure, isHiveSigner };
         this.usernameOnChange = e => {
             const value = e.target.value.toLowerCase();
             this.state.username.props.onChange(value);
@@ -62,6 +65,10 @@ class LoginForm extends Component {
             });
         };
         this.initForm(props);
+    }
+
+    componentWillMount() {
+        this.loginWithHiveSigner();
     }
 
     componentDidMount() {
@@ -116,6 +123,46 @@ class LoginForm extends Component {
         saveLoginDefault = !saveLoginDefault;
         localStorage.setItem('saveLogin', saveLoginDefault ? 'yes' : 'no');
         saveLogin.props.onChange(saveLoginDefault); // change UI
+    };
+
+    onClickHiveSignerBtn = () => {
+        const { saveLogin } = this.state;
+        const { afterLoginRedirectToWelcome } = this.props;
+        hiveSignerClient.login({
+            state: JSON.stringify({
+                lastPath: window.location.pathname,
+                saveLogin: saveLogin.value,
+                afterLoginRedirectToWelcome,
+            }),
+        });
+    };
+
+    loginWithHiveSigner = () => {
+        const path = window.location.pathname;
+        if (path === '/login/hivesigner') {
+            this.setState({
+                isHiveSigner: true,
+            });
+            const params = getQueryStringParams(window.location.search);
+            const { username, access_token, expires_in, state } = params;
+            const {
+                saveLogin,
+                afterLoginRedirectToWelcome,
+                lastPath,
+            } = JSON.parse(state);
+            const { reallySubmit, loginBroadcastOperation } = this.props;
+            const data = {
+                username,
+                access_token,
+                expires_in,
+                saveLogin,
+                loginBroadcastOperation,
+                useHiveSigner: true,
+                lastPath,
+            };
+            console.log('login:hivesigner', data);
+            reallySubmit(data, afterLoginRedirectToWelcome);
+        }
     };
 
     render() {
@@ -182,7 +229,9 @@ class LoginForm extends Component {
             msg,
         } = this.props;
         const { username, password, useKeychain, saveLogin } = this.state;
-        const { submitting, valid, handleSubmit } = this.state.login;
+        const { valid, handleSubmit } = this.state.login;
+        const submitting =
+            this.state.login.submitting || this.state.isHiveSigner;
         const { usernameOnChange, onCancel /*qrReader*/ } = this;
         const disabled = submitting || !valid;
         const opType = loginBroadcastOperation
@@ -462,13 +511,35 @@ class LoginForm extends Component {
             </form>
         );
 
-        return (
-            <div className="LoginForm row">
+        const moreLoginMethods = (
+            <div className="row buttons">
                 <div className="column">
-                    {message}
-                    {showLoginWarning ? loginWarningTitleText : titleText}
-                    {showLoginWarning ? loginWarningForm : form}
+                    <a
+                        id="btn-hivesigner"
+                        className="button"
+                        onClick={this.onClickHiveSignerBtn}
+                        disabled={submitting}
+                    >
+                        <img src="/images/hivesigner.svg" />
+                    </a>
                 </div>
+            </div>
+        );
+
+        return (
+            <div className="LoginForm">
+                <div className="row">
+                    <div className="column">
+                        {message}
+                        {showLoginWarning ? loginWarningTitleText : titleText}
+                        {showLoginWarning ? loginWarningForm : form}
+                    </div>
+                </div>
+                <div className="divider">
+                    <span>{tt('loginform_jsx.more_login_methods')}</span>
+                </div>
+                <br />
+                {moreLoginMethods}
             </div>
         );
     }
@@ -607,7 +678,16 @@ export default connect(
             }
         },
         reallySubmit: (
-            { username, password, saveLogin, loginBroadcastOperation },
+            {
+                username,
+                password,
+                saveLogin,
+                loginBroadcastOperation,
+                access_token,
+                expires_in,
+                useHiveSigner,
+                lastPath,
+            },
             afterLoginRedirectToWelcome
         ) => {
             const { type } = loginBroadcastOperation
@@ -620,6 +700,10 @@ export default connect(
                 userActions.usernamePasswordLogin({
                     username,
                     password,
+                    access_token,
+                    expires_in,
+                    lastPath,
+                    useHiveSigner,
                     saveLogin,
                     afterLoginRedirectToWelcome,
                 })
