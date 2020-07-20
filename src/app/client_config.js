@@ -9,6 +9,7 @@ export const APP_ICON = 'hive';
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://hive.blog';
 export const APP_DOMAIN = 'hive.blog';
+export const HIVE_SIGNER_APP = 'hive.blog';
 export const LIQUID_TOKEN = 'Hive';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'HIVE';

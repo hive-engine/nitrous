@@ -7,6 +7,9 @@
   form {
     margin-top: 1.5rem;
   }
+  .buttons {
+    text-align: center;
+  }
 }
 .pdf-download {
   margin-top: 1em;
@@ -23,14 +26,14 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     font-size: 1.2rem;
-    text-transform: none;       
+    text-transform: none;
   }
   .button.hollow {
     border: 1px solid #ddd;
     color: $color-hive-black;
     transition: 0.2s all ease-in-out;
     @include font-size(16px);
-    
+
     &:hover {
       border: 1px solid $color-hive-red-dark;
       color: $color-hive-red-dark;
@@ -51,4 +54,36 @@
 
 .LoginForm__save-login {
   margin-top: 0.5rem;
+}
+
+.divider{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.divider::before,.divider::after{
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+}
+.divider::before{
+  margin-right: 10px;
+}
+.divider::after{
+  margin-left: 10px;
+}
+
+#btn-hivesigner {
+  color: #fff;
+  border-color: #d1d5da;
+  background: #d1d5da;
+
+  &:hover {
+    background: #A6A6A6;
+  }
+
+  img {
+    width: 140px;
+  }
 }

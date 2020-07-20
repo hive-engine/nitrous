@@ -30,6 +30,10 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Login')]);
             //});
+        } else if (route.page === 'HiveSignerLogin') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/HiveSignerLogin')]);
+            //});
         } else if (route.page === 'Privacy') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Privacy')]);
