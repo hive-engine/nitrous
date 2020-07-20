@@ -203,6 +203,18 @@ function* usernamePasswordLogin2({
         );
         return;
     }
+    //check for defaultBeneficiaries
+    let defaultBeneficiaries;
+    try {
+        const json_metadata = JSON.parse(account.get('json_metadata'));
+        if (json_metadata.beneficiaries) {
+            defaultBeneficiaries = json_metadata.beneficiaries;
+        } else {
+            defaultBeneficiaries = [];
+        }
+    } catch (error) {
+        defaultBeneficiaries = [];
+    }
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using Hive Keychain');
@@ -211,6 +223,7 @@ function* usernamePasswordLogin2({
                 username,
                 login_with_keychain: true,
                 effective_vests: effectiveVests(account),
+                defaultBeneficiaries,
             })
         );
         return;
@@ -359,18 +372,6 @@ function* usernamePasswordLogin2({
         }
         if (username) feedURL = '/@' + username + '/feed';
 
-        let defaultBeneficiaries;
-        try {
-            const json_metadata = JSON.parse(account.get('json_metadata'));
-            if (json_metadata.beneficiaries) {
-                defaultBeneficiaries = json_metadata.beneficiaries;
-            } else {
-                defaultBeneficiaries = [];
-            }
-        } catch (error) {
-            defaultBeneficiaries = [];
-        }
-
         // If user is signing operation by operaion and has no saved login, don't save to RAM
         if (!operationType || saveLogin) {
             // Keep the posting key in RAM but only when not signing an operation.
@@ -432,6 +433,7 @@ function* usernamePasswordLogin2({
                         username,
                         login_with_keychain: true,
                         effective_vests: effectiveVests(account),
+                        defaultBeneficiaries,
                     })
                 );
             } else {
