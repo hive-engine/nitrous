@@ -63,14 +63,16 @@ class Post extends React.Component {
         const { content, sortOrder, post, dis, loading } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
 
-        if (loading) {
-            return (
-                <center>
-                    <LoadingIndicator type="circle" />
-                </center>
-            );
-        } else if (isEmptyPost(dis)) {
-            return <NotFoundMessage />;
+        if (!content) {
+            if (loading) {
+                return (
+                    <center>
+                        <LoadingIndicator type="circle" />
+                    </center>
+                );
+            } else if (isEmptyPost(dis)) {
+                return <NotFoundMessage />;
+            }
         }
 
         const gptTags = parseJsonTags(dis);
