@@ -263,6 +263,7 @@ function* usernamePasswordLogin2({
                     access_token,
                     expires_in,
                     effective_vests: effectiveVests(account),
+                    defaultBeneficiaries,
                 })
             );
         }
