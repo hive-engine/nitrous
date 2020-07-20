@@ -44,6 +44,8 @@ import {
     preprocessHtml as preprocessTwitterHtml,
 } from 'app/components/elements/EmbeddedPlayers/twitter';
 
+import { validateIframeUrl as validateDapplrVideoUrl } from 'app/components/elements/EmbeddedPlayers/dapplr';
+
 const supportedProviders = [
     {
         id: 'dtube',
@@ -93,6 +95,13 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitterEmbedUrl,
         embedNodeFn: embedTwitterNode,
         genIframeMdFn: genTwitterIframeMd,
+    },
+    {
+        id: 'dapplr',
+        validateIframeUrlFn: validateDapplrVideoUrl,
+        normalizeEmbedUrlFn: null,
+        embedNodeFn: null,
+        genIframeMdFn: null,
     },
 ];
 
