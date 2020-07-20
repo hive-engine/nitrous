@@ -228,6 +228,7 @@ function* usernamePasswordLogin2({
     //check for defaultBeneficiaries
     let defaultBeneficiaries;
     try {
+        console.log(account.get('json_metadata'));
         const json_metadata = JSON.parse(account.get('json_metadata'));
         if (json_metadata.beneficiaries) {
             defaultBeneficiaries = json_metadata.beneficiaries;
@@ -237,6 +238,8 @@ function* usernamePasswordLogin2({
     } catch (error) {
         defaultBeneficiaries = [];
     }
+    yield put(userActions.setUser({ defaultBeneficiaries }));
+
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using Hive Keychain');
@@ -245,7 +248,6 @@ function* usernamePasswordLogin2({
                 username,
                 login_with_keychain: true,
                 effective_vests: effectiveVests(account),
-                defaultBeneficiaries,
             })
         );
         return;
@@ -263,7 +265,6 @@ function* usernamePasswordLogin2({
                     access_token,
                     expires_in,
                     effective_vests: effectiveVests(account),
-                    defaultBeneficiaries,
                 })
             );
         }
@@ -423,7 +424,6 @@ function* usernamePasswordLogin2({
                     private_keys,
                     login_owner_pubkey,
                     effective_vests: effectiveVests(account),
-                    defaultBeneficiaries,
                 })
             );
         } else {
@@ -431,7 +431,6 @@ function* usernamePasswordLogin2({
                 userActions.setUser({
                     username,
                     effective_vests: effectiveVests(account),
-                    defaultBeneficiaries,
                 })
             );
         }
@@ -474,7 +473,6 @@ function* usernamePasswordLogin2({
                         username,
                         login_with_keychain: true,
                         effective_vests: effectiveVests(account),
-                        defaultBeneficiaries,
                     })
                 );
             } else if (useHiveSigner) {
