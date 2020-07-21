@@ -227,5 +227,10 @@
     "ttl": 7200,
     "key": "steem-market"
   },
-  "esteem_elastic_search_api_key": null
+  "esteem_elastic_search_api_key": null,
+  "referral": {
+    "max_fee_referrer": 300,
+    "max_fee_creator": 100,
+    "max_fee_provider": 100
+  }
 }

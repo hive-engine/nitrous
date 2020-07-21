@@ -162,6 +162,7 @@ class ReplyEditor extends React.Component {
         let qualifiedBeneficiaries = [];
 
         if (
+            this.props.defaultBeneficiaries &&
             this.props.defaultBeneficiaries.toArray().length > 0 &&
             this.props.referralSystem != 'disabled'
         ) {
@@ -171,7 +172,14 @@ class ReplyEditor extends React.Component {
                 const weight = parseInt(element.get('weight'));
 
                 if (label && name && weight) {
-                    if (label === 'referrer' && weight <= 300) {
+                    if (
+                        (label === 'referrer' &&
+                            weight <= $STM_Config.referral.max_fee_referrer) ||
+                        (label === 'creator' &&
+                            weight <= $STM_Config.referral.max_fee_creator) ||
+                        (label === 'provider' &&
+                            weight <= $STM_Config.referral.max_fee_provider)
+                    ) {
                         if (
                             qualifiedBeneficiaries.find(
                                 beneficiary => beneficiary.username === name
@@ -179,52 +187,11 @@ class ReplyEditor extends React.Component {
                         ) {
                             qualifiedBeneficiaries.find(
                                 beneficiary => beneficiary.username === name
-                            ).percent =
-                                +qualifiedBeneficiaries.find(
-                                    beneficiary => beneficiary.username === name
-                                ).percent + +(weight / 100).toFixed(0);
+                            ).percent += parseInt((weight / 100).toFixed(0));
                         } else {
                             qualifiedBeneficiaries.push({
                                 username: name,
-                                percent: parseInt(weight / 100).toFixed(0),
-                            });
-                        }
-                    }
-                    if (label === 'creator' && weight <= 100) {
-                        if (
-                            qualifiedBeneficiaries.find(
-                                beneficiary => beneficiary.username === name
-                            )
-                        ) {
-                            qualifiedBeneficiaries.find(
-                                beneficiary => beneficiary.username === name
-                            ).percent =
-                                +qualifiedBeneficiaries.find(
-                                    beneficiary => beneficiary.username === name
-                                ).percent + +(weight / 100).toFixed(0);
-                        } else {
-                            qualifiedBeneficiaries.push({
-                                username: name,
-                                percent: parseInt(weight / 100).toFixed(0),
-                            });
-                        }
-                    }
-                    if (label === 'provider' && weight <= 100) {
-                        if (
-                            qualifiedBeneficiaries.find(
-                                beneficiary => beneficiary.username === name
-                            )
-                        ) {
-                            qualifiedBeneficiaries.find(
-                                beneficiary => beneficiary.username === name
-                            ).percent =
-                                +qualifiedBeneficiaries.find(
-                                    beneficiary => beneficiary.username === name
-                                ).percent + +(weight / 100).toFixed(0);
-                        } else {
-                            qualifiedBeneficiaries.push({
-                                username: name,
-                                percent: parseInt(weight / 100).toFixed(0),
+                                percent: parseInt((weight / 100).toFixed(0)),
                             });
                         }
                     }

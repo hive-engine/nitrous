@@ -36,6 +36,7 @@ global.$STM_Config = {
     wallet_url: config.get('wallet_url'),
     failover_threshold: config.get('failover_threshold'),
     alternative_api_endpoints: alternativeApiEndpoints,
+    referral: config.get('referral'),
 };
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');

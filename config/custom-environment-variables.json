@@ -48,5 +48,10 @@
   "steem_market_token": "STEEM_MARKET_TOKEN",
   "cookie_consent_enabled": "SDC_ENABLE_COOKIE_CONSENT",
   "cookie_consent_api_key": "SDC_COOKIE_CONSENT_KEY",
-  "esteem_elastic_search_api_key": "ESTEEM_ELASTIC_SEARCH_API_KEY"
+  "esteem_elastic_search_api_key": "ESTEEM_ELASTIC_SEARCH_API_KEY",
+  "referral": {
+    "max_fee_referrer": "REFERRAL_MAX_FEE_REFERRER",
+    "max_fee_creator": "REFERRAL_MAX_FEE_CREATOR",
+    "max_fee_provider": "REFERRAL_MAX_FEE_PROVIDER"
+  }
 }
