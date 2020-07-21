@@ -228,7 +228,6 @@ function* usernamePasswordLogin2({
     //check for defaultBeneficiaries
     let defaultBeneficiaries;
     try {
-        console.log(account.get('json_metadata'));
         const json_metadata = JSON.parse(account.get('json_metadata'));
         if (json_metadata.beneficiaries) {
             defaultBeneficiaries = json_metadata.beneficiaries;
