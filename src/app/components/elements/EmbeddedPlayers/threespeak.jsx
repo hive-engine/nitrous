@@ -6,11 +6,11 @@ import React from 'react';
  */
 const regex = {
     // eslint-disable-next-line no-useless-escape
-    sanitize: /^https:\/\/3speak\.online\/embed\?v=([A-Za-z0-9_\-\/]+)(&.*)?$/,
+    sanitize: /^https:\/\/3speak\.online\/embed\?v=([A-Za-z0-9_-\/]+)(&.*)?$/,
     // eslint-disable-next-line no-useless-escape
-    main: /(?:https?:\/\/(?:(?:3speak\.online\/watch\?v=)|(?:3speak\.online\/embed\?v=)))([A-Za-z0-9_\-\/]+)(&.*)?/i,
+    main: /(?:https?:\/\/(?:(?:3speak\.online\/watch\?v=)|(?:3speak\.online\/embed\?v=)))([A-Za-z0-9_-\/]+)(&.*)?/i,
     // eslint-disable-next-line no-useless-escape
-    htmlReplacement: /<a href="(https?:\/\/3speak\.online\/watch\?v=([A-Za-z0-9_\-\/]+))".*<img.*?><\/a>/i,
+    htmlReplacement: /<a href="(https?:\/\/3speak\.online\/watch\?v=([A-Za-z0-9_-\/]+))".*<img.*?><\/a>/i,
     embedShorthand: /~~~ embed:(.*?)\/(.*?) threespeak ~~~/,
 };
 export default regex;
