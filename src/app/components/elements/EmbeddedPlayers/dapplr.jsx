@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Regular expressions for detecting and validating provider URLs
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
@@ -7,8 +5,16 @@ import React from 'react';
 const regex = {
     sanitize: /^(https?:)?\/\/[a-z]*\.dapplr.in\/file\/dapplr-videos\/.*/i,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: true,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL

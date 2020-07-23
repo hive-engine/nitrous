@@ -5,16 +5,28 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^https:\/\/3speak.online\/embed\?v=([A-Za-z0-9\_\-\/]+)(&.*)?$/,
-    main: /(?:https?:\/\/(?:(?:3speak.online\/watch\?v=)|(?:3speak.online\/embed\?v=)))([A-Za-z0-9\_\-\/]+)(&.*)?/i,
-    htmlReplacement: /<a href="(https?:\/\/3speak.online\/watch\?v=([A-Za-z0-9\_\-\/]+))".*<img.*?><\/a>/i,
+    // eslint-disable-next-line no-useless-escape
+    sanitize: /^https:\/\/3speak\.online\/embed\?v=([A-Za-z0-9_\-\/]+)(&.*)?$/,
+    // eslint-disable-next-line no-useless-escape
+    main: /(?:https?:\/\/(?:(?:3speak\.online\/watch\?v=)|(?:3speak\.online\/embed\?v=)))([A-Za-z0-9_\-\/]+)(&.*)?/i,
+    // eslint-disable-next-line no-useless-escape
+    htmlReplacement: /<a href="(https?:\/\/3speak\.online\/watch\?v=([A-Za-z0-9_\-\/]+))".*<img.*?><\/a>/i,
     embedShorthand: /~~~ embed:(.*?)\/(.*?) threespeak ~~~/,
 };
-
 export default regex;
 
 /**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: true,
+    sandboxAttributes: ['allow-scripts', 'allow-same-origin', 'allow-popups'],
+};
+
+/**
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
+ *
  * @param idx
  * @param threespeakId
  * @param w
@@ -33,6 +45,13 @@ export function genIframeMd(idx, threespeakId, w, h) {
                 height={h}
                 frameBorder="0"
                 allowFullScreen
+                sandbox={
+                    sandboxConfig.useSandbox
+                        ? sandboxConfig.sandboxAttributes
+                          ? sandboxConfig.sandboxAttributes.join(' ')
+                          : true
+                        : ''
+                }
             />
         </div>
     );
@@ -40,6 +59,7 @@ export function genIframeMd(idx, threespeakId, w, h) {
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
+ * <iframe src="https://3speak.online/embed?v=threespeak/iaarkpvf"></iframe>
  * @param url
  * @returns {boolean|*}
  */

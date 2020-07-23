@@ -5,11 +5,19 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/player.twitch.tv\/.*/i,
-    main: /https?:\/\/(?:www.)?twitch.tv\/(?:(videos)\/)?([a-zA-Z0-9][\w]{3,24})/i,
+    sanitize: /^(https?:)?\/\/player\.twitch.tv\/.*/i,
+    main: /https?:\/\/(?:www.)?twitch\.tv\/(?:(videos)\/)?([a-zA-Z0-9][\w]{3,24})/i,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: false,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
@@ -112,6 +120,13 @@ export function genIframeMd(idx, id, w, h) {
                 height={h}
                 frameBorder="0"
                 allowFullScreen
+                sandbox={
+                    sandboxConfig.useSandbox
+                        ? sandboxConfig.sandboxAttributes
+                          ? sandboxConfig.sandboxAttributes.join(' ')
+                          : true
+                        : ''
+                }
             />
         </div>
     );

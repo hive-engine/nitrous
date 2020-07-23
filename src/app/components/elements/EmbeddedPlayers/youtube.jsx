@@ -6,13 +6,21 @@ import YoutubePreview from 'app/components/elements/YoutubePreview';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/www.youtube.com\/embed\/.*/i,
+    sanitize: /^(https?:)?\/\/www\.youtube\.com\/embed\/.*/i,
     //main: new RegExp(urlSet({ domain: '(?:(?:.*.)?youtube.com|youtu.be)' }), flags),
-    main: /(?:https?:\/\/)(?:www\.)?(?:(?:youtube.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube.com\/embed\/))([A-Za-z0-9\_\-]+)[^ ]*/i,
-    contentId: /(?:(?:youtube.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube.com\/embed\/))([A-Za-z0-9\_\-]+)/i,
+    main: /(?:https?:\/\/)(?:www\.)?(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_-]+)[^ ]*/i,
+    contentId: /(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_-]+)/i,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: false,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL

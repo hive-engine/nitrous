@@ -5,12 +5,20 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/player.vimeo.com\/video\/([0-9]*)/i,
-    main: /https?:\/\/(?:vimeo.com\/|player.vimeo.com\/video\/)([0-9]+)\/?(#t=((\d+)s?))?\/?/,
-    contentId: /(?:vimeo.com\/|player.vimeo.com\/video\/)([0-9]+)/,
+    sanitize: /^(https?:)?\/\/player\.vimeo\.com\/video\/([0-9]*)/i,
+    main: /https?:\/\/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)\/?(#t=((\d+)s?))?\/?/,
+    contentId: /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: false,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
@@ -118,6 +126,13 @@ export function genIframeMd(idx, id, w, h, startTime) {
                 webkitallowfullscreen
                 mozallowfullscreen
                 allowFullScreen
+                sandbox={
+                    sandboxConfig.useSandbox
+                        ? sandboxConfig.sandboxAttributes
+                          ? sandboxConfig.sandboxAttributes.join(' ')
+                          : true
+                        : ''
+                }
             />
         </div>
     );
