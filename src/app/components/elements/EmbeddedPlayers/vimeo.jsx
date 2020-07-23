@@ -113,26 +113,39 @@ export function embedNode(child, links /*images*/) {
  * @param h
  * @returns {*}
  */
-export function genIframeMd(idx, id, w, h, startTime) {
+export function genIframeMd(idx, id, width, height, startTime) {
     const url = `https://player.vimeo.com/video/${id}#t=${startTime}s`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        webkitallowfullscreen: 'webkitallowfullscreen',
+        mozallowfullscreen: 'mozallowfullscreen',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`vimeo-${id}-${idx}`} className="videoWrapper">
             <iframe
                 title="Vimeo embedded player"
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                webkitallowfullscreen
-                mozallowfullscreen
-                allowFullScreen
-                sandbox={
-                    sandboxConfig.useSandbox
-                        ? sandboxConfig.sandboxAttributes
-                          ? sandboxConfig.sandboxAttributes.join(' ')
-                          : true
-                        : ''
-                }
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );

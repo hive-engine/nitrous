@@ -105,28 +105,41 @@ export function embedNode(child, links /*images*/) {
  * @param h
  * @returns {*}
  */
-export function genIframeMd(idx, id, w, h) {
+export function genIframeMd(idx, id, width, height) {
     let parentDomain = $STM_Config.site_domain;
     if (typeof window !== 'undefined') {
         parentDomain = window.location.hostname;
     }
     const url = `https://player.twitch.tv/${id}&parent=${parentDomain}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`twitch-${id}-${idx}`} className="videoWrapper">
             <iframe
                 title="Twitch embedded player"
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
-                sandbox={
-                    sandboxConfig.useSandbox
-                        ? sandboxConfig.sandboxAttributes
-                          ? sandboxConfig.sandboxAttributes.join(' ')
-                          : true
-                        : ''
-                }
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );

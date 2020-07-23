@@ -33,25 +33,38 @@ export const sandboxConfig = {
  * @param h
  * @returns {*}
  */
-export function genIframeMd(idx, threespeakId, w, h) {
+export function genIframeMd(idx, threespeakId, width, height) {
     const url = `https://3speak.online/embed?v=${threespeakId}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        key: idx,
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`threespeak-${threespeakId}-${idx}`} className="videoWrapper">
             <iframe
                 title="3Speak embedded player"
-                key={idx}
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
-                sandbox={
-                    sandboxConfig.useSandbox
-                        ? sandboxConfig.sandboxAttributes
-                          ? sandboxConfig.sandboxAttributes.join(' ')
-                          : true
-                        : ''
-                }
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );

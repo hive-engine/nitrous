@@ -31,25 +31,38 @@ export const sandboxConfig = {
  * @param h
  * @returns {*}
  */
-export function genIframeMd(idx, dtubeId, w, h) {
+export function genIframeMd(idx, dtubeId, width, height) {
     const url = `https://emb.d.tube/#!/${dtubeId}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        key: idx,
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`dtube-${dtubeId}-${idx}`} className="videoWrapper">
             <iframe
                 title="DTube embedded player"
-                key={idx}
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
-                sandbox={
-                    sandboxConfig.useSandbox
-                        ? sandboxConfig.sandboxAttributes
-                          ? sandboxConfig.sandboxAttributes.join(' ')
-                          : true
-                        : ''
-                }
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );
