@@ -27,8 +27,8 @@ export const sandboxConfig = {
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
 export function genIframeMd(idx, dtubeId, width, height) {

@@ -120,16 +120,16 @@ export function embedNode(child, links, images) {
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
-export function genIframeMd(idx, id, w, h, startTime) {
+export function genIframeMd(idx, id, width, height, startTime) {
     return (
         <YoutubePreview
             key={`youtube-${id}-${idx}`}
-            width={w}
-            height={h}
+            width={width}
+            height={height}
             youTubeId={id}
             startTime={startTime}
             frameBorder="0"

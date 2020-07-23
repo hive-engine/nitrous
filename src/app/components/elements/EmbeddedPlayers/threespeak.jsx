@@ -29,8 +29,8 @@ export const sandboxConfig = {
  *
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
 export function genIframeMd(idx, threespeakId, width, height) {
