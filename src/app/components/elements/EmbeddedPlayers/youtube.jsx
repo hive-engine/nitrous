@@ -8,8 +8,10 @@ import YoutubePreview from 'app/components/elements/YoutubePreview';
 const regex = {
     sanitize: /^(https?:)?\/\/www\.youtube\.com\/embed\/.*/i,
     //main: new RegExp(urlSet({ domain: '(?:(?:.*.)?youtube.com|youtu.be)' }), flags),
-    main: /(?:https?:\/\/)(?:www\.)?(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_-]+)[^ ]*/i,
-    contentId: /(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_-]+)/i,
+    // eslint-disable-next-line no-useless-escape
+    main: /(?:https?:\/\/)(?:www\.)?(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_\-]+)[^ ]*/i,
+    // eslint-disable-next-line no-useless-escape
+    contentId: /(?:(?:youtube\.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube\.com\/embed\/))([A-Za-z0-9_\-]+)/i,
 };
 export default regex;
 

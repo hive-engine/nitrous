@@ -6,11 +6,11 @@ import React from 'react';
  */
 const regex = {
     // eslint-disable-next-line no-useless-escape
-    sanitize: /^https:\/\/emb\.d\.tube\/#!\/([a-zA-Z0-9-.\/]+)$/,
+    sanitize: /^https:\/\/emb\.d\.tube\/#!\/([a-zA-Z0-9.\-\/]+)$/,
     // eslint-disable-next-line no-useless-escape
-    main: /https:\/\/(?:emb\.)?(?:d\.tube\/#!\/(?:v\/)?)([a-zA-Z0-9-.\/]*)/,
+    main: /https:\/\/(?:emb\.)?(?:d\.tube\/#!\/(?:v\/)?)([a-zA-Z0-9.\-\/]*)/,
     // eslint-disable-next-line no-useless-escape
-    contentId: /(?:d\.tube\/#!\/(?:v\/)?([a-zA-Z0-9-.\/]*))+/,
+    contentId: /(?:d\.tube\/#!\/(?:v\/)?([a-zA-Z0-9.\-\/]*))+/,
 };
 export default regex;
 
