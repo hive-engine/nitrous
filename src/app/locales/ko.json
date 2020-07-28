@@ -589,7 +589,8 @@
         "returning_users": "Returning Users: ",
         "join_our": "Join our",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "more_login_methods": "더 많은 로그인 방법"
     },
     "chainvalidation_js": {
         "account_name_should": "Account name should ",

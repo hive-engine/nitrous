@@ -614,7 +614,8 @@
         "returning_users": "Utilisateurs de retour: ",
         "join_our": "Rejoignez notre",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "more_login_methods": "plus de méthodes de connexion"
     },
     "chainvalidation_js": {
         "account_name_should": "Le nom du compte doit ",

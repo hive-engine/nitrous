@@ -98,6 +98,25 @@ export const determineViewMode = search => {
     return '';
 };
 
+/**
+ * Returns a new object contains the parameters in a query (window.location.search)
+ * @param query
+ * @returns {*}
+ */
+export const getQueryStringParams = query => {
+    return query
+        ? (/^[?#]/.test(query) ? query.slice(1) : query)
+              .split('&')
+              .reduce((params, param) => {
+                  let [key, value] = param.split('=');
+                  params[key] = value
+                      ? decodeURIComponent(value.replace(/\+/g, ' '))
+                      : '';
+                  return params;
+              }, {})
+        : {};
+};
+
 // Original regex
 // const urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
 

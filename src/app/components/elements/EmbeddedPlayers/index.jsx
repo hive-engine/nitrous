@@ -44,6 +44,8 @@ import {
     preprocessHtml as preprocessTwitterHtml,
 } from 'app/components/elements/EmbeddedPlayers/twitter';
 
+import { validateIframeUrl as validateDapplrVideoUrl } from 'app/components/elements/EmbeddedPlayers/dapplr';
+
 const supportedProviders = [
     {
         id: 'dtube',
@@ -51,6 +53,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeDtubeEmbedUrl,
         embedNodeFn: embedDtubeNode,
         genIframeMdFn: genDtubeIframeMd,
+        useSandbox: false,
     },
     {
         id: 'twitch',
@@ -58,6 +61,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitchEmbedUrl,
         embedNodeFn: embedTwitchNode,
         genIframeMdFn: genTwitchIframeMd,
+        useSandbox: false,
     },
     {
         id: 'soundcloud',
@@ -65,6 +69,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: null,
         embedNodeFn: null,
         genIframeMdFn: null,
+        useSandbox: false,
     },
     {
         id: 'youtube',
@@ -72,6 +77,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeYoutubeEmbedUrl,
         embedNodeFn: embedYoutubeNode,
         genIframeMdFn: genYoutubeIframeMd,
+        useSandbox: false,
     },
     {
         id: 'vimeo',
@@ -79,6 +85,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeVimeoEmbedUrl,
         embedNodeFn: embedVimeoNode,
         genIframeMdFn: genVimeoIframeMd,
+        useSandbox: false,
     },
     {
         id: 'threespeak',
@@ -86,6 +93,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeThreespeakEmbedUrl,
         embedNodeFn: embedThreeSpeakNode,
         genIframeMdFn: genThreespeakIframeMd,
+        useSandbox: false,
     },
     {
         id: 'twitter',
@@ -93,6 +101,15 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitterEmbedUrl,
         embedNodeFn: embedTwitterNode,
         genIframeMdFn: genTwitterIframeMd,
+        useSandbox: false,
+    },
+    {
+        id: 'dapplr',
+        validateIframeUrlFn: validateDapplrVideoUrl,
+        normalizeEmbedUrlFn: null,
+        embedNodeFn: null,
+        genIframeMdFn: null,
+        useSandbox: true,
     },
 ];
 
@@ -101,17 +118,21 @@ export default supportedProviders;
 /**
  * Allow iFrame in the Markdown if the source URL is allowed
  * @param url
- * @returns {boolean|*}
+ * @returns { boolean | { providerId: string, useSandbox: boolean, validUrl: string }}
  */
 export function validateIframeUrl(url) {
     for (let pi = 0; pi < supportedProviders.length; pi += 1) {
         const provider = supportedProviders[pi];
 
-        const validIframeUrl = provider.validateIframeUrlFn(url);
+        const validUrl = provider.validateIframeUrlFn(url);
 
-        if (validIframeUrl !== false) {
+        if (validUrl !== false) {
             console.log(`Found a valid ${provider.id} iframe URL`);
-            return validIframeUrl;
+            return {
+                providerId: provider.id,
+                useSandbox: provider.useSandbox,
+                validUrl,
+            };
         }
     }
 
