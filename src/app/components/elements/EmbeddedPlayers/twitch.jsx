@@ -5,11 +5,19 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/player.twitch.tv\/.*/i,
-    main: /https?:\/\/(?:www.)?twitch.tv\/(?:(videos)\/)?([a-zA-Z0-9][\w]{3,24})/i,
+    sanitize: /^(https?:)?\/\/player\.twitch.tv\/.*/i,
+    main: /https?:\/\/(?:www.)?twitch\.tv\/(?:(videos)\/)?([a-zA-Z0-9][\w]{3,24})/i,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: false,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
@@ -93,25 +101,45 @@ export function embedNode(child, links /*images*/) {
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
-export function genIframeMd(idx, id, w, h) {
+export function genIframeMd(idx, id, width, height) {
     let parentDomain = $STM_Config.site_domain;
     if (typeof window !== 'undefined') {
         parentDomain = window.location.hostname;
     }
     const url = `https://player.twitch.tv/${id}&parent=${parentDomain}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`twitch-${id}-${idx}`} className="videoWrapper">
             <iframe
                 title="Twitch embedded player"
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );

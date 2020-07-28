@@ -5,33 +5,64 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^https:\/\/emb.d.tube\/\#\!\/([a-zA-Z0-9\-\.\/]+)$/,
-    main: /https:\/\/(?:emb\.)?(?:d.tube\/\#\!\/(?:v\/)?)([a-zA-Z0-9\-\.\/]*)/,
-    contentId: /(?:d\.tube\/#!\/(?:v\/)?([a-zA-Z0-9\-\.\/]*))+/,
+    // eslint-disable-next-line no-useless-escape
+    sanitize: /^https:\/\/emb\.d\.tube\/#!\/([a-zA-Z0-9.\-\/]+)$/,
+    // eslint-disable-next-line no-useless-escape
+    main: /https:\/\/(?:emb\.)?(?:d\.tube\/#!\/(?:v\/)?)([a-zA-Z0-9.\-\/]*)/,
+    // eslint-disable-next-line no-useless-escape
+    contentId: /(?:d\.tube\/#!\/(?:v\/)?([a-zA-Z0-9.\-\/]*))+/,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: true,
+    sandboxAttributes: ['allow-scripts', 'allow-same-origin'],
+};
 
 /**
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
-export function genIframeMd(idx, dtubeId, w, h) {
+export function genIframeMd(idx, dtubeId, width, height) {
     const url = `https://emb.d.tube/#!/${dtubeId}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        key: idx,
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`dtube-${dtubeId}-${idx}`} className="videoWrapper">
             <iframe
                 title="DTube embedded player"
-                key={idx}
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );
@@ -39,7 +70,7 @@ export function genIframeMd(idx, dtubeId, w, h) {
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
- * <iframe title="DTube embedded player" src="https://emb.d.tube/#!/lemwong/QmQqxBCkoVusMRwP6D9oBMRQdASFzABdKQxE7xLysfmsR6" width="640" height="360" frameborder="0" allowfullscreen=""></iframe>
+ * <iframe title="DTube embedded player" src="https://emb.d.tube/#!/cyberspacegod/QmfHTqZWQkJ6uqLsca4wgZffGE3To6YVSzazFD3ReS1NcA" width="640" height="360" frameborder="0" allowfullscreen=""></iframe>
  * @param url
  * @returns {boolean|*}
  */
