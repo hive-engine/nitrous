@@ -130,7 +130,7 @@ function generateTwitterCode(metadata) {
             '</blockquote>';
 
         const twttr = _.get(window, 'twttr');
-        if (twttr) {
+        if (twttr && twttr.widgets) {
             twttr.widgets.load();
         }
     }
