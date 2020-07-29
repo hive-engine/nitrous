@@ -349,7 +349,10 @@
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
         "beneficiaries_set": "%(count)s set",
-        "tags_input": "Enter your tags separated by a space"
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",

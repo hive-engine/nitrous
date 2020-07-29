@@ -1,5 +1,24 @@
 .ReplyEditor {
-  max-width: 100%;
+  max-width: 60rem;
+  padding: 10px;
+  margin-bottom: 15px;
+  overflow-y: auto;
+  @include themify($themes) {
+    border-radius: themed('roundedCorners');
+    border: themed('border');
+    background-color: themed('moduleBackgroundColor');
+  }
+  &.side-by-side {
+    max-width: 100%;
+  }
+  .preview-container {
+    max-width: 40rem;
+    margin-left: 10rem;
+    &.side-by-side {
+        max-width: 100%;
+        margin-left: 0;
+    }
+  }
   .vframe {
     display: block;
     .public-DraftEditor-content {
@@ -25,15 +44,7 @@
     border: transparent;
   }
   .side-by-side {
-    padding: 10px;
-    margin-bottom: 15px;
-    height: calc(100vh - 140px);
-    overflow-y: auto;
-    @include themify($themes) {
-        border-radius: themed('roundedCorners');
-        border: themed('border');
-        background-color: themed('moduleBackgroundColor');
-    }
+      height: calc(100vh - 140px);
   }
   .Preview-info {
     display: flex;
