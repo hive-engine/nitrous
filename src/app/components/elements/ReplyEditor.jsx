@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import reactForm from 'app/utils/ReactForm';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
@@ -91,7 +92,11 @@ class ReplyEditor extends React.Component {
 
     constructor(props) {
         super();
-        this.state = { progress: {}, imagesUploadCount: 0 };
+        this.state = {
+            progress: {},
+            imagesUploadCount: 0,
+            enableSideBySide: true,
+        };
         this.initForm(props);
     }
 
@@ -571,7 +576,14 @@ class ReplyEditor extends React.Component {
             body: this.props.body,
         };
         const { onCancel, onTitleChange } = this;
-        const { title, tags, body, community, disabledCommunity } = this.state;
+        const {
+            title,
+            tags,
+            body,
+            community,
+            disabledCommunity,
+            enableSideBySide,
+        } = this.state;
         const {
             reply,
             username,
@@ -661,9 +673,27 @@ class ReplyEditor extends React.Component {
             ? 'vframe__section--shrink'
             : '';
 
+        const toggleSideBySide = () => {
+            this.setState({
+                enableSideBySide: !enableSideBySide,
+            });
+        };
+
         return (
-            <div className="ReplyEditor row">
-                <div className="column small-12 large-6">
+            <div
+                className={classnames({
+                    ReplyEditor: true,
+                    row: true,
+                    'side-by-side': enableSideBySide,
+                })}
+            >
+                <div
+                    className={classnames({
+                        column: true,
+                        'small-12': true,
+                        'large-6': enableSideBySide,
+                    })}
+                >
                     {isStory &&
                         !isEdit &&
                         username && (
@@ -682,7 +712,10 @@ class ReplyEditor extends React.Component {
                         {tt('reply_editor.draft_saved')}
                     </div>
                     <form
-                        className={`${vframe_class} side-by-side`}
+                        className={classnames({
+                            vframe_class: true,
+                            'side-by-side': enableSideBySide,
+                        })}
                         onSubmit={handleSubmit(({ data }) => {
                             const startLoadingIndicator = () =>
                                 this.setState({
@@ -854,17 +887,35 @@ class ReplyEditor extends React.Component {
                                         isEdit={isEdit}
                                         tabIndex={3}
                                     />
-                                    <div className="error">
-                                        {(tags.touched || tags.value) &&
-                                            tags.error}&nbsp;
-                                    </div>
+                                    {(tags.touched || tags.value) && (
+                                        <div className="error">
+                                            {tags.error}{' '}
+                                        </div>
+                                    )}
                                 </span>
                             )}
                         </div>
-                        <div className={vframe_section_shrink_class}>
+                        {isStory && (
+                            <div className={vframe_section_shrink_class}>
+                                <a href="#" onClick={toggleSideBySide}>
+                                    {(enableSideBySide &&
+                                        tt(
+                                            'reply_editor.disable_sidebyside'
+                                        )) ||
+                                        tt('reply_editor.enable_sidebyside')}
+                                </a>
+                            </div>
+                        )}
+                        <div
+                            className={vframe_section_shrink_class}
+                            style={{ marginTop: '0.5rem' }}
+                        >
                             {isStory &&
                                 !isEdit && (
                                     <div className="ReplyEditor__options">
+                                        <h6>
+                                            {tt('reply_editor.post_options')}:
+                                        </h6>
                                         <div>
                                             {this.props.maxAcceptedPayout !==
                                                 null &&
@@ -1002,7 +1053,15 @@ class ReplyEditor extends React.Component {
                         </div>
                     </form>
                 </div>
-                <div className="column small-12 large-6">
+                <div
+                    className={classnames({
+                        column: true,
+                        'small-12': true,
+                        'large-6': enableSideBySide,
+                        'preview-container': true,
+                        'side-by-side': enableSideBySide,
+                    })}
+                >
                     <div className="Preview-info">
                         <h6>{tt('g.preview')}</h6>
                         {!isHtml && (
@@ -1021,9 +1080,11 @@ class ReplyEditor extends React.Component {
                         !rte &&
                         body.value && (
                             <div
-                                className={`Preview side-by-side ${
-                                    vframe_section_shrink_class
-                                }`}
+                                className={classnames({
+                                    Preview: true,
+                                    'side-by-side': enableSideBySide,
+                                    vframe_section_shrink_class: true,
+                                })}
                             >
                                 <MarkdownViewer
                                     text={body.value}
@@ -1052,7 +1113,8 @@ function stateToHtml(state) {
     if (html === '<p></p>') html = '';
     if (html === '<p><br></p>') html = '';
     if (html == '') return '';
-    return `<html>\n${html}\n</html>`;
+    return `<html>
+                                }\n${html}\n</html>`;
 }
 
 function stateFromHtml(html = null) {
