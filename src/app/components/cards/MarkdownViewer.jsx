@@ -119,7 +119,7 @@ class MarkdownViewer extends Component {
                         noImage: noImage && allowNoImage,
                     })
                 );
-            catch(e) {
+            } catch(e) {
                 cleanText = ''
                 console.error('bad input')
             }
