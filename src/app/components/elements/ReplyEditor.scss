@@ -12,8 +12,8 @@
     max-width: 100%;
   }
   .preview-container {
-    max-width: 40rem;
-    margin-left: 10rem;
+    max-width: 48rem;
+    margin-left: 5rem;
     &.side-by-side {
         max-width: 100%;
         margin-left: 0;
@@ -130,7 +130,7 @@
 
 .ReplyEditor .Preview .Markdown {
   border: 1px solid $light-gray;
-  padding: 0.5rem 1rem;
+  padding: 0 0.5rem;
 }
 
 .ReplyEditor__body {
