@@ -102,6 +102,7 @@ const map = {
       python13 : 'Verified Creator',
      forced2orgasm : 'Verified Creator',
      gressylove23 : 'Verified Creator',
+     lunagoddess503 : 'Verified Creator',
 };
 
 export default map;
