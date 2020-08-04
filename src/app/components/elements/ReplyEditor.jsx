@@ -162,6 +162,51 @@ class ReplyEditor extends React.Component {
             }
             this.checkTagsCommunity(this.props.category);
         }
+
+        // Verify and Set defaultBeneficiaries if enabled
+        let qualifiedBeneficiaries = [];
+
+        if (
+            this.props.defaultBeneficiaries &&
+            this.props.defaultBeneficiaries.toArray().length > 0 &&
+            this.props.referralSystem != 'disabled'
+        ) {
+            this.props.defaultBeneficiaries.toArray().forEach(element => {
+                const label = element.get('label');
+                const name = element.get('name');
+                const weight = parseInt(element.get('weight'));
+
+                if (label && name && weight) {
+                    if (
+                        (label === 'referrer' &&
+                            weight <= $STM_Config.referral.max_fee_referrer) ||
+                        (label === 'creator' &&
+                            weight <= $STM_Config.referral.max_fee_creator) ||
+                        (label === 'provider' &&
+                            weight <= $STM_Config.referral.max_fee_provider)
+                    ) {
+                        if (
+                            qualifiedBeneficiaries.find(
+                                beneficiary => beneficiary.username === name
+                            )
+                        ) {
+                            qualifiedBeneficiaries.find(
+                                beneficiary => beneficiary.username === name
+                            ).percent += parseInt((weight / 100).toFixed(0));
+                        } else {
+                            qualifiedBeneficiaries.push({
+                                username: name,
+                                percent: parseInt((weight / 100).toFixed(0)),
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        if (qualifiedBeneficiaries.length > 0) {
+            this.props.setBeneficiaries(formId, qualifiedBeneficiaries);
+        }
     }
 
     checkTagsCommunity(tagsInput) {
@@ -1140,6 +1185,14 @@ export default formId =>
         // mapStateToProps
         (state, ownProps) => {
             const username = state.user.getIn(['current', 'username']);
+            const referralSystem = state.app.getIn([
+                'user_preferences',
+                'referralSystem',
+            ]);
+            const defaultBeneficiaries = state.user.getIn([
+                'current',
+                'defaultBeneficiaries',
+            ]);
             const fields = ['body'];
             const { author, permlink, type, parent_author } = ownProps;
             const isEdit = type === 'edit';
@@ -1250,6 +1303,8 @@ export default formId =>
                 fields,
                 isStory,
                 username,
+                referralSystem,
+                defaultBeneficiaries,
                 defaultPayoutType,
                 payoutType,
                 beneficiaries,

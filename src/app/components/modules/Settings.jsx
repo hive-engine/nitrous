@@ -256,6 +256,13 @@ class Settings extends React.Component {
         this.props.setUserPreferences(userPreferences);
     };
 
+    handleReferralSystemChange = event => {
+        this.props.setUserPreferences({
+            ...this.props.user_preferences,
+            referralSystem: event.target.value,
+        });
+    };
+
     getPreferredApiEndpoint = () => {
         let preferred_api_endpoint = $STM_Config.steemd_connection_client;
 
@@ -710,6 +717,32 @@ class Settings extends React.Component {
                                             </option>
 
                                             {this.generateAPIEndpointOptions()}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div className="form__field column small-12 medium-6 large-4">
+                                    <label>
+                                        {tt(
+                                            'settings_jsx.default_beneficiaries'
+                                        )}
+                                        <select
+                                            defaultValue={
+                                                user_preferences.referralSystem
+                                            }
+                                            onChange={
+                                                this.handleReferralSystemChange
+                                            }
+                                        >
+                                            <option value="enabled">
+                                                {tt(
+                                                    'settings_jsx.default_beneficiaries_enabled'
+                                                )}
+                                            </option>
+                                            <option value="disabled">
+                                                {tt(
+                                                    'settings_jsx.default_beneficiaries_disabled'
+                                                )}
+                                            </option>
                                         </select>
                                     </label>
                                 </div>
