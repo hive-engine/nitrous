@@ -132,7 +132,13 @@ class PostSummary extends React.Component {
         const post_url = `/${category}/@${author}/${permlink}`;
         const showCommunityLabels = requestedCategory === category;
 
-        const summary = extractBodySummary(post.get('body'), isReply);
+        let summary;
+        if (crossPostedBy) {
+            summary = extractBodySummary(post.get('cross_post_body'), isReply);
+        } else {
+            summary = extractBodySummary(post.get('body'), isReply);
+        }
+
         const content_body = (
             <div className="PostSummary__body entry-content">
                 <Link to={post_url}>{summary}</Link>
