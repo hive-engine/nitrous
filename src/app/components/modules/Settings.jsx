@@ -11,17 +11,41 @@ import Dropzone from 'react-dropzone';
 import MuteList from 'app/components/elements/MuteList';
 import { isLoggedIn } from 'app/utils/UserUtil';
 import * as api from '@hiveio/hive-js';
+import Cookies from 'universal-cookie';
+
+//TODO?: Maybe move this to a config file somewhere?
+const KNOWN_API_NODES = [
+    'api.hive.blog',
+    'anyx.io',
+    'hived.hive-engine.com',
+    'api.followbtcnews.com',
+    'rpc.esteem.app',
+    'api.openhive.network',
+    'api.pharesim.me',
+    'hive.roelandp.nl',
+    'hived.privex.io',
+    'techcoderx.com',
+    'hive.3speak.online',
+    'rpc.ausbit.dev',
+    'api.hivekings.com',
+];
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
+        let cookies = new Cookies();
         this.state = {
             errorMessage: '',
             successMessage: '',
             progress: {},
+            expand_advanced: false,
+            cookies: cookies,
+            endpoint_error_message: '',
+            original_api_endpoints: '', //safety precaution for the moment
         };
         this.initForm(props);
         this.onNsfwPrefChange = this.onNsfwPrefChange.bind(this);
+        this.resetEndpointOptions = this.resetEndpointOptions.bind(this);
     }
 
     componentWillMount() {
@@ -36,6 +60,28 @@ class Settings extends React.Component {
         if (prevProps.account !== account && account) {
             this.initForm(this.props);
         }
+    }
+
+    componentDidMount() {
+        //Create the cookies if they don't already exist
+        let endpoints = [];
+        if (!this.state.cookies.get('user_preferred_api_endpoint')) {
+            let default_endpoint = 'https://api.hive.blog';
+            this.state.cookies.set(
+                'user_preferred_api_endpoint',
+                default_endpoint
+            );
+        }
+
+        if (!this.state.cookies.get('user_api_endpoints')) {
+            endpoints = api.config.get('alternative_api_endpoints');
+            for (var node of KNOWN_API_NODES) endpoints.push('https://' + node);
+            this.state.cookies.set('user_api_endpoints', endpoints);
+        } else endpoints = this.state.cookies.get('user_api_endpoints');
+
+        let preferred = this.getPreferredApiEndpoint();
+        api.api.setOptions({ url: preferred });
+        this.synchronizeLists();
     }
 
     initForm(props) {
@@ -264,53 +310,172 @@ class Settings extends React.Component {
     };
 
     getPreferredApiEndpoint = () => {
-        let preferred_api_endpoint = $STM_Config.steemd_connection_client;
-
-        if (
-            typeof window !== 'undefined' &&
-            localStorage.getItem('user_preferred_api_endpoint')
-        ) {
-            preferred_api_endpoint = localStorage.getItem(
+        let preferred_api_endpoint = 'https://api.hive.blog';
+        if (this.state.cookies.get('user_preferred_api_endpoint'))
+            preferred_api_endpoint = this.state.cookies.get(
                 'user_preferred_api_endpoint'
             );
-        }
-
         return preferred_api_endpoint;
     };
 
-    generateAPIEndpointOptions = () => {
-        const endpoints = api.config.get('alternative_api_endpoints');
+    resetEndpointOptions = () => {
+        this.state.cookies.set(
+            'user_preferred_api_endpoint',
+            'https://api.hive.blog'
+        );
+        this.state.cookies.set('user_api_endpoints', []);
+        let preferred_api_endpoint = 'https://api.hive.blog';
+        let alternative_api_endpoints = api.config.get(
+            'alternative_api_endpoints'
+        );
+        alternative_api_endpoints.length = 0;
+        for (var node of KNOWN_API_NODES)
+            alternative_api_endpoints.push('https://' + node);
+        api.api.setOptions({ url: preferred_api_endpoint });
 
-        if (endpoints === null || endpoints === undefined) {
-            return null;
-        }
+        let cookies = this.state.cookies;
+        cookies.set('user_preferred_api_endpoint', preferred_api_endpoint);
+        cookies.set('user_api_endpoints', alternative_api_endpoints);
+        this.setState({ cookies: cookies, endpoint_error_message: '' });
+    };
+
+    synchronizeLists = () => {
+        let preferred = this.getPreferredApiEndpoint();
+        let alternative_api_endpoints = api.config.get(
+            'alternative_api_endpoints'
+        );
+        let user_endpoints = this.state.cookies.get('user_api_endpoints');
+        api.api.setOptions({ url: preferred });
+        alternative_api_endpoints.length = 0;
+        for (var user_endpoint of user_endpoints)
+            alternative_api_endpoints.push(user_endpoint);
+    };
+
+    setPreferredApiEndpoint = event => {
+        let cookies = this.state.cookies;
+        cookies.set('user_preferred_api_endpoint', event.target.value);
+        this.setState({ cookies: cookies, endpoint_error_message: '' }); //doing it this way to force a re-render, otherwise the option doesn't look updated even though it is
+        api.api.setOptions({ url: event.target.value });
+    };
+
+    generateAPIEndpointOptions = () => {
+        let user_endpoints = this.state.cookies.get('user_api_endpoints');
+
+        if (user_endpoints === null || user_endpoints === undefined) return;
 
         const preferred_api_endpoint = this.getPreferredApiEndpoint();
         const entries = [];
-        for (let ei = 0; ei < endpoints.length; ei += 1) {
-            const endpoint = endpoints[ei];
-
-            //this one is always present even if the api config call fails
-            if (endpoint !== preferred_api_endpoint) {
-                const entry = (
-                    <option key={endpoint} value={endpoint}>
-                        {endpoint}
-                    </option>
-                );
-                entries.push(entry);
-            }
+        for (let ei = 0; ei < user_endpoints.length; ei += 1) {
+            const endpoint = user_endpoints[ei];
+            let entry = (
+                <tr key={endpoint + 'key'}>
+                    <td>{endpoint}</td>
+                    <td>
+                        <input
+                            type="radio"
+                            value={endpoint}
+                            checked={endpoint === preferred_api_endpoint}
+                            onChange={e => this.setPreferredApiEndpoint(e)}
+                        />
+                    </td>
+                    <td style={{ fontSize: '20px' }}>
+                        <button
+                            onClick={e => {
+                                this.removeAPIEndpoint(endpoint);
+                            }}
+                        >
+                            {'\u2612'}
+                        </button>
+                    </td>
+                </tr>
+            );
+            entries.push(entry);
         }
         return entries;
     };
 
-    handlePreferredAPIEndpointChange = event => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(
-                'user_preferred_api_endpoint',
-                event.target.value
-            );
-            api.api.setOptions({ url: event.target.value });
+    toggleShowAdvancedSettings = event => {
+        this.setState({ expand_advanced: !this.state.expand_advanced });
+    };
+
+    addAPIEndpoint = value => {
+        this.setState({ endpoint_error_message: '' });
+        let validated = /^https?:\/\//.test(value);
+        if (!validated) {
+            this.setState({
+                endpoint_error_message:
+                    'This appears to be a bad URL, please check it and try again',
+            });
+            return;
         }
+
+        let cookies = this.state.cookies;
+        let endpoints = cookies.get('user_api_endpoints');
+        if (endpoints === null || endpoints === undefined) {
+            this.setState({
+                endpoint_error_message: 'Unable to get endpoints from cookie',
+            });
+            return;
+        }
+
+        for (var endpoint of endpoints) {
+            if (endpoint === value) {
+                this.setState({
+                    endpoint_error_message:
+                        'This server is already in the list',
+                });
+                return;
+            }
+        }
+
+        endpoints.push(value);
+        cookies.set('user_api_endpoints', endpoints);
+        this.setState({ cookies: cookies }, () => {
+            this.synchronizeLists();
+        });
+    };
+
+    removeAPIEndpoint = value => {
+        this.setState({ endpoint_error_message: '' });
+        //don't remove the active endpoint
+        //don't remove it if it is the only endpoint in the list
+        let active_endpoint = this.getPreferredApiEndpoint();
+        if (value === active_endpoint) {
+            this.setState({
+                endpoint_error_message:
+                    "Can't remove the current preferred endpoint. Please select a new preffered endpoint first",
+            });
+            return;
+        }
+
+        let cookies = this.state.cookies;
+        let endpoints = cookies.get('user_api_endpoints');
+        if (endpoints === null || endpoints === undefined) {
+            this.setState({
+                endpoint_error_message: 'Unable to get endpoints from cookie',
+            });
+            return;
+        }
+
+        if (endpoints.length == 1) {
+            this.setState({
+                endpoint_error_message:
+                    'You must have at least 1 valid endpoint in your list',
+            });
+            return;
+        }
+
+        let new_endpoints = [];
+        for (var endpoint of endpoints) {
+            if (endpoint !== value) {
+                new_endpoints.push(endpoint);
+            }
+        }
+
+        cookies.set('user_api_endpoints', new_endpoints);
+        this.setState({ cookies: cookies }, () => {
+            this.synchronizeLists();
+        });
     };
 
     render() {
@@ -345,7 +510,7 @@ class Settings extends React.Component {
             account_is_witness,
         } = this.state;
 
-        const preferred_api_endpoint = this.getPreferredApiEndpoint();
+        const endpoint_options = this.generateAPIEndpointOptions();
 
         return (
             <div className="Settings">
@@ -699,30 +864,6 @@ class Settings extends React.Component {
                                 <div className="form__field column small-12 medium-6 large-4">
                                     <label>
                                         {tt(
-                                            'settings_jsx.choose_preferred_api_endpoint'
-                                        )}
-                                        <select
-                                            defaultValue={
-                                                preferred_api_endpoint
-                                            }
-                                            onChange={
-                                                this
-                                                    .handlePreferredAPIEndpointChange
-                                            }
-                                        >
-                                            <option
-                                                value={preferred_api_endpoint}
-                                            >
-                                                {preferred_api_endpoint}
-                                            </option>
-
-                                            {this.generateAPIEndpointOptions()}
-                                        </select>
-                                    </label>
-                                </div>
-                                <div className="form__field column small-12 medium-6 large-4">
-                                    <label>
-                                        {tt(
                                             'settings_jsx.default_beneficiaries'
                                         )}
                                         <select
@@ -750,6 +891,96 @@ class Settings extends React.Component {
                         </div>
                     </div>
                 )}
+                <br />
+                <div className="row">
+                    <div className="large-12 columns">
+                        <h4 onClick={this.toggleShowAdvancedSettings}>
+                            {tt('settings_jsx.advanced') + ' '}{' '}
+                            {this.state.expand_advanced ? '\u25B2' : '\u25BC'}
+                        </h4>
+                        {this.state.expand_advanced && (
+                            <div>
+                                <b>{tt('settings_jsx.api_endpoint_options')}</b>
+                                <table style={{ width: '60%' }}>
+                                    <thead />
+                                    <tbody>
+                                        <tr>
+                                            <td style={{ width: '50%' }}>
+                                                <b>
+                                                    {tt(
+                                                        'settings_jsx.endpoint'
+                                                    )}
+                                                </b>
+                                            </td>
+                                            <td style={{ width: '25%' }}>
+                                                <b>
+                                                    {tt(
+                                                        'settings_jsx.preferred'
+                                                    )}
+                                                </b>
+                                            </td>
+                                            <td style={{ width: '25%' }}>
+                                                <b>
+                                                    {tt('settings_jsx.remove')}
+                                                </b>
+                                            </td>
+                                        </tr>
+                                        {endpoint_options}
+                                    </tbody>
+                                </table>
+                                <h4>
+                                    <b>{tt('settings_jsx.add_api_endpoint')}</b>
+                                </h4>
+                                <table style={{ width: '60%' }}>
+                                    <thead />
+                                    <tbody>
+                                        <tr>
+                                            <td style={{ width: '40%' }}>
+                                                <input
+                                                    type="text"
+                                                    ref={el =>
+                                                        (this.new_endpoint = el)
+                                                    }
+                                                />
+                                            </td>
+                                            <td
+                                                style={{
+                                                    width: '20%',
+                                                    fontSize: '30px',
+                                                }}
+                                            >
+                                                <button
+                                                    onClick={e =>
+                                                        this.addAPIEndpoint(
+                                                            this.new_endpoint
+                                                                .value
+                                                        )
+                                                    }
+                                                >
+                                                    {'\u2713'}
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <div className="error">
+                                                    {
+                                                        this.state
+                                                            .endpoint_error_message
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span
+                                    className="button"
+                                    onClick={this.resetEndpointOptions}
+                                >
+                                    {tt('settings_jsx.reset_endpoints')}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
                 {ignores &&
                     ignores.size > 0 && (
                         <div className="row">
