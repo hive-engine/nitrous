@@ -12,6 +12,7 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import * as steem from '@hiveio/hive-js';
 import { determineViewMode } from 'app/utils/Links';
 import frontendLogger from 'app/utils/FrontendLogger';
+import Cookies from 'universal-cookie';
 
 window.addEventListener('error', frontendLogger);
 
@@ -84,11 +85,12 @@ function runApp(initial_state) {
     }
 
     const { config } = initial_state.offchain;
+    let cookies = new Cookies();
     const alternativeApiEndpoints = config.alternative_api_endpoints;
     const currentApiEndpoint =
-        localStorage.getItem('user_preferred_api_endpoint') === null
+        cookies.get('user_preferred_api_endpoint') === null
             ? config.steemd_connection_client
-            : localStorage.getItem('user_preferred_api_endpoint');
+            : cookies.get('user_preferred_api_endpoint');
 
     steem.api.setOptions({
         url: currentApiEndpoint,
