@@ -5,34 +5,66 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^https:\/\/3speak.online\/embed\?v=([A-Za-z0-9\_\-\/]+)(&.*)?$/,
-    main: /(?:https?:\/\/(?:(?:3speak.online\/watch\?v=)|(?:3speak.online\/embed\?v=)))([A-Za-z0-9\_\-\/]+)(&.*)?/i,
-    htmlReplacement: /<a href="(https?:\/\/3speak.online\/watch\?v=([A-Za-z0-9\_\-\/]+))".*<img.*?><\/a>/i,
+    // eslint-disable-next-line no-useless-escape
+    sanitize: /^https:\/\/3speak\.online\/embed\?v=([A-Za-z0-9_\-\/]+)(&.*)?$/,
+    // eslint-disable-next-line no-useless-escape
+    main: /(?:https?:\/\/(?:(?:3speak\.online\/watch\?v=)|(?:3speak\.online\/embed\?v=)))([A-Za-z0-9_\-\/]+)(&.*)?/i,
+    // eslint-disable-next-line no-useless-escape
+    htmlReplacement: /<a href="(https?:\/\/3speak\.online\/watch\?v=([A-Za-z0-9_\-\/]+))".*<img.*?><\/a>/i,
     embedShorthand: /~~~ embed:(.*?)\/(.*?) threespeak ~~~/,
 };
-
 export default regex;
 
 /**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: true,
+    sandboxAttributes: ['allow-scripts', 'allow-same-origin', 'allow-popups'],
+};
+
+/**
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
+ *
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
  * @returns {*}
  */
-export function genIframeMd(idx, threespeakId, w, h) {
+export function genIframeMd(idx, threespeakId, width, height) {
     const url = `https://3speak.online/embed?v=${threespeakId}`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        key: idx,
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`threespeak-${threespeakId}-${idx}`} className="videoWrapper">
             <iframe
                 title="3Speak embedded player"
-                key={idx}
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                allowFullScreen
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );
@@ -40,6 +72,7 @@ export function genIframeMd(idx, threespeakId, w, h) {
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
+ * <iframe src="https://3speak.online/embed?v=threespeak/iaarkpvf"></iframe>
  * @param url
  * @returns {boolean|*}
  */

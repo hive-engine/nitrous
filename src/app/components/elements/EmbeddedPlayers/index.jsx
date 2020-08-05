@@ -3,6 +3,7 @@ import {
     validateIframeUrl as validateDtubeIframeUrl,
     normalizeEmbedUrl as normalizeDtubeEmbedUrl,
     embedNode as embedDtubeNode,
+    sandboxConfig as sandboxConfigDtube,
 } from 'app/components/elements/EmbeddedPlayers/dtube';
 
 import {
@@ -10,15 +11,20 @@ import {
     validateIframeUrl as validateTwitchIframeUrl,
     normalizeEmbedUrl as normalizeTwitchEmbedUrl,
     embedNode as embedTwitchNode,
+    sandboxConfig as sandboxConfigTwitch,
 } from 'app/components/elements/EmbeddedPlayers/twitch';
 
-import { validateIframeUrl as validateSoundcloudIframeUrl } from 'app/components/elements/EmbeddedPlayers/soundcloud';
+import {
+    validateIframeUrl as validateSoundcloudIframeUrl,
+    sandboxConfig as sandboxConfigSoundcloud,
+} from 'app/components/elements/EmbeddedPlayers/soundcloud';
 
 import {
     genIframeMd as genYoutubeIframeMd,
     validateIframeUrl as validateYoutubeIframeUrl,
     normalizeEmbedUrl as normalizeYoutubeEmbedUrl,
     embedNode as embedYoutubeNode,
+    sandboxConfig as sandboxConfigYoutube,
 } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 import {
@@ -26,6 +32,7 @@ import {
     validateIframeUrl as validateVimeoIframeUrl,
     normalizeEmbedUrl as normalizeVimeoEmbedUrl,
     embedNode as embedVimeoNode,
+    sandboxConfig as sandboxConfigVimeo,
 } from 'app/components/elements/EmbeddedPlayers/vimeo';
 
 import {
@@ -34,6 +41,7 @@ import {
     normalizeEmbedUrl as normalizeThreespeakEmbedUrl,
     embedNode as embedThreeSpeakNode,
     preprocessHtml as preprocess3SpeakHtml,
+    sandboxConfig as sandboxConfigThreespeak,
 } from 'app/components/elements/EmbeddedPlayers/threespeak';
 
 import {
@@ -42,9 +50,23 @@ import {
     normalizeEmbedUrl as normalizeTwitterEmbedUrl,
     embedNode as embedTwitterNode,
     preprocessHtml as preprocessTwitterHtml,
+    sandboxConfig as sandboxConfigTwitter,
 } from 'app/components/elements/EmbeddedPlayers/twitter';
 
-import { validateIframeUrl as validateDapplrVideoUrl } from 'app/components/elements/EmbeddedPlayers/dapplr';
+import {
+    validateIframeUrl as validateDapplrVideoUrl,
+    sandboxConfig as sandboxConfigDapplr,
+} from 'app/components/elements/EmbeddedPlayers/dapplr';
+
+// Set only those attributes in `sandboxAttributes`, that are minimally
+// required for a given provider.
+// When the embedded document has the same origin as the embedding page,
+// it is strongly discouraged to use both allow-scripts
+// and allow-same-origin, as that lets the embedded document remove
+// the sandbox attribute — making it no more secure than not using
+// the sandbox attribute at all. Also note that the sandbox attribute
+// is unsupported in Internet Explorer 9 and earlier.
+// See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe.
 
 const supportedProviders = [
     {
@@ -53,7 +75,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeDtubeEmbedUrl,
         embedNodeFn: embedDtubeNode,
         genIframeMdFn: genDtubeIframeMd,
-        useSandbox: false,
+        ...sandboxConfigDtube,
     },
     {
         id: 'twitch',
@@ -61,7 +83,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitchEmbedUrl,
         embedNodeFn: embedTwitchNode,
         genIframeMdFn: genTwitchIframeMd,
-        useSandbox: false,
+        ...sandboxConfigTwitch,
     },
     {
         id: 'soundcloud',
@@ -69,7 +91,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: null,
         embedNodeFn: null,
         genIframeMdFn: null,
-        useSandbox: false,
+        ...sandboxConfigSoundcloud,
     },
     {
         id: 'youtube',
@@ -77,7 +99,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeYoutubeEmbedUrl,
         embedNodeFn: embedYoutubeNode,
         genIframeMdFn: genYoutubeIframeMd,
-        useSandbox: false,
+        ...sandboxConfigYoutube,
     },
     {
         id: 'vimeo',
@@ -85,7 +107,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeVimeoEmbedUrl,
         embedNodeFn: embedVimeoNode,
         genIframeMdFn: genVimeoIframeMd,
-        useSandbox: false,
+        ...sandboxConfigVimeo,
     },
     {
         id: 'threespeak',
@@ -93,7 +115,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeThreespeakEmbedUrl,
         embedNodeFn: embedThreeSpeakNode,
         genIframeMdFn: genThreespeakIframeMd,
-        useSandbox: false,
+        ...sandboxConfigThreespeak,
     },
     {
         id: 'twitter',
@@ -101,7 +123,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitterEmbedUrl,
         embedNodeFn: embedTwitterNode,
         genIframeMdFn: genTwitterIframeMd,
-        useSandbox: false,
+        ...sandboxConfigTwitter,
     },
     {
         id: 'dapplr',
@@ -109,7 +131,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: null,
         embedNodeFn: null,
         genIframeMdFn: null,
-        useSandbox: true,
+        ...sandboxConfigDapplr,
     },
 ];
 
@@ -118,7 +140,7 @@ export default supportedProviders;
 /**
  * Allow iFrame in the Markdown if the source URL is allowed
  * @param url
- * @returns { boolean | { providerId: string, useSandbox: boolean, validUrl: string }}
+ * @returns { boolean | { providerId: string, sandboxAttributes: string[], useSandbox: boolean, validUrl: string }}
  */
 export function validateIframeUrl(url) {
     for (let pi = 0; pi < supportedProviders.length; pi += 1) {
@@ -130,6 +152,7 @@ export function validateIframeUrl(url) {
             console.log(`Found a valid ${provider.id} iframe URL`);
             return {
                 providerId: provider.id,
+                sandboxAttributes: provider.sandboxAttributes || [],
                 useSandbox: provider.useSandbox,
                 validUrl,
             };

@@ -5,12 +5,20 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/player.vimeo.com\/video\/([0-9]*)/i,
-    main: /https?:\/\/(?:vimeo.com\/|player.vimeo.com\/video\/)([0-9]+)\/?(#t=((\d+)s?))?\/?/,
-    contentId: /(?:vimeo.com\/|player.vimeo.com\/video\/)([0-9]+)/,
+    sanitize: /^(https?:)?\/\/player\.vimeo\.com\/video\/([0-9]*)/i,
+    main: /https?:\/\/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)\/?(#t=((\d+)s?))?\/?/,
+    contentId: /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/,
 };
-
 export default regex;
+
+/**
+ * Configuration for HTML iframe's `sandbox` attribute
+ * @type {useSandbox: boolean, sandboxAttributes: string[]}
+ */
+export const sandboxConfig = {
+    useSandbox: false,
+    sandboxAttributes: [],
+};
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
@@ -101,23 +109,44 @@ export function embedNode(child, links /*images*/) {
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
  * @param threespeakId
- * @param w
- * @param h
+ * @param width
+ * @param height
+ * @param startTime
  * @returns {*}
  */
-export function genIframeMd(idx, id, w, h, startTime) {
+export function genIframeMd(idx, id, width, height, startTime) {
     const url = `https://player.vimeo.com/video/${id}#t=${startTime}s`;
+
+    let sandbox = sandboxConfig.useSandbox;
+    if (sandbox) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
+            sandbox = sandboxConfig.sandboxAttributes.join(' ');
+        }
+    }
+    const iframeProps = {
+        src: url,
+        width,
+        height,
+        frameBorder: '0',
+        webkitallowfullscreen: 'webkitallowfullscreen',
+        mozallowfullscreen: 'mozallowfullscreen',
+        allowFullScreen: 'allowFullScreen',
+    };
+    if (sandbox) {
+        iframeProps.sandbox = sandbox;
+    }
+
     return (
         <div key={`vimeo-${id}-${idx}`} className="videoWrapper">
             <iframe
                 title="Vimeo embedded player"
-                src={url}
-                width={w}
-                height={h}
-                frameBorder="0"
-                webkitallowfullscreen
-                mozallowfullscreen
-                allowFullScreen
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...iframeProps}
             />
         </div>
     );

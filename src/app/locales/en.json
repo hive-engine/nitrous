@@ -349,7 +349,10 @@
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
         "beneficiaries_set": "%(count)s set",
-        "tags_input": "Enter your tags separated by a space"
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -737,7 +740,10 @@
         "profile_witness_owner": "Witness owner",
         "profile_witness_description": "Witness description",
         "saved": "Saved!",
-        "choose_preferred_api_endpoint": "Choose Your Preferred API Node"
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

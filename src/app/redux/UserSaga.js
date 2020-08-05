@@ -225,6 +225,20 @@ function* usernamePasswordLogin2({
         );
         return;
     }
+    //check for defaultBeneficiaries
+    let defaultBeneficiaries;
+    try {
+        const json_metadata = JSON.parse(account.get('json_metadata'));
+        if (json_metadata.beneficiaries) {
+            defaultBeneficiaries = json_metadata.beneficiaries;
+        } else {
+            defaultBeneficiaries = [];
+        }
+    } catch (error) {
+        defaultBeneficiaries = [];
+    }
+    yield put(userActions.setUser({ defaultBeneficiaries }));
+
     // return if already logged in using steem keychain
     if (login_with_keychain) {
         console.log('Logged in using Hive Keychain');

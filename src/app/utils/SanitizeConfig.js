@@ -59,9 +59,11 @@ export default ({
     transformTags: {
         iframe: (tagName, attribs) => {
             const srcAtty = attribs.src;
-            const { validUrl, useSandbox } = validateEmbbeddedPlayerIframeUrl(
-                srcAtty
-            );
+            const {
+                validUrl,
+                useSandbox,
+                sandboxAttributes,
+            } = validateEmbbeddedPlayerIframeUrl(srcAtty);
 
             if (validUrl !== false) {
                 const iframe = {
@@ -77,7 +79,11 @@ export default ({
                     },
                 };
                 if (useSandbox) {
-                    iframe.attribs.sandbox = true;
+                    if (sandboxAttributes.length > 0) {
+                        iframe.attribs.sandbox = sandboxAttributes.join(' ');
+                    } else {
+                        iframe.attribs.sandbox = true;
+                    }
                 }
                 return iframe;
             }
