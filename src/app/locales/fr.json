@@ -653,7 +653,13 @@
         "profile_about": "A propos",
         "profile_location": "Lieu",
         "profile_website": "Site internet",
-        "choose_preferred_api_endpoint": "Choisissez votre nœud d'API préféré"
+        "advanced": "Avancée",
+        "api_endpoint_options": "Options de point de terminaison API",
+        "endpoint": "Point final",
+        "preferred": "Préféré?",
+        "remove": "Retirer",
+        "add_api_endpoint": "Ajouter un point de terminaison d'API",
+        "reset_endpoints": "Réinitialiser les points de terminaison"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Montant dans le format 99999.999",

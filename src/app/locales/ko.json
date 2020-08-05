@@ -627,7 +627,13 @@
         "profile_about": "한 줄 소개",
         "profile_location": "지역",
         "profile_website": "웹사이트",
-        "choose_preferred_api_endpoint": "기본 API 노드 선택"
+        "advanced": "많은",
+        "api_endpoint_options": "API 엔드 포인트 옵션",
+        "endpoint": "엔드 포인트",
+        "preferred": "선호하는?",
+        "remove": "없애다",
+        "add_api_endpoint": "API 엔드 포인트 추가",
+        "reset_endpoints": "엔드 포인트 재설정"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

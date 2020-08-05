@@ -743,7 +743,14 @@
         "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
         "default_beneficiaries": "Referral System",
         "default_beneficiaries_enabled": "Use Default Beneficiaries",
-        "default_beneficiaries_disabled": "Opt-Out Referral System"
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Advanced",
+        "api_endpoint_options": "API Endpoint Options",
+        "endpoint": "Endpoint",
+        "preferred": "Preferred?",
+        "remove": "Remove",
+        "add_api_endpoint": "Add API Endpoint",
+        "reset_endpoints": "Reset Endpoints"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

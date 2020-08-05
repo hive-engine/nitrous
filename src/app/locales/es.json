@@ -625,7 +625,13 @@
         "profile_about": "Sobre",
         "profile_location": "Localización",
         "profile_website": "Página Web",
-        "choose_preferred_api_endpoint": "Elija su nodo de API preferido"
+        "advanced": "Avanzado",
+        "api_endpoint_options": "Opciones de punto final de API",
+        "endpoint": "Punto final",
+        "preferred": "Privilegiado?",
+        "remove": "Eliminar",
+        "add_api_endpoint": "Agregar punto final de API",
+        "reset_endpoints": "Restablecer puntos finales"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La cantidad está en el formato 99999.999",

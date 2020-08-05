@@ -632,7 +632,13 @@
         "profile_about": "About",
         "profile_location": "Località",
         "profile_website": "Sito",
-        "choose_preferred_api_endpoint": "Scegli il tuo nodo API preferito"
+        "advanced": "Avanzate",
+        "api_endpoint_options": "Opzioni endpoint API",
+        "endpoint": "Endpoint",
+        "preferred": "Preferito?",
+        "remove": "Rimuovere",
+        "add_api_endpoint": "Aggiungi endpoint API",
+        "reset_endpoints": "Reimposta endpoint"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La quantita deve essere della forma 99999.999",
