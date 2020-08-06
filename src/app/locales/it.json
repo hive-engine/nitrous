@@ -638,7 +638,15 @@
         "preferred": "Preferito?",
         "remove": "Rimuovere",
         "add_api_endpoint": "Aggiungi endpoint API",
-        "reset_endpoints": "Reimposta endpoint"
+        "reset_endpoints": "Reimposta endpoint",
+        "error_bad_url":
+            "Questo sembra essere un URL non valido, controlla e riprova",
+        "error_bad_cookie": "Impossibile ottenere endpoint dai cookie",
+        "error_already_exists": "Questo endpoint è già nell'elenco",
+        "error_cant_remove_active":
+            "Non è possibile rimuovere l'endpoint preferito corrente. Selezionare prima un nuovo endpoint preferito",
+        "error_cant_remove_all":
+            "È necessario disporre di almeno un endpoint nell'elenco"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La quantita deve essere della forma 99999.999",

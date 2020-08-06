@@ -403,8 +403,7 @@ class Settings extends React.Component {
         let validated = /^https?:\/\//.test(value);
         if (!validated) {
             this.setState({
-                endpoint_error_message:
-                    'This appears to be a bad URL, please check it and try again',
+                endpoint_error_message: tt('settings_jsx.error_bad_url'),
             });
             return;
         }
@@ -413,7 +412,7 @@ class Settings extends React.Component {
         let endpoints = cookies.get('user_api_endpoints');
         if (endpoints === null || endpoints === undefined) {
             this.setState({
-                endpoint_error_message: 'Unable to get endpoints from cookie',
+                endpoint_error_message: tt('settings_jsx.error_bad_cookie'),
             });
             return;
         }
@@ -421,8 +420,9 @@ class Settings extends React.Component {
         for (var endpoint of endpoints) {
             if (endpoint === value) {
                 this.setState({
-                    endpoint_error_message:
-                        'This server is already in the list',
+                    endpoint_error_message: tt(
+                        'settings_jsx.error_already_exists'
+                    ),
                 });
                 return;
             }
@@ -442,8 +442,9 @@ class Settings extends React.Component {
         let active_endpoint = this.getPreferredApiEndpoint();
         if (value === active_endpoint) {
             this.setState({
-                endpoint_error_message:
-                    "Can't remove the current preferred endpoint. Please select a new preffered endpoint first",
+                endpoint_error_message: tt(
+                    'settings_jsx.error_cant_remove_active'
+                ),
             });
             return;
         }
@@ -452,15 +453,16 @@ class Settings extends React.Component {
         let endpoints = cookies.get('user_api_endpoints');
         if (endpoints === null || endpoints === undefined) {
             this.setState({
-                endpoint_error_message: 'Unable to get endpoints from cookie',
+                endpoint_error_message: tt('settings_jsx.error_bad_cookie'),
             });
             return;
         }
 
         if (endpoints.length == 1) {
             this.setState({
-                endpoint_error_message:
-                    'You must have at least 1 valid endpoint in your list',
+                endpoint_error_message: tt(
+                    'settings_jsx.error_cant_remove_all'
+                ),
             });
             return;
         }
