@@ -750,7 +750,15 @@
         "preferred": "Preferred?",
         "remove": "Remove",
         "add_api_endpoint": "Add API Endpoint",
-        "reset_endpoints": "Reset Endpoints"
+        "reset_endpoints": "Reset Endpoints",
+        "error_bad_url":
+            "This appears to be a bad URL, please check it and try again",
+        "error_bad_cookie": "Unable to get endpoints from cookie",
+        "error_already_exists": "This endpoint is already in the list",
+        "error_cant_remove_active":
+            "You can't remove the current preferred endpoint. Please select a new preferred endpoint first",
+        "error_cant_remove_all":
+            "You must have at least one endpoint in the list"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",
