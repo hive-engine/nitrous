@@ -627,7 +627,21 @@
         "profile_about": "한 줄 소개",
         "profile_location": "지역",
         "profile_website": "웹사이트",
-        "choose_preferred_api_endpoint": "기본 API 노드 선택"
+        "advanced": "많은",
+        "api_endpoint_options": "API 엔드 포인트 옵션",
+        "endpoint": "엔드 포인트",
+        "preferred": "선호하는?",
+        "remove": "없애다",
+        "add_api_endpoint": "API 엔드 포인트 추가",
+        "reset_endpoints": "엔드 포인트 재설정",
+        "error_bad_url":
+            "잘못된 URL 인 것 같습니다. 확인 후 다시 시도하십시오.",
+        "error_bad_cookie": "쿠키에서 엔드 포인트를 가져올 수 없습니다",
+        "error_already_exists": "이 엔드 포인트는 이미 목록에 있습니다",
+        "error_cant_remove_active":
+            "현재 기본 엔드 포인트를 제거 할 수 없습니다. 우선 새로운 선호 엔드 포인트를 선택하십시오",
+        "error_cant_remove_all":
+            "목록에 하나 이상의 엔드 포인트가 있어야합니다."
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",

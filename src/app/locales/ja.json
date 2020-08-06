@@ -630,7 +630,21 @@
         "profile_about": "概要",
         "profile_location": "場所",
         "profile_website": "ウェブサイト",
-        "choose_preferred_api_endpoint": "優先APIノードを選択してください"
+        "advanced": "高度な",
+        "api_endpoint_options": "APIエンドポイントオプション",
+        "endpoint": "終点",
+        "preferred": "優先?",
+        "remove": "削除する",
+        "add_api_endpoint": "APIエンドポイントを追加",
+        "reset_endpoints": "エンドポイントをリセット",
+        "error_bad_url":
+            "これは不正なURLのようです。確認して、もう一度お試しください",
+        "error_bad_cookie": "Cookieからエンドポイントを取得できません",
+        "error_already_exists": "このエンドポイントはすでにリストにあります",
+        "error_cant_remove_active":
+            "現在の優先エンドポイントを削除することはできません。 最初に新しい優先エンドポイントを選択してください",
+        "error_cant_remove_all":
+            "リストに少なくとも1つのエンドポイントが必要です"
     },
     "transfer_jsx": {
         "amount_is_in_form": "金額は99999.999の形式です",
