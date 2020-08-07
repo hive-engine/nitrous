@@ -735,7 +735,7 @@ class ReplyEditor extends React.Component {
                 <div
                     className={classnames({
                         column: true,
-                        'medium-12': true,
+                        'small-12': true,
                         'large-6': enableSideBySide,
                     })}
                 >
@@ -1101,7 +1101,7 @@ class ReplyEditor extends React.Component {
                 <div
                     className={classnames({
                         column: true,
-                        'medium-12': true,
+                        'small-12': true,
                         'large-6': enableSideBySide,
                         'preview-container': true,
                         'side-by-side': enableSideBySide,
