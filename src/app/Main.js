@@ -87,10 +87,11 @@ function runApp(initial_state) {
     const { config } = initial_state.offchain;
     let cookies = new Cookies();
     const alternativeApiEndpoints = config.alternative_api_endpoints;
+    const cookie_endpoint = cookies.get('user_preferred_api_endpoint');
     const currentApiEndpoint =
-        cookies.get('user_preferred_api_endpoint') === null
+        cookie_endpoint === undefined
             ? config.steemd_connection_client
-            : cookies.get('user_preferred_api_endpoint');
+            : cookie_endpoint;
 
     steem.api.setOptions({
         url: currentApiEndpoint,
