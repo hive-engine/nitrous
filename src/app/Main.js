@@ -89,7 +89,7 @@ function runApp(initial_state) {
     const alternativeApiEndpoints = config.alternative_api_endpoints;
     const cookie_endpoint = cookies.get('user_preferred_api_endpoint');
     const currentApiEndpoint =
-        cookie_endpoint === null || cookie_endpoint === undefined
+        cookie_endpoint === undefined
             ? config.steemd_connection_client
             : cookie_endpoint;
 
