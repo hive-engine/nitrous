@@ -378,11 +378,11 @@ class PostsIndex extends React.Component {
                                 JAHMFEST June 26-28th in Negril
                             </a>
                         </strong>{' '}
-                        - Tickets: {' '}
-                        <a href="https://shop.steemleo.com/@reggaesteem/k63364an-reggaesteem-jahmfest-2020-earlybird-room-package">LeoShop</a> {' '}
-                        <a href="https://discord.gg/PTJQMAW">
-                            Discord
-                        </a>
+                        - Tickets:{' '}
+                        <a href="https://shop.steemleo.com/@reggaesteem/k63364an-reggaesteem-jahmfest-2020-earlybird-room-package">
+                            LeoShop
+                        </a>{' '}
+                        <a href="https://discord.gg/PTJQMAW">Discord</a>
                     </div>
 
                     {category !== 'feed' && (
@@ -416,21 +416,6 @@ class PostsIndex extends React.Component {
                             <SidebarLinks username={this.props.username} />
                         </div>
                     ) : null}
-                    <div className="sidebar-ad">
-                        <a href="https://www.reggaetube.io/#!/v/jahm.syndicator/s9siye52lfj">
-                            <img src="https://www.reggaetube.io/DTube_files/images/sgfeature200x600.png" />
-                        </a>
-                    </div>
-                    <br />
-                    <div className="sidebar-ad">
-                        <iframe
-                            data-aa="1247599"
-                            src="//ad.a-ads.com/1247599?size=200x200&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
-                            scrolling="no"
-                            style={adStyle_200x200}
-                            allowtransparency="true"
-                        />
-                    </div>
                     <Notices notices={this.props.notices} />
                     {SHOW_TOKEN_STATS &&
                         this.props.isBrowser &&
@@ -555,17 +540,6 @@ class PostsIndex extends React.Component {
                         </a>
                         {' ' + tt('g.next_3_strings_together.value_posts')}
                     </small>
-                    <div style={{ textAlign: 'center', marginTop: 20 }}>
-                        <div className="sidebar-ad">
-                            <iframe
-                                data-aa="1249451"
-                                src="//ad.a-ads.com/1249451?size=200x90&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
-                                scrolling="no"
-                                style={adStyle_200x90}
-                                allowtransparency="true"
-                            />
-                        </div>
-                    </div>
                     {this.props.gptEnabled && allowAdsOnContent ? (
                         <div>
                             <div className="sidebar-ad">

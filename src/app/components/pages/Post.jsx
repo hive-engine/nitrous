@@ -112,16 +112,6 @@ class Post extends React.Component {
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <br />
-                        <iframe
-                            data-aa="1249447"
-                            src="//ad.a-ads.com/1249447?size=300x250&background_color=fcfcfc&title_color=3e8f3e&title_hover_color=333333&link_color=3e8f3e&link_hover_color=333333"
-                            scrolling="no"
-                            style={adStyle_300x250}
-                            allowtransparency="true"
-                        />
-                    </div>
                 </div>
             );
 

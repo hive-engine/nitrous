@@ -1,12 +1,12 @@
 import { fromJSOrdered } from './utils/immutable';
 
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'ReggaeSteem';
+export const APP_NAME = 'ReggaeJahm';
 // sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
 // ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'ReggaeSteem';
-export const APP_NAME_UPPERCASE = 'REGGAESTEEM';
-export const APP_ICON = 'reggaesteem';
+export const APP_NAME_LATIN = 'ReggaeJahm';
+export const APP_NAME_UPPERCASE = 'REGGAEJAHM';
+export const APP_ICON = 'reggaejahm';
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.reggaesteem.io';
@@ -125,7 +125,7 @@ export const REVIVE_ADS = {
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
-    '---\n<center>Posted via [ReggaeSteem](${POST_URL}) | Reggae Culture Rewarded </center>';
+    '---\n<center>Posted via [ReggaeJahm](${POST_URL}) | Reggae Culture Rewarded </center>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100

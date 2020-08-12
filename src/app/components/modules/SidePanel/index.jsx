@@ -185,30 +185,6 @@ const SidePanel = ({
                         </a>
                     </li>
                     <li>
-                        <a
-                            href="https://www.reggaesteem.com/artists"
-                            target="_blank"
-                        >
-                            Artists <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://www.reggaesteem.com/tourism"
-                            target="_blank"
-                        >
-                            Tourism <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://www.reggaesteem.com/advertise"
-                            target="_blank"
-                        >
-                            Advertise <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
                         </a>
