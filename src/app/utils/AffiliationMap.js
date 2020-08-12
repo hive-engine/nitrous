@@ -26,7 +26,11 @@ const map = {
     raymondspeaks: 'City Patriot',
     'neoxag-tip': 'Tip Bot',
     gerber: 'Babyboy',
-    sayee: 'Momma'
+    sayee: 'Momma',
+    xabi: 'Curator',
+    olaexcal: 'Curator',
+    burlarj: 'Curator',
+    shrazi: 'Gifman'
 };
 
 export default map;
