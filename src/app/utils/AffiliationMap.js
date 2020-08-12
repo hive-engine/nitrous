@@ -1,16 +1,5 @@
 const map = {
-    //steemit
-    ned: 'Who?',
-    justinw: 'Steemit',
-    elipowell: 'Steemit',
-    vandeberg: 'Steemit',
-    birdinc: 'Steemit',
-    gerbino: 'Steemit',
-    andrarchy: 'Steemit',
-    roadscape: 'Steemit',
-    steemitblog: 'Steemit',
-    steemitdev: 'Steemit',
-
+   
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
 
@@ -22,10 +11,8 @@ const map = {
     thereikiforest: 'Pope',
     r2cornell: 'Dragon',
     aggroed: 'Dragon',
-    afolwalex: 'Dragon',
     swedishdragon: 'Dragon',
     geke: 'Dragon',
-    afolwalex: 'Dragon',
     khaleelkazi: 'Dragon',
     followbtcnews: 'Dragon',
     teamsteem: 'Dragon',
@@ -34,13 +21,12 @@ const map = {
     xawi: 'Everything\'s girl',
     udezee: 'Curator',
     rehan12: 'Curator',
-    joedukeg: 'Curator',
-    'mango-juice': 'Curator',
     bwar: 'Bwar',
     neobooster: 'Syed Shakil',
     raymondspeaks: 'City Patriot',
     'neoxag-tip': 'Tip Bot',
-    gerber: 'Babyboy'
+    gerber: 'Babyboy',
+    sayee: 'Momma'
 };
 
 export default map;
