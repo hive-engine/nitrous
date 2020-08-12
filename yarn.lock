@@ -29,6 +29,11 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.0.2.tgz#57597083f763eafbfdc902d16ec868aa787b24d2"
   integrity sha512-LyibKv2QnD9BPI5g2L+g85yiIPv3ajYpENGFgy4u0xCLPhXWG1Zdx29neSB8sgX0/wz6k5TMjHzTwJ6+DaBYOA==
 
+"@hivechain/hivescript@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@hivechain/hivescript/-/hivescript-1.1.7.tgz#24d89ef8b0984c6e496934b626a72a374618338a"
+  integrity sha512-hS/negE2DoPqPYzY14+WLqNrdV+4R9pt3AhKkabW6m8auNXOp6i48+ckTMRWT5/lU4/avhjKgOgdqvTAMbXRAg==
+
 "@steem/crypto-session@git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb":
   version "1.0.3"
   resolved "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb"
@@ -47,10 +52,10 @@
   dependencies:
     "@steemit/libcrypto" "^1.0.1"
 
-"@steemit/steem-js@0.7.5":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@steemit/steem-js/-/steem-js-0.7.5.tgz#2894b84005f839b56aa0b1152424cf316f702f78"
-  integrity sha512-qcjkUCFy3MMu5TrIQ2zwm4Ow5Yh3J2udTvRykFymQ4SE/dWWb1w4inXrYwp+SmWqyvesvoeak4bSKyp6OrTLuw==
+"@steemit/steem-js@0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@steemit/steem-js/-/steem-js-0.7.9.tgz#eab4e9b2b7b73205c99620c65608d525f35f72bd"
+  integrity sha512-7k/2JV+FdNDHZvzJ8l+dgll+6tuhuWNfpt6tEvb/nbRKl6duInAcqtF0QzxW43pMv78uQ4nMCIbvtq9KZkPGWA==
   dependencies:
     "@steemit/rpc-auth" "^1.1.1"
     bigi "^1.4.2"
@@ -68,7 +73,7 @@
     ecurve "^1.0.5"
     lodash "^4.16.4"
     retry "^0.12.0"
-    secure-random "^1.1.1"
+    secure-random "^1.1.2"
     ws "^3.3.2"
 
 "@storybook/addon-actions@^3.2.19":
@@ -8902,9 +8907,14 @@ scss-tokenizer@^0.2.3:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
 
-secure-random@1.1.1, secure-random@^1.1.1:
+secure-random@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/secure-random/-/secure-random-1.1.1.tgz#0880f2d8c5185f4bcb4684058c836b4ddb07145a"
+
+secure-random@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/secure-random/-/secure-random-1.1.2.tgz#ed103b460a851632d420d46448b2a900a41e7f7c"
+  integrity sha512-H2bdSKERKdBV1SwoqYm6C0y+9EA94v6SUBOWO8kDndc4NoUih7Dv6Tsgma7zO1lv27wIvjlD0ZpMQk7um5dheQ==
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1:
   version "5.5.0"
@@ -9290,10 +9300,10 @@ stealthy-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
-steem@0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/steem/-/steem-0.7.5.tgz#d0aff313bb39fa4ef7b0f0ec38af9fa3dfcbb122"
-  integrity sha512-krAkPZBo/GGhzrbcYSUrvgCnCbJUTXb4nYdrvrEu9pl/J4YIc2EI3BkNqWv8PyC3h3/5jNW7Woe1SlKuxuAq8w==
+steem@0.7.9:
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/steem/-/steem-0.7.9.tgz#5287f21d006632f59374625d6846720a40c346d1"
+  integrity sha512-ALD6Ij8zBdw3fdgbdXGHsqGUUGOba/S/uJXH24keoOAQ+0GbbsiNqooVQ9YtZNLnjYFkq8mVim+puaFubB7vnQ==
   dependencies:
     "@steemit/rpc-auth" "^1.1.1"
     bigi "^1.4.2"
@@ -9311,7 +9321,7 @@ steem@0.7.5:
     ecurve "^1.0.5"
     lodash "^4.16.4"
     retry "^0.12.0"
-    secure-random "^1.1.1"
+    secure-random "^1.1.2"
     ws "^3.3.2"
 
 steemscript@1.1.1:

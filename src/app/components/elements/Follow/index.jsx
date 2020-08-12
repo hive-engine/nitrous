@@ -7,6 +7,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { Set, Map } from 'immutable';
 import tt from 'counterpart';
+import { PREFER_HIVE } from 'app/client_config';
 
 const { string, bool, any } = PropTypes;
 
@@ -40,14 +41,14 @@ export default class Follow extends React.Component {
     }
 
     initEvents(props) {
-        const { updateFollow, follower, following } = props;
+        const { updateFollow, follower, following, useHive } = props;
         const upd = type => {
             if (this.state.busy) return;
             this.setState({ busy: true });
             const done = () => {
                 this.setState({ busy: false });
             };
-            updateFollow(follower, following, type, done);
+            updateFollow(follower, following, type, done, useHive);
         };
         this.follow = () => {
             upd('blog');
@@ -170,15 +171,18 @@ module.exports = connect(
               ? 'ignore'
               : null;
 
+        const useHive = PREFER_HIVE;
+
         return {
             follower,
             following,
             followingWhat,
             loading,
+            useHive,
         };
     },
     dispatch => ({
-        updateFollow: (follower, following, action, done) => {
+        updateFollow: (follower, following, action, done, useHive) => {
             const what = action ? [action] : [];
             const json = ['follow', { follower, following, what }];
             dispatch(
@@ -192,6 +196,7 @@ module.exports = connect(
                     successCallback: done,
                     // TODO: Why?
                     errorCallback: done,
+                    useHive,
                 })
             );
         },

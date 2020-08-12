@@ -1,6 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { Set, Map, fromJS, List } from 'immutable';
-import { api } from '@steemit/steem-js';
+import { api as steemApi } from '@steemit/steem-js';
+import { api as hiveApi } from 'steem';
 import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
@@ -9,7 +10,7 @@ import { ALLOW_MASTER_PW } from 'app/client_config';
 
 // operations that require only posting authority
 export const postingOps = Set(
-    `vote, comment, delete_comment, custom_json, claim_reward_balance`
+    `vote, comment, delete_comment, custom_json, claim_reward_balance, account_update2`
         .trim()
         .split(/,\s*/)
 );
@@ -19,7 +20,7 @@ export const authWatches = [
 ];
 
 export function* accountAuthLookup({
-    payload: { account, private_keys, login_owner_pubkey },
+    payload: { account, private_keys, login_owner_pubkey, useHive },
 }) {
     account = fromJS(account);
     private_keys = fromJS(private_keys);
@@ -41,6 +42,7 @@ export function* accountAuthLookup({
                   pubkeys: Set([toPub(posting)]),
                   authority: account.get('posting'),
                   authType: 'posting',
+                  useHive,
               })
             : 'none',
         active: active
@@ -48,6 +50,7 @@ export function* accountAuthLookup({
                   pubkeys: Set([toPub(active)]),
                   authority: account.get('active'),
                   authType: 'active',
+                  useHive,
               })
             : 'none',
         owner: owner
@@ -55,6 +58,7 @@ export function* accountAuthLookup({
                   pubkeys: Set([toPub(active)]),
                   authority: account.get('owner'),
                   authType: 'owner',
+                  useHive,
               })
             : 'none',
         memo: account.get('memo_key') === toPub(memo) ? 'full' : 'none',
@@ -74,23 +78,38 @@ export function* accountAuthLookup({
     @arg {object} data.pubkeys Immutable Set public key strings
     @return {string} full, partial, none
 */
-function* authorityLookup({ pubkeys, authority, authType }) {
-    return yield call(authStr, { pubkeys, authority, authType });
+function* authorityLookup({ pubkeys, authority, authType, useHive }) {
+    return yield call(authStr, { pubkeys, authority, authType, useHive });
 }
 
-function* authStr({ pubkeys, authority, authType, recurse = 1 }) {
-    const t = yield call(threshold, { pubkeys, authority, authType, recurse });
+function* authStr({ pubkeys, authority, authType, useHive, recurse = 1 }) {
+    const t = yield call(threshold, {
+        pubkeys,
+        authority,
+        authType,
+        useHive,
+        recurse,
+    });
     const r = authority.get('weight_threshold');
     return t >= r ? 'full' : t > 0 ? 'partial' : 'none';
 }
 
-export function* threshold({ pubkeys, authority, authType, recurse = 1 }) {
+export function* threshold({
+    pubkeys,
+    authority,
+    authType,
+    useHive,
+    recurse = 1,
+}) {
     if (!pubkeys.size) return 0;
     let t = pubkeyThreshold({ pubkeys, authority });
     const account_auths = authority.get('account_auths');
     const aaNames = account_auths.map(v => v.get(0), List());
     if (aaNames.size) {
-        const aaAccounts = yield api.getAccountsAsync(aaNames);
+        const aaAccounts = yield (useHive
+            ? hiveApi
+            : steemApi
+        ).getAccountsAsync(aaNames);
         const aaThreshes = account_auths.map(v => v.get(1), List());
         for (let i = 0; i < aaAccounts.size; i++) {
             const aaAccount = aaAccounts.get(i);
@@ -102,6 +121,7 @@ export function* threshold({ pubkeys, authority, authType, recurse = 1 }) {
                 const auth = yield call(authStr, {
                     authority: aaAccount,
                     pubkeys,
+                    useHive,
                     recurse: ++recurse,
                 });
                 if (auth === 'full') {
@@ -130,6 +150,7 @@ export function* findSigningKey({
     needsActiveAuth,
     username,
     password,
+    useHive,
 }) {
     let authTypes;
     if (postingOps.has(opType) && !needsActiveAuth)
@@ -151,7 +172,7 @@ export function* findSigningKey({
     const private_keys =
         currentUsername === username ? currentUser.get('private_keys') : Map();
 
-    const account = yield call(getAccount, username);
+    const account = yield call(getAccount, username, useHive);
     if (!account) throw new Error('Account not found');
 
     for (const authType of authTypes) {
@@ -176,6 +197,7 @@ export function* findSigningKey({
                 pubkeys,
                 authority,
                 authType,
+                useHive,
             });
             if (auth === 'full') return private_key;
         }

@@ -126,6 +126,7 @@ class PostSummary extends React.Component {
                 `${content.get('author')}/${content.get('permlink')}`
             );
         const p = extractContent(immutableAccessor, content);
+        const hive = content.get('hive');
         const desc = p.desc;
 
         const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
@@ -274,6 +275,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+                            hive={hive}
                         />
                     )}
                     <span className="show-for-medium">{author_category}</span>
@@ -291,6 +293,7 @@ class PostSummary extends React.Component {
                             author={p.author}
                             permlink={p.permlink}
                             parent_author={p.parent_author}
+                            hive={hive}
                         />
                     )}
                 </span>
