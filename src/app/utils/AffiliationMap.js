@@ -29,7 +29,7 @@ const map = {
     sayee: 'Momma',
     xabi: 'Curator',
     olaexcal: 'Curator',
-    burlarj: 'Curator',
+    burlarj: 'Warrior',
     shrazi: 'Gifman'
 };
 
