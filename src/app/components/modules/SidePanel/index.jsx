@@ -170,19 +170,6 @@ const SidePanel = ({
                 </ul>
                 <ul className="vertical menu">
                     <li>
-                        <a
-                            className="menu-section"
-                            href="https://reggaetube.io"
-                        >
-                            ReggaeTube
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.reggaetube.io/#!/upload">
-                            Upload Video <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
                         <a className="menu-section">
                             Trade {LIQUID_TOKEN_UPPERCASE}
                         </a>
@@ -190,14 +177,6 @@ const SidePanel = ({
                     {sidePanelLinks['internal'].map(makeLink)}
                     <li>
                         <a className="menu-section">Help</a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://www.youtube.com/watch?v=-fSu4gWk5rY&list=PL2GAL5HEcoFVVSzFV1ayTGVzuc0jLFx14"
-                            target="_blank"
-                        >
-                            How-to Videos <Icon name="extlink" />
-                        </a>
                     </li>
                     <li>
                         <a href="https://discord.gg/sZCXZ9K" target="_blank">
