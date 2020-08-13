@@ -117,7 +117,11 @@ class PostFull extends React.Component {
         this.onDeletePost = () => {
             const { props: { deletePost } } = this;
             const content = this.props.cont.get(this.props.post);
-            deletePost(content.get('author'), content.get('permlink'));
+            deletePost(
+                content.get('author'),
+                content.get('permlink'),
+                content.get('hive')
+            );
         };
     }
 
@@ -234,7 +238,8 @@ class PostFull extends React.Component {
         if (!post_content) return;
         const author = post_content.get('author');
         const permlink = post_content.get('permlink');
-        this.props.showPromotePost(author, permlink);
+        const hive = post_content.get('hive');
+        this.props.showPromotePost(author, permlink, hive);
     };
 
     showExplorePost = () => {
@@ -261,7 +266,13 @@ class PostFull extends React.Component {
         if (!post_content) return null;
         const p = extractContent(immutableAccessor, post_content);
         const content = post_content.toJS();
-        const { author, permlink, parent_author, parent_permlink } = content;
+        const {
+            author,
+            permlink,
+            parent_author,
+            parent_permlink,
+            hive,
+        } = content;
         const jsonMetadata = this.state.showReply ? null : p.json_metadata;
         // let author_link = '/@' + content.author;
         let link = `/@${content.author}/${content.permlink}`;
@@ -303,6 +314,7 @@ class PostFull extends React.Component {
             category,
             title,
             body,
+            hive,
         };
 
         this.share_params = {
@@ -395,7 +407,7 @@ class PostFull extends React.Component {
                     )}
                 {full_power && (
                     <span title={tt('g.powered_up_100')}>
-                        <Icon name="steempower" />
+                        <Icon name={hive ? 'hive' : 'steempower'} />
                     </span>
                 )}
             </h1>
@@ -519,7 +531,11 @@ class PostFull extends React.Component {
                     </div>
                     <div className="RightShare__Menu small-11 medium-12 large-5 columns">
                         {showReblog && (
-                            <Reblog author={author} permlink={permlink} />
+                            <Reblog
+                                author={author}
+                                permlink={permlink}
+                                hive={hive}
+                            />
                         )}
                         <span className="PostFull__reply">
                             {showReplyOption && (
@@ -588,20 +604,21 @@ export default connect(
         unlock: () => {
             dispatch(userActions.showLogin());
         },
-        deletePost: (author, permlink) => {
+        deletePost: (author, permlink, hive) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
                     confirm: tt('g.are_you_sure'),
+                    useHive: hive,
                 })
             );
         },
-        showPromotePost: (author, permlink) => {
+        showPromotePost: (author, permlink, hive) => {
             dispatch(
                 globalActions.showDialog({
                     name: 'promotePost',
-                    params: { author, permlink },
+                    params: { author, permlink, hive },
                 })
             );
         },

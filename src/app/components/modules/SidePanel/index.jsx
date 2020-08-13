@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
+import { SIGNUP_URL } from 'shared/constants.js';
 
 const SidePanel = ({
     alignment,
@@ -13,6 +14,8 @@ const SidePanel = ({
     hideSidePanel,
     username,
     walletUrl,
+    scotTokenSymbol,
+    useHive,
 }) => {
     if (process.env.BROWSER) {
         visible && document.addEventListener('click', hideSidePanel);
@@ -52,11 +55,11 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'steemengine',
-                label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: 'engine',
+                label: useHive ? 'Hive Engine' : 'Steem Engine',
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
         ],
         exchanges: [
@@ -131,7 +134,7 @@ const SidePanel = ({
             {
                 value: 'signup',
                 label: tt('g.sign_up'),
-                link: 'https://signup.steemit.com',
+                link: SIGNUP_URL,
             },
             {
                 value: 'post',
@@ -181,8 +184,12 @@ SidePanel.defaultProps = {
 export default connect(
     (state, ownProps) => {
         const walletUrl = state.app.get('walletUrl');
+        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
+        const useHive = HIVE_ENGINE;
         return {
             walletUrl,
+            scotTokenSymbol,
+            useHive,
             ...ownProps,
         };
     },
