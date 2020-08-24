@@ -1,16 +1,9 @@
 import { Map, OrderedMap, getIn, List, fromJS, Set, merge } from 'immutable';
-import { emptyContent } from 'app/redux/EmptyState';
 import * as globalActions from './GlobalReducer';
 import reducer, { defaultState } from './GlobalReducer';
 import { SCOT_DENOM } from 'app/client_config';
 
 const FLAG_WEIGHT = 2 - Math.min(2, Math.log10(SCOT_DENOM));
-
-const expectedStats = Map({
-    hide: false,
-    gray: false,
-    total_votes: 0,
-});
 
 describe('Global reducer', () => {
     it('should provide a nice initial state', () => {
@@ -39,16 +32,13 @@ describe('Global reducer', () => {
     it('should return correct state for a RECEIVE_STATE action', () => {
         // Arrange
         const payload = {
-            content: Map({ barman: Map({ foo: 'choo', stats: '' }) }),
+            content: Map({ barman: Map({ foo: 'choo', stats: {} }) }),
         };
         const initial = reducer();
         // Act
         const actual = reducer(initial, globalActions.receiveState(payload));
         // Assert
         expect(actual.getIn(['content', 'barman', 'foo'])).toEqual('choo');
-        expect(actual.getIn(['content', 'barman', 'stats'])).toEqual(
-            expectedStats
-        );
     });
 
     it('should replace transfer history for a RECEIVE_STATE action', () => {
@@ -335,18 +325,11 @@ describe('Global reducer', () => {
         };
         let payload = {
             data: [postData],
-            order: 'by_author',
-            category: 'blog',
-            accountname: 'alice',
+            order: 'blog',
+            category: '@smudge',
         };
         const initWithData = reducer().merge({
-            accounts: Map({
-                [payload.accountname]: Map({
-                    [payload.category]: List([
-                        { data: { author: 'farm', permlink: 'barn' } },
-                    ]),
-                }),
-            }),
+            accounts: Map({}),
             content: Map({}),
             status: Map({
                 [payload.category]: Map({
@@ -357,6 +340,11 @@ describe('Global reducer', () => {
                 [payload.category]: Map({
                     UnusualOrder: List([
                         { data: { author: 'ship', permlink: 'bridge' } },
+                    ]),
+                }),
+                [payload.accountname]: Map({
+                    [payload.order]: List([
+                        { data: { author: 'farm', permlink: 'barn' } },
                     ]),
                 }),
                 '': Map({
@@ -386,13 +374,8 @@ describe('Global reducer', () => {
 
         // Push new key to posts list, If order meets the condition.
         expect(
-            actual1.getIn(['accounts', payload.accountname, payload.category])
-        ).toEqual(
-            List([
-                { data: { author: 'farm', permlink: 'barn' } },
-                'smudge/klop',
-            ])
-        );
+            actual1.getIn(['discussion_idx', payload.category, payload.order])
+        ).toEqual(List(['smudge/klop']));
 
         // Arrange
         payload.order = 'UnusualOrder';
@@ -430,7 +413,7 @@ describe('Global reducer', () => {
         //Arrange
         let payload = {
             data: [],
-            order: 'by_author',
+            order: 'by_blog',
             category: 'blog',
             accountname: 'alice',
         };
@@ -571,19 +554,6 @@ describe('Global reducer', () => {
                 'author',
             ])
         ).toEqual(payload.data[0].author);
-        expect(
-            actual.getIn([
-                'content',
-                `${payload.data[0].author}/${payload.data[0].permlink}`,
-                'stats',
-            ])
-        ).toEqual(
-            Map({
-                hide: false,
-                gray: false,
-                total_votes: 2,
-            })
-        );
 
         // Act
         // If the recent post is already in the list do not add it again.

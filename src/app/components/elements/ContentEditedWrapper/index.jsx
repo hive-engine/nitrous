@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl';
 class ContentEditedWrapper extends React.Component {
     render() {
         let { createDate, updateDate, className } = this.props;
-        if (createDate === updateDate) return null;
+        if (!updateDate || createDate === updateDate) return null;
 
         if (updateDate && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$/.test(updateDate)) {
             updateDate = updateDate + 'Z'; // Firefox really wants this Z (Zulu)

@@ -1,4 +1,4 @@
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 
 const request_base = {
     method: 'post',
@@ -32,13 +32,6 @@ export function serverApiRecordEvent(type, val, rate_limit_ms = 5000) {
     if (last_call && new Date() - last_call < rate_limit_ms) return;
     last_call = new Date();
     const value = val && val.stack ? `${val.toString()} | ${val.stack}` : val;
-    //api.call(
-    //    'overseer.collect',
-    //    { collection: 'event', metadata: { type, value } },
-    //    error => {
-    //        // if (error) console.warn('overseer error', error, error.data);
-    //    }
-    //);
 }
 
 let last_page;
@@ -72,6 +65,10 @@ export function setUserPreferences(payload) {
 }
 
 export function isTosAccepted() {
+    if (process.env.NODE_ENV !== 'production') {
+        // TODO: remove this. endpoint in dev currently down.
+        return true;
+    }
     const request = Object.assign({}, request_base, {
         body: JSON.stringify({ csrf: window.$STM_csrf }),
     });
@@ -83,4 +80,14 @@ export function acceptTos() {
         body: JSON.stringify({ csrf: window.$STM_csrf }),
     });
     return fetch('/api/v1/acceptTos', request);
+}
+export function conductSearch(req) {
+    const bodyWithCSRF = {
+        ...req.body,
+        csrf: window.$STM_csrf,
+    };
+    const request = Object.assign({}, request_base, {
+        body: JSON.stringify(bodyWithCSRF),
+    });
+    return fetch('/api/v1/search', request);
 }

@@ -1,58 +1,16 @@
 import {
+    isDefaultImageSize,
+    defaultSrcSet,
+    defaultWidth,
+} from 'app/utils/ProxifyUrl';
+import {
     getPhishingWarningMessage,
     getExternalLinkWarningMessage,
 } from 'shared/HtmlReady'; // the only allowable title attributes for div and a tags
 import { APP_DOMAIN } from 'app/client_config';
 
-const iframeWhitelist = [
-    {
-        re: /^(https?:)?\/\/player.vimeo.com\/video\/.*/i,
-        fn: src => {
-            // <iframe src="https://player.vimeo.com/video/179213493" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-            if (!src) return null;
-            const m = src.match(
-                /https:\/\/player\.vimeo\.com\/video\/([0-9]+)/
-            );
-            if (!m || m.length !== 2) return null;
-            return 'https://player.vimeo.com/video/' + m[1];
-        },
-    },
-    {
-        re: /^(https?:)?\/\/www.youtube.com\/embed\/.*/i,
-        fn: src => {
-            return src.replace(/\?.+$/, ''); // strip query string (yt: autoplay=1,controls=0,showinfo=0, etc)
-        },
-    },
-    {
-        re: /^https:\/\/w.soundcloud.com\/player\/.*/i,
-        fn: src => {
-            if (!src) return null;
-            // <iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/257659076&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
-            const m = src.match(/url=(.+?)&/);
-            if (!m || m.length !== 2) return null;
-            return (
-                'https://w.soundcloud.com/player/?url=' +
-                m[1] +
-                '&auto_play=false&hide_related=false&show_comments=true' +
-                '&show_user=true&show_reposts=false&visual=true'
-            );
-        },
-    },
-    {
-        re: /^(https?:)?\/\/player.twitch.tv\/.*/i,
-        fn: src => {
-            //<iframe src="https://player.twitch.tv/?channel=ninja" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620">
-            return src;
-        },
-    },
-    {
-        re: /^https:\/\/emb.d.tube\/\#\!\/([a-zA-Z0-9\-\.\/]+)$/,
-        fn: src => {
-            // <iframe width="560" height="315" src="https://emb.d.tube/#!/justineh/u6qoydvy" frameborder="0" allowfullscreen></iframe>
-            return src;
-        },
-    },
-];
+import { validateIframeUrl as validateEmbbeddedPlayerIframeUrl } from 'app/components/elements/EmbeddedPlayers';
+
 export const noImageText = '(Image not shown due to low ratings)';
 export const allowedTags = `
     div, iframe, del,
@@ -84,6 +42,7 @@ export default ({
             'allowfullscreen',
             'webkitallowfullscreen',
             'mozallowfullscreen',
+            'sandbox',
         ],
 
         // class attribute is strictly whitelisted (below)
@@ -92,7 +51,7 @@ export default ({
 
         // style is subject to attack, filtering more below
         td: ['style'],
-        img: ['src', 'alt'],
+        img: ['src', 'srcset', 'alt', 'class'],
 
         // title is only set in the case of an external link warning
         a: ['href', 'rel', 'title'],
@@ -101,31 +60,41 @@ export default ({
     transformTags: {
         iframe: (tagName, attribs) => {
             const srcAtty = attribs.src;
-            for (const item of iframeWhitelist)
-                if (item.re.test(srcAtty)) {
-                    const src =
-                        typeof item.fn === 'function'
-                            ? item.fn(srcAtty, item.re)
-                            : srcAtty;
-                    if (!src) break;
-                    return {
-                        tagName: 'iframe',
-                        attribs: {
-                            frameborder: '0',
-                            allowfullscreen: 'allowfullscreen',
-                            webkitallowfullscreen: 'webkitallowfullscreen', // deprecated but required for vimeo : https://vimeo.com/forums/help/topic:278181
-                            mozallowfullscreen: 'mozallowfullscreen', // deprecated but required for vimeo
-                            src,
-                            width: large ? '640' : '480',
-                            height: large ? '360' : '270',
-                        },
-                    };
+            const {
+                validUrl,
+                useSandbox,
+                sandboxAttributes,
+            } = validateEmbbeddedPlayerIframeUrl(srcAtty);
+
+            if (validUrl !== false) {
+                const iframe = {
+                    tagName: 'iframe',
+                    attribs: {
+                        frameborder: '0',
+                        allowfullscreen: 'allowfullscreen',
+                        webkitallowfullscreen: 'webkitallowfullscreen', // deprecated but required for vimeo : https://vimeo.com/forums/help/topic:278181
+                        mozallowfullscreen: 'mozallowfullscreen', // deprecated but required for vimeo
+                        src: validUrl,
+                        width: large ? '640' : '480',
+                        height: large ? '360' : '270',
+                    },
+                };
+                if (useSandbox) {
+                    if (sandboxAttributes.length > 0) {
+                        iframe.attribs.sandbox = sandboxAttributes.join(' ');
+                    } else {
+                        iframe.attribs.sandbox = true;
+                    }
                 }
+                return iframe;
+            }
+
             console.log(
                 'Blocked, did not match iframe "src" white list urls:',
                 tagName,
                 attribs
             );
+
             sanitizeErrors.push('Invalid iframe URL: ' + srcAtty);
             return { tagName: 'div', text: `(Unsupported ${srcAtty})` };
         },
@@ -149,6 +118,9 @@ export default ({
             src = src.replace(/^http:\/\//i, '//');
             let atts = { src };
             if (alt && alt !== '') atts.alt = alt;
+            if (isDefaultImageSize(src)) {
+                atts['srcset'] = defaultSrcSet(src);
+            }
             return { tagName, attribs: atts };
         },
         div: (tagName, attribs) => {

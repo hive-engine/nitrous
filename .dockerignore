@@ -1,2 +1,11 @@
 node_modules
 tmp
+dist
+lib
+doc
+.vscode
+.idea
+.storybook
+blackboxtest
+api_mockdata
+package-lock.json

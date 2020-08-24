@@ -4,6 +4,7 @@ import Slider from 'react-rangeslider';
 import tt from 'counterpart';
 import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import {
@@ -175,9 +176,7 @@ export default connect(
             useHive,
         }) => {
             const successCallbackWrapper = (...args) => {
-                dispatch(
-                    globalActions.getState({ url: `@${account}/transfers` })
-                );
+                dispatch(userProfileActions.fetchWalletProfile({ account }));
                 return successCallback(...args);
             };
             const unstakeOperation = {
