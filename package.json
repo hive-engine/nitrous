@@ -193,8 +193,8 @@
     "webpack-livereload-plugin": "1"
   },
   "engines": {
-    "node": ">=8.7.0",
-    "npm": ">=5.4.2"
+    "node": "10.x",
+    "yarn": "1.x"
   },
   "lint-staged": {
     "src/**/*.js*": [
