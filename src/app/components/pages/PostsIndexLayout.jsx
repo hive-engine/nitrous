@@ -195,6 +195,7 @@ export default connect(
         const username =
             state.user.getIn(['current', 'username']) ||
             state.offchain.get('account');
+        const reviveEnabled = state.app.get('reviveEnabled');
         return {
             blogmode: props.blogmode,
             enableAds: props.enableAds,
@@ -208,6 +209,7 @@ export default connect(
             username,
             tokenStats: scotConfig.getIn(['config', 'tokenStats']),
             hiveEngine,
+            reviveEnabled,
         };
     },
     dispatch => ({
