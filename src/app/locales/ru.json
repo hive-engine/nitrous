@@ -194,8 +194,8 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "Не удается увеличить вознаграждение за пост в последнюю минуту перед выплатой",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "Только один Steem аккаунт разрешен с одного IP адреса каждые десять минут",
-        "resteem_this_post": "Поделиться этим постом",
+            "Только один Hive аккаунт разрешен с одного IP адреса каждые десять минут",
+        "reblog_this_post": "Поделиться этим постом",
         "reblog": "Поделиться",
         "write_your_story": "Написать свою историю",
         "remember_voting_and_posting_key": "Запомнить голос и постинг ключ",
@@ -221,9 +221,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Авторы получают вознаграждение, когда пользователи голосуют за их посты",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "Если Вам понравилось то, что Вы здесь прочитали, создайте свой аккаунт сегодня и начните зарабатывать БЕСПЛАТНЫЕ STEEM-ы!",
-            "free_steem": "БЕСПЛАТНЫЕ STEEM!",
-            "sign_up_earn_steem": "Зарегистрируйтесь сейчас, чтобы заработать "
+                "Если Вам понравилось то, что Вы здесь прочитали, создайте свой аккаунт сегодня и начните зарабатывать БЕСПЛАТНЫЕ HIVE-ы!",
+            "free_hive": "БЕСПЛАТНЫЕ HIVE!",
+            "sign_up_earn_hive": "Зарегистрируйтесь сейчас, чтобы заработать "
         },
         "next_3_strings_together": {
             "show_more": "Показать больше",
@@ -288,19 +288,20 @@
         "learn_more": "Документация",
         "welcome": "Добро пожаловать",
         "faq": "ЧаВО",
-        "chat": "Чат Steemit",
-        "app_center": "Центр приложений Steemit",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "API-документация Steemit",
-        "bluepaper": "Синяя бумага Steem",
+        "chat": "Чат Hive",
+        "app_center": "Центр приложений Hive",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "API-документация Hive",
+        "bluepaper": "Синяя бумага Hive",
         "smt_whitepaper": "Белая книга SMT",
-        "whitepaper": "Белая книга Steem",
+        "whitepaper": "Белая книга Hive",
         "intro_tagline": "Здесь говорят деньги.",
         "intro_paragraph":
             "Ваше мнение имеет цену. Присоединяйтесь к сообществу, которое платит за контент и за работу по отбору самого лучшего контента.",
-        "jobs": "Jobs at Steemit",
-        "steem_proposals": "Steem Proposals",
-        "witnesses": "Делегаты"
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer"
     },
     "main_menu": {
         "hot": "актуальное",
@@ -457,7 +458,7 @@
             "few": "%(count)s поста",
             "many": "%(count)s постов"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -555,7 +556,7 @@
         "after_printing_write_down_your_user_name":
             "После печати запишите ваше имя пользователя"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "Ваши %(DEBT_TOKEN)s токены ликвидны. Вы можете конвертировать %(DEBT_TOKEN)s на этом сайте (%(link)s) или вывести на биржу/обменник.",
         "this_is_a_price_feed_conversion":
@@ -575,12 +576,8 @@
             "%(VESTING_TOKEN)s - не ликвидные токены, требуется три месяца (13 еженедальных выплат) чтобы сконвертировать их в ликвидные токены %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Конвертированные %(VESTING_TOKEN)s токены могут быть отправлены себе или кому-либо еще, но не могут быть переданы вновь без конвертации в %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Часть STEEM POWER вам делегирована, это увеличивает ваше влияние на платформе. Количество делегированных токенов со временем может изменяться.",
-        "steem_engine_tokens":
-            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
-        "snax_token":
-            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
+        "part_of_your_hive_power_is_currently_delegated":
+            "Часть HIVE POWER вам делегирована, это увеличивает ваше влияние на платформе. Количество делегированных токенов со временем может изменяться."
     },
     "promote_post_jsx": {
         "promote_post": "Продвинуть пост",
@@ -603,8 +600,8 @@
             "Изображения были скрыты из-за низкого рейтинга."
     },
     "postsummary_jsx": {
-        "resteemed": "Поделиться",
-        "resteemed_by": "Репостнуто",
+        "reblogged": "Поделиться",
+        "reblogged_by": "Репостнуто",
         "reveal_it": "посмотреть пост",
         "adjust_your": "откорректируйте свои",
         "display_preferences": "настройки отображения",
@@ -754,7 +751,7 @@
         "password_update_succes":
             "Пароль для %(accountName)s был успешно обновлен",
         "password_info":
-            "Этот пароль или закрытый ключ был введен неправильно. Вероятно, есть ошибка почерка или ввода данных. Подсказка: пароль или закрытый ключ, сгенерированный Steemit, никогда не будет содержать символы 0 (ноль), O (прописная o), I (прописная i) и l (нижний регистр L).",
+            "Этот пароль или закрытый ключ был введен неправильно. Вероятно, есть ошибка почерка или ввода данных. Подсказка: пароль или закрытый ключ, сгенерированный Hive, никогда не будет содержать символы 0 (ноль), O (прописная o), I (прописная i) и l (нижний регистр L).",
         "enter_your_username": "Введи свое имя пользователя",
         "password_or_wif": "Пароль или WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -763,6 +760,7 @@
         "amazing_community": "удивительное сообщество",
         "to_comment_and_reward_others":
             " комментировать и вознаграждать других.",
+        "sign_up_get_hive": "Sign up.",
         "signup_button": "Зарегистрируйтесь",
         "signup_button_emphasis": " сейчас!",
         "sign_up_get_steem": "Sign up.",
@@ -775,8 +773,7 @@
         "join_our": "Присоединяйтесь к нашему",
         "sign_transfer": "Sign to complete transfer",
         "use_keychain": "Use keychain extension",
-        "password_update_success":
-            "Пароль для %(accountName)s был успешно обновлен"
+        "more_login_methods": "больше методов входа"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -837,7 +834,9 @@
         "profile_about": "О себе",
         "profile_location": "Местоположение",
         "profile_website": "Веб-сайт",
-        "saved": "Saved!"
+        "saved": "Saved!",
+        "choose_preferred_api_endpoint":
+            "Выберите свой предпочтительный узел API"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Сумма должна быть в формате 99999.999",
@@ -851,7 +850,7 @@
         "balance_subject_to_3_day_withdraw_waiting_period":
             "Вывод баланса из сейфа на обычный счет, занимает 3 дня,",
         "move_funds_to_another_account":
-            "Отправить средства на другой Steem аккаунт.",
+            "Отправить средства на другой Hive аккаунт.",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "Защитите средства от вывода 3-х дневным периодом ожидания.",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -882,9 +881,7 @@
         "withdraw_LIQUID_TOKEN": "Снять %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Снять %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Стоимость токенов $1.00 в %(LIQUID_TICKER)s, начисляемые годовые %(sbdInterest)s%%.",
-        "tradeable_tokens_transferred":
-            "Tradeable tokens that may be transferred anywhere at anytime.",
+            "Стоимость токенов $1.00 в %(LIQUID_TICKER)s, начисляемые годовые %(hbdInterest)s%%.",
         "savings": "Сберегательный счет",
         "estimated_account_value": "Приблизительная стоимость аккаунта",
         "next_power_down_is_scheduled_to_happen":
@@ -892,7 +889,7 @@
         "transfers_are_temporary_disabled": "Переводы временно преостановлены.",
         "history": "ИСТОРИЯ",
         "redeem_rewards": "Получить вознаграждение",
-        "buy_steem_or_steem_power": "Купить STEEM или STEEM POWER"
+        "buy_hive_or_hive_power": "Купить HIVE или HIVE POWER"
     },
     "powerdown_jsx": {
         "power_down": "Уменьшить силу голоса (power down)",

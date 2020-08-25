@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+    condenser:
+        image: hiveio/condenser:latest
+        deploy:
+            mode: replicated
+            replicas: 4
+            resources:
+                limits:
+                    cpus: "0.9"
+                    memory: 2048M
+            restart_policy:
+                condition: any
+                delay: 5s
+            update_config:
+                parallelism: 1
+                delay: 10s
+                failure_action: rollback
+                order: start-first
+            rollback_config:
+                parallelism: 1
+                delay: 5s
+        environment:
+            VIRTUAL_HOST: hive.blog
+            VIRTUAL_PORT: 8080
+            DISABLE_CLUSTERING: true
+            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+            SDC_SERVER_STEEMD_URL: https://api.hive.blog
+            SDC_SITE_DOMAIN: hive.blog
+            SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+            SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+            SDC_ALT_API_ENDPOINTS: "https://api.hive.blog https://anyx.io https://api.openhive.network https://api.hivekings.com"
+            SDC_HELMET_CONNECTSRC: "'self' hive.blog https://hive.blog https://images.hive.blog https://api.hive.blog https://anyx.io https://api.openhive.network https://api.hivekings.com"
+            WALLET_URL: https://wallet.hive.blog
+        networks:
+            - reverse-proxy
+
+networks:
+    reverse-proxy:
+        external:
+            name: reverse-proxy
