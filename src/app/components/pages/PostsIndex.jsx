@@ -312,6 +312,17 @@ class PostsIndex extends React.Component {
                 enableAds={enableAds}
                 blogmode={this.props.blogmode}
             >
+                {order !== 'feed' && (
+                    <div className="tag-feed-header row">
+                        <div className="column">
+                            <MarkdownViewer
+                                text={
+                                    tagHeaderMap[category] || tagHeaderMap['']
+                                }
+                            />
+                        </div>
+                    </div>
+                )}
                 <div className="articles__header row">
                     <div className="small-8 medium-7 large-8 column">
                         <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
@@ -366,11 +377,6 @@ class PostsIndex extends React.Component {
                                 />
                             </div>
                         )}
-                    {order !== 'feed' && (
-                        <MarkdownViewer
-                            text={tagHeaderMap[category] || tagHeaderMap['']}
-                        />
-                    )}
                 </div>
                 <hr className="articles__hr" />
                 {postsIndexDisplay}
