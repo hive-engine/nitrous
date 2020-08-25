@@ -132,7 +132,6 @@ class PostsIndex extends React.Component {
                         processed.add(nextDiscussion);
                     }
                 }
-                console.log(interleaved);
                 return {
                     posts: List(interleaved),
                     promotedPosts: List(promoted),
