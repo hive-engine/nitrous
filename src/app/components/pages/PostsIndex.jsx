@@ -91,34 +91,23 @@ class PostsIndex extends React.Component {
         }
     }
 
-    getPosts(order, category) {
-        const pinned = this.props.pinned;
+    getPosts() {
+        const { order, pinned, posts, promotedPosts } = this.props;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
               ? pinned.get('pinned_posts').toJS()
               : []
             : [];
-        const notices = this.props.notices || [];
-        const topic_discussions =
-            this.props.discussions != null
-                ? this.props.discussions.get(category || '')
-                : null;
-        if (!topic_discussions) return { posts: List(), promotedPosts: List() };
-        const mainDiscussions = topic_discussions.get(order);
         if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
-            let promotedDiscussions = topic_discussions.get('promoted');
-            if (
-                promotedDiscussions &&
-                promotedDiscussions.size > 0 &&
-                mainDiscussions
-            ) {
+            let promotedDiscussions = promotedPosts;
+            if (promotedDiscussions && promotedDiscussions.size > 0 && posts) {
                 const processed = new Set(
                     pinnedPosts.map(p => `${p.author}/${p.permlink}`)
                 ); // mutable
                 const interleaved = [];
                 const promoted = [];
                 let promotedIndex = 0;
-                for (let i = 0; i < mainDiscussions.size; i++) {
+                for (let i = 0; i < posts.size; i++) {
                     if (i % PROMOTED_POST_PAD_SIZE === 0) {
                         while (
                             processed.has(
@@ -137,19 +126,20 @@ class PostsIndex extends React.Component {
                             processed.add(nextPromoted);
                         }
                     }
-                    const nextDiscussion = mainDiscussions.get(i);
+                    const nextDiscussion = posts.get(i);
                     if (!processed.has(nextDiscussion)) {
                         interleaved.push(nextDiscussion);
                         processed.add(nextDiscussion);
                     }
                 }
+                console.log(interleaved);
                 return {
                     posts: List(interleaved),
                     promotedPosts: List(promoted),
                 };
             }
         }
-        return { posts: mainDiscussions || List(), promotedPosts: List() };
+        return { posts: posts || List(), promotedPosts: List() };
     }
 
     loadMore() {
@@ -226,7 +216,6 @@ class PostsIndex extends React.Component {
             category,
             account_name, // TODO: for feed
             order,
-            posts,
             pinned,
             username,
         } = this.props;
@@ -244,7 +233,10 @@ class PostsIndex extends React.Component {
             : null;
         let fetching = (status && status.fetching) || this.props.loading;
 
-        let promotedPosts = List();
+        const processedPosts = this.getPosts();
+        const posts = processedPosts.posts;
+        const promotedPosts = processedPosts.promotedPosts;
+
         let emptyText = '';
         if (order === 'feed') {
             emptyText = noFriendsText;
@@ -266,42 +258,6 @@ class PostsIndex extends React.Component {
             else if (order == 'created') emptyText = `No posts in ${cat} yet!`;
             else emptyText = `No ${order} ${cat} posts found.`;
         } else {
-            /*            const processedPosts = this.getPosts(order, category);
-            posts = processedPosts.posts;
-            promotedPosts = processedPosts.promotedPosts;
-            if (posts && posts.size === 0) {
-                emptyText = (
-                    <div>
-                        {'No ' +
-                            topics_order +
-                            (category ? ' #' + category : '') +
-                            ' posts found'}
-                    </div>
-                );
-            }
-        }
-
-        const status = this.props.status
-            ? this.props.status.getIn([category || '', order])
-            : null;
-        const fetching = (status && status.fetching) || this.props.loading;
-        const { showSpam } = this.state;
-
-        const topicDiscussions =
-            discussions != null ? discussions.get(category || '') : null;
-
-        // If we're at one of the four sort order routes without a tag filter,
-        // use the translated string for that sort order, f.ex "trending"
-        //
-        // If you click on a tag while you're in a sort order route,
-        // the title should be the translated string for that sort order
-        // plus the tag string, f.ex "trending: blog"
-        //
-        // Logged-in:
-        // At homepage (@user/feed) say "My feed"
-        let page_title = 'Posts'; // sensible default here?
-        if (category === 'feed') {
-        */
             emptyText = 'Nothing here to see...';
         }
 
@@ -328,6 +284,7 @@ class PostsIndex extends React.Component {
             <PostsList
                 ref="list"
                 post_refs={posts}
+                promoted={promotedPosts}
                 loading={fetching}
                 order={order}
                 category={category}
@@ -443,7 +400,6 @@ module.exports = {
             const hive = ifHivemind(category);
             const community = state.global.getIn(['community', hive], null);
 
-            const reviveEnabled = state.app.get('reviveEnabled');
             const enableAds =
                 ownProps.gptEnabled &&
                 !GptUtils.HasBannedTags(
@@ -453,6 +409,8 @@ module.exports = {
 
             const key = ['discussion_idx', category || '', order];
             let posts = state.global.getIn(key, List());
+            const promotedKey = ['discussion_idx', category || '', 'promoted'];
+            const promotedPosts = state.global.getIn(promotedKey, List());
 
             // if 'pending' post is found, prepend it to posts list
             //   (see GlobalReducer RECEIVE_CONTENT)
@@ -473,6 +431,7 @@ module.exports = {
                 category,
                 order,
                 posts,
+                promotedPosts,
                 pending,
                 community,
                 username,
@@ -481,13 +440,8 @@ module.exports = {
                 categories: TAG_LIST,
                 pinned: state.offchain.get('pinned_posts'),
                 isBrowser: process.env.BROWSER,
-                notices: state.offchain
-                    .get('pinned_posts')
-                    .get('notices')
-                    .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
                 enableAds,
-                reviveEnabled,
             };
         },
         dispatch => ({

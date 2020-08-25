@@ -31,19 +31,17 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 label: tt('main_menu.hot'),
                 value: `/hot${tag}`,
             },
+            {
+                label: tt('g.new'),
+                value: `/created${tag}`,
+            },
+            {
+                label: tt('g.promoted'),
+                value: `/promoted${tag}`,
+            },
         ];
 
         if (!topMenu) {
-            out.push({
-                label: tt('g.new'),
-                value: `/created${tag}`,
-            });
-
-            out.push({
-                label: tt('g.promoted'),
-                value: `/promoted${tag}`,
-            });
-
             out.push({
                 label: tt('g.payouts'),
                 value: `/payout${tag}`,
