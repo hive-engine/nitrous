@@ -741,7 +741,7 @@ function* saveLogin_localStorage() {
         return;
     }
     const account = yield select(state =>
-        state.userProfiles.getIn(['profiles', username])
+        state.global.getIn(['accounts', username])
     );
     if (!account) {
         console.error('Missing global.accounts[' + username + ']');
