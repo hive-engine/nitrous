@@ -1,0 +1,188 @@
+stages:
+    - test
+    - build
+    - deploy
+
+variables:
+    DOCKER_IMAGE: hiveio/condenser
+    APP_REVIEW_SUBDOMAIN: .condenser.engrave.dev
+    STAGING_DOMAIN: staging.condenser.engrave.dev
+    PRODUCTION_DOMAIN: hive.blog
+    CERTS: ~/.docker
+
+################################# COMMON TEMPLATES #################################
+
+.docker-job: &docker-job
+    image: docker:stable
+    services:
+        - docker:dind
+    before_script:
+        - echo $HUB_TOKEN | docker login -u $HUB_USERNAME --password-stdin
+
+.docker-remote-host-review: &docker-remote-host-review
+    before_script:
+        - mkdir -p $CERTS
+        - echo "$REVIEW_TLSCACERT" > $CERTS/ca.pem
+        - echo "$REVIEW_TLSCERT" > $CERTS/cert.pem
+        - echo "$REVIEW_TLSKEY" > $CERTS/key.pem
+        - echo $CI_JOB_TOKEN | DOCKER_CERT_PATH=$CERTS docker -H $REVIEW_HOST --tlsverify login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    after_script:
+        - rm -R $CERTS
+
+.docker-remote-host-staging: &docker-remote-host-staging
+    before_script:
+        - mkdir -p $CERTS
+        - echo "$STAGING_TLSCACERT" > $CERTS/ca.pem
+        - echo "$STAGING_TLSCERT" > $CERTS/cert.pem
+        - echo "$STAGING_TLSKEY" > $CERTS/key.pem
+    after_script:
+        - rm -fR $CERTS
+
+.docker-remote-host-production: &docker-remote-host-production
+    before_script:
+        - mkdir -p $CERTS
+        - echo "$PRODUCTION_TLSCACERT" > $CERTS/ca.pem
+        - echo "$PRODUCTION_TLSCERT" > $CERTS/cert.pem
+        - echo "$PRODUCTION_TLSKEY" > $CERTS/key.pem
+    after_script:
+        - rm -fR $CERTS
+
+################################# MERGE REQUESTS #################################
+
+run-unit-tests:
+    stage: test
+    image: node:12.16.2
+    only:
+        - branches
+        - merge_requests
+    before_script:
+        - yarn install --frozen-lockfile --ignore-optional
+    script:
+        - yarn run ci:test
+    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
+run-eslint:
+    stage: test
+    image: node:12.16.2
+    only:
+        - branches
+        - merge_requests
+    before_script:
+        - yarn install --frozen-lockfile --ignore-optional
+    script:
+        - yarn ci:eslint
+    allow_failure: true # will be changed to false when all linter errors removed
+
+build-review-app:
+    <<: *docker-job
+    stage: build
+    variables:
+        DOCKER_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+        SOURCE_COMMIT: $CI_COMMIT_SHA
+    only:
+        - merge_requests
+    before_script:
+        - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    script:
+        - docker build -t $DOCKER_TAG --build-arg SOURCE_COMMIT --build-arg DOCKER_TAG .
+        - docker push $DOCKER_TAG
+
+deploy-review-app:
+    <<: *docker-job
+    <<: *docker-remote-host-review
+    stage: deploy
+    variables:
+        DOCKER_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+        SERVICE_NAME: review_$CI_ENVIRONMENT_SLUG
+    only:
+        - merge_requests
+    script:
+        - DOCKER_CERT_PATH=$CERTS docker -H $REVIEW_HOST --tlsverify pull $DOCKER_TAG
+        - DOCKER_CERT_PATH=$CERTS docker -H $REVIEW_HOST --tlsverify service rm $SERVICE_NAME || true # try to remove previous service but do not fail if it not exist
+        - DOCKER_CERT_PATH=$CERTS docker -H $REVIEW_HOST --tlsverify service create --with-registry-auth --network infrastructure --name $SERVICE_NAME $DOCKER_TAG
+        - echo "Review app deployed"
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        url: https://$CI_ENVIRONMENT_SLUG$APP_REVIEW_SUBDOMAIN
+        on_stop: stop-review-app
+        auto_stop_in: 1 week
+
+stop-review-app:
+    <<: *docker-job
+    <<: *docker-remote-host-review
+    stage: deploy
+    variables:
+        SERVICE_NAME: review_$CI_ENVIRONMENT_SLUG
+    only:
+        - merge_requests
+    when: manual
+    script:
+        - DOCKER_CERT_PATH=$CERTS docker -H $REVIEW_HOST --tlsverify service rm $SERVICE_NAME || true # try to remove previous service but do not fail if it not exist
+        - echo "Review app stopped"
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        action: stop
+
+################################# IMAGE BUILDING #################################
+
+build-development:
+    <<: *docker-job
+    stage: build
+    variables:
+        DOCKER_TAG: $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+        DOCKER_TAG_MAIN: $DOCKER_IMAGE:development
+        SOURCE_COMMIT: $CI_COMMIT_SHA
+    only:
+        - develop
+    script:
+        - docker build -t $DOCKER_TAG -t $DOCKER_TAG_MAIN --build-arg SOURCE_COMMIT --build-arg DOCKER_TAG .
+        - docker push $DOCKER_TAG
+        - docker push $DOCKER_TAG_MAIN
+
+build-production:
+    <<: *docker-job
+    stage: build
+    variables:
+        DOCKER_TAG: $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+        DOCKER_TAG_MAIN: $DOCKER_IMAGE:latest
+        SOURCE_COMMIT: $CI_COMMIT_SHA
+    only:
+        - master
+    script:
+        - docker build -t $DOCKER_TAG -t $DOCKER_TAG_MAIN --build-arg SOURCE_COMMIT --build-arg DOCKER_TAG .
+        - docker push $DOCKER_TAG
+        - docker push $DOCKER_TAG_MAIN
+
+################################# DEPLOYMENT #################################
+
+deploy-staging:
+    <<: *docker-job
+    <<: *docker-remote-host-staging
+    stage: deploy
+    variables:
+        DOCKER_TAG: $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+        SERVICE_NAME: staging_condenser
+    only:
+        - develop
+    script:
+        - DOCKER_CERT_PATH=$CERTS docker -H $STAGING_HOST --tlsverify pull $DOCKER_TAG
+        - DOCKER_CERT_PATH=$CERTS docker -H $STAGING_HOST --tlsverify service update --image $DOCKER_TAG --update-failure-action rollback --update-order start-first $SERVICE_NAME
+    environment:
+        name: staging
+        url: https://$STAGING_DOMAIN
+
+deploy-production:
+    <<: *docker-job
+    <<: *docker-remote-host-production
+    stage: deploy
+    variables:
+        DOCKER_TAG: $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+        SERVICE_NAME: production_condenser
+    only:
+        - master
+    script:
+        - DOCKER_CERT_PATH=$CERTS docker -H $PRODUCTION_HOST --tlsverify pull $DOCKER_TAG
+        - DOCKER_CERT_PATH=$CERTS docker -H $PRODUCTION_HOST --tlsverify service update --image $DOCKER_TAG --update-failure-action rollback --update-order start-first $SERVICE_NAME
+    environment:
+        name: production
+        url: https://$PRODUCTION_DOMAIN

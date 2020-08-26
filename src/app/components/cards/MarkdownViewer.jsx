@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Component } from 'react';
 import Remarkable from 'remarkable';
-import YoutubePreview from 'app/components/elements/YoutubePreview';
 import sanitizeConfig, { noImageText } from 'app/utils/SanitizeConfig';
 import sanitize from 'sanitize-html';
 import HtmlReady from 'shared/HtmlReady';
 import tt from 'counterpart';
+import { generateMd as EmbeddedPlayerGenerateMd } from 'app/components/elements/EmbeddedPlayers';
 
 const remarkable = new Remarkable({
     html: true, // remarkable renders first then sanitize runs...
@@ -31,7 +31,6 @@ class MarkdownViewer extends Component {
         text: PropTypes.string,
         className: PropTypes.string,
         large: PropTypes.bool,
-        jsonMetadata: PropTypes.object,
         highQualityPost: PropTypes.bool,
         noImage: PropTypes.bool,
         allowDangerousHTML: PropTypes.bool,
@@ -70,11 +69,7 @@ class MarkdownViewer extends Component {
         const { allowNoImage } = this.state;
         let { text } = this.props;
         if (!text) text = ''; // text can be empty, still view the link meta data
-        const {
-            large,
-            highQualityPost,
-            //jsonMetadata,
-        } = this.props;
+        const { large, highQualityPost } = this.props;
 
         let html = false;
         // See also ReplyEditor isHtmlTest
@@ -115,14 +110,19 @@ class MarkdownViewer extends Component {
         if (this.props.allowDangerousHTML === true) {
             console.log('WARN\tMarkdownViewer rendering unsanitized content');
         } else {
-            cleanText = sanitize(
-                renderedText,
-                sanitizeConfig({
-                    large,
-                    highQualityPost,
-                    noImage: noImage && allowNoImage,
-                })
-            );
+            try {
+                cleanText = sanitize(
+                    renderedText,
+                    sanitizeConfig({
+                        large,
+                        highQualityPost,
+                        noImage: noImage && allowNoImage,
+                    })
+                );
+            } catch (e) {
+                cleanText = '';
+                console.error('bad input');
+            }
         }
 
         if (/<\s*script/gi.test(cleanText)) {
@@ -141,93 +141,37 @@ class MarkdownViewer extends Component {
         let idx = 0;
         const sections = [];
 
+        function checksum(s) {
+            let chk = 0x12345678;
+            const len = s.length;
+            for (let i = 0; i < len; i += 1) {
+                chk += s.charCodeAt(i) * (i + 1);
+            }
+
+            return (chk & 0xffffffff).toString(16);
+        }
+
         // HtmlReady inserts ~~~ embed:${id} type ~~~
         for (let section of cleanText.split('~~~ embed:')) {
-            const match = section.match(
-                /^([A-Za-z0-9\?\=\_\-\/\.]+) (youtube|vimeo|twitch|dtube)\s?(\d+)? ~~~/
-            );
-            if (match && match.length >= 3) {
-                const id = match[1];
-                const type = match[2];
-                const startTime = match[3] ? parseInt(match[3]) : 0;
-                const w = large ? 640 : 480,
-                    h = large ? 360 : 270;
-                if (type === 'youtube') {
-                    sections.push(
-                        <YoutubePreview
-                            key={idx++}
-                            width={w}
-                            height={h}
-                            youTubeId={id}
-                            startTime={startTime}
-                            frameBorder="0"
-                            allowFullScreen="true"
-                        />
-                    );
-                } else if (type === 'vimeo') {
-                    const url = `https://player.vimeo.com/video/${id}#t=${
-                        startTime
-                    }s`;
-                    sections.push(
-                        <div className="videoWrapper">
-                            <iframe
-                                key={idx++}
-                                src={url}
-                                width={w}
-                                height={h}
-                                frameBorder="0"
-                                webkitallowfullscreen
-                                mozallowfullscreen
-                                allowFullScreen
-                            />
-                        </div>
-                    );
-                } else if (type === 'twitch') {
-                    const url = `https://player.twitch.tv/${id}`;
-                    sections.push(
-                        <div className="videoWrapper">
-                            <iframe
-                                key={idx++}
-                                src={url}
-                                width={w}
-                                height={h}
-                                frameBorder="0"
-                                allowFullScreen
-                            />
-                        </div>
-                    );
-                } else if (type === 'dtube') {
-                    const url = `https://emb.d.tube/#!/${id}`;
-                    sections.push(
-                        <div className="videoWrapper">
-                            <iframe
-                                key={idx++}
-                                src={url}
-                                width={w}
-                                height={h}
-                                frameBorder="0"
-                                allowFullScreen
-                            />
-                        </div>
-                    );
-                } else {
-                    console.error('MarkdownViewer unknown embed type', type);
+            const embedMd = EmbeddedPlayerGenerateMd(section, idx, large);
+            if (embedMd) {
+                const { section: newSection, markdown } = embedMd;
+                section = newSection;
+                sections.push(markdown);
+
+                if (section === '') {
+                    continue;
                 }
-                if (match[3]) {
-                    section = section.substring(
-                        `${id} ${type} ${startTime} ~~~`.length
-                    );
-                } else {
-                    section = section.substring(`${id} ${type} ~~~`.length);
-                }
-                if (section === '') continue;
             }
+
             sections.push(
                 <div
-                    key={idx++}
+                    key={checksum(section)}
                     dangerouslySetInnerHTML={{ __html: section }}
                 />
             );
+
+            idx += 1;
         }
 
         const cn =
@@ -235,12 +179,14 @@ class MarkdownViewer extends Component {
             (this.props.className ? ` ${this.props.className}` : '') +
             (html ? ' html' : '') +
             (large ? '' : ' MarkdownViewer--small');
+
         return (
             <div className={'MarkdownViewer ' + cn}>
                 {sections}
                 {noImageActive &&
                     allowNoImage && (
                         <div
+                            key={'hidden-content'}
                             onClick={this.onAllowNoImage}
                             className="MarkdownViewer__negative_group"
                         >
