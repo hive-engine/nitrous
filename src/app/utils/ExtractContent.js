@@ -16,7 +16,11 @@ const getValidImage = array => {
 };
 
 export function extractImageLink(json_metadata, body = null) {
-    let json = json_metadata || {};
+    let json =
+        typeof json_metadata !== 'string'
+            ? json_metadata.toJS()
+            : json_metadata;
+    if (!json) json = {};
     let image_link;
 
     try {
