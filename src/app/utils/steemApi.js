@@ -720,7 +720,7 @@ export async function getStateAsync(url, observer, ssr = false) {
     // Steemit state not needed for main feeds.
     const steemitApiStateNeeded =
         path !== '' &&
-        !path.match(/^submit\.html$/) &&
+        !path.match(/^(login|submit)\.html$/) &&
         !path.match(
             /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
