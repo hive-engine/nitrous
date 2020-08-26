@@ -5,7 +5,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' 3speak.online emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      "connectSrc": "https://accounts.hive-engine.com https://history.steem-engine.com https://servedby.revive-adserver.net https://anyx.io https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.hive-engine.com https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com https://images.hive.blog securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com https://api.hive.blog api.blocktrades.us https://hivesigner.com",
+      "connectSrc": "https://accounts.hive-engine.com https://history.steem-engine.com https://servedby.revive-adserver.net https://anyx.io https://steemd.minnowsupportproject.org https://cdn.snax.one https://api.hive-engine.com https://api.steem-engine.com https://scot-api.steem-engine.com https://steemitimages.com https://images.hive.blog securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com https://api.hive.blog api.blocktrades.us https://hivesigner.com https://pagead2.googlesyndication.com https://www.google-analytics.com",
       "defaultSrc": "tpc.googlesyndication.com 'self' img.3speakcontent.online emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",
