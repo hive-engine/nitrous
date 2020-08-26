@@ -66,7 +66,7 @@ const transformAccount = account =>
  */
 
 const mergeAccounts = (state, account) => {
-    return state.updateIn(['profiles', account.get('name')], Map(), a =>
+    return state.updateIn(['accounts', account.get('name')], Map(), a =>
         a.mergeDeep(account)
     );
 };
