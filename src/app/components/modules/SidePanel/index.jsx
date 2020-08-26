@@ -86,10 +86,6 @@ const SidePanel = ({
 
         organizational: [
             {
-                label: tt('navigation.api_docs'),
-                link: 'https://developers.hive.io/',
-            },
-            {
                 value: 'referee',
                 label: 'Referee Elections',
                 link: 'https://referee.sportstalk.social/',
