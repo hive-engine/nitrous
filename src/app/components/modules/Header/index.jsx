@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { parseJsonTags } from 'app/utils/StateFunctions';
 import Headroom from 'react-headroom';
-import Icon from 'app/components/elements/Icon';
 import resolveRoute from 'app/ResolveRoute';
 import tt from 'counterpart';
 import { APP_NAME } from 'app/client_config';
-import SortOrder from 'app/components/elements/SortOrder';
-import SearchInput from 'app/components/elements/SearchInput';
+import ElasticSearchInput from 'app/components/elements/ElasticSearchInput';
 import IconButton from 'app/components/elements/IconButton';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import * as userActions from 'app/redux/UserReducer';
 import * as appActions from 'app/redux/AppReducer';
+import { startPolling } from 'app/redux/PollingSaga';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import Userpic from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
 import AppLogo from 'app/components/elements/AppLogo';
@@ -21,14 +22,18 @@ import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
+import SortOrder from 'app/components/elements/SortOrder';
+import { Map } from 'immutable';
+import ReactMutationObserver from '../../utils/ReactMutationObserver';
 
 class Header extends React.Component {
     static propTypes = {
         current_account_name: PropTypes.string,
-        account_meta: PropTypes.object,
-        category: PropTypes.string,
-        order: PropTypes.string,
         pathname: PropTypes.string,
+        getUnreadAccountNotifications: PropTypes.func,
+        startNotificationsPolling: PropTypes.func,
+        loggedIn: PropTypes.bool,
+        unreadNotificationCount: PropTypes.number,
     };
 
     constructor(props) {
@@ -45,6 +50,17 @@ class Header extends React.Component {
             this.props.hideAnnouncement(event);
             this.forceUpdate();
         };
+    }
+
+    componentWillMount() {
+        const {
+            loggedIn,
+            current_account_name,
+            startNotificationsPolling,
+        } = this.props;
+        if (loggedIn) {
+            startNotificationsPolling(current_account_name);
+        }
     }
 
     componentDidMount() {
@@ -110,29 +126,26 @@ class Header extends React.Component {
 
     render() {
         const {
-            category,
-            order,
             pathname,
-            current_account_name,
             username,
             showLogin,
             logout,
             loggedIn,
-            vertical,
-            nightmodeEnabled,
             toggleNightmode,
-            userPath,
+            nightmodeEnabled,
             showSidePanel,
             navigate,
-            account_meta,
-            walletUrl,
+            display_name,
+            content,
+            unreadNotificationCount,
+            notificationActionPending,
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
 
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
-        let home_account = false;
+        let gptTags = [];
         let page_title = route.page;
 
         let sort_order = '';
@@ -141,25 +154,35 @@ class Header extends React.Component {
         if (route.page === 'PostsIndex') {
             sort_order = route.params[0];
             if (sort_order === 'home') {
-                page_title = tt('header_jsx.home');
-                const account_name = route.params[1];
-                if (
-                    current_account_name &&
-                    account_name.indexOf(current_account_name) === 1
-                )
-                    home_account = true;
+                page_title = 'My Friends'; //tt('header_jsx.home');
             } else {
-                topic = route.params.length > 1 ? route.params[1] : '';
-                const type =
-                    route.params[0] == 'payout_comments' ? 'comments' : 'posts';
+                topic = route.params.length > 1 ? route.params[1] || '' : '';
+                gptTags = [topic];
+
                 let prefix = route.params[0];
                 if (prefix == 'created') prefix = 'New';
-                if (prefix == 'payout') prefix = 'Pending payout';
-                if (prefix == 'payout_comments') prefix = 'Pending payout';
-                if (topic !== '') prefix += ` ${topic}`;
-                page_title = `${prefix} ${type}`;
+                if (prefix == 'payout') prefix = 'Pending';
+                if (prefix == 'payout_comments') prefix = 'Pending';
+                if (prefix == 'muted') prefix = 'Muted';
+                page_title = prefix;
+                if (topic !== '') {
+                    let name = this.props.community.getIn(
+                        [topic, 'title'],
+                        '#' + topic
+                    );
+                    if (name == '#my') name = 'My Communities';
+                    page_title = `${name} / ${page_title}`;
+                } else {
+                    page_title += ' posts';
+                }
             }
         } else if (route.page === 'Post') {
+            if (content) {
+                const user = `${route.params[1]}`.replace('@', '');
+                const slug = `${route.params[2]}`;
+                const post = content.get(`${user}/${slug}`);
+                gptTags = post ? parseJsonTags(post) : [];
+            }
             sort_order = '';
             topic = route.params[0];
         } else if (route.page == 'SubmitPost') {
@@ -168,14 +191,13 @@ class Header extends React.Component {
             page_title = tt('navigation.privacy_policy');
         } else if (route.page == 'Tos') {
             page_title = tt('navigation.terms_of_service');
-        } else if (route.page == 'RecoverAccountStep1') {
-            page_title = tt('header_jsx.stolen_account_recovery');
+        } else if (route.page == 'CommunityRoles') {
+            page_title = 'Community Roles';
         } else if (route.page === 'UserProfile') {
-            let user_name = route.params[0].slice(1);
-            const name = account_meta
-                ? normalizeProfile(account_meta.toJS()).name
-                : null;
-            const user_title = name ? `${name} (@${user_name})` : user_name;
+            const user_name = route.params[0].slice(1);
+            const user_title = display_name
+                ? `${display_name} (@${user_name})`
+                : user_name;
             page_title = user_title;
             if (route.params[1] === 'followers') {
                 page_title = tt('header_jsx.people_following', {
@@ -187,23 +209,17 @@ class Header extends React.Component {
                     username: user_title,
                 });
             }
-            if (route.params[1] === 'curation-rewards') {
-                page_title = tt('header_jsx.curation_rewards_by', {
-                    username: user_title,
-                });
-            }
-            if (route.params[1] === 'author-rewards') {
-                page_title = tt('header_jsx.author_rewards_by', {
-                    username: user_title,
-                });
-            }
-            if (route.params[1] === 'recent-replies') {
+            if (route.params[1] === 'replies') {
                 page_title = tt('header_jsx.replies_to', {
                     username: user_title,
                 });
             }
-            // @user/"posts" is deprecated in favor of "comments" as of oct-2016 (#443)
-            if (route.params[1] === 'posts' || route.params[1] === 'comments') {
+            if (route.params[1] === 'posts') {
+                page_title = tt('header_jsx.posts_by', {
+                    username: user_title,
+                });
+            }
+            if (route.params[1] === 'comments') {
                 page_title = tt('header_jsx.comments_by', {
                     username: user_title,
                 });
@@ -224,12 +240,8 @@ class Header extends React.Component {
         )
             document.title = page_title + ' — ' + APP_NAME;
 
-        const logo_link =
-            resolveRoute(pathname).params &&
-            resolveRoute(pathname).params.length > 1 &&
-            this.last_sort_order
-                ? '/' + this.last_sort_order
-                : current_account_name ? `/@${current_account_name}/feed` : '/';
+        const _feed = username && `/@${username}/feed`;
+        const logo_link = _feed && pathname != _feed ? _feed : '/';
 
         //TopRightHeader Stuff
         const defaultNavigate = e => {
@@ -254,49 +266,46 @@ class Header extends React.Component {
             </Link>
         );
 
-        const feed_link = `/@${username}/feed`;
-        const replies_link = `/@${username}/recent-replies`;
+        const replies_link = `/@${username}/replies`;
         const account_link = `/@${username}`;
         const comments_link = `/@${username}/comments`;
         const wallet_link = `/@${username}/transfers`;
         const settings_link = `/@${username}/settings`;
-        const pathCheck = userPath === '/submit.html' ? true : null;
+        const notifs_link = `/@${username}/notifications`;
+        const notif_label =
+            tt('g.notifications') +
+            (unreadNotificationCount > 0
+                ? ` (${unreadNotificationCount})`
+                : '');
 
         const user_menu = [
-            {
-                link: feed_link,
-                icon: 'home',
-                value: tt('g.feed'),
-            },
-            { link: account_link, icon: 'profile', value: tt('g.blog') },
-            { link: comments_link, icon: 'replies', value: tt('g.comments') },
-            {
-                link: replies_link,
-                icon: 'reply',
-                value: tt('g.replies'),
-            },
-            {
-                link: wallet_link,
-                icon: 'wallet',
-                value: tt('g.wallet'),
-            },
-
+            { link: account_link, icon: 'profile', value: tt('g.profile') },
+            //{ link: notifs_link, icon: 'clock', value: notif_label },
+            { link: comments_link, icon: 'chatbox', value: tt('g.comments') },
+            { link: replies_link, icon: 'reply', value: tt('g.replies') },
+            //{ link: settings_link, icon: 'cog', value: tt('g.settings') },
             {
                 link: '#',
                 icon: 'eye',
                 onClick: toggleNightmode,
                 value: tt('g.toggle_nightmode'),
             },
-            { link: settings_link, icon: 'cog', value: tt('g.settings') },
-            loggedIn
-                ? {
-                      link: '#',
-                      icon: 'enter',
-                      onClick: logout,
-                      value: tt('g.logout'),
-                  }
-                : { link: '#', onClick: showLogin, value: tt('g.login') },
+            { link: wallet_link, icon: 'wallet', value: tt('g.wallet') },
+            {
+                link: '#',
+                icon: 'enter',
+                onClick: logout,
+                value: tt('g.logout'),
+            },
         ];
+        const headerMutated = (mutation, discconnectObserver) => {
+            if (mutation.target.id.indexOf('google_ads_iframe_') !== -1) {
+                this.gptAdRendered();
+                if (typeof discconnectObserver === 'function') {
+                    discconnectObserver();
+                }
+            }
+        };
         return (
             <Headroom
                 onUnpin={e => this.headroomOnUnpin(e)}
@@ -341,8 +350,8 @@ class Header extends React.Component {
                         <div className="large-4 columns show-for-large large-centered Header__sort">
                             {/*SORT*/}
                             <SortOrder
-                                sortOrder={order}
-                                topic={category === 'feed' ? '' : category}
+                                sortOrder={sort_order}
+                                topic={topic === 'feed' ? '' : topic}
                                 horizontal={true}
                                 pathname={pathname}
                             />
@@ -417,19 +426,26 @@ const mapStateToProps = (state, ownProps) => {
         return {
             username: null,
             loggedIn: false,
+            community: state.global.get('community', Map({})),
         };
     }
 
-    let user_profile;
+    // display name used in page title
+    let display_name;
     const route = resolveRoute(ownProps.pathname);
     if (route.page === 'UserProfile') {
-        user_profile = state.global.getIn([
-            'accounts',
-            route.params[0].slice(1),
-        ]);
+        display_name = state.userProfiles.getIn(
+            [
+                'profiles',
+                route.params[0].slice(1),
+                'metadata',
+                'profile',
+                'name',
+            ],
+            null
+        );
     }
 
-    const userPath = state.routing.locationBeforeTransitions.pathname;
     const username = state.user.getIn(['current', 'username']);
     const loggedIn = !!username;
     const current_account_name = username
@@ -437,21 +453,41 @@ const mapStateToProps = (state, ownProps) => {
         : state.offchain.get('account');
 
     const gptEnabled = state.app.getIn(['googleAds', 'gptEnabled']);
-    const walletUrl = state.app.get('walletUrl');
-
     const announcement = state.offchain.getIn(['pinned_posts', 'announcement']);
+    const content = state.global.get('content'); // TODO: needed for SSR?
+    let unreadNotificationCount = 0;
+    if (
+        loggedIn &&
+        state.global.getIn([
+            'notifications',
+            current_account_name,
+            'unreadNotifications',
+        ])
+    ) {
+        unreadNotificationCount = state.global.getIn([
+            'notifications',
+            current_account_name,
+            'unreadNotifications',
+            'unread',
+        ]);
+    }
 
     return {
         username,
         loggedIn,
-        userPath,
         nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
-        account_meta: user_profile,
+        community: state.global.get('community', Map({})),
+        display_name,
         current_account_name,
         announcement,
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
-        walletUrl,
+        content,
+        unreadNotificationCount,
+        notificationActionPending: state.global.getIn([
+            'notifications',
+            'loading',
+        ]),
         ...ownProps,
     };
 };
@@ -476,6 +512,25 @@ const mapDispatchToProps = dispatch => ({
         dispatch(userActions.hideSidePanel());
     },
     hideAnnouncement: id => dispatch(userActions.hideAnnouncement({ id })),
+    getUnreadAccountNotifications: username => {
+        const query = {
+            account: username,
+        };
+        return dispatch(
+            fetchDataSagaActions.getUnreadAccountNotifications(query)
+        );
+    },
+    startNotificationsPolling: username => {
+        const query = {
+            account: username,
+        };
+        const params = {
+            pollAction: fetchDataSagaActions.getUnreadAccountNotifications,
+            pollPayload: query,
+            delay: 600000, // The delay between successive polls
+        };
+        return dispatch(startPolling(params));
+    },
 });
 
 const connectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);

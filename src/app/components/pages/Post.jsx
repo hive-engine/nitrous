@@ -1,31 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import tt from 'counterpart';
+import { SIGNUP_URL } from 'shared/constants';
 import Comment from 'app/components/cards/Comment';
 import PostFull from 'app/components/cards/PostFull';
-import { immutableAccessor } from 'app/utils/Accessors';
-import extractContent from 'app/utils/ExtractContent';
-import { connect } from 'react-redux';
-
+import NotFoundMessage from 'app/components/cards/NotFoundMessage';
+import { parseJsonTags } from 'app/utils/StateFunctions';
 import { sortComments } from 'app/components/cards/Comment';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { Set } from 'immutable';
-import tt from 'counterpart';
-import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { INVEST_TOKEN_UPPERCASE } from 'app/client_config';
-import { SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
+import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 
-import AppLogo from 'app/components/elements/AppLogo';
+function isEmptyPost(post) {
+    // check if the post doesn't exist
+    // !dis may be enough but keep 'created' & 'body' test for potential compat
+    return (
+        !post ||
+        (post.get('created') === '1970-01-01T00:00:00' &&
+            post.get('body') === '')
+    );
+}
 
 class Post extends React.Component {
     static propTypes = {
-        content: PropTypes.object.isRequired,
         post: PropTypes.string,
-        routeParams: PropTypes.object,
+        content: PropTypes.object.isRequired,
+        dis: PropTypes.object,
         sortOrder: PropTypes.string,
+        loading: PropTypes.bool,
     };
     constructor() {
         super();
@@ -55,100 +61,52 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder } = this.props;
+        const { content, sortOrder, post, dis, loading } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
-        let post = this.props.post;
-        if (!post) {
-            const route_params = this.props.routeParams;
-            post = route_params.username + '/' + route_params.slug;
+
+        if (!content) {
+            if (loading) {
+                return (
+                    <center>
+                        <LoadingIndicator type="circle" />
+                    </center>
+                );
+            } else if (isEmptyPost(dis)) {
+                return <NotFoundMessage />;
+            }
         }
-        const dis = content.get(post);
 
-        // A-ads styles
-        const adStyle_300x250 = {
-            width: '300px',
-            height: '250px',
-            border: '0',
-            padding: '0',
-            overflow: 'hidden',
-        };
-
-        // check if the post doesn't exist
-        // !dis may be enough but keep 'created' & 'body' test for potential compatibility
-        const emptyPost =
-            !dis ||
-            (dis.get('created') === '1970-01-01T00:00:00' &&
-                dis.get('body') === '');
-
-        if (emptyPost)
-            return (
-                <div className="NotFound float-center">
-                    <div>
-                        <AppLogo />
-                        <h4 className="NotFound__header">
-                            Sorry! This page doesnt exist.
-                        </h4>
-                        <p>
-                            Not to worry. You can head back to{' '}
-                            <a style={{ fontWeight: 800 }} href="/">
-                                our homepage
-                            </a>, or check out some great posts.
-                        </p>
-                        <ul className="NotFound__menu">
-                            <li>
-                                <a href="/created">new posts</a>
-                            </li>
-                            <li>
-                                <a href="/hot">hot posts</a>
-                            </li>
-                            <li>
-                                <a href="/trending">trending posts</a>
-                            </li>
-                            <li>
-                                <a href="/promoted">promoted posts</a>
-                            </li>
-                            <li>
-                                <a href="/active">active posts</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            );
-
-        // TODO: This data model needs some help.
-        const post_content = content.get(post);
-        const p = extractContent(immutableAccessor, post_content);
-        const tags = p.json_metadata.tags;
+        const gptTags = parseJsonTags(dis);
 
         // A post should be hidden if it is not special, is not told to "show
         // anyway", and is designated "gray".
+        let postBody;
         const special = dis.get('special');
-        if (!special && !showAnyway) {
-            const { gray } = dis.get('stats').toJS();
-            if (gray) {
-                return (
-                    <div className="Post">
-                        <div className="row">
-                            <div className="column">
-                                <div className="PostFull">
-                                    <p onClick={this.showAnywayClick}>
-                                        {tt(
-                                            'promote_post_jsx.this_post_was_hidden_due_to_low_ratings'
-                                        )}.{' '}
-                                        <button
-                                            style={{ marginBottom: 0 }}
-                                            className="button hollow tiny float-right"
-                                            onClick={this.showAnywayClick}
-                                        >
-                                            {tt('g.show')}
-                                        </button>
-                                    </p>
-                                </div>
+        if (!special && !showAnyway && dis.getIn(['stats', 'gray'], false)) {
+            postBody = (
+                <div className="Post">
+                    <div className="row">
+                        <div className="column">
+                            <div className="PostFull">
+                                <p onClick={this.showAnywayClick}>
+                                    {tt(
+                                        'promote_post_jsx.this_post_was_hidden_due_to_low_ratings'
+                                    )}.{' '}
+                                    <button
+                                        style={{ marginBottom: 0 }}
+                                        className="button hollow tiny float-right"
+                                        onClick={this.showAnywayClick}
+                                    >
+                                        {tt('g.show')}
+                                    </button>
+                                </p>
                             </div>
                         </div>
                     </div>
-                );
-            }
+                </div>
+            );
+        } else {
+            postBody = <PostFull post={post} cont={content} />;
         }
 
         let replies = dis
@@ -174,8 +132,7 @@ class Post extends React.Component {
             return (
                 <div key={post + reply}>
                     <Comment
-                        root
-                        content={reply}
+                        postref={reply}
                         cont={content}
                         sort_order={sortOrder}
                         showNegativeComments={showNegativeComments}
@@ -185,7 +142,7 @@ class Post extends React.Component {
                     {this.props.gptEnabled && showAd ? (
                         <div className="Post_footer__ad">
                             <GptAd
-                                tags={tags}
+                                tags={gptTags}
                                 type="Freestar"
                                 id="bsa-zone_1566494240874-7_123456"
                             />
@@ -218,12 +175,11 @@ class Post extends React.Component {
             </div>
         );
 
-        const sort_orders = ['trending', 'votes', 'new', 'author_reputation'];
+        const sort_orders = ['trending', 'votes', 'new'];
         const sort_labels = [
             tt('post_jsx.comment_sort_order.trending'),
             tt('post_jsx.comment_sort_order.votes'),
             tt('post_jsx.comment_sort_order.age'),
-            tt('post_jsx.comment_sort_order.reputation'),
         ];
         const sort_menu = [];
         let sort_label;
@@ -240,37 +196,36 @@ class Post extends React.Component {
         return (
             <div className="Post">
                 <div className="row">
-                    <div className="column">
-                        <PostFull post={post} cont={content} />
-                    </div>
+                    <div className="column">{postBody}</div>
                 </div>
-                {!isLoggedIn() && (
-                    <div className="row">
-                        <div className="column">
-                            <div className="Post__promo">
-                                {tt(
-                                    'g.next_7_strings_single_block.authors_get_paid_when_people_like_you_upvote_their_post'
-                                )}.
-                                <br />
-                                {tt(
-                                    'g.next_7_strings_single_block.if_you_enjoyed_what_you_read_earn_amount'
-                                )}
-                                <br />
-                                <button
-                                    type="button"
-                                    className="button e-btn"
-                                    onClick={showSignUp}
-                                >
-                                    {tt('loginform_jsx.sign_up_get_steem')}
-                                </button>
+                {false &&
+                    !isLoggedIn() && (
+                        <div className="row">
+                            <div className="column">
+                                <div className="Post__promo">
+                                    {tt(
+                                        'g.next_7_strings_single_block.authors_get_paid_when_people_like_you_upvote_their_post'
+                                    )}.
+                                    <br />
+                                    {tt(
+                                        'g.next_7_strings_single_block.if_you_enjoyed_what_you_read_earn_amount'
+                                    )}
+                                    <br />
+                                    <button
+                                        type="button"
+                                        className="button e-btn"
+                                        onClick={showSignUp}
+                                    >
+                                        {tt('loginform_jsx.sign_up_get_hive')}
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
                 {this.props.gptEnabled && commentCount >= 5 ? (
                     <div className="Post_footer__ad">
                         <GptAd
-                            tags={tags}
+                            tags={gptTags}
                             type="Freestar"
                             id="bsa-zone_1566494147292-7_123456"
                         />
@@ -304,7 +259,7 @@ class Post extends React.Component {
                 {this.props.gptEnabled ? (
                     <div className="Post_footer__ad">
                         <GptAd
-                            tags={tags}
+                            tags={gptTags}
                             type="Freestar"
                             id="bsa-zone_1566494371533-0_123456"
                         />
@@ -315,13 +270,20 @@ class Post extends React.Component {
     }
 }
 
-const emptySet = Set();
 export default connect((state, ownProps) => {
+    const currLocation = ownProps.router.getCurrentLocation();
+    const { username, slug } = ownProps.routeParams;
+    const post = username + '/' + slug;
+    const content = state.global.get('content');
+    const dis = content.get(post);
+
     return {
-        content: state.global.get('content'),
-        sortOrder:
-            ownProps.router.getCurrentLocation().query.sort || 'trending',
+        post,
+        content,
+        dis,
+        sortOrder: currLocation.query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
         reviveEnabled: state.app.get('reviveEnabled'),
+        loading: state.app.get('loading'),
     };
 })(Post);

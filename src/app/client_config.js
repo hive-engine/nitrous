@@ -52,18 +52,20 @@ export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'JAHM POWER';
 export const INTERLEAVE_PROMOTED = true;
 
+export const HIVE_SIGNER_APP = 'ewd';
+
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
-export const LANDING_PAGE_URL = 'https://steem.io/';
+export const LANDING_PAGE_URL = 'https://hive.io';
 export const TERMS_OF_SERVICE_URL = 'https://' + APP_DOMAIN + '/tos.html';
 export const PRIVACY_POLICY_URL = 'https://' + APP_DOMAIN + '/privacy.html';
-export const WHITEPAPER_URL = 'https://steem.io/SteemWhitePaper.pdf';
+export const WHITEPAPER_URL = 'https://hive.io/hive-whitepaper.pdf';
 
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
-export const LIQUID_TICKER = 'STEEM';
+export const LIQUID_TICKER = 'HIVE';
 export const VEST_TICKER = 'VESTS';
-export const DEBT_TICKER = 'SBD';
-export const DEBT_TOKEN_SHORT = 'SBD';
+export const DEBT_TICKER = 'HBD';
+export const DEBT_TOKEN_SHORT = 'HBD';
 
 // application settings
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap
@@ -73,9 +75,9 @@ export const ALLOWED_CURRENCIES = ['USD'];
 // meta info
 export const TWITTER_HANDLE = '@reggaesteem';
 export const SHARE_IMAGE =
-    'https://' + APP_DOMAIN + '/images/steemit-share.png';
+    'https://' + APP_DOMAIN + '/images/hive-blog-share.png';
 export const TWITTER_SHARE_IMAGE =
-    'https://' + APP_DOMAIN + '/images/steemit-twshare.png';
+    'https://' + APP_DOMAIN + '/images/hive-blog-twshare.png';
 export const SITE_DESCRIPTION =
     'ReggaeSteem is a social media platform where everyone gets paid for ' +
     'creating and curating content. It leverages a robust digital points system, called JAHM, that ' +
