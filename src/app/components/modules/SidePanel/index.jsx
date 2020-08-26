@@ -76,10 +76,6 @@ const SidePanel = ({
 
         organizational: [
             {
-                label: tt('navigation.api_docs'),
-                link: 'https://developers.hive.io/',
-            },
-            {
                 value: 'forum',
                 label: 'Forum',
                 link: 'https://forum.splinterlands.io/',
