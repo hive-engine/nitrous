@@ -498,6 +498,8 @@ function* usernamePasswordLogin2({
             // provided password did not yield memo key, or matched active/owner
             private_keys = private_keys.remove('memo_private');
 
+        if (username) feedURL = '/@' + username + '/feed';
+
         // If user is signing operation by operaion and has no saved login, don't save to RAM
         if (!operationType || saveLogin) {
             // Keep the posting key in RAM but only when not signing an operation.
