@@ -802,6 +802,10 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
         } else if (args.sort === 'posts') {
             order = 'blog';
             callName = 'get_discussions_by_blog';
+        } else if (args.sort === 'feed') {
+            order = 'feed';
+            callName = 'get_feed';
+            discussionQuery.include_reblogs = true;
         } else if (args.sort === 'replies') {
             order = 'replies';
             callName = 'get_discussions_by_replies';
