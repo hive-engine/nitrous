@@ -33,8 +33,7 @@ export function* loadFollows(method, account, type, useHive, force = false) {
             state.global.getIn(['follow', method, account, type + '_loading'])
         )
     ) {
-        // console.log('Already loading', method, account, type)
-        return;
+        return; //already loading
     }
 
     if (!force) {
@@ -42,8 +41,7 @@ export function* loadFollows(method, account, type, useHive, force = false) {
             state.global.hasIn(['follow', method, account, type + '_result'])
         );
         if (hasResult) {
-            // console.log('Already loaded', method, account, type)
-            return;
+            return; //already loaded
         }
     }
 
