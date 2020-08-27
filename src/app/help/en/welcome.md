@@ -140,7 +140,6 @@ If someone [delegates](https://naturalmedicine.io/hive-120078/@naturalmedicine/d
 
 If you'd like to know more about HIVE and how it works, we suggest you click [here](https://hive.blog/welcome), which will redirect you to the Welcome Pages of HIVE.
 
-
 ### A Final Disclaimer
 
 *It's important to note that any third party apps we've referenced here, or the content that might appear on NaturalMedicine.io, is not necessarily endorsed by Natural Medicine as a whole.* 

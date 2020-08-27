@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { DEFAULT_LANGUAGE } from 'app/client_config';
 
 // Action constants
@@ -28,7 +28,6 @@ export const SET_USER = 'user/SET_USER';
 const CLOSE_LOGIN = 'user/CLOSE_LOGIN';
 export const LOGIN_ERROR = 'user/LOGIN_ERROR';
 export const LOGOUT = 'user/LOGOUT';
-const SET_LATEST_FEED_PRICE = 'user/SET_LATEST_FEED_PRICE';
 const SHOW_SIGN_UP = 'user/SHOW_SIGN_UP';
 const HIDE_SIGN_UP = 'user/HIDE_SIGN_UP';
 const KEYS_ERROR = 'user/KEYS_ERROR';
@@ -54,7 +53,7 @@ const SHOW_DELEGATIONS = 'user/SHOW_DELEGATIONS';
 const HIDE_DELEGATIONS = 'user/HIDE_DELEGATIONS';
 
 const defaultState = fromJS({
-    current: null,
+    current: {},
     show_login_modal: false,
     show_promote_post_modal: false,
     show_post_advanced_settings_modal: '', // formId
@@ -70,15 +69,16 @@ export default function reducer(state = defaultState, action) {
 
     switch (action.type) {
         case SHOW_LOGIN: {
-            let operation, loginDefault;
+            let operation, loginDefault, login_type;
             if (payload) {
                 operation = fromJS(payload.operation);
                 loginDefault = fromJS(payload.loginDefault);
+                login_type = payload.type;
             }
             return state.merge({
                 login_error: undefined,
                 show_login_modal: true,
-                login_type: payload.type,
+                login_type,
                 loginBroadcastOperation: operation,
                 loginDefault,
             });
@@ -86,9 +86,6 @@ export default function reducer(state = defaultState, action) {
 
         case SHOW_LOGIN_WARNING:
             return state.set('show_login_warning', true);
-
-        case SET_LATEST_FEED_PRICE:
-            return state.set('latest_feed_price', payload);
 
         case HIDE_LOGIN:
             return state.merge({
@@ -188,16 +185,6 @@ export default function reducer(state = defaultState, action) {
             return state; // saga
 
         case SET_USER:
-            if (payload.vesting_shares)
-                payload.vesting_shares = parseFloat(payload.vesting_shares);
-            if (payload.delegated_vesting_shares)
-                payload.delegated_vesting_shares = parseFloat(
-                    payload.delegated_vesting_shares
-                );
-            if (payload.received_vesting_shares)
-                payload.received_vesting_shares = parseFloat(
-                    payload.received_vesting_shares
-                );
             return state.mergeDeep({
                 current: payload,
                 show_login_modal: false,
@@ -449,11 +436,6 @@ export const accountAuthLookup = payload => ({
 
 export const setAuthority = payload => ({
     type: SET_AUTHORITY,
-    payload,
-});
-
-export const setLatestFeedPrice = payload => ({
-    type: SET_LATEST_FEED_PRICE,
     payload,
 });
 
