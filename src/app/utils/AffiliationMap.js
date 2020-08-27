@@ -1,5 +1,4 @@
 const map = {
-   
     // Add Custom Badges. Use single quotes for the key if user has . or -,  e.g.
     // 'robot.pay' : 'Robot',
 
@@ -18,7 +17,7 @@ const map = {
     teamsteem: 'Dragon',
     legendchew: 'Dragon',
     neoxiancity: 'City',
-    xawi: 'Everything\'s girl',
+    xawi: "Everything's girl",
     udezee: 'Curator',
     rehan12: 'Curator',
     bwar: 'Bwar',
@@ -30,7 +29,7 @@ const map = {
     xabi: 'Curator',
     olaexcal: 'Curator',
     burlarj: 'Warrior',
-    shrazi: 'Gifman'
+    shrazi: 'Gifman',
 };
 
 export default map;
