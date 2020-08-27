@@ -163,12 +163,7 @@ class Author extends React.Component {
                     <strong>
                         <Link to={'/@' + author}>{author}</Link>
                     </strong>{' '}
-                    <Reputation value={authorRep} />
-                    {showAffiliation && AffiliationMap[author] ? (
-                        <span className="affiliation">
-                            {AffiliationMap[author]}
-                        </span>
-                    ) : null}
+                    {false && <Reputation value={authorRep} />}
                     {warn}
                     {userTitle}
                 </span>
@@ -189,12 +184,7 @@ class Author extends React.Component {
                             }}
                             to={'/@' + author}
                         >
-                            {author} <Reputation value={authorRep} />
-                            {showAffiliation && AffiliationMap[author] ? (
-                                <span className="affiliation">
-                                    {AffiliationMap[author]}
-                                </span>
-                            ) : null}
+                            {author} {false && <Reputation value={authorRep} />}
                             <Icon name="dropdown-arrow" />
                         </Link>
                     </strong>
