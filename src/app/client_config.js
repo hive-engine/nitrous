@@ -15,6 +15,7 @@ export const APP_DOMAIN = 'www.lassecash.com';
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'lassecash';
 export const TAG_LIST = fromJSOrdered([
+    'truthbombs',
     'antiilluminati',
     'flatearth',
     'anarchocapitalism',
