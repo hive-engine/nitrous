@@ -8,6 +8,7 @@
 @import "./cards/PostFull";
 @import "./cards/PostsList";
 @import "./cards/TransferHistoryRow/style";
+@import "./cards/NotificationsList";
 
 // elements
 @import "./elements/Icon";
@@ -16,9 +17,9 @@
 @import "./elements/Voting";
 @import "./elements/FormattedAsset";
 @import "./elements/ReplyEditor";
+@import "./elements/SlateEditor";
 @import "./elements/DropdownMenu";
 @import "./elements/VerticalMenu";
-@import "./elements/HorizontalMenu";
 @import "./elements/VotesAndComments";
 @import "./elements/TagList";
 @import "./elements/Reputation";
@@ -34,7 +35,6 @@
 @import "./elements/NativeSelect/styles";
 @import "./elements/SteemMarket";
 @import "./elements/SanitizedLink/styles";
-@import "./elements/HelpTip/styles";
 @import "./elements/Dropdown";
 @import "./elements/Notices";
 @import "./elements/GoogleAd";
@@ -42,6 +42,8 @@
 @import "./elements/GptAd";
 @import "./elements/FormattedAssetTokens";
 @import "./elements/AuthorRecentPosts";
+@import "./elements/PostCategoryBanner";
+@import "./elements/FlagButton";
 @import "./elements/VideoAd";
 @import "./elements/SidebarToken";
 
@@ -50,12 +52,12 @@
 @import "./modules/LoginForm";
 @import "./modules/SidePanel/styles";
 @import "./modules/Settings";
-@import "./modules/BottomPanel";
 @import "./modules/UserWallet";
 @import "./modules/Powerdown";
 @import "./modules/ConfirmTransactionForm";
 @import "./modules/Transfer";
 @import "./modules/Delegations";
+@import "./modules/PostAdvancedSettings";
 
 // pages
 @import "./pages/PostsIndex";
@@ -67,3 +69,6 @@
 @import "./pages/TagsIndex";
 @import "./pages/Welcome";
 @import "./pages/About";
+@import "./pages/CommunitiesIndex";
+@import "./pages/CommunityRoles";
+@import "./pages/Rewards";
