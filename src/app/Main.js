@@ -10,9 +10,10 @@ import { clientRender } from 'shared/UniversalRender';
 import ConsoleExports from './utils/ConsoleExports';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import * as steem from '@steemit/steem-js';
-import * as hive from 'steem';
+import * as hive from '@hiveio/hive-js';
 import { determineViewMode } from 'app/utils/Links';
 import frontendLogger from 'app/utils/FrontendLogger';
+import Cookies from 'universal-cookie';
 
 window.addEventListener('error', frontendLogger);
 
@@ -26,7 +27,7 @@ try {
         ConsoleExports.init(window);
     }
 } catch (e) {
-    console.error(e);
+    console.error('console_export', e);
 }
 
 function runApp(initial_state) {
@@ -66,6 +67,10 @@ function runApp(initial_state) {
         }
     };
 
+    window.onunhandledrejection = function(evt) {
+        console.error('unhandled rejection', evt ? evt.toString() : '<null>');
+    };
+
     window.document.body.onkeypress = e => {
         buff.shift();
         buff.push(e.key);
@@ -80,21 +85,30 @@ function runApp(initial_state) {
         cmd(CMD_LOG_O);
     }
 
-    const config = initial_state.offchain.config;
+    const { config } = initial_state.offchain;
+    let cookies = new Cookies();
+    const alternativeApiEndpoints = config.alternative_api_endpoints;
+    const cookie_endpoint = cookies.get('user_preferred_api_endpoint');
+    const currentApiEndpoint =
+        cookie_endpoint === undefined
+            ? config.hive_connection_client
+            : cookie_endpoint;
+
     steem.api.setOptions({
-        url: config.steemd_connection_client,
+        url: config.steem_connection_client,
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
     });
-    steem.config.set('address_prefix', config.address_prefix);
-    steem.config.set('chain_id', config.chain_id);
     hive.api.setOptions({
-        url: config.hive_connection_client,
+        url: currentApiEndpoint,
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
+        alternative_api_endpoints: alternativeApiEndpoints,
+        failover_threshold: config.failover_threshold,
     });
     hive.config.set('address_prefix', config.address_prefix);
     hive.config.set('chain_id', config.chain_id);
+
     window.$STM_Config = config;
     plugins(config);
     if (initial_state.offchain.serverBusy) {
@@ -126,7 +140,7 @@ function runApp(initial_state) {
     try {
         clientRender(initial_state);
     } catch (error) {
-        console.error(error);
+        console.error('render_error', error);
         serverApiRecordEvent('client_error', error);
     }
 }

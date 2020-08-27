@@ -143,6 +143,7 @@ ScotConfig.prototype.refresh = async function() {
                     burn += parseFloat(tokenBalance.balance);
                 } else {
                     circulating -= parseFloat(tokenBalance.balance);
+                    circulating -= parseFloat(tokenBalance.stake);
                     staking -= parseFloat(tokenBalance.stake);
                 }
             } else if (
@@ -154,6 +155,7 @@ ScotConfig.prototype.refresh = async function() {
                     burnMiner += parseFloat(tokenBalance.balance);
                 } else {
                     circulatingMiner -= parseFloat(tokenBalance.balance);
+                    circulatingMiner -= parseFloat(tokenBalance.stake);
                     stakingMiner -= parseFloat(tokenBalance.stake);
                 }
             } else if (
@@ -165,6 +167,7 @@ ScotConfig.prototype.refresh = async function() {
                     burnMegaMiner += parseFloat(tokenBalance.balance);
                 } else {
                     circulatingMegaMiner -= parseFloat(tokenBalance.balance);
+                    circulatingMegaMiner -= parseFloat(tokenBalance.stake);
                     stakingMegaMiner -= parseFloat(tokenBalance.stake);
                 }
             }

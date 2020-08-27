@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
 import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import * as appActions from 'app/redux/AppReducer';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
@@ -16,6 +17,7 @@ const SidePanel = ({
     walletUrl,
     scotTokenSymbol,
     useHive,
+    toggleNightmode,
 }) => {
     if (process.env.BROWSER) {
         visible && document.addEventListener('click', hideSidePanel);
@@ -30,23 +32,25 @@ const SidePanel = ({
     const makeLink = (i, ix, arr) => {
         // A link is internal if it begins with a slash
         const isExternal = !i.link.match(/^\//) || i.isExternal;
+        const cn = ix === arr.length - 1 ? 'last' : null;
         if (isExternal) {
-            const cn = ix === arr.length - 1 ? 'last' : null;
             return (
-                <li key={i.value} className={cn}>
-                    <a
-                        href={i.link}
-                        target={i.internal ? null : '_blank'}
-                        rel="noopener noreferrer"
-                    >
+                <li key={ix} className={cn}>
+                    <a href={i.link} target="_blank" rel="noopener noreferrer">
                         {i.label}&nbsp;<Icon name="extlink" />
                     </a>
                 </li>
             );
         }
-        const cn = ix === arr.length - 1 ? 'last' : null;
+        if (i.onClick) {
+            return (
+                <li key={ix} className={cn}>
+                    <a onClick={i.onClick}>{i.label}</a>
+                </li>
+            );
+        }
         return (
-            <li key={i.value} className={cn}>
+            <li key={ix} className={cn}>
                 <Link to={i.link}>{i.label}</Link>
             </li>
         );
@@ -62,25 +66,9 @@ const SidePanel = ({
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
         ],
-        exchanges: [
-            {
-                value: 'blocktrades',
-                label: 'Blocktrades',
-                link: username
-                    ? `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem&receive_address=${
-                          username
-                      }`
-                    : `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem`,
-            },
-            {
-                value: 'gopax',
-                label: 'GOPAX',
-                link: 'https://www.gopax.co.kr/exchange/steem-krw/',
-            },
-        ],
+
         external: [
             {
-                value: 'chat',
                 label: tt('navigation.chat'),
                 link: 'https://steem.chat/home',
             },
@@ -152,26 +140,24 @@ const SidePanel = ({
                 internal: true,
             },
         ],
+
         legal: [
             {
-                value: 'privacy',
                 label: tt('navigation.privacy_policy'),
                 link: '/privacy.html',
             },
             {
-                value: 'tos',
                 label: tt('navigation.terms_of_service'),
                 link: '/tos.html',
             },
         ],
+
         extras: [
             {
-                value: 'login',
                 label: tt('g.sign_in'),
                 link: '/login.html',
             },
             {
-                value: 'signup',
                 label: tt('g.sign_up'),
                 link: SIGNUP_URL,
             },
@@ -214,6 +200,7 @@ SidePanel.propTypes = {
     visible: PropTypes.bool.isRequired,
     hideSidePanel: PropTypes.func.isRequired,
     username: PropTypes.string,
+    toggleNightmode: PropTypes.func.isRequired,
 };
 
 SidePanel.defaultProps = {
@@ -232,5 +219,10 @@ export default connect(
             ...ownProps,
         };
     },
-    dispatch => ({})
+    dispatch => ({
+        toggleNightmode: e => {
+            if (e) e.preventDefault();
+            dispatch(appActions.toggleNightmode());
+        },
+    })
 )(SidePanel);
