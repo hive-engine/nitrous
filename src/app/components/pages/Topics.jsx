@@ -98,16 +98,14 @@ class Topics extends Component {
                     }),
                 };
                 return username
-                    ? [ex.allTags(menuOrder), ex.myFeed(username)]
-                    : [ex.allTags(menuOrder)];
+                    ? [ex.allTags(order), ex.myFeed(username)]
+                    : [ex.allTags(order)];
             };
             const opts = extras(username).concat(
                 categories
                     .map(cat => {
                         const { tag, label } = parseCategory(cat);
-                        const link = menuOrder
-                            ? `/${menuOrder}/${tag}`
-                            : `/${tag}`;
+                        const link = order ? `/${order}/${tag}` : `/${tag}`;
                         return { value: link, label: label };
                     })
                     .toJS()
@@ -197,7 +195,7 @@ class Topics extends Component {
 
         const categoriesLinks = categories.map(cat => {
             const { tag, label } = parseCategory(cat);
-            const link = menuOrder ? `/${menuOrder}/${tag}` : `/hot/${tag}`;
+            const link = order ? `/${order}/${tag}` : `/hot/${tag}`;
             return (
                 <li className="c-sidebar__list-item" key={tag}>
                     <Link
@@ -217,7 +215,7 @@ class Topics extends Component {
                         <li className="c-sidebar__list-item">
                             <div className="c-sidebar__header">
                                 <Link
-                                    to={'/' + menuOrder}
+                                    to={'/' + order}
                                     className="c-sidebar__link"
                                     activeClassName="active"
                                 >
