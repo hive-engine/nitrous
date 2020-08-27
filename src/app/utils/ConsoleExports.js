@@ -3,7 +3,7 @@ import {
     PublicKey,
     Aes,
     key_utils,
-} from '@steemit/steem-js/lib/auth/ecc';
+} from '@hiveio/hive-js/lib/auth/ecc';
 
 // import secureRandom from 'secure-random'
 // import links from 'app/utils/Links'
@@ -46,7 +46,7 @@ module.exports = {
                     window[atty] = result;
                 })
                 .catch(error => {
-                    console.error(error);
+                    console.error('resolve_err', error);
                     reject(error);
                     window[atty] = error;
                 });

@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+    condenser:
+        build:
+            context: .
+            target: development
+        container_name: condenser
+        ports:
+            - 80:8080
+            - 8080:8080
+            - 35729:35729
+        environment:
+            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+            SDC_SERVER_STEEMD_URL: https://api.hive.blog
+
+            # add to your /etc/hosts
+            # 127.0.0.1     hiveblog.local
+            SDC_SITE_DOMAIN: hiveblog.local
+
+            SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+            SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+            SDC_HELMET_CONNECTSRC: "'self' http://hiveblog.local https://api.hive.blog https://images.hive.blog"
+        volumes:
+            - ./yarn.lock:/var/app/yarn.lock
+            - ./package.json:/var/app/package.json
+            - ./src:/var/app/src:delegated
+            - ./webpack:/var/app/webpack:delegated
+            - ./config:/var/app/config:delegated
