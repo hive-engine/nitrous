@@ -40,13 +40,11 @@ const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
 
-[ 'ads.txt', 'googled114a072e131cab7.html' ].forEach(f => {
+['ads.txt', 'googled114a072e131cab7.html'].forEach(f => {
     const fData = fs.readFileSync(
         path.join(__dirname, '../app/assets/' + f),
         'utf8'
     );
-    
-
 
     app.use(
         mount('/' + f, function*() {
@@ -55,11 +53,6 @@ const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
         })
     );
 });
-
-
-
-
-
 
 // Serve static assets without fanfare
 app.use(
@@ -92,8 +85,6 @@ app.use(
         )
     )
 );
-
-
 
 // Proxy asset folder to webpack development server in development mode
 if (env === 'development') {
@@ -182,12 +173,14 @@ app.use(function*(next) {
     if (this.method === 'GET' && this.url === '/' && this.session.a) {
         this.status = 302;
         this.redirect(`/@${this.session.a}/feed`);
+        //this.redirect(`/trending/my`);
         return;
     }
+
     // normalize user name url from cased params
     if (
         this.method === 'GET' &&
-        (routeRegex.UserProfile1.test(this.url) ||
+        (routeRegex.UserProfile.test(this.url) ||
             routeRegex.PostNoCategory.test(this.url) ||
             routeRegex.Post.test(this.url))
     ) {
@@ -209,6 +202,7 @@ app.use(function*(next) {
             return;
         }
     }
+
     // normalize top category filtering from cased params
     if (this.method === 'GET' && routeRegex.CategoryFilters.test(this.url)) {
         const p = this.originalUrl.toLowerCase();
@@ -218,6 +212,7 @@ app.use(function*(next) {
             return;
         }
     }
+
     // remember ch, cn, r url params in the session and remove them from url
     if (this.method === 'GET' && /\?[^\w]*(ch=|cn=|r=)/.test(this.url)) {
         let redir = this.url.replace(/((ch|cn|r)=[^&]+)/gi, r => {
@@ -350,7 +345,7 @@ if (env !== 'test') {
 
     const port = process.env.PORT ? parseInt(process.env.PORT) : 8080;
 
-    if (env === 'production') {
+    if (env === 'production' && process.env.DISABLE_CLUSTERING !== 'true') {
         if (cluster.isMaster) {
             for (var i = 0; i < numProcesses; i++) {
                 cluster.fork();
