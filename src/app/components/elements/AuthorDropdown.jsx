@@ -33,7 +33,7 @@ class AuthorDropdown extends Component {
                     <Link to={'/@' + author}>
                         <strong>{author}</strong>
                     </Link>{' '}
-                    <Reputation value={this.props.authorRep} />
+                    {false && <Reputation value={this.props.authorRep} />}
                 </span>
             );
         }
