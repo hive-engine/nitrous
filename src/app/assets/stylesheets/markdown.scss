@@ -13,6 +13,10 @@
   img {
     max-width: 400px;
     max-height: 400px;
+    @media screen and (max-width: 39.9375em) {
+      max-width: 100%;
+      max-height: 100%;
+    }
   }
 
   div.videoWrapper {
