@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { config } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
+import { config } from '@hiveio/hive-js';
 
 export const browserTests = {};
 
@@ -14,7 +14,7 @@ export default function runTests() {
         try {
             fn();
         } catch (error) {
-            console.error(error);
+            console.error('test', name, error);
             pass = false;
             rpt += error.stack + '\n\n';
             serverApiRecordEvent('client_error', error);

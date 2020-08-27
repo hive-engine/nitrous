@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-
+import { connect } from 'react-redux';
+import tt from 'counterpart';
+import { List } from 'immutable';
+import _ from 'lodash';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import Icon from 'app/components/elements/Icon';
-import { connect } from 'react-redux';
-import * as userActions from 'app/redux/UserReducer';
 import Reblog from 'app/components/elements/Reblog';
+import resolveRoute from 'app/ResolveRoute';
 import Voting from 'app/components/elements/Voting';
-import { immutableAccessor } from 'app/utils/Accessors';
-import extractContent from 'app/utils/ExtractContent';
+import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
 import VotesAndComments from 'app/components/elements/VotesAndComments';
-import { Map } from 'immutable';
 import Author from 'app/components/elements/Author';
-import TagList from 'app/components/elements/TagList';
+import Tag from 'app/components/elements/Tag';
 import UserNames from 'app/components/elements/UserNames';
-import tt from 'counterpart';
+import { ifHivemind } from 'app/utils/Community';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
-import proxifyImageUrl from 'app/utils/ProxifyUrl';
-import Userpic, { avatarSize } from 'app/components/elements/Userpic';
+import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
+import Userpic, { SIZE_SMALL } from 'app/components/elements/Userpic';
 import { SIGNUP_URL } from 'shared/constants';
 import {
     APP_NAME,
@@ -26,17 +27,25 @@ import {
     POSTED_VIA_NITROUS_ICON,
 } from 'app/client_config';
 import { hasNsfwTag } from 'app/utils/StateFunctions';
-import { repLog10 } from 'app/utils/ParsersAndFormatters';
+
+const CURATOR_VESTS_THRESHOLD = 1.0 * 1000.0 * 1000.0;
+
+// TODO: document why ` ` => `%20` is needed, and/or move to base fucntion
+const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
+
+const vote_weights = post => {
+    const rshares = post.get('net_rshares');
+    const dn = post.getIn(['stats', 'flag_weight']);
+    const up = Math.max(String(parseInt(rshares / 2, 10)).length - 10, 0);
+    return { dn, up };
+};
 
 class PostSummary extends React.Component {
     static propTypes = {
-        post: PropTypes.string.isRequired,
-        pending_payout: PropTypes.string.isRequired,
-        total_payout: PropTypes.string.isRequired,
-        content: PropTypes.object.isRequired,
+        post: PropTypes.object.isRequired,
         featured: PropTypes.bool,
         featuredOnClose: PropTypes.func,
-        thumbSize: PropTypes.string,
+        onClose: PropTypes.func,
         nsfwPref: PropTypes.string,
         promoted: PropTypes.object,
     };
@@ -47,16 +56,26 @@ class PostSummary extends React.Component {
         this.onRevealNsfw = this.onRevealNsfw.bind(this);
     }
 
+    componentWillMount() {
+        const { post, community, getCommunity } = this.props;
+        if (
+            ifHivemind(post.get('category')) &&
+            !post.has('community_title') &&
+            !community
+        ) {
+            getCommunity(post.get('category'));
+        }
+    }
+
     shouldComponentUpdate(props, state) {
         return (
-            props.thumbSize !== this.props.thumbSize ||
-            props.pending_payout !== this.props.pending_payout ||
-            props.total_payout !== this.props.total_payout ||
             props.username !== this.props.username ||
             props.nsfwPref !== this.props.nsfwPref ||
             (props.promoted && !props.promoted.equals(this.props.promoted)) ||
             props.blogmode !== this.props.blogmode ||
-            state.revealNsfw !== this.state.revealNsfw
+            state.revealNsfw !== this.state.revealNsfw ||
+            props.post != this.props.post ||
+            props.community != this.props.community
         );
     }
 
@@ -66,23 +85,30 @@ class PostSummary extends React.Component {
     }
 
     render() {
-        const { thumbSize, ignore } = this.props;
         const {
+            ignore,
+            hideCategory,
+            net_vests,
             post,
+            community,
             promoted,
-            content,
             featured,
             featuredOnClose,
         } = this.props;
         const { account } = this.props;
-        if (!content) return null;
+        let requestedCategory;
+        if (typeof window !== 'undefined') {
+            const route = resolveRoute(window.location.pathname);
+            if (route.page === 'PostsIndex') {
+                requestedCategory = _.get(route, 'params[1]');
+            }
+        }
+
+        if (!post) return null;
 
         let reblogged_by;
-        if (
-            content.get('reblogged_by') &&
-            content.get('reblogged_by').size > 0
-        ) {
-            reblogged_by = content.get('reblogged_by').toJS();
+        if (post.get('reblogged_by', List()).size > 0) {
+            reblogged_by = post.get('reblogged_by').toJS();
         }
 
         if (reblogged_by) {
@@ -93,98 +119,83 @@ class PostSummary extends React.Component {
                             <Icon name="reblog" />
                         </span>
                         <UserNames names={reblogged_by} />{' '}
-                        {tt('postsummary_jsx.resteemed')}
+                        {tt('postsummary_jsx.reblogged')}
                     </p>
                 </div>
             );
         }
 
-        // 'account' is the current blog being viewed, if applicable.
-        if (account && account != content.get('author')) {
-            reblogged_by = (
-                <div className="articles__resteem">
-                    <p className="articles__resteem-text">
-                        <span className="articles__resteem-icon">
-                            <Icon name="reblog" />
+        let crossPostedBy = post.get('cross_posted_by');
+
+        if (crossPostedBy) {
+            const crossPostAuthor = post.get('cross_post_author');
+            const crossPostPermlink = post.get('cross_post_permlink');
+            const crossPostCategory = `/${post.get('cross_post_category', '')}`;
+
+            crossPostedBy = (
+                <div className="articles__crosspost">
+                    <div className="articles__crosspost-text">
+                        <span className="articles__crosspost-icon">
+                            <Icon name="cross-post" />
                         </span>
-                        {tt('postsummary_jsx.resteemed')}
-                    </p>
+                        <UserNames names={[crossPostedBy]} />{' '}
+                        {tt('postsummary_jsx.crossposted')}{' '}
+                        <Link
+                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                                crossPostPermlink
+                            }`}
+                        >
+                            @{crossPostAuthor}/{crossPostPermlink}
+                        </Link>
+                    </div>
                 </div>
             );
         }
 
-        const { gray } = content.get('stats', Map()).toJS();
-        const authorRepLog10 = repLog10(content.get('author_reputation'));
-        const isNsfw = hasNsfwTag(content);
-        const special = content.get('special');
-        const pinned = content.get('pinned');
-
+        const gray = post.getIn(['stats', 'gray']);
+        const isNsfw = hasNsfwTag(post);
         const isPromoted =
             INTERLEAVE_PROMOTED &&
             promoted &&
-            promoted.contains(
-                `${content.get('author')}/${content.get('permlink')}`
-            );
-        const p = extractContent(immutableAccessor, content);
-        const hive = content.get('hive');
-        const desc = p.desc;
+            promoted.contains(`${post.get('author')}/${post.get('permlink')}`);
+        const hive = post.get('hive');
+        const full_power = post.get('percent_steem_dollars') === 0;
+        const app_info = post.get('app') || '';
 
-        const archived = content.get('cashout_time') === '1969-12-31T23:59:59'; // TODO: audit after HF17. #1259
-        const full_power = content.get('percent_steem_dollars') === 0;
-        const app_info = content.get('app') || '';
+        const author = post.get('author');
+        const permlink = post.get('permlink');
+        const category = post.get('category');
+        const post_url = `/${category}/@${author}/${permlink}`;
+        const isReply = post.get('depth') > 0;
+        const showReblog = !isReply;
+        const showCommunityLabels = requestedCategory === category;
 
-        let post_url;
-        let title_text;
-        let comments_url;
-
-        if (content.get('depth') > 0) {
-            title_text = tt('g.re_to', { topic: content.get('root_title') });
-            post_url =
-                '/' +
-                content.get('category') +
-                '/@' +
-                content.get('author') +
-                '/' +
-                content.get('permlink');
-            comments_url = p.link + '#comments';
+        let summary;
+        if (crossPostedBy) {
+            summary = extractBodySummary(post.get('cross_post_body'), isReply);
         } else {
-            title_text = p.title;
-            post_url = p.link;
-            comments_url = post_url + '#comments';
+            summary = extractBodySummary(post.get('body'), isReply);
         }
 
         const content_body = (
             <div className="PostSummary__body entry-content">
-                <Link to={post_url}>{desc}</Link>
+                <Link to={post_url}>{summary}</Link>
             </div>
         );
+
         const content_title = (
             <h2 className="articles__h2 entry-title">
                 <Link to={post_url}>
                     {isNsfw && <span className="nsfw-flag">nsfw</span>}
-                    {title_text}
+                    {post.get('title')}
                 </Link>
                 {featured && <span className="PinText">Featured</span>}
             </h2>
         );
 
-        // author and category
-        const author_category = (
-            <span className="vcard">
-                <Userpic account={p.author} />
-                <Author
-                    author={p.author}
-                    authorRepLog10={authorRepLog10}
-                    follow={false}
-                    mute={false}
-                    showAffiliation
-                />
-                {} {tt('g.in')} <TagList post={p} single />&nbsp;•&nbsp;
-                <Link to={post_url}>
-                    <TimeAgoWrapper date={p.created} className="updated" />
-                </Link>
-            </span>
-        );
+        const summaryAuthor = crossPostedBy
+            ? post.get('cross_post_author')
+            : post.get('author');
 
         // New Post Summary heading
         const summary_header = (
@@ -192,10 +203,13 @@ class PostSummary extends React.Component {
                 <div className="user">
                     {!isNsfw ? (
                         <div className="user__col user__col--left">
-                            <a className="user__link" href={'/@' + p.author}>
+                            <a
+                                className="user__link"
+                                href={`/@${summaryAuthor}`}
+                            >
                                 <Userpic
-                                    account={p.author}
-                                    size={avatarSize.small}
+                                    account={summaryAuthor}
+                                    size={SIZE_SMALL}
                                 />
                             </a>
                         </div>
@@ -203,21 +217,33 @@ class PostSummary extends React.Component {
                     <div className="user__col user__col--right">
                         <span className="user__name">
                             <Author
-                                author={p.author}
-                                authorRepLog10={authorRepLog10}
+                                post={post}
                                 follow={false}
-                                mute={false}
                                 showAffiliation
+                                hideEditor={true}
+                                resolveCrossPost
+                                showRole={showCommunityLabels}
                             />
                         </span>
 
-                        <span className="articles__tag-link">
-                            {tt('g.in')}&nbsp;<TagList post={p} single />&nbsp;•&nbsp;
-                        </span>
+                        {hideCategory || (
+                            <span className="articles__tag-link">
+                                {tt('g.in')}&nbsp;
+                                <Tag post={post} community={community} />
+                                &nbsp;•&nbsp;
+                            </span>
+                        )}
                         <Link className="timestamp__link" to={post_url}>
                             <span className="timestamp__time">
+                                {this.props.order == 'payout' && (
+                                    <span>payout </span>
+                                )}
                                 <TimeAgoWrapper
-                                    date={p.created}
+                                    date={
+                                        this.props.order == 'payout'
+                                            ? post.get('cashout_time')
+                                            : post.get('created')
+                                    }
                                     className="updated"
                                 />
                             </span>
@@ -241,9 +267,13 @@ class PostSummary extends React.Component {
                                     className="articles__icon-100"
                                     title={tt('g.powered_up_100')}
                                 >
-                                    <Icon name="steempower" />
+                                    <Icon name="hivepower" />
                                 </span>
                             )}
+                            {showCommunityLabels &&
+                                post.getIn(['stats', 'is_pinned'], false) && (
+                                    <span className="FeaturedTag">Pinned</span>
+                                )}
                         </Link>
                         {isPromoted && (
                             <span className="articles__tag-link">
@@ -265,34 +295,34 @@ class PostSummary extends React.Component {
             </div>
         );
 
-        const content_footer = (
-            <div className="PostSummary__footer">
-                <Voting post={post} showList={true} />
-                <VotesAndComments post={post} commentsLink={comments_url} />
-                <span className="PostSummary__time_author_category">
-                    {!archived && (
-                        <Reblog
-                            author={p.author}
-                            permlink={p.permlink}
-                            parent_author={p.parent_author}
-                            hive={hive}
-                        />
-                    )}
-                    <span className="show-for-medium">{author_category}</span>
-                </span>
-            </div>
-        );
+        let dots;
+        if (net_vests >= CURATOR_VESTS_THRESHOLD) {
+            const _dots = cnt => {
+                return cnt > 0 ? '•'.repeat(cnt) : null;
+            };
+            const { up, dn } = vote_weights(post);
+            dots =
+                up || dn ? (
+                    <span className="vote_weights">
+                        {_dots(up)}
+                        {<span>{_dots(dn)}</span>}
+                    </span>
+                ) : null;
+        }
 
         const summary_footer = (
             <div className="articles__summary-footer">
-                <Voting post={post} showList={true} />
-                <VotesAndComments post={post} commentsLink={comments_url} />
+                {dots}
+                <Voting post={post} showList={false} />
+                <VotesAndComments
+                    post={post}
+                    commentsLink={post_url + '#comments'}
+                />
                 <span className="PostSummary__time_author_category">
-                    {!archived && (
+                    {showReblog && (
                         <Reblog
-                            author={p.author}
-                            permlink={p.permlink}
-                            parent_author={p.parent_author}
+                            author={post.get('author')}
+                            permlink={post.get('permlink')}
                             hive={hive}
                         />
                     )}
@@ -320,7 +350,6 @@ class PostSummary extends React.Component {
                             <span className="nsfw-flag">
                                 nsfw
                             </span>&nbsp;&nbsp;<span
-                                className="ptc"
                                 role="button"
                                 onClick={this.onRevealNsfw}
                             >
@@ -355,51 +384,42 @@ class PostSummary extends React.Component {
             }
         }
 
-        const userBlacklisted = ImageUserBlockList.includes(p.author);
+        let image_link = extractImageLink(
+            post.get('json_metadata'),
+            post.get('body')
+        );
+
+        if (crossPostedBy) {
+            image_link = extractImageLink(
+                post.get('cross_post_json_metadata'),
+                post.get('cross_post_body')
+            );
+        }
 
         let thumb = null;
-        if (!gray && p.image_link && !userBlacklisted) {
+        if (!gray && image_link && !ImageUserBlockList.includes(author)) {
             // on mobile, we always use blog layout style -- there's no toggler
             // on desktop, we offer a choice of either blog or list
             // if blogmode is false, output an image with a srcset
             // which has the 256x512 for whatever the large breakpoint is where the list layout is used
             // and the 640 for lower than that
-
-            const blogSize = proxifyImageUrl(p.image_link, '640x480').replace(
-                / /g,
-                '%20'
-            );
+            const blogImg = proxify(image_link, '640x480');
 
             if (this.props.blogmode) {
-                thumb = (
-                    <span className="articles__feature-img-container">
-                        <img className="articles__feature-img" src={blogSize} />
-                    </span>
-                );
+                thumb = <img className="articles__feature-img" src={blogImg} />;
             } else {
-                const listSize = proxifyImageUrl(
-                    p.image_link,
-                    '256x512'
-                ).replace(/ /g, '%20');
-
+                const listImg = proxify(image_link, '256x512');
                 thumb = (
-                    <span className="articles__feature-img-container">
-                        <picture className="articles__feature-img">
-                            <source
-                                srcSet={listSize}
-                                media="(min-width: 1000px)"
-                            />
-                            <img srcSet={blogSize} />
-                        </picture>
-                    </span>
+                    <picture className="articles__feature-img">
+                        <source srcSet={listImg} media="(min-width: 1000px)" />
+                        <img srcSet={blogImg} />
+                    </picture>
                 );
             }
+            thumb = (
+                <span className="articles__feature-img-container">{thumb}</span>
+            );
         }
-
-        // A post is hidden if it's marked "gray" or "ignore" and it's not
-        // pinned.
-        const commentClasses = [];
-        if (!pinned && (gray || ignore)) commentClasses.push('downvoted'); // rephide
 
         return (
             <div
@@ -408,12 +428,13 @@ class PostSummary extends React.Component {
                 }
             >
                 {reblogged_by}
+                {crossPostedBy}
                 {summary_header}
                 <div
                     className={
                         'articles__content hentry' +
                         (thumb ? ' with-image ' : ' ') +
-                        commentClasses.join(' ')
+                        (gray || ignore ? ' downvoted' : '')
                     }
                     itemScope
                     itemType="http://schema.org/blogPost"
@@ -428,7 +449,11 @@ class PostSummary extends React.Component {
                     <div className="articles__content-block articles__content-block--text">
                         {content_title}
                         {content_body}
-                        {this.props.blogmode ? null : summary_footer}
+                        {this.props.blogmode ? null : (
+                            <div className="articles__footer">
+                                {summary_footer}
+                            </div>
+                        )}
                     </div>
                     {this.props.blogmode ? summary_footer : null}
                 </div>
@@ -439,33 +464,28 @@ class PostSummary extends React.Component {
 
 export default connect(
     (state, props) => {
-        const { post } = props;
-        const content = state.global.get('content').get(post);
-        let pending_payout = 0;
-        let total_payout = 0;
-        // Only used for refresh state, do not need SCOT data here.
-        if (content) {
-            pending_payout = content.get('pending_payout_value');
-            total_payout = content.get('total_payout_value');
-        }
+        const { post, hideCategory, nsfwPref } = props;
+        const net_vests = state.user.getIn(['current', 'effective_vests'], 0.0);
+
+        const category = post.get('category');
+        const community = state.global.getIn(
+            ['community', ifHivemind(category)],
+            null
+        );
         return {
             post,
-            content,
-            pending_payout: pending_payout ? pending_payout.toString() : '0',
-            total_payout: total_payout ? total_payout.toString() : '0',
+            community,
+            hideCategory,
             username:
                 state.user.getIn(['current', 'username']) ||
                 state.offchain.get('account'),
             blogmode: state.app.getIn(['user_preferences', 'blogmode']),
+            nsfwPref,
+            net_vests,
         };
     },
-
     dispatch => ({
-        dispatchSubmit: data => {
-            dispatch(userActions.usernamePasswordLogin({ ...data }));
-        },
-        clearError: () => {
-            dispatch(userActions.loginError({ error: null }));
-        },
+        getCommunity: category =>
+            dispatch(fetchDataSagaActions.getCommunity(category)),
     })
 )(PostSummary);

@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+    condenser:
+        image: hiveio/condenser:latest
+        build: .
+        environment:
+            VIRTUAL_HOST: hive.blog
+            VIRTUAL_PORT: 8080
+            SDC_CLIENT_STEEMD_URL: https://api.hive.blog
+            SDC_SERVER_STEEMD_URL: https://api.hive.blog
+            SDC_SITE_DOMAIN: hive.blog
+            SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
+            SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
+            SDC_HELMET_CONNECTSRC: "'self' hive.blog https://hive.blog https://api.hive.blog https://anyx.io api.blocktrades.us https://images.hive.blog"
+            WALLET_URL: https://wallet.hive.blog
+        networks:
+            - reverse-proxy
+
+networks:
+    reverse-proxy:
+        external:
+            name: reverse-proxy

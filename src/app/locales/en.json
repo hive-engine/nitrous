@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "age",
         "amount": "Amount",
         "and": "and",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",
         "blog": "Blog",
+        "profile": "Profile",
         "browse": "Browse",
         "buy": "Buy",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "Buy or Sell",
         "by": "by",
         "cancel": "Cancel",
@@ -21,6 +24,18 @@
         "clear": "Clear",
         "close": "Close",
         "collapse_or_expand": "Collapse/Expand",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "Comments",
         "confirm": "Confirm",
         "convert": "Convert",
@@ -32,7 +47,12 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_hive": "Hive Team",
         "feed": "Feed",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "Follow",
         "for": " for ",
         "from": " from ",
@@ -58,6 +78,7 @@
         "newer": "Newer",
         "next": "Next",
         "no": "No",
+        "notifications": "Notifications",
         "ok": "Ok",
         "older": "Older",
         "or": "or",
@@ -67,6 +88,7 @@
         "permissions": "Permissions",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
+        "pin": "Pin",
         "post": "Post",
         "post_as_user": "Post as %(username)s",
         "posts": "Posts",
@@ -79,7 +101,7 @@
         "promoted": "Promoted",
         "re": "RE",
         "re_to": "RE: %(topic)s",
-        "read_offical_blog": "Steemit Blog",
+        "read_offical_blog": "Hive Blog",
         "recent_password": "Recent Password",
         "receive": "Receive ",
         "remove": "Remove",
@@ -104,25 +126,33 @@
         "sell": "Sell",
         "settings": "Settings",
         "share_this_post": "Share this post",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "Show",
         "sign_in": "Sign in",
         "sign_up": "Sign up",
         "since": "since %(date)s",
         "submit": "Submit",
+        "subscriptions": "Subscriptions",
         "power_up": "Stake",
         "submit_a_story": "Post",
         "tag": "Tag",
         "to": " to ",
         "topics": "Topics",
-        "toggle_nightmode": "Toggle Night Mode",
-        "all_tags": "All tags",
-        "all_tags_mobile": "All content",
+        "toggle_nightmode": "Night Mode",
+        "all_tags": "All posts",
+        "all_tags_mobile": "All posts",
         "transfer": "Transfer ",
         "trending_topics": "Trending Topics",
         "try_again": "Try Again",
         "type": "Type",
         "unfollow": "Unfollow",
         "unmute": "Unmute",
+        "unpin": "Unpin",
         "unknown": "Unknown",
         "upvote": "Upvote",
         "upvote_post": "Upvote post",
@@ -192,9 +222,9 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "Cannot increase reward of post within the last minute before payout",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "Only one Steem account allowed per IP address every 10 minutes",
-        "resteem_this_post": "Resteem This Post",
-        "reblog": "Resteem",
+            "Only one Hive account allowed per IP address every 10 minutes",
+        "reblog_this_post": "Reblog This Post",
+        "reblog": "Reblog",
         "write_your_story": "Write your story...",
         "remember_voting_and_posting_key": "Remember voting & posting key",
         "auto_login_question_mark": "Auto login?",
@@ -218,9 +248,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Authors get paid when people like you upvote their post",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "If you enjoyed what you read here, create your account today and start earning FREE STEEM!",
-            "free_steem": "FREE STEEM!",
-            "sign_up_earn_steem": "Sign up now to earn "
+                "If you enjoyed what you read here, create your account today and start earning FREE HIVE!",
+            "free_hive": "FREE HIVE!",
+            "sign_up_earn_hive": "Sign up now to earn "
         },
         "next_3_strings_together": {
             "show_more": "Show more",
@@ -230,7 +260,7 @@
         "read_only_mode":
             "Due to server maintenance we are running in read only mode. We are sorry for the inconvenience.",
         "tags_and_topics": "Tags",
-        "show_more_topics": "View all tags",
+        "show_more_topics": "Explore communities",
         "basic": "Basic",
         "advanced": "Advanced",
         "views": {
@@ -245,9 +275,9 @@
         },
         "post_key_warning": {
             "confirm":
-                "You are about to publish a STEEM private key or master password. You will probably lose control of the associated account and all its funds.",
+                "You are about to publish a HIVE private key or master password. You will probably lose control of the associated account and all its funds.",
             "warning":
-                "Legitimate users, including employees of Steemit Inc., will never ask you for a private key or master password.",
+                "Legitimate users, including employees of Hive, will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
         "total": "Total",
@@ -260,7 +290,7 @@
         "all_claim_completed": "Claims completed!"
     },
     "navigation": {
-        "about": "About Steemit, Inc.",
+        "about": "About Hive",
         "explore": "Explore",
         "APP_NAME_whitepaper": "%(APP_NAME)s Whitepaper",
         "third_party_exchanges": "Third-party exchanges:",
@@ -278,18 +308,21 @@
         "learn_more": "Learn more",
         "welcome": "Welcome",
         "faq": "FAQ",
-        "chat": "Steem Chat",
-        "app_center": "Apps Built on Steem",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Steemit API Docs",
-        "bluepaper": "Steem Bluepaper",
+        "chat": "Hive Chat",
+        "app_center": "Hive Dapps",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Developer Portal",
+        "bluepaper": "Hive Bluepaper",
         "smt_whitepaper": "SMT Whitepaper",
-        "whitepaper": "Steem Whitepaper",
+        "whitepaper": "Hive Whitepaper",
         "intro_tagline": "Your voice is worth something",
         "intro_paragraph":
-            "Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.",
-        "jobs": "Jobs at Steemit",
-        "steem_proposals": "Steem Proposals"
+            "Get paid for good content. Post and upvote articles on Hive to get your share of the daily rewards pool.",
+        "jobs": "Jobs at Hive",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer"
     },
     "main_menu": {
         "hot": "Hot",
@@ -306,24 +339,30 @@
             "Are you sure you want to exit the comment editor?",
         "uploading": "Uploading...",
         "draft_saved": "Draft saved.",
-        "editor": "Editor",
+        "editor": "Enable WYSIWYG Editor",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "Insert images by dragging & dropping, ",
         "pasting_from_the_clipboard": "pasting from the clipboard, ",
         "selecting_them": "selecting them",
         "image_upload": "Image upload",
         "power_up_100": "Power Up 100%%",
-        "default_50_50": "50%% SBD / 50%% SP",
+        "default_50_50": "50%% HBD / 50%% HP",
         "decline_payout": "Decline Payout",
         "check_this_to_auto_upvote_your_post":
             "Check this to auto-upvote your post",
         "markdown_styling_guide": "Markdown Styling Guide",
         "or_by": "or by",
-        "title": "Title",
+        "title": "Title of your story",
         "update_post": "Update Post",
         "markdown_not_supported": "Markdown is not supported here",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -336,27 +375,44 @@
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
     },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
+    },
     "category_selector_jsx": {
         "tag_your_story": "Add tags. The first tag is your main category.",
         "select_a_tag": "Select a tag",
         "maximum_tag_length_is_24_characters":
             "Maximum tag length is 24 characters",
-        "use_limited_amount_of_categories":
-            "Please use only %(amount)s categories",
+        "use_limited_amount_of_categories": "Please use only %(amount)s tags",
         "use_only_lowercase_letters": "Use only lowercase letters",
         "use_one_dash": "Use only one dash",
         "use_spaces_to_separate_tags": "Use spaces to separate tags",
         "use_only_allowed_characters":
             "Use only lowercase letters, digits and one dash",
         "must_start_with_a_letter": "Must start with a letter",
-        "must_end_with_a_letter_or_number": "Must end with a letter or number"
+        "must_end_with_a_letter_or_number": "Must end with a letter or number",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -376,7 +432,7 @@
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
-            "From time to time, a Steemian's owner key may be compromised. Stolen Account Recovery gives the rightful account owner 30 days to recover their account from the moment the thief changed their owner key. Stolen Account Recovery can only be used on %(APP_URL)s if the account owner had previously listed '%(APP_NAME)s' as their account trustee and complied with %(APP_NAME)s's Terms of Service."
+            "From time to time, a Hivian's owner key may be compromised. Stolen Account Recovery gives the rightful account owner 30 days to recover their account from the moment the thief changed their owner key. Stolen Account Recovery can only be used on %(APP_URL)s if the account owner had previously listed '%(APP_NAME)s' as their account trustee and complied with %(APP_NAME)s's Terms of Service."
     },
     "user_profile": {
         "unknown_account": "Unknown Account",
@@ -387,6 +443,8 @@
         "user_hasnt_followed_anything_yet":
             "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
         "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
@@ -411,13 +469,13 @@
             "one": "1 post",
             "other": "%(count)s posts"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
         "now_showing_comments_with_low_ratings":
             "Now showing comments with low ratings",
-        "sort_order": "Sort Order",
+        "sort_order": "Sort",
         "comments_were_hidden_due_to_low_ratings":
             "Comments were hidden due to low ratings",
         "comment_sort_order": {
@@ -499,7 +557,7 @@
         "after_printing_write_down_your_user_name":
             "After printing, write down your user name"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "Your existing %(DEBT_TOKEN)s are liquid and transferable. Instead you may wish to trade %(DEBT_TOKEN)s directly in this site under %(link)s or transfer to an external market.",
         "this_is_a_price_feed_conversion":
@@ -519,8 +577,8 @@
             "%(VESTING_TOKEN)s is non-transferable and has some time delay to convert back to %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions. Your delegation amount can fluctuate.",
+        "part_of_your_hive_power_is_currently_delegated":
+            "Part of %(user_name)s's HIVE POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on Hive. Your delegation amount can fluctuate.",
         "steem_engine_tokens":
             "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
         "snax_token":
@@ -538,7 +596,7 @@
     "about_jsx": {
         "about_app": "About %(APP_NAME)s",
         "about_app_details":
-            "%(APP_NAME)s is a social media platform where everyone gets paid for creating and curating content. It leverages a robust digital points system, called Steem, that supports real value for digital rewards through market price discovery and liquidity.",
+            "%(APP_NAME)s is a social media platform where everyone gets paid for creating and curating content. It leverages a robust digital points system, called Hive, that supports real value for digital rewards through market price discovery and liquidity.",
         "learn_more_at_app_url": "Learn more at %(APP_URL)s",
         "resources": "Resources"
     },
@@ -547,8 +605,10 @@
             "Images were hidden due to low ratings."
     },
     "postsummary_jsx": {
-        "resteemed": "resteemed",
-        "resteemed_by": "Resteemed by",
+        "reblogged": "reblogged",
+        "reblogged_by": "Reblogged by",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "Reveal this post",
         "adjust_your": "adjust your",
         "display_preferences": "display preferences",
@@ -650,7 +710,7 @@
     "explorepost_jsx": {
         "copied": "Copied!",
         "copy": "COPY",
-        "alternative_sources": "Alternative Sources"
+        "alternative_sources": "Open in alternative Hive dApps"
     },
     "header_jsx": {
         "home": "home",
@@ -663,6 +723,7 @@
         "curation_rewards_by": "Curation rewards by %(username)s",
         "author_rewards_by": "Author rewards by %(username)s",
         "replies_to": "Replies to %(username)s",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "Comments by %(username)s"
     },
     "loginform_jsx": {
@@ -698,7 +759,7 @@
         "password_update_succes":
             "The password for %(accountName)s was successfully updated",
         "password_info":
-            "This password or private key was entered incorrectly.  There is probably a handwriting or data-entry error.  Hint: A password or private key generated by Steemit will never contain 0 (zero), O (capital o), I (capital i) and l (lower case L) characters.",
+            "This password or private key was entered incorrectly.  There is probably a handwriting or data-entry error.  Hint: A password or private key generated by Hive will never contain 0 (zero), O (capital o), I (capital i) and l (lower case L) characters.",
         "enter_your_username": "Enter your username",
         "password_or_wif": "Password or WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -707,18 +768,19 @@
         "amazing_community": "amazing community",
         "to_comment_and_reward_others": " to comment and reward others.",
         "signup_button": "Sign up now to earn ",
-        "signup_button_emphasis": "FREE STEEM!",
+        "signup_button_emphasis": "FREE TOKENS!",
         "sign_up_get_steem": "Sign up",
         "returning_users": "Returning Users: ",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
-            "You are attempting to use a key with more permissions than required for everyday Steemit.com use. Since keys and passwords are more likely to get compromised the more they are used, it is strongly recommended to only use your Posting Key to log in.",
+            "You are attempting to use a key with more permissions than required for everyday hive.blog use. Since keys and passwords are more likely to get compromised the more they are used, it is strongly recommended to only use your Posting Key to log in.",
         "continue_anyway": "Continue Anyway",
         "login_warning_link_text":
-            "Open my Steemit Wallet to access and view my posting key",
+            "Open my Hive Wallet to access and view my posting key",
         "join_our": "Join our",
         "sign_transfer": "Sign to complete transfer",
-        "use_keychain": "Use keychain extension"
+        "use_keychain": "Use keychain extension",
+        "more_login_methods": "more login methods"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -751,6 +813,8 @@
         "location_is_too_long": "Location is too long",
         "website_url_is_too_long": "Website URL is too long",
         "public_profile_settings": "Public Profile Settings",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Preferences",
         "not_safe_for_work_nsfw_content": "Not safe for work (NSFW) content",
         "always_hide": "Always hide",
@@ -768,7 +832,28 @@
         "profile_about": "About",
         "profile_location": "Location",
         "profile_website": "Website",
-        "saved": "Saved!"
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
+        "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Advanced",
+        "api_endpoint_options": "API Endpoint Options",
+        "endpoint": "Endpoint",
+        "preferred": "Preferred?",
+        "remove": "Remove",
+        "add_api_endpoint": "Add API Endpoint",
+        "reset_endpoints": "Reset Endpoints",
+        "error_bad_url":
+            "This appears to be a bad URL, please check it and try again",
+        "error_bad_cookie": "Unable to get endpoints from cookie",
+        "error_already_exists": "This endpoint is already in the list",
+        "error_cant_remove_active":
+            "You can't remove the current preferred endpoint. Please select a new preferred endpoint first",
+        "error_cant_remove_all":
+            "You must have at least one endpoint in the list"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Amount is in the form 99999.999",
@@ -781,7 +866,7 @@
         "convert_to_VESTING_TOKEN": "Convert to %(VESTING_TOKEN)s",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "Balances subject to 3 day withdraw waiting period.",
-        "move_funds_to_another_account": "Move funds to another Steem account.",
+        "move_funds_to_another_account": "Move funds to another Hive account.",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "Protect funds by requiring a 3 day withdraw waiting period.",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -812,7 +897,7 @@
         "withdraw_LIQUID_TOKEN": "Withdraw %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Withdraw %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Tokens worth about $1.00 of %(LIQUID_TICKER)s, currently collecting %(sbdInterest)s%% APR.",
+            "Tokens worth about $1.00 of %(LIQUID_TICKER)s, currently collecting %(hbdInterest)s%% APR.",
         "tradeable_tokens_transferred":
             "Tradeable tokens that may be transferred anywhere at anytime.",
         "savings": "SAVINGS",
@@ -822,7 +907,7 @@
         "transfers_are_temporary_disabled": "Transfers are temporary disabled.",
         "history": "HISTORY",
         "redeem_rewards": "Redeem Rewards (Transfer to Balance)",
-        "buy_steem_or_steem_power": "Buy STEEM or STEEM POWER"
+        "buy_hive_or_hive_power": "Buy HIVE or HIVE POWER"
     },
     "powerdown_jsx": {
         "power_down": "Unstake",
@@ -849,8 +934,8 @@
         "please_review": "Please review our terms to continue",
         "hi_user": "Hi %(username)s,",
         "blurb":
-            "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+            "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Hive and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Hive better.",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
@@ -863,11 +948,11 @@
         "your_transaction_failed": "Your transaction failed to process",
         "out_of_bandwidth_title": "Why? You've run out of Resource Credits",
         "out_of_bandwidth_reason":
-            "Actions such as posting and voting use computing resources, placing a real cost on the community members who run the Steem blockchain for everyone.",
+            "Actions such as posting and voting use computing resources, placing a real cost on the community members who run the Hive blockchain for everyone.",
         "out_of_bandwidth_reason_2":
-            "To keep things free, Steem intelligently allocates Resource Credits to each user based on their Steem Power holdings, which can be used to submit a limited number of feeless transactions. When a user runs low on Resource Credits, they will either need to wait for them to recharge, or purchase additional Steem Power. This system prioritizes actions by good community members while limiting spam.",
-        "out_of_bandwidth_option_title": "To keep interacting on Steemit:",
-        "out_of_bandwidth_option_1": "Buy and hold more Steem Power",
+            "To keep things free, Hive intelligently allocates Resource Credits to each user based on their Hive Power holdings, which can be used to submit a limited number of feeless transactions. When a user runs low on Resource Credits, they will either need to wait for them to recharge, or purchase additional Hive Power. This system prioritizes actions by good community members while limiting spam.",
+        "out_of_bandwidth_option_title": "To keep interacting on Hive:",
+        "out_of_bandwidth_option_1": "Buy and hold more Hive Power",
         "out_of_bandwidth_option_2":
             "Wait until your Resource Credits recharge",
         "out_of_bandwidth_option_3": "Wait until the network usage decreases"
@@ -878,5 +963,15 @@
     },
     "delegations_jsx": {
         "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     }
 }
