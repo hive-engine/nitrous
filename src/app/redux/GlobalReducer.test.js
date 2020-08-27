@@ -1,16 +1,9 @@
 import { Map, OrderedMap, getIn, List, fromJS, Set, merge } from 'immutable';
-import { emptyContent } from 'app/redux/EmptyState';
 import * as globalActions from './GlobalReducer';
 import reducer, { defaultState } from './GlobalReducer';
 import { SCOT_DENOM } from 'app/client_config';
 
 const FLAG_WEIGHT = 2 - Math.min(2, Math.log10(SCOT_DENOM));
-
-const expectedStats = Map({
-    hide: false,
-    gray: false,
-    total_votes: 0,
-});
 
 describe('Global reducer', () => {
     it('should provide a nice initial state', () => {
@@ -39,143 +32,13 @@ describe('Global reducer', () => {
     it('should return correct state for a RECEIVE_STATE action', () => {
         // Arrange
         const payload = {
-            content: Map({ barman: Map({ foo: 'choo', stats: '' }) }),
+            content: Map({ barman: Map({ foo: 'choo', stats: {} }) }),
         };
         const initial = reducer();
         // Act
         const actual = reducer(initial, globalActions.receiveState(payload));
         // Assert
         expect(actual.getIn(['content', 'barman', 'foo'])).toEqual('choo');
-        expect(actual.getIn(['content', 'barman', 'stats'])).toEqual(
-            expectedStats
-        );
-    });
-
-    it('should replace transfer history for a RECEIVE_STATE action', () => {
-        // Arrange, payload has one account with transfer history, one without
-        const payload = {
-            accounts: Map({
-                fooman: Map({
-                    transfer_history: List([Map({ a: 1 })]),
-                }),
-                barman: Map({}),
-            }),
-        };
-
-        // Two accounts both with transfer history
-        const initial = reducer()
-            .setIn(
-                ['accounts', 'fooman', 'transfer_history'],
-                List([Map({ b: 2 })])
-            )
-            .setIn(
-                ['accounts', 'barman', 'transfer_history'],
-                List([Map({ c: 3 })])
-            );
-
-        // Act
-        const actual = reducer(initial, globalActions.receiveState(payload));
-        // Assert
-        expect(
-            actual.getIn(['accounts', 'fooman', 'transfer_history'])
-        ).toEqual(List([Map({ a: 1 })]));
-        // Payload had no transfer history, does not affect account.
-        expect(
-            actual.getIn(['accounts', 'barman', 'transfer_history'])
-        ).toEqual(List([Map({ c: 3 })]));
-    });
-
-    it('should return correct state for a RECEIVE_ACCOUNT action', () => {
-        // Arrange
-        const payload = {
-            account: {
-                name: 'foo',
-                beList: ['alice', 'bob', 'claire'],
-                beOrderedMap: { foo: 'barman' },
-            },
-        };
-        const initial = reducer();
-        const expected = Map({
-            status: {},
-            accounts: Map({
-                foo: Map({
-                    name: 'foo',
-                    be_List: List(['alice', 'bob', 'claire']),
-                    be_orderedMap: OrderedMap({ foo: 'barman' }),
-                }),
-            }),
-        });
-        // Act
-        const actual = reducer(initial, globalActions.receiveAccount(payload));
-        // Assert
-        expect(
-            actual.getIn(['accounts', payload.account.name, 'name'])
-        ).toEqual(payload.account.name);
-        expect(
-            actual.getIn(['accounts', payload.account.name, 'beList'])
-        ).toEqual(List(payload.account.beList));
-        expect(
-            actual.getIn(['accounts', payload.account.name, 'beOrderedMap'])
-        ).toEqual(OrderedMap(payload.account.beOrderedMap));
-    });
-
-    it('should return correct state for a RECEIVE_ACCOUNTS action', () => {
-        // Arrange
-        const payload = {
-            accounts: [
-                {
-                    name: 'foo',
-                    beList: ['alice', 'bob', 'claire'],
-                    beorderedMap: { foo: 'barman' },
-                },
-                {
-                    name: 'bar',
-                    beList: ['james', 'billy', 'samantha'],
-                    beOrderedMap: { kewl: 'snoop' },
-                },
-            ],
-        };
-
-        const initState = Map({
-            status: {},
-            seagull: Map({ result: 'fulmar', error: 'stuka' }),
-            accounts: Map({
-                sergei: Map({
-                    name: 'sergei',
-                    beList: List(['foo', 'carl', 'hanna']),
-                    beorderedMap: OrderedMap({ foo: 'cramps' }),
-                }),
-            }),
-        });
-
-        const initial = reducer(initState);
-
-        const expected = Map({
-            status: {},
-            accounts: Map({
-                sergei: Map({
-                    name: 'sergei',
-                    beList: List(['foo', 'carl', 'hanna']),
-                    beorderedMap: OrderedMap({
-                        foo: 'cramps',
-                    }),
-                }),
-                foo: Map({
-                    name: 'foo',
-                    beList: List(['alice', 'bob', 'claire']),
-                    beorderedMap: OrderedMap({ foo: 'barman' }),
-                }),
-                bar: Map({
-                    name: 'bar',
-                    beList: List(['james', 'billy', 'samantha']),
-                    beOrderedMap: OrderedMap({ kewl: 'snoop' }),
-                }),
-            }),
-        });
-        // Act
-        const actual = reducer(initial, globalActions.receiveAccounts(payload));
-        // Assert
-        expect(actual.get('accounts')).toEqual(expected.get('accounts'));
     });
 
     it('should return correct state for a RECEIVE_CONTENT action', () => {
@@ -335,18 +198,11 @@ describe('Global reducer', () => {
         };
         let payload = {
             data: [postData],
-            order: 'by_author',
-            category: 'blog',
-            accountname: 'alice',
+            order: 'blog',
+            category: '@smudge',
         };
         const initWithData = reducer().merge({
-            accounts: Map({
-                [payload.accountname]: Map({
-                    [payload.category]: List([
-                        { data: { author: 'farm', permlink: 'barn' } },
-                    ]),
-                }),
-            }),
+            accounts: Map({}),
             content: Map({}),
             status: Map({
                 [payload.category]: Map({
@@ -357,6 +213,11 @@ describe('Global reducer', () => {
                 [payload.category]: Map({
                     UnusualOrder: List([
                         { data: { author: 'ship', permlink: 'bridge' } },
+                    ]),
+                }),
+                [payload.accountname]: Map({
+                    [payload.order]: List([
+                        { data: { author: 'farm', permlink: 'barn' } },
                     ]),
                 }),
                 '': Map({
@@ -386,13 +247,8 @@ describe('Global reducer', () => {
 
         // Push new key to posts list, If order meets the condition.
         expect(
-            actual1.getIn(['accounts', payload.accountname, payload.category])
-        ).toEqual(
-            List([
-                { data: { author: 'farm', permlink: 'barn' } },
-                'smudge/klop',
-            ])
-        );
+            actual1.getIn(['discussion_idx', payload.category, payload.order])
+        ).toEqual(List(['smudge/klop']));
 
         // Arrange
         payload.order = 'UnusualOrder';
@@ -430,7 +286,7 @@ describe('Global reducer', () => {
         //Arrange
         let payload = {
             data: [],
-            order: 'by_author',
+            order: 'by_blog',
             category: 'blog',
             accountname: 'alice',
         };
@@ -571,19 +427,6 @@ describe('Global reducer', () => {
                 'author',
             ])
         ).toEqual(payload.data[0].author);
-        expect(
-            actual.getIn([
-                'content',
-                `${payload.data[0].author}/${payload.data[0].permlink}`,
-                'stats',
-            ])
-        ).toEqual(
-            Map({
-                hide: false,
-                gray: false,
-                total_votes: 2,
-            })
-        );
 
         // Act
         // If the recent post is already in the list do not add it again.
