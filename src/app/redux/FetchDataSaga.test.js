@@ -1,20 +1,22 @@
 import { call, fork, put } from 'redux-saga/effects';
 import { getStateAsync } from 'app/utils/steemApi';
-import { api } from '@steemit/steem-js';
+import { api } from '@hiveio/hive-js';
 import { List, Map } from 'immutable';
+import { callBridge } from 'app/utils/steemApi';
 import * as appActions from './AppReducer';
 import * as globalActions from './GlobalReducer';
 import constants from './constants';
 
 import { fetchData, fetchState } from './FetchDataSaga';
+import { fetchCrossPosts } from 'app/utils/CrossPosts';
 
 describe('FetchDataSaga', () => {
     xdescribe('should fetch multiple and filter', () => {
         let payload = {
-            order: 'by_author',
+            order: 'blog',
+            category: '@bob',
             author: 'alice',
             permlink: 'hair',
-            accountname: 'bob',
             postFilter: value => value.author === 'bob',
         };
         let action = {
@@ -28,8 +30,8 @@ describe('FetchDataSaga', () => {
             expect(actual).toEqual(
                 put(
                     globalActions.fetchingData({
-                        order: 'by_author',
-                        category: '',
+                        order: 'blog',
+                        category: '@bob',
                     })
                 )
             );
@@ -40,8 +42,9 @@ describe('FetchDataSaga', () => {
 
             actual = gen.next().value;
             expect(actual).toEqual(
-                call([api, api.getDiscussionsByBlogAsync], {
-                    tag: payload.accountname,
+                call(callBridge, 'get_account_posts', {
+                    sort: 'blog',
+                    account: payload.category.slice(1),
                     limit: constants.FETCH_DATA_BATCH_SIZE,
                     start_author: payload.author,
                     start_permlink: payload.permlink,
@@ -59,17 +62,32 @@ describe('FetchDataSaga', () => {
                 },
             ]).value;
             expect(actual).toEqual(
+                call(
+                    fetchCrossPosts,
+                    [
+                        {
+                            author: 'alice',
+                        },
+                        {
+                            author: 'bob',
+                            permlink: 'post1',
+                        },
+                    ],
+                    undefined
+                )
+            );
+
+            actual = gen.next().value;
+            expect(actual).toEqual(
                 put(
                     globalActions.receiveData({
                         data: [
                             { author: 'alice' },
                             { author: 'bob', permlink: 'post1' },
                         ],
-                        order: 'by_author',
-                        category: '',
+                        order: 'blog',
+                        category: '@bob',
                         author: 'alice',
-                        firstPermlink: payload.permlink,
-                        accountname: 'bob',
                         fetching: true,
                         endOfData: false,
                     })
@@ -79,8 +97,9 @@ describe('FetchDataSaga', () => {
         it('should finish fetching data filtering 1 out', () => {
             let actual = gen.next().value;
             expect(actual).toEqual(
-                call([api, api.getDiscussionsByBlogAsync], {
-                    tag: payload.accountname,
+                call(callBridge, 'get_account_posts', {
+                    sort: 'blog',
+                    account: payload.category.slice(1),
                     limit: constants.FETCH_DATA_BATCH_SIZE,
                     start_author: 'bob',
                     start_permlink: 'post1',
@@ -94,14 +113,26 @@ describe('FetchDataSaga', () => {
                 },
             ]).value;
             expect(actual).toEqual(
+                call(
+                    fetchCrossPosts,
+                    [
+                        {
+                            author: 'bob',
+                            permlink: 'post2',
+                        },
+                    ],
+                    undefined
+                )
+            );
+
+            actual = gen.next().value;
+            expect(actual).toEqual(
                 put(
                     globalActions.receiveData({
                         data: [{ author: 'bob', permlink: 'post2' }],
-                        order: 'by_author',
-                        category: '',
+                        order: 'blog',
+                        category: '@bob',
                         author: 'alice',
-                        firstPermlink: payload.permlink,
-                        accountname: 'bob',
                         fetching: false,
                         endOfData: true,
                     })
@@ -114,10 +145,10 @@ describe('FetchDataSaga', () => {
     });
     xdescribe('should not fetch more batches than max batch size', () => {
         let payload = {
-            order: 'by_author',
+            order: 'blog',
             author: 'alice',
             permlink: 'hair',
-            accountname: 'bob',
+            category: '@bob',
             postFilter: value => value.author === 'bob',
         };
         let action = {
@@ -132,8 +163,8 @@ describe('FetchDataSaga', () => {
         expect(actual).toEqual(
             put(
                 globalActions.fetchingData({
-                    order: 'by_author',
-                    category: '',
+                    order: 'blog',
+                    category: '@bob',
                 })
             )
         );
@@ -143,8 +174,9 @@ describe('FetchDataSaga', () => {
 
         actual = gen.next().value;
         expect(actual).toEqual(
-            call([api, api.getDiscussionsByBlogAsync], {
-                tag: payload.accountname,
+            call(callBridge, 'get_account_posts', {
+                sort: 'blog',
+                account: payload.category.slice(1),
                 limit: constants.FETCH_DATA_BATCH_SIZE,
                 start_author: payload.author,
                 start_permlink: payload.permlink,
@@ -161,14 +193,28 @@ describe('FetchDataSaga', () => {
             },
         ]).value;
         expect(actual).toEqual(
+            call(
+                fetchCrossPosts,
+                [
+                    {
+                        author: 'alice',
+                    },
+                    {
+                        author: 'alice',
+                    },
+                ],
+                undefined
+            )
+        );
+
+        actual = gen.next().value;
+        expect(actual).toEqual(
             put(
                 globalActions.receiveData({
                     data: [{ author: 'alice' }, { author: 'alice' }],
-                    order: 'by_author',
-                    category: '',
+                    order: 'blog',
+                    category: '@bob',
                     author: 'alice',
-                    firstPermlink: payload.permlink,
-                    accountname: 'bob',
                     fetching: true,
                     endOfData: false,
                 })
@@ -177,8 +223,9 @@ describe('FetchDataSaga', () => {
 
         actual = gen.next().value;
         expect(actual).toEqual(
-            call([api, api.getDiscussionsByBlogAsync], {
-                tag: payload.accountname,
+            call(callBridge, 'get_account_posts', {
+                sort: 'blog',
+                account: payload.category.slice(1),
                 limit: constants.FETCH_DATA_BATCH_SIZE,
                 start_author: 'alice',
             })
@@ -192,15 +239,30 @@ describe('FetchDataSaga', () => {
                 author: 'alice',
             },
         ]).value;
+
+        expect(actual).toEqual(
+            call(
+                fetchCrossPosts,
+                [
+                    {
+                        author: 'alice',
+                    },
+                    {
+                        author: 'alice',
+                    },
+                ],
+                undefined
+            )
+        );
+
+        actual = gen.next().value;
         expect(actual).toEqual(
             put(
                 globalActions.receiveData({
                     data: [{ author: 'alice' }, { author: 'alice' }],
-                    order: 'by_author',
-                    category: '',
+                    order: 'blog',
+                    category: '@bob',
                     author: 'alice',
-                    firstPermlink: payload.permlink,
-                    accountname: 'bob',
                     fetching: false,
                     endOfData: false,
                 })

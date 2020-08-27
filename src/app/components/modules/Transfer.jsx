@@ -8,7 +8,7 @@ import tt from 'counterpart';
 
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import * as globalActions from 'app/redux/GlobalReducer';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import ConfirmTransfer from 'app/components/elements/ConfirmTransfer';
 import runTests, { browserTests } from 'app/utils/BrowserTests';
@@ -543,8 +543,8 @@ export default connect(
         const initialValues = state.user.get('transfer_defaults', Map()).toJS();
         const toVesting = initialValues.asset === VESTING_TOKEN;
         const currentUser = state.user.getIn(['current']);
-        const currentAccount = state.global.getIn([
-            'accounts',
+        const currentAccount = state.userProfiles.getIn([
+            'profiles',
             currentUser.get('username'),
         ]);
         const tokenBalances = currentAccount.has('token_balances')
@@ -610,7 +610,7 @@ export default connect(
             const successCallback = () => {
                 // refresh transfer history
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    userProfileActions.fetchWalletProfile({ account: username })
                 );
                 dispatch(userActions.hideTransfer());
             };
