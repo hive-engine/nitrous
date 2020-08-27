@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import tt from 'counterpart';
 import classnames from 'classnames';
-import { memo } from '@steemit/steem-js';
+import { memo } from '@hiveio/hive-js';
 import BadActorList from 'app/utils/BadActorList';
 import { repLog10 } from 'app/utils/ParsersAndFormatters';
 
@@ -89,7 +89,11 @@ export default connect((state, ownProps) => {
             : null;
     const fromNegativeRepUser =
         repLog10(
-            state.global.getIn(['accounts', ownProps.fromAccount, 'reputation'])
+            state.userProfiles.getIn([
+                'profiles',
+                ownProps.fromAccount,
+                'reputation',
+            ])
         ) < MINIMUM_REPUTATION;
     return { ...ownProps, memo_private, myAccount, fromNegativeRepUser };
 })(Memo);

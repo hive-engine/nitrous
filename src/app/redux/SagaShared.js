@@ -2,12 +2,13 @@ import { fromJS, Map } from 'immutable';
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import tt from 'counterpart';
 import { api as steemApi } from '@steemit/steem-js';
-import { api as hiveApi } from 'steem';
+import { api as hiveApi } from '@hiveio/hive-js';
 import * as globalActions from './GlobalReducer';
 import * as appActions from './AppReducer';
 import * as transactionActions from './TransactionReducer';
 import { setUserPreferences } from 'app/utils/ServerApiClient';
 import { getContentAsync, getStateAsync } from 'app/utils/steemApi';
+import { callBridge } from 'app/utils/steemApi';
 
 const wait = ms =>
     new Promise(resolve => {
@@ -15,7 +16,6 @@ const wait = ms =>
     });
 
 export const sharedWatches = [
-    takeEvery(globalActions.GET_STATE, getState),
     takeLatest(
         [
             appActions.SET_USER_PREFERENCES,
@@ -47,23 +47,22 @@ export function* getAccount(username, useHive, force = false) {
 
         const api = useHive ? hiveApi : steemApi;
         [account] = yield call([api, api.getAccountsAsync], [username]);
+        const accountWitness = yield call(
+            [api, api.callAsync],
+            'condenser_api.get_witness_by_account',
+            [username]
+        );
+
         if (account) {
+            if (accountWitness) {
+                account.account_is_witness = true;
+            }
+
             account = fromJS(account);
             yield put(globalActions.receiveAccount({ account }));
         }
     }
     return account;
-}
-
-/** Manual refreshes.  The router is in FetchDataSaga. */
-export function* getState({ payload: { url } }) {
-    try {
-        const state = yield call(getStateAsync, url);
-        yield put(globalActions.receiveState(state));
-    } catch (error) {
-        console.error('~~ Saga getState error ~~>', url, error);
-        yield put(appActions.steemApiError(error.message));
-    }
 }
 
 function* showTransactionErrorNotification() {
@@ -79,14 +78,27 @@ function* showTransactionErrorNotification() {
 
 export function* getContent({ author, permlink, resolve, reject }) {
     let content;
-    while (!content) {
+    let attempt = 1;
+    while (!content && attempt <= 5) {
+        console.log('getContent', author, permlink);
         content = yield call(getContentAsync, author, permlink);
         if (content['author'] == '') {
             // retry if content not found. #1870
+            attempt += 1;
             content = null;
             yield call(wait, 3000);
         }
     }
+
+    function dbg(content) {
+        const cop = Object.assign({}, content);
+        delete cop['active_votes'];
+        return JSON.stringify(cop);
+    }
+
+    //console.log('raw content> ', dbg(content));
+    //content = yield call(callBridge, 'normalize_post', { post: content });
+    //console.log('normalized> ', dbg(content));
 
     yield put(globalActions.receiveContent({ content }));
     if (resolve && content) {

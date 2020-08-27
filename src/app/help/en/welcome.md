@@ -20,7 +20,6 @@ Rewarding truth content and social interaction. The original idea was to create 
 
 Distribution
 --
-
 We operate with the K.I.S.S. model (Keep It Simple Stupid). So the distribution is quite simple. Initially 20 million is the first 10 years of rewards, distributed from @lassecash via the scotbot.
 
 20 million is for rewards after 10 years period. The reason for this, is that blockchain tech evolve so fast, so it is good to have these extra tokens set aside for after the first 10 years.
@@ -46,3 +45,4 @@ Lasse Ehlers is naturally the leader of the LASSECASH tribe and will be the one 
 
 
 <center>https://images.hive.blog/640x0/https://images.hive.blog/DQmbFnDzZBm8PTQdkCitomayGtqGRPYrZvaBrY1LxHPx1SB/image.png</center>
+
