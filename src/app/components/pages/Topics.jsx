@@ -65,7 +65,7 @@ class Topics extends Component {
             tagWithOrder: `/${currentOrder}/${currentTag}`,
             default: `/trending`,
         };
-        if (currentTag === 'feed') return opts['feed'];
+        if (currentOrder === 'feed') return opts['feed'];
         if (currentTag && currentOrder) return opts['tagWithOrder'];
         if (!currentTag && currentOrder) return opts['orderOnly'];
         if (currentTag && !currentOrder) return opts['tagOnly'];
@@ -78,11 +78,12 @@ class Topics extends Component {
             compact,
             username,
             topics,
-            order,
             subscriptions,
             communities,
             categories,
         } = this.props;
+        const currentOrder = this.props.order;
+        const order = currentOrder == 'feed' ? 'trending' : currentOrder;
 
         if (compact) {
             const extras = username => {
@@ -114,7 +115,7 @@ class Topics extends Component {
                     currentlySelected={this.currentlySelected(
                         current,
                         username,
-                        order
+                        currentOrder
                     )}
                     options={opts}
                     onChange={this.handleChange}
