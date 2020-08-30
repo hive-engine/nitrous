@@ -191,7 +191,6 @@ export default connect(
             state.user.getIn(['current', 'username']) ||
             state.offchain.get('account');
         const reviveEnabled = state.app.get('reviveEnabled');
-        console.log(scotConfig.toJS());
         return {
             blogmode: props.blogmode,
             enableAds: props.enableAds,
