@@ -6,7 +6,7 @@ import * as appActions from 'app/redux/AppReducer';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
-import { SIGNUP_URL } from 'shared/constants.js';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 
 const SidePanel = ({
     alignment,
@@ -210,7 +210,7 @@ const SidePanel = ({
             },
             {
                 label: tt('g.sign_up'),
-                link: SIGNUP_URL,
+                link: useHive ? HIVE_SIGNUP_URL : SIGNUP_URL,
             },
             {
                 value: 'post',
