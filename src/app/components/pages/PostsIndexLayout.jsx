@@ -191,6 +191,7 @@ export default connect(
             state.user.getIn(['current', 'username']) ||
             state.offchain.get('account');
         const reviveEnabled = state.app.get('reviveEnabled');
+        console.log(scotConfig.toJS());
         return {
             blogmode: props.blogmode,
             enableAds: props.enableAds,
@@ -204,7 +205,10 @@ export default connect(
             username,
             interleavePromoted: hostConfig.get('INTERLEAVE_PROMOTED', false),
             scotTokenSymbol,
-            tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+            tokenStats: scotConfig.getIn([
+                'config',
+                hiveEngine ? 'hiveTokenStats' : 'tokenStats',
+            ]),
             showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
             hiveEngine,
             reviveEnabled,
