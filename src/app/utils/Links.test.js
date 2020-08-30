@@ -51,7 +51,6 @@ describe('Links', () => {
         match(linksRe.local()('appdomain'), locals);
 
         const remotes = ['https://example.com/', 'http://abc.co'];
-        match(linksRe.remote(), remotes);
         matchNot(linksRe.local()('appdomain'), remotes);
     });
     it('by image', () => {
