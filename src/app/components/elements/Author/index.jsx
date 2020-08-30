@@ -1,25 +1,25 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
+import tt from 'counterpart';
+import { List } from 'immutable';
+import ReactDOM, { findDOMNode } from 'react-dom';
+import Overlay from 'react-overlays/lib/Overlay';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Icon from 'app/components/elements/Icon';
-import { Link } from 'react-router';
-import { authorNameAndRep } from 'app/utils/ComponentFormatters';
-import AuthorDropdown from '../AuthorDropdown';
 import Reputation from 'app/components/elements/Reputation';
-import normalizeProfile from 'app/utils/NormalizeProfile';
 import { getAffiliation } from 'app/utils/AffiliationMap';
-import tt from 'counterpart';
-import Overlay from 'react-overlays/lib/Overlay';
-import { findDOMNode } from 'react-dom';
+import UserTitle from 'app/components/elements/UserTitle';
+import AuthorDropdown from '../AuthorDropdown';
 
 const { string, bool, number } = PropTypes;
 
 const closers = [];
 
 const fnCloseAll = () => {
-    var close;
+    let close;
     while ((close = closers.shift())) {
         close();
     }
@@ -28,15 +28,29 @@ const fnCloseAll = () => {
 class Author extends React.Component {
     static propTypes = {
         author: string.isRequired,
+        hideEditor: bool,
         follow: bool,
         mute: bool,
-        authorRepLog10: number,
+        authorRep: number,
         showAffiliation: bool,
+        role: string,
+        title: string,
+        community: string,
+        crossPostedBy: string,
+        crossPostAuthor: string,
+        resolveCrossPost: bool,
+        showRole: bool,
     };
     static defaultProps = {
         follow: true,
         mute: true,
         showAffiliation: false,
+        role: '',
+        title: '',
+        community: '',
+        crossPostedBy: null,
+        crossPostAuthor: null,
+        resolveCrossPost: true,
     };
 
     constructor(...args) {
@@ -90,24 +104,56 @@ class Author extends React.Component {
     };
 
     shouldComponentUpdate = shouldComponentUpdate(this, 'Author');
+
     render() {
         const {
             author,
+            authorRep,
+            username,
             follow,
             mute,
-            authorRepLog10,
             showAffiliation,
             scotTokenSymbol,
             hive,
-        } = this.props; // html
-        const { username } = this.props; // redux
-        const { name, about } = this.props.account
-            ? normalizeProfile(this.props.account.toJS())
-            : {};
+            blacklists,
+            showRole,
+            community,
+            permlink,
+            role,
+            title,
+            tribeCommunityTitle,
+        } = this.props;
 
-        const authorAffiliation = getAffiliation(scotTokenSymbol, author);
+        const warn = blacklists && (
+            <span className="account_warn" title={blacklists.join(', ')}>
+                ({blacklists.length})
+            </span>
+        );
 
-        if (!(follow || mute) || username === author) {
+        const affiliation = tribeCommunityTitle
+            ? tribeCommunityTitle
+            : getAffiliation(scotTokenSymbol, author);
+        const userTitle = (
+            <span>
+                {false &&
+                    community && (
+                        <UserTitle
+                            username={username}
+                            community={community}
+                            author={author}
+                            permlink={permlink}
+                            role={showRole ? role : null}
+                            title={title}
+                            hideEdit={this.props.hideEditor}
+                        />
+                    )}
+                {showAffiliation && affiliation ? (
+                    <span className="affiliation">{affiliation}</span>
+                ) : null}
+            </span>
+        );
+
+        if (!(follow || mute)) {
             return (
                 <span
                     className="author"
@@ -118,10 +164,9 @@ class Author extends React.Component {
                     <strong>
                         <Link to={'/@' + author}>{author}</Link>
                     </strong>{' '}
-                    <Reputation value={authorRepLog10} />
-                    {showAffiliation && authorAffiliation ? (
-                        <span className="affiliation">{authorAffiliation}</span>
-                    ) : null}
+                    {false && <Reputation value={authorRep} />}
+                    {warn}
+                    {userTitle}
                 </span>
             );
         }
@@ -135,21 +180,17 @@ class Author extends React.Component {
                 >
                     <strong>
                         <Link
-                            className="ptc"
                             ref={link => {
                                 this.authorProfileLink = link;
                             }}
                             to={'/@' + author}
                         >
-                            {author} <Reputation value={authorRepLog10} />
-                            {showAffiliation && authorAffiliation ? (
-                                <span className="affiliation">
-                                    {authorAffiliation}
-                                </span>
-                            ) : null}
+                            {author} {false && <Reputation value={authorRep} />}
                             <Icon name="dropdown-arrow" />
                         </Link>
                     </strong>
+                    {warn}
+                    {userTitle}
                 </span>
                 <Overlay
                     show={this.state.show}
@@ -163,11 +204,10 @@ class Author extends React.Component {
                         author={author}
                         follow={follow}
                         mute={mute}
-                        authorRepLog10={authorRepLog10}
-                        name={name}
-                        about={about}
+                        authorRep={authorRep}
                         username={username}
                         hive={hive}
+                        blacklists={blacklists}
                     />
                 </Overlay>
             </span>
@@ -175,25 +215,51 @@ class Author extends React.Component {
     }
 }
 
-import { connect } from 'react-redux';
+export default connect((state, props) => {
+    const { post, resolveCrossPost, hive } = props;
+    const blacklists = post.get('blacklists', List()).toJS();
+    const crossPostedBy = post.get('cross_posted_by');
 
-export default connect((state, ownProps) => {
-    const { author, follow, mute, authorRepLog10, hive } = ownProps;
-    const username = state.user.getIn(['current', 'username']);
-    const account = state.global.getIn(['accounts', author]);
+    let author = post.get('author');
+    let authorRep = post.get('author_reputation');
+    if (resolveCrossPost && crossPostedBy) {
+        author = post.get('cross_post_author');
+        authorRep = post.get('cross_post_author_reputation');
+    }
+
     const scotTokenSymbol = state.app.getIn([
         'hostConfig',
         'LIQUID_TOKEN_UPPERCASE',
     ]);
+    const COMMUNITY_CATEGORY = state.app.getIn([
+        'hostConfig',
+        'COMMUNITY_CATEGORY',
+    ]);
+
+    const tribeCommunityTitle = state.global.getIn([
+        'community',
+        COMMUNITY_CATEGORY,
+        'team',
+        author,
+        'title',
+    ]);
 
     return {
+        follow: typeof props.follow === 'undefined' ? true : props.follow,
+        mute: typeof props.mute === 'undefined' ? props.follow : props.mute,
+        username: state.user.getIn(['current', 'username']),
+        authorRep,
         author,
-        follow,
-        mute,
-        authorRepLog10,
-        username,
-        account,
         scotTokenSymbol,
         hive,
+        community: post.get('community'), // UserTitle
+        permlink: post.get('permlink'), // UserTitle
+        role: post.get('author_role'), // UserTitle
+        title: post.get('author_title'), // UserTitle
+        blacklists: blacklists.length > 0 ? blacklists : null,
+        crossPostedBy: post.get('cross_posted_by'),
+        crossPostAuthor: post.get('cross_post_author'),
+        showRole: props.showRole,
+        tribeCommunityTitle,
     };
 })(Author);

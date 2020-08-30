@@ -97,7 +97,13 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             },
         };
 
-        const { body, title, statusCode, meta } = await serverRender(
+        const {
+            body,
+            title,
+            statusCode,
+            meta,
+            redirectUrl,
+        } = await serverRender(
             ctx.request.url,
             initial_state,
             ErrorPage,
@@ -105,6 +111,13 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             offchain,
             ctx.state.requestTimer
         );
+
+        if (redirectUrl) {
+            console.log('Redirecting to', redirectUrl);
+            ctx.status = 302;
+            ctx.redirect(redirectUrl);
+            return;
+        }
 
         let assets;
         // If resolvedAssets argument parameter is falsey we infer that we are in
@@ -138,6 +151,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             '<!DOCTYPE html>' + renderToString(<ServerHTML {...props} />);
     } catch (err) {
         // Render 500 error page from server
+        console.error('AppRender error', err, redirect);
         const { error, redirect } = err;
         if (error) throw error;
 

@@ -2,6 +2,9 @@ import assert from 'assert';
 import secureRandom from 'secure-random';
 import links, * as linksRe from 'app/utils/Links';
 import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
+import youtubeRegex from 'app/components/elements/EmbeddedPlayers/youtube';
+import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak';
+import twitterRegex from 'app/components/elements/EmbeddedPlayers/twitter';
 
 describe('Links', () => {
     it('all', () => {
@@ -48,6 +51,7 @@ describe('Links', () => {
         match(linksRe.local()('appdomain'), locals);
 
         const remotes = ['https://example.com/', 'http://abc.co'];
+        match(linksRe.remote(), remotes);
         matchNot(linksRe.local()('appdomain'), remotes);
     });
     it('by image', () => {
@@ -229,34 +233,92 @@ describe('Performance', () => {
         }
     });
     it('youTube', () => {
-        match(linksRe.youTube(), 'https://youtu.be/xG7ajrbj4zs?t=7s');
+        match(youtubeRegex.main, 'https://youtu.be/xG7ajrbj4zs?t=7s');
         match(
-            linksRe.youTube(),
+            youtubeRegex.main,
             'https://www.youtube.com/watch?v=xG7ajrbj4zs&t=14s'
         );
         match(
-            linksRe.youTube(),
+            youtubeRegex.main,
             'https://www.youtube.com/watch?v=xG7ajrbj4zs&feature=youtu.be&t=14s'
         );
     });
     it('youTubeId', () => {
         match(
-            links.youTubeId,
+            youtubeRegex.contentId,
             'https://youtu.be/xG7ajrbj4zs?t=7s',
             'xG7ajrbj4zs',
             1
         );
         match(
-            links.youTubeId,
+            youtubeRegex.contentId,
             'https://www.youtube.com/watch?v=xG7ajrbj4zs&t=14s',
             'xG7ajrbj4zs',
             1
         );
         match(
-            links.youTubeId,
+            youtubeRegex.contentId,
             'https://www.youtube.com/watch?v=xG7ajrbj4zs&feature=youtu.be&t=14s',
             'xG7ajrbj4zs',
             1
+        );
+    });
+    it('threespeak', () => {
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/watch?v=artemislives/tvxkobat'
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl'
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/embed?v=artemislives/tvxkobat'
+        );
+    });
+    it('threespeakId', () => {
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/watch?v=artemislives/tvxkobat',
+            'artemislives/tvxkobat',
+            1
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl',
+            'artemislives/tvxkobat',
+            1
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.online/embed?v=artemislives/tvxkobat',
+            'artemislives/tvxkobat',
+            1
+        );
+    });
+    it('threespeakImageLink', () => {
+        match(
+            threespeakRegex.htmlReplacement,
+            '<a href="https://3speak.online/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+        );
+    });
+    it('twitter', () => {
+        match(
+            twitterRegex.main,
+            'https://twitter.com/quochuync/status/1274676558641299459'
+        );
+        match(
+            twitterRegex.sanitize,
+            'https://twitter.com/quochuync/status/1274676558641299459?ref_src=something'
+        );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&mdash; 🇮🇱Dr BrianofLondon.me (@brianoflondon) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw">January 21, 2020</a></blockquote>'
+        );
+        match(
+            twitterRegex.htmlReplacement,
+            '<blockquote><p>Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&amp;mdash; 🇮🇱Dr BrianofLondon.me (<a href="/@brianoflondon" class="keychainify-checked">@brianoflondon</a>) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw" rel="nofollow noopener" title="This link will take you away from hive.blog">January 21, 2020</a></blockquote>'
         );
     });
 });

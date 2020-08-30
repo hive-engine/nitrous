@@ -36,11 +36,23 @@ const ABOUT_FLAG = (
 
 const MAX_VOTES_DISPLAY = 20;
 const MAX_WEIGHT = 10000;
+const MIN_PAYOUT = 0.02;
+
+function amt(string_amount) {
+    return parsePayoutAmount(string_amount);
+}
+
+function fmt(decimal_amount, asset = null) {
+    return formatDecimal(decimal_amount).join('') + (asset ? ' ' + asset : '');
+}
+
+function abs(value) {
+    return Math.abs(parseInt(value));
+}
 
 class Voting extends React.Component {
     static propTypes = {
         // HTML properties
-        post: PropTypes.string.isRequired,
         showList: PropTypes.bool,
 
         // Redux connect properties
@@ -50,8 +62,7 @@ class Voting extends React.Component {
         username: PropTypes.string,
         is_comment: PropTypes.bool,
         active_votes: PropTypes.object,
-        loggedin: PropTypes.bool,
-        post_obj: PropTypes.object,
+        post: PropTypes.object,
         enable_slider: PropTypes.bool,
         voting: PropTypes.bool,
         scotData: PropTypes.object,
@@ -66,7 +77,6 @@ class Voting extends React.Component {
         super(props);
         this.state = {
             showWeight: false,
-            myVote: null,
             sliderWeight: {
                 up: MAX_WEIGHT,
                 down: MAX_WEIGHT,
@@ -85,13 +95,12 @@ class Voting extends React.Component {
             if (this.props.voting) return;
             this.setState({ votingUp: up, votingDown: !up });
             if (this.state.showWeight) this.setState({ showWeight: false });
-            const { myVote } = this.state;
             const {
+                myVote,
                 author,
                 permlink,
                 username,
                 is_comment,
-                post_obj,
                 useHive,
             } = this.props;
 
@@ -109,6 +118,9 @@ class Voting extends React.Component {
                 weight = up ? MAX_WEIGHT : -MAX_WEIGHT;
             }
 
+            const rshares = Math.floor(
+                0.05 * this.props.net_vests * 1e6 * (weight / 10000.0)
+            );
             const isFlag = up ? null : true;
             this.props.vote(weight, {
                 author,
@@ -117,6 +129,7 @@ class Voting extends React.Component {
                 myVote,
                 isFlag,
                 useHive,
+                rshares,
             });
         };
 
@@ -198,35 +211,15 @@ class Voting extends React.Component {
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'Voting');
     }
 
-    componentWillMount() {
-        const { username, active_votes } = this.props;
-        this._checkMyVote(username, active_votes);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const { username, active_votes } = nextProps;
-        this._checkMyVote(username, active_votes);
-    }
-
-    _checkMyVote(username, active_votes) {
-        if (username && active_votes) {
-            const vote = active_votes.find(el => el.get('voter') === username);
-            // weight warning, the API may send a string or a number (when zero)
-            if (vote)
-                this.setState({
-                    myVote: parseInt(vote.get('percent') || 0, 10),
-                });
-        }
-    }
-
     render() {
         const {
+            myVote,
             active_votes,
             showList,
             voting,
             enable_slider,
             is_comment,
-            post_obj,
+            post,
             username,
             votingData,
             scotData,
@@ -238,13 +231,8 @@ class Voting extends React.Component {
             downvoteEnabled,
             useHive,
         } = this.props;
-        const {
-            votingUp,
-            votingDown,
-            showWeight,
-            showWeightDir,
-            myVote,
-        } = this.state;
+
+        const { votingUp, votingDown, showWeight, showWeightDir } = this.state;
 
         const scotDenom = Math.pow(10, scotPrecision);
         // Incorporate regeneration time.
@@ -264,7 +252,7 @@ class Voting extends React.Component {
         let scot_token_bene_payout = 0;
         let payout = 0;
         let promoted = 0;
-        let decline_payout = false;
+        let decline_payout = post.get('decline_payout');
         // Arbitrary invalid cash time (steem related behavior)
         const cashout_time =
             scotData && scotData.has('cashout_time')
@@ -319,7 +307,7 @@ class Voting extends React.Component {
             payout /= scotDenom;
             promoted /= scotDenom;
         }
-        const total_votes = post_obj.getIn(['stats', 'total_votes']);
+        const total_votes = post.getIn(['stats', 'total_votes']);
         if (payout < 0.0) payout = 0.0;
 
         const votingUpActive = voting && votingUp;
@@ -396,16 +384,18 @@ class Voting extends React.Component {
                 (votingDownActive ? ' votingDown' : '');
             // myVote === current vote
 
-            const invokeFlag = (
-                <span
+            let dropdown = (
+                <a
                     href="#"
-                    onClick={this.toggleWeightDown}
+                    onClick={
+                        enable_slider ? this.toggleWeightDown : this.voteDown
+                    }
                     title="Downvote"
                     id="downvote_button"
                     className="flag"
                 >
                     {down}
-                </span>
+                </a>
             );
 
             const revokeFlag = (
@@ -420,42 +410,47 @@ class Voting extends React.Component {
                 </a>
             );
 
-            const dropdown = (
-                <Dropdown
-                    show={showWeight && showWeightDir == 'down'}
-                    onHide={() => this.setState({ showWeight: false })}
-                    onShow={() => {
-                        this.setState({ showWeight: true });
-                        this.readSliderWeight();
-                    }}
-                    title={invokeFlag}
-                    position={'right'}
-                >
-                    <div className="Voting__adjust_weight_down">
-                        {(myVote == null || myVote === 0) &&
-                            enable_slider && (
-                                <div className="weight-container">
-                                    {slider(false)}
-                                </div>
-                            )}
-                        <CloseButton
-                            onClick={() => this.setState({ showWeight: false })}
-                        />
-                        <div className="clear Voting__about-flag">
-                            {ABOUT_FLAG}
-                            <br />
-                            <span
-                                href="#"
-                                onClick={this.voteDown}
-                                className="button outline"
-                                title="Downvote"
-                            >
-                                Submit
-                            </span>
+            if (enable_slider) {
+                dropdown = (
+                    <Dropdown
+                        show={showWeight && showWeightDir === 'down'}
+                        onHide={() => this.setState({ showWeight: false })}
+                        onShow={() => {
+                            this.setState({ showWeight: true });
+                            this.readSliderWeight();
+                            this.toggleWeightDown();
+                        }}
+                        title={down}
+                        position={'right'}
+                    >
+                        <div className="Voting__adjust_weight_down">
+                            {(myVote == null || myVote === 0) &&
+                                enable_slider && (
+                                    <div className="weight-container">
+                                        {slider(false)}
+                                    </div>
+                                )}
+                            <CloseButton
+                                onClick={() =>
+                                    this.setState({ showWeight: false })
+                                }
+                            />
+                            <div className="clear Voting__about-flag">
+                                {ABOUT_FLAG}
+                                <br />
+                                <span
+                                    href="#"
+                                    onClick={this.voteDown}
+                                    className="button outline"
+                                    title="Downvote"
+                                >
+                                    Submit
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </Dropdown>
-            );
+                    </Dropdown>
+                );
+            }
 
             downVote = (
                 <span className={classDown}>
@@ -524,7 +519,7 @@ class Voting extends React.Component {
         }
 
         // add beneficiary info. use toFixed due to a bug of formatDecimal (5.00 is shown as 5,.00)
-        const beneficiaries = post_obj.get('beneficiaries');
+        const beneficiaries = post.get('beneficiaries');
         if (
             rewardData.enable_comment_beneficiaries &&
             beneficiaries &&
@@ -629,18 +624,16 @@ class Voting extends React.Component {
                     link: '/@' + voter,
                 });
             }
-            if (total_votes > voters.length) {
+
+            // add overflow, if any
+            const extra = total_votes - voters.length;
+            if (extra > 0) {
                 voters.push({
-                    value: (
-                        <span>
-                            &hellip;{' '}
-                            {tt('voting_jsx.and_more', {
-                                count: total_votes - voters.length,
-                            })}
-                        </span>
-                    ),
+                    value: tt('voting_jsx.and_more', { count: extra }),
                 });
             }
+
+            // build voters list
             voters_list = (
                 <DropdownMenu
                     selected={tt('voting_jsx.votes_plural', {
@@ -667,6 +660,7 @@ class Voting extends React.Component {
                 {up}
             </a>
         );
+
         if (myVote <= 0 && enable_slider) {
             voteUpClick = this.toggleWeightUp;
             voteChevron = null;
@@ -733,8 +727,13 @@ export default connect(
     // mapStateToProps
     (state, ownProps) => {
         const hostConfig = state.app.get('hostConfig', Map()).toJS();
-        const post = state.global.getIn(['content', ownProps.post]);
-        if (!post) return ownProps;
+        const post =
+            ownProps.post || state.global.getIn(['content', ownProps.post_ref]);
+
+        if (!post) {
+            console.error('post_not_found', ownProps);
+            throw 'post not found';
+        }
         const scotConfig = state.app.get('scotConfig');
         const scotData = post.getIn([
             'scotData',
@@ -780,6 +779,9 @@ export default connect(
         const useHive = post.get('hive');
 
         const current_account = state.user.get('current');
+        const net_vests = current_account
+            ? current_account.get('effective_vests')
+            : 0.0;
         const username = current_account
             ? current_account.get('username')
             : null;
@@ -794,17 +796,23 @@ export default connect(
             : null;
         const enable_slider = true;
 
+        let myVote = ownProps.myVote || null; // ownProps: test only
+        if (username && active_votes) {
+            const vote = active_votes.find(el => el.get('voter') === username);
+            if (vote) myVote = parseInt(vote.get('rshares', 0), 10);
+        }
+
         return {
-            post: ownProps.post,
+            post,
             showList: ownProps.showList,
+            net_vests,
             author,
             permlink,
             username,
+            myVote,
             active_votes,
             enable_slider,
             is_comment,
-            post_obj: post,
-            loggedin: username != null,
             voting,
             votingData,
             scotData,
@@ -831,10 +839,13 @@ export default connect(
     dispatch => ({
         vote: (
             weight,
-            { author, permlink, username, myVote, isFlag, useHive }
+            { author, permlink, username, myVote, isFlag, useHive, rshares }
         ) => {
             const confirm = () => {
+                // new vote
                 if (myVote == null) return null;
+
+                // changing a vote
                 if (weight === 0)
                     return isFlag
                         ? tt('voting_jsx.removing_your_vote')
@@ -863,6 +874,7 @@ export default connect(
                         author,
                         permlink,
                         weight,
+                        __rshares: rshares,
                         __config: {
                             title: weight < 0 ? 'Confirm Downvote' : null,
                         },

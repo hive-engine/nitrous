@@ -10,6 +10,11 @@ describe('makeCanonicalLink', () => {
     };
     const test_cases = [
         [
+            'handles posts from hive.blog',
+            { ...post_data, json_metadata: {} },
+            'https://hive.blog/testing/@test/test-post',
+        ],
+        [
             'handles posts without app',
             { ...post_data, json_metadata: {} },
             `${DEFAULT_URL}/testing/@test/test-post`,
@@ -31,13 +36,13 @@ describe('makeCanonicalLink', () => {
         ],
         [
             'handles apps that do exist',
-            { ...post_data, json_metadata: { app: 'steempeak/1.1.1' } },
-            'https://steempeak.com/testing/@test/test-post',
+            { ...post_data, json_metadata: { app: 'peakd/1.1.1' } },
+            'https://peakd.com/testing/@test/test-post',
         ],
         [
-            'handles posts from steemit',
-            { ...post_data, json_metadata: { app: 'steemit/0.1' } },
-            `https://steemit.com/testing/@test/test-post`,
+            'handles posts from hive blog',
+            { ...post_data, json_metadata: { app: 'hiveblog/0.1' } },
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles posts from app',
@@ -60,7 +65,7 @@ describe('makeCanonicalLink', () => {
     ];
     test_cases.forEach(v => {
         it(v[0], () => {
-            expect(makeCanonicalLink(v[1], { PREFER_HIVE: true })).toBe(v[2]);
+            expect(makeCanonicalLink(v[1], v[1].json_metadata)).toBe(v[2]);
         });
     });
 });

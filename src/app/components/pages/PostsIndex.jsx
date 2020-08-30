@@ -6,41 +6,57 @@ import { Link } from 'react-router';
 import tt from 'counterpart';
 import { List, Map, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
-import constants from 'app/redux/constants';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import PostsList from 'app/components/cards/PostsList';
 import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import Callout from 'app/components/elements/Callout';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
-import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
-import Notices from 'app/components/elements/Notices';
 import { GptUtils } from 'app/utils/GptUtils';
 import GptAd from 'app/components/elements/GptAd';
-import ReviveAd from 'app/components/elements/ReviveAd';
-import ArticleLayoutSelector from 'app/components/modules/ArticleLayoutSelector';
 import Topics from './Topics';
 import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-import SidebarToken from 'app/components/elements/SidebarToken';
+import { ifHivemind } from 'app/utils/Community';
+import PostsIndexLayout from 'app/components/pages/PostsIndexLayout';
+
+// posts_index.empty_feed_1 [-5]
+const noFriendsText = (
+    <div>
+        You haven't followed anyone yet!<br />
+        <br />
+        <span style={{ fontSize: '1.1rem' }}>
+            <Link to="/">Explore Trending</Link>
+        </span>
+        <br />
+    </div>
+);
+
+const noCommunitiesText = (
+    <div>
+        You haven't joined any active communities yet!<br />
+        <br />
+        <span style={{ fontSize: '1.1rem' }}>
+            <Link to="/communities">Explore Communities</Link>
+        </span>
+        {/*
+        <br /><br />
+        <Link to="/welcome">New users guide</Link>*/}
+    </div>
+);
 
 class PostsIndex extends React.Component {
     static propTypes = {
-        discussions: PropTypes.object,
-        feed_posts: PropTypes.object,
+        posts: PropTypes.object,
         status: PropTypes.object,
         routeParams: PropTypes.object,
         requestData: PropTypes.func,
         loading: PropTypes.bool,
         username: PropTypes.string,
         blogmode: PropTypes.bool,
-        categories: PropTypes.object,
         interleavePromoted: PropTypes.bool,
-    };
-
-    static defaultProps = {
-        showSpam: false,
+        topics: PropTypes.object,
     };
 
     constructor() {
@@ -50,45 +66,54 @@ class PostsIndex extends React.Component {
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'PostsIndex');
     }
 
+    componentWillMount() {
+        const {
+            category,
+            community,
+            subscriptions,
+            username,
+            getSubscriptions,
+            getCommunity,
+        } = this.props;
+        if (!subscriptions && username) getSubscriptions(username);
+        if (ifHivemind(category) && !community) {
+            getCommunity(category);
+        }
+    }
+
     componentDidUpdate(prevProps) {
         if (
             window.innerHeight &&
             window.innerHeight > 3000 &&
-            prevProps.discussions !== this.props.discussions
+            prevProps.posts !== this.props.posts
         ) {
             this.refs.list.fetchIfNeeded();
         }
     }
 
-    getPosts(order, category) {
-        const pinned = this.props.pinned;
+    getPosts() {
+        const {
+            order,
+            pinned,
+            posts,
+            promotedPosts,
+            interleavePromoted,
+        } = this.props;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
               ? pinned.get('pinned_posts').toJS()
               : []
             : [];
-        const notices = this.props.notices || [];
-        const topic_discussions =
-            this.props.discussions != null
-                ? this.props.discussions.get(category || '')
-                : null;
-        if (!topic_discussions) return { posts: List(), promotedPosts: List() };
-        const mainDiscussions = topic_discussions.get(order);
-        const interleavePromoted = this.props.interleavePromoted;
         if (interleavePromoted && (order === 'trending' || order === 'hot')) {
-            let promotedDiscussions = topic_discussions.get('promoted');
-            if (
-                promotedDiscussions &&
-                promotedDiscussions.size > 0 &&
-                mainDiscussions
-            ) {
+            let promotedDiscussions = promotedPosts;
+            if (promotedDiscussions && promotedDiscussions.size > 0 && posts) {
                 const processed = new Set(
                     pinnedPosts.map(p => `${p.author}/${p.permlink}`)
                 ); // mutable
                 const interleaved = [];
                 const promoted = [];
                 let promotedIndex = 0;
-                for (let i = 0; i < mainDiscussions.size; i++) {
+                for (let i = 0; i < posts.size; i++) {
                     if (i % PROMOTED_POST_PAD_SIZE === 0) {
                         while (
                             processed.has(
@@ -107,7 +132,7 @@ class PostsIndex extends React.Component {
                             processed.add(nextPromoted);
                         }
                     }
-                    const nextDiscussion = mainDiscussions.get(i);
+                    const nextDiscussion = posts.get(i);
                     if (!processed.has(nextDiscussion)) {
                         interleaved.push(nextDiscussion);
                         processed.add(nextDiscussion);
@@ -119,35 +144,27 @@ class PostsIndex extends React.Component {
                 };
             }
         }
-        return { posts: mainDiscussions || List(), promotedPosts: List() };
+        return { posts: posts || List(), promotedPosts: List() };
     }
 
-    loadMore(last_post) {
+    loadMore() {
+        const last_post = this.props.posts ? this.props.posts.last() : null;
         if (!last_post) return;
-        let {
-            accountname,
-            category,
-            order = constants.DEFAULT_SORT_ORDER,
-        } = this.props.routeParams;
-        if (category === 'feed') {
-            accountname = order.slice(1);
-            order = 'by_feed';
-        }
-        if (isFetchingOrRecentlyUpdated(this.props.status, order, category))
-            return;
+        if (last_post == this.props.pending) return; // if last post is 'pending', its an invalid start token
+        const { username, status, order, category } = this.props;
+
+        if (isFetchingOrRecentlyUpdated(status, order, category)) return;
+
         const [author, permlink] = last_post.split('/');
         this.props.requestData({
             author,
             permlink,
             order,
             category,
-            accountname,
+            observer: username,
             useHive: this.props.preferHive,
         });
     }
-    onShowSpam = () => {
-        this.setState({ showSpam: !this.state.showSpam });
-    };
 
     searchCategories(cat, parent, categories) {
         if (!cat) return { par: parent, cats: categories, found: false };
@@ -196,12 +213,18 @@ class PostsIndex extends React.Component {
     }
 
     render() {
-        let {
+        const {
+            topics,
+            subscriptions,
+            enableAds,
+            community,
             category,
-            order = constants.DEFAULT_SORT_ORDER,
-        } = this.props.routeParams;
+            account_name, // TODO: for feed
+            order,
+            pinned,
+            username,
+        } = this.props;
 
-        const { discussions, pinned, scotTokenSymbol } = this.props;
         const { par, cats, found } = this.searchCategories(
             category,
             null,
@@ -210,320 +233,159 @@ class PostsIndex extends React.Component {
         const categories = this.buildCategories(category, par, cats);
         const max_levels = category && found ? 3 : 2;
 
-        let topics_order = order;
-        let posts = List();
-        let promotedPosts = List();
-        let account_name = '';
-        let emptyText = '';
-        if (category === 'feed') {
-            account_name = order.slice(1);
-            order = 'by_feed';
-            topics_order = 'trending';
-            posts = this.props.feed_posts;
-            const isMyAccount = this.props.username === account_name;
-            if (isMyAccount) {
-                emptyText = (
-                    <div>
-                        {tt('posts_index.empty_feed_1')}.<br />
-                        <br />
-                        {tt('posts_index.empty_feed_2')}.<br />
-                        <br />
-                        <Link to="/trending">
-                            {tt('posts_index.empty_feed_3')}
-                        </Link>
-                        <br />
-                    </div>
-                );
-            } else {
-                emptyText = (
-                    <div>
-                        {tt('user_profile.user_hasnt_followed_anything_yet', {
-                            name: account_name,
-                        })}
-                    </div>
-                );
-            }
-        } else {
-            const processedPosts = this.getPosts(order, category);
-            posts = processedPosts.posts;
-            promotedPosts = processedPosts.promotedPosts;
-            if (posts && posts.size === 0) {
-                emptyText = (
-                    <div>
-                        {'No ' +
-                            topics_order +
-                            (category ? ' #' + category : '') +
-                            ' posts found'}
-                    </div>
-                );
-            }
-        }
-
         const status = this.props.status
             ? this.props.status.getIn([category || '', order])
             : null;
-        const fetching = (status && status.fetching) || this.props.loading;
-        const { showSpam } = this.state;
+        let fetching = (status && status.fetching) || this.props.loading;
 
-        const topicDiscussions =
-            discussions != null ? discussions.get(category || '') : null;
+        const processedPosts = this.getPosts();
+        const posts = processedPosts.posts;
+        const promotedPosts = processedPosts.promotedPosts;
 
-        // If we're at one of the four sort order routes without a tag filter,
-        // use the translated string for that sort order, f.ex "trending"
-        //
-        // If you click on a tag while you're in a sort order route,
-        // the title should be the translated string for that sort order
-        // plus the tag string, f.ex "trending: blog"
-        //
-        // Logged-in:
-        // At homepage (@user/feed) say "My feed"
-        let page_title = 'Posts'; // sensible default here?
-        if (category === 'feed') {
-            if (account_name === this.props.username)
-                page_title = tt('posts_index.my_feed');
-            else
-                page_title = tt('posts_index.accountnames_feed', {
-                    account_name,
-                });
-        } else {
-            switch (topics_order) {
-                case 'trending': // cribbed from Header.jsx where it's repeated 2x already :P
-                    page_title = tt('main_menu.trending');
-                    break;
-                case 'created':
-                    page_title = tt('g.new');
-                    break;
-                case 'hot':
-                    page_title = tt('main_menu.hot');
-                    break;
-                case 'promoted':
-                    page_title = tt('g.promoted');
-                    break;
-            }
-            if (typeof category !== 'undefined') {
-                page_title = `${page_title}: ${category}`; // maybe todo: localize the colon?
+        let emptyText = '';
+        if (order === 'feed') {
+            emptyText = noFriendsText;
+        } else if (category === 'my') {
+            if (!process.env.BROWSER) {
+                fetching = true;
             } else {
-                page_title = `${page_title}: ${tt('g.all_tags')}`;
+                emptyText = noCommunitiesText;
             }
-        }
-        const layoutClass = this.props.blogmode
-            ? ' layout-block'
-            : ' layout-list';
+        } else if (posts.size === 0) {
+            const cat = community
+                ? 'community' //community.get('title')
+                : category ? ' #' + category : '';
 
-        const mqLarge =
-            process.env.BROWSER &&
-            window.matchMedia('screen and (min-width: 75em)').matches;
+            if (order == 'payout')
+                emptyText = `No pending ${
+                    cat
+                } posts found. This view only shows posts within 12 - 36 hours of payout.`;
+            else if (order == 'created') emptyText = `No posts in ${cat} yet!`;
+            else emptyText = `No ${order} ${cat} posts found.`;
+        } else {
+            emptyText = 'Nothing here to see...';
+        }
+
+        // page title
+        let page_title = tt('g.all_tags');
+        if (order === 'feed') {
+            if (account_name === this.props.username)
+                page_title = 'My friends' || tt('posts_index.my_feed');
+            else
+                //page_title = tt('posts_index.accountnames_feed', {
+                //    account_name,
+                //});
+                //page_title = '@' + account_name + "'s friends"
+                page_title = 'My friends';
+        } else if (category === 'my') {
+            page_title = 'My communities';
+        } else if (community) {
+            page_title = community.get('title');
+        } else if (category) {
+            page_title = '#' + category;
+        }
+
+        let postsIndexDisplay = (
+            <PostsList
+                ref="list"
+                post_refs={posts}
+                promoted={promotedPosts}
+                loading={fetching}
+                order={order}
+                category={category}
+                hideCategory={!!community}
+                loadMore={this.loadMore}
+            />
+        );
+
+        if (!fetching && !posts.size) {
+            postsIndexDisplay = <Callout>{emptyText}</Callout>;
+        }
+        if (!username && posts.size && category === 'my') {
+            postsIndexDisplay = <Callout>{emptyText}</Callout>;
+        }
+        if (order === 'feed' && !username) {
+            postsIndexDisplay = <Callout>{emptyText}</Callout>;
+        }
+
         return (
-            <div
-                className={
-                    'PostsIndex row' +
-                    (fetching ? ' fetching' : '') +
-                    layoutClass
-                }
+            <PostsIndexLayout
+                order={order}
+                categories={categories}
+                max_levels={max_levels}
+                category={category}
+                enableAds={enableAds}
+                blogmode={this.props.blogmode}
             >
-                <article className="articles">
-                    <div className="articles__header row">
-                        <div className="small-6 medium-6 large-6 column">
-                            <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
-                                {page_title}
-                            </h1>
-                            <span className="hide-for-mq-large articles__header-select">
-                                <Topics
-                                    username={this.props.username}
-                                    order={topics_order}
-                                    current={category}
-                                    categories={categories}
-                                    compact
-                                    levels={max_levels}
-                                />
-                            </span>
-                        </div>
-                        <div className="small-6 medium-5 large-5 column hide-for-large articles__header-select">
-                            <SortOrder
-                                sortOrder={this.props.sortOrder}
-                                topic={this.props.topic}
-                                horizontal={false}
+                {order !== 'feed' && (
+                    <div className="tag-feed-header row">
+                        <div className="column">
+                            <MarkdownViewer
+                                text={
+                                    tagHeaderMap[category] || tagHeaderMap['']
+                                }
                             />
-                        </div>
-                        <div className="medium-1 show-for-mq-medium column">
-                            <ArticleLayoutSelector />
                         </div>
                     </div>
-                    {category !== 'feed' && (
-                        <MarkdownViewer
-                            text={tagHeaderMap[category] || tagHeaderMap['']}
-                        />
-                    )}
-                    <hr className="articles__hr" />
-                    {!fetching &&
-                    (posts && !posts.size) &&
-                    (pinned && !pinned.get('pinned_posts', List()).size) ? (
-                        <Callout>{emptyText}</Callout>
-                    ) : (
-                        <PostsList
-                            ref="list"
-                            posts={posts}
-                            loading={fetching}
-                            anyPosts
-                            category={category}
-                            loadMore={this.loadMore}
-                            showPinned={true}
-                            showSpam={showSpam}
-                            promoted={promotedPosts}
-                        />
-                    )}
-                </article>
+                )}
+                <div className="articles__header row">
+                    <div className="small-8 medium-7 large-8 column">
+                        <h1 className="articles__h1 show-for-mq-large articles__h1--no-wrap">
+                            {page_title}
+                        </h1>
+                        <div className="show-for-mq-large">
+                            {community && (
+                                <div
+                                    style={{
+                                        fontSize: '80%',
+                                        color: 'gray',
+                                    }}
+                                >
+                                    Community
+                                </div>
+                            )}
+                            {!community &&
+                                category &&
+                                order !== 'feed' &&
+                                category !== 'my' && (
+                                    <div
+                                        style={{
+                                            fontSize: '80%',
+                                            color: 'gray',
+                                        }}
+                                    >
+                                        Unmoderated tag
+                                    </div>
+                                )}
+                        </div>
 
-                <aside className="c-sidebar c-sidebar--right">
-                    {this.props.isBrowser && (
-                        <div>
-                            <SidebarLinks
+                        <span className="hide-for-mq-large articles__header-select">
+                            <Topics
                                 username={this.props.username}
-                                scotTokenSymbol={scotTokenSymbol}
+                                current={category}
+                                topics={topics}
+                                subscriptions={subscriptions}
+                                compact
+                                order={order}
+                                categories={categories}
+                                levels={max_levels}
                             />
-                        </div>
-                    )}
-                    <Notices notices={this.props.notices} />
-                    {this.props.showTokenStats &&
-                        this.props.isBrowser &&
-                        this.props.tokenStats && (
-                            <div>
-                                <SidebarToken
-                                    scotToken={this.props.tokenStats.getIn([
-                                        'scotToken',
-                                    ])}
-                                    scotTokenCirculating={this.props.tokenStats.getIn(
-                                        ['total_token_balance_circulating']
-                                    )}
-                                    scotTokenBurn={
-                                        this.props.tokenStats.getIn([
-                                            'token_burn_balance',
-                                        ]) || 0
-                                    }
-                                    scotTokenStaking={this.props.tokenStats.getIn(
-                                        ['total_token_balance_staked']
-                                    )}
-                                    useHive={this.props.hiveEngine}
+                        </span>
+                    </div>
+                    {order != 'feed' &&
+                        !(category === 'my' && !posts.size) && (
+                            <div className="small-4 medium-5 large-4 column articles__header-select">
+                                <SortOrder
+                                    sortOrder={order}
+                                    topic={category}
+                                    horizontal={false}
                                 />
                             </div>
                         )}
-                    {this.props.showTokenStats &&
-                        this.props.isBrowser &&
-                        this.props.tokenStats &&
-                        this.props.tokenStats.getIn(['scotMinerTokens', 0]) && (
-                            <div>
-                                <SidebarToken
-                                    scotToken={this.props.tokenStats.getIn([
-                                        'scotMinerTokens',
-                                        0,
-                                    ])}
-                                    scotTokenCirculating={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_miner_balance_circulating',
-                                        ]
-                                    )}
-                                    scotTokenBurn={
-                                        this.props.tokenStats.getIn([
-                                            'token_burn_miner_balance',
-                                        ]) || 0
-                                    }
-                                    scotTokenStaking={this.props.tokenStats.getIn(
-                                        ['total_token_miner_balance_staked']
-                                    )}
-                                    useHive={this.props.hiveEngine}
-                                />
-                            </div>
-                        )}
-                    {this.props.showTokenStats &&
-                        this.props.isBrowser &&
-                        this.props.tokenStats &&
-                        this.props.tokenStats.getIn(['scotMinerTokens', 1]) && (
-                            <div>
-                                <SidebarToken
-                                    scotToken={this.props.tokenStats.getIn([
-                                        'scotMinerTokens',
-                                        1,
-                                    ])}
-                                    scotTokenCirculating={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_mega_miner_balance_circulating',
-                                        ]
-                                    )}
-                                    scotTokenBurn={
-                                        this.props.tokenStats.getIn([
-                                            'token_burn_mega_miner_balance',
-                                        ]) || 0
-                                    }
-                                    scotTokenStaking={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_mega_miner_balance_staked',
-                                        ]
-                                    )}
-                                    useHive={this.props.hiveEngine}
-                                />
-                            </div>
-                        )}
-                    {this.props.gptEnabled && allowAdsOnContent ? (
-                        <div className="sidebar-ad">
-                            <GptAd
-                                type="Freestar"
-                                id="bsa-zone_1566495004689-0_123456"
-                            />
-                        </div>
-                    ) : null}
-                    {this.props.reviveEnabled && mqLarge ? (
-                        <div className="sidebar-ad">
-                            <ReviveAd adKey="sidebar_right" />
-                        </div>
-                    ) : null}
-                </aside>
-
-                <aside className="c-sidebar c-sidebar--left">
-                    <Topics
-                        order={topics_order}
-                        current={category}
-                        compact={false}
-                        username={this.props.username}
-                        categories={categories}
-                        levels={max_levels}
-                    />
-                    <small>
-                        <a
-                            className="c-sidebar__more-link"
-                            onClick={this.onShowSpam}
-                        >
-                            {showSpam
-                                ? tt('g.next_3_strings_together.show_less')
-                                : tt('g.next_3_strings_together.show_more')}
-                        </a>
-                        {' ' + tt('g.next_3_strings_together.value_posts')}
-                    </small>
-                    {this.props.gptEnabled && allowAdsOnContent ? (
-                        <div>
-                            <div className="sidebar-ad">
-                                <GptAd
-                                    type="Freestar"
-                                    slotName="bsa-zone_1566494461953-7_123456"
-                                />
-                            </div>
-                            <div
-                                className="sidebar-ad"
-                                style={{ marginTop: 20 }}
-                            >
-                                <GptAd
-                                    type="Freestar"
-                                    slotName="bsa-zone_1566494856923-9_123456"
-                                />
-                            </div>
-                        </div>
-                    ) : null}
-                    {this.props.reviveEnabled && mqLarge ? (
-                        <div className="sidebar-ad">
-                            <ReviveAd adKey="sidebar_left" />
-                        </div>
-                    ) : null}
-                </aside>
-            </div>
+                </div>
+                <hr className="articles__hr" />
+                {postsIndexDisplay}
+            </PostsIndexLayout>
         );
     }
 }
@@ -533,59 +395,80 @@ module.exports = {
     component: connect(
         (state, ownProps) => {
             const hostConfig = state.app.get('hostConfig', Map());
-            const scotTokenSymbol = hostConfig.get('LIQUID_TOKEN_UPPERCASE');
-            const hiveEngine = hostConfig.get('HIVE_ENGINE');
             const preferHive = hostConfig.get('PREFER_HIVE');
-            const scotConfig = state.app.get('scotConfig');
-            // special case if user feed (vs. trending, etc)
-            let feed_posts;
-            if (ownProps.routeParams.category === 'feed') {
-                const account_name = ownProps.routeParams.order.slice(1);
-                feed_posts = state.global.getIn(
-                    ['accounts', account_name, 'feed'],
-                    List()
+            // route can be e.g. trending/food (order/category);
+            //   or, @username/feed (category/order). Branch on presence of `@`.
+            const route = ownProps.routeParams;
+            const account_name =
+                route.order && route.order[0] == '@'
+                    ? route.order.slice(1).toLowerCase()
+                    : null;
+            const category = account_name
+                ? route.order
+                : route.category ? route.category.toLowerCase() : null;
+            const order = account_name
+                ? route.category
+                : route.order || 'trending';
+
+            const hive = ifHivemind(category);
+            const community = state.global.getIn(['community', hive], null);
+
+            const enableAds =
+                ownProps.gptEnabled &&
+                !GptUtils.HasBannedTags(
+                    [category],
+                    state.app.getIn(['googleAds', 'gptBannedTags'])
                 );
+
+            const key = ['discussion_idx', category || '', order];
+            let posts = state.global.getIn(key, List());
+            const promotedKey = ['discussion_idx', category || '', 'promoted'];
+            const promotedPosts = state.global.getIn(promotedKey, List());
+
+            // if 'pending' post is found, prepend it to posts list
+            //   (see GlobalReducer RECEIVE_CONTENT)
+            const pkey = ['discussion_idx', category || '', '_' + order];
+            const pending = state.global.getIn(pkey, null);
+            if (pending && !posts.includes(pending)) {
+                posts = posts.unshift(pending);
             }
+            const username =
+                state.user.getIn(['current', 'username']) ||
+                state.offchain.get('account');
 
             return {
-                discussions: state.global.get('discussion_idx'),
+                subscriptions: state.global.getIn(['subscriptions', username]),
                 status: state.global.get('status'),
                 loading: state.app.get('loading'),
-                feed_posts,
-                username:
-                    state.user.getIn(['current', 'username']) ||
-                    state.offchain.get('account'),
+                account_name,
+                category,
+                order,
+                posts,
+                promotedPosts,
+                pending,
+                community,
+                username,
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
-                sortOrder: ownProps.params.order,
-                topic: ownProps.params.category,
+                topics: state.global.getIn(['topics'], List()),
                 categories: hostConfig.get('TAG_LIST', List()),
-                pinned: state.offchain.getIn(['pinned_posts', scotTokenSymbol]),
-                maybeLoggedIn: state.user.get('maybeLoggedIn'),
+                pinned: state.offchain.get('pinned_posts'),
                 isBrowser: process.env.BROWSER,
-                notices: state.offchain
-                    .getIn(['pinned_posts', scotTokenSymbol, 'notices'])
-                    .toJS(),
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
-                reviveEnabled: state.app.get('reviveEnabled'),
                 interleavePromoted: hostConfig.get(
                     'INTERLEAVE_PROMOTED',
                     false
                 ),
-                scotTokenSymbol,
-                tokenStats: scotConfig.getIn([
-                    'config',
-                    hiveEngine ? 'hiveTokenStats' : 'tokenStats',
-                ]),
-                showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
                 preferHive,
-                hiveEngine,
+                enableAds,
             };
         },
-        dispatch => {
-            return {
-                requestData: args =>
-                    dispatch(fetchDataSagaActions.requestData(args)),
-            };
-        }
+        dispatch => ({
+            getSubscriptions: account =>
+                dispatch(fetchDataSagaActions.getSubscriptions(account)),
+            requestData: args =>
+                dispatch(fetchDataSagaActions.requestData(args)),
+            getCommunity: category =>
+                dispatch(fetchDataSagaActions.getCommunity(category)),
+        })
     )(PostsIndex),
 };

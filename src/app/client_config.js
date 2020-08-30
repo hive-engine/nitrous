@@ -419,7 +419,7 @@ const ARCHON = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': ARCHON,
+    'localhost:8080': STEEMING,
     'frozen-retreat-15997.herokuapp.com': ARCHON,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
@@ -595,16 +595,16 @@ export const CONFIG_MAP = {
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 
+export const HIVE_SIGNER_APP = 'ewd';
+
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
-export const LANDING_PAGE_URL = 'https://steem.io/';
-export const WHITEPAPER_URL = 'https://steem.io/SteemWhitePaper.pdf';
 
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
-export const LIQUID_TICKER = 'STEEM';
+export const LIQUID_TICKER = 'HIVE';
 export const VEST_TICKER = 'VESTS';
-export const DEBT_TICKER = 'SBD';
-export const DEBT_TOKEN_SHORT = 'SBD';
+export const DEBT_TICKER = 'HBD';
+export const DEBT_TOKEN_SHORT = 'HBD';
 
 // application settings
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap

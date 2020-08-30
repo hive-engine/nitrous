@@ -1,16 +1,16 @@
 import React from 'react';
+import { Map } from 'immutable';
 import tt from 'counterpart';
 import { Link } from 'react-router';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import { connect } from 'react-redux';
 
 const Notice = ({ notice }) => {
     if (!notice || !notice.title) {
         return null;
     }
 
-    const url = notice.permalink
-        ? `/@${notice.author}/${notice.permlink}`
-        : notice.url;
+    const url = `/${notice.category}/@${notice.author}/${notice.permlink}`;
     const tag = notice.tag ? (
         <p className="Notices__featured">{notice.tag}</p>
     ) : null;
@@ -70,4 +70,15 @@ const SteemitNotices = ({ notices }) => {
     );
 };
 
-export default SteemitNotices;
+module.exports = connect(state => ({
+    notices: state.offchain
+        .getIn(
+            [
+                'pinned_posts',
+                state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE']),
+                'notices',
+            ],
+            Map()
+        )
+        .toJS(),
+}))(SteemitNotices);

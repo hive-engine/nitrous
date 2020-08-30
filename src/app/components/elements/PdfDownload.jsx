@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PrivateKey } from '@steemit/steem-js/lib/auth/ecc';
+import { PrivateKey } from '@hiveio/hive-js/lib/auth/ecc';
 import QRious from 'qrious';
 
 function image2canvas(image, bgcolor) {
@@ -37,11 +37,12 @@ export default class PdfDownload extends Component {
 
     downloadPdf() {
         const keys = this.generateKeys(this.props.name, this.props.password);
-        const filename = this.props.name + '_steem_keys.pdf';
+        const filename = this.props.name + '_hive_keys.pdf';
         this.renderPdf(keys, filename).save(filename);
     }
 
     // Generate the canvas, which will be generated into a PDF
+    // TODO: we need to host these files somewhere else instead of relying on steemit to serve them
     async componentDidMount() {
         // Load jsPDF. It does not work with webpack, so it must be loaded here.
         // On the plus side, it is only loaded when the warning page is shown.
@@ -185,7 +186,7 @@ export default class PdfDownload extends Component {
         );
 
         offset += 0.265;
-        offset += this.renderText(ctx, `Steem keys for @${this.props.name}`, {
+        offset += this.renderText(ctx, `Hive keys for @${this.props.name}`, {
             scale,
             x: margin,
             y: offset,
@@ -219,7 +220,7 @@ export default class PdfDownload extends Component {
             ctx,
             'Generated at ' +
                 new Date().toISOString().replace(/\.\d{3}/, '') +
-                ' by steemit.com',
+                ' by hive.blog',
             {
                 scale,
                 x: margin,
@@ -303,7 +304,7 @@ export default class PdfDownload extends Component {
         offset += 0.15;
         this.drawQr(
             ctx,
-            'steem://import/wif/' +
+            'hive://import/wif/' +
                 keys.postingPrivate +
                 '/account/' +
                 this.props.name,
@@ -327,7 +328,7 @@ export default class PdfDownload extends Component {
 
         offset += this.renderText(
             ctx,
-            'Used to log in to apps such as Steemit.com and perform social ' +
+            'Used to log in to apps such as hive.blog and perform social ' +
                 'actions such as posting, commenting, and voting.',
             {
                 scale,
@@ -364,7 +365,7 @@ export default class PdfDownload extends Component {
         offset += 0.15;
         this.drawQr(
             ctx,
-            'steem://import/wif/' +
+            'hive://import/wif/' +
                 keys.memoPrivate +
                 '/account/' +
                 this.props.name,
@@ -428,7 +429,7 @@ export default class PdfDownload extends Component {
         offset += 0.15;
         this.drawQr(
             ctx,
-            'steem://import/wif/' +
+            'hive://import/wif/' +
                 keys.activePrivate +
                 '/account/' +
                 this.props.name,
@@ -454,7 +455,7 @@ export default class PdfDownload extends Component {
         offset += this.renderText(
             ctx,
             'Used for monetary and wallet related actions, such as ' +
-                'transferring tokens or powering STEEM up and down.',
+                'transferring tokens or powering HIVE up and down.',
             {
                 scale,
                 x: margin + qrSize + 0.1,
@@ -491,7 +492,7 @@ export default class PdfDownload extends Component {
         offset += 0.15;
         this.drawQr(
             ctx,
-            'steem://import/wif/' +
+            'hive://import/wif/' +
                 keys.ownerPrivate +
                 '/account/' +
                 this.props.name,
@@ -519,7 +520,7 @@ export default class PdfDownload extends Component {
             'This key is used to reset all your other keys. It is ' +
                 'recommended to keep it offline at all times. If your ' +
                 'account is compromised, use this key to recover it ' +
-                'within 30 days at https://steemitwallet.com.',
+                'within 30 days at https://wallet.hive.blog',
             {
                 scale,
                 x: margin + qrSize + 0.1,
@@ -619,7 +620,7 @@ export default class PdfDownload extends Component {
             ctx,
             'Public keys are associated with usernames and are used to ' +
                 'encrypt and verify messages. Your public keys are not required ' +
-                'for login. You can view these anytime at: https://steemd.com/@' +
+                'for login. You can view these anytime at: https://wallet.hive.blog/@' +
                 this.props.name,
             {
                 scale,

@@ -1,7 +1,9 @@
-import extractContent from 'app/utils/ExtractContent';
-import { objAccessor } from 'app/utils/Accessors';
-import normalizeProfile from 'app/utils/NormalizeProfile';
+import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
 import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
+
+import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
+
+const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
 
 function addSiteMeta(metas, hostConfig) {
     metas.push({ title: hostConfig['APP_NAME'] });
@@ -40,110 +42,117 @@ function addSiteMeta(metas, hostConfig) {
     });
 }
 
+function addPostMeta(metas, content, profile, hostConfig) {
+    const {
+        APP_NAME,
+        APP_DOMAIN,
+        APP_URL,
+        APP_ICON,
+        TWITTER_HANDLE,
+    } = hostConfig;
+    const { profile_image } = profile;
+    const { category, created, body, json_metadata, hive } = content;
+    const isReply = content.depth > 0;
+
+    const title = content.title + ` — ${APP_NAME}`;
+    const desc = extractBodySummary(body, isReply) + ' by ' + content.author;
+    const image_link = extractImageLink(json_metadata, APP_DOMAIN, hive, body);
+
+    const canonicalUrl = makeCanonicalLink(content, json_metadata);
+    const localUrl = makeCanonicalLink(content, null);
+    const image = image_link || profile_image;
+
+    // Standard meta
+    metas.push({ title });
+    metas.push({ canonical: canonicalUrl });
+    metas.push({ name: 'description', content: desc });
+
+    // Open Graph data
+    metas.push({ name: 'og:title', content: title });
+    metas.push({ name: 'og:type', content: 'article' });
+    metas.push({ name: 'og:url', content: localUrl });
+    metas.push({
+        name: 'og:image',
+        content:
+            proxify(image, '1200x630') || `${APP_URL}/images/${APP_ICON}.png`,
+    });
+    metas.push({ name: 'og:description', content: desc });
+    metas.push({ name: 'og:site_name', content: APP_NAME });
+    metas.push({ name: 'fb:app_id', content: $STM_Config.fb_app });
+    metas.push({ name: 'article:tag', content: category });
+    metas.push({
+        name: 'article:published_time',
+        content: created,
+    });
+
+    // Twitter card data
+    metas.push({
+        name: 'twitter:card',
+        content: image ? 'summary_large_image' : 'summary',
+    });
+    metas.push({ name: 'twitter:site', content: TWITTER_HANDLE });
+    metas.push({ name: 'twitter:title', content: title });
+    metas.push({ name: 'twitter:description', content: desc });
+    metas.push({
+        name: 'twitter:image',
+        content:
+            proxify(image, '1200x630') || `${APP_URL}/images/${APP_ICON}.png`,
+    });
+}
+
+function addAccountMeta(metas, accountname, profile, hostConfig) {
+    const { SITE_DESCRIPTION, APP_URL, APP_ICON, TWITTER_HANDLE } = hostConfig;
+    let { name, about, profile_image } = profile;
+
+    name = name || accountname;
+    about = about || SITE_DESCRIPTION;
+    profile_image = profile_image || `${APP_URL}/images/${APP_ICON}.png`;
+
+    // Set profile tags
+    const title = `@${accountname}`;
+    const desc = `The latest posts from ${name}. Follow me at @${
+        accountname
+    }. ${about}`;
+
+    // Standard meta
+    metas.push({ name: 'description', content: desc });
+
+    // Twitter card data
+    metas.push({ name: 'twitter:card', content: 'summary' });
+    metas.push({ name: 'twitter:site', content: TWITTER_HANDLE });
+    metas.push({ name: 'twitter:title', content: title });
+    metas.push({ name: 'twitter:description', content: desc });
+    metas.push({ name: 'twitter:image', content: profile_image });
+}
+
+function readProfile(chain_data, account) {
+    if (!chain_data.profiles[account]) return {};
+    return chain_data.profiles[account]['metadata']['profile'];
+}
+
 export default function extractMeta(chain_data, rp, hostConfig) {
-    const metas = [];
+    let username;
+    let content;
     if (rp.username && rp.slug) {
         // post
-        const post = `${rp.username}/${rp.slug}`;
-        const content = chain_data.content[post];
-        const author = chain_data.accounts[rp.username];
-        const profile = normalizeProfile(author);
-        if (content && content.id !== '0.0.0') {
-            // API currently returns 'false' data with id 0.0.0 for posts that do not exist
-            const d = extractContent(
-                objAccessor,
-                content,
-                false,
-                hostConfig['APP_DOMAIN']
-            );
-            const url = hostConfig['APP_URL'] + d.link;
-            const canonicalUrl = makeCanonicalLink(d, hostConfig);
-            const title = d.title + ` — ${hostConfig['APP_NAME']}`;
-            const desc = d.desc + ' by ' + d.author;
-            const image = d.image_link || profile.profile_image;
-            const { category, created } = d;
-
-            // Standard meta
-            metas.push({ title });
-            metas.push({ canonical: canonicalUrl });
-            metas.push({ name: 'description', content: desc });
-
-            // Open Graph data
-            metas.push({ name: 'og:title', content: title });
-            metas.push({ name: 'og:type', content: 'article' });
-            metas.push({ name: 'og:url', content: url });
-            metas.push({
-                name: 'og:image',
-                content:
-                    image ||
-                    `${hostConfig['APP_URL']}/images/${
-                        hostConfig['APP_ICON']
-                    }.png`,
-            });
-            metas.push({ name: 'og:description', content: desc });
-            metas.push({
-                name: 'og:site_name',
-                content: hostConfig['APP_NAME'],
-            });
-            metas.push({ name: 'fb:app_id', content: $STM_Config.fb_app });
-            metas.push({ name: 'article:tag', content: category });
-            metas.push({
-                name: 'article:published_time',
-                content: created,
-            });
-
-            // Twitter card data
-            metas.push({
-                name: 'twitter:card',
-                content: image ? 'summary_large_image' : 'summary',
-            });
-            metas.push({ name: 'twitter:title', content: title });
-            metas.push({ name: 'twitter:description', content: desc });
-            metas.push({
-                name: 'twitter:image',
-                content:
-                    image ||
-                    `${hostConfig['APP_URL']}/images/${
-                        hostConfig['APP_ICON']
-                    }.png`,
-            });
-        } else {
-            addSiteMeta(metas, hostConfig);
-        }
+        const obj = chain_data.content[`${rp.username}/${rp.slug}`];
+        content = obj && obj.id !== '0.0.0' ? obj : null;
+        username = content ? content.author : null;
     } else if (rp.accountname) {
         // user profile root
-        const account = chain_data.accounts[rp.accountname];
-        let { name, about, profile_image } = normalizeProfile(account);
-        if (!account) {
-            return metas;
-        }
-        if (name == null) name = account.name;
-        if (about == null)
-            about = `Join thousands on ${
-                hostConfig['APP_NAME']
-            } who share, post and earn rewards.`;
-        if (profile_image == null)
-            profile_image = `${hostConfig['APP_URL']}/images/${
-                hostConfig['APP_ICON']
-            }.png`;
-        // Set profile tags
-        const title = `@${account.name}`;
-        const desc = `The latest posts from ${name}. Follow me at @${
-            account.name
-        }. ${about}`;
-        const image = profile_image;
+        username = rp.accountname;
+    }
 
-        // Standard meta
-        metas.push({ name: 'description', content: desc });
+    const profile = username ? readProfile(chain_data, username) : null;
 
-        // Twitter card data
-        metas.push({ name: 'twitter:card', content: 'summary' });
-        metas.push({ name: 'twitter:title', content: title });
-        metas.push({ name: 'twitter:description', content: desc });
-        metas.push({ name: 'twitter:image', content: image });
+    const metas = [];
+    if (content) {
+        addPostMeta(metas, content, profile, hostConfig);
+    } else if (username) {
+        addAccountMeta(metas, username, profile, hostConfig);
     } else {
-        // site
         addSiteMeta(metas, hostConfig);
     }
+
     return metas;
 }
