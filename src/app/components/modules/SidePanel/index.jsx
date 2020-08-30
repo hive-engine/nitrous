@@ -186,7 +186,7 @@ const SidePanel = ({
             {
                 value: 'HiveList_Discord',
                 label: 'Discord',
-                link: 'https://discord.gg/dj846af',
+                link: 'https://discord.gg/ZapSfYj',
             },
         ],
 
