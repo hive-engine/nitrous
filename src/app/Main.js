@@ -95,7 +95,7 @@ function runApp(initial_state) {
             : cookie_endpoint;
 
     steem.api.setOptions({
-        url: config.steem_connection_client,
+        url: config.steemd_connection_client,
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
     });
