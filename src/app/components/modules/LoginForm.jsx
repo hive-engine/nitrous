@@ -227,6 +227,7 @@ class LoginForm extends Component {
             hideWarning,
             afterLoginRedirectToWelcome,
             msg,
+            disableHive,
         } = this.props;
         const { username, password, useKeychain, saveLogin } = this.state;
         const { valid, handleSubmit } = this.state.login;
@@ -511,7 +512,7 @@ class LoginForm extends Component {
             </form>
         );
 
-        const moreLoginMethods = (
+        const moreLoginMethods = disableHive ? null : (
             <div className="row buttons">
                 <div className="column">
                     <a
@@ -535,10 +536,12 @@ class LoginForm extends Component {
                         {showLoginWarning ? loginWarningForm : form}
                     </div>
                 </div>
-                <div className="divider">
-                    <span>{tt('loginform_jsx.more_login_methods')}</span>
-                </div>
-                <br />
+                {moreLoginMethods && (
+                    <div className="divider">
+                        <span>{tt('loginform_jsx.more_login_methods')}</span>
+                    </div>
+                )}
+                {moreLoginMethods && <br />}
                 {moreLoginMethods}
             </div>
         );
@@ -581,6 +584,7 @@ export default connect(
         const walletUrl = state.app.get('walletUrl');
         const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
         const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+        const disableHive = state.app.getIn(['hostConfig', 'DISABLE_HIVE']);
         const showLoginWarning = state.user.get('show_login_warning');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
@@ -623,6 +627,7 @@ export default connect(
             msg,
             appUrl,
             preferHive,
+            disableHive,
             offchain_user: state.offchain.get('user'),
         };
     },
