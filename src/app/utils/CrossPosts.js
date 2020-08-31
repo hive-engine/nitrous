@@ -1,7 +1,7 @@
 import { settlePromises } from 'app/utils/StateFunctions';
 import { callBridge } from './steemApi';
 
-export async function fetchCrossPosts(posts, observer) {
+export async function fetchCrossPosts(posts, observer, useHive = true) {
     const crossPostRegex = /^This is a cross post of \[@(.*?)\/(.*?)\]\(\/.*?@.*?\/.*?\) by @.*?\.<br>/;
     const crossPostPromises = [];
 
@@ -19,7 +19,9 @@ export async function fetchCrossPosts(posts, observer) {
                 permlink: crossPostPermlink,
                 observer,
             };
-            crossPostPromises.push(callBridge('get_post', crossPostParams));
+            crossPostPromises.push(
+                callBridge('get_post', crossPostParams, useHive)
+            );
             post.cross_post_key = `${crossPostAuthor}/${crossPostPermlink}`;
         }
 
