@@ -828,20 +828,25 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
             console.log('Fetching state from Steem.');
             raw = await getCommunityStateAsync(url, observer, ssr, false);
         } else {
-            const hiveState = await getCommunityStateAsync(
-                url,
-                observer,
-                ssr,
-                true
-            );
-            if (
-                hiveState &&
-                (Object.keys(hiveState.content).length > 0 ||
-                    path.match(/^login\/hivesigner/))
-            ) {
-                raw = hiveState;
-                useHive = true;
-            } else {
+            try {
+                const hiveState = await getCommunityStateAsync(
+                    url,
+                    observer,
+                    ssr,
+                    true
+                );
+                if (
+                    hiveState &&
+                    (Object.keys(hiveState.content).length > 0 ||
+                        path.match(/^login\/hivesigner/))
+                ) {
+                    raw = hiveState;
+                    useHive = true;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+            if (!useHive) {
                 console.log('Fetching state from Steem.');
                 raw = await getCommunityStateAsync(url, observer, ssr, false);
             }

@@ -418,9 +418,40 @@ const ARCHON = {
     HIVE_ENGINE: true,
 };
 
+const DBLOG = {
+    APP_NAME: 'DBlog',
+    APP_ICON: 'dblog',
+    APP_ICON_WIDTH: '150px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://dblog.io',
+    APP_DOMAIN: 'dblog.io',
+    LIQUID_TOKEN: 'DBLOG',
+    LIQUID_TOKEN_UPPERCASE: 'DBLOG',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'dblog',
+    TAG_LIST: fromJSOrdered(['dblog']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'dblog.promo',
+    VESTING_TOKEN: 'DBLOG POWER',
+    SITE_DESCRIPTION:
+        'DBlog is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called DBLOG, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
+    GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': STEEMING,
+    'localhost:8080': DBLOG,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
@@ -560,36 +591,7 @@ export const CONFIG_MAP = {
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-26',
     },
-    'dblog.io': {
-        APP_NAME: 'DBlog',
-        APP_ICON: 'dblog',
-        APP_ICON_WIDTH: '150px',
-        APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://dblog.io',
-        APP_DOMAIN: 'dblog.io',
-        LIQUID_TOKEN: 'DBLOG',
-        LIQUID_TOKEN_UPPERCASE: 'DBLOG',
-        APP_MAX_TAG: 10,
-        SCOT_TAG: 'dblog',
-        TAG_LIST: fromJSOrdered(['dblog']),
-        INTERLEAVE_PROMOTED: true,
-        PROMOTED_POST_ACCOUNT: 'dblog.promo',
-        VESTING_TOKEN: 'DBLOG POWER',
-        SITE_DESCRIPTION:
-            'DBlog is a social media platform where everyone gets paid for ' +
-            'creating and curating content. It leverages a robust digital points system, called DBLOG, that ' +
-            'supports real value for digital rewards through market price discovery and liquidity',
-        // Revive Ads
-        NO_ADS_STAKE_THRESHOLD: 9999999999,
-        REVIVE_ADS: {},
-        ALLOW_MASTER_PW: false,
-        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-        POST_FOOTER: '',
-        SCOT_TAG_FIRST: false,
-        PINNED_POSTS_URL: null,
-        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
-        GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
-    },
+    'dblog.io': DBLOG,
     'weedcash.network': WEEDCASH,
 };
 
