@@ -12,7 +12,7 @@ import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
-import { APP_URL } from 'app/client_config';
+import { APP_URL, DISABLE_HIVE } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
 import { SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
@@ -510,7 +510,7 @@ class LoginForm extends Component {
             </form>
         );
 
-        const moreLoginMethods = (
+        const moreLoginMethods = DISABLE_HIVE ? null : (
             <div className="row buttons">
                 <div className="column">
                     <a
@@ -534,10 +534,12 @@ class LoginForm extends Component {
                         {showLoginWarning ? loginWarningForm : form}
                     </div>
                 </div>
-                <div className="divider">
-                    <span>{tt('loginform_jsx.more_login_methods')}</span>
-                </div>
-                <br />
+                {moreLoginMethods && (
+                    <div className="divider">
+                        <span>{tt('loginform_jsx.more_login_methods')}</span>
+                    </div>
+                )}
+                {moreLoginMethods && <br />}
                 {moreLoginMethods}
             </div>
         );
