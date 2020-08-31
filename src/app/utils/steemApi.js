@@ -56,7 +56,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
     const transfers = await callApi(
         hive
             ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://history.steem-engine.com/accountHistory',
+            : 'https://api.steem-engine.com/accounts/history',
         {
             account,
             limit: 50,
