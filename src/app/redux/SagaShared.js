@@ -8,7 +8,6 @@ import * as appActions from './AppReducer';
 import * as transactionActions from './TransactionReducer';
 import { setUserPreferences } from 'app/utils/ServerApiClient';
 import { getContentAsync, getStateAsync } from 'app/utils/steemApi';
-import { callBridge } from 'app/utils/steemApi';
 
 const wait = ms =>
     new Promise(resolve => {
@@ -107,10 +106,6 @@ export function* getContent({ author, permlink, resolve, reject }) {
         delete cop['active_votes'];
         return JSON.stringify(cop);
     }
-
-    //console.log('raw content> ', dbg(content));
-    //content = yield call(callBridge, 'normalize_post', { post: content });
-    //console.log('normalized> ', dbg(content));
 
     yield put(globalActions.receiveContent({ content }));
     if (resolve && content) {
