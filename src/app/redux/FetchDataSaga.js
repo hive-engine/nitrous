@@ -260,12 +260,20 @@ function* getCommunitySaga() {
 function* fetchCommunity(tag) {
     const currentUser = yield select(state => state.user.get('current'));
     const currentUsername = currentUser && currentUser.get('username');
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'], false)
+    );
 
     // TODO: If no current user is logged in, skip the observer param.
-    const community = yield call(callBridge, 'get_community', {
-        name: tag,
-        observer: currentUsername,
-    });
+    const community = yield call(
+        callBridge,
+        'get_community',
+        {
+            name: tag,
+            observer: currentUsername,
+        },
+        useHive
+    );
 
     // TODO: Handle error state
     if (community.name)
