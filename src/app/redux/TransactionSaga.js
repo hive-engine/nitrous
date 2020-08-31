@@ -14,7 +14,6 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { DEBT_TICKER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
@@ -601,7 +600,9 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
     // comment_options must come directly after comment
     if (comment_options) {
         const {
-            max_accepted_payout = ['1000000.000', DEBT_TICKER].join(' '),
+            max_accepted_payout = ['1000000.000', useHive ? 'HBD' : 'SBD'].join(
+                ' '
+            ),
             percent_steem_dollars = 10000, // 10000 === 100%
             allow_votes = true,
             allow_curation_rewards = true,
@@ -637,20 +638,16 @@ export function* createPermlink(title, author, useHive) {
 
         // ensure the permlink is unique
         let postExists = false;
-        if (useHive) {
-            const head = yield call(callBridge, 'get_post_header', {
+        const head = yield call(
+            callBridge,
+            'get_post_header',
+            {
                 author,
                 permlink: s,
-            });
-            postExists = head && !!head.category;
-        } else {
-            const slugState = yield call(
-                [steem.api, steem.api.getContentAsync],
-                author,
-                s
-            );
-            postExists = slugState.body !== '';
-        }
+            },
+            !!useHive
+        );
+        postExists = head && !!head.category;
         if (postExists) {
             const noise = base58
                 .encode(secureRandom.randomBuffer(4))

@@ -14,15 +14,19 @@ import SSC from 'sscjs';
 const ssc = new SSC('https://api.steem-engine.com/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
-export async function callBridge(method, params) {
+export async function callBridge(method, params, useHive = true) {
     console.log(
         'call bridge',
+        'hive=' + useHive,
         method,
         params && JSON.stringify(params).substring(0, 200)
     );
 
     return new Promise(function(resolve, reject) {
-        hive.api.call('bridge.' + method, params, function(err, data) {
+        (useHive ? hive : steem).api.call('bridge.' + method, params, function(
+            err,
+            data
+        ) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -93,12 +97,8 @@ async function getAccountFromNodeApi(account, useHive) {
 }
 
 export async function getAccount(account, useHive) {
-    if (useHive) {
-        const profile = await callBridge('get_profile', { account });
-        return profile ? profile : {};
-    } else {
-        return await getAccountFromNodeApi(account, useHive);
-    }
+    const profile = await callBridge('get_profile', { account }, useHive);
+    return profile ? profile : {};
 }
 
 export async function getWalletAccount(account, useHive, scotTokenSymbol) {
@@ -278,15 +278,9 @@ async function fetchMissingData(
 }
 
 async function addAccountToState(state, account, useHive) {
-    if (useHive) {
-        const profile = await callBridge('get_profile', { account });
-        if (profile && profile['name']) {
-            state['profiles'][account] = profile;
-        }
-    } else {
-        if (!state['profiles'][account]) {
-            state['profiles'][account] = await getAccount(account, useHive);
-        }
+    const profile = await callBridge('get_profile', { account }, useHive);
+    if (profile && profile['name']) {
+        state['profiles'][account] = profile;
     }
 }
 
@@ -532,11 +526,14 @@ export async function attachScotData(
     }
 }
 
-async function getContentFromBridge(author, permlink) {
+async function getContentFromBridge(author, permlink, useHive = true) {
     try {
-        const content = await hive.api.getContentAsync(author, permlink);
+        const content = await (useHive ? hive : steem).api.getContentAsync(
+            author,
+            permlink
+        );
 
-        return await callBridge('normalize_post', { post: content });
+        return await callBridge('normalize_post', { post: content }, useHive);
     } catch (e) {
         console.log(e);
     }
@@ -551,8 +548,8 @@ export async function getContentAsync(
     let content;
     let scotData;
     const [steemitContent, hiveContent] = await Promise.all([
-        steem.api.getContentAsync(author, permlink),
-        false ? Promise.resolve(null) : getContentFromBridge(author, permlink),
+        getContentFromBridge(author, permlink, false),
+        getContentFromBridge(author, permlink, true),
     ]);
     let useHive = false;
     if (
@@ -588,7 +585,12 @@ export async function getContentAsync(
     return content;
 }
 
-export async function getCommunityStateAsync(url, observer, ssr = false) {
+export async function getCommunityStateAsync(
+    url,
+    observer,
+    ssr = false,
+    useHive = true
+) {
     console.log('getStateAsync');
     if (observer === undefined) observer = null;
 
@@ -605,11 +607,11 @@ export async function getCommunityStateAsync(url, observer, ssr = false) {
 
     // load `content` and `discussion_idx`
     if (page == 'posts' || page == 'account') {
-        const posts = await loadPosts(sort, tag, observer);
+        const posts = await loadPosts(sort, tag, observer, useHive);
         state['content'] = posts['content'];
         state['discussion_idx'] = posts['discussion_idx'];
     } else if (page == 'thread') {
-        const posts = await loadThread(key[0], key[1]);
+        const posts = await loadThread(key[0], key[1], useHive);
         state['content'] = posts['content'];
     } else {
         // no-op
@@ -618,10 +620,14 @@ export async function getCommunityStateAsync(url, observer, ssr = false) {
     // append `community` key
     if (tag && ifHivemind(tag)) {
         try {
-            state['community'][tag] = await callBridge('get_community', {
-                name: tag,
-                observer: observer,
-            });
+            state['community'][tag] = await callBridge(
+                'get_community',
+                {
+                    name: tag,
+                    observer: observer,
+                },
+                useHive
+            );
         } catch (e) {}
     }
 
@@ -632,7 +638,7 @@ export async function getCommunityStateAsync(url, observer, ssr = false) {
             : page == 'thread' ? key[0].slice(1) : null;
     if (ssr && account) {
         // TODO: move to global reducer?
-        const profile = await callBridge('get_profile', { account });
+        const profile = await callBridge('get_profile', { account }, useHive);
         if (profile && profile['name']) {
             state['profiles'][account] = profile;
         }
@@ -640,25 +646,33 @@ export async function getCommunityStateAsync(url, observer, ssr = false) {
 
     if (ssr) {
         // append `topics` key
-        state['topics'] = await callBridge('get_trending_topics', {
-            limit: 12,
-        });
+        state['topics'] = await callBridge(
+            'get_trending_topics',
+            {
+                limit: 12,
+            },
+            useHive
+        );
     }
 
     const cleansed = stateCleaner(state);
     return cleansed;
 }
 
-async function loadThread(account, permlink) {
+async function loadThread(account, permlink, useHive) {
     const author = account.slice(1);
-    const content = await callBridge('get_discussion', { author, permlink });
+    const content = await callBridge(
+        'get_discussion',
+        { author, permlink },
+        useHive
+    );
 
     if (content) {
         const {
             content: preppedContent,
             keys,
             crossPosts,
-        } = await fetchCrossPosts([Object.values(content)[0]], author);
+        } = await fetchCrossPosts([Object.values(content)[0]], author, useHive);
         if (crossPosts) {
             const crossPostKey = content[keys[0]].cross_post_key;
             content[keys[0]] = preppedContent[keys[0]];
@@ -672,22 +686,23 @@ async function loadThread(account, permlink) {
     return { content };
 }
 
-async function loadPosts(sort, tag, observer) {
+async function loadPosts(sort, tag, observer, useHive) {
     console.log('loadPosts');
     const account = tag && tag[0] == '@' ? tag.slice(1) : null;
 
     let posts;
     if (account) {
         const params = { sort, account, observer };
-        posts = await callBridge('get_account_posts', params);
+        posts = await callBridge('get_account_posts', params, useHive);
     } else {
         const params = { sort, tag, observer };
-        posts = await callBridge('get_ranked_posts', params);
+        posts = await callBridge('get_ranked_posts', params, useHive);
     }
 
     const { content, keys, crossPosts } = await fetchCrossPosts(
         posts,
-        observer
+        observer,
+        useHive
     );
 
     if (Object.keys(crossPosts).length > 0) {
@@ -810,9 +825,15 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
     if (steemitApiStateNeeded) {
         // First get Hive state
         if (hostConfig['DISABLE_HIVE']) {
-            raw = await steem.api.getStateAsync(path);
+            console.log('Fetching state from Steem.');
+            raw = await getCommunityStateAsync(url, observer, ssr, false);
         } else {
-            const hiveState = await getCommunityStateAsync(url, observer, ssr);
+            const hiveState = await getCommunityStateAsync(
+                url,
+                observer,
+                ssr,
+                true
+            );
             if (
                 hiveState &&
                 (Object.keys(hiveState.content).length > 0 ||
@@ -822,7 +843,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
                 useHive = true;
             } else {
                 console.log('Fetching state from Steem.');
-                raw = await steem.api.getStateAsync(path);
+                raw = await getCommunityStateAsync(url, observer, ssr, false);
             }
         }
     } else {

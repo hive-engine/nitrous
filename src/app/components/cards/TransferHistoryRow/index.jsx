@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 // import Icon from 'app/components/elements/Icon';
 import Memo from 'app/components/elements/Memo';
-import { numberWithCommas, vestsToSp } from 'app/utils/StateFunctions';
+import { numberWithCommas } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
 

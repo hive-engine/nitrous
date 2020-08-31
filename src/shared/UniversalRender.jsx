@@ -292,12 +292,14 @@ export async function serverRender(
             if (process.env.OFFLINE_SSR_TEST) {
                 header = get_content_perf;
             } else {
-                header = await getContentAsync(
-                    params[0],
-                    params[1],
-                    scotTokenSymbol,
-                    preferHive
-                );
+                const postref = url.substr(2, url.length - 1).split('/');
+                const params = { author: postref[0], permlink: postref[1] };
+                if (!hostConfig['DISABLE_HIVE']) {
+                    header = await callBridge('get_post_header', params, true);
+                }
+                if (!header) {
+                    header = await callBridge('get_post_header', params, false);
+                }
             }
             if (header && header.author && header.permlink && header.category) {
                 const { author, permlink, category } = header;

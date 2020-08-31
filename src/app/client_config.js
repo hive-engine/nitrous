@@ -420,7 +420,7 @@ const ARCHON = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
+    'localhost:8080': STEEMING,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
@@ -604,8 +604,6 @@ export const WIKI_URL = ''; // https://wiki.golos.io/
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
 export const LIQUID_TICKER = 'HIVE';
 export const VEST_TICKER = 'VESTS';
-export const DEBT_TICKER = 'HBD';
-export const DEBT_TOKEN_SHORT = 'HBD';
 
 // application settings
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap

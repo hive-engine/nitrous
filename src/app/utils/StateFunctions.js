@@ -1,7 +1,6 @@
 import constants from 'app/redux/constants';
 import { parsePayoutAmount, repLog10 } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
-import { VEST_TICKER, LIQUID_TICKER } from 'app/client_config';
 import { fromJS } from 'immutable';
 import { formatter } from '@hiveio/hive-js';
 
@@ -11,48 +10,6 @@ export function numberWithCommas(x) {
         parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') +
         (parts[1] ? '.' + parts[1] : '')
     );
-}
-
-export function vestsToSpf(state, vesting_shares) {
-    const { global } = state;
-    let vests = vesting_shares;
-    if (typeof vesting_shares === 'string') {
-        vests = assetFloat(vesting_shares, VEST_TICKER);
-    }
-    const total_vests = assetFloat(
-        global.getIn(['props', 'total_vesting_shares']),
-        VEST_TICKER
-    );
-    const total_vest_steem = assetFloat(
-        global.getIn(['props', 'total_vesting_fund_steem']),
-        LIQUID_TICKER
-    );
-    return total_vest_steem * (vests / total_vests);
-}
-
-export function vestsToSp(state, vesting_shares) {
-    return vestsToSpf(state, vesting_shares).toFixed(3);
-}
-
-export function spToVestsf(state, steem_power) {
-    const { global } = state;
-    let power = steem_power;
-    if (typeof power === 'string') {
-        power = assetFloat(power, LIQUID_TICKER);
-    }
-    const total_vests = assetFloat(
-        global.getIn(['props', 'total_vesting_shares']),
-        VEST_TICKER
-    );
-    const total_vest_steem = assetFloat(
-        global.getIn(['props', 'total_vesting_fund_steem']),
-        LIQUID_TICKER
-    );
-    return steem_power / total_vest_steem * total_vests;
-}
-
-export function spToVests(state, vesting_shares) {
-    return spToVestsf(state, vesting_shares).toFixed(6);
 }
 
 export function vestingSteem(account, gprops) {
