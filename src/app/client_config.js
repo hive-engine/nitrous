@@ -7,6 +7,7 @@ export const APP_NAME = 'CreativeCoin';
 export const APP_NAME_LATIN = 'CreativeCoin';
 export const APP_NAME_UPPERCASE = 'CREATIVECOIN';
 export const APP_ICON = 'creativecoin';
+
 // FIXME figure out best way to do this on both client and server from env
 // vars. client should read $STM_Config, server should read config package.
 export const APP_URL = 'https://www.creativecoin.xyz';
@@ -36,8 +37,6 @@ export const WHITEPAPER_URL = 'https://hive.io/hive-whitepaper.pdf';
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
 export const LIQUID_TICKER = 'HIVE';
 export const VEST_TICKER = 'VESTS';
-export const DEBT_TICKER = 'HBD';
-export const DEBT_TOKEN_SHORT = 'HBD';
 
 // application settings
 export const DEFAULT_LANGUAGE = 'en'; // used on application internationalization bootstrap
