@@ -83,10 +83,15 @@ describe('TransactionSaga', () => {
         const gen = createPermlink(operation.title, operation.author, true);
         it('should call the api to get a permlink if the title is valid', () => {
             const actual = gen.next().value;
-            const mockCall = call(callBridge, 'get_post_header', {
-                author: operation.author,
-                permlink: operation.title,
-            });
+            const mockCall = call(
+                callBridge,
+                'get_post_header',
+                {
+                    author: operation.author,
+                    permlink: operation.title,
+                },
+                true
+            );
             expect(actual).toEqual(mockCall);
         });
         it('should return a string containing the transformed data from the api', () => {
@@ -107,10 +112,15 @@ describe('TransactionSaga', () => {
             const permlink = gen.next(operation.title, operation.author, true)
                 .value;
             const actual = permlink.next().value;
-            const expected = call(callBridge, 'get_post_header', {
-                author: operation.author,
-                permlink: operation.title,
-            });
+            const expected = call(
+                callBridge,
+                'get_post_header',
+                {
+                    author: operation.author,
+                    permlink: operation.title,
+                },
+                true
+            );
             expect(expected).toEqual(actual);
         });
         it('should return the comment options array.', () => {
