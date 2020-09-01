@@ -292,7 +292,7 @@ export async function serverRender(
             } else {
                 const postref = url.substr(2, url.length - 1).split('/');
                 const params = { author: postref[0], permlink: postref[1] };
-                if (DISABLE_HIVE) {
+                if (!DISABLE_HIVE) {
                     header = await callBridge('get_post_header', params, true);
                 }
                 if (!header) {
