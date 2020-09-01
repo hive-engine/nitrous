@@ -14,7 +14,7 @@ import {
 } from 'react-router';
 import { Provider } from 'react-redux';
 
-import { APP_NAME } from 'app/client_config';
+import { APP_NAME, DISABLE_HIVE } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -292,7 +292,12 @@ export async function serverRender(
             } else {
                 const postref = url.substr(2, url.length - 1).split('/');
                 const params = { author: postref[0], permlink: postref[1] };
-                header = await callBridge('get_post_header', params);
+                if (DISABLE_HIVE) {
+                    header = await callBridge('get_post_header', params, true);
+                }
+                if (!header) {
+                    header = await callBridge('get_post_header', params, false);
+                }
             }
             if (header && header.author && header.permlink && header.category) {
                 const { author, permlink, category } = header;
