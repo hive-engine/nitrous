@@ -88,12 +88,6 @@ const SidePanel = ({
                 internal: true,
             },
             {
-                value: 'lassepromo',
-                label: 'Promotion Program',
-                link: '/promotion',
-                internal: true,
-            },
-            {
                 value: 'lassediscord',
                 label: 'Contact us at Discord',
                 link: 'https://discord.gg/5JW2w9t',
