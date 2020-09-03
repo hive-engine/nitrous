@@ -48,9 +48,10 @@ export async function pinnedPosts() {
     const allPinnedPostData = {};
 
     for (const config of Object.values(CONFIG_MAP)) {
+        const appName = config['APP_NAME'].toLowerCase();
         const scotTokenSymbol = config['LIQUID_TOKEN_UPPERCASE'];
         const preferHive = config['PREFER_HIVE'];
-        console.info(`Loading pinned posts for ${scotTokenSymbol}`);
+        console.info(`Loading pinned posts for ${appName}`);
         const postData = await loadPinnedPosts(config['PINNED_POSTS_URL']);
         let loadedPostData = {
             pinned_posts: [],
@@ -85,7 +86,7 @@ export async function pinnedPosts() {
                 loadedPostData.notices.push(notice);
             }
         }
-        allPinnedPostData[config['LIQUID_TOKEN_UPPERCASE']] = loadedPostData;
+        allPinnedPostData[appName] = loadedPostData;
     }
 
     console.info('Loaded pinned posts');

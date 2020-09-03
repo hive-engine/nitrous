@@ -193,12 +193,12 @@ function* syncPinnedPosts() {
     // Bail if we're rendering serverside since there is no localStorage
     if (!process.env.BROWSER) return null;
 
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    const appName = yield select(state =>
+        state.app.getIn(['hostConfig', 'APP_NAME'], '').toLowerCase()
     );
     // Get pinned posts from the store.
     const pinnedPosts = yield select(state =>
-        state.offchain.getIn(['pinned_posts', scotTokenSymbol])
+        state.offchain.getIn(['pinned_posts', appName])
     );
 
     // Mark seen posts.

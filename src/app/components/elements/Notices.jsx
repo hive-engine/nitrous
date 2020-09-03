@@ -75,7 +75,7 @@ module.exports = connect(state => ({
         .getIn(
             [
                 'pinned_posts',
-                state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE']),
+                state.app.getIn(['hostConfig', 'APP_NAME'], '').toLowerCase(),
                 'notices',
             ],
             Map()

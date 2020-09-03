@@ -316,7 +316,7 @@ export async function serverRender(
 
         // Insert the pinned posts into the list of posts, so there is no
         // jumping of content.
-        offchain.pinned_posts[scotTokenSymbol].pinned_posts.forEach(
+        offchain.pinned_posts[APP_NAME.toLowerCase()].pinned_posts.forEach(
             pinnedPost => {
                 onchain.content[
                     `${pinnedPost.author}/${pinnedPost.permlink}`

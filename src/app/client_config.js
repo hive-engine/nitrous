@@ -100,7 +100,7 @@ const ONLINEBUZZ = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': ONLINEBUZZ,
+    'localhost:8080': STEEMING,
     'onlinebuzz.com': ONLINEBUZZ,
     'steeming.com': STEEMING,
 };

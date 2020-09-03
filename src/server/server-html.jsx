@@ -64,7 +64,6 @@ export default function ServerHTML({
                     rel="manifest"
                     href={`/static/${faviconSubfolder}/manifest.json`}
                 />
-                <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
                 <link
                     rel="apple-touch-icon"
                     sizes="57x57"

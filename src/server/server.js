@@ -54,19 +54,19 @@ async function favicon(ctx) {
     } else {
         // lazily read the icon
         const hostConfig = CONFIG_MAP[ctx.request.headers.host];
-        const symbol = hostConfig['APP_NAME'].toLowerCase();
+        const appName = hostConfig['APP_NAME'].toLowerCase();
         const faviconPath = path.resolve(
             path.join(
                 __dirname,
                 hostConfig
-                    ? `../app/assets/images/favicons/${symbol}/favicon.ico`
+                    ? `../app/assets/images/favicons/${appName}/favicon.ico`
                     : '../app/assets/images/favicon.ico'
             )
         );
-        if (!icon[symbol]) icon[symbol] = fs.readFileSync(faviconPath);
+        if (!icon[appName]) icon[appName] = fs.readFileSync(faviconPath);
         ctx.set('Cache-Control', 'public, max-age=86400');
         ctx.type = 'image/x-icon';
-        ctx.body = icon[symbol];
+        ctx.body = icon[appName];
     }
 }
 
