@@ -40,6 +40,9 @@ export default function resolveRoute(path) {
     if (path === '/support.html') return { page: 'Support' };
     if (path === '/privacy.html') return { page: 'Privacy' };
     if (path === '/tos.html') return { page: 'Tos' };
+    if (path === '/promotion') return { page: 'Promotion' };
+    if (path === '/buy') return { page: 'Buy' };
+    if (path === '/shop') return { page: 'Shop' };
 
     // general functions
     if (path === '/login.html') return { page: 'Login' };

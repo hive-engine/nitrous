@@ -70,9 +70,27 @@ const SidePanel = ({
         external: [],
         organizational: [
             {
-                value: 'lassecashinfo',
-                label: 'About LASSECASH',
-                link: '/welcome',
+                value: 'lassepromo',
+                label: 'Promotion Program',
+                link: '/promotion',
+                internal: true,
+            },
+            {
+                value: 'lassebuy',
+                label: 'Buy LASSECASH',
+                link: '/buy',
+                internal: true,
+            },
+            {
+                value: 'lasseshop',
+                label: 'Shop LASSECASH',
+                link: '/shop',
+                internal: true,
+            },
+            {
+                value: 'lassepromo',
+                label: 'Promotion Program',
+                link: '/promotion',
                 internal: true,
             },
             {
@@ -84,6 +102,12 @@ const SidePanel = ({
                 value: 'lassefaq',
                 label: 'FAQ',
                 link: '/faq.html',
+                internal: true,
+            },
+            {
+                value: 'lassecashinfo',
+                label: 'About LASSECASH',
+                link: '/welcome',
                 internal: true,
             },
         ],

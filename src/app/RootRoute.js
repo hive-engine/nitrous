@@ -65,6 +65,18 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Tos')]);
             //});
+        } else if (route.page === 'Promotion') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Promotion')]);
+            //});
+        } else if (route.page === 'Buy') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Buy')]);
+            //});
+        } else if (route.page === 'Shop') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Shop')]);
+            //});
         } else if (route.page === 'SubmitPost') {
             if (process.env.BROWSER) {
                 // require.ensure([], (require) => {
