@@ -21,26 +21,6 @@ class ExplorePost extends Component {
         };
         this.onCopy = this.onCopy.bind(this);
         this.onCopyMD = this.onCopyMD.bind(this);
-        this.Steemd = this.Steemd.bind(this);
-        this.Steemdb = this.Steemdb.bind(this);
-        this.Steemit = this.Steemit.bind(this);
-        this.Busy = this.Busy.bind(this);
-    }
-
-    Steemd() {
-        serverApiRecordEvent('SteemdView', this.props.permlink);
-    }
-
-    Steemdb() {
-        serverApiRecordEvent('SteemdbView', this.props.permlink);
-    }
-
-    Steemit() {
-        serverApiRecordEvent('Steemit view', this.props.permlink);
-    }
-
-    Busy() {
-        serverApiRecordEvent('Busy view', this.props.permlink);
     }
 
     onCopy() {
@@ -58,10 +38,6 @@ class ExplorePost extends Component {
     render() {
         const link = this.props.permlink;
         const title = this.props.title;
-        const steemd = 'https://steemd.com' + link;
-        const steemdb = 'https://steemdb.com' + link;
-        const busy = 'https://busy.org' + link;
-        const steemit = 'https://steemit.com' + link;
         const appLink = APP_URL + link;
         const md = `[${title}](${APP_URL}${link})`;
         let text =
@@ -76,6 +52,7 @@ class ExplorePost extends Component {
             <span className="ExplorePost">
                 <h4>{tt('g.share_this_post')}</h4>
                 <hr />
+                <div>URL to this post:</div>
                 <div className="input-group">
                     <input
                         className="input-group-field share-box"
@@ -91,6 +68,7 @@ class ExplorePost extends Component {
                         <span>{text}</span>
                     </CopyToClipboard>
                 </div>
+                <div>Markdown code for a link to this post:</div>
                 <div className="input-group">
                     <input
                         className="input-group-field share-box"
@@ -100,56 +78,12 @@ class ExplorePost extends Component {
                     />
                     <CopyToClipboard
                         text={md}
-                        onCopy={this.onCopyMD}
+                        onCopy={this.onCopy}
                         className="ExplorePost__copy-button input-group-label"
                     >
                         <span>{textMD}</span>
                     </CopyToClipboard>
                 </div>
-                <h5>{tt('explorepost_jsx.alternative_sources')}</h5>
-                <ul>
-                    <li>
-                        <a
-                            href={steemd}
-                            onClick={this.Steemd}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            steemd.com <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={steemdb}
-                            onClick={this.Steemdb}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            steemdb.com <Icon name="extlink" />
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={steemit}
-                            onClick={this.Steemit}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            steemit.com <Icon name="extlink" />
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                            href={busy}
-                            onClick={this.Busy}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            busy.org <Icon name="extlink" />
-                        </a>
-                    </li>
-                </ul>
             </span>
         );
     }

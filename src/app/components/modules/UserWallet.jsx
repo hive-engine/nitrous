@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { List } from 'immutable';
 import tt from 'counterpart';
 import TransferHistoryRow from 'app/components/cards/TransferHistoryRow';
 import TransactionError from 'app/components/elements/TransactionError';
@@ -26,6 +27,7 @@ import {
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as appActions from 'app/redux/AppReducer';
+import { actions as UserProfilesSagaActions } from 'app/redux/UserProfilesSaga';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Icon from 'app/components/elements/Icon';
 import classNames from 'classnames';
@@ -39,7 +41,7 @@ class UserWallet extends React.Component {
         };
         this.onShowDepositSteem = e => {
             if (e && e.preventDefault) e.preventDefault();
-            const name = this.props.current_user.get('username');
+            const name = this.props.current_user;
             const new_window = window.open();
             new_window.opener = null;
             new_window.location =
@@ -64,21 +66,46 @@ class UserWallet extends React.Component {
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'UserWallet');
     }
 
-    handleClaimRewards = account => {
+    componentWillMount() {
+        const { profile, fetchWalletProfile, accountname } = this.props;
+
+        if (
+            !profile ||
+            !profile.has('token_balances') ||
+            !profile.has('balance')
+        ) {
+            fetchWalletProfile(accountname);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        const { profile, accountname, fetchWalletProfile } = this.props;
+        if (prevProps.accountname != accountname) {
+            if (
+                !profile ||
+                !profile.has('token_balances') ||
+                !profile.has('balance')
+            ) {
+                fetchWalletProfile(accountname);
+            }
+        }
+    }
+
+    handleClaimRewards = profile => {
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account, useHive);
+        this.props.claimRewards(profile, useHive);
     };
     handleClaimTokenRewards = token => {
-        const { account, claimTokenRewards, useHive } = this.props;
-        claimTokenRewards(account, token, useHive);
+        const { profile, claimTokenRewards, useHive } = this.props;
+        claimTokenRewards(profile, token, useHive);
     };
     handleClaimAllTokensRewards = () => {
-        const { account, claimAllTokensRewards, useHive } = this.props;
-        const allTokenStatus = account.get('all_token_status').toJS();
+        const { profile, claimAllTokensRewards, useHive } = this.props;
+        const allTokenStatus = profile.get('all_token_status').toJS();
         const pendingTokenSymbols = Object.values(allTokenStatus)
             .filter(e => parseFloat(e.pending_token))
             .map(({ symbol }) => symbol);
-        claimAllTokensRewards(account, pendingTokenSymbols, useHive);
+        claimAllTokensRewards(profile, pendingTokenSymbols, useHive);
     };
     render() {
         const {
@@ -87,17 +114,22 @@ class UserWallet extends React.Component {
             onShowDepositPower,
         } = this;
         const {
-            account,
+            profile,
             current_user,
             gprops,
             scotPrecision,
             useHive,
         } = this.props;
 
-        // do not render if account is not loaded or available
-        if (!account) return null;
-        const allTokenBalances = account.has('token_balances')
-            ? account.get('token_balances').toJS()
+        // do not render if profile is not loaded or available
+        if (
+            !profile ||
+            (!profile.has('token_balances') && !profile.has('balance'))
+        ) {
+            return null;
+        }
+        const allTokenBalances = profile.has('token_balances')
+            ? profile.get('token_balances').toJS()
             : [];
         const tokenBalances = allTokenBalances.find(
             ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
@@ -110,19 +142,19 @@ class UserWallet extends React.Component {
         const otherTokenBalances = allTokenBalances
             .filter(({ symbol }) => symbol !== LIQUID_TOKEN_UPPERCASE)
             .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
-        const tokenUnstakes = account.has('token_unstakes')
-            ? account.get('token_unstakes').toJS()
+        const tokenUnstakes = profile.has('token_unstakes')
+            ? profile.get('token_unstakes').toJS()
             : {
                   quantityLeft: '0',
               };
 
-        const tokenStatus = account.has('token_status')
-            ? account.get('token_status').toJS()
+        const tokenStatus = profile.has('token_status')
+            ? profile.get('token_status').toJS()
             : {
                   pending_token: 0,
               };
-        const allTokenStatus = account.has('all_token_status')
-            ? account.get('all_token_status').toJS()
+        const allTokenStatus = profile.has('all_token_status')
+            ? profile.get('all_token_status').toJS()
             : [];
         const balance = tokenBalances.balance;
         const delegatedStake = tokenBalances.delegationsOut || '0';
@@ -132,11 +164,11 @@ class UserWallet extends React.Component {
             parseFloat(delegatedStake) -
             parseFloat(tokenBalances.delegationsIn || '0');
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
-        const tokenDelegations = account.has('token_delegations')
-            ? account.get('token_delegations').toJS()
+        const tokenDelegations = profile.has('token_delegations')
+            ? profile.get('token_delegations').toJS()
             : [];
-        const [snaxBalance] = account.has('snax_balance')
-            ? account.get('snax_balance').toJS()
+        const [snaxBalance] = profile.has('snax_balance')
+            ? profile.get('snax_balance').toJS()
             : [];
         const snax_balance_str = numberWithCommas(
             parseFloat(snaxBalance).toString()
@@ -144,16 +176,14 @@ class UserWallet extends React.Component {
         const pendingTokens = Object.values(allTokenStatus).filter(e =>
             parseFloat(e.pending_token)
         );
-        let isMyAccount =
-            current_user &&
-            current_user.get('username') === account.get('name');
+        let isMyAccount = current_user && current_user === profile.get('name');
 
         const disabledWarning = false;
 
         const showTransfer = (asset, transferType, e) => {
             e.preventDefault();
             this.props.showTransfer({
-                to: isMyAccount ? null : account.get('name'),
+                to: isMyAccount ? null : profile.get('name'),
                 asset,
                 transferType,
             });
@@ -161,7 +191,7 @@ class UserWallet extends React.Component {
 
         const unstake = e => {
             e.preventDefault();
-            const name = account.get('name');
+            const name = profile.get('name');
             this.props.showPowerdown({
                 account: name,
                 stakeBalance: stakeBalance.toFixed(scotPrecision),
@@ -170,7 +200,7 @@ class UserWallet extends React.Component {
         };
         const cancelUnstake = e => {
             e.preventDefault();
-            const name = account.get('name');
+            const name = profile.get('name');
             this.props.cancelUnstake({
                 account: name,
                 transactionId: tokenUnstakes.txID,
@@ -180,14 +210,14 @@ class UserWallet extends React.Component {
 
         /// transfer log
         let idx = 0;
-        const transfer_log = account
-            .get('transfer_history')
+        const transfer_log = profile
+            .get('transfer_history', List())
             .map(item => {
                 return (
                     <TransferHistoryRow
                         key={idx++}
                         op={item.toJS()}
-                        context={account.get('name')}
+                        context={profile.get('name')}
                     />
                 );
             })
@@ -266,7 +296,7 @@ class UserWallet extends React.Component {
                                 disabled={this.state.claimInProgress}
                                 className="button"
                                 onClick={e => {
-                                    this.handleClaimRewards(account);
+                                    this.handleClaimRewards(profile);
                                 }}
                             >
                                 {tt('userwallet_jsx.redeem_rewards')}
@@ -278,20 +308,20 @@ class UserWallet extends React.Component {
         }
 
         // -------
-        const vesting_steem = vestingSteem(account.toJS(), gprops);
-        const delegated_steem = delegatedSteem(account.toJS(), gprops);
-        // const powerdown_steem = powerdownSteem(account.toJS(), gprops);
+        const vesting_steem = vestingSteem(profile.toJS(), gprops);
+        const delegated_steem = delegatedSteem(profile.toJS(), gprops);
+        // const powerdown_steem = powerdownSteem(profile.toJS(), gprops);
 
-        const savings_balance = account.get('savings_balance');
-        const savings_sbd_balance = account.get('savings_sbd_balance');
+        const savings_balance = profile.get('savings_balance');
+        const savings_sbd_balance = profile.get('savings_sbd_balance');
 
         const powerDown = (cancel, e) => {
             e.preventDefault();
-            const name = account.get('name');
+            const name = profile.get('name');
             if (cancel) {
                 const vesting_shares = cancel
                     ? '0.000000 VESTS'
-                    : account.get('vesting_shares');
+                    : profile.get('vesting_shares');
                 this.setState({ toggleDivestError: null });
                 const errorCallback = e2 => {
                     this.setState({ toggleDivestError: e2.toString() });
@@ -306,10 +336,10 @@ class UserWallet extends React.Component {
                     successCallback,
                 });
             } else {
-                const to_withdraw = account.get('to_withdraw');
-                const withdrawn = account.get('withdrawn');
-                const vesting_shares = account.get('vesting_shares');
-                const delegated_vesting_shares = account.get(
+                const to_withdraw = profile.get('to_withdraw');
+                const withdrawn = profile.get('withdrawn');
+                const vesting_shares = profile.get('vesting_shares');
+                const delegated_vesting_shares = profile.get(
                     'delegated_vesting_shares'
                 );
                 this.props.showPowerdownSteem({
@@ -322,11 +352,11 @@ class UserWallet extends React.Component {
             }
         };
 
-        const balance_steem = parseFloat(account.get('balance', 0));
+        const balance_steem = parseFloat(profile.get('balance', 0));
         const saving_balance_steem = parseFloat(savings_balance || 0);
         const divesting =
-            parseFloat(account.get('vesting_withdraw_rate', 0)) > 0.0;
-        const sbd_balance = parseFloat(account.get('sbd_balance'));
+            parseFloat(profile.get('vesting_withdraw_rate', 0)) > 0.0;
+        const sbd_balance = parseFloat(profile.get('sbd_balance', 0));
         const sbd_balance_savings = parseFloat(savings_sbd_balance || 0);
         const received_power_balance_str =
             (delegated_steem < 0 ? '+' : '') +
@@ -338,7 +368,7 @@ class UserWallet extends React.Component {
         const steem_menu = [
             {
                 value: tt('userwallet_jsx.wallet'),
-                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
+                link: `https://${walletUrl}/@${profile.get('name')}/transfers`,
             },
         ];
         if (isMyAccount) {
@@ -350,7 +380,7 @@ class UserWallet extends React.Component {
         const steem_power_menu = [
             {
                 value: tt('userwallet_jsx.wallet'),
-                link: `https://${walletUrl}/@${account.get('name')}/transfers`,
+                link: `https://${walletUrl}/@${profile.get('name')}/transfers`,
             },
         ];
 
@@ -430,7 +460,7 @@ class UserWallet extends React.Component {
                                     href="#"
                                     onClick={e => {
                                         e.preventDefault();
-                                        const name = account.get('name');
+                                        const name = profile.get('name');
                                         this.props.showDelegations({
                                             account: name,
                                             tokenDelegations,
@@ -500,8 +530,8 @@ class UserWallet extends React.Component {
                         {delegated_steem != 0 ? (
                             <span className="secondary">
                                 {tt(
-                                    'tips_js.part_of_your_steem_power_is_currently_delegated',
-                                    { user_name: account.get('name') }
+                                    'tips_js.part_of_your_hive_power_is_currently_delegated',
+                                    { user_name: profile.get('name') }
                                 )}
                             </span>
                         ) : null}
@@ -671,11 +701,13 @@ export default connect(
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: (account, useHive) => {
-            const username = account.get('name');
+        claimRewards: (profile, useHive) => {
+            const username = profile.get('name');
             const successCallback = () => {
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    UserProfilesSagaActions.fetchWalletProfile({
+                        account: username,
+                    })
                 );
             };
 
@@ -697,8 +729,8 @@ export default connect(
             );
         },
 
-        claimTokenRewards: (account, symbol, useHive) => {
-            const username = account.get('name');
+        claimTokenRewards: (profile, symbol, useHive) => {
+            const username = profile.get('name');
             const successCallback = () => {
                 dispatch(
                     appActions.addNotification({
@@ -708,7 +740,9 @@ export default connect(
                     })
                 );
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    UserProfilesSagaActions.fetchWalletProfile({
+                        account: username,
+                    })
                 );
             };
             const operation = {
@@ -726,8 +760,8 @@ export default connect(
             );
         },
 
-        claimAllTokensRewards: (account, symbols, useHive) => {
-            const username = account.get('name');
+        claimAllTokensRewards: (profile, symbols, useHive) => {
+            const username = profile.get('name');
             const successCallback = () => {
                 dispatch(
                     appActions.addNotification({
@@ -737,7 +771,9 @@ export default connect(
                     })
                 );
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    UserProfilesSagaActions.fetchWalletProfile({
+                        account: username,
+                    })
                 );
             };
             const json = symbols.map(symbol => ({ symbol }));
@@ -762,5 +798,8 @@ export default connect(
                 })
             );
         },
+
+        fetchWalletProfile: account =>
+            dispatch(UserProfilesSagaActions.fetchWalletProfile({ account })),
     })
 )(UserWallet);

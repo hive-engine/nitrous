@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+    proxy:
+        image: jwilder/nginx-proxy:latest
+        container_name: proxy
+        labels:
+          com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - letsencrypt-certs:/etc/nginx/certs:ro
+            - nginx-vhost:/etc/nginx/vhost.d
+            - nginx-html:/usr/share/nginx/html
+            - nginx-conf:/etc/nginx/conf.d
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ./proxy/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+        networks:
+            - reverse-proxy
+        restart: always
+
+    letsencrypt:
+        image: jrcs/letsencrypt-nginx-proxy-companion:latest
+        container_name: letsencrypt
+        depends_on:
+            - proxy
+        environment:
+          NGINX_PROXY_CONTAINER: proxy
+        volumes:
+            - letsencrypt-certs:/etc/nginx/certs
+            - nginx-vhost:/etc/nginx/vhost.d
+            - nginx-html:/usr/share/nginx/html
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            - reverse-proxy
+        restart: always
+
+networks:
+    reverse-proxy:
+        driver: bridge
+
+volumes:
+  letsencrypt-certs:
+    driver_opts:
+      type: none
+      device: /etc/letsencrypt/certs
+      o: bind
+  nginx-conf:
+    driver_opts:
+      type: none
+      device: /etc/nginx/conf.d
+      o: bind
+  nginx-vhost:
+    driver_opts:
+      type: none
+      device: /etc/nginx/vhost.d
+      o: bind
+  nginx-html:
+    driver_opts:
+      type: none
+      device: /var/www/html
+      o: bind

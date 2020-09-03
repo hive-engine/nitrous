@@ -11,30 +11,43 @@ export default class WelcomePanel extends React.Component {
     }
 
     render() {
+        const signup = (
+            <a className="button ghost fade-in--5" href={SIGNUP_URL}>
+                {tt('navigation.sign_up')}
+            </a>
+        );
+
+        const learn = (
+            <Link href="/faq.html" className="button ghost fade-in--7">
+                {tt('navigation.learn_more')}
+            </Link>
+        );
+
         return (
             <div className="welcomeWrapper">
                 <div className="welcomeBanner">
                     <CloseButton onClick={this.setShowBannerFalse} />
                     <div className="row">
-                        <div className="text-center welcomeImage small-12 show-for-small-only">
-                            <img
-                                className="heroImage"
-                                src={require('app/assets/images/welcome-hero.png')}
-                            />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="large-1 show-for-large" />
+                        <div className="large-2 medium-1 show-for-medium" />
                         <div className="small-12 medium-6 large-5 welcomePitch">
                             <h2 className="fade-in--1">
                                 Get Paid to live in San Diego
                             </h2>
                             <h4 className="fade-in--3">
-                                Post and Upvote Articles about San Diego to get your share of the daily rewards pool.
+                                Post and Upvote Articles about San Diego to get
+                                your share of the daily rewards pool. Buy and
+                                Sell SAND for EOS, NFTs and Ads that appear on
+                                the App. Advertising and investors fund the SAND
+                                EOS alcor.exchange liquidity pool. The More
+                                locals use our app the more SAND can be worth.
+                                Visit{' '}
+                                <a href="https://discord.sandiegocoin.org">
+                                    SanDiegoCoin Discord
+                                </a>{' '}
+                                for a 24/7 local community.
                             </h4>
-                            
                         </div>
-                        <div className="text-center welcomeImage medium-6 large-5 show-for-medium">
+                        <div className="text-center welcomeImage medium-4 large-3 show-for-medium">
                             <img
                                 className="heroImage"
                                 src={require('app/assets/images/welcome-hero.png')}
