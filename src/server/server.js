@@ -54,7 +54,7 @@ async function favicon(ctx) {
     } else {
         // lazily read the icon
         const hostConfig = CONFIG_MAP[ctx.request.headers.host];
-        const symbol = hostConfig['LIQUID_TOKEN_UPPERCASE'].toLowerCase();
+        const symbol = hostConfig['APP_NAME'].toLowerCase();
         const faviconPath = path.resolve(
             path.join(
                 __dirname,
