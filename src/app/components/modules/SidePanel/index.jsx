@@ -87,108 +87,6 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
-        organizational_WEED: [
-            {
-                value: 'orgsite',
-                label: 'About WeedCash',
-                link: 'https://weedcash.org/',
-            },
-            {
-                value: 'discord',
-                label: 'Discord',
-                link: 'https://discord.gg/jMHX3d8',
-            },
-            {
-                value: 'weed_store',
-                label: 'WeedCash Store',
-                link: 'https://weedcash.store',
-            },
-        ],
-        organizational_LAGO: [
-            {
-                value: 'lago_orgsite',
-                label: 'LagoTube',
-                link: 'https://tube.lago.com.gt/',
-            },
-        ],
-        organizational_DIAMOND: [
-            {
-                value: 'diamond_guide',
-                label: 'Guide to SteemDiamond',
-                internal: true,
-                link: '/@diamondtoken/guide-to-steemdiamond',
-            },
-            {
-                value: 'diamond_staking',
-                label: 'Diamond Staking',
-                internal: true,
-                link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
-            },
-            {
-                value: 'diamond_telegram',
-                label: 'Telegram',
-                link: 'https://t.me/steemdiamond',
-            },
-            {
-                value: 'diamond_richlist',
-                label: 'Rich List',
-                link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
-            },
-        ],
-        organizational_KANDA: [
-            {
-                value: 'telokanda_site',
-                label: 'Telokanda.com',
-                link: 'https://telokanda.com',
-            },
-            {
-                value: 'kanda_discord',
-                label: 'Discord',
-                link: 'https://discord.telokanda.com',
-            },
-            {
-                value: 'kanda_telegram',
-                label: 'Telegram',
-                link: 'https://t.me/telokanda',
-            },
-            {
-                value: 'telos',
-                label: 'Telos',
-                link: 'https://app.telos.net',
-            },
-            {
-                value: 'SQRL',
-                label: 'SQRL',
-                link: 'https://sqrlwallet.io',
-            },
-            {
-                value: 'kanda_challengedapp',
-                label: 'Earn More: ChallengeDapp GPS EOS and Kanda for Africa',
-                link: 'https://challengedapp.io/',
-            },
-        ],
-        organizational_LIST: [
-            {
-                value: 'HiveList_Main',
-                label: 'HiveList',
-                link: 'https://hivelist.io/',
-            },
-            {
-                value: 'HiveList_Store',
-                label: 'Store',
-                link: 'https://hivelist.store',
-            },
-            {
-                value: 'HiveList_Services',
-                label: 'Services',
-                link: 'https://hivelist.io/hivecommerce-website-services/',
-            },
-            {
-                value: 'HiveList_Discord',
-                label: 'Discord',
-                link: 'https://discord.gg/ZapSfYj',
-            },
-        ],
 
         organizational: [],
 
@@ -216,14 +114,6 @@ const SidePanel = ({
                 value: 'post',
                 label: tt('g.post'),
                 link: '/submit.html',
-            },
-        ],
-        extras_WEED: [
-            {
-                value: 'whitepaper',
-                label: 'White Paper',
-                internal: true,
-                link: '/@coffeebuds/weedcash-network-white-paper',
             },
         ],
     };

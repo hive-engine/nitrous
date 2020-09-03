@@ -19,7 +19,7 @@ export default function ServerHTML({
     hostConfig,
 }) {
     let page_title = title;
-    const faviconSubfolder = hostConfig['LIQUID_TOKEN_UPPERCASE'].toLowerCase();
+    const faviconSubfolder = hostConfig['APP_NAME'].toLowerCase();
     return (
         <html lang="en">
             <head>
