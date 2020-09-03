@@ -96,8 +96,6 @@ const SidePanel = ({
             },
         ],
 
-        organizational: [],
-
         legal: [
             {
                 label: tt('navigation.privacy_policy'),

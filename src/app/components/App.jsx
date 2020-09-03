@@ -221,7 +221,7 @@ export default connect(
             viewMode: state.app.get('viewMode'),
             error: state.app.get('error'),
             new_visitor:
-                !state.user.get('current') &&
+                !current_account_name &&
                 !state.offchain.get('user') &&
                 !state.offchain.get('account') &&
                 state.offchain.get('new_visit'),

@@ -33,14 +33,16 @@ export default class WelcomePanel extends React.Component {
                             <h2 className="fade-in--1">
                                 Get Paid to live in San Diego
                             </h2>
-                            <h4 className="fade-in--3">
+                            <h4 className="fade-in--2">
                                 Post and Upvote Articles about San Diego to get
-                                your share of the daily rewards pool. Buy and
-                                Sell SAND for EOS, NFTs and Ads that appear on
-                                the App. Advertising and investors fund the SAND
-                                EOS alcor.exchange liquidity pool. The More
-                                locals use our app the more SAND can be worth.
-                                Visit{' '}
+                                your share of the daily rewards pool.
+                            </h4>
+                            <h4 className="fade-in--3">
+                                Buy and sell SAND for EOS, NFTs and Ads that
+                                appear on the App. Advertising and investors
+                                fund the SAND EOS alcor.exchange liquidity pool.
+                                The more locals use our app, the more SAND can
+                                be worth. Visit{' '}
                                 <a href="https://discord.sandiegocoin.org">
                                     SanDiegoCoin Discord
                                 </a>{' '}
