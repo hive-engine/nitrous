@@ -2,10 +2,10 @@
 
 <center>
 
-> Bank name: Danskebank
-> Beneficiary: Lasse Ehlers
-> IBAN: DK3630004594859464
-> BIC/SWIFT: DABADKKK
-> Mobilepay 52112585
+* Bank name: Danskebank
+* Beneficiary: Lasse Ehlers
+* IBAN: DK3630004594859464
+* BIC/SWIFT: DABADKKK
+* Mobilepay 52112585
 
 </center>

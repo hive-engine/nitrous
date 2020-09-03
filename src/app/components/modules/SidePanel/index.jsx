@@ -57,39 +57,36 @@ const SidePanel = ({
     };
 
     const sidePanelLinks = {
-        internal: [
-            {
-                value: 'engine',
-                label: useHive ? 'Hive Engine' : 'Steem Engine',
-                link: `https://${
-                    useHive ? 'hive' : 'steem'
-                }-engine.com/?p=market&t=${scotTokenSymbol}`,
-            },
-        ],
+        internal: [],
 
         external: [],
         organizational: [
             {
-                value: 'lassepromo',
-                label: 'Promotion Program',
-                link: '/promotion',
-                internal: true,
+                value: 'engine',
+                label: 'Trade',
+                link: `https://hive-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
                 value: 'lassebuy',
-                label: 'Buy LASSECASH',
+                label: 'Buy',
                 link: '/buy',
                 internal: true,
             },
             {
                 value: 'lasseshop',
-                label: 'Shop LASSECASH',
+                label: 'Shop',
                 link: '/shop',
                 internal: true,
             },
             {
+                value: 'lassepromo',
+                label: 'Promotion',
+                link: '/promotion',
+                internal: true,
+            },
+            {
                 value: 'lassediscord',
-                label: 'Contact us at Discord',
+                label: 'Discord',
                 link: 'https://discord.gg/5JW2w9t',
             },
             {
@@ -100,7 +97,7 @@ const SidePanel = ({
             },
             {
                 value: 'lassecashinfo',
-                label: 'About LASSECASH',
+                label: 'About',
                 link: '/welcome',
                 internal: true,
             },
@@ -146,14 +143,6 @@ const SidePanel = ({
                         <a className="menu-section">Community</a>
                     </li>
                     {sidePanelLinks['organizational'].map(makeLink)}
-                </ul>
-                <ul className="vertical menu">
-                    <li>
-                        <a className="menu-section">
-                            Trade {LIQUID_TOKEN_UPPERCASE}
-                        </a>
-                    </li>
-                    {sidePanelLinks['internal'].map(makeLink)}
                 </ul>
             </div>
         </div>
