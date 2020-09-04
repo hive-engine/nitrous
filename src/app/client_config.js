@@ -46,6 +46,7 @@ const STEEMING = {
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-29',
     DISABLE_HIVE: true,
+    DISABLE_BLACKLIST: true,
 };
 
 const ONLINEBUZZ = {
@@ -96,6 +97,7 @@ const ONLINEBUZZ = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    DISABLE_BLACKLIST: true,
 };
 
 export const CONFIG_MAP = {

@@ -25,6 +25,7 @@ class UserProfileHeader extends React.Component {
             tribeCommunityTitle,
             scotTokenSymbol,
             preferHive,
+            disableBlacklist,
         } = this.props;
         const isMyAccount = current_user === accountname;
 
@@ -46,18 +47,19 @@ class UserProfileHeader extends React.Component {
         }
 
         const _lists = profile.get('blacklists').toJS();
-        const blacklists = _lists.length > 0 && (
-            <DropdownMenu
-                title="Blacklisted on:"
-                className="UserProfile__blacklists"
-                items={_lists.map(list => {
-                    return { value: list };
-                })}
-                el="div"
-            >
-                <span className="account_warn">({_lists.length})</span>
-            </DropdownMenu>
-        );
+        const blacklists = !disableBlacklist &&
+            _lists.length > 0 && (
+                <DropdownMenu
+                    title="Blacklisted on:"
+                    className="UserProfile__blacklists"
+                    items={_lists.map(list => {
+                        return { value: list };
+                    })}
+                    el="div"
+                >
+                    <span className="account_warn">({_lists.length})</span>
+                </DropdownMenu>
+            );
 
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
@@ -163,6 +165,10 @@ export default connect((state, props) => {
         'hostConfig',
         'LIQUID_TOKEN_UPPERCASE',
     ]);
+    const disableBlacklist = state.app.getIn([
+        'hostConfig',
+        'DISABLE_BLACKLIST',
+    ]);
     const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
     return {
         current_user,
@@ -171,5 +177,6 @@ export default connect((state, props) => {
         tribeCommunityTitle,
         scotTokenSymbol,
         preferHive,
+        disableBlacklist,
     };
 })(UserProfileHeader);
