@@ -243,6 +243,10 @@ export default connect((state, props) => {
         author,
         'title',
     ]);
+    const disableBlacklist = state.app.getIn([
+        'hostConfig',
+        'DISABLE_BLACKLIST',
+    ]);
 
     return {
         follow: typeof props.follow === 'undefined' ? true : props.follow,
@@ -256,7 +260,8 @@ export default connect((state, props) => {
         permlink: post.get('permlink'), // UserTitle
         role: post.get('author_role'), // UserTitle
         title: post.get('author_title'), // UserTitle
-        blacklists: blacklists.length > 0 ? blacklists : null,
+        blacklists:
+            !disableBlacklist && blacklists.length > 0 ? blacklists : null,
         crossPostedBy: post.get('cross_posted_by'),
         crossPostAuthor: post.get('cross_post_author'),
         showRole: props.showRole,
