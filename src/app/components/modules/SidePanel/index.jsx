@@ -63,7 +63,7 @@ const SidePanel = ({
         organizational: [
             {
                 value: 'engine',
-                label: 'Trade',
+                label: 'Market',
                 link: `https://hive-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
