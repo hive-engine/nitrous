@@ -272,6 +272,7 @@ const STEEMING = {
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-29',
     DISABLE_HIVE: true,
+    DISABLE_BLACKLIST: true,
 };
 
 const ONLINEBUZZ = {
@@ -322,6 +323,7 @@ const ONLINEBUZZ = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    DISABLE_BLACKLIST: true,
 };
 
 const HIVELIST = {
@@ -484,7 +486,7 @@ const INFOWARS = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': INFOWARS,
+    'localhost:8080': ONLINEBUZZ,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
