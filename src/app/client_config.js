@@ -449,47 +449,49 @@ const DBLOG = {
     GOOGLE_AD_CLIENT: 'ca-pub-8763908884278473',
 };
 
+const INFOWARS = {
+    APP_NAME: 'InfoWars',
+    APP_ICON: 'infowars',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.cryptowars.me',
+    APP_DOMAIN: 'www.cryptowars.me',
+    LIQUID_TOKEN: 'Infowars',
+    LIQUID_TOKEN_UPPERCASE: 'INFOWARS',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'infowars',
+    TAG_LIST: fromJSOrdered(['infowars']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'INFOWARS POWER',
+    SITE_DESCRIPTION:
+        'InfoWars is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called INFOWARS, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
+    COMMUNITY_CATEGORY: 'hive-172447',
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': DBLOG,
+    'localhost:8080': INFOWARS,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,
     'onlinebuzz.com': ONLINEBUZZ,
-    'www.cryptowars.me': {
-        APP_NAME: 'InfoWars',
-        APP_ICON: 'infowars',
-        APP_ICON_WIDTH: '40px',
-        APP_ICON_HEIGHT: '40px',
-        APP_URL: 'https://www.cryptowars.me',
-        APP_DOMAIN: 'www.cryptowars.me',
-        LIQUID_TOKEN: 'Infowars',
-        LIQUID_TOKEN_UPPERCASE: 'INFOWARS',
-        APP_MAX_TAG: 10,
-        SCOT_TAG: 'infowars',
-        TAG_LIST: fromJSOrdered(['infowars']),
-        INTERLEAVE_PROMOTED: true,
-        PROMOTED_POST_ACCOUNT: 'null',
-        VESTING_TOKEN: 'INFOWARS POWER',
-        SITE_DESCRIPTION:
-            'InfoWars is a social media platform where everyone gets paid for ' +
-            'creating and curating content. It leverages a robust digital points system, called INFOWARS, that ' +
-            'supports real value for digital rewards through market price discovery and liquidity',
-        // Revive Ads
-        NO_ADS_STAKE_THRESHOLD: 9999999999,
-        REVIVE_ADS: {},
-        ALLOW_MASTER_PW: false,
-        // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-        POST_FOOTER: '',
-        SCOT_TAG_FIRST: false,
-        PINNED_POSTS_URL: null,
-        SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
-        COMMUNITY_CATEGORY: 'hive-172447',
-        PREFER_HIVE: true,
-        HIVE_ENGINE: true,
-    },
+    'www.cryptowars.me': INFOWARS,
     'steeming.com': STEEMING,
     'steemdiamond.com': {
         APP_NAME: 'SteemDiamond',
