@@ -101,6 +101,11 @@ const SidePanel = ({
                 link: '/welcome',
                 internal: true,
             },
+            {
+                value: 'lassedswap',
+                label: 'Dswap',
+                link: 'https://dswap.trade',
+            },
         ],
 
         legal: [
