@@ -486,7 +486,7 @@ const INFOWARS = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': ONLINEBUZZ,
+    'localhost:8080': KANDA,
     'frozen-retreat-15997.herokuapp.com': HIVELIST,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,

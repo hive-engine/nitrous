@@ -167,6 +167,14 @@ class PostsIndexLayout extends React.Component {
                             allowFullScreen
                         />
                     )}
+                    {scotTokenSymbol === 'KANDA' && (
+                        <a href="https://discord.telokanda.com">
+                            <img
+                                width="320"
+                                src="/images/telokandabanner.png"
+                            />
+                        </a>
+                    )}
                 </aside>
 
                 <aside className="c-sidebar c-sidebar--left">
