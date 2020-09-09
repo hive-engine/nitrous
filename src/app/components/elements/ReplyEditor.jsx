@@ -1513,7 +1513,7 @@ export default formId =>
                             elt =>
                                 elt.username ===
                                 SCOT_DEFAULT_BENEFICIARY_ACCOUNT
-                        ).length > 0
+                        ).length == 0
                     ) {
                         beneficiaries.push({
                             username: SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
