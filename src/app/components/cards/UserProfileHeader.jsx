@@ -14,7 +14,7 @@ import SanitizedLink from 'app/components/elements/SanitizedLink';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { COMMUNITY_CATEGORY } from 'app/client_config';
+import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
 
 class UserProfileHeader extends React.Component {
     render() {

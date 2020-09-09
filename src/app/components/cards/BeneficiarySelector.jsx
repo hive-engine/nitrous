@@ -14,9 +14,6 @@ export class BeneficiarySelector extends React.Component {
         onBlur: React.PropTypes.func.isRequired,
         value: React.PropTypes.array,
         tabIndex: React.PropTypes.number,
-
-        // redux connect
-        following: React.PropTypes.object.isRequired,
     };
     static defaultProps = {
         id: 'BeneficiarySelectorId',
