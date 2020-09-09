@@ -14,7 +14,7 @@ import SanitizedLink from 'app/components/elements/SanitizedLink';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { COMMUNITY_CATEGORY } from 'app/client_config';
+import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
 
 class UserProfileHeader extends React.Component {
     render() {
@@ -23,6 +23,7 @@ class UserProfileHeader extends React.Component {
             accountname,
             profile,
             tribeCommunityTitle,
+            disableBlacklist,
         } = this.props;
         const isMyAccount = current_user === accountname;
 
@@ -42,18 +43,19 @@ class UserProfileHeader extends React.Component {
         }
 
         const _lists = profile.get('blacklists').toJS();
-        const blacklists = _lists.length > 0 && (
-            <DropdownMenu
-                title="Blacklisted on:"
-                className="UserProfile__blacklists"
-                items={_lists.map(list => {
-                    return { value: list };
-                })}
-                el="div"
-            >
-                <span className="account_warn">({_lists.length})</span>
-            </DropdownMenu>
-        );
+        const blacklists = !disableBlacklist &&
+            _lists.length > 0 && (
+                <DropdownMenu
+                    title="Blacklisted on:"
+                    className="UserProfile__blacklists"
+                    items={_lists.map(list => {
+                        return { value: list };
+                    })}
+                    el="div"
+                >
+                    <span className="account_warn">({_lists.length})</span>
+                </DropdownMenu>
+            );
 
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
@@ -156,5 +158,6 @@ export default connect((state, props) => {
         accountname,
         profile: props.profile,
         tribeCommunityTitle,
+        disableBlacklist: DISABLE_BLACKLIST,
     };
 })(UserProfileHeader);
