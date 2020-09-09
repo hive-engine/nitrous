@@ -7,9 +7,13 @@ T-shirt #1, for sale for $50.
 
 T-shirt #2, for sale for $50.
 
-![image.png](https://images.hive.blog/DQmQu6tyxzup2KCC9WgjB2Ur24vS2eznNn35SMdarNujQw1/image.png)
+![image.png](https://images.hive.blog/DQmbUCpy9WBWervqkHxm1JfL9rGoag4BKSjgtddn1gwZgkZ/image.png)
 
 T-shirt #3, for sale for $50.
+
+![image.png](https://images.hive.blog/DQmQu6tyxzup2KCC9WgjB2Ur24vS2eznNn35SMdarNujQw1/image.png)
+
+T-shirt #4, for sale for $50.
 
 ![image.png](https://images.hive.blog/DQmSCZ391NAQcsE8Ss2sfL2q26mgBk8Apjer6Eb6mf4HtBv/image.png)
 
