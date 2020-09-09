@@ -571,6 +571,7 @@ export async function getContentAsync(
             hiveContent.permlink === permlink)
     ) {
         content = hiveContent;
+        content.hive = true;
         useHive = true;
     }
     if (useHive) {

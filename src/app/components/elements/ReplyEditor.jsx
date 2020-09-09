@@ -1517,7 +1517,14 @@ export default formId =>
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
-                    if (hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT']) {
+                    if (
+                        hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT'] &&
+                        beneficiaries.filter(
+                            elt =>
+                                elt.username ===
+                                SCOT_DEFAULT_BENEFICIARY_ACCOUNT
+                        ).length > 0
+                    ) {
                         beneficiaries.push({
                             username:
                                 hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT'],
