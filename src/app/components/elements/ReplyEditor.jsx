@@ -1507,7 +1507,14 @@ export default formId =>
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
-                    if (SCOT_DEFAULT_BENEFICIARY_ACCOUNT) {
+                    if (
+                        SCOT_DEFAULT_BENEFICIARY_ACCOUNT &&
+                        beneficiaries.filter(
+                            elt =>
+                                elt.username ===
+                                SCOT_DEFAULT_BENEFICIARY_ACCOUNT
+                        ).length == 0
+                    ) {
                         beneficiaries.push({
                             username: SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
                             percent: SCOT_DEFAULT_BENEFICIARY_PERCENT,
