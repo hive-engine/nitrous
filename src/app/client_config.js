@@ -112,6 +112,7 @@ export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
+export const DISABLE_BLACKLIST = false;
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
