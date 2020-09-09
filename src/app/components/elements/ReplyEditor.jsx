@@ -1522,8 +1522,8 @@ export default formId =>
                         beneficiaries.filter(
                             elt =>
                                 elt.username ===
-                                SCOT_DEFAULT_BENEFICIARY_ACCOUNT
-                        ).length > 0
+                                hostConfig['SCOT_DEFAULT_BENEFICIARY_ACCOUNT']
+                        ).length == 0
                     ) {
                         beneficiaries.push({
                             username:
