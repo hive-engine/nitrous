@@ -13,7 +13,7 @@ import Reputation from 'app/components/elements/Reputation';
 import AffiliationMap from 'app/utils/AffiliationMap';
 import UserTitle from 'app/components/elements/UserTitle';
 import AuthorDropdown from '../AuthorDropdown';
-import { COMMUNITY_CATEGORY } from 'app/client_config';
+import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
 
 const { string, bool, number } = PropTypes;
 
@@ -232,6 +232,7 @@ export default connect((state, props) => {
         author,
         'title',
     ]);
+    const disableBlacklist = DISABLE_BLACKLIST;
 
     return {
         follow: typeof props.follow === 'undefined' ? true : props.follow,
@@ -243,7 +244,8 @@ export default connect((state, props) => {
         permlink: post.get('permlink'), // UserTitle
         role: post.get('author_role'), // UserTitle
         title: post.get('author_title'), // UserTitle
-        blacklists: blacklists.length > 0 ? blacklists : null,
+        blacklists:
+            !disableBlacklist && blacklists.length > 0 ? blacklists : null,
         crossPostedBy: post.get('cross_posted_by'),
         crossPostAuthor: post.get('cross_post_author'),
         showRole: props.showRole,
