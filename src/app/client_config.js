@@ -53,7 +53,7 @@ export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
 export const VESTING_TOKEN = 'JAHM POWER';
 export const INTERLEAVE_PROMOTED = true;
 
-export const HIVE_SIGNER_APP = 'ewd';
+export const HIVE_SIGNER_APP = 'reggaejahm';
 
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
