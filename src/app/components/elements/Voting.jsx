@@ -792,7 +792,7 @@ export default connect(
         let myVote = ownProps.myVote || null; // ownProps: test only
         if (username && active_votes) {
             const vote = active_votes.find(el => el.get('voter') === username);
-            if (vote) myVote = parseInt(vote.get('rshares', 0), 10);
+            if (vote) myVote = parseInt(vote.get('percent', 0), 10);
         }
 
         return {
