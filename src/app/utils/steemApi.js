@@ -202,7 +202,7 @@ function mergeContent(content, scotData) {
             if (!scotVoted.has(v.voter)) {
                 content.active_votes.push({
                     voter: v.voter,
-                    percent: v.percent,
+                    percent: Math.sign(v.rshares),
                     rshares: 0,
                 });
             }
