@@ -152,6 +152,13 @@
       top: 0;
     }
   }
+   div.tweetWrapper {
+    padding-bottom: 0;
+  }
+  .tweetWrapper iframe {
+    max-height: inherit;
+	}
+
   blockquote {
     @include themify($themes) {
       border-left: themed('borderDark');
