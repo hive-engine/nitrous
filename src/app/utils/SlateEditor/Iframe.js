@@ -1,49 +1,18 @@
 import React from 'react';
-import linksRe from 'app/utils/Links';
+import { normalizeEmbedUrl as normalizeEmbbeddedPlayerEmbedUrl } from 'app/components/elements/EmbeddedPlayers';
 
 export default class Iframe extends React.Component {
     normalizeEmbedUrl = url => {
-        let match;
-
-        // Detect youtube URLs
-        match = url.match(linksRe.youTubeId);
-        if (match && match.length >= 2) {
-            return 'https://www.youtube.com/embed/' + match[1];
+        const validEmbedUrl = normalizeEmbbeddedPlayerEmbedUrl(url);
+        if (validEmbedUrl !== false) {
+            return validEmbedUrl;
         }
-
-        // Detect vimeo
-        match = url.match(linksRe.vimeoId);
-        if (match && match.length >= 2) {
-            return 'https://player.vimeo.com/video/' + match[1];
-        }
-
-        // Detect twitch stream
-        match = url.match(linksRe.twitch);
-        if (match && match.length >= 3) {
-            if (match[1] === undefined) {
-                return (
-                    'https://player.twitch.tv/?autoplay=false&channel=' +
-                    match[2]
-                );
-            } else {
-                return (
-                    'https://player.twitch.tv/?autoplay=false&video=' + match[1]
-                );
-            }
-        }
-
-        // Detect dtube
-        match = url.match(linksRe.dtubeId);
-        if (match && match.length >= 2) {
-            return 'https://emb.d.tube/#!/' + match[1];
-        }
-
         console.log('unable to auto-detect embed url', url);
         return null;
     };
 
     onChange = e => {
-        const { node, state, editor } = this.props;
+        const { node, editor } = this.props;
         const value = e.target.value;
 
         const src = this.normalizeEmbedUrl(value) || value;
