@@ -484,10 +484,42 @@ const INFOWARS = {
     HIVE_ENGINE: true,
 };
 
+const LIETA = {
+    APP_NAME: 'Lieta',
+    APP_ICON: 'lieta',
+    APP_ICON_WIDTH: '135px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.lieta.io',
+    APP_DOMAIN: 'www.lieta.io',
+    LIQUID_TOKEN: 'Gile',
+    LIQUID_TOKEN_UPPERCASE: 'GILE',
+    APP_MAX_TAG: 15,
+    SCOT_TAG: 'lieta',
+    COMMUNITY_CATEGORY: 'hive-109522',
+    TAG_LIST: fromJSOrdered(['lieta']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'LIETA POWER',
+    SITE_DESCRIPTION:
+        'Lieta is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called GILE, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': KANDA,
-    'frozen-retreat-15997.herokuapp.com': HIVELIST,
+    'localhost:8080': LIETA,
+    'frozen-retreat-15997.herokuapp.com': LIETA,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
