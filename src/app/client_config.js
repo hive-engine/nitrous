@@ -520,6 +520,7 @@ export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': LIETA,
     'frozen-retreat-15997.herokuapp.com': LIETA,
+    'www.lieta.io': LIETA,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
