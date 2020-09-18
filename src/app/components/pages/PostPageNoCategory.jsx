@@ -51,8 +51,11 @@ const StoreWrapped = connect(
 
         // check for category (undefined: loading; null: not found)
         let category = state.global.getIn(['content', postref, 'category']);
-        if (typeof category === 'undefined') {
-            if (state.global.hasIn(['headers', postref])) {
+        const fetchedHeader = state.global.hasIn(['headers', postref]);
+        console.log(fetchedHeader);
+        console.log(category);
+        if (!category) {
+            if (fetchedHeader) {
                 category = state.global.getIn(
                     ['headers', postref, 'category'],
                     null
@@ -64,7 +67,7 @@ const StoreWrapped = connect(
             author,
             permlink,
             redirectUrl: category ? `/${category}/@${postref}` : null,
-            loading: typeof category === 'undefined',
+            loading: !category && !fetchedHeader,
         };
     },
     dispatch => ({
