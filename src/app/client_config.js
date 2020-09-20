@@ -487,7 +487,7 @@ const INFOWARS = {
 const LIETA = {
     APP_NAME: 'Lieta',
     APP_ICON: 'lieta',
-    APP_ICON_WIDTH: '135px',
+    APP_ICON_WIDTH: '156px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.lieta.io',
     APP_DOMAIN: 'www.lieta.io',
