@@ -119,7 +119,7 @@ export const TAG_LIST = fromJSOrdered({
             ],
         },
     },
-    amfootball: {
+    americanfootball: {
         nfl: {
             afc: [
                 'bengals',
