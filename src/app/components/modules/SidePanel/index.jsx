@@ -59,14 +59,9 @@ const SidePanel = ({
     const sidePanelLinks = {
         internal: [
             {
-                value: 'getsports',
-                label: 'GET SPORTS',
-                link: `https://get.sportstalksocial.com/`,
-            },
-            {
                 value: 'leodex',
-                label: 'SteemLeo DEX',
-                link: `https://dex.steemleo.com/market/SPORTS`,
+                label: 'Leo DEX',
+                link: `https://leodex.io/market/SPORTS`,
             },
             {
                 value: 'engine',
@@ -86,11 +81,6 @@ const SidePanel = ({
 
         organizational: [
             {
-                value: 'referee',
-                label: 'Referee Elections',
-                link: 'https://referee.sportstalk.social/',
-            },
-            {
                 value: 'sportstube',
                 label: 'SportsTube',
                 link: 'https://video.sportstalksocial.com',
@@ -103,13 +93,7 @@ const SidePanel = ({
             {
                 value: 'sports_richlist',
                 label: 'SPORTS Richlist',
-                link: 'https://steem-engine.rocks/tokens/SPORTS/richlist',
-                internal: true,
-            },
-            {
-                value: 'sportspredictsocial',
-                label: 'SportsPredictSocial',
-                link: 'https://www.sportspredictsocial.com/',
+                link: 'https://leodex.io/richlist/SPORTS',
                 internal: true,
             },
             {
