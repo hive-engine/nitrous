@@ -100,6 +100,7 @@ const map = {
     lunagoddess503: 'Verified Creator',
     extasisvionic: 'Verified Creator',
     blackcyanide: 'Verified Creator',
+    angelandevil: 'Verified Creator',
 };
 
 export default map;
