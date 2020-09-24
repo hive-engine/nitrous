@@ -162,7 +162,7 @@ class PostsIndexLayout extends React.Component {
                         <iframe
                             width="320"
                             height="200"
-                            src="https://www.youtube.com/embed/cQ1EQEKMr1U"
+                            src="https://www.youtube.com/embed/rbL8Mur9ejk"
                             frameBorder="0"
                             allowFullScreen
                         />
