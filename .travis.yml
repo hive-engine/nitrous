@@ -10,17 +10,17 @@ before_install:
 install: true
 
 script:
-  - docker build -t registry.heroku.com/frozen-retreat-15997/web .
+  - docker build -t registry.heroku.com/lieta/web .
 
 deploy:
   provider: script
   script:
     bash docker_push
   on:
-    branch: scotty_multi
+    branch: scotty_gile
 
 # safelist
 branches:
   only:
   - master
-  - scotty_multi
+  - scotty_gile
