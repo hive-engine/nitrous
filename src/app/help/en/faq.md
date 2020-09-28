@@ -14,3 +14,5 @@ Yes, you need a HIVE wallet, there are several ways to [create a HIVE wallet](ht
 ## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
 You can ask it at the LASSECASH Discord server, the link is here: https://discord.gg/5JW2w9t
 
+## <span of="hive_keys_safe">Are my Hive keys safe on the site? </span>
+We recommend using the browser add-on "Hive keychain" (only works on chrome browser and brave browser) for your Hive keys. It's open source and trusted by a large group of people.
