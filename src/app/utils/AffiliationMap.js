@@ -101,6 +101,7 @@ const map = {
     extasisvionic: 'Verified Creator',
     blackcyanide: 'Verified Creator',
     angelandevil: 'Verified Creator',
+    sexandfreedom1: 'Verified Creator',
 };
 
 export default map;
