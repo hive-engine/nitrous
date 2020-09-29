@@ -165,7 +165,9 @@ class PostSummary extends React.Component {
         const author = post.get('author');
         const permlink = post.get('permlink');
         const category = post.get('category');
-        const post_url = `/${category}/@${author}/${permlink}`;
+        const post_url = category
+            ? `/${category}/@${author}/${permlink}`
+            : `/@${author}/${permlink}`;
         const isReply = post.get('depth') > 0;
         const showReblog = !isReply;
         const showCommunityLabels = requestedCategory === category;
