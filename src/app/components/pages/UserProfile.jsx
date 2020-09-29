@@ -17,7 +17,6 @@ import { isFetchingOrRecentlyUpdated } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import Callout from 'app/components/elements/Callout';
 import userIllegalContent from 'app/utils/userIllegalContent';
-import { actions as UserProfilesSagaActions } from 'app/redux/UserProfilesSaga';
 import UserProfileHeader from 'app/components/cards/UserProfileHeader';
 import SubscriptionsList from '../cards/SubscriptionsList';
 import { PREFER_HIVE } from 'app/client_config';
@@ -436,7 +435,7 @@ module.exports = {
             },
             fetchProfile: (account, observer) =>
                 dispatch(
-                    UserProfilesSagaActions.fetchProfile({ account, observer })
+                    userProfileActions.fetchProfile({ account, observer })
                 ),
         })
     )(UserProfile),

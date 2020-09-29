@@ -1041,7 +1041,7 @@ export default connect(
                 accountname,
                 'ignore_result',
             ]);
-        const account = state.userProfiles.getIn(['profiles', accountname]);
+        const account = state.global.getIn(['accounts', accountname]);
         const current_user = state.user.get('current');
         const username = current_user ? current_user.get('username') : '';
 
