@@ -812,7 +812,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
             /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
         !path.match(
-            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|settings|followers|followed)?)?$/
+            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|followers|followed)?)?$/
         );
 
     let raw = {
