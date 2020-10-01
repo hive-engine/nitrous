@@ -185,7 +185,9 @@ export default function reducer(state = defaultState, action = {}) {
         case RECEIVE_STAKED_ACCOUNTS: {
             const stakedAccounts = {};
             payload.stakedAccounts.forEach(acc => {
-                stakedAccounts[acc['name']] = acc['staked_tokens'];
+                stakedAccounts[acc['name']] =
+                    parseFloat(acc['staked_tokens']) /
+                    Math.pow(10, payload.precision);
             });
             return state.set('stakedAccounts', fromJS(stakedAccounts));
         }
