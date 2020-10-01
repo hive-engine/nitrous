@@ -11,8 +11,21 @@ const map = {
 };
 
 export function affiliationFromStake(accountName, stake) {
-    // Put stake based breakdowns here.
-    return map[accountName];
+    if (accountName === 'lasseehlers') {
+        return 'Tribe Leader';
+    }
+
+    if (stake >= 250000) {
+        return 'Hero Tribe Member';
+    } else if (stake >= 150000) {
+        return 'Legendary Tribe Member';
+    } else if (stake >= 100000) {
+        return 'Full Tribe Member';
+    } else if (stake >= 50000) {
+        return 'Tribe Member';
+    } else {
+        return null;
+    }
 }
 
 export default map;
