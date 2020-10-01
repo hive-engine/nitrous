@@ -25,4 +25,9 @@ const map = {
     metametheus: 'And if you listen very hard...',
 };
 
+export function affiliationFromStake(accountName, stake) {
+    // Put stake based breakdowns here.
+    return map[accountName];
+}
+
 export default map;
