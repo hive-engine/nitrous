@@ -25,13 +25,6 @@ class UserProfileHeader extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        const { stakedAccounts, getStakedAccounts } = this.props;
-        if (!stakedAccounts) {
-            getStakedAccounts();
-        }
-    }
-
     render() {
         const {
             current_user,

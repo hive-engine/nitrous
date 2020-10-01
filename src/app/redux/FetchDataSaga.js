@@ -684,9 +684,12 @@ export function* getRewardsDataSaga(action) {
 
 function* getStakedAccountsSaga() {
     while (true) {
-        const action = yield take(GET_COMMUNITY);
+        const action = yield take(GET_STAKED_ACCOUNTS);
         const loadedStakedAccounts = yield select(state =>
             state.global.has('stakedAccounts')
+        );
+        const precision = yield select(state =>
+            state.app.getIn(['scotConfig', 'info', 'precision'], 0)
         );
         if (!loadedStakedAccounts) {
             const params = { token: LIQUID_TOKEN_UPPERCASE };
@@ -697,7 +700,10 @@ function* getStakedAccountsSaga() {
                     params
                 );
                 yield put(
-                    globalActions.receiveStakedAccounts({ stakedAccounts })
+                    globalActions.receiveStakedAccounts({
+                        stakedAccounts,
+                        precision,
+                    })
                 );
             } catch (error) {
                 console.error('~~ Saga getStakedAccountsSaga error ~~>', error);
