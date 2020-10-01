@@ -53,7 +53,9 @@ export const sendOperationsWithHiveSigner = (ops, params, cb) => {
         params.callback = window.location.href;
     }
     const uri = encodeOps(ops, params);
-    const webUrl = uri.replace('hive://', `${HIVE_SIGNER_URL}/`);
+    const webUrl = uri
+        .replace('hive://', `${HIVE_SIGNER_URL}/`)
+        .concat('&authority=active');
     if (cb && isBrowser()) {
         window.location = webUrl;
     }
