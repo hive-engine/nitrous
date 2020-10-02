@@ -272,24 +272,28 @@ function* fetchCommunity(tag) {
         state.app.getIn(['hostConfig', 'PREFER_HIVE'], false)
     );
 
-    // TODO: If no current user is logged in, skip the observer param.
-    const community = yield call(
-        callBridge,
-        'get_community',
-        {
-            name: tag,
-            observer: currentUsername,
-        },
-        useHive
-    );
-
-    // TODO: Handle error state
-    if (community.name)
-        yield put(
-            globalActions.receiveCommunity({
-                [tag]: { ...community },
-            })
+    try {
+        // TODO: If no current user is logged in, skip the observer param.
+        const community = yield call(
+            callBridge,
+            'get_community',
+            {
+                name: tag,
+                observer: currentUsername,
+            },
+            useHive
         );
+
+        // TODO: Handle error state
+        if (community.name)
+            yield put(
+                globalActions.receiveCommunity({
+                    [tag]: { ...community },
+                })
+            );
+    } catch (e) {
+        console.log(`Error fetching community ${tag}.`);
+    }
 }
 
 /**
