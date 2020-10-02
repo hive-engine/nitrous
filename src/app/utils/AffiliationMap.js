@@ -12,4 +12,9 @@ const map = {
     swelker101: 'Owner of CCC and SONIC, Master Of Triangle, Taker of Blame',
 };
 
+export function affiliationFromStake(accountName, stake) {
+    // Put stake based breakdowns here.
+    return map[accountName];
+}
+
 export default map;
