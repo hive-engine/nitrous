@@ -74,6 +74,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
         .concat(history)
+        .filter(a => Date.now() - new Date(a.timestamp) < 14 * 24 * 3600 * 1000)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
@@ -812,7 +813,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
             /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
         !path.match(
-            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|settings|followers|followed)?)?$/
+            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|followers|followed)?)?$/
         );
 
     let raw = {

@@ -31,4 +31,9 @@ export function getAffiliation(token, user) {
     }
 }
 
+export function affiliationFromStake(token, accountName, stake) {
+    // Put stake based breakdowns here.
+    return getAffiliation(token, accountName);
+}
+
 export default map;

@@ -21,7 +21,7 @@ import { FormattedHTMLMessage } from 'app/Translator';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as appActions from 'app/redux/AppReducer';
-import { actions as UserProfilesSagaActions } from 'app/redux/UserProfilesSaga';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Icon from 'app/components/elements/Icon';
 import classNames from 'classnames';
@@ -716,7 +716,7 @@ export default connect(
             const username = account.get('name');
             const successCallback = () => {
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -751,7 +751,7 @@ export default connect(
                     })
                 );
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -782,7 +782,7 @@ export default connect(
                     })
                 );
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -811,6 +811,6 @@ export default connect(
         },
 
         fetchWalletProfile: account =>
-            dispatch(UserProfilesSagaActions.fetchWalletProfile({ account })),
+            dispatch(userProfileActions.fetchWalletProfile({ account })),
     })
 )(UserWallet);

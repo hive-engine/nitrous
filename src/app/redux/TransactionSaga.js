@@ -366,7 +366,7 @@ function* broadcastPayload({
                             }
                         );
                     } else {
-                        sendOperationsWithHiveSigners(
+                        sendOperationsWithHiveSigner(
                             operations,
                             {},
                             (err, result) => {
