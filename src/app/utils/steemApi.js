@@ -80,6 +80,7 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
         .concat(history)
+        .filter(a => Date.now() - new Date(a.timestamp) < 14 * 24 * 3600 * 1000)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 

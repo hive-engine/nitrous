@@ -26,4 +26,10 @@ const map = {
     'a1-shroom-spores': 'Hemp token owner',
     justinparke: 'Italist',
 };
+
+export function affiliationFromStake(accountName, stake) {
+    // Put stake based breakdowns here.
+    return map[accountName];
+}
+
 export default map;
