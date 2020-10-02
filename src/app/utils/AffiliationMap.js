@@ -32,4 +32,9 @@ const map = {
     shrazi: 'Gifman',
 };
 
+export function affiliationFromStake(accountName, stake) {
+    // Put stake based breakdowns here.
+    return map[accountName];
+}
+
 export default map;
