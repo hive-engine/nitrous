@@ -43,6 +43,7 @@ const GET_UNREAD_ACCOUNT_NOTIFICATIONS =
     'fetchDataSaga/GET_UNREAD_ACCOUNT_NOTIFICATIONS';
 const MARK_NOTIFICATIONS_AS_READ = 'fetchDataSaga/MARK_NOTIFICATIONS_AS_READ';
 const GET_REWARDS_DATA = 'fetchDataSaga/GET_REWARDS_DATA';
+const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -62,6 +63,7 @@ export const fetchDataWatches = [
         getUnreadAccountNotificationsSaga
     ),
     takeEvery(GET_REWARDS_DATA, getRewardsDataSaga),
+    fork(getStakedAccountsSaga),
     takeEvery(MARK_NOTIFICATIONS_AS_READ, markNotificationsAsReadSaga),
 ];
 
@@ -692,6 +694,39 @@ export function* getRewardsDataSaga(action) {
     yield put(appActions.fetchDataEnd());
 }
 
+function* getStakedAccountsSaga() {
+    while (true) {
+        const action = yield take(GET_STAKED_ACCOUNTS);
+        const scotTokenSymbol = yield select(state =>
+            state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+        );
+        const loadedStakedAccounts = yield select(state =>
+            state.global.has('stakedAccounts')
+        );
+        const precision = yield select(state =>
+            state.app.getIn(['scotConfig', 'info', 'precision'], 0)
+        );
+        if (!loadedStakedAccounts) {
+            const params = { token: scotTokenSymbol };
+            try {
+                const stakedAccounts = yield call(
+                    getScotDataAsync,
+                    'get_staked_accounts',
+                    params
+                );
+                yield put(
+                    globalActions.receiveStakedAccounts({
+                        stakedAccounts,
+                        precision,
+                    })
+                );
+            } catch (error) {
+                console.error('~~ Saga getStakedAccountsSaga error ~~>', error);
+            }
+        }
+    }
+}
+
 function* fetchScotInfo() {
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
@@ -863,6 +898,11 @@ export const actions = {
 
     getRewardsData: payload => ({
         type: GET_REWARDS_DATA,
+        payload,
+    }),
+
+    getStakedAccounts: payload => ({
+        type: GET_STAKED_ACCOUNTS,
         payload,
     }),
 };

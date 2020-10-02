@@ -10,9 +10,10 @@ import Overlay from 'react-overlays/lib/Overlay';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Icon from 'app/components/elements/Icon';
 import Reputation from 'app/components/elements/Reputation';
-import { getAffiliation } from 'app/utils/AffiliationMap';
+import { affiliationFromStake } from 'app/utils/AffiliationMap';
 import UserTitle from 'app/components/elements/UserTitle';
 import AuthorDropdown from '../AuthorDropdown';
+import { actions as fetchActions } from 'app/redux/FetchDataSaga';
 
 const { string, bool, number } = PropTypes;
 
@@ -60,7 +61,18 @@ class Author extends React.Component {
         this.close = this.close.bind(this);
     }
 
+    componentWillMount() {
+        const { stakedAccounts, getStakedAccounts } = this.props;
+        if (!stakedAccounts) {
+            getStakedAccounts();
+        }
+    }
+
     componentDidMount() {
+        const { stakedAccounts, getStakedAccounts } = this.props;
+        if (!stakedAccounts) {
+            getStakedAccounts();
+        }
         if (!this.authorProfileLink) {
             return;
         }
@@ -122,6 +134,7 @@ class Author extends React.Component {
             role,
             title,
             tribeCommunityTitle,
+            stakedAccounts,
         } = this.props;
 
         const warn = blacklists && (
@@ -132,7 +145,11 @@ class Author extends React.Component {
 
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
-            : getAffiliation(scotTokenSymbol, author);
+            : affiliationFromStake(
+                  scotTokenSymbol,
+                  author,
+                  stakedAccounts ? stakedAccounts.get(author) : 0
+              );
         const userTitle = (
             <span>
                 {false &&
@@ -215,56 +232,63 @@ class Author extends React.Component {
     }
 }
 
-export default connect((state, props) => {
-    const { post, resolveCrossPost, hive } = props;
-    const blacklists = post.get('blacklists', List()).toJS();
-    const crossPostedBy = post.get('cross_posted_by');
+export default connect(
+    (state, props) => {
+        const { post, resolveCrossPost } = props;
+        const blacklists = post.get('blacklists', List()).toJS();
+        const crossPostedBy = post.get('cross_posted_by');
 
-    let author = post.get('author');
-    let authorRep = post.get('author_reputation');
-    if (resolveCrossPost && crossPostedBy) {
-        author = post.get('cross_post_author');
-        authorRep = post.get('cross_post_author_reputation');
-    }
+        let author = post.get('author');
+        let authorRep = post.get('author_reputation');
+        if (resolveCrossPost && crossPostedBy) {
+            author = post.get('cross_post_author');
+            authorRep = post.get('cross_post_author_reputation');
+        }
 
-    const scotTokenSymbol = state.app.getIn([
-        'hostConfig',
-        'LIQUID_TOKEN_UPPERCASE',
-    ]);
-    const COMMUNITY_CATEGORY = state.app.getIn([
-        'hostConfig',
-        'COMMUNITY_CATEGORY',
-    ]);
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const COMMUNITY_CATEGORY = state.app.getIn([
+            'hostConfig',
+            'COMMUNITY_CATEGORY',
+        ]);
 
-    const tribeCommunityTitle = state.global.getIn([
-        'community',
-        COMMUNITY_CATEGORY,
-        'team',
-        author,
-        'title',
-    ]);
-    const disableBlacklist = state.app.getIn([
-        'hostConfig',
-        'DISABLE_BLACKLIST',
-    ]);
+        const tribeCommunityTitle = state.global.getIn([
+            'community',
+            COMMUNITY_CATEGORY,
+            'team',
+            author,
+            'title',
+        ]);
+        const disableBlacklist = state.app.getIn([
+            'hostConfig',
+            'DISABLE_BLACKLIST',
+        ]);
 
-    return {
-        follow: typeof props.follow === 'undefined' ? true : props.follow,
-        mute: typeof props.mute === 'undefined' ? props.follow : props.mute,
-        username: state.user.getIn(['current', 'username']),
-        authorRep,
-        author,
-        scotTokenSymbol,
-        hive,
-        community: post.get('community'), // UserTitle
-        permlink: post.get('permlink'), // UserTitle
-        role: post.get('author_role'), // UserTitle
-        title: post.get('author_title'), // UserTitle
-        blacklists:
-            !disableBlacklist && blacklists.length > 0 ? blacklists : null,
-        crossPostedBy: post.get('cross_posted_by'),
-        crossPostAuthor: post.get('cross_post_author'),
-        showRole: props.showRole,
-        tribeCommunityTitle,
-    };
-})(Author);
+        return {
+            follow: typeof props.follow === 'undefined' ? true : props.follow,
+            mute: typeof props.mute === 'undefined' ? props.follow : props.mute,
+            username: state.user.getIn(['current', 'username']),
+            authorRep,
+            author,
+            community: post.get('community'), // UserTitle
+            permlink: post.get('permlink'), // UserTitle
+            role: post.get('author_role'), // UserTitle
+            title: post.get('author_title'), // UserTitle
+            blacklists:
+                !disableBlacklist && blacklists.length > 0 ? blacklists : null,
+            crossPostedBy: post.get('cross_posted_by'),
+            crossPostAuthor: post.get('cross_post_author'),
+            showRole: props.showRole,
+            tribeCommunityTitle,
+            scotTokenSymbol,
+            stakedAccounts: state.global.get('stakedAccounts'),
+        };
+    },
+    dispatch => ({
+        getStakedAccounts: () => {
+            dispatch(fetchActions.getStakedAccounts());
+        },
+    })
+)(Author);
