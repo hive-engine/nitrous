@@ -264,24 +264,28 @@ function* fetchCommunity(tag) {
     const currentUsername = currentUser && currentUser.get('username');
     const useHive = PREFER_HIVE;
 
-    // TODO: If no current user is logged in, skip the observer param.
-    const community = yield call(
-        callBridge,
-        'get_community',
-        {
-            name: tag,
-            observer: currentUsername,
-        },
-        useHive
-    );
-
-    // TODO: Handle error state
-    if (community.name)
-        yield put(
-            globalActions.receiveCommunity({
-                [tag]: { ...community },
-            })
+    try {
+        // TODO: If no current user is logged in, skip the observer param.
+        const community = yield call(
+            callBridge,
+            'get_community',
+            {
+                name: tag,
+                observer: currentUsername,
+            },
+            useHive
         );
+
+        // TODO: Handle error state
+        if (community.name)
+            yield put(
+                globalActions.receiveCommunity({
+                    [tag]: { ...community },
+                })
+            );
+    } catch (e) {
+        console.log(`Error fetching community ${tag}.`);
+    }
 }
 
 /**
