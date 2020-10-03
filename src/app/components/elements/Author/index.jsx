@@ -146,7 +146,7 @@ class Author extends React.Component {
             ? tribeCommunityTitle
             : affiliationFromStake(
                   author,
-                  stakedAccounts ? stakedAccounts.get(author) : 0
+                  stakedAccounts ? stakedAccounts.get(author) : null
               );
         const userTitle = (
             <span>

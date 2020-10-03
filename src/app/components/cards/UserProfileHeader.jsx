@@ -70,7 +70,7 @@ class UserProfileHeader extends React.Component {
             ? tribeCommunityTitle
             : affiliationFromStake(
                   accountname,
-                  stakedAccounts ? stakedAccounts.get(accountname) : 0
+                  stakedAccounts ? stakedAccounts.get(accountname) : null
               );
         return (
             <div className="UserProfile__banner row expanded">
