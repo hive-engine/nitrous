@@ -696,7 +696,7 @@ function* getStakedAccountsSaga() {
             state.app.getIn(['scotConfig', 'info', 'precision'], 0)
         );
         if (!loadedStakedAccounts) {
-            const params = { token: LIQUID_TOKEN_UPPERCASE };
+            const params = { token: LIQUID_TOKEN_UPPERCASE, hive: 1 };
             try {
                 const stakedAccounts = yield call(
                     getScotDataAsync,
