@@ -26,7 +26,7 @@ export function affiliationFromStake(accountName, stake) {
     } else if (stake >= 15000) {
         return 'Noob Tribe Member';
     } else {
-        return null;
+        return 'Dust Account';
     }
 }
 
