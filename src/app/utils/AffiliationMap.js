@@ -23,6 +23,8 @@ export function affiliationFromStake(accountName, stake) {
         return 'Full Tribe Member';
     } else if (stake >= 50000) {
         return 'Tribe Member';
+    } else if (stake >= 15000) {
+        return 'Noob Tribe Member';
     } else {
         return null;
     }
