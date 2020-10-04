@@ -78,8 +78,6 @@ global.webpackIsomorphicTools.server(ROOT, () => {
         },
         useAppbaseApi: !!config.steemd_use_appbase,
     });
-    hive.config.set('address_prefix', config.get('address_prefix'));
-    hive.config.set('chain_id', config.get('chain_id'));
 
     // const CliWalletClient = require('shared/api_client/CliWalletClient').default;
     // if (process.env.NODE_ENV === 'production') connect_promises.push(CliWalletClient.instance().connect_promise());
