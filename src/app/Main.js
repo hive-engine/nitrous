@@ -99,6 +99,8 @@ function runApp(initial_state) {
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
     });
+    steem.config.set('address_prefix', config.address_prefix);
+    steem.config.set('chain_id', config.chain_id);
     hive.api.setOptions({
         url: currentApiEndpoint,
         retry: true,
@@ -106,8 +108,6 @@ function runApp(initial_state) {
         alternative_api_endpoints: alternativeApiEndpoints,
         failover_threshold: config.failover_threshold,
     });
-    hive.config.set('address_prefix', config.address_prefix);
-    hive.config.set('chain_id', config.chain_id);
 
     window.$STM_Config = config;
     plugins(config, initial_state.app.hostConfig);
