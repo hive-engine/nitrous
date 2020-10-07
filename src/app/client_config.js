@@ -518,8 +518,8 @@ const LIETA = {
 
 const AENEAS = {
     APP_NAME: 'Aeneas',
-    APP_ICON: 'ash',
-    APP_ICON_WIDTH: '40px',
+    APP_ICON: 'aeneas',
+    APP_ICON_WIDTH: '110px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.aeneas.blog',
     APP_DOMAIN: 'www.aeneas.blog',
