@@ -17,7 +17,7 @@ const map = {
     teamsteem: 'Dragon',
     legendchew: 'Dragon',
     neoxiancity: 'City',
-    xawi: "Everything's girl",
+    xawi: "KitK@t",
     udezee: 'Curator',
     rehan12: 'Curator',
     bwar: 'Bwar',
