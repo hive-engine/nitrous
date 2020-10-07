@@ -516,10 +516,43 @@ const LIETA = {
     HIVE_ENGINE: true,
 };
 
+const AENEAS = {
+    APP_NAME: 'Aeneas',
+    APP_ICON: 'ash',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.aeneas.blog',
+    APP_DOMAIN: 'www.aeneas.blog',
+    LIQUID_TOKEN: 'Ash',
+    LIQUID_TOKEN_UPPERCASE: 'ASH',
+    APP_MAX_TAG: 15,
+    SCOT_TAG: 'aeneas',
+    COMMUNITY_CATEGORY: 'hive-109522',
+    TAG_LIST: fromJSOrdered(['ash', 'aeneas']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'ASH POWER',
+    SITE_DESCRIPTION:
+        'Aeneas is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called ASH, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-37',
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': LIETA,
-    'frozen-retreat-15997.herokuapp.com': LIETA,
+    'localhost:8080': AENEAS,
+    'frozen-retreat-15997.herokuapp.com': AENEAS,
+    'www.aeneas.blog': AENEAS,
     'www.lieta.io': LIETA,
     'www.archonapp.net': ARCHON,
     'www.hivelist.org': HIVELIST,
