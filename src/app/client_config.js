@@ -527,7 +527,7 @@ const AENEAS = {
     LIQUID_TOKEN_UPPERCASE: 'ASH',
     APP_MAX_TAG: 15,
     SCOT_TAG: 'aeneas',
-    COMMUNITY_CATEGORY: 'hive-109522',
+    COMMUNITY_CATEGORY: 'hive-165469',
     TAG_LIST: fromJSOrdered(['ash', 'aeneas']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
