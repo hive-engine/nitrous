@@ -166,13 +166,23 @@ export default connect(
             'total_token_balance',
             'numberTransactions',
         ]);
+        const scotPrecision = scotConfig.getIn(['info', 'precision'], 0);
+        const toFixedNoRounding = x => {
+            const xStr = x.toString();
+            const pointIndex = xStr.indexOf('.');
+            return +xStr.slice(
+                0,
+                pointIndex > -1 ? scotPrecision + 1 + pointIndex : undefined
+            );
+        };
         const lockedStake = tokenUnstakes
+            .filter(unstake => unstake.numberTransactionsLeft > 1)
             .map(
                 unstake =>
-                    unstake.numberTransactionsLeft > 1
-                        ? parseFloat(unstake.quantityLeft) -
-                          parseFloat(unstake.quantity) / numberTransactions
-                        : 0
+                    parseFloat(unstake.quantityLeft) -
+                    toFixedNoRounding(
+                        parseFloat(unstake.quantity) / numberTransactions
+                    )
             )
             .reduce((x, y) => x + y, 0);
         const useHive = HIVE_ENGINE;
@@ -183,7 +193,7 @@ export default connect(
             lockedStake,
             delegatedStake,
             state,
-            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            scotPrecision,
             useHive,
         };
     },
