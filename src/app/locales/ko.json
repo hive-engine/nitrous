@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "시간",
         "amount": "양",
         "and": "and",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",
         "blog": "블로그",
+        "profile": "Profile",
         "browse": "Browse",
         "buy": "구매",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "구입/판매",
         "by": "by",
         "cancel": "취소",
@@ -21,6 +24,18 @@
         "clear": "지우기",
         "close": "닫기",
         "collapse_or_expand": "닫기/펼치기",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "작성한 댓글",
         "confirm": "확인",
         "convert": "변환하기",
@@ -32,7 +47,12 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_hive": "Hive Team",
         "feed": "피드",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "팔로우",
         "for": " for ",
         "from": " from ",
@@ -58,6 +78,7 @@
         "newer": "최근",
         "next": "다음",
         "no": "No",
+        "notifications": "Notifications",
         "ok": "Ok",
         "older": "이전",
         "or": "or",
@@ -67,6 +88,7 @@
         "permissions": "권한",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
+        "pin": "Pin",
         "post": "글쓰기",
         "post_as_user": "Post as %(username)s",
         "posts": "Posts",
@@ -105,11 +127,18 @@
         "sell": "판매",
         "settings": "설정",
         "share_this_post": "이 포스트 공유하기",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "Show",
         "sign_in": "로그인",
         "sign_up": "회원가입",
         "since": "since",
         "submit": "Submit",
+        "subscriptions": "Subscriptions",
         "power_up": "파워 업",
         "submit_a_story": "글쓰기",
         "tag": "태그",
@@ -124,6 +153,7 @@
         "type": "Type",
         "unfollow": "언팔로우",
         "unmute": "차단 해제",
+        "unpin": "Unpin",
         "unknown": "Unknown",
         "upvote": "보팅",
         "upvote_post": "이 글에 보팅하기",
@@ -258,6 +288,7 @@
             "전체 토큰의 클레임 요청을 시작합니다. 약 %(seconds)s 초 후에 완료됩니다.",
         "all_claim_completed":
             "클레임 요청이 완료 되었습니다. 결과는 수분 이내 확인이 가능합니다.",
+        "buy_steem_power": "Buy Steem Power",
         "post_as": "Post as",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "vote currently exists, user must be indicate a desire to reject witness"
@@ -291,11 +322,13 @@
         "intro_tagline": "생각의 가치",
         "intro_paragraph":
             "당신의 생각과 글은 소중합니다. 스팀잇은 고급 컨텐츠 생산자들과 큐레이터들에게 투명한 금전적 보상을 지원합니다. 지금 참여하세요.",
-        "steem_proposals": "Steem Proposals",
-        "witnesses": "증인",
+        "jobs": "Jobs at Hive",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer",
+        "steem_proposals": "Steem Proposals",
+        "witnesses": "증인"
     },
     "main_menu": {
         "hot": "인기글",
@@ -312,6 +345,8 @@
         "uploading": "Uploading",
         "draft_saved": "임시 저장.",
         "editor": "에디터",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "이미지를 추가하시려면 마우스로 끌어다가 놓으시거나, ",
         "pasting_from_the_clipboard": "클립보드에서 붙여넣기 하시거나, ",
@@ -327,7 +362,11 @@
         "update_post": "저장",
         "markdown_not_supported": "Markdown은 지원되지 않습니다.",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -339,6 +378,15 @@
             "Beneficiary percentage must be from 1-100",
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
     },
     "category_selector_jsx": {
         "tag_your_story":
@@ -355,14 +403,23 @@
             "소문자, 숫자 그리고 대쉬만 사용 가능합니다.",
         "must_start_with_a_letter": "태그는 반드시 문자로 시작해야 합니다.",
         "must_end_with_a_letter_or_number":
-            "태그는 반드시 문자나 숫자로 끝나야 합니다."
+            "태그는 반드시 문자나 숫자로 끝나야 합니다.",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -393,6 +450,8 @@
         "user_hasnt_followed_anything_yet":
             "Looks like %(name)s might not be following anyone yet! If %(name)s recently added new users to follow, their personalized feed will populate once new content is available.",
         "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "아직 포스팅을 하지 않았습니다.",
         "create_a_post": "글쓰기",
@@ -529,14 +588,14 @@
             "%(VESTING_TOKEN)s는 전송이 불가능하며, 다시 %(LIQUID_TOKEN)s으로 전환하기 위해서는 3달이 소요됩니다. (13회로 나누어 전환 됩니다)",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Converted %(VESTING_TOKEN)s can be sent to yourself or someone else but can not transfer again without converting back to %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다.",
         "part_of_your_hive_power_is_currently_delegated":
             "%(user_name)s 님은 HIVE POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다.",
         "steem_engine_tokens":
             "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a>은 STEEM 블록체인을 위한 스마트 컨트랙트 플랫폼입니다.",
         "snax_token":
-            "Snax는 사용자들이 소셜 활동에 대한 보상을 받을 수 있는 블록체인 플랫폼입니다. 그리고 Steem 계정과 통합될 수 있습니다.<br><a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>에서 Snax에 대해 자세히 알아보십시오."
+            "Snax는 사용자들이 소셜 활동에 대한 보상을 받을 수 있는 블록체인 플랫폼입니다. 그리고 Steem 계정과 통합될 수 있습니다.<br><a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>에서 Snax에 대해 자세히 알아보십시오.",
+        "part_of_your_steem_power_is_currently_delegated":
+            "%(user_name)s 님은 STEEM POWER 를 임대 받고 있습니다. 임대 받는 양은 가입 시기에 따라 가변적입니다."
     },
     "promote_post_jsx": {
         "promote_post": "Promote Post",
@@ -560,6 +619,8 @@
     "postsummary_jsx": {
         "reblogged": "리스팀",
         "reblogged_by": "리스팀 by",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "Reveal this post",
         "adjust_your": "adjust your",
         "display_preferences": "display preferences",
@@ -673,6 +734,7 @@
         "curation_rewards_by": "Curation rewards by",
         "author_rewards_by": "Author rewards by",
         "replies_to": "Replies to",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "Comments by"
     },
     "loginform_jsx": {
@@ -718,7 +780,7 @@
         "to_comment_and_reward_others": " to comment and reward others.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREE HIVE!",
-        "sign_up_get_hive": "계정을 만들고 가상화폐 HIVE 을 보상으로 받으세요.",
+        "sign_up_get_steem": "Sign up",
         "returning_users": "Returning Users: ",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
@@ -728,7 +790,8 @@
         "join_our": "Join our",
         "sign_transfer": "Sign to complete transfer",
         "use_keychain": "Use keychain extension",
-        "more_login_methods": "더 많은 로그인 방법"
+        "more_login_methods": "더 많은 로그인 방법",
+        "sign_up_get_hive": "계정을 만들고 가상화폐 HIVE 을 보상으로 받으세요."
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -771,6 +834,8 @@
         "location_is_too_long": "너무 긴 지역명입니다",
         "website_url_is_too_long": "너무 긴 웹사이트 URL입니다",
         "public_profile_settings": "공개 프로파일 설정",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "컨텐츠 표시 설정",
         "not_safe_for_work_nsfw_content": "선정적이거나 폭력적인 컨텐츠",
         "always_hide": "항상 숨기기",
@@ -788,7 +853,13 @@
         "profile_about": "한 줄 소개",
         "profile_location": "지역",
         "profile_website": "웹사이트",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
         "advanced": "많은",
         "api_endpoint_options": "API 엔드 포인트 옵션",
         "endpoint": "엔드 포인트",
@@ -863,6 +934,8 @@
         "amount": "목표량",
         "already_power_down":
             "이미 %(AMOUNT)s %(LIQUID_TICKER)s의 파워 다운을 진행하고 있습니다(현재까지 %(WITHDRAWN)s %(LIQUID_TICKER)s 파워 다운). 파워다운 수량을 변경하게 되면 파워 다운 일정이 초기화되니 유의하십시오..",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "현재 %(AMOUNT)s %(LIQUID_TICKER)s을 임대 중입니다. 이 수량은 임대 종료 후 회수 기간이 완전히 지날 때까지는 파워 다운을 할 수 없습니다.",
         "per_week": "That's ~%(AMOUNT)s %(LIQUID_TICKER)s per week.",
@@ -884,11 +957,12 @@
         "hi_user": "Hi %(username)s,",
         "blurb":
             "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "i_agree_to_steemits": "I agree to Steemit's"
     },
     "confirmtransactionform_jsx": {
         "confirm": "Confirm %(transactionType)s"
@@ -912,6 +986,16 @@
     },
     "delegations_jsx": {
         "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     },
     "market_jsx": {
         "action": "Action",
