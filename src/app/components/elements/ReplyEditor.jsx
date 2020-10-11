@@ -1006,9 +1006,7 @@ class ReplyEditor extends React.Component {
                                                     )}
                                                 {this.props.payoutType ===
                                                     '50%' &&
-                                                    (hive
-                                                        ? '50% HBD / 50% HP'
-                                                        : '50% SBD / 50% SP')}
+                                                    '10% LASSECASH / 90% LASSECASH POWER'}
                                                 {this.props.payoutType ===
                                                     '100%' &&
                                                     tt(
