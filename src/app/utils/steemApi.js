@@ -125,7 +125,7 @@ export async function getWalletAccount(account, useHive) {
         engineApi.find('tokens', 'balances', {
             account,
         }),
-        engineApi.findOne('tokens', 'pendingUnstakes', {
+        engineApi.find('tokens', 'pendingUnstakes', {
             account,
             symbol: LIQUID_TOKEN_UPPERCASE,
         }),
