@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "età",
         "amount": "Quantità",
         "and": "e",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "Bid",
         "blog": "Blog",
+        "profile": "Profile",
         "browse": "Naviga",
         "buy": "Acquista",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "Acquista o vendi",
         "by": "da",
         "cancel": "Cancella",
@@ -21,6 +24,18 @@
         "clear": "Pulisci",
         "close": "Chiudi",
         "collapse_or_expand": "Riduci/Espandi",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "Commenti",
         "confirm": "Conferma",
         "convert": "Converti",
@@ -36,7 +51,12 @@
         "affiliation_tribe_team": "Tribe Team",
         "affiliation_pope": "Pope",
         "affiliation_dragon": "Dragon",
+        "affiliation_hive": "Hive Team",
         "feed": "Feed",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "Segui",
         "for": "per",
         "from": "da",
@@ -62,6 +82,7 @@
         "newer": "Più recente",
         "next": "Prossimo",
         "no": "No",
+        "notifications": "Notifications",
         "ok": "Ok",
         "older": "Meno recente",
         "or": "o",
@@ -71,6 +92,7 @@
         "permissions": "Permessi",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
+        "pin": "Pin",
         "post": "Post",
         "post_as_user": "Post as %(username)s",
         "posts": "Posts",
@@ -108,11 +130,18 @@
         "sell": "Vendi",
         "settings": "Impostazioni",
         "share_this_post": "Condividi questo post",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "Mostra",
         "sign_in": "Accedi",
         "sign_up": "Registrati",
         "since": "da",
         "submit": "Sottoscrivi",
+        "subscriptions": "Subscriptions",
         "power_up": "Power Up",
         "submit_a_story": "Post",
         "tag": "Tag",
@@ -127,6 +156,7 @@
         "type": "Scrivi",
         "unfollow": "Non seguire più",
         "unmute": "Unmute",
+        "unpin": "Unpin",
         "unknown": "Sconosciuto",
         "upvote": "Upvote",
         "upvote_post": "Upvote post",
@@ -268,6 +298,7 @@
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
         "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Buy Steem Power",
         "post_as": "Pubblica come",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "Attualmente il voto esiste, l'utente deve indicare la volonta di rigettare il witness "
@@ -301,11 +332,13 @@
         "intro_tagline": "Il denaro parla",
         "intro_paragraph":
             "La tua voce vale qualcosa. Entra nella community che ti paga per pubblicare e curare contenuti di alta qualità.",
-        "steem_proposals": "Steem Proposals",
-        "witnesses": "Witness",
+        "jobs": "Jobs at Hive",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer",
+        "steem_proposals": "Steem Proposals",
+        "witnesses": "Witness"
     },
     "main_menu": {
         "hot": "hot",
@@ -322,6 +355,8 @@
         "uploading": "Caricamento",
         "draft_saved": "Bozza salvata",
         "editor": "Editor",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "Per inserire le immagini, trascinale qui",
         "pasting_from_the_clipboard": "incollando dagli appunti,",
@@ -338,7 +373,11 @@
         "update_post": "Aggiorna il Post",
         "markdown_not_supported": "Il Markdown non è supportato qui",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -350,6 +389,15 @@
             "Beneficiary percentage must be from 1-100",
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
     },
     "category_selector_jsx": {
         "tag_your_story": "Tag: Il primo tag è la categoria principale. ",
@@ -365,14 +413,23 @@
             "Usa solo lettere minuscole, cifre e un trattino",
         "must_start_with_a_letter": "Deve iniziare con una lettera",
         "must_end_with_a_letter_or_number":
-            "Deve terminare con una lettera o un numero"
+            "Deve terminare con una lettera o un numero",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -403,6 +460,8 @@
         "user_hasnt_followed_anything_yet":
             "Sembra che %(name)snon stia seguendo ancora nessuno! Se %(name)sha aggiunto di recente nuovi utenti da seguire, il feed personalizzato si riempirà di contenuti non appena ce ne saranno di nuovi. ",
         "user_hasnt_had_any_replies_yet": "%(name)s hasn't had any replies yet",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
@@ -538,14 +597,14 @@
             "%(VESTING_TOKEN)s non è trasferibile e richiede 3 mesi, (13 pagamenti) per riconvertirli in  %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "I %(VESTING_TOKEN)s convertiti possono essere spediti a te stesso o a qualcun altro ma non possono non ritrasferirli senza essere convertirli di nuovo in %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Parte del tuo STEEM POWER ti è attualmente delegato. La delegazione è donata per l'influenza o per aiutare i nuovi utenti ad eseguire le azioni su steemit. Il quantitativo delegato può fluttuare.",
         "part_of_your_hive_power_is_currently_delegated":
             "Parte del tuo HIVE POWER ti è attualmente delegato. La delegazione è donata per l'influenza o per aiutare i nuovi utenti ad eseguire le azioni su Hive. Il quantitativo delegato può fluttuare.",
         "steem_engine_tokens":
             "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
         "snax_token":
-            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>.",
+        "part_of_your_steem_power_is_currently_delegated":
+            "Parte del tuo STEEM POWER ti è attualmente delegato. La delegazione è donata per l'influenza o per aiutare i nuovi utenti ad eseguire le azioni su steemit. Il quantitativo delegato può fluttuare."
     },
     "promote_post_jsx": {
         "promote_post": "Promuovi post",
@@ -570,6 +629,8 @@
     "postsummary_jsx": {
         "reblogged": "condiviso",
         "reblogged_by": "Condiviso da",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "mostra",
         "adjust_your": "sistema il tuo",
         "display_preferences": "mostrare le tue preferenze",
@@ -685,6 +746,7 @@
         "curation_rewards_by": "Ricompense da curatore da",
         "author_rewards_by": "Ricompense da autore da",
         "replies_to": "Risposte a ",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "Commenti di"
     },
     "loginform_jsx": {
@@ -783,6 +845,8 @@
         "location_is_too_long": "Luogo è troppo lungo",
         "website_url_is_too_long": "L'url del sito è troppo lunga ",
         "public_profile_settings": "Impostazioni profilo pubblico",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Impostazioni di Visualizzazione del Post Privato",
         "not_safe_for_work_nsfw_content":
             "Contenuto inappropriato da visualizzare da un luogo di lavoro (NSFW)",
@@ -801,7 +865,13 @@
         "profile_about": "About",
         "profile_location": "Località",
         "profile_website": "Sito",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
         "advanced": "Avanzate",
         "api_endpoint_options": "Opzioni endpoint API",
         "endpoint": "Endpoint",
@@ -879,6 +949,8 @@
         "amount": "Somma",
         "already_power_down":
             "Stai già effettuando il powering down %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s pagati sin ora). Ricorda che se cambi l'ammontare del power down il pagamento programmato verrà resettato.",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "Stai delegando %(AMOUNT)s %(LIQUID_TICKER)s. Questa somma sarà bloccata e non disponibile per il power down sino a quando la delega non sarà rimossa e non sia passato un intero intervallo di ricompensa.",
         "per_week": "È ~%(AMOUNT)s %(LIQUID_TICKER)s a settimana.",
@@ -900,11 +972,12 @@
         "hi_user": "Hi %(username)s,",
         "blurb":
             "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "i_agree_to_steemits": "I agree to Steemit's"
     },
     "confirmtransactionform_jsx": {
         "confirm": "Confirm %(transactionType)s"
@@ -928,6 +1001,16 @@
     },
     "delegations_jsx": {
         "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     },
     "market_jsx": {
         "action": "Azione",
