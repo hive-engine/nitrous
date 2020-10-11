@@ -15,7 +15,6 @@
         "profile": "Profil",
         "browse": "Przeglądaj",
         "buy": "Kup",
-        "buy_steem_power": "Buy Steem Power",
         "buy_hive_power": "Kup Hive Power",
         "buy_or_sell": "Kup lub Sprzedaj",
         "by": "przez",
@@ -93,7 +92,7 @@
             "Link rozszerzony na zwykły tekst; uważaj na potencjalną próbę phishingu",
         "pin": "Przypnij",
         "post": "Napisz",
-        "post_as": "Napisz jako %(username)s",
+        "post_as_user": "Post as %(username)s",
         "posts": "Posty",
         "powered_up_100": "Zwiększono moc 100%%",
         "preview": "Podgląd",
@@ -294,7 +293,9 @@
         "written_from": "written from %(app_name)s",
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
-        "all_claim_completed": "Claims completed!"
+        "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Buy Steem Power",
+        "post_as": "Napisz jako %(username)s"
     },
     "navigation": {
         "about": "O Hive",
@@ -365,7 +366,10 @@
         "markdown_not_supported": "Formatowanie Markdown nie jest tu wspierane",
         "advanced_settings": "Ustawienia zaawansowane",
         "beneficiaries_set": "%(count)s ustawionych",
-        "tags_input": "Wpisz tagi oddzielone spacją"
+        "tags_input": "Wpisz tagi oddzielone spacją",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Kto powinien otrzymać nagrodę?",
@@ -379,6 +383,15 @@
             "Procent dla beneficjenta musi wynosić od 1 do 100",
         "beneficiary_percent_total_invalid":
             "Procent dla beneficjenta musi być mniejszy niż 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
     },
     "category_selector_jsx": {
         "tag_your_story": "Kategorie: pierwsza kategoria określa główną.",
@@ -403,7 +416,14 @@
         "payout_option_description":
             "Jaki rodzaj tokenów chciałbyś otrzymać za ten wpis?",
         "current_default": "Domyślnie",
-        "update_default_in_settings": "Zaktualizuj"
+        "update_default_in_settings": "Zaktualizuj",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -600,14 +620,14 @@
             "Jednostki %(VESTING_TOKEN)s są niezbywalne i wymagają 3 miesięcy (w 13 ratach) do konwersji z powrotem na tokeny %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Przekonwertowane jednostki %(VESTING_TOKEN)s możesz wysłać sobie lub komuś innemu ale nie możesz ich wysłać ponownie bez konwersji z powrotem do tokenów %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Część z Twoich jednostek wpływu STEEM POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Steemit. Kwota oddelegowanych jednostek może się zmieniać w czasie.",
         "part_of_your_hive_power_is_currently_delegated":
             "Część z Twoich jednostek wpływu HIVE POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Hive. Kwota oddelegowanych jednostek może się zmieniać w czasie.",
         "steem_engine_tokens":
             "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
         "snax_token":
-            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>.",
+        "part_of_your_steem_power_is_currently_delegated":
+            "Część z Twoich jednostek wpływu STEEM POWER jest Ci oddelegowana. Delegowane jednostek to czasowe użyczenie dla zwiększenia wpływu lub by pomóc nowym użytkownikom platformy w korzystaniu ze Steemit. Kwota oddelegowanych jednostek może się zmieniać w czasie."
     },
     "promote_post_jsx": {
         "promote_post": "Promuj wpis",
@@ -632,6 +652,8 @@
     "postsummary_jsx": {
         "reblogged": "reblogowany",
         "reblogged_by": "Reblogowany przez",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "Pokaż ten wpis",
         "adjust_your": "dostosuj twój",
         "display_preferences": "wyświetl ustawienia",
@@ -794,7 +816,7 @@
         "to_comment_and_reward_others": " aby komentować i nagradzać innych.",
         "signup_button": "Sign up now to earn ",
         "signup_button_emphasis": "FREETOKENS!",
-        "sign_up_get_hive": "Sign up.",
+        "sign_up_get_steem": "Sign up",
         "returning_users": "Powracający: ",
         "login_warning_title":
             "Logowanie za pomocą klucza innego niż do publikowania",
@@ -806,7 +828,8 @@
         "join_our": "Dołącz do",
         "sign_transfer": "Podpisz, aby dokończyć przelew",
         "use_keychain": "Użyj rozszerzenia Hive Keychain",
-        "more_login_methods": "więcej metod logowania"
+        "more_login_methods": "więcej metod logowania",
+        "sign_up_get_hive": "Sign up."
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty":
@@ -839,6 +862,8 @@
         "location_is_too_long": "Lokalizacja jest za długa",
         "website_url_is_too_long": "Strona www jest za długa",
         "public_profile_settings": "Ustawienia profilu publicznego",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Prywatne ustawienia wyświetlania postów",
         "not_safe_for_work_nsfw_content": "Treści niestosowne w pracy (NSFW)",
         "always_hide": "Zawsze ukrywaj",
@@ -856,8 +881,28 @@
         "profile_about": "Opis",
         "profile_location": "Lokalizacja",
         "profile_website": "Strona www",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Zapisano!",
-        "choose_preferred_api_endpoint": "Wybierz preferowany węzeł API"
+        "choose_preferred_api_endpoint": "Wybierz preferowany węzeł API",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Advanced",
+        "api_endpoint_options": "API Endpoint Options",
+        "endpoint": "Endpoint",
+        "preferred": "Preferred?",
+        "remove": "Remove",
+        "add_api_endpoint": "Add API Endpoint",
+        "reset_endpoints": "Reset Endpoints",
+        "error_bad_url":
+            "This appears to be a bad URL, please check it and try again",
+        "error_bad_cookie": "Unable to get endpoints from cookie",
+        "error_already_exists": "This endpoint is already in the list",
+        "error_cant_remove_active":
+            "You can't remove the current preferred endpoint. Please select a new preferred endpoint first",
+        "error_cant_remove_all":
+            "You must have at least one endpoint in the list"
     },
     "transfer_jsx": {
         "amount_is_in_form": "Podana kwota musi być w formacie 99999.999",
@@ -919,6 +964,8 @@
         "amount": "Liczba",
         "already_power_down":
             "Aktualnie zmniejszasz moc %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s już wypłacono). Pamiętaj, że jeśli zmienisz ilość zmniejszanej mocy, to licznik dla następnej wypłaty zostanie wyzerowany.",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "Delegujesz %(AMOUNT)s %(LIQUID_TICKER)s. Kwota ta, jest zablokowana i nie jest dostępna do zmniejszenia mocy, dopóki delegacja się nie zakończy i upłynie pełen okres wypłacania nagród.",
         "per_week": "To około%(AMOUNT)s %(LIQUID_TICKER)s na tydzień.",
@@ -962,6 +1009,23 @@
             "Wait until your Resource Credits recharge",
         "out_of_bandwidth_option_3": "Wait until the network usage decreases"
     },
+    "sanitizedlink_jsx": {
+        "phishylink_caution": "Link ukryty; próba phishingu",
+        "phishylink_reveal": "pokaż link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Oznacz jako przeczytane",
+        "load_more": "Wczytaj więcej",
+        "all": "Wszystko",
+        "replies": "Odpowiedzi",
+        "follows": "Obserwowania",
+        "resteems": "Reblogi",
+        "upvotes": "Głosy",
+        "mentions": "Wzmianki"
+    },
     "market_jsx": {
         "action": "Akcja",
         "date_created": "Data utworzenia",
@@ -991,14 +1055,6 @@
         "total_DEBT_TOKEN_SHORT_CURRENCY_SIGN":
             "Razem %(DEBT_TOKEN_SHORT)s (%(CURRENCY_SIGN)s)"
     },
-    "sanitizedlink_jsx": {
-        "phishylink_caution": "Link ukryty; próba phishingu",
-        "phishylink_reveal": "pokaż link"
-    },
-    "delegations_jsx": {
-        "delegations": "Delegations"
-    },
-
     "authorrewards_jsx": {
         "estimated_author_rewards_last_week":
             "Szacowane wynagrodzenie autorskie w ostatnim tygodniu",
@@ -1031,15 +1087,5 @@
         "witness_proxy_set": "Ustaw pełnomocnika",
         "witness_proxy_clear": "Wyczyść pełnomocnika",
         "proxy_update_error": "Twój pełnomocnik nie został zaktualizowany"
-    },
-    "notificationslist_jsx": {
-        "mark_all_as_read": "Oznacz jako przeczytane",
-        "load_more": "Wczytaj więcej",
-        "all": "Wszystko",
-        "replies": "Odpowiedzi",
-        "follows": "Obserwowania",
-        "resteems": "Reblogi",
-        "upvotes": "Głosy",
-        "mentions": "Wzmianki"
     }
 }

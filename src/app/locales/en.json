@@ -915,6 +915,8 @@
         "amount": "Amount",
         "already_power_down":
             "You are already unstaking %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s paid out so far). Note that if you change the unstake amount the payout schedule will reset.",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "You are delegating %(AMOUNT)s %(LIQUID_TICKER)s. That amount is locked up and not available to unstake until the delegation is removed and a full reward period has passed.",
         "per_week": "That's ~%(AMOUNT)s %(LIQUID_TICKER)s per week.",
