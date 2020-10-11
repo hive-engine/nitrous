@@ -143,9 +143,7 @@ class UserWallet extends React.Component {
             .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
         const tokenUnstakes = profile.has('token_unstakes')
             ? profile.get('token_unstakes').toJS()
-            : {
-                  quantityLeft: '0',
-              };
+            : [];
 
         const tokenStatus = profile.has('token_status')
             ? profile.get('token_status').toJS()
@@ -194,6 +192,7 @@ class UserWallet extends React.Component {
             this.props.showPowerdown({
                 account: name,
                 stakeBalance: stakeBalance.toFixed(scotPrecision),
+                tokenUnstakes,
                 delegatedStake,
             });
         };
@@ -202,7 +201,7 @@ class UserWallet extends React.Component {
             const name = profile.get('name');
             this.props.cancelUnstake({
                 account: name,
-                transactionId: tokenUnstakes.txID,
+                tokenUnstakes,
                 useHive,
             });
         };
@@ -259,7 +258,7 @@ class UserWallet extends React.Component {
             },
         ];
 
-        if (parseFloat(tokenUnstakes.quantityLeft) > 0) {
+        if (tokenUnstakes.length > 0) {
             power_menu.push({
                 value: 'Cancel Unstake',
                 link: '#',

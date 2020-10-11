@@ -119,7 +119,7 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         engineApi.find('tokens', 'balances', {
             account,
         }),
-        engineApi.findOne('tokens', 'pendingUnstakes', {
+        engineApi.find('tokens', 'pendingUnstakes', {
             account,
             symbol: scotTokenSymbol,
         }),
