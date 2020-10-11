@@ -181,7 +181,7 @@ const SidePanel = ({
             {
                 value: 'HiveList_Services',
                 label: 'Services',
-                link: 'https://hivelist.io/hivecommerce-website-services/',
+                link: 'https://hivelist.io/services/',
             },
             {
                 value: 'HiveList_Discord',
