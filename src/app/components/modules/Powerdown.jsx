@@ -17,7 +17,8 @@ import { numberWithCommas } from 'app/utils/StateFunctions';
 class Powerdown extends React.Component {
     constructor(props, context) {
         super(props, context);
-        const new_withdraw = props.stakeBalance - props.delegatedStake;
+        const new_withdraw =
+            props.stakeBalance - props.delegatedStake - props.lockedStake;
         this.state = {
             broadcasting: false,
             manual_entry: false,
@@ -31,6 +32,7 @@ class Powerdown extends React.Component {
             account,
             stakeBalance,
             delegatedStake,
+            lockedStake,
             scotPrecision,
             useHive,
         } = this.props;
@@ -60,8 +62,8 @@ class Powerdown extends React.Component {
             };
             // workaround bad math in react-rangeslider
             let withdraw = new_withdraw;
-            if (withdraw > stakeBalance - delegatedStake) {
-                withdraw = stakeBalance - delegatedStake;
+            if (withdraw > stakeBalance - delegatedStake - lockedStake) {
+                withdraw = stakeBalance - delegatedStake - lockedStake;
             }
             const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
@@ -88,6 +90,16 @@ class Powerdown extends React.Component {
                 </li>
             );
         }
+        if (lockedStake !== 0) {
+            notes.push(
+                <li key="unstaking">
+                    {tt('powerdown_jsx.locked_in_unstake', {
+                        AMOUNT: formatBalance(lockedStake),
+                        LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
+                    })}
+                </li>
+            );
+        }
         if (this.state.error_message) {
             const MESSAGE = this.state.error_message;
             notes.push(
@@ -107,7 +119,7 @@ class Powerdown extends React.Component {
                 <Slider
                     value={new_withdraw}
                     step={1 / Math.pow(10, scotPrecision)}
-                    max={stakeBalance - delegatedStake}
+                    max={stakeBalance - delegatedStake - lockedStake}
                     format={formatBalance}
                     onChange={sliderChange}
                 />
@@ -146,12 +158,29 @@ export default connect(
         const account = values.get('account');
         const stakeBalance = parseFloat(values.get('stakeBalance'));
         const delegatedStake = parseFloat(values.get('delegatedStake'));
+        const tokenUnstakes = values.get('tokenUnstakes').toJS();
         const scotConfig = state.app.get('scotConfig');
+        const numberTransactions = scotConfig.getIn([
+            'config',
+            'tokenStats',
+            'total_token_balance',
+            'numberTransactions',
+        ]);
+        const lockedStake = tokenUnstakes
+            .map(
+                unstake =>
+                    unstake.numberTransactionsLeft > 1
+                        ? parseFloat(unstake.quantityLeft) -
+                          parseFloat(unstake.quantity) / numberTransactions
+                        : 0
+            )
+            .reduce((x, y) => x + y, 0);
         const useHive = HIVE_ENGINE;
         return {
             ...ownProps,
             account,
             stakeBalance,
+            lockedStake,
             delegatedStake,
             state,
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
