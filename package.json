@@ -25,7 +25,7 @@
   "author": "HiveBlog",
   "license": "MIT",
   "dependencies": {
-    "@hiveio/hive-js": "0.0.5",
+    "@hiveio/hive-js": "0.8.4",
     "@hiveio/hivescript": "^1.2.0",
     "@steem/crypto-session": "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb",
     "@steemit/steem-js": "0.7.9",
