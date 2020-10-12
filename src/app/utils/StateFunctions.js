@@ -18,11 +18,13 @@ export function vestingSteem(account, gprops) {
     }
     const vests = parseFloat(account.vesting_shares.split(' ')[0]);
     const total_vests = parseFloat(gprops.total_vesting_shares.split(' ')[0]);
-    const total_vest_steem = parseFloat(
-        gprops.total_vesting_fund_steem.split(' ')[0]
+    const total_vest_liquid = parseFloat(
+        (gprops.total_vesting_fund_hive
+            ? gprops.total_vesting_fund_hive
+            : gprops.total_vesting_fund_steem
+        ).split(' ')[0]
     );
-    const vesting_steemf = total_vest_steem * (vests / total_vests);
-    return vesting_steemf;
+    return total_vest_liquid * (vests / total_vests);
 }
 
 // How much STEEM this account has delegated out (minus received).
@@ -30,8 +32,7 @@ export function delegatedSteem(account, gprops) {
     if (
         !account.delegated_vesting_shares ||
         !account.received_vesting_shares ||
-        !gprops.total_vesting_shares ||
-        !gprops.total_vesting_fund_steem
+        !gprops.total_vesting_shares
     ) {
         return 0;
     }
@@ -43,11 +44,13 @@ export function delegatedSteem(account, gprops) {
     );
     const vests = delegated_vests - received_vests;
     const total_vests = parseFloat(gprops.total_vesting_shares.split(' ')[0]);
-    const total_vest_steem = parseFloat(
-        gprops.total_vesting_fund_steem.split(' ')[0]
+    const total_vest_liquid = parseFloat(
+        (gprops.total_vesting_fund_hive
+            ? gprops.total_vesting_fund_hive
+            : gprops.total_vesting_fund_steem
+        ).split(' ')[0]
     );
-    const vesting_steemf = total_vest_steem * (vests / total_vests);
-    return vesting_steemf;
+    return total_vest_liquid * (vests / total_vests);
 }
 
 export function assetFloat(str, asset) {
