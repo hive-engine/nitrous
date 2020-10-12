@@ -607,20 +607,22 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
             allow_votes = true,
             allow_curation_rewards = true,
         } = comment_options;
-        comment_op.push([
-            'comment_options',
-            {
-                author,
-                permlink,
-                max_accepted_payout,
-                percent_steem_dollars,
-                allow_votes,
-                allow_curation_rewards,
-                extensions: comment_options.extensions
-                    ? comment_options.extensions
-                    : [],
-            },
-        ]);
+        const commentOptionsOp = {
+            author,
+            permlink,
+            max_accepted_payout,
+            allow_votes,
+            allow_curation_rewards,
+            extensions: comment_options.extensions
+                ? comment_options.extensions
+                : [],
+        };
+        if (hive.config.rebranded_api) {
+            commentOptionsOp.percent_hbd = percent_steem_dollars;
+        } else {
+            commentOptionsOp.percent_steem_dollars = percent_steem_dollars;
+        }
+        comment_op.push(['comment_options', commentOptionsOp]);
     }
 
     return comment_op;
