@@ -3,7 +3,7 @@ import { fromJSOrdered } from './utils/immutable';
 const WEEDCASH = {
     APP_NAME: 'WeedCash',
     APP_ICON: 'weedcash',
-    APP_ICON_WIDTH: '140px',
+    APP_ICON_WIDTH: '145px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.weedcash.network',
     APP_DOMAIN: 'www.weedcash.network',
