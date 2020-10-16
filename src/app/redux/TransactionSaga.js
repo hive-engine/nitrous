@@ -617,7 +617,7 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
                 ? comment_options.extensions
                 : [],
         };
-        if (hive.config.rebranded_api) {
+        if (useHive) {
             commentOptionsOp.percent_hbd = percent_steem_dollars;
         } else {
             commentOptionsOp.percent_steem_dollars = percent_steem_dollars;
