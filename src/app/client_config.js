@@ -548,10 +548,43 @@ const AENEAS = {
     HIVE_ENGINE: true,
 };
 
+const BLOG = {
+    APP_NAME: 'BlogToken',
+    APP_ICON: 'blogtoken',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://blogtoken.io',
+    APP_DOMAIN: 'blogtoken.io',
+    LIQUID_TOKEN: 'Blog',
+    LIQUID_TOKEN_UPPERCASE: 'BLOG',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'blogtoken',
+    TAG_LIST: fromJSOrdered(['blogtoken']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'BLOG POWER',
+    SITE_DESCRIPTION:
+        'BlogToken is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called BLOG, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-38',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': AENEAS,
-    'frozen-retreat-15997.herokuapp.com': AENEAS,
+    'localhost:8080': BLOG,
+    'frozen-retreat-15997.herokuapp.com': BLOG,
+    'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,
     'www.lieta.io': LIETA,
     'www.archonapp.net': ARCHON,
