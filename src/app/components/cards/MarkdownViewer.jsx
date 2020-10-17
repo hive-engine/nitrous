@@ -110,19 +110,14 @@ class MarkdownViewer extends Component {
         if (this.props.allowDangerousHTML === true) {
             console.log('WARN\tMarkdownViewer rendering unsanitized content');
         } else {
-            try {
-                cleanText = sanitize(
-                    renderedText,
-                    sanitizeConfig({
-                        large,
-                        highQualityPost,
-                        noImage: noImage && allowNoImage,
-                    })
-                );
-            } catch (e) {
-                cleanText = '';
-                console.error('bad input');
-            }
+            cleanText = sanitize(
+                renderedText,
+                sanitizeConfig({
+                    large,
+                    highQualityPost,
+                    noImage: noImage && allowNoImage,
+                })
+            );
         }
 
         if (/<\s*script/gi.test(cleanText)) {
