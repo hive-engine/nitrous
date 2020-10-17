@@ -638,16 +638,20 @@ export function* createPermlink(title, author, useHive) {
 
         // ensure the permlink is unique
         let postExists = false;
-        const head = yield call(
-            callBridge,
-            'get_post_header',
-            {
-                author,
-                permlink: s,
-            },
-            !!useHive
-        );
-        postExists = head && !!head.category;
+        try {
+            const head = yield call(
+                callBridge,
+                'get_post_header',
+                {
+                    author,
+                    permlink: s,
+                },
+                !!useHive
+            );
+            postExists = head && !!head.category;
+        } catch (e) {
+            // suppress not found errors
+        }
         if (postExists) {
             const noise = base58
                 .encode(secureRandom.randomBuffer(4))
