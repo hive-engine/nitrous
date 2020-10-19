@@ -551,7 +551,7 @@ const AENEAS = {
 const BLOG = {
     APP_NAME: 'BlogToken',
     APP_ICON: 'blogtoken',
-    APP_ICON_WIDTH: '40px',
+    APP_ICON_WIDTH: '140px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://blogtoken.io',
     APP_DOMAIN: 'blogtoken.io',
