@@ -31,7 +31,7 @@
         "community_user_role_add_description":
             "Set the role of a user in this community.",
         "community_user_role_edit_description":
-            "Changing @%(username)s's role.",
+              "Changing @%(username)s's role.",
         "community_user_role_add_header": "Add User Role",
         "community_user_role_edit_header": "Change User Role",
         "community_user_title_edit_header": "Change User Title",
@@ -544,7 +544,7 @@
         "response_count_tooltip": {
             "zero": "коментарів немає. Клацніть, щоб прокоментувати.",
             "one": "1 коментар. Клацніть, щоб прокоментувати.",
-            "other": "%(count) коментаря(-ів). Клацніть, щоб прокоментувати."
+            "other": "%(count)s коментаря(-ів). Клацніть, щоб прокоментувати."
         },
         "vote_count": {
             "zero": "Жодного голосу",
