@@ -582,7 +582,7 @@ const BLOG = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': BLOG,
+    'localhost:8080': AENEAS,
     'frozen-retreat-15997.herokuapp.com': BLOG,
     'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,

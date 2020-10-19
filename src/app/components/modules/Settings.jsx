@@ -769,6 +769,9 @@ class Settings extends React.Component {
                                             <option value="ru">
                                                 Russian русский
                                             </option>
+                                            <option value="ua">
+                                                Ukranian Український
+                                            </option>
                                             <option value="fr">
                                                 French français
                                             </option>
