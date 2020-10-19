@@ -62,13 +62,13 @@
         "in_reply_to": "у відповідь на",
         "insufficient_balance": "Недостатній баланс",
         "invalid_amount": "Недійсна сума",
-        "links": "Джерала",
+        "links": "Мої посилання",
         "joined": "Приєднався(-лася)",
         "loading": "Завантаження",
         "login": "Вхід",
         "logout": "Вийти",
         "memo": "Пам'ятка",
-        "mute": "Вимкнути читання",
+        "mute": "В бан",
         "my_blog": "Мій блог",
         "my_comments": "Мої коментарі",
         "my_feed": "Моя стрічка",
@@ -335,8 +335,8 @@
         "steem_proposals": "Hive Пропозиції"
     },
     "main_menu": {
-        "hot": "Гарячі",
-        "trending": "Тенденції"
+        "hot": "Гаряче",
+        "trending": "Популярне"
     },
     "reply_editor": {
         "shorten_title": "Скоротіть назву",
