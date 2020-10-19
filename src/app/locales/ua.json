@@ -7,7 +7,7 @@
         "and": "і",
         "are_you_sure": "Ви впевнені?",
         "ask": "Пропозиції (ASK)",
-        "balance": "Баланс: %(balanceValue)-и",
+        "balance": "Баланс: %(balanceValue)s-и",
         "balances": "Баланси",
         "beneficiaries": "Beneficiaries",
         "bid": "Купівля",
@@ -82,7 +82,7 @@
         "ok": "Добре",
         "older": "Найстаріший",
         "or": "або",
-        "order_placed": "Замовлення розміщено: %(order)-і",
+        "order_placed": "Замовлення розміщено: %(order)s-і",
         "password": "Пароль",
         "payouts": "Виплати",
         "permissions": "Дозволи",
@@ -90,7 +90,7 @@
             "Джерело розширено до простого тексту; остерігайтеся потенційної спроби фішингу!",
         "pin": "Pin",
         "post": "Допис",
-        "post_as_user": "Опублікувати як %(username)",
+        "post_as_user": "Опублікувати як %(username)s",
         "posts": "Дописи",
         "powered_up_100": "100%% у Силі Голосу",
         "preview": "Попередній перегляд",
@@ -106,13 +106,13 @@
         "receive": "Отримувати ",
         "remove": "Видалити",
         "remove_vote": "Прибрати голос",
-        "replied_to": "відповів(ла) на %(account)",
+        "replied_to": "відповів(ла) на %(account)s",
         "replies": "Відповіді",
         "reply": "Відповісти",
         "reply_count": {
             "zero": "жодних відповідей",
             "one": "1 відповідь",
-            "other": "%(count) відповіді(-ей)"
+            "other": "%(count)s відповіді(-ей)"
         },
         "reputation": "Репутація",
         "reveal_comment": "Розкрийте коментар",
@@ -136,7 +136,7 @@
         "show": "Показати",
         "sign_in": "Увійти",
         "sign_up": "Зареєструватися",
-        "since": "з тих пір %(date)",
+        "since": "з тих пір %(date)s",
         "submit": "Надіслати",
         "subscriptions": "Subscriptions",
         "power_up": "Голосувати за",
@@ -172,9 +172,9 @@
         "do_you_need_to": "Вам потрібно",
         "account_name": "Назва рахунку",
         "recover_your_account": "відновити свій рахунок",
-        "reset_usernames_password": "Скидання %(username) Паролю",
+        "reset_usernames_password": "Скидання %(username)s Паролю",
         "this_will_update_usernames_authtype_key":
-            "Це оновить %(username) %(authType) ключ",
+            "Це оновить %(username)s %(authType)s ключ",
         "passwords_do_not_match": "Паролі не співпадають",
         "you_need_private_password_or_key_not_a_public_key":
             "Вам потрібен приватний пароль або ключ (не відкритий ключ)",
@@ -207,7 +207,7 @@
         "confirm_password": "Підтвердьте пароль",
         "account_updated": "Обліковий запис оновлено",
         "password_must_be_characters_or_more":
-            "Пароль повинен бути %(amount)-в символів або більше",
+            "Пароль повинен бути %(amount)s-в символів або більше",
         "need_password_or_key":
             "Вам потрібен приватний пароль або ключ (не відкритий ключ)",
         "login_to_see_memo": "увійдіть, щоб побачити нагадування",
@@ -272,13 +272,13 @@
         "advanced": "Розширений",
         "views": {
             "zero": "Ніхто не бачив",
-            "one": "%(count) Переглянуло",
-            "other": "%(count) Переглянуло"
+            "one": "%(count)s Переглянуло",
+            "other": "%(count)s Переглянуло"
         },
         "responses": {
             "zero": "Немає відповідей",
-            "one": "%(count) Відповідь",
-            "other": "%(count) Відповідей"
+            "one": "%(count)s Відповідь",
+            "other": "%(count)s Відповідей"
         },
         "post_key_warning": {
             "confirm":
@@ -303,8 +303,8 @@
         "explore": "Досліджувати",
         "APP_NAME_whitepaper": "%(APP_NAME)s Whitepaper",
         "third_party_exchanges": "Сторонні біржі:",
-        "buy_LIQUID_TOKEN": "Купити %(LIQUID_TOKEN)-и",
-        "sell_LIQUID_TOKEN": "Продати %(LIQUID_TOKEN)-и",
+        "buy_LIQUID_TOKEN": "Купити %(LIQUID_TOKEN)s-и",
+        "sell_LIQUID_TOKEN": "Продати %(LIQUID_TOKEN)s-и",
         "currency_market": "Ринок валюти",
         "stolen_account_recovery": "Відновлення викрадених рахунків",
         "change_account_password": "Змінити пароль облікового запису",
@@ -341,9 +341,9 @@
     "reply_editor": {
         "shorten_title": "Скоротіть назву",
         "exceeds_maximum_length": "Максимальна довжина перевищує (%(maxKb)sKB)",
-        "including_the_category": " (включаючи категорію '%(rootCategory)')",
+        "including_the_category": " (включаючи категорію '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Ви маєте %(tagsLength)-ів, всього тегів%(includingCategory)s. Будь ласка, використовуйте лише 5 у своєму дописі та рядку категорії.",
+            "Ви маєте %(tagsLength)s-ів, всього тегів%(includingCategory)s. Будь ласка, використовуйте лише 5 у своєму дописі та рядку категорії.",
         "are_you_sure_you_want_to_clear_this_form":
             "Ви впевнені, що хочете вийти з редактора коментарів?",
         "uploading": "Завантаження...",
@@ -367,7 +367,7 @@
         "update_post": "Оновити допис",
         "markdown_not_supported": "Тут не підтримується розмітка*Markdown",
         "advanced_settings": "Розширені налаштування",
-        "beneficiaries_set": "%(count) набір",
+        "beneficiaries_set": "%(count)s набір",
         "tags_input": "Enter your tags separated by a space",
         "enable_sidebyside": "Enable side-by-side editor",
         "disable_sidebyside": "Disable side-by-side editor",
@@ -400,7 +400,7 @@
         "maximum_tag_length_is_24_characters":
             "Максимальна довжина тегу - 24 символи",
         "use_limited_amount_of_categories":
-            "Будь ласка, використовуйте лише %(amount) категорії",
+            "Будь ласка, використовуйте лише %(amount)s категорії",
         "use_only_lowercase_letters": "Використовуйте лише малі літери",
         "use_one_dash": "Використовуйте лише один тире",
         "use_spaces_to_separate_tags":
@@ -450,13 +450,13 @@
     "user_profile": {
         "unknown_account": "Невідомий рахунок",
         "user_hasnt_made_any_posts_yet":
-            "Виглядає так, що %(name) ще не зробив(-ла) жодної публікації!",
+            "Виглядає так, що %(name)s ще не зробив(-ла) жодної публікації!",
         "user_hasnt_started_bloggin_yet":
-            "Виглядає так, що %(name) ще не почав(-ла) вести блог!",
+            "Виглядає так, що %(name)s ще не почав(-ла) вести блог!",
         "user_hasnt_followed_anything_yet":
-            "Виглядає так, що %(name) не встиг(-ла) підписатись на жодного користувача! %(name) А якщо нещодавно додали нових користувачів, яких почав(-ла) слідкувати, а їхня персоналізована срічка буде заповнена, коли з’явиться новий вміст.",
+            "Виглядає так, що %(name)s не встиг(-ла) підписатись на жодного користувача! %(name)s А якщо нещодавно додали нових користувачів, яких почав(-ла) слідкувати, а їхня персоналізована срічка буде заповнена, коли з’явиться новий вміст.",
         "user_hasnt_had_any_replies_yet":
-            "%(name) ще не отримав(-ла) жодної відповіді",
+            "%(name)s ще не отримав(-ла) жодної відповіді",
         "user_hasnt_had_any_notifications_yet":
             "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
@@ -471,17 +471,17 @@
         "follower_count": {
             "zero": "Жодниного послідовника",
             "one": "1 послідовник",
-            "other": "%(count) послідовники(-ів)"
+            "other": "%(count)s послідовники(-ів)"
         },
         "followed_count": {
             "zero": "Ні за ким не слідкує",
             "one": "1 слідкує",
-            "other": "%(count) слідкують"
+            "other": "%(count)s слідкують"
         },
         "post_count": {
             "zero": "Жодного допису",
             "one": "1 допис",
-            "other": "%(count) дописів"
+            "other": "%(count)s дописів"
         },
         "hide_reblogs": "Hide Reblogs",
         "show_all": "Показати все",
@@ -509,13 +509,13 @@
             "Мова ненависті чи Інтернет-тролінг",
         "intentional_miss_categorized_content_or_spam":
             "Навмисна публікація єресі або спам",
-        "pending_payout": "Очікується сума виплати: $%(value)",
+        "pending_payout": "Очікується сума виплати: $%(value)s",
         "payout_declined": "Виплата відхилена",
-        "max_accepted_payout": "Макс. прийнята виплата: $%(value)",
-        "promotion_cost": "Вартість просування $%(value)",
-        "past_payouts": "Минулі виплати $%(value)",
-        "past_payouts_author": " - Автор $%(value)",
-        "past_payouts_curators": " - Куратори $%(value)",
+        "max_accepted_payout": "Макс. прийнята виплата: $%(value)s",
+        "promotion_cost": "Вартість просування $%(value)s",
+        "past_payouts": "Минулі виплати $%(value)s",
+        "past_payouts_author": " - Автор $%(value)s",
+        "past_payouts_curators": " - Куратори $%(value)s",
         "removing_your_vote": "Видалення вашого голосу",
         "removing_your_vote_will_reset_curation_rewards_for_this_post":
             "Вилучення голосу призведе до скидання вашої винагороди за цю посаду",
@@ -526,10 +526,10 @@
         "changing_to_a_downvote_will_reset_curation_rewards_for_this_post":
             "Якщо змінити функцію Пониження голосу, ви скинете ваші винагороди за цю посаду",
         "confirm_flag": "Підтвердити прапор",
-        "and_more": "і %(count) більше",
+        "and_more": "і %(count)s більше",
         "votes_plural": {
-            "one": "%(count) голос",
-            "other": "%(count) голоси"
+            "one": "%(count)s голос",
+            "other": "%(count)s голоси"
         },
         "voting_power": "Voting Power",
         "estimated_vote": "Estimated Vote Value",
@@ -549,7 +549,7 @@
         "vote_count": {
             "zero": "Жодного голосу",
             "one": "1 голос",
-            "other": "%(count) голоси(-ів)"
+            "other": "%(count)s голоси(-ів)"
         }
     },
     "userkeys_jsx": {
@@ -570,7 +570,7 @@
     },
     "suggestpassword_jsx": {
         "APP_NAME_cannot_recover_passwords_keep_this_page_in_a_secure_location":
-            "%(APP_NAME) не вдається відновити паролі. Зберігайте цю сторінку в надійному місці, наприклад: пожежобезпечному сейфі чи просто сейфі.",
+            "%(APP_NAME)s не вдається відновити паролі. Зберігайте цю сторінку в надійному місці, наприклад: пожежобезпечному сейфі чи просто сейфі.",
         "APP_NAME_password_backup": "%(APP_NAME)s Резервне копіювання пароля",
         "APP_NAME_password_backup_required":
             "%(APP_NAME)s Резервне копіювання пароля (обов’язково)",
@@ -588,15 +588,15 @@
     },
     "tips_js": {
         "liquid_token":
-            "Торгові токени, які можна перенести будь-де в будь-який час.<br/>%(LIQUID_TOKEN)-и можна конвертувати в %(VESTING_TOKEN)-и у процесі, який називається Сила Голосу.",
+            "Торгові токени, які можна перенести будь-де в будь-який час.<br/>%(LIQUID_TOKEN)s-и можна конвертувати в %(VESTING_TOKEN)s-и у процесі, який називається Сила Голосу.",
         "influence_token":
             "Токени впливу, які дають вам більше контролю над виплатами за допис та дозволяють заробляти на винагороді за курацію.",
         "estimated_value":
-            "Орієнтовне значення базується на середньому значенні %(LIQUID_TOKEN)-и у доларах США.",
+            "Орієнтовне значення базується на середньому значенні %(LIQUID_TOKEN)s-и у доларах США.",
         "non_transferable":
-            "%(VESTING_TOKEN)-и є непередаваним і вимагає 3 місяців (13 платежів), щоб перетворити назад у %(LIQUID_TOKEN)-и.",
+            "%(VESTING_TOKEN)s-и є непередаваним і вимагає 3 місяців (13 платежів), щоб перетворити назад у %(LIQUID_TOKEN)s-и.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
-            "Конвертовано %(VESTING_TOKEN)-и можна надіслати самому собі або комусь іншому, але не можна перенести знову без перетворення на %(LIQUID_TOKEN)-и.",
+            "Конвертовано %(VESTING_TOKEN)s-и можна надіслати самому собі або комусь іншому, але не можна перенести знову без перетворення на %(LIQUID_TOKEN)s-и.",
         "part_of_your_hive_power_is_currently_delegated":
             "Part of %(user_name)s's HIVE POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on Hive. Your delegation amount can fluctuate.",
         "steem_engine_tokens":
@@ -609,7 +609,7 @@
     "promote_post_jsx": {
         "promote_post": "Просувати Допис",
         "spend_your_DEBT_TOKEN_to_advertise_this_post":
-            "Витратьте свої %(DEBT_TOKEN)-и щоб рекламувати цю публікацію в розділі промоціонованого вмісту",
+            "Витратьте свої %(DEBT_TOKEN)s-и щоб рекламувати цю публікацію в розділі промоціонованого вмісту",
         "you_successfully_promoted_this_post":
             "Ви успішно просунули цю публікацію",
         "this_post_was_hidden_due_to_low_ratings":
@@ -647,7 +647,7 @@
         "empty_feed_4": "Прочитайте Посібник із швидкого початку",
         "empty_feed_5": "Перегляньте поширені запитання",
         "my_feed": "Моя стрічку",
-        "accountnames_feed": "%(account_name) Стрічка"
+        "accountnames_feed": "%(account_name)s Стрічка"
     },
     "transferhistoryrow_jsx": {
         "to_savings": "to savings",
@@ -690,7 +690,7 @@
             },
             "to_self": "Receive %(amount)s STEEM POWER from ",
             "from_user_to_user":
-                " Transfer %(amount)s STEEM POWER from %(from) to "
+                " Transfer %(amount)s STEEM POWER from %(from)s to "
         },
         "transfer": {
             "from_self": {
@@ -742,13 +742,13 @@
         "change_account_password": "Змінити пароль облікового запису",
         "create_account": "Створити рахунок",
         "stolen_account_recovery": "Відновлення викраденого рахунку",
-        "people_following": "Люди, що стежать %(username)",
-        "people_followed_by": "Люди стежели за %(username)",
-        "curation_rewards_by": "Кураторські нагороди від %(username)",
-        "author_rewards_by": "Авторські нагороди %(username)",
-        "replies_to": "Відповіді на %(username)",
+        "people_following": "Люди, що стежать %(username)s",
+        "people_followed_by": "Люди стежели за %(username)s",
+        "curation_rewards_by": "Кураторські нагороди від %(username)s",
+        "author_rewards_by": "Авторські нагороди %(username)s",
+        "replies_to": "Відповіді на %(username)s",
         "posts_by": "Posts by %(username)s",
-        "comments_by": "Коментарі від %(username)"
+        "comments_by": "Коментарі від %(username)s"
     },
     "loginform_jsx": {
         "you_need_a_private_password_or_key":
@@ -781,13 +781,13 @@
         "you_account_has_been_successfully_recovered":
             "Ваш обліковку успішно відновлено!",
         "password_update_succes":
-            "Пароль для %(accountName) було успішно оновлено",
+            "Пароль для %(accountName)s було успішно оновлено",
         "password_info":
             "Цей пароль або приватний ключ було введено неправильно. Ймовірно, є помилка рукописного тексту або введення даних. Підказка: пароль або приватний ключ, згенерований Hive, ніколи не буде містити символів 0 (нуль), O (літери o), I (літери i) та l (малі регістри L).",
         "enter_your_username": "Введіть своє ім’я користувача",
         "password_or_wif": "Пароль або WIF",
         "this_operation_requires_your_key_or_master_password":
-            "Ця операція вимагає вашого %(authType) ключ або головний пароль.",
+            "Ця операція вимагає вашого %(authType)s ключ або головний пароль.",
         "keep_me_logged_in": "Тримайте мене в системі",
         "amazing_community": "дивовижна спільнота",
         "to_comment_and_reward_others":
@@ -890,7 +890,7 @@
         "asset": "Актив",
         "this_memo_is_private": "Ця примітка є приватною",
         "this_memo_is_public": "Ця пам’ятка є загальнодоступною",
-        "convert_to_VESTING_TOKEN": "Конвертувати в %(VESTING_TOKEN)-и",
+        "convert_to_VESTING_TOKEN": "Конвертувати в %(VESTING_TOKEN)s-и",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "Залишки за умови 3-денного зняття періоду очікування.",
         "move_funds_to_another_account":
@@ -902,30 +902,30 @@
         "from": "Від",
         "to": "Кому",
         "asset_currently_collecting":
-            "%(asset) наразі збирає %(interest)s%% КВТ.",
+            "%(asset)s наразі збирає %(interest)s%% КВТ.",
         "beware_of_spam_and_phishing_links":
             "Остерігайтеся спаму та фішингових посилань у пам’ятках про передачу. Не відкривайте джерело від користувачів, яким ви не довіряєте. Не надайте свої приватні ключі жодним стороннім веб-сайтам.",
         "transactions_make_take_a_few_minutes":
             "Операції не відображатимуться, поки їх не підтвердять на блокчейні, що може зайняти кілька хвилин.",
         "autocomplete_previous_transfers": "попередні перекази",
         "autocomplete_user_following": "послідовники",
-        "confirm_transfer": "Переведення %(amount) від %(from) кому %(to)s?"
+        "confirm_transfer": "Переведення %(amount)s від %(from)s кому %(to)s?"
     },
     "userwallet_jsx": {
         "transfer": "Переведення",
-        "conversion_complete_tip": "Буде завершено %(date)",
-        "in_conversion": "%(amount) в конверсії",
+        "conversion_complete_tip": "Буде завершено %(date)s",
+        "in_conversion": "%(amount)s в конверсії",
         "transfer_to_savings": "Перехід до заощаджень",
         "power_up": "Збільшити Силу",
         "power_down": "Зменшити Силу",
         "market": "Маркет",
         "wallet": "Wallet",
         "steem_wallet": "Steem Wallet",
-        "convert_to_LIQUID_TOKEN": "Конвертувати в %(LIQUID_TOKEN)-и",
-        "withdraw_LIQUID_TOKEN": "Вивести %(LIQUID_TOKEN)-и",
-        "withdraw_DEBT_TOKENS": "Вивести %(DEBT_TOKENS)-и",
+        "convert_to_LIQUID_TOKEN": "Конвертувати в %(LIQUID_TOKEN)s-и",
+        "withdraw_LIQUID_TOKEN": "Вивести %(LIQUID_TOKEN)s-и",
+        "withdraw_DEBT_TOKENS": "Вивести %(DEBT_TOKENS)s-и",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Токени вартістю близько $1,00 %(LIQUID_TICKER)-и, наразі збирає %(sbdInterest)-и%% КВТ.",
+            "Токени вартістю близько $1,00 %(LIQUID_TICKER)s-и, наразі збирає %(sbdInterest)s-и%% КВТ.",
         "tradeable_tokens_transferred":
             "Торгові токени, які можна перенести будь-де в будь-який час.",
         "savings": "ЗБЕРЕЖЕННЯ",
@@ -963,7 +963,7 @@
     },
     "termsagree_jsx": {
         "please_review": "Перегляньте наші умови, щоб продовжити",
-        "hi_user": "Вітаю, %(username)!",
+        "hi_user": "Вітаю, %(username)s!",
         "blurb":
             "Наші Загальні положення та умови встановлюють правила та рекомендації, які ви повинні прийняти та дотримуватися, щоб використовувати Hive, а наша Політика конфіденційності пояснює тип інформації, яку ми збираємо, і що ми робимо з нею. Не хвилюйтесь, ми не продаємо ваші дані нікому. Ми використовуємо його для задоволення юридичних вимог та для того, щоб зробити Hive кращим.",
         "i_agree_to_hives": "I agree to Hive's",
@@ -974,7 +974,7 @@
         "i_agree_to_Hives": "Я погоджуюсь із Hive's"
     },
     "confirmtransactionform_jsx": {
-        "confirm": "Підтвердіти %(transactionType)"
+        "confirm": "Підтвердіти %(transactionType)s"
     },
     "modals_jsx": {
         "your_transaction_failed": "Не вдалося обробити транзакцію",
@@ -1009,11 +1009,11 @@
     },
     "converttosteem_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
-            "Ваші %(DEBT_TOKEN)-и є рідкими та передаваними. Натомість, якщо ви бажаєте торгувати %(DEBT_TOKEN) безпосередньо можна на цьому веб-сайті %(link)s або скористуватись на зовнішнім ринком.",
+            "Ваші %(DEBT_TOKEN)s-и є рідкими та передаваними. Натомість, якщо ви бажаєте торгувати %(DEBT_TOKEN)s безпосередньо можна на цьому веб-сайті %(link)s або скористуватись на зовнішнім ринком.",
         "this_is_a_price_feed_conversion":
             "Це конверсія ринкової ставки. Кінцевий термін на 3,5 дня необхідний, щоб уникнути зловживань тих, хто намагається зробити ставку на короткострокові зміни середнього ринкового курсу.",
         "convert_to_LIQUID_TOKEN": "Convert to %(LIQUID_TOKEN)s",
         "DEBT_TOKEN_will_be_unavailable":
-            "Ця дія відбуватиметься через 3,5 дня і не може бути скасована.Ці(-ей) %(DEBT_TOKEN)-и негайно стануть недоступними."
+            "Ця дія відбуватиметься через 3,5 дня і не може бути скасована.Ці(-ей) %(DEBT_TOKEN)s-и негайно стануть недоступними."
     }
 }
