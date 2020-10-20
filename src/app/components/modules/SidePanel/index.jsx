@@ -109,7 +109,7 @@ const SidePanel = ({
             },
             {
                 value: 'ASH_Tribaldex',
-                label: 'Triabl Dex',
+                label: 'Tribal Dex',
                 link: 'https://tribaldex.com/exchange/ASH',
             },
         ],
@@ -224,9 +224,29 @@ const SidePanel = ({
 
         organizational_ASH: [
             {
-                value: 'Team_Ukraine',
+                value: 'ASH_Team_Ukraine',
                 label: 'Team Ukraine',
                 link: 'https://www.aeneas.blog/trending/hive-165469',
+            },
+            {
+                value: 'ASH_Team_Ukraine_Chat',
+                label: 'Team Ukraine Telegram Chat',
+                link: 'https://t.me/HIVE_UA',
+            },
+            {
+                value: 'ASH_Aeneas_Discord',
+                label: 'Aeneas Discord',
+                link: 'https://discord.gg/aAGP32v',
+            },
+            {
+                value: 'ASH_Cryptobrewmaster',
+                label: 'Cryptobrewmaster',
+                link: 'https://cryptobrewmaster.io',
+            },
+            {
+                value: 'ASH_Cryptobrewmaster_Chat',
+                label: 'Cryptobrewmaster Chat',
+                link: 'https://t.me/cryptobrewmaster',
             },
         ],
 
