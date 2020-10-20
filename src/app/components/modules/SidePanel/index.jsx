@@ -224,28 +224,27 @@ const SidePanel = ({
 
         organizational_ASH: [
             {
-                value: 'Team_Ukraine',
+                value: 'ASH_Team_Ukraine',
                 label: 'Team Ukraine',
                 link: 'https://www.aeneas.blog/trending/hive-165469',
             },
-                   {
-                value: 'Team Ukraine Chat',
+            {
+                value: 'ASH_Team_Ukraine_Chat',
                 label: 'Team Ukraine Telegram Chat',
                 link: 'https://t.me/HIVE_UA',
             },
-                   {
-                value: 'Aeneas Discord',
+            {
+                value: 'ASH_Aeneas_Discord',
                 label: 'Aeneas Discord',
                 link: 'https://discord.gg/aAGP32v',
             },
-            
-             {
-                value: 'Cryptobrewmaster',
+            {
+                value: 'ASH_Cryptobrewmaster',
                 label: 'Cryptobrewmaster',
-                link: 'http://cryptobrewmaster.io',
+                link: 'https://cryptobrewmaster.io',
             },
-             {
-                value: 'Cryptobrewmaster Chat',
+            {
+                value: 'ASH_Cryptobrewmaster_Chat',
                 label: 'Cryptobrewmaster Chat',
                 link: 'https://t.me/cryptobrewmaster',
             },
