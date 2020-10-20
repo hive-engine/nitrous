@@ -546,7 +546,7 @@ const AENEAS = {
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
+    POST_FOOTER: '\n\n---\n\n<center><sub>Posted via [Posted Using Aeneas.Blog](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-37',
     PREFER_HIVE: true,
