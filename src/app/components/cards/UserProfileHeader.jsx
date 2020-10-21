@@ -68,10 +68,12 @@ class UserProfileHeader extends React.Component {
 
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
-            : affiliationFromStake(
-                  accountname,
-                  stakedAccounts ? stakedAccounts.get(accountname) : null
-              );
+            : stakedAccounts
+              ? affiliationFromStake(
+                    accountname,
+                    stakedAccounts.get(accountname)
+                )
+              : null;
         return (
             <div className="UserProfile__banner row expanded">
                 <div className="column" style={cover_image_style}>

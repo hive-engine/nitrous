@@ -14,9 +14,6 @@ export function affiliationFromStake(accountName, stake) {
     if (accountName === 'lasseehlers') {
         return 'Tribe Leader';
     }
-    if (stake == null) {
-        return null;
-    }
 
     if (stake >= 250000) {
         return 'Hero Tribe Member';
