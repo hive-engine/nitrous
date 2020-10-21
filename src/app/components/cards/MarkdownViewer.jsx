@@ -125,9 +125,9 @@ class MarkdownViewer extends Component {
                         appDomain,
                     })
                 );
-            } catch (e) {
-                cleanText = '';
-                console.error('bad input');
+            } catch(e) {
+                cleanText = ''
+                console.error('bad input')
             }
         }
 
