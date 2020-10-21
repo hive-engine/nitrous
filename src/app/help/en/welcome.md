@@ -35,7 +35,7 @@ If you compare to any other tribe, even the APPICS token, then they all have a h
 Scotbot parameters
 --
 
-We tweaked the parameters of the Scotbot to be more successful then HIVE. The most important changes from HIVE, is that LASSECASH has 14 days reward window (meaning you receive your author and curator rewards for a post, 14 days after the post is made) and that the powerdown time is 26 payments every 7 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
+We tweaked the parameters of the Scotbot to be more successful then HIVE. The powerdown time is 26 payments every 7 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
 
 Lasse as leader of LASSECASH
 --
