@@ -64,27 +64,87 @@ const SidePanel = ({
                     useHive ? 'hive' : 'steem'
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
-        ].concat(
-            scotTokenSymbol == 'KANDA'
-                ? [
-                      {
-                          value: 'KANDA_Alcordex',
-                          label: 'Alcor Dex',
-                          link:
-                              'https://telos.alcor.exchange/markets/KANDA-telokandaone',
-                      },
-                      {
-                          value: 'KANDA_vapaeedex',
-                          label: 'Vapaee Dex',
-                          link: 'https://vapaee.io/exchange/trade/kanda.tlos',
-                      },
-                  ]
-                : []
-        ),
+        ],
+        internal_KANDA: [
+            {
+                value: 'engine',
+                label: useHive ? 'Hive Engine' : 'Steem Engine',
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
+            },
+            {
+                value: 'KANDA_Alcordex',
+                label: 'Alcor Dex',
+                link: 'https://telos.alcor.exchange/markets/KANDA-telokandaone',
+            },
+            {
+                value: 'KANDA_vapaeedex',
+                label: 'Vapaee Dex',
+                link: 'https://vapaee.io/exchange/trade/kanda.tlos',
+            },
+        ],
+        internal_ASH: [
+            {
+                value: 'engine',
+                label: useHive ? 'Hive Engine' : 'Steem Engine',
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
+            },
+            {
+                value: 'ASH_cryptex24',
+                label: 'Cryptex24',
+                link: 'https://www.cryptex24.io/registration?ref=cfdb40ad',
+            },
+            {
+                value: 'ASH_richamster',
+                label: 'Richamster',
+                link: 'https://richamster.com/?referral=h1F5TOeCoLPq',
+            },
+            {
+                value: 'ASH_Leodex',
+                label: 'LEO Dex',
+                link: 'https://leodex.io/market/ASH',
+            },
+            {
+                value: 'ASH_Tribaldex',
+                label: 'Tribal Dex',
+                link: 'https://tribaldex.com/exchange/ASH',
+            },
+        ],
         external: [
             {
                 label: tt('navigation.chat'),
                 link: 'https://openhive.chat/home',
+            },
+        ],
+
+        organizational_ASH: [
+            {
+                value: 'ASH_Team_Ukraine',
+                label: 'Team Ukraine',
+                link: 'https://www.aeneas.blog/trending/hive-165469',
+            },
+            {
+                value: 'ASH_Team_Ukraine_Chat',
+                label: 'Team Ukraine Telegram Chat',
+                link: 'https://t.me/HIVE_UA',
+            },
+            {
+                value: 'ASH_Aeneas_Discord',
+                label: 'Aeneas Discord',
+                link: 'https://discord.gg/aAGP32v',
+            },
+            {
+                value: 'ASH_Cryptobrewmaster',
+                label: 'Cryptobrewmaster',
+                link: 'https://cryptobrewmaster.io',
+            },
+            {
+                value: 'ASH_Cryptobrewmaster_Chat',
+                label: 'Cryptobrewmaster Chat',
+                link: 'https://t.me/cryptobrewmaster',
             },
         ],
 
@@ -134,21 +194,25 @@ const SidePanel = ({
                     </ul>
                 )}
 
-                <ul className="vertical menu">
-                    <li>
-                        <a className="menu-section">Community</a>
-                    </li>
-                    {sidePanelLinks['organizational_' + scotTokenSymbol] &&
-                        sidePanelLinks['organizational_' + scotTokenSymbol].map(
-                            makeLink
-                        )}
-                </ul>
+                {sidePanelLinks['organizational_' + scotTokenSymbol] && (
+                    <ul className="vertical menu">
+                        <li>
+                            <a className="menu-section">Community</a>
+                        </li>
+                        {sidePanelLinks[
+                            'organizational_' + scotTokenSymbol
+                        ].map(makeLink)}
+                    </ul>
+                )}
 
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">Trade {scotTokenSymbol}</a>
                     </li>
-                    {sidePanelLinks['internal'].map(makeLink)}
+                    {(sidePanelLinks['internal_' + scotTokenSymbol]
+                        ? sidePanelLinks['internal_' + scotTokenSymbol]
+                        : sidePanelLinks['internal']
+                    ).map(makeLink)}
                 </ul>
             </div>
         </div>
