@@ -21,6 +21,7 @@ export const TAG_LIST = fromJSOrdered([
     'flatearth',
     'anarchocapitalism',
     'cryptocurrencies',
+    'keto',
     'personalpost',
     'design',
     'pictures',

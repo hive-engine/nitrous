@@ -265,7 +265,7 @@ class PostAdvancedSettings extends Component {
                             onChange={this.handlePayoutChange}
                         >
                             <option value="50%">
-                                {tt('reply_editor.default_50_50')}
+                                10% LASSECASH / 90% LASSECASH POWER
                             </option>
                             <option value="100%">
                                 {tt('reply_editor.power_up_100')}
@@ -280,7 +280,7 @@ class PostAdvancedSettings extends Component {
                         {defaultPayoutType === '0%'
                             ? tt('reply_editor.decline_payout')
                             : defaultPayoutType === '50%'
-                              ? tt('reply_editor.default_50_50')
+                              ? '10% LASSECASH / 90% LASSECASH POWER'
                               : tt('reply_editor.power_up_100')}
                     </div>
                 </div>
