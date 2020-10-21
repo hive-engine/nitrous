@@ -69,10 +69,6 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Promotion')]);
             //});
-        } else if (route.page === 'Buy') {
-            //require.ensure([], (require) => {
-            cb(null, [require('app/components/pages/Buy')]);
-            //});
         } else if (route.page === 'Shop') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Shop')]);
