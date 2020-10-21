@@ -20,6 +20,23 @@ import {
 } from 'app/components/elements/EmbeddedPlayers/soundcloud';
 
 import {
+    validateIframeUrl as validateSpotifyIframeUrl,
+    genIframeMd as genSpotifyIframeMd,
+    normalizeEmbedUrl as normalizeSpotifyEmbedUrl,
+    embedNode as embedSpotifyNode,
+    sandboxConfig as sandboxConfigSpotify,
+} from 'app/components/elements/EmbeddedPlayers/spotify';
+
+import {
+    validateIframeUrl as validateMixcloudIframeUrl,
+    genIframeMd as genMixcloudIframeMd,
+    normalizeEmbedUrl as normalizeMixcloudEmbedUrl,
+    embedNode as embedMixcloudNode,
+    getIframeDimensions as getMixcloudIframeDimensions,
+    sandboxConfig as sandboxConfigMixcloud,
+} from 'app/components/elements/EmbeddedPlayers/mixcloud';
+
+import {
     genIframeMd as genYoutubeIframeMd,
     validateIframeUrl as validateYoutubeIframeUrl,
     normalizeEmbedUrl as normalizeYoutubeEmbedUrl,
@@ -75,6 +92,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeDtubeEmbedUrl,
         embedNodeFn: embedDtubeNode,
         genIframeMdFn: genDtubeIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigDtube,
     },
     {
@@ -83,6 +101,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitchEmbedUrl,
         embedNodeFn: embedTwitchNode,
         genIframeMdFn: genTwitchIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigTwitch,
     },
     {
@@ -91,7 +110,26 @@ const supportedProviders = [
         normalizeEmbedUrlFn: null,
         embedNodeFn: null,
         genIframeMdFn: null,
+        getIframeDimensionsFn: null,
         ...sandboxConfigSoundcloud,
+    },
+    {
+        id: 'spotify',
+        validateIframeUrlFn: validateSpotifyIframeUrl,
+        normalizeEmbedUrlFn: normalizeSpotifyEmbedUrl,
+        embedNodeFn: embedSpotifyNode,
+        genIframeMdFn: genSpotifyIframeMd,
+        getIframeDimensionsFn: null,
+        ...sandboxConfigSpotify,
+    },
+    {
+        id: 'mixcloud',
+        validateIframeUrlFn: validateMixcloudIframeUrl,
+        normalizeEmbedUrlFn: normalizeMixcloudEmbedUrl,
+        embedNodeFn: embedMixcloudNode,
+        genIframeMdFn: genMixcloudIframeMd,
+        getIframeDimensionsFn: getMixcloudIframeDimensions,
+        ...sandboxConfigMixcloud,
     },
     {
         id: 'youtube',
@@ -99,6 +137,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeYoutubeEmbedUrl,
         embedNodeFn: embedYoutubeNode,
         genIframeMdFn: genYoutubeIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigYoutube,
     },
     {
@@ -107,6 +146,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeVimeoEmbedUrl,
         embedNodeFn: embedVimeoNode,
         genIframeMdFn: genVimeoIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigVimeo,
     },
     {
@@ -115,6 +155,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeThreespeakEmbedUrl,
         embedNodeFn: embedThreeSpeakNode,
         genIframeMdFn: genThreespeakIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigThreespeak,
     },
     {
@@ -123,6 +164,7 @@ const supportedProviders = [
         normalizeEmbedUrlFn: normalizeTwitterEmbedUrl,
         embedNodeFn: embedTwitterNode,
         genIframeMdFn: genTwitterIframeMd,
+        getIframeDimensionsFn: null,
         ...sandboxConfigTwitter,
     },
     {
@@ -131,35 +173,53 @@ const supportedProviders = [
         normalizeEmbedUrlFn: null,
         embedNodeFn: null,
         genIframeMdFn: null,
+        getIframeDimensionsFn: null,
         ...sandboxConfigDapplr,
     },
 ];
 
 export default supportedProviders;
 
+function getIframeDimensions(large) {
+    return {
+        width: large ? '640' : '480',
+        height: large ? '360' : '270',
+    };
+}
+
 /**
  * Allow iFrame in the Markdown if the source URL is allowed
  * @param url
  * @returns { boolean | { providerId: string, sandboxAttributes: string[], useSandbox: boolean, validUrl: string }}
  */
-export function validateIframeUrl(url) {
+export function validateIframeUrl(url, large = true) {
     for (let pi = 0; pi < supportedProviders.length; pi += 1) {
         const provider = supportedProviders[pi];
 
         const validUrl = provider.validateIframeUrlFn(url);
 
+        let iframeDimensions;
+        if (provider.getIframeDimensionsFn) {
+            iframeDimensions = provider.getIframeDimensionsFn(large);
+        } else {
+            iframeDimensions = getIframeDimensions(large);
+        }
+
         if (validUrl !== false) {
-            console.log(`Found a valid ${provider.id} iframe URL`);
             return {
                 providerId: provider.id,
                 sandboxAttributes: provider.sandboxAttributes || [],
                 useSandbox: provider.useSandbox,
+                width: iframeDimensions.width,
+                height: iframeDimensions.height,
                 validUrl,
             };
         }
     }
 
-    return false;
+    return {
+        validUrl: false,
+    };
 }
 
 /**
@@ -257,12 +317,22 @@ export function generateMd(section, idx, large) {
             metadata = metadataString.substring(9);
         }
 
-        const w = large ? 640 : 480,
-            h = large ? 360 : 270;
-
         const provider = getProviderById(type);
         if (provider) {
-            markdown = provider.genIframeMdFn(idx, id, w, h, metadata);
+            let iframeDimensions;
+            if (provider.getIframeDimensionsFn) {
+                iframeDimensions = provider.getIframeDimensionsFn(large);
+            } else {
+                iframeDimensions = getIframeDimensions(large);
+            }
+
+            markdown = provider.genIframeMdFn(
+                idx,
+                id,
+                iframeDimensions.width,
+                iframeDimensions.height,
+                metadata
+            );
         } else {
             console.error('MarkdownViewer unknown embed type', type);
         }
