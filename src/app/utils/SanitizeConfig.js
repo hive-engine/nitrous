@@ -64,7 +64,9 @@ export default ({
                 validUrl,
                 useSandbox,
                 sandboxAttributes,
-            } = validateEmbbeddedPlayerIframeUrl(srcAtty);
+                width,
+                height,
+            } = validateEmbbeddedPlayerIframeUrl(srcAtty, large);
 
             if (validUrl !== false) {
                 const iframe = {
@@ -75,8 +77,8 @@ export default ({
                         webkitallowfullscreen: 'webkitallowfullscreen', // deprecated but required for vimeo : https://vimeo.com/forums/help/topic:278181
                         mozallowfullscreen: 'mozallowfullscreen', // deprecated but required for vimeo
                         src: validUrl,
-                        width: large ? '640' : '480',
-                        height: large ? '360' : '270',
+                        width,
+                        height,
                     },
                 };
                 if (useSandbox) {
