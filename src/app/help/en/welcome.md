@@ -16,7 +16,7 @@ Purpose of LASSECASH
 Rewarding truth content and social interaction. The original idea was to create a space for anarcho capitalists to monetize their content, but the first half year of LASSECASH’s life has shown that we attract all kinds of people, that just want to have fun and earn money at the same time. For this reason, we think that LASSECASH reward social interaction more then truth content.
 
 
-<center>https://images.hive.blog/640x0/https://images.hive.blog/DQmek9Q2vZ8fRo8P4r9dVzhZCYu3yMM1wQgk4i4J9biVAYW/image.png</center>
+<center>![](https://images.hive.blog/DQmR7EaUFzuT1CLFZEj5mpiv13FLEYC2uDJwff854QGDYZB/image.png)</center>
 
 Distribution
 --
