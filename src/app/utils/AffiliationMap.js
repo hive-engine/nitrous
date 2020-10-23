@@ -104,6 +104,7 @@ const map = {
     sexandfreedom1: 'Verified Creator',
     sexandlove: 'Verified Creator',
     nancyxxx: 'Verified Creator', 
+    mistressavanya: 'Verified Creator',
 };
 
 export function affiliationFromStake(accountName, stake) {
