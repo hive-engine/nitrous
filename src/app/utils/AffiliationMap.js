@@ -106,6 +106,7 @@ const map = {
     nancyxxx: 'Verified Creator', 
     mistressavanya: 'Verified Creator',
     lowlightart: 'Verified Creator'
+    polyannie: 'Verified Creator'
 };
 
 export function affiliationFromStake(accountName, stake) {
