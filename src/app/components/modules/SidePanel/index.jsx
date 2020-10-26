@@ -93,6 +93,11 @@ const SidePanel = ({
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
+                value: 'ASH_Richlist',
+                label: 'ASH Richlist',
+                link: 'https://he.dtools.dev/richlist/ASH',
+            },
+            {
                 value: 'ASH_cryptex24',
                 label: 'Cryptex24',
                 link: 'https://www.cryptex24.io/registration?ref=cfdb40ad',
@@ -230,7 +235,7 @@ const SidePanel = ({
             },
             {
                 value: 'ASH_Team_Ukraine_Chat',
-                label: 'Team Ukraine Telegram Chat',
+                label: 'Hive UA Telegram Chat',
                 link: 'https://t.me/HIVE_UA',
             },
             {
