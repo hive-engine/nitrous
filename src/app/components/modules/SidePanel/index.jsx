@@ -93,7 +93,7 @@ const SidePanel = ({
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
-                value: 'Richlist',
+                value: 'ASH_Richlist',
                 label: 'ASH Richlist',
                 link: 'https://he.dtools.dev/richlist/ASH',
             },
