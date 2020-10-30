@@ -42,6 +42,8 @@ const STEEMING = {
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-29',
@@ -90,6 +92,8 @@ const ONLINEBUZZ = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
