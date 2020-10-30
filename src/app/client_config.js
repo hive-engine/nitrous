@@ -123,6 +123,9 @@ export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER =
     '---\n<center>Posted via [ReggaeJahm](${POST_URL}) | Reggae Culture Rewarded </center>';
+// Footer to attach to commments. ${POST_URL} is a macro that can be used, will be expanded to the URL of the commment.
+export const COMMENT_FOOTER =
+    '---\n<center>Posted via [ReggaeJahm](${POST_URL}) | Reggae Culture Rewarded </center>';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
