@@ -64,6 +64,8 @@ const WEEDCASH = {
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [weedcash.network](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [weedcash.network](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: 'https://richardcrill.github.io',
     SDC_GTAG_MEASUREMENT_ID: 'UA-140856330-1',
@@ -99,6 +101,7 @@ const TIX = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-31',
     COMMUNITY_CATEGORY: 'hive-177225',
@@ -177,6 +180,7 @@ const FOODIE = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-27',
@@ -217,6 +221,8 @@ const KANDA = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted from [Telokanda Hive Dapp](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
         '\n\n---\n\n<center><sub>Posted from [Telokanda Hive Dapp](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
@@ -268,6 +274,8 @@ const STEEMING = {
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [Steeming.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-29',
@@ -316,6 +324,8 @@ const ONLINEBUZZ = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [Onlinebuzz.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
@@ -379,6 +389,7 @@ const HIVELIST = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: 'https://hivelist.github.io/',
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-34',
@@ -412,6 +423,7 @@ const ARCHON = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-35',
@@ -445,6 +457,7 @@ const DBLOG = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-25',
@@ -476,6 +489,7 @@ const INFOWARS = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
@@ -510,6 +524,7 @@ const LIETA = {
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER: '',
+    COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
     PREFER_HIVE: true,
@@ -565,6 +580,7 @@ export const CONFIG_MAP = {
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
+        COMMENT_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: 'https://steemdiamond.github.io/',
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-28',
@@ -594,6 +610,7 @@ export const CONFIG_MAP = {
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
+        COMMENT_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-16',
@@ -624,6 +641,7 @@ export const CONFIG_MAP = {
         ALLOW_MASTER_PW: false,
         // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
         POST_FOOTER: '',
+        COMMENT_FOOTER: '',
         SCOT_TAG_FIRST: false,
         PINNED_POSTS_URL: null,
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-26',
