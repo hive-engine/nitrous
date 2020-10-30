@@ -571,17 +571,19 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
 
     // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
 
-    const md = operation.json_metadata;
-
     let body2;
     if (originalBody) {
         const patch = createPatch(originalBody, body);
         // Putting body into buffer will expand Unicode characters into their true length
         if (patch && patch.length < new Buffer(body, 'utf-8').length)
             body2 = patch;
-    } else if (typeof md !== 'string' && !md.canonical_url) {
+    } else {
         // Creation - set up canonical url
-        md.canonical_url = postUrl;
+        const parsedMeta = JSON.parse(operation.json_metadata);
+        if (!parsedMeta.canonical_url) {
+            parsedMeta.canonical_url = postUrl;
+        }
+        operation.json_metadata = JSON.stringify(parsedMeta);
     }
     if (!body2) body2 = body;
 
