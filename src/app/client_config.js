@@ -75,6 +75,8 @@ const WEEDCASH = {
     POSTED_VIA_NITROUS_ICON: 'weedcash',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    DISCORD_SERVER: '514943843154526208',
+    DISCORD_CHANNEL: '514943843154526210',
 };
 
 const TIX = {
@@ -697,7 +699,7 @@ const BLOG = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': AENEAS,
+    'localhost:8080': WEEDCASH,
     'frozen-retreat-15997.herokuapp.com': BLOG,
     'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,
