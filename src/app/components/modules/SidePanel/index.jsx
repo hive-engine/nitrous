@@ -67,6 +67,12 @@ const SidePanel = ({
                 link: `https://hive-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
             {
+                value: 'airdrop',
+                label: 'Airdrop',
+                link: '/airdrop/@lasseehlers/airdrop-competition',
+                internal: true,
+            },
+            {
                 value: 'lasseshop',
                 label: 'Shop',
                 link: '/shop',
