@@ -74,7 +74,13 @@ const SidePanel = ({
             },
         ],
 
-        organizational: [],
+        organizational: [
+             {
+                value: 'buybeats',
+                label: 'Buy Beats With JAHM',
+                link: 'https://irie876.com/product-category/digital-goods/',
+            },
+        ],
 
         legal: [
             {
