@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import * as appActions from 'app/redux/AppReducer';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
+import { SIGNUP_URL } from 'shared/constants.js';
 
 const SidePanel = ({
     alignment,
@@ -13,6 +15,9 @@ const SidePanel = ({
     hideSidePanel,
     username,
     walletUrl,
+    scotTokenSymbol,
+    useHive,
+    toggleNightmode,
 }) => {
     if (process.env.BROWSER) {
         visible && document.addEventListener('click', hideSidePanel);
@@ -27,135 +32,97 @@ const SidePanel = ({
     const makeLink = (i, ix, arr) => {
         // A link is internal if it begins with a slash
         const isExternal = !i.link.match(/^\//) || i.isExternal;
+        const cn = ix === arr.length - 1 ? 'last' : null;
         if (isExternal) {
-            const cn = ix === arr.length - 1 ? 'last' : null;
             return (
-                <li key={i.value} className={cn}>
-                    <a
-                        href={i.link}
-                        target={i.internal ? null : '_blank'}
-                        rel="noopener noreferrer"
-                    >
+                <li key={ix} className={cn}>
+                    <a href={i.link} target="_blank" rel="noopener noreferrer">
                         {i.label}&nbsp;<Icon name="extlink" />
                     </a>
                 </li>
             );
-        } else {
-            const cn = ix === arr.length - 1 ? 'last' : null;
+        }
+        if (i.onClick) {
             return (
-                <li key={i.value} className={cn}>
-                    <Link to={i.link}>{i.label}</Link>
+                <li key={ix} className={cn}>
+                    <a onClick={i.onClick}>{i.label}</a>
                 </li>
             );
         }
+        return (
+            <li key={ix} className={cn}>
+                <Link to={i.link}>{i.label}</Link>
+            </li>
+        );
     };
 
     const sidePanelLinks = {
         internal: [
             {
-                value: 'steemengine',
-                label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
+                value: 'leodex',
+                label: 'Leo DEX',
+                link: `https://leodex.io/market/SPORTS`,
             },
             {
-                value: 'freedomx',
-                label: 'FreedomEX',
-                link: `https://freedomex.io/trading/${
-                    LIQUID_TOKEN_UPPERCASE
-                }freex`,
+                value: 'engine',
+                label: useHive ? 'Hive Engine' : 'Steem Engine',
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
         ],
-        exchanges: [
-            {
-                value: 'blocktrades',
-                label: 'Blocktrades',
-                link: username
-                    ? `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem&receive_address=${
-                          username
-                      }`
-                    : `https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem`,
-            },
-            {
-                value: 'gopax',
-                label: 'GOPAX',
-                link: 'https://www.gopax.co.kr/exchange/steem-krw/',
-            },
-        ],
+
         external: [
             {
-                value: 'chat',
                 label: tt('navigation.chat'),
-                link: 'https://steem.chat/home',
-            },
-            {
-                value: 'jobs',
-                label: tt('navigation.jobs'),
-                link:
-                    'https://recruiting.paylocity.com/recruiting/jobs/List/3288/Steemit-Inc',
-            },
-            {
-                value: 'tools',
-                label: tt('navigation.app_center'),
-                link: 'https://steemprojects.com/',
-            },
-            {
-                value: 'business',
-                label: tt('navigation.business_center'),
-                link: 'https://steemeconomy.com/',
-            },
-            {
-                value: 'api_docs',
-                label: tt('navigation.api_docs'),
-                link: 'https://developers.steem.io/',
+                link: 'https://openhive.chat/home',
             },
         ],
+
         organizational: [
             {
-                value: 'bluepaper',
-                label: tt('navigation.bluepaper'),
-                link: 'https://steem.io/steem-bluepaper.pdf',
+                value: 'sportstube',
+                label: 'SportsTube',
+                link: 'https://video.sportstalksocial.com',
             },
             {
-                value: 'smt_whitepaper',
-                label: tt('navigation.smt_whitepaper'),
-                link: 'https://smt.steem.io/',
+                value: 'discord',
+                label: 'Discord',
+                link: 'http://discord.sportstalk.social',
             },
             {
-                value: 'whitepaper',
-                label: tt('navigation.whitepaper'),
-                link: 'https://steem.io/SteemWhitePaper.pdf',
+                value: 'sports_richlist',
+                label: 'SPORTS Richlist',
+                link: 'https://leodex.io/richlist/SPORTS',
+                internal: true,
             },
             {
-                value: 'about',
-                label: tt('navigation.about'),
-                link: '/about.html',
+                value: 'actifit',
+                label: 'Actifit',
+                link: 'https://actifit.io/signup?referrer=sportsbuy',
                 internal: true,
             },
         ],
+
         legal: [
             {
-                value: 'privacy',
                 label: tt('navigation.privacy_policy'),
                 link: '/privacy.html',
             },
             {
-                value: 'tos',
                 label: tt('navigation.terms_of_service'),
                 link: '/tos.html',
             },
         ],
+
         extras: [
             {
-                value: 'login',
                 label: tt('g.sign_in'),
                 link: '/login.html',
             },
             {
-                value: 'signup',
                 label: tt('g.sign_up'),
-                link: 'https://signup.steemit.com',
+                link: SIGNUP_URL,
             },
             {
                 value: 'post',
@@ -170,8 +137,15 @@ const SidePanel = ({
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
                 <ul className={`vertical menu ${loggedIn}`}>
-                    {sidePanelLinks['extras'].map(makeLink)}
+                    {sidePanelLinks.extras.map(makeLink)}
                 </ul>
+                <ul className="vertical menu">
+                    <li>
+                        <a className="menu-section">Community</a>
+                    </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
+                </ul>
+
                 <ul className="vertical menu">
                     <li>
                         <a className="menu-section">
@@ -190,6 +164,7 @@ SidePanel.propTypes = {
     visible: PropTypes.bool.isRequired,
     hideSidePanel: PropTypes.func.isRequired,
     username: PropTypes.string,
+    toggleNightmode: PropTypes.func.isRequired,
 };
 
 SidePanel.defaultProps = {
@@ -199,10 +174,19 @@ SidePanel.defaultProps = {
 export default connect(
     (state, ownProps) => {
         const walletUrl = state.app.get('walletUrl');
+        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
+        const useHive = HIVE_ENGINE;
         return {
             walletUrl,
+            scotTokenSymbol,
+            useHive,
             ...ownProps,
         };
     },
-    dispatch => ({})
+    dispatch => ({
+        toggleNightmode: e => {
+            if (e) e.preventDefault();
+            dispatch(appActions.toggleNightmode());
+        },
+    })
 )(SidePanel);

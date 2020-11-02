@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { POSTED_VIA_NITROUS_ICON } from 'app/client_config';
 
 export const icons = [
     'user',
@@ -11,6 +12,7 @@ export const icons = [
     'chatbox',
     'close',
     'facebook',
+    'hive',
     'twitter',
     'reddit',
     'linkedin',
@@ -19,8 +21,8 @@ export const icons = [
     'logotype',
     'clock',
     'extlink',
-    'steem',
-    'steempower',
+    'hive',
+    'hivepower',
     'ether',
     'bitcoin',
     'bitshares',
@@ -34,6 +36,7 @@ export const icons = [
     'flag1',
     'flag2',
     'reblog',
+    'cross-post',
     'photo',
     'line',
     'video',
@@ -56,11 +59,12 @@ export const icons = [
     'pin',
     'pin-disabled',
     'dtube',
-];
+].concat(POSTED_VIA_NITROUS_ICON ? [POSTED_VIA_NITROUS_ICON] : []);
 const icons_map = {};
 for (const i of icons) icons_map[i] = require(`assets/icons/${i}.svg`);
 
 const rem_sizes = {
+    '0_8x': '0.8',
     '1x': '1.12',
     '1_5x': '1.5',
     '2x': '2',
@@ -73,7 +77,16 @@ const rem_sizes = {
 export default class Icon extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
-        size: PropTypes.oneOf(['1x', '1_5x', '2x', '3x', '4x', '5x', '10x']),
+        size: PropTypes.oneOf([
+            '0_8x',
+            '1x',
+            '1_5x',
+            '2x',
+            '3x',
+            '4x',
+            '5x',
+            '10x',
+        ]),
         inverse: PropTypes.bool,
         className: PropTypes.string,
     };

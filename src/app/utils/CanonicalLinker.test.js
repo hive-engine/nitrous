@@ -1,5 +1,7 @@
 import { makeCanonicalLink } from './CanonicalLinker';
-import { APP_NAME, APP_URL } from 'app/client_config';
+import { APP_NAME, APP_URL, PREFER_HIVE } from 'app/client_config';
+
+const DEFAULT_URL = PREFER_HIVE ? 'https://hive.blog' : 'https://steemit.com';
 
 describe('makeCanonicalLink', () => {
     const post_data = {
@@ -10,57 +12,54 @@ describe('makeCanonicalLink', () => {
     };
     const test_cases = [
         [
+            'handles posts from hive.blog',
+            { ...post_data, json_metadata: {} },
+            'https://hive.blog/testing/@test/test-post',
+        ],
+        [
             'handles posts without app',
             { ...post_data, json_metadata: {} },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             'handles empty strings as app',
             { ...post_data, json_metadata: { app: '' } },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             "handles apps that don't exist",
             { ...post_data, json_metadata: { app: 'fakeapp/1.2.3' } },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             "handles app that don't exist without version",
             { ...post_data, json_metadata: { app: 'fakeapp' } },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             'handles apps that do exist',
-            { ...post_data, json_metadata: { app: 'busy/1.1.1' } },
-            'https://busy.org/@test/test-post',
+            { ...post_data, json_metadata: { app: 'peakd/1.1.1' } },
+            'https://peakd.com/testing/@test/test-post',
         ],
         [
-            'handles posts from steemit',
-            { ...post_data, json_metadata: { app: 'steemit/0.1' } },
-            'https://steemit.com/testing/@test/test-post',
-        ],
-        [
-            'handles posts from app',
-            {
-                ...post_data,
-                json_metadata: { app: `${APP_NAME.toLowerCase()}/0.1` },
-            },
-            `${APP_URL}/testing/@test/test-post`,
+            'handles posts from hive blog',
+            { ...post_data, json_metadata: { app: 'hiveblog/0.1' } },
+            'https://hive.blog/testing/@test/test-post',
         ],
         [
             'handles badly formatted app strings',
             { ...post_data, json_metadata: { app: 'fakeapp/0.0.1/a////' } },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             'handles objects as apps',
             { ...post_data, json_metadata: { app: { this_is: 'an objct' } } },
-            `${APP_URL}/testing/@test/test-post`,
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
     ];
     test_cases.forEach(v => {
         it(v[0], () => {
-            expect(makeCanonicalLink(v[1])).toBe(v[2]);
+            expect(makeCanonicalLink(v[1], v[1].json_metadata)).toBe(v[2]);
         });
     });
 });

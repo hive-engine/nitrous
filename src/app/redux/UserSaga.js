@@ -1,9 +1,15 @@
-import { fromJS, Set, List } from 'immutable';
+import { fromJS, Set, List, Map } from 'immutable';
 import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
-import { api, auth } from '@steemit/steem-js';
-import { PrivateKey, Signature, hash } from '@steemit/steem-js/lib/auth/ecc';
+import { api as steemApi, auth as steemAuth } from '@steemit/steem-js';
+import { api as hiveApi, auth as hiveAuth } from '@hiveio/hive-js';
+import { PrivateKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 
-import { LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
+import {
+    ALLOW_MASTER_PW,
+    LIQUID_TOKEN_UPPERCASE,
+    HIVE_ENGINE,
+    PREFER_HIVE,
+} from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
@@ -27,14 +33,17 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+
+import {
+    setHiveSignerAccessToken,
+    isLoggedInWithHiveSigner,
+    hiveSignerClient,
+} from 'app/utils/HiveSigner';
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
-    takeLatest(
-        'user/lookupPreviousOwnerAuthority',
-        lookupPreviousOwnerAuthority
-    ),
     takeLatest(userActions.CHECK_KEY_TYPE, checkKeyType),
     takeLatest(userActions.USERNAME_PASSWORD_LOGIN, usernamePasswordLogin),
     takeLatest(userActions.SAVE_LOGIN, saveLogin_localStorage),
@@ -51,7 +60,7 @@ export const userWatches = [
     takeLatest(userActions.VOTING_POWER_LOOKUP, lookupVotingPower),
     function* getLatestFeedPrice() {
         try {
-            const history = yield call([api, api.getFeedHistoryAsync]);
+            const history = yield call([hiveApi, hiveApi.getFeedHistoryAsync]);
             const feed = history.price_history;
             const last = fromJS(feed[feed.length - 1]);
             yield put(userActions.setLatestFeedPrice(last));
@@ -85,16 +94,29 @@ function* removeHighSecurityKeys({ payload: { pathname } }) {
     }
 }
 
-function* shouldShowLoginWarning({ username, password }) {
+function effectiveVests(account) {
+    const vests = parseFloat(account.get('vesting_shares'));
+    const delegated = parseFloat(account.get('delegated_vesting_shares'));
+    const received = parseFloat(account.get('received_vesting_shares'));
+    return vests - delegated + received;
+}
+
+function* shouldShowLoginWarning({ username, password }, useHive) {
     // If it's a high-security login page, don't show the warning.
     if (yield isHighSecurityPage()) {
         return false;
     }
 
     // If it's a master key, show the warning.
-    if (!auth.isWif(password)) {
-        const accounts = yield api.getAccountsAsync([username]);
-        const account = accounts[0];
+    if (!ALLOW_MASTER_PW && !(useHive ? hiveAuth : steemAuth).isWif(password)) {
+        const account = (yield (useHive ? hiveApi : steemApi).getAccountsAsync([
+            username,
+        ]))[0];
+        if (!account) {
+            console.error('shouldShowLoginWarning - account not found');
+            return false;
+        }
+
         const pubKey = PrivateKey.fromSeed(username + 'posting' + password)
             .toPublicKey()
             .toString();
@@ -114,7 +136,8 @@ function* shouldShowLoginWarning({ username, password }) {
         owner, posting keys.
 */
 function* checkKeyType(action) {
-    if (yield call(shouldShowLoginWarning, action.payload)) {
+    const useHive = PREFER_HIVE;
+    if (yield call(shouldShowLoginWarning, action.payload, useHive)) {
         yield put(userActions.showLoginWarning(action.payload));
     } else {
         yield put(userActions.usernamePasswordLogin(action.payload));
@@ -134,23 +157,30 @@ function* usernamePasswordLogin(action) {
     // or if the user's browser does not support session storage,
     // show the announcement.
     if (
-        typeof sessionStorage === 'undefined' ||
-        (typeof sessionStorage !== 'undefined' &&
-            sessionStorage.getItem('hideAnnouncement') !== 'true')
+        typeof localStorage === 'undefined' ||
+        (typeof localStorage !== 'undefined' &&
+            !localStorage.getItem('hideAnnouncement'))
     ) {
         // Uncomment to re-enable announcment
         // TODO: use config to enable/disable
-        // yield put(userActions.showAnnouncement());
+        //yield put(userActions.showAnnouncement());
     }
 
     // Sets 'loading' while the login is taking place. The key generation can
     // take a while on slow computers.
     yield call(usernamePasswordLogin2, action.payload);
     const current = yield select(state => state.user.get('current'));
+    const useHive = PREFER_HIVE;
     if (current) {
         const username = current.get('username');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'blog');
-        yield fork(loadFollows, 'getFollowingAsync', username, 'ignore');
+        yield fork(loadFollows, 'getFollowingAsync', username, 'blog', useHive);
+        yield fork(
+            loadFollows,
+            'getFollowingAsync',
+            username,
+            'ignore',
+            useHive
+        );
     }
 }
 
@@ -163,6 +193,10 @@ function* usernamePasswordLogin2({
     username,
     password,
     useKeychain,
+    access_token,
+    expires_in,
+    useHiveSigner,
+    lastPath,
     saveLogin,
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
@@ -185,7 +219,8 @@ function* usernamePasswordLogin2({
         memoWif,
         login_owner_pubkey,
         login_wif_owner_pubkey,
-        login_with_keychain;
+        login_with_keychain,
+        login_with_hivesigner;
     if (!username && !password) {
         const data = localStorage.getItem('autopost2');
         if (data) {
@@ -198,13 +233,25 @@ function* usernamePasswordLogin2({
                 memoWif,
                 login_owner_pubkey,
                 login_with_keychain,
+                login_with_hivesigner,
+                access_token,
+                expires_in,
             ] = extractLoginData(data);
             memoWif = clean(memoWif);
             login_owner_pubkey = clean(login_owner_pubkey);
         }
     }
     // no saved password
-    if (!username || !(password || useKeychain || login_with_keychain)) {
+    if (
+        !username ||
+        !(
+            password ||
+            useKeychain ||
+            login_with_keychain ||
+            useHiveSigner ||
+            login_with_hivesigner
+        )
+    ) {
         console.log('No saved password');
         const offchain_account = yield select(state =>
             state.offchain.get('account')
@@ -223,7 +270,7 @@ function* usernamePasswordLogin2({
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
-    const account = yield call(getAccount, username);
+    const account = yield call(getAccount, username, PREFER_HIVE);
     if (!account) {
         console.log('No account');
         yield put(userActions.loginError({ error: 'Username does not exist' }));
@@ -238,6 +285,7 @@ function* usernamePasswordLogin2({
         return;
     }
     // fetch SCOT stake
+    const ssc = HIVE_ENGINE ? hiveSsc : steemSsc;
     const token_balances = yield call(
         [ssc, ssc.findOne],
         'tokens',
@@ -247,9 +295,22 @@ function* usernamePasswordLogin2({
             symbol: LIQUID_TOKEN_UPPERCASE,
         }
     );
-    // return if already logged in using steem keychain
+    //check for defaultBeneficiaries
+    let defaultBeneficiaries;
+    try {
+        const json_metadata = JSON.parse(account.get('json_metadata'));
+        if (json_metadata.beneficiaries) {
+            defaultBeneficiaries = json_metadata.beneficiaries;
+        } else {
+            defaultBeneficiaries = [];
+        }
+    } catch (error) {
+        defaultBeneficiaries = [];
+    }
+    yield put(userActions.setUser({ defaultBeneficiaries }));
+    // return if already logged in using keychain
     if (login_with_keychain) {
-        console.log('Logged in using steem keychain');
+        console.log('Logged in using keychain');
         yield put(
             userActions.setUser({
                 username,
@@ -260,6 +321,7 @@ function* usernamePasswordLogin2({
                 delegated_vesting_shares: account.get(
                     'delegated_vesting_shares'
                 ),
+                effective_vests: effectiveVests(account),
             })
         );
         // Fetch voting power
@@ -267,8 +329,33 @@ function* usernamePasswordLogin2({
         return;
     }
 
+    // return if already logged in using HiveSigner
+    if (login_with_hivesigner) {
+        console.log('Logged in using HiveSigner');
+        if (access_token) {
+            setHiveSignerAccessToken(username, access_token, expires_in);
+            yield put(
+                userActions.setUser({
+                    username,
+                    login_with_hivesigner: true,
+                    access_token,
+                    expires_in,
+                    vesting_shares: account.get('vesting_shares'),
+                    received_vesting_shares: account.get(
+                        'received_vesting_shares'
+                    ),
+                    delegated_vesting_shares: account.get(
+                        'delegated_vesting_shares'
+                    ),
+                    effective_vests: effectiveVests(account),
+                })
+            );
+        }
+        return;
+    }
+
     let private_keys;
-    if (!useKeychain) {
+    if (!useKeychain && !useHiveSigner) {
         try {
             const private_key = PrivateKey.fromWif(password);
             login_wif_owner_pubkey = private_key.toPublicKey().toString();
@@ -306,6 +393,7 @@ function* usernamePasswordLogin2({
                 account,
                 private_keys,
                 login_owner_pubkey,
+                useHive: PREFER_HIVE,
             },
         });
         let authority = yield select(state =>
@@ -322,7 +410,7 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        if (hasOwnerAuth) {
+        if (!ALLOW_MASTER_PW && hasOwnerAuth) {
             console.log('Rejecting due to detected owner auth');
             yield put(userActions.loginError({ error: 'owner_login_blocked' }));
             return;
@@ -338,8 +426,9 @@ function* usernamePasswordLogin2({
             localStorage.removeItem('autopost2');
             const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
             if (
-                login_owner_pubkey === owner_pub_key ||
-                login_wif_owner_pubkey === owner_pub_key
+                !ALLOW_MASTER_PW &&
+                (login_owner_pubkey === owner_pub_key ||
+                    login_wif_owner_pubkey === owner_pub_key)
             ) {
                 yield put(
                     userActions.loginError({ error: 'owner_login_blocked' })
@@ -409,9 +498,10 @@ function* usernamePasswordLogin2({
             // provided password did not yield memo key, or matched active/owner
             private_keys = private_keys.remove('memo_private');
 
+        if (username) feedURL = '/@' + username + '/feed';
+
         // If user is signing operation by operaion and has no saved login, don't save to RAM
         if (!operationType || saveLogin) {
-            if (username) feedURL = '/@' + username + '/feed';
             // Keep the posting key in RAM but only when not signing an operation.
             // No operation or the user has checked: Keep me logged in...
             yield put(
@@ -427,10 +517,10 @@ function* usernamePasswordLogin2({
                     delegated_vesting_shares: account.get(
                         'delegated_vesting_shares'
                     ),
+                    effective_vests: effectiveVests(account),
                 })
             );
         } else {
-            if (username) feedURL = '/@' + username + '/feed';
             yield put(
                 userActions.setUser({
                     username,
@@ -442,6 +532,7 @@ function* usernamePasswordLogin2({
                     delegated_vesting_shares: account.get(
                         'delegated_vesting_shares'
                     ),
+                    effective_vests: effectiveVests(account),
                 })
             );
         }
@@ -458,17 +549,16 @@ function* usernamePasswordLogin2({
             const challenge = { token: challengeString };
             const buf = JSON.stringify(challenge, null, 0);
             const bufSha = hash.sha256(buf);
+            const useHive = PREFER_HIVE;
 
             if (useKeychain) {
                 const response = yield new Promise(resolve => {
-                    window.steem_keychain.requestSignBuffer(
-                        username,
-                        buf,
-                        'Posting',
-                        response => {
-                            resolve(response);
-                        }
-                    );
+                    (useHive
+                        ? window.hive_keychain
+                        : window.steem_keychain
+                    ).requestSignBuffer(username, buf, 'Posting', response => {
+                        resolve(response);
+                    });
                 });
                 if (response.success) {
                     signatures['posting'] = response.result;
@@ -491,8 +581,37 @@ function* usernamePasswordLogin2({
                         delegated_vesting_shares: account.get(
                             'delegated_vesting_shares'
                         ),
+                        effective_vests: effectiveVests(account),
                     })
                 );
+            } else if (useHiveSigner) {
+                if (access_token) {
+                    // redirect url
+                    feedURL = '/@' + username + '/feed';
+                    // set access setHiveSignerAccessToken
+                    setHiveSignerAccessToken(
+                        username,
+                        access_token,
+                        expires_in
+                    );
+                    // set user data
+                    yield put(
+                        userActions.setUser({
+                            username,
+                            login_with_hivesigner: true,
+                            access_token,
+                            expires_in,
+                            vesting_shares: account.get('vesting_shares'),
+                            received_vesting_shares: account.get(
+                                'received_vesting_shares'
+                            ),
+                            delegated_vesting_shares: account.get(
+                                'delegated_vesting_shares'
+                            ),
+                            effective_vests: effectiveVests(account),
+                        })
+                    );
+                }
             } else {
                 const sign = (role, d) => {
                     console.log('Sign before');
@@ -506,7 +625,11 @@ function* usernamePasswordLogin2({
             }
 
             console.log('Logging in as', username);
-            const response = yield serverApiLogin(username, signatures);
+            const response = yield serverApiLogin(
+                username,
+                signatures,
+                useHive
+            );
             const body = yield response.json();
         }
     } catch (error) {
@@ -520,12 +643,17 @@ function* usernamePasswordLogin2({
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
 
     // Redirect user to the appropriate page after login.
+    const path = useHiveSigner ? lastPath : document.location.pathname;
     if (afterLoginRedirectToWelcome) {
         console.log('Redirecting to welcome page');
         browserHistory.push('/welcome');
-    } else if (feedURL && document.location.pathname === '/') {
-        console.log('Redirecting to feed page', feedURL);
-        browserHistory.push(feedURL);
+    } else if (feedURL && path === '/login.html') {
+        browserHistory.push(`/@${username}/feed`);
+    } else if (feedURL && path === '/') {
+        //browserHistory.push(feedURL);
+        browserHistory.push(`/@${username}/feed`);
+    } else if (useHiveSigner && lastPath) {
+        browserHistory.push(lastPath);
     }
 }
 
@@ -541,11 +669,13 @@ function* promptTosAcceptance(username) {
 }
 
 function* getFeatureFlags(username, posting_private) {
+    // not yet in use
+    return;
     try {
         let flags;
         if (!posting_private && hasCompatibleKeychain()) {
             flags = yield new Promise((resolve, reject) => {
-                window.steem_keychain.requestSignedCall(
+                window.hive_keychain.requestSignedCall(
                     username,
                     'conveyor.get_feature_flags',
                     { account: username },
@@ -561,7 +691,7 @@ function* getFeatureFlags(username, posting_private) {
             });
         } else {
             flags = yield call(
-                [api, api.signedCallAsync],
+                [steemApi, steemApi.signedCallAsync],
                 'conveyor.get_feature_flags',
                 { account: username },
                 username,
@@ -585,19 +715,30 @@ function* saveLogin_localStorage() {
         private_keys,
         login_owner_pubkey,
         login_with_keychain,
+        login_with_hivesigner,
+        access_token,
+        expires_in,
     ] = yield select(state => [
         state.user.getIn(['current', 'username']),
         state.user.getIn(['current', 'private_keys']),
         state.user.getIn(['current', 'login_owner_pubkey']),
         state.user.getIn(['current', 'login_with_keychain']),
+        state.user.getIn(['current', 'login_with_hivesigner']),
+        state.user.getIn(['current', 'access_token']),
+        state.user.getIn(['current', 'expires_in']),
     ]);
     if (!username) {
         console.error('Not logged in');
         return;
     }
-    // Save the lowest security key
-    const posting_private = private_keys && private_keys.get('posting_private');
-    if (!login_with_keychain && !posting_private) {
+
+    // Save the lowest security key, or owner if allowed
+    let posting_private = private_keys && private_keys.get('posting_private');
+    if (private_keys && !posting_private && ALLOW_MASTER_PW) {
+        posting_private = private_keys.get('owner_private');
+    }
+
+    if (!login_with_keychain && !login_with_hivesigner && !posting_private) {
         console.error('No posting key to save?');
         return;
     }
@@ -616,12 +757,14 @@ function* saveLogin_localStorage() {
             if (auth.get(0) === postingPubkey)
                 throw 'Login will not be saved, posting key is the same as active key';
         });
-        account.getIn(['owner', 'key_auths']).forEach(auth => {
-            if (auth.get(0) === postingPubkey)
-                throw 'Login will not be saved, posting key is the same as owner key';
-        });
+        if (!ALLOW_MASTER_PW) {
+            account.getIn(['owner', 'key_auths']).forEach(auth => {
+                if (auth.get(0) === postingPubkey)
+                    throw 'Login will not be saved, posting key is the same as owner key';
+            });
+        }
     } catch (e) {
-        console.error(e);
+        console.error('login_auth_err', e);
         return;
     }
 
@@ -635,7 +778,10 @@ function* saveLogin_localStorage() {
         postingPrivateWif,
         memoWif,
         login_owner_pubkey,
-        login_with_keychain
+        login_with_keychain,
+        login_with_hivesigner,
+        access_token,
+        expires_in
     );
     // autopost is a auto login for a low security key (like the posting key)
     localStorage.setItem('autopost2', data);
@@ -664,55 +810,6 @@ function* loginError({
     serverApiLogout();
 }
 
-/**
-    If the owner key was changed after the login owner key, this function will
-    find the next owner key history record after the change and store it under
-    user.previous_owner_authority.
-*/
-function* lookupPreviousOwnerAuthority({ payload: {} }) {
-    const current = yield select(state => state.user.getIn(['current']));
-    if (!current) return;
-
-    const login_owner_pubkey = current.get('login_owner_pubkey');
-    if (!login_owner_pubkey) return;
-
-    const username = current.get('username');
-    const key_auths = yield select(state =>
-        state.global.getIn(['accounts', username, 'owner', 'key_auths'])
-    );
-    if (key_auths && key_auths.find(key => key.get(0) === login_owner_pubkey)) {
-        return;
-    }
-    // Owner history since this index was installed July 14
-    let owner_history = fromJS(
-        yield call([api, api.getOwnerHistoryAsync], username)
-    );
-    if (owner_history.count() === 0) return;
-    owner_history = owner_history.sort((b, a) => {
-        // Sort decending
-        const aa = a.get('last_valid_time');
-        const bb = b.get('last_valid_time');
-        return aa < bb ? -1 : aa > bb ? 1 : 0;
-    });
-    const previous_owner_authority = owner_history.find(o => {
-        const auth = o.get('previous_owner_authority');
-        const weight_threshold = auth.get('weight_threshold');
-        const key3 = auth
-            .get('key_auths')
-            .find(
-                key2 =>
-                    key2.get(0) === login_owner_pubkey &&
-                    key2.get(1) >= weight_threshold
-            );
-        return key3 ? auth : null;
-    });
-    if (!previous_owner_authority) {
-        console.log('UserSaga ---> Login owner does not match owner history');
-        return;
-    }
-    yield put(userActions.setUser({ previous_owner_authority }));
-}
-
 function* uploadImage({
     payload: { file, dataUrl, filename = 'image.txt', progress },
 }) {
@@ -724,12 +821,13 @@ function* uploadImage({
     const stateUser = yield select(state => state.user);
     const username = stateUser.getIn(['current', 'username']);
     const keychainLogin = isLoggedInWithKeychain();
+    const hiveSignerLogin = isLoggedInWithHiveSigner();
     const d = stateUser.getIn(['current', 'private_keys', 'posting_private']);
     if (!username) {
         progress({ error: 'Please login first.' });
         return;
     }
-    if (!(keychainLogin || d)) {
+    if (!(keychainLogin || hiveSignerLogin || d)) {
         progress({ error: 'Login with your posting key' });
         return;
     }
@@ -773,43 +871,68 @@ function* uploadImage({
     }
 
     let sig;
-    if (keychainLogin) {
-        const response = yield new Promise(resolve => {
-            window.steem_keychain.requestSignBuffer(
-                username,
-                JSON.stringify(buf),
-                'Posting',
-                response => {
-                    resolve(response);
-                }
-            );
-        });
-        if (response.success) {
-            sig = response.result;
-        } else {
-            progress({ error: response.message });
-            return;
-        }
+    let postUrl;
+    if (hiveSignerLogin) {
+        // verify user with access_token for HiveSigner login
+        postUrl = `${$STM_Config.upload_image}/hs/${
+            hiveSignerClient.accessToken
+        }`;
     } else {
-        sig = Signature.signBufferSha256(bufSha, d).toHex();
+        if (keychainLogin) {
+            const response = yield new Promise(resolve => {
+                (PREFER_HIVE
+                    ? window.hive_keychain
+                    : window.steem_keychain
+                ).requestSignBuffer(
+                    username,
+                    JSON.stringify(buf),
+                    'Posting',
+                    response => {
+                        resolve(response);
+                    }
+                );
+            });
+            if (response.success) {
+                sig = response.result;
+            } else {
+                progress({ error: response.message });
+                return;
+            }
+        } else {
+            sig = Signature.signBufferSha256(bufSha, d).toHex();
+        }
+        postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
     }
-    const postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', postUrl);
     xhr.onload = function() {
         console.log(xhr.status, xhr.responseText);
-        const res = JSON.parse(xhr.responseText);
-        const { error } = res;
-        if (error) {
-            progress({ error: 'Error: ' + error });
+        if (xhr.status === 200) {
+            try {
+                const res = JSON.parse(xhr.responseText);
+                const { error } = res;
+                if (error) {
+                    console.error('upload_error', error, xhr.responseText);
+                    progress({ error: 'Error: ' + error });
+                    return;
+                }
+
+                const { url } = res;
+                progress({ url });
+            } catch (e) {
+                console.error('upload_error2', 'not json', e, xhr.responseText);
+                progress({ error: 'Error: response not JSON' });
+                return;
+            }
+        } else {
+            console.error('upload_error3', xhr.status, xhr.statusText);
+            progress({ error: `Error: ${xhr.status}: ${xhr.statusText}` });
             return;
         }
-        const { url } = res;
-        progress({ url });
     };
     xhr.onerror = function(error) {
-        console.error(filename, error);
+        console.error('xhr', filename, error);
         progress({ error: 'Unable to contact the server.' });
     };
     xhr.upload.onprogress = function(event) {
@@ -826,7 +949,15 @@ function* lookupVotingPower({ payload: { account } }) {
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData[LIQUID_TOKEN_UPPERCASE],
+            ...accountData.data[LIQUID_TOKEN_UPPERCASE],
         })
     );
+    if (accountData.hiveData) {
+        yield put(
+            userActions.setHiveVotingPower({
+                account,
+                ...accountData.hiveData[LIQUID_TOKEN_UPPERCASE],
+            })
+        );
+    }
 }

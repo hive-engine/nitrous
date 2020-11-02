@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "日時",
         "amount": "数量",
         "and": "と",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "売値",
         "blog": "ブログ",
+        "profile": "Profile",
         "browse": "ブラウズ",
         "buy": "買う",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "購入または売却",
         "by": "by",
         "cancel": "キャンセル",
@@ -21,6 +24,18 @@
         "clear": "消去",
         "close": "閉じる",
         "collapse_or_expand": "折りたたみ/展開",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "コメント",
         "confirm": "確認",
         "convert": "変換する",
@@ -32,7 +47,12 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_hive": "Hive Team",
         "feed": "フィード",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "フォロー",
         "for": " : ",
         "from": " 送信元:",
@@ -58,6 +78,7 @@
         "newer": "新しい",
         "next": "次へ",
         "no": "いいえ",
+        "notifications": "Notifications",
         "ok": "Ok",
         "older": "古い",
         "or": "または",
@@ -67,6 +88,7 @@
         "permissions": "アクセス権",
         "phishy_message":
             "リンクをプレーンテキストに拡張しました。潜在的なフィッシングに注意してください。",
+        "pin": "Pin",
         "post": "投稿",
         "post_as_user": "Post as %(username)s",
         "posts": "投稿数",
@@ -94,6 +116,7 @@
         },
         "reputation": "評価",
         "reveal_comment": "コメントを表示する",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "リクエスト",
         "required": "必須です",
         "rewards": "報酬",
@@ -104,11 +127,18 @@
         "sell": "売る",
         "settings": "設定",
         "share_this_post": "この記事をシェアする",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "表示",
         "sign_in": "ログイン",
         "sign_up": "登録",
         "since": "since",
         "submit": "送信",
+        "subscriptions": "Subscriptions",
         "power_up": "パワーアップ",
         "submit_a_story": "投稿",
         "tag": "タグ",
@@ -123,6 +153,7 @@
         "type": "売買",
         "unfollow": "フォロー解除",
         "unmute": "ミュート解除",
+        "unpin": "Unpin",
         "unknown": "不明",
         "upvote": "Upvote",
         "upvote_post": "投稿をUpvoteする",
@@ -194,9 +225,9 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "支払いの直前に投稿の報酬を増やすことはできません",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "10分毎に各IPアドレスにつき1つのSteemアカウントのみ許可されています",
-        "resteem_this_post": "この投稿をResteemする",
-        "reblog": "Resteem",
+            "10分毎に各IPアドレスにつき1つのHiveアカウントのみ許可されています",
+        "reblog_this_post": "この投稿をReblogする",
+        "reblog": "Reblog",
         "write_your_story": "投稿内容を書いてください",
         "remember_voting_and_posting_key": "投稿キーを記憶する",
         "auto_login_question_mark": "自動ログインしますか？",
@@ -220,9 +251,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "投稿者は読者から投稿をupvoteされることで報酬を得ます。",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "読んで楽しんだら、次はアカウントを作成してSTEEMを手に入れましょう！",
-            "free_steem": "STEEMを手に入れよう！",
-            "sign_up_earn_steem": "サインアップして "
+                "読んで楽しんだら、次はアカウントを作成してHIVEを手に入れましょう！",
+            "free_hive": "HIVEを手に入れよう！",
+            "sign_up_earn_hive": "サインアップして "
         },
         "next_3_strings_together": {
             "show_more": "評価の低い投稿の表示を増やす",
@@ -247,17 +278,26 @@
         },
         "post_key_warning": {
             "confirm":
-                "STEEMの秘密キーまたはマスターパスワードを公開しようとしています。関連するアカウントの管理権とすべての資金を失う恐れがあります。",
+                "HIVEの秘密キーまたはマスターパスワードを公開しようとしています。関連するアカウントの管理権とすべての資金を失う恐れがあります。",
             "warning":
-                "Steemit Inc.の従業員を含む正当なユーザーは秘密キーまたはマスターパスワードを要求することはありません。",
+                "Hiveの従業員を含む正当なユーザーは秘密キーまたはマスターパスワードを要求することはありません。",
             "checkbox": "理解しました。"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Buy Steem Power",
         "post_as": "投稿します:",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "現在、投票が存在し、証人を拒否するには強い意志を示す必要があります"
     },
     "navigation": {
-        "about": "Steemについて",
+        "about": "Hiveについて",
         "explore": "投稿を探す",
         "APP_NAME_whitepaper": "%(APP_NAME)sホワイトペーパー",
         "third_party_exchanges": "Third-party exchanges:",
@@ -268,24 +308,28 @@
         "change_account_password": "パスワードの変更",
         "vote_for_witnesses": "証人に投票する",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "プライバシーポリシー",
         "terms_of_service": "利用規約",
         "sign_up": "登録",
         "learn_more": "詳細",
         "welcome": "ようこそ",
         "faq": "FAQ",
-        "chat": "Steemitチャット",
-        "app_center": "Steemitアプリセンター",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Steemit API資料",
-        "bluepaper": "Steemブルーペーパー",
+        "chat": "Hiveチャット",
+        "app_center": "Hiveアプリセンター",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Hive API資料",
+        "bluepaper": "Hiveブルーペーパー",
         "smt_whitepaper": "SMT Whitepaper",
-        "whitepaper": "Steemホワイトペーパー",
+        "whitepaper": "Hiveホワイトペーパー",
         "intro_tagline": "金がものを言う",
         "intro_paragraph":
             "あなたの声には価値があります。あなたのハイクオリティな投稿やキュレーションに報酬を出すコミュニティに参加しましょう。",
-        "jobs": "Jobs at Steemit",
-        "witnesses": "証人"
+        "jobs": "Jobs at Hive",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "ブロックエクスプローラー"
     },
     "main_menu": {
         "hot": "ホット",
@@ -296,12 +340,14 @@
         "exceeds_maximum_length": "最大長を超えています (%(maxKb)sKB)",
         "including_the_category": "(カテゴリ'%(rootCategory)s'を含む)",
         "use_limited_amount_of_tags":
-            "合計で%(tagsLength)s個のタグがあります%(includingCategory)s。投稿とカテゴリの行には5つ以内にしてください。",
+            "合計で%(tagsLength)s個のタグがあります%(includingCategory)s。投稿とカテゴリの行には%(maxTags)sつ以内にしてください。",
         "are_you_sure_you_want_to_clear_this_form":
             "フォームの内容を消去してもよろしいですか？",
         "uploading": "アップロード中",
         "draft_saved": "下書きを保存しました。",
         "editor": "エディタ",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "画像を挿入するにはドラッグ＆ドロップするか、",
         "pasting_from_the_clipboard": "クリップボードから貼り付けるか、",
@@ -319,7 +365,11 @@
         "markdown_not_supported":
             "ここではマークダウンはサポートされていません",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -331,6 +381,15 @@
             "Beneficiary percentage must be from 1-100",
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
     },
     "category_selector_jsx": {
         "tag_your_story":
@@ -347,14 +406,23 @@
             "英小文字、数字、ダッシュのみ使用可能です。",
         "must_start_with_a_letter": "文字で始める必要があります。",
         "must_end_with_a_letter_or_number":
-            "文字または数字で終わる必要があります。"
+            "文字または数字で終わる必要があります。",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -369,37 +437,12 @@
         "view_the_full_context": "スレッドをすべて表示する",
         "view_the_direct_parent": "親コメントを表示する",
         "you_are_viewing_a_single_comments_thread_from":
-            "次のスレッドのコメントの1つを表示しています "
+            "次のスレッドのコメントの1つを表示しています ",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
-            "時折、Steemianのオーナーキーが盗まれることがあります。盗難アカウントの回復は、盗んだ者がオーナーキーを変更してから30日以内に、アカウントの正しい所有者にアカウントを取り戻します。盗難アカウントの回復は、アカウントの所有者が'%(APP_NAME)s'をアカウント受託者とし、%(APP_NAME)sの利用規約に準拠している場合にのみ%(APP_URL)sで行うことができます。",
-        "begin_recovery": "回復を開始する",
-        "not_valid": "無効です",
-        "account_name_is_not_found": "アカウント名が存在しません",
-        "unable_to_recover_account_not_change_ownership_recently":
-            "このアカウントは最近パスワードが変更されていないため回復できません。",
-        "password_not_used_in_last_days":
-            "このパスワードは30日以内にこのアカウントで使用されていません。",
-        "request_already_submitted_contact_support":
-            "リクエストは既に送信されていて、現在作業中です。リクエストの状況については%(SUPPORT_EMAIL)sにお問い合わせください。",
-        "login_with_facebook_or_reddit_media_to_verify_identity":
-            "FacebookまたはRedditにログインして本人確認をしてください。",
-        "login_with_social_media_to_verify_identity":
-            "%(provider)sにログインして本人確認をしてください。",
-        "enter_email_toverify_identity":
-            "本人確認が必要です。確認するには以下の欄にメールアドレスを入力してください。",
-        "continue_with_email": "メールアドレスで続ける",
-        "thanks_for_submitting_request_for_account_recovery":
-            "%(APP_NAME)sのブロックチェーンベースマルチファクタ認証を使用してアカウント回復のリクエストを送信していただきありがとうございます。出来る限り早く返答いたしますが、多数のメールが来ているため返答が遅れることがあることをご了承ください。本人確認の準備をしておいてください。",
-        "recovering_account": "アカウント回復中",
-        "recover_account": "アカウント回復",
-        "checking_account_owner": "アカウント所有者を確認しています",
-        "sending_recovery_request": "回復リクエストを送信しています",
-        "cant_confirm_account_ownership":
-            "アカウントの所有者を確認できません。パスワードを確認してください。",
-        "account_recovery_request_not_confirmed":
-            "アカウント回復リクエストはまだ確認されていません。しばらくお待ちいただき、後ほどもう一度ご確認ください。"
+            "時折、Hiveianのオーナーキーが盗まれることがあります。盗難アカウントの回復は、盗んだ者がオーナーキーを変更してから30日以内に、アカウントの正しい所有者にアカウントを取り戻します。盗難アカウントの回復は、アカウントの所有者が'%(APP_NAME)s'をアカウント受託者とし、%(APP_NAME)sの利用規約に準拠している場合にのみ%(APP_URL)sで行うことができます。"
     },
     "user_profile": {
         "unknown_account": "不明なアカウント",
@@ -410,6 +453,8 @@
         "user_hasnt_followed_anything_yet":
             "%(name)sはまだ誰もフォローしていません！%(name)sが最近新しいユーザーをフォローした場合、新しいコンテンツが有効になると個々のフィードに追加されます。",
         "user_hasnt_had_any_replies_yet": "%(name)sへの返信はまだありません。",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "あなたはまだ1つも投稿していないようです！",
         "create_a_post": "投稿を作成する",
@@ -434,7 +479,7 @@
             "one": "投稿1件",
             "other": "投稿%(count)s 件"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -524,7 +569,7 @@
         "after_printing_write_down_your_user_name":
             "印刷後、ユーザー名を書き留めてください。"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "あなたが持つ%(DEBT_TOKEN)sは流動的であり移動可能です。代わりに、%(DEBT_TOKEN)sを%(link)sから行けるサイトで直接取引したり、または外部の取引所に送ることができます。",
         "this_is_a_price_feed_conversion":
@@ -544,6 +589,12 @@
             "%(VESTING_TOKEN)sは移転不可能であり、再び%(LIQUID_TOKEN)sに変換するには、3ヶ月（13週間）かかります。",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "変換した%(VESTING_TOKEN)sは、自分自身や他の人に送ることが可能ですが、もう一度送るには%(LIQUID_TOKEN)sに変換する必要があります。",
+        "part_of_your_hive_power_is_currently_delegated":
+            "現在のHIVE POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがHiveでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>.",
         "part_of_your_steem_power_is_currently_delegated":
             "現在のSTEEM POWERの一部は委託されたものです。委託は影響力の寄付や、新規ユーザーがSteemitでアクションを起こしやすくするために行われます。委託された額は変動する可能性があります。"
     },
@@ -559,7 +610,7 @@
     "about_jsx": {
         "about_app": "%(APP_NAME)sについて",
         "about_app_details":
-            "%(APP_NAME)sは誰もがコンテンツ作成やキュレーションで報酬を得られるソーシャルメディアプラットフォームです。これにはSteemという堅牢なデジタルポイントシステムを活用しています。それは市場の価格発見と流動性によってデジタル報酬で実価値を与えます。",
+            "%(APP_NAME)sは誰もがコンテンツ作成やキュレーションで報酬を得られるソーシャルメディアプラットフォームです。これにはHiveという堅牢なデジタルポイントシステムを活用しています。それは市場の価格発見と流動性によってデジタル報酬で実価値を与えます。",
         "learn_more_at_app_url": "詳細は%(APP_URL)sを参照してください。",
         "resources": "リソース"
     },
@@ -568,8 +619,10 @@
             "評価が低いため画像は非表示になりました。"
     },
     "postsummary_jsx": {
-        "resteemed": "Resteemしました",
-        "resteemed_by": "Resteemed by",
+        "reblogged": "Reblogしました",
+        "reblogged_by": "Rebloged by",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "この投稿を表示する、",
         "adjust_your": "を変更してください。",
         "display_preferences": "表示設定",
@@ -606,9 +659,6 @@
             "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
         "from_negative_rep_user_reveal_memo":
             "I understand the risk; show anyway.",
-        "curation_reward": "%(curation_reward)s STEEM POWER for ",
-        "author_reward":
-            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
         "claim_reward_balance": {
             "three_rewards":
                 "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
@@ -625,8 +675,6 @@
             "open_owner_filled_my_order":
                 "Paid %(current_pays)s for %(open_pays)s"
         },
-        "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
                 "no_to": "Transfer %(amount)s to STEEM POWER",
@@ -655,7 +703,18 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
-        "request_id": "Request ID: %(request_id)s"
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)",
+        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "引き出し依頼をキャンセルしますか？",
@@ -680,6 +739,7 @@
         "curation_rewards_by": "のキュレーション報酬",
         "author_rewards_by": "の投稿者報酬",
         "replies_to": "への返信",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "のコメント"
     },
     "loginform_jsx": {
@@ -714,7 +774,7 @@
         "password_update_succes":
             "%(accountName)sのパスワードは正常に更新されました。",
         "password_info":
-            "入力したパスワードまたは秘密キーが間違っています。手入力したか、またはデータエラーがある可能性があります。ヒント：Steemitで生成したパスワードまたは秘密キーは0 (ゼロ)、O (大文字のo)、I (大文字のi)、l (小文字のL)を含みません。",
+            "入力したパスワードまたは秘密キーが間違っています。手入力したか、またはデータエラーがある可能性があります。ヒント：Hiveで生成したパスワードまたは秘密キーは0 (ゼロ)、O (大文字のo)、I (大文字のi)、l (小文字のL)を含みません。",
         "enter_your_username": "ユーザー名を入力してください",
         "password_or_wif": "パスワードまたはWIF",
         "this_operation_requires_your_key_or_master_password":
@@ -724,8 +784,8 @@
         "to_comment_and_reward_others":
             "に参加して、他の人にコメントして報酬を与えましょう。",
         "signup_button": "サインアップして",
-        "signup_button_emphasis": "STEEMを手に入れよう！",
-        "sign_up_get_steem": "登録してSTEEMを手に入れよう！",
+        "signup_button_emphasis": "HIVEを手に入れよう！",
+        "sign_up_get_steem": "Sign up",
         "returning_users": "再",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
@@ -735,8 +795,8 @@
         "join_our": "",
         "sign_transfer": "Sign to complete transfer",
         "use_keychain": "Use keychain extension",
-        "password_update_success":
-            "%(accountName)sのパスワードは正常に更新されました。"
+        "more_login_methods": "その他のログイン方法",
+        "sign_up_get_hive": "登録してHIVEを手に入れよう！"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -778,6 +838,8 @@
         "location_is_too_long": "場所が長すぎます",
         "website_url_is_too_long": "URLが長すぎます",
         "public_profile_settings": "公開プロフィール設定",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Preferences",
         "not_safe_for_work_nsfw_content": "閲覧注意 (NSFW) コンテンツ",
         "always_hide": "常に非表示",
@@ -795,7 +857,28 @@
         "profile_about": "概要",
         "profile_location": "場所",
         "profile_website": "ウェブサイト",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "高度な",
+        "api_endpoint_options": "APIエンドポイントオプション",
+        "endpoint": "終点",
+        "preferred": "優先?",
+        "remove": "削除する",
+        "add_api_endpoint": "APIエンドポイントを追加",
+        "reset_endpoints": "エンドポイントをリセット",
+        "error_bad_url":
+            "これは不正なURLのようです。確認して、もう一度お試しください",
+        "error_bad_cookie": "Cookieからエンドポイントを取得できません",
+        "error_already_exists": "このエンドポイントはすでにリストにあります",
+        "error_cant_remove_active":
+            "現在の優先エンドポイントを削除することはできません。 最初に新しい優先エンドポイントを選択してください",
+        "error_cant_remove_all":
+            "リストに少なくとも1つのエンドポイントが必要です",
         "private_post_display_settings": "ローカル表示設定"
     },
     "transfer_jsx": {
@@ -809,8 +892,7 @@
         "convert_to_VESTING_TOKEN": "%(VESTING_TOKEN)sに変換",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "引き出しに3日間の待ち時間が必要となる貯蓄口座です。",
-        "move_funds_to_another_account":
-            "資金を他のSteemアカウントに送ります。",
+        "move_funds_to_another_account": "資金を他のHiveアカウントに送ります。",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "3日間の引き出し待ち時間で資金を守ります。",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -835,11 +917,13 @@
         "power_up": "パワーアップ",
         "power_down": "パワーダウン",
         "market": "取引所",
+        "wallet": "Wallet",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "%(LIQUID_TOKEN)sに変換",
         "withdraw_LIQUID_TOKEN": "%(LIQUID_TOKEN)sを引き出す",
         "withdraw_DEBT_TOKENS": "%(DEBT_TOKENS)sを引き出す",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "約$1.00の%(LIQUID_TICKER)sと同じ価値のトークンです。現在、利子が年間%(sbdInterest)s%%つきます。",
+            "約$1.00の%(LIQUID_TICKER)sと同じ価値のトークンです。現在、利子が年間%(hbdInterest)s%%つきます。",
         "tradeable_tokens_transferred":
             "Tradeable tokens that may be transferred anywhere at anytime.",
         "savings": "貯蓄口座",
@@ -850,13 +934,15 @@
             "送金は一時的に無効になっています。",
         "history": "履歴",
         "redeem_rewards": "報酬の請求 (残高に送る)",
-        "buy_steem_or_steem_power": "STEEMやSTEEM POWERを購入する"
+        "buy_hive_or_hive_power": "HIVEやHIVE POWERを購入する"
     },
     "powerdown_jsx": {
         "power_down": "パワーダウン",
         "amount": "数量",
         "already_power_down":
             "既に%(AMOUNT)s %(LIQUID_TICKER)sのパワーダウン中です (%(WITHDRAWN)s %(LIQUID_TICKER)sが支払い済みです) 。パワーダウン量を変更すると、支払いスケジュールがリセットされることに注意してください。",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             " %(AMOUNT)s %(LIQUID_TICKER)sを委託しています。委託分はロックされており、委託が終了して7日が過ぎるまでパワーダウンできません。",
         "per_week": "毎週~%(AMOUNT)s %(LIQUID_TICKER)sです。",
@@ -878,11 +964,12 @@
         "hi_user": "Hi %(username)s,",
         "blurb":
             "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "i_agree_to_steemits": "I agree to Steemit's"
     },
     "confirmtransactionform_jsx": {
         "confirm": "Confirm %(transactionType)s"
@@ -903,6 +990,19 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     },
     "market_jsx": {
         "action": "操作",

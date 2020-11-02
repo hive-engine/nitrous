@@ -4,8 +4,9 @@ import tt from 'counterpart';
 import getSlug from 'speakingurl';
 import base58 from 'bs58';
 import secureRandom from 'secure-random';
-import { PrivateKey, PublicKey } from '@steemit/steem-js/lib/auth/ecc';
-import { api, broadcast, auth, memo } from '@steemit/steem-js';
+import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
+import * as steem from '@steemit/steem-js';
+import * as hive from '@hiveio/hive-js';
 
 import { getAccount, getContent } from 'app/redux/SagaShared';
 import { postingOps, findSigningKey } from 'app/redux/AuthSaga';
@@ -13,12 +14,19 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { DEBT_TICKER } from 'app/client_config';
+import { APP_URL, COMMENT_FOOTER, POST_FOOTER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+import { callBridge } from 'app/utils/steemApi';
+import {
+    isLoggedInWithHiveSigner,
+    hiveSignerClient,
+    sendOperationsWithHiveSigner,
+} from 'app/utils/HiveSigner';
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
@@ -35,7 +43,7 @@ const hook = {
     accepted_delete_comment,
     accepted_vote,
 };
-export function* preBroadcast_transfer({ operation }) {
+export function* preBroadcast_transfer({ operation, useHive }) {
     let memoStr = operation.memo;
     if (memoStr) {
         memoStr = toStringUtf8(memoStr);
@@ -48,10 +56,10 @@ export function* preBroadcast_transfer({ operation }) {
                 throw new Error(
                     'Unable to encrypt memo, missing memo private key'
                 );
-            const account = yield call(getAccount, operation.to);
+            const account = yield call(getAccount, operation.to, useHive);
             if (!account) throw new Error(`Unknown to account ${operation.to}`);
             const memo_key = account.get('memo_key');
-            memoStr = memo.encode(memo_private, memo_key, memoStr);
+            memoStr = steem.memo.encode(memo_private, memo_key, memoStr);
             operation.memo = memoStr;
         }
     }
@@ -62,7 +70,7 @@ const toStringUtf8 = o =>
 
 function* preBroadcast_vote({ operation, username }) {
     if (!operation.voter) operation.voter = username;
-    const { voter, author, permlink, weight } = operation;
+    const { author, permlink } = operation;
     // give immediate feedback
     yield put(
         globalActions.set({
@@ -70,9 +78,7 @@ function* preBroadcast_vote({ operation, username }) {
             value: true,
         })
     );
-    yield put(
-        globalActions.voted({ username: voter, author, permlink, weight })
-    );
+    yield put(globalActions.voted(operation));
     return operation;
 }
 
@@ -90,6 +96,7 @@ export function* broadcastOperation({
         successCallback,
         errorCallback,
         allowPostUnsafe,
+        useHive,
     },
 }) {
     const operationParam = {
@@ -102,6 +109,7 @@ export function* broadcastOperation({
         successCallback,
         errorCallback,
         allowPostUnsafe,
+        useHive,
     };
     console.log('broadcastOperation', operationParam);
     const needsActiveAuth =
@@ -112,6 +120,7 @@ export function* broadcastOperation({
 
     const conf = typeof confirm === 'function' ? confirm() : confirm;
     if (conf) {
+        console.log('broadcastConfirm', operationParam);
         yield put(
             transactionActions.confirmOperation({
                 confirm,
@@ -122,9 +131,11 @@ export function* broadcastOperation({
         );
         return;
     }
+
     const payload = {
         operations: [[type, operation]],
         needsActiveAuth,
+        useHive,
         keys,
         username,
         successCallback,
@@ -147,7 +158,7 @@ export function* broadcastOperation({
         return;
     }
     try {
-        if (!isLoggedInWithKeychain()) {
+        if (!isLoggedInWithKeychain() && !isLoggedInWithHiveSigner()) {
             if (!keys || keys.length === 0) {
                 payload.keys = [];
                 // user may already be logged in, or just enterend a signing passowrd or wif
@@ -156,6 +167,7 @@ export function* broadcastOperation({
                     needsActiveAuth,
                     username,
                     password,
+                    useHive,
                 });
                 if (signingKey) payload.keys.push(signingKey);
                 else {
@@ -169,6 +181,7 @@ export function* broadcastOperation({
                                     successCallback,
                                     errorCallback,
                                     saveLogin: true,
+                                    useHive,
                                 },
                             })
                         );
@@ -177,6 +190,23 @@ export function* broadcastOperation({
                 }
             }
         }
+        // if the customJsonPayload has a 'required_posting_auths' key, that has value undefined, and the user is logged in. Update it.
+        const updatedOps = payload.operations.map((op, idx, src) => {
+            if (op[0] === 'custom_json') {
+                if (
+                    op[1].required_posting_auths &&
+                    op[1].required_posting_auths.filter(u => u === undefined)
+                        .length > 0 &&
+                    username
+                ) {
+                    op[1].required_posting_auths = [username];
+                }
+            }
+            return op;
+        });
+
+        payload.operations = updatedOps;
+
         yield call(broadcastPayload, { payload });
         let eventType = type
             .replace(/^([a-z])/, g => g.toUpperCase())
@@ -215,6 +245,7 @@ function hasPrivateKeys(payload) {
 function* broadcastPayload({
     payload: {
         needsActiveAuth,
+        useHive,
         operations,
         keys,
         username,
@@ -222,7 +253,8 @@ function* broadcastPayload({
         errorCallback,
     },
 }) {
-    // console.log('broadcastPayload')
+    console.log('broadcastPayload', operations, username);
+
     if ($STM_Config.read_only_mode) return;
     for (const [type, operation] of operations) {
         // see also transaction/ERROR
@@ -238,6 +270,7 @@ function* broadcastPayload({
                 const op = yield call(hook['preBroadcast_' + type], {
                     operation,
                     username,
+                    useHive,
                 });
                 if (Array.isArray(op)) for (const o of op) newOps.push(o);
                 else newOps.push([type, op]);
@@ -255,7 +288,7 @@ function* broadcastPayload({
                 try {
                     hook['broadcasted_' + type]({ operation });
                 } catch (error) {
-                    console.error(error);
+                    console.error('broadcastPayload error', error);
                 }
             }
         }
@@ -294,8 +327,61 @@ function* broadcastPayload({
                     broadcastedEvent();
                 }, 2000);
             } else {
-                if (!isLoggedInWithKeychain()) {
-                    broadcast.send(
+                if (isLoggedInWithKeychain()) {
+                    const authType = needsActiveAuth ? 'active' : 'posting';
+                    const keychain = useHive
+                        ? window.hive_keychain
+                        : window.steem_keychain;
+                    if (!keychain) {
+                        reject(
+                            `${
+                                useHive ? 'Hive' : 'Steem'
+                            } keychain not available for operation. Please install or use private key.`
+                        );
+                    } else {
+                        keychain.requestBroadcast(
+                            username,
+                            operations,
+                            authType,
+                            response => {
+                                if (!response.success) {
+                                    reject(response.message);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve(response.result);
+                                }
+                            }
+                        );
+                    }
+                } else if (isLoggedInWithHiveSigner()) {
+                    if (!needsActiveAuth) {
+                        hiveSignerClient.broadcast(
+                            operations,
+                            (err, result) => {
+                                if (err) {
+                                    reject(err.error_description);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve();
+                                }
+                            }
+                        );
+                    } else {
+                        sendOperationsWithHiveSigner(
+                            operations,
+                            {},
+                            (err, result) => {
+                                if (err) {
+                                    reject(err.error_description);
+                                } else {
+                                    broadcastedEvent();
+                                    resolve();
+                                }
+                            }
+                        );
+                    }
+                } else {
+                    (useHive ? hive : steem).broadcast.send(
                         { extensions: [], operations },
                         keys,
                         (err, result) => {
@@ -308,28 +394,15 @@ function* broadcastPayload({
                             }
                         }
                     );
-                } else {
-                    const authType = needsActiveAuth ? 'active' : 'posting';
-                    window.steem_keychain.requestBroadcast(
-                        username,
-                        operations,
-                        authType,
-                        response => {
-                            if (!response.success) {
-                                reject(response.message);
-                            } else {
-                                broadcastedEvent();
-                                resolve(response.result);
-                            }
-                        }
-                    );
                 }
             }
         });
+        const ssc = useHive ? hiveSsc : steemSsc;
         if (
             operations.length == 1 &&
             operations[0][0] === 'custom_json' &&
-            operations[0][1].id === 'ssc-mainnet1'
+            operations[0][1].id ===
+                (useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1')
         ) {
             // Wait for finish.
             for (let i = 0; i < 15; i++) {
@@ -357,7 +430,7 @@ function* broadcastPayload({
                         username,
                     });
                 } catch (error) {
-                    console.error(error);
+                    console.error('accepted_', error);
                 }
             }
             const config = operation.__config;
@@ -373,9 +446,9 @@ function* broadcastPayload({
         }
         if (successCallback)
             try {
-                successCallback();
+                successCallback(operations);
             } catch (error) {
-                console.error(error);
+                console.error('defaultErrorCallback', error);
             }
     } catch (error) {
         console.error('TransactionSaga\tbroadcastPayload', error);
@@ -388,7 +461,7 @@ function* broadcastPayload({
                 try {
                     yield call(hook['error_' + type], { operation });
                 } catch (error2) {
-                    console.error(error2);
+                    console.error('error_ hook error', error2);
                 }
             }
         }
@@ -399,10 +472,7 @@ function* accepted_comment({ operation }) {
     const { author, permlink } = operation;
     // update again with new $$ amount from the steemd node
     yield call(getContent, { author, permlink });
-    // receiveComment did the linking already (but that is commented out)
     yield put(globalActions.linkReply(operation));
-    // mark the time (can only post 1 per min)
-    // yield put(user.actions.acceptedComment())
 }
 
 function updateFollowState(action, following, state) {
@@ -474,7 +544,7 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
     yield put(userActions.lookupVotingPower({ account: username }));
 }
 
-export function* preBroadcast_comment({ operation, username }) {
+export function* preBroadcast_comment({ operation, username, useHive }) {
     if (!operation.author) operation.author = username;
     let permlink = operation.permlink;
     const { author, __config: { originalBody, comment_options } } = operation;
@@ -487,6 +557,18 @@ export function* preBroadcast_comment({ operation, username }) {
 
     body = body.trim();
 
+    if (!permlink) permlink = yield createPermlink(title, author, useHive);
+
+    const postUrl = `${APP_URL}/@${author}/${permlink}`;
+    // Add footer
+    const footer = (parent_author === ''
+        ? POST_FOOTER
+        : COMMENT_FOOTER
+    ).replace('${POST_URL}', postUrl);
+    if (footer && !body.endsWith(footer)) {
+        body += '\n\n' + footer;
+    }
+
     // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
 
     let body2;
@@ -495,18 +577,23 @@ export function* preBroadcast_comment({ operation, username }) {
         // Putting body into buffer will expand Unicode characters into their true length
         if (patch && patch.length < new Buffer(body, 'utf-8').length)
             body2 = patch;
+    } else {
+        // Creation - set up canonical url
+        const parsedMeta = JSON.parse(operation.json_metadata);
+        if (!parsedMeta.canonical_url) {
+            parsedMeta.canonical_url = postUrl;
+        }
+        operation.json_metadata = JSON.stringify(parsedMeta);
     }
     if (!body2) body2 = body;
-    if (!permlink) permlink = yield createPermlink(title, author);
 
-    const md = operation.json_metadata;
-    const json_metadata = typeof md === 'string' ? md : JSON.stringify(md);
+    if (typeof operation.json_metadata !== 'string')
+        throw 'json not serialized';
     const op = {
         ...operation,
         permlink: permlink.toLowerCase(),
         parent_author,
         parent_permlink,
-        json_metadata,
         title: (operation.title || '').trim(),
         body: body2,
     };
@@ -516,31 +603,35 @@ export function* preBroadcast_comment({ operation, username }) {
     // comment_options must come directly after comment
     if (comment_options) {
         const {
-            max_accepted_payout = ['1000000.000', DEBT_TICKER].join(' '),
+            max_accepted_payout = ['1000000.000', useHive ? 'HBD' : 'SBD'].join(
+                ' '
+            ),
             percent_steem_dollars = 10000, // 10000 === 100%
             allow_votes = true,
             allow_curation_rewards = true,
         } = comment_options;
-        comment_op.push([
-            'comment_options',
-            {
-                author,
-                permlink,
-                max_accepted_payout,
-                percent_steem_dollars,
-                allow_votes,
-                allow_curation_rewards,
-                extensions: comment_options.extensions
-                    ? comment_options.extensions
-                    : [],
-            },
-        ]);
+        const commentOptionsOp = {
+            author,
+            permlink,
+            max_accepted_payout,
+            allow_votes,
+            allow_curation_rewards,
+            extensions: comment_options.extensions
+                ? comment_options.extensions
+                : [],
+        };
+        if (useHive) {
+            commentOptionsOp.percent_hbd = percent_steem_dollars;
+        } else {
+            commentOptionsOp.percent_steem_dollars = percent_steem_dollars;
+        }
+        comment_op.push(['comment_options', commentOptionsOp]);
     }
 
     return comment_op;
 }
 
-export function* createPermlink(title, author) {
+export function* createPermlink(title, author, useHive) {
     let permlink;
     if (title && title.trim() !== '') {
         let s = slug(title);
@@ -551,8 +642,22 @@ export function* createPermlink(title, author) {
         s = s.toLowerCase().replace(/[^a-z0-9-]+/g, '');
 
         // ensure the permlink is unique
-        const slugState = yield call([api, api.getContentAsync], author, s);
-        if (slugState.body !== '') {
+        let postExists = false;
+        try {
+            const head = yield call(
+                callBridge,
+                'get_post_header',
+                {
+                    author,
+                    permlink: s,
+                },
+                !!useHive
+            );
+            postExists = head && !!head.category;
+        } catch (e) {
+            // suppress not found errors
+        }
+        if (postExists) {
             const noise = base58
                 .encode(secureRandom.randomBuffer(4))
                 .toLowerCase();

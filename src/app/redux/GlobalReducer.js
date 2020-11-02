@@ -1,10 +1,4 @@
-import { Map, Set, List, fromJS, Iterable } from 'immutable';
-import resolveRoute from 'app/ResolveRoute';
-import { emptyContent } from 'app/redux/EmptyState';
-import { contentStats } from 'app/utils/StateFunctions';
-import constants from './constants';
-
-export const emptyContentMap = Map(emptyContent);
+import { Map, List, fromJS, Iterable } from 'immutable';
 
 export const defaultState = Map({
     status: {},
@@ -13,10 +7,19 @@ export const defaultState = Map({
 // Action constants
 const SET_COLLAPSED = 'global/SET_COLLAPSED';
 const RECEIVE_STATE = 'global/RECEIVE_STATE';
+const RECEIVE_NOTIFICATIONS = 'global/RECEIVE_NOTIFICATIONS';
+const RECEIVE_UNREAD_NOTIFICATIONS = 'global/RECEIVE_UNREAD_NOTIFICATIONS';
+const NOTIFICATIONS_LOADING = 'global/NOTIFICATIONS_LOADING';
 const RECEIVE_ACCOUNT = 'global/RECEIVE_ACCOUNT';
 const RECEIVE_ACCOUNTS = 'global/RECEIVE_ACCOUNTS';
 const SYNC_PINNED_POSTS = 'global/SYNC_PINNED_POSTS';
 const RECEIVE_COMMENT = 'global/RECEIVE_COMMENT';
+const RECEIVE_POST_HEADER = 'global/RECEIVE_POST_HEADER';
+const RECEIVE_COMMUNITY = 'global/RECEIVE_COMMUNITY';
+const RECEIVE_COMMUNITIES = 'global/RECEIVE_COMMUNITIES';
+const LOADING_SUBSCRIPTIONS = 'global/LOADING_SUBSCRIPTIONS';
+const RECEIVE_SUBSCRIPTIONS = 'global/RECEIVE_SUBSCRIPTIONS';
+const SYNC_SPECIAL_POSTS = 'global/SYNC_SPECIAL_POSTS';
 const RECEIVE_CONTENT = 'global/RECEIVE_CONTENT';
 const LINK_REPLY = 'global/LINK_REPLY';
 const DELETE_CONTENT = 'global/DELETE_CONTENT';
@@ -24,20 +27,23 @@ const VOTED = 'global/VOTED';
 const FETCHING_DATA = 'global/FETCHING_DATA';
 const RECEIVE_DATA = 'global/RECEIVE_DATA';
 const RECEIVE_RECENT_POSTS = 'global/RECEIVE_RECENT_POSTS';
+const RECEIVE_AUTHOR_RECENT_POSTS = 'global/RECEIVE_AUTHOR_RECENT_POSTS';
 const REQUEST_META = 'global/REQUEST_META';
 const RECEIVE_META = 'global/RECEIVE_META';
 const SET = 'global/SET';
 const REMOVE = 'global/REMOVE';
 const UPDATE = 'global/UPDATE';
-const SET_META_DATA = 'global/SET_META_DATA';
-const CLEAR_META = 'global/CLEAR_META';
-const CLEAR_META_ELEMENT = 'global/CLEAR_META_ELEMENT';
 const FETCH_JSON = 'global/FETCH_JSON';
 const FETCH_JSON_RESULT = 'global/FETCH_JSON_RESULT';
 const SHOW_DIALOG = 'global/SHOW_DIALOG';
 const HIDE_DIALOG = 'global/HIDE_DIALOG';
-// Saga-related:
-export const GET_STATE = 'global/GET_STATE';
+const RECEIVE_REWARDS = 'global/RECEIVE_REWARDS';
+const RECEIVE_STAKED_ACCOUNTS = 'global/RECEIVE_STAKED_ACCOUNTS';
+
+const postKey = (author, permlink) => {
+    if ((author || '') === '' || (permlink || '') === '') return null;
+    return author + '/' + permlink;
+};
 
 /**
  * Transfrom nested JS object to appropriate immutable collection.
@@ -69,16 +75,6 @@ const mergeAccounts = (state, account) => {
 export default function reducer(state = defaultState, action = {}) {
     const payload = action.payload;
 
-    // Set post category
-    const pathname = state.get('pathname');
-    if (pathname) {
-        const route = resolveRoute(pathname);
-        if (route.page === 'PostsIndex') {
-            const postCategory = route.params[1];
-            state = state.set('postCategory', postCategory);
-        }
-    }
-
     switch (action.type) {
         case SET_COLLAPSED: {
             return state.withMutations(map => {
@@ -90,42 +86,31 @@ export default function reducer(state = defaultState, action = {}) {
 
         case RECEIVE_STATE: {
             let new_state = fromJS(payload);
-            if (new_state.has('content')) {
-                const content = new_state.get('content').withMutations(c => {
-                    c.forEach((cc, key) => {
-                        cc = emptyContentMap.mergeDeep(cc);
-                        const stats = fromJS(contentStats(cc));
-                        c.setIn([key, 'stats'], stats);
-                    });
-                });
-                new_state = new_state.set('content', content);
-            }
-            // let transfer_history from new state override completely, otherwise
-            // deep merge may not work as intended.
-            let mergedState = state.mergeDeep(new_state);
-            return mergedState.update(
-                'accounts',
-                accountMap =>
-                    accountMap
-                        ? accountMap.map(
-                              (v, k) =>
-                                  new_state.hasIn([
-                                      'accounts',
-                                      k,
-                                      'transfer_history',
-                                  ])
-                                      ? v.set(
-                                            'transfer_history',
-                                            new_state.getIn([
-                                                'accounts',
-                                                k,
-                                                'transfer_history',
-                                            ])
-                                        )
-                                      : v
-                          )
-                        : accountMap
+            return state.mergeDeep(new_state);
+        }
+
+        case RECEIVE_NOTIFICATIONS: {
+            console.log('Receive notifications', payload);
+            return state.updateIn(['notifications', payload.name], Map(), n =>
+                n.withMutations(nmut =>
+                    nmut
+                        .update('notifications', List(), a =>
+                            a.concat(fromJS(payload.notifications))
+                        )
+                        .set('isLastPage', payload.isLastPage)
+                )
             );
+        }
+
+        case RECEIVE_UNREAD_NOTIFICATIONS: {
+            return state.setIn(
+                ['notifications', payload.name, 'unreadNotifications'],
+                Map(payload.unreadNotifications)
+            );
+        }
+
+        case NOTIFICATIONS_LOADING: {
+            return state.setIn(['notifications', 'loading'], payload);
         }
 
         case RECEIVE_ACCOUNT: {
@@ -153,59 +138,78 @@ export default function reducer(state = defaultState, action = {}) {
             }, state);
         }
 
-        case RECEIVE_COMMENT: {
-            const {
-                author,
-                permlink,
-                parent_author = '',
-                parent_permlink = '',
-                title = '',
-                body,
-            } = payload.op;
-            const key = author + '/' + permlink;
-            let updatedState = state.updateIn(
-                ['content', key],
-                Map(emptyContent),
-                r =>
-                    r.merge({
-                        author,
-                        permlink,
-                        parent_author,
-                        parent_permlink,
-                        title: title.toString('utf-8'),
-                        body: body.toString('utf-8'),
-                    })
+        case RECEIVE_POST_HEADER: {
+            return state.update('headers', Map(), a =>
+                a.mergeDeep(fromJS(payload))
             );
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'replies'],
-                    List(),
-                    r => r.insert(0, key)
-                );
-                const children = updatedState.getIn(
-                    ['content', parent_key, 'replies'],
-                    List()
-                ).size;
-                updatedState = updatedState.updateIn(
-                    ['content', parent_key, 'children'],
-                    0,
-                    () => children
-                );
+        }
+
+        case RECEIVE_COMMUNITIES: {
+            const map = Map(payload.map(c => [c.name, fromJS(c)]));
+            const idx = List(payload.map(c => c.name));
+            if (map.length <= 0) {
+                debugger;
             }
-            return updatedState;
+            return state
+                .setIn(['community'], map)
+                .setIn(['community_idx'], idx);
+        }
+
+        case RECEIVE_COMMUNITY: {
+            // update status
+            Object.keys(payload).forEach(k => {
+                const c = payload[k];
+                const teamMap = {};
+                c.team.forEach(t => {
+                    teamMap[t[0]] = { role: t[1], title: t[2] };
+                });
+                c.team = teamMap;
+            });
+            return state.update('community', Map(), a => a.mergeDeep(payload));
+        }
+
+        case LOADING_SUBSCRIPTIONS: {
+            return state.setIn(['subscriptions', 'loading'], payload);
+        }
+
+        case RECEIVE_SUBSCRIPTIONS: {
+            return state.setIn(
+                ['subscriptions', payload.username],
+                fromJS(payload.subscriptions)
+            );
+        }
+        case RECEIVE_REWARDS: {
+            return state.set('rewards', fromJS(payload.rewards));
+        }
+
+        case RECEIVE_STAKED_ACCOUNTS: {
+            const stakedAccounts = {};
+            payload.stakedAccounts.forEach(acc => {
+                stakedAccounts[acc['name']] =
+                    parseFloat(acc['staked_tokens']) /
+                    Math.pow(10, payload.precision);
+            });
+            return state.set('stakedAccounts', fromJS(stakedAccounts));
         }
 
         case RECEIVE_CONTENT: {
             const content = fromJS(payload.content);
             const key = content.get('author') + '/' + content.get('permlink');
-            return state.updateIn(['content', key], Map(), c => {
-                c = emptyContentMap.mergeDeep(c);
-                c = c.delete('active_votes');
-                c = c.mergeDeep(content);
-                c = c.set('stats', fromJS(contentStats(c)));
-                return c;
-            });
+            console.log('received content...', payload.content);
+
+            // merge content object into map
+            let new_state = state.updateIn(['content', key], Map(), c =>
+                c.mergeDeep(content)
+            );
+
+            // set creation-pending key (optimistic UI update)
+            if (content.get('depth') == 0) {
+                const category = content.get('category');
+                const dkey = ['discussion_idx', category, '_created'];
+                new_state = new_state.setIn(dkey, key);
+            }
+
+            return new_state;
         }
 
         case LINK_REPLY: {
@@ -215,9 +219,9 @@ export default function reducer(state = defaultState, action = {}) {
                 parent_author = '',
                 parent_permlink = '',
             } = payload;
-            if (parent_author === '' || parent_permlink === '') return state;
+            const parent_key = postKey(parent_author, parent_permlink);
+            if (!parent_key) return state;
             const key = author + '/' + permlink;
-            const parent_key = parent_author + '/' + parent_permlink;
             // Add key if not exist
             let updatedState = state.updateIn(
                 ['content', parent_key, 'replies'],
@@ -240,11 +244,12 @@ export default function reducer(state = defaultState, action = {}) {
             const { author, permlink } = payload;
             const key = author + '/' + permlink;
             const content = state.getIn(['content', key]);
-            const parent_author = content.get('parent_author') || '';
-            const parent_permlink = content.get('parent_permlink') || '';
+            const parent_key = postKey(
+                content.get('parent_author'),
+                content.get('parent_permlink')
+            );
             let updatedState = state.deleteIn(['content', key]);
-            if (parent_author !== '' && parent_permlink !== '') {
-                const parent_key = parent_author + '/' + parent_permlink;
+            if (parent_key) {
                 updatedState = updatedState.updateIn(
                     ['content', parent_key, 'replies'],
                     List(),
@@ -255,24 +260,17 @@ export default function reducer(state = defaultState, action = {}) {
         }
 
         case VOTED: {
-            const { username, author, permlink, weight } = payload;
+            const { voter, author, permlink, weight } = payload;
+            const vote = Map({ voter, percent: weight });
             const key = ['content', author + '/' + permlink, 'active_votes'];
-            let active_votes = state.getIn(key, List());
-            const idx = active_votes.findIndex(
-                v => v.get('voter') === username
-            );
-            // steemd flips weight into percent
-            if (idx === -1) {
-                active_votes = active_votes.push(
-                    Map({ voter: username, percent: weight })
-                );
-            } else {
-                active_votes = active_votes.set(
-                    idx,
-                    Map({ voter: username, percent: weight })
-                );
-            }
-            state.setIn(key, active_votes);
+            let votes = state.getIn(key, List());
+
+            const idx = votes.findIndex(v => v.get('voter') === voter);
+            votes = idx === -1 ? votes.push(vote) : votes.set(idx, vote);
+            console.log('Applying vote @ idx', idx, payload);
+
+            // TODO: new state never returned -- masked by RECEIVE_CONTENT
+            state.setIn(key, votes);
             return state;
         }
 
@@ -288,56 +286,31 @@ export default function reducer(state = defaultState, action = {}) {
         }
 
         case RECEIVE_DATA: {
-            const {
-                data,
-                order,
-                category,
-                accountname,
-                fetching,
-                endOfData,
-            } = payload;
+            const { data, order, category, fetching, endOfData } = payload;
             let new_state;
-            if (
-                order === 'by_author' ||
-                order === 'by_feed' ||
-                order === 'by_comments' ||
-                order === 'by_replies'
-            ) {
-                // category is either "blog", "feed", "comments", or "recent_replies" (respectively) -- and all posts are keyed under current profile
-                const key = ['accounts', accountname, category];
-                new_state = state.updateIn(key, List(), list => {
-                    return list.withMutations(posts => {
-                        data.forEach(value => {
-                            const key2 = `${value.author}/${value.permlink}`;
-                            if (!posts.includes(key2)) posts.push(key2);
-                        });
+
+            // append content keys to `discussion_idx` list
+            const key = ['discussion_idx', category || '', order];
+            new_state = state.updateIn(key, List(), list => {
+                return list.withMutations(posts => {
+                    data.forEach(value => {
+                        const key = `${value.author}/${value.permlink}`;
+                        if (!posts.includes(key)) posts.push(key);
                     });
                 });
-            } else {
-                new_state = state.updateIn(
-                    ['discussion_idx', category || '', order],
-                    list => {
-                        return list.withMutations(posts => {
-                            data.forEach(value => {
-                                const entry = `${value.author}/${
-                                    value.permlink
-                                }`;
-                                if (!posts.includes(entry)) posts.push(entry);
-                            });
-                        });
-                    }
-                );
-            }
+            });
+
+            // append content to `content` map
             new_state = new_state.updateIn(['content'], content => {
                 return content.withMutations(map => {
                     data.forEach(value => {
                         const key = `${value.author}/${value.permlink}`;
-                        value = fromJS(value);
-                        value = value.set('stats', fromJS(contentStats(value)));
-                        map.set(key, value);
+                        map.set(key, fromJS(value));
                     });
                 });
             });
+
+            // update status
             new_state = new_state.updateIn(
                 ['status', category || '', order],
                 () => {
@@ -369,13 +342,34 @@ export default function reducer(state = defaultState, action = {}) {
                         const key = `${value.author}/${value.permlink}`;
                         if (!map.has(key)) {
                             value = fromJS(value);
-                            value = value.set(
-                                'stats',
-                                fromJS(contentStats(value))
-                            );
-
                             map.set(key, value);
                         }
+                    });
+                });
+            });
+            return new_state;
+        }
+
+        case RECEIVE_AUTHOR_RECENT_POSTS: {
+            const { data, order, category } = payload;
+            let new_state = state.updateIn(
+                ['discussion_idx', category || '', order],
+                List(),
+                list => {
+                    return list.withMutations(posts => {
+                        data.forEach(value => {
+                            const entry = `${value.author}/${value.permlink}`;
+                            if (!posts.includes(entry)) posts.push(entry);
+                        });
+                    });
+                }
+            );
+            new_state = new_state.updateIn(['content'], content => {
+                return content.withMutations(map => {
+                    data.forEach(value => {
+                        const key = `${value.author}/${value.permlink}`;
+                        value = fromJS(value);
+                        map.set(key, value);
                     });
                 });
             });
@@ -410,22 +404,6 @@ export default function reducer(state = defaultState, action = {}) {
         case UPDATE: {
             const { key, notSet = Map(), updater } = payload;
             return state.updateIn(key, notSet, updater);
-        }
-
-        case SET_META_DATA: {
-            const { id, meta } = payload;
-            return state.setIn(['metaLinkData', id], fromJS(meta));
-        }
-
-        case CLEAR_META: {
-            return state.deleteIn(['metaLinkData', payload.id]);
-        }
-
-        case CLEAR_META_ELEMENT: {
-            const { formId, element } = payload;
-            return state.updateIn(['metaLinkData', formId], data =>
-                data.remove(element)
-            );
         }
 
         case FETCH_JSON: {
@@ -465,6 +443,31 @@ export const receiveState = payload => ({
     payload,
 });
 
+export const receiveNotifications = payload => ({
+    type: RECEIVE_NOTIFICATIONS,
+    payload,
+});
+
+export const receiveUnreadNotifications = payload => ({
+    type: RECEIVE_UNREAD_NOTIFICATIONS,
+    payload,
+});
+
+export const notificationsLoading = payload => ({
+    type: NOTIFICATIONS_LOADING,
+    payload,
+});
+
+export const receiveRewards = payload => ({
+    type: RECEIVE_REWARDS,
+    payload,
+});
+
+export const receiveStakedAccounts = payload => ({
+    type: RECEIVE_STAKED_ACCOUNTS,
+    payload,
+});
+
 export const receiveAccount = payload => ({
     type: RECEIVE_ACCOUNT,
     payload,
@@ -480,8 +483,27 @@ export const syncPinnedPosts = payload => ({
     payload,
 });
 
-export const receiveComment = payload => ({
-    type: RECEIVE_COMMENT,
+export const receivePostHeader = payload => ({
+    type: RECEIVE_POST_HEADER,
+    payload,
+});
+
+export const receiveCommunities = payload => ({
+    type: RECEIVE_COMMUNITIES,
+    payload,
+});
+
+export const receiveCommunity = payload => ({
+    type: RECEIVE_COMMUNITY,
+    payload,
+});
+
+export const receiveSubscriptions = payload => ({
+    type: RECEIVE_SUBSCRIPTIONS,
+    payload,
+});
+export const loadingSubscriptions = payload => ({
+    type: LOADING_SUBSCRIPTIONS,
     payload,
 });
 
@@ -520,6 +542,11 @@ export const receiveRecentPosts = payload => ({
     payload,
 });
 
+export const receiveAuthorRecentPosts = payload => ({
+    type: RECEIVE_AUTHOR_RECENT_POSTS,
+    payload,
+});
+
 export const requestMeta = payload => ({
     type: REQUEST_META,
     payload,
@@ -546,21 +573,6 @@ export const update = payload => ({
     payload,
 });
 
-export const setMetaData = payload => ({
-    type: SET_META_DATA,
-    payload,
-});
-
-export const clearMeta = payload => ({
-    type: CLEAR_META,
-    payload,
-});
-
-export const clearMetaElement = payload => ({
-    type: CLEAR_META_ELEMENT,
-    payload,
-});
-
 export const fetchJson = payload => ({
     type: FETCH_JSON,
     payload,
@@ -578,10 +590,5 @@ export const showDialog = payload => ({
 
 export const hideDialog = payload => ({
     type: HIDE_DIALOG,
-    payload,
-});
-
-export const getState = payload => ({
-    type: GET_STATE,
     payload,
 });

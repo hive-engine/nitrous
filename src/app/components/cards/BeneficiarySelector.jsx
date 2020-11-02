@@ -5,6 +5,10 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 import reactForm from 'app/utils/ReactForm';
 import { List, Set } from 'immutable';
 import tt from 'counterpart';
+import {
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
+    SCOT_DEFAULT_BENEFICIARY_PERCENT,
+} from 'app/client_config';
 
 export class BeneficiarySelector extends React.Component {
     static propTypes = {
@@ -14,9 +18,6 @@ export class BeneficiarySelector extends React.Component {
         onBlur: React.PropTypes.func.isRequired,
         value: React.PropTypes.array,
         tabIndex: React.PropTypes.number,
-
-        // redux connect
-        following: React.PropTypes.object.isRequired,
     };
     static defaultProps = {
         id: 'BeneficiarySelectorId',
@@ -83,6 +84,7 @@ export class BeneficiarySelector extends React.Component {
         const beneficiaries = this.props.value;
         const remainingPercent =
             100 -
+            SCOT_DEFAULT_BENEFICIARY_PERCENT -
             beneficiaries
                 .map(b => (b.percent ? parseInt(b.percent) : 0))
                 .reduce((sum, elt) => sum + elt, 0);
@@ -98,18 +100,15 @@ export class BeneficiarySelector extends React.Component {
                                 pattern="[0-9]*"
                                 value={remainingPercent}
                                 disabled
-                                style={{
-                                    maxWidth: '2.6rem',
-                                }}
+                                className="BeneficiarySelector__percentbox"
                             />
-                            <span style={{ paddingTop: '5px' }}>%</span>
+                            <span className="BeneficiarySelector__percentrow">
+                                %
+                            </span>
                         </div>
                     </div>
                     <div className="column small-5">
-                        <div
-                            className="input-group"
-                            style={{ marginBottom: '1.25rem' }}
-                        >
+                        <div className="input-group">
                             <span className="input-group-label">@</span>
                             <input
                                 className="input-group-field bold"
@@ -120,18 +119,16 @@ export class BeneficiarySelector extends React.Component {
                         </div>
                     </div>
                 </div>
-                {beneficiaries.map((beneficiary, idx) => (
-                    <div className="row" key={idx}>
+                {SCOT_DEFAULT_BENEFICIARY_ACCOUNT && (
+                    <div className="row">
                         <div className="column small-2">
                             <div className="input-group">
                                 <input
-                                    id="percent"
+                                    id="benePercent"
                                     type="text"
                                     pattern="[0-9]*"
-                                    value={beneficiary.percent}
-                                    onChange={this.handleBeneficiaryPercentChange(
-                                        idx
-                                    )}
+                                    value={SCOT_DEFAULT_BENEFICIARY_PERCENT}
+                                    disabled
                                     style={{
                                         maxWidth: '2.6rem',
                                     }}
@@ -144,6 +141,38 @@ export class BeneficiarySelector extends React.Component {
                                 className="input-group"
                                 style={{ marginBottom: '1.25rem' }}
                             >
+                                <span className="input-group-label">@</span>
+                                <input
+                                    className="input-group-field bold"
+                                    type="text"
+                                    disabled
+                                    value={SCOT_DEFAULT_BENEFICIARY_ACCOUNT}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {beneficiaries.map((beneficiary, idx) => (
+                    <div className="row" key={idx}>
+                        <div className="column small-2">
+                            <div className="input-group">
+                                <input
+                                    id="percent"
+                                    type="text"
+                                    pattern="[0-9]*"
+                                    value={beneficiary.percent}
+                                    onChange={this.handleBeneficiaryPercentChange(
+                                        idx
+                                    )}
+                                    className="BeneficiarySelector__percentbox"
+                                />
+                                <span className="BeneficiarySelector__percentrow">
+                                    %
+                                </span>
+                            </div>
+                        </div>
+                        <div className="column small-5">
+                            <div className="input-group">
                                 <span className="input-group-label">@</span>
                                 <Autocomplete
                                     wrapperStyle={{
@@ -189,10 +218,7 @@ export class BeneficiarySelector extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div
-                            className="column small-5"
-                            style={{ paddingTop: '5px' }}
-                        >
+                        <div className="BeneficiarySelector__percentrow column small-5">
                             <a
                                 id="remove"
                                 href="#"
@@ -255,7 +281,7 @@ export function validateBeneficiaries(
         }
         totalPercent += parseInt(beneficiary.percent);
     }
-    if (totalPercent > 100) {
+    if (totalPercent > 100 - SCOT_DEFAULT_BENEFICIARY_PERCENT) {
         return tt('beneficiary_selector_jsx.beneficiary_percent_total_invalid');
     }
 }
@@ -263,7 +289,7 @@ export function validateBeneficiaries(
 import { connect } from 'react-redux';
 
 export default connect((state, ownProps) => {
-    var following = List();
+    let following = List();
     const username = state.user.getIn(['current', 'username']);
     const follow = state.global.get('follow');
     if (follow) {
@@ -277,6 +303,6 @@ export default connect((state, ownProps) => {
     return {
         ...ownProps,
         username,
-        following,
+        following: following.toJS(),
     };
 })(BeneficiarySelector);

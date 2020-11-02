@@ -73,6 +73,7 @@
                 padding: 0.6rem;
                 text-transform: none;
                 margin: 0 0.75rem 0 .5rem;
+                white-space: nowrap;
             }
             &.Header__login-link {
                 @extend .link;
@@ -109,6 +110,25 @@
   }
 }
 
+.Header__notification {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+    border-radius: 50%;
+    background: red;
+    line-height: 20px;
+    font-size: 11px;
+    text-align: center;
+    > span {
+        color: white;
+    }
+    &--loading {
+     background: transparent; 
+    }
+}
+
 span.Header__hamburger.toggle-menu {
     width: 1rem;
     height: 1rem;
@@ -142,11 +162,13 @@ span.Header__hamburger.toggle-menu {
 .annoucement-banner {
   text-align: left;
   position: relative;
-  background: #171FC9;
+  background: #171FC9; //Notice Blue
+  // background: #fff3cd;
   color: #fff;
+  // color: #856404;
   @include themify($themes) {
       border-bottom: themed('borderLight');
-  }  
+  }
   @include MQ(M) {
     text-align: center;
   }
@@ -159,7 +181,7 @@ span.Header__hamburger.toggle-menu {
     &:hover, &:focus {
       color: #ccc;
     }
-  }  
+  }
 }
 
 .announcement-banner__text {
@@ -172,5 +194,6 @@ span.Header__hamburger.toggle-menu {
 
 .announcement-banner__link {
    color: #fafafa !important;
+   // color: #856404 !important;;
    text-decoration: underline;
 }

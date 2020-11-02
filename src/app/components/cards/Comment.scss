@@ -1,7 +1,7 @@
 .Comment {
   position: relative;
   clear: both;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.2rem;
   .Markdown {
     p {
       margin: 0.1rem 0 0.6rem 0;
@@ -10,6 +10,15 @@
     p:last-child {
       margin-bottom: 0.2rem;
     }
+  }
+
+  .ReplyEditor .column.large-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+  }
+
+  .ReplyEditor .side-by-side {
+      height: auto;
   }
 }
 
@@ -23,7 +32,7 @@
   }
 
   .Userpic {
-    margin-left: 5px;
+    margin-left: 7px;
   }
 }
 
@@ -85,18 +94,17 @@
 .Comment__header {
   @include themify($themes) {
     margin-left: 62px;
-    border-radius: 3px 3px 0 0;
+    border-radius: themed('roundedCornersTop');
     border: themed('border');
-    background: themed('backgroundColorOpaque');
-    padding: 1px 5px;
+    background: themed('moduleBackgroundColor');
+    padding: 3px 5px;
   }
 }
 
 .Comment__header-user {
   color: $black;
   font-size: 100%;
-  font-weight: 600;
-  a {    
+  a {
     @extend .link;
     @extend .link--primary;
   }
@@ -117,12 +125,12 @@
 .Comment .Comment__block .Comment__body {
   @include themify($themes) {
     margin-left: 62px;
-    max-width: 50rem;
     border: themed('border');
-    padding: 2px 7px;
+    padding: 0 5px;
     border-top: none;
     border-bottom: none;
     font-size: 90%;
+    background: themed('moduleBackgroundColor');
   }
 }
 
@@ -130,8 +138,9 @@
   @include themify($themes) {
     margin-left: 62px;
     border: themed('border');
-    border-radius: 3px 0;
-    padding: 3px 8px;
+    border-radius: themed('roundedCornersBottom');
+    padding: 3px 10px 5px 10px;
+    background: themed('moduleBackgroundColor');
   }
 
   @include themify($themes) {
@@ -145,20 +154,20 @@
     @include themify($themes) {
       border-right: themed('border');
     }
-    padding-right: 1rem;
-    margin-right: 1rem;
+    padding-right: 0.4rem;
+    margin-right: 0.4rem;
     transition: 0.3s all ease-in-out;
     .dropdown-arrow {
       position: relative;
       top: 3px;
       left: -2px;
-    }     
+    }
     &:hover {
       .Icon.dropdown-arrow polygon {
           @include themify($themes) {
             fill: themed('textColorAccent');
-          }     
-      }      
+          }
+      }
     }
   }
 

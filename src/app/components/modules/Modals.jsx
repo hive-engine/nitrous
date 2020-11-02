@@ -16,6 +16,7 @@ import Powerdown from 'app/components/modules/Powerdown';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import TermsAgree from 'app/components/modules/TermsAgree';
 import PostAdvancedSettings from 'app/components/modules/PostAdvancedSettings';
+import Delegations from 'app/components/modules/Delegations';
 
 class Modals extends React.Component {
     static defaultProps = {
@@ -30,6 +31,8 @@ class Modals extends React.Component {
         show_confirm_modal: false,
         show_login_modal: false,
         show_post_advanced_settings_modal: '',
+        show_delegations_modal: false,
+        loginBroadcastOperation: undefined,
     };
     static propTypes = {
         show_login_modal: PropTypes.bool,
@@ -50,6 +53,14 @@ class Modals extends React.Component {
         notifications: PropTypes.object,
         show_terms_modal: PropTypes.bool,
         removeNotification: PropTypes.func,
+        show_delegations_modal: PropTypes.bool,
+        hideDelegations: PropTypes.func.isRequired,
+        loginBroadcastOperation: PropTypes.shape({
+            type: PropTypes.string,
+            username: PropTypes.string,
+            successCallback: PropTypes.func,
+            errorCallback: PropTypes.func,
+        }),
     };
 
     constructor() {
@@ -77,6 +88,9 @@ class Modals extends React.Component {
             hideBandwidthError,
             hidePostAdvancedSettings,
             username,
+            show_delegations_modal,
+            hideDelegations,
+            loginBroadcastOperation,
         } = this.props;
 
         const notifications_array = notifications
@@ -94,11 +108,15 @@ class Modals extends React.Component {
                 'https://blocktrades.us/?input_coin_type=eth&output_coin_type=steem_power&receive_address=' +
                 username;
         };
-
         return (
             <div>
                 {show_login_modal && (
-                    <Reveal onHide={hideLogin} show={show_login_modal}>
+                    <Reveal
+                        onHide={() => {
+                            hideLogin();
+                        }}
+                        show={show_login_modal}
+                    >
                         <LoginForm onCancel={hideLogin} />
                     </Reveal>
                 )}
@@ -152,7 +170,7 @@ class Modals extends React.Component {
                                 </li>
                             </ol>
                             <button className="button" onClick={buySteemPower}>
-                                {tt('g.buy_steem_power')}
+                                {tt('g.buy_hive_power')}
                             </button>
                         </div>
                     </Reveal>
@@ -168,6 +186,15 @@ class Modals extends React.Component {
                         />
                     </Reveal>
                 )}
+                {show_delegations_modal && (
+                    <Reveal
+                        onHide={hideDelegations}
+                        show={show_delegations_modal}
+                    >
+                        <CloseButton onClick={hideDelegations} />
+                        <Delegations />
+                    </Reveal>
+                )}
                 <NotificationStack
                     style={false}
                     notifications={notifications_array}
@@ -180,9 +207,22 @@ class Modals extends React.Component {
 
 export default connect(
     state => {
+        const rcErr = state.transaction.getIn(['errors', 'bandwidthError']);
+        // get the onErrorCB and call it on cancel
+        const show_login_modal = state.user.get('show_login_modal');
+        let loginBroadcastOperation = {};
+        if (
+            show_login_modal &&
+            state.user &&
+            state.user.getIn(['loginBroadcastOperation'])
+        ) {
+            loginBroadcastOperation = state.user
+                .getIn(['loginBroadcastOperation'])
+                .toJS();
+        }
         return {
             username: state.user.getIn(['current', 'username']),
-            show_login_modal: state.user.get('show_login_modal'),
+            show_login_modal,
             show_confirm_modal: state.transaction.get('show_confirm_modal'),
             show_transfer_modal: state.user.get('show_transfer_modal'),
             show_powerdown_modal: state.user.get('show_powerdown_modal'),
@@ -194,13 +234,12 @@ export default connect(
                     '/tos.html' &&
                 state.routing.locationBeforeTransitions.pathname !==
                     '/privacy.html',
-            show_bandwidth_error_modal: state.transaction.getIn([
-                'errors',
-                'bandwidthError',
-            ]),
+            show_bandwidth_error_modal: rcErr,
             show_post_advanced_settings_modal: state.user.get(
                 'show_post_advanced_settings_modal'
             ),
+            show_delegations_modal: state.user.get('show_delegations_modal'),
+            loginBroadcastOperation,
         };
     },
     dispatch => ({
@@ -237,5 +276,9 @@ export default connect(
         // example: addNotification: ({key, message}) => dispatch({type: 'ADD_NOTIFICATION', payload: {key, message}}),
         removeNotification: key =>
             dispatch(appActions.removeNotification({ key })),
+        hideDelegations: e => {
+            if (e) e.preventDefault();
+            dispatch(userActions.hideDelegations());
+        },
     })
 )(Modals);

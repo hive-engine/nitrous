@@ -1,4 +1,5 @@
 import linksRe from 'app/utils/Links';
+import o2j from 'shared/clash/object2json';
 
 function truncate(str, len) {
     if (str) {
@@ -18,26 +19,21 @@ export default function normalizeProfile(account) {
 
     // Parse
     let profile = {};
-    if (account.json_metadata) {
-        try {
-            const md = JSON.parse(account.json_metadata);
-            if (md.profile) {
-                profile = md.profile;
-            }
-            if (!(typeof profile == 'object')) {
-                console.error(
-                    'Expecting object in account.json_metadata.profile:',
-                    profile
-                );
-                profile = {};
-            }
-        } catch (e) {
+    let md = o2j.ifStringParseJSON(account.posting_json_metadata);
+    if (!md || !md.profile || !md.profile.version) {
+        md = o2j.ifStringParseJSON(account.json_metadata);
+    }
+    if (typeof md === 'string') md = o2j.ifStringParseJSON(md); // issue #1237, double-encoded
+    if (md) {
+        if (md.profile) {
+            profile = md.profile;
+        }
+        if (!(typeof profile == 'object')) {
             console.error(
-                'Invalid json metadata string',
-                account.json_metadata,
-                'in account',
-                account.name
+                'Expecting object in account.json_metadata.profile:',
+                profile
             );
+            profile = {};
         }
     }
 

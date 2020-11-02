@@ -7,6 +7,7 @@ import {
     BeneficiarySelector,
     validateBeneficiaries,
 } from './BeneficiarySelector';
+import { SCOT_DEFAULT_BENEFICIARY_PERCENT } from 'app/client_config';
 
 require('app/Translator');
 
@@ -48,7 +49,7 @@ describe('BeneficiarySelector', () => {
         const component = wrapper.instance();
         expect(component.state.beneficiaries.value.length).toBe(0);
         expect(wrapper.find('input #remainingPercent').get(0).props.value).toBe(
-            100
+            100 - SCOT_DEFAULT_BENEFICIARY_PERCENT
         );
 
         // add beneficiary
@@ -60,7 +61,7 @@ describe('BeneficiarySelector', () => {
             .find('input #percent')
             .simulate('change', { target: { value: 20 } });
         expect(wrapper.find('input #remainingPercent').get(0).props.value).toBe(
-            80
+            80 - SCOT_DEFAULT_BENEFICIARY_PERCENT
         );
         wrapper
             .find('input #user')
@@ -74,7 +75,7 @@ describe('BeneficiarySelector', () => {
         wrapper.find('a #remove').simulate('click');
         expect(component.state.beneficiaries.value.length).toBe(0);
         expect(wrapper.find('input #remainingPercent').get(0).props.value).toBe(
-            100
+            100 - SCOT_DEFAULT_BENEFICIARY_PERCENT
         );
     });
 });
@@ -86,7 +87,7 @@ describe('BeneficiarySelector_maxEntries', () => {
         const component = wrapper.instance();
         expect(component.state.beneficiaries.value.length).toBe(0);
         expect(wrapper.find('input #remainingPercent').get(0).props.value).toBe(
-            100
+            100 - SCOT_DEFAULT_BENEFICIARY_PERCENT
         );
 
         // add beneficiary 8 times

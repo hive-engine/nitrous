@@ -8,7 +8,7 @@ import tt from 'counterpart';
 
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import * as globalActions from 'app/redux/GlobalReducer';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import ConfirmTransfer from 'app/components/elements/ConfirmTransfer';
 import runTests, { browserTests } from 'app/utils/BrowserTests';
@@ -22,6 +22,7 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
+    HIVE_ENGINE,
 } from 'app/client_config';
 
 /** Warning .. This is used for Power UP too. */
@@ -188,8 +189,11 @@ class TransferForm extends Component {
         const { transferType } = this.props.initialValues;
         const { currentAccount, tokenBalances } = this.props;
         const { asset } = this.state;
+        const tokenBalance = tokenBalances.find(
+            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+        );
         return !asset || asset.value === LIQUID_TOKEN_UPPERCASE
-            ? `${tokenBalances.balance} ${LIQUID_TOKEN_UPPERCASE}`
+            ? `${tokenBalance.balance} ${LIQUID_TOKEN_UPPERCASE}`
             : null;
     }
 
@@ -207,6 +211,7 @@ class TransferForm extends Component {
     };
 
     render() {
+        const useHive = HIVE_ENGINE;
         const transferTips = {
             'Transfer to Account': tt(
                 'transfer_jsx.move_funds_to_another_account',
@@ -242,6 +247,7 @@ class TransferForm extends Component {
                         currentUser,
                         toVesting,
                         transferType,
+                        useHive,
                     });
                 })}
                 onChange={this.clearError}
@@ -537,8 +543,8 @@ export default connect(
         const initialValues = state.user.get('transfer_defaults', Map()).toJS();
         const toVesting = initialValues.asset === VESTING_TOKEN;
         const currentUser = state.user.getIn(['current']);
-        const currentAccount = state.global.getIn([
-            'accounts',
+        const currentAccount = state.userProfiles.getIn([
+            'profiles',
             currentUser.get('username'),
         ]);
         const tokenBalances = currentAccount.has('token_balances')
@@ -591,6 +597,7 @@ export default connect(
             toVesting,
             currentUser,
             errorCallback,
+            useHive,
         }) => {
             if (!toVesting && !/Transfer to Account/.test(transferType))
                 throw new Error(
@@ -603,7 +610,7 @@ export default connect(
             const successCallback = () => {
                 // refresh transfer history
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    userProfileActions.fetchWalletProfile({ account: username })
                 );
                 dispatch(userActions.hideTransfer());
             };
@@ -628,7 +635,7 @@ export default connect(
                       },
                   };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [username],
                 json: JSON.stringify(transferOperation),
             };
@@ -652,6 +659,7 @@ export default connect(
                     successCallback,
                     errorCallback,
                     confirm,
+                    useHive,
                 })
             );
         },

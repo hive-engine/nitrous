@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "edad",
         "amount": "Cantidad",
         "and": "y",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "Oferta",
         "blog": "Blog",
+        "profile": "Profile",
         "browse": "Navegar",
         "buy": "Comprar",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "Comprar o Vender",
         "by": "por",
         "cancel": "Cancelar",
@@ -21,6 +24,18 @@
         "clear": "Limpiar",
         "close": "Cerrar",
         "collapse_or_expand": "Plegar/Expandir",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "Comentarios",
         "confirm": "Confirmar",
         "convert": "Convertir",
@@ -32,7 +47,12 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_hive": "Hive Team",
         "feed": "Favoritos",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "Seguir",
         "for": "para",
         "from": "de",
@@ -58,6 +78,7 @@
         "newer": "Nuevo",
         "next": "Próximo",
         "no": "No",
+        "notifications": "Notifications",
         "ok": "Ok",
         "older": "Más viejo",
         "or": "o",
@@ -67,6 +88,7 @@
         "permissions": "Permisos",
         "phishy_message":
             "Enlace expuesto a texto sin formato; cuidado con un posible intento de phishing",
+        "pin": "Pin",
         "post": "Publicación",
         "post_as_user": "Post as %(username)s",
         "posts": "Publicaciones",
@@ -94,6 +116,7 @@
         },
         "reputation": "Reputación",
         "reveal_comment": "Mostrar Comentario",
+        "will_be_hidden_due_to_low_rating": "Will be hidden due to low rating",
         "request": "solicitud",
         "required": "Requerido",
         "rewards": "Recompensa",
@@ -104,11 +127,18 @@
         "sell": "Vender",
         "settings": "Configuración",
         "share_this_post": "Compartir esta publicación",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "Mostrar",
         "sign_in": "Registrarse",
         "sign_up": "Inscribirse",
         "since": "desde",
         "submit": "Enviar",
+        "subscriptions": "Subscriptions",
         "power_up": "Power Up",
         "submit_a_story": "Publicar",
         "tag": "Etiqueta",
@@ -123,6 +153,7 @@
         "type": "Tipo",
         "unfollow": "Dejar de seguir",
         "unmute": "Desmutear",
+        "unpin": "Unpin",
         "unknown": "Desconocido",
         "upvote": "Votar",
         "upvote_post": "Votar publicación",
@@ -196,9 +227,9 @@
         "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
             "No se puede aumentar la recompensa de la publicación dentro del último minuto antes del pago.",
         "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
-            "Sólo una cuenta Steem permitida por dirección IP cada 10 minutos",
-        "resteem_this_post": "Reesteemea esta Publicación",
-        "reblog": "Reesteemear",
+            "Sólo una cuenta Hive permitida por dirección IP cada 10 minutos",
+        "reblog_this_post": "Reblogea esta Publicación",
+        "reblog": "Reblogear",
         "write_your_story": "Escribe tu historia",
         "remember_voting_and_posting_key":
             "Recuerda la clave de voto y de publicación",
@@ -223,9 +254,9 @@
             "authors_get_paid_when_people_like_you_upvote_their_post":
                 "Autores cobran cuando gente como tú vota por sus posts",
             "if_you_enjoyed_what_you_read_earn_amount":
-                "Si te ha gustado lo que has leído aquí, crea tu cuenta hoy mismo y empieza a ganar STEEM!",
-            "free_steem": "¡STEEM GRATIS!",
-            "sign_up_earn_steem": "Regístrate ahora para ganar"
+                "Si te ha gustado lo que has leído aquí, crea tu cuenta hoy mismo y empieza a ganar HIVE!",
+            "free_hive": "¡HIVE GRATIS!",
+            "sign_up_earn_hive": "Regístrate ahora para ganar"
         },
         "next_3_strings_together": {
             "show_more": "Mostrar más",
@@ -250,11 +281,20 @@
         },
         "post_key_warning": {
             "confirm":
-                "Está a punto de publicar una clave privada STEEM o una contraseña maestra. Probablemente perderá el control de la cuenta asociada y todos sus fondos.",
+                "Está a punto de publicar una clave privada HIVE o una contraseña maestra. Probablemente perderá el control de la cuenta asociada y todos sus fondos.",
             "warning":
-                "Los usuarios legítimos, incluidos los empleados de Steemit Inc., nunca le pedirán una clave privada o contraseña maestra.",
+                "Los usuarios legítimos, incluidos los empleados de Hive, nunca le pedirán una clave privada o contraseña maestra.",
             "checkbox": "Entiendo"
         },
+        "total": "Total",
+        "circulating": "Circulating",
+        "burn": "Burn",
+        "staking": "Staking",
+        "written_from": "written from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Buy Steem Power",
         "post_as": "Publicar como",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "Este voto ya existe, el usuario tiene que quitar el voto al witness"
@@ -271,23 +311,29 @@
         "change_account_password": "Cambia la contraseña de la cuenta",
         "vote_for_witnesses": "Vota a los testigos",
         "advertise": "Advertise",
+        "media_kit": "Media Kit",
         "privacy_policy": "Política de Privacidad",
         "terms_of_service": "Términos del Servicio",
         "sign_up": "Unirse",
         "learn_more": "Para saber más",
         "welcome": "Bienvenido",
         "faq": "Preguntas Frecuentes",
-        "chat": "Chat de Steemit",
-        "app_center": "Centro de Aplicaciones Steemit",
-        "business_center": "Businesses Accepting Steem",
-        "api_docs": "Documentos API de Steemit",
-        "bluepaper": "Steem Bluepaper",
+        "chat": "Chat de Hive",
+        "app_center": "Centro de Aplicaciones Hive",
+        "business_center": "Businesses Accepting Hive",
+        "api_docs": "Documentos API de Hive",
+        "bluepaper": "Hive Bluepaper",
         "smt_whitepaper": "Libro blanco de SMT",
-        "whitepaper": "Libro blanco de Steem",
+        "whitepaper": "Libro blanco de Hive",
         "intro_tagline": "El dinero habla.",
         "intro_paragraph":
             "Tu voz tiene valor. Únete a la comunidad que te paga por publicar y votar contenido de alta calidad",
-        "jobs": "Jobs at Steemit",
+        "jobs": "Jobs at Hive",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer",
+        "steem_proposals": "Steem Proposals",
         "witnesses": "Testigos"
     },
     "main_menu": {
@@ -299,12 +345,14 @@
         "exceeds_maximum_length": "Excede la capacidad máxima (%(maxKb)sKB)",
         "including_the_category": "(incluyendo categoría '%(rootCategory)s')",
         "use_limited_amount_of_tags":
-            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo 5 tags en tu post y en la línea de categorías",
+            "Tienes %(tagsLength)s tags totales %(includingCategory)s. Por favor usa solo %(maxTags)s tags en tu post y en la línea de categorías",
         "are_you_sure_you_want_to_clear_this_form":
             "¿Estás seguro de que quieres limpiar este formulario?",
         "uploading": "Subiendo",
         "draft_saved": "Borrador guardado.",
         "editor": "Editor",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping":
             "Inserta imágenes arrastrando y soltando,",
         "pasting_from_the_clipboard": "pegando desde el portapapeles,",
@@ -321,7 +369,11 @@
         "update_post": "Actualizar Publicación",
         "markdown_not_supported": "Markdown no soportado aquí",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -333,6 +385,15 @@
             "Beneficiary percentage must be from 1-100",
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
     },
     "category_selector_jsx": {
         "tag_your_story":
@@ -350,14 +411,23 @@
             "Usa sólo letras minúsculas, dígitos y un guión",
         "must_start_with_a_letter": "Debe empezar con una letra",
         "must_end_with_a_letter_or_number":
-            "Debe terminar con una letra o número"
+            "Debe terminar con una letra o número",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -372,7 +442,8 @@
         "view_the_full_context": "Ver todo el contexto",
         "view_the_direct_parent": "Ver el comentario relacionado",
         "you_are_viewing_a_single_comments_thread_from":
-            "Estás viendo  los comentarios relacionados de"
+            "Estás viendo  los comentarios relacionados de",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
     },
     "recoveraccountstep1_jsx": {
         "recover_account_intro":
@@ -414,6 +485,8 @@
             "Parece que %(name)s aún no está siguiendo a nadie. Si %(name)s acaba de añadir nuevas cuentas para seguir, el feed personalizado aparecerá cuando el nuevo contenido esté disponible.",
         "user_hasnt_had_any_replies_yet":
             "%(name)s todavía no ha tenido ninguna respuesta",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
@@ -438,7 +511,7 @@
             "one": "1 publicación",
             "other": "%(count)s posts"
         },
-        "hide_resteems": "Hide Resteems",
+        "hide_reblogs": "Hide Reblogs",
         "show_all": "Show All"
     },
     "post_jsx": {
@@ -530,7 +603,7 @@
         "after_printing_write_down_your_user_name":
             "Después de imprimir, escribe tu nombre de usuario"
     },
-    "converttosteem_jsx": {
+    "converttohive_jsx": {
         "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
             "La cantidad de %(DEBT_TOKEN)s son líquidos y transferibles. Si lo deseas también puedes comprar o vender %(DEBT_TOKEN)s directamente en esta página en el %(link)s o transferir a un mercado externo",
         "this_is_a_price_feed_conversion":
@@ -550,8 +623,12 @@
             "%(VESTING_TOKEN)s es intransferible y requiere 3 meses (13 pagos) para convertir de vuelta a %(LIQUID_TOKEN)s.",
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "Los %(VESTING_TOKEN)s convertidos pueden ser enviados a ti mismo o a otras personas pero no pueden ser transferidos de nuevo sin convertirlos de vuelta a %(LIQUID_TOKEN)s.",
-        "part_of_your_steem_power_is_currently_delegated":
-            "Part of %(user_name)s's STEEM POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on steemit. Your delegation amount can fluctuate."
+        "part_of_your_hive_power_is_currently_delegated":
+            "Part of %(user_name)s's HIVE POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on Hive. Your delegation amount can fluctuate.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "Promociona el Post",
@@ -565,7 +642,7 @@
     "about_jsx": {
         "about_app": "Sobre %(APP_NAME)s",
         "about_app_details":
-            "%(APP_NAME)s es una plataforma social online donde todo el mundo genera ingresos creando y votando contenido. Usa un sistema muy sólido de puntos digitales llamado Steem que soporta valor real gracias al precio de mercado y gracias a su liquidez.",
+            "%(APP_NAME)s es una plataforma social online donde todo el mundo genera ingresos creando y votando contenido. Usa un sistema muy sólido de puntos digitales llamado Hive que soporta valor real gracias al precio de mercado y gracias a su liquidez.",
         "learn_more_at_app_url": "Aprende más en %(APP_URL)s",
         "resources": "Recursos"
     },
@@ -574,8 +651,10 @@
             "Las imágenes fueron ocultadas por bajas calificaciones."
     },
     "postsummary_jsx": {
-        "resteemed": "reesteemeado",
-        "resteemed_by": "Resteemeado por",
+        "reblogged": "reblogeado",
+        "reblogged_by": "Reblogeado por",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "revelarlo",
         "adjust_your": "ajustar tu",
         "display_preferences": "Visualizar preferencias",
@@ -609,9 +688,6 @@
             "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
         "from_negative_rep_user_reveal_memo":
             "I understand the risk; show anyway.",
-        "curation_reward": "%(curation_reward)s STEEM POWER for ",
-        "author_reward":
-            "%(sbd_payout)s%(steem_payout)s and %(author_reward)s STEEM POWER for ",
         "claim_reward_balance": {
             "three_rewards":
                 "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
@@ -628,8 +704,6 @@
             "open_owner_filled_my_order":
                 "Paid %(current_pays)s for %(open_pays)s"
         },
-        "comment_benefactor_reward":
-            "%(benefactor_reward)s STEEM POWER for %(author)s/%(permlink)s",
         "transfer_to_vesting": {
             "from_self": {
                 "no_to": "Transfer %(amount)s to STEEM POWER",
@@ -658,7 +732,18 @@
                 "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
             }
         },
-        "request_id": "Request ID: %(request_id)s"
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)",
+        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
         "cancel_this_withdraw_request": "¿Cancelar la petición de retirada?",
@@ -683,6 +768,7 @@
         "curation_rewards_by": "Recompensas de curación de",
         "author_rewards_by": "Recompensas de autor de",
         "replies_to": "Respuestas a",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "Comentarios de"
     },
     "loginform_jsx": {
@@ -717,7 +803,7 @@
         "password_update_succes":
             "La contraseña %(accountName)s ha sido cambiada correctamente",
         "password_info":
-            "La contraseña o la contraseña privada fue introducida incorrectamente. Probablemente. Ayuda: Las contraseñas generadas por Steemit nunca contendrán 0 (cero), O (o mayúscula), I (i mayúscula), l (L minúscula).",
+            "La contraseña o la contraseña privada fue introducida incorrectamente. Probablemente. Ayuda: Las contraseñas generadas por Hive nunca contendrán 0 (cero), O (o mayúscula), I (i mayúscula), l (L minúscula).",
         "enter_your_username": "Introduce tu nombre de usuario",
         "password_or_wif": "Contraseña o WIF",
         "this_operation_requires_your_key_or_master_password":
@@ -726,8 +812,8 @@
         "amazing_community": "comunidad increíble",
         "to_comment_and_reward_others": "para comentar y recompensar a otros",
         "signup_button": "Crea una cuenta, comienza a ganar ",
-        "signup_button_emphasis": "FREE STEEM!",
-        "sign_up_get_steem": "Crea una cuenta. Comienza en STEEM",
+        "signup_button_emphasis": "FREE TOKENS!",
+        "sign_up_get_steem": "Crea una cuenta.",
         "returning_users": "Inicia sesion",
         "login_warning_title": "Logging in with non-posting key",
         "login_warning_body":
@@ -737,8 +823,7 @@
         "join_our": "Únete a nuestro",
         "sign_transfer": "Sign to complete transfer",
         "use_keychain": "Use keychain extension",
-        "password_update_success":
-            "La contraseña %(accountName)s ha sido cambiada correctamente"
+        "more_login_methods": "más métodos de inicio de sesión"
     },
     "chainvalidation_js": {
         "account_name_should_not_be_empty": "Account name should not be empty.",
@@ -781,6 +866,8 @@
         "location_is_too_long": "Localización es demasiado largo",
         "website_url_is_too_long": "La URL de la página web es muy larga",
         "public_profile_settings": "Herramientas para el perfil público",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "Herramientas privadas para la visualización del post",
         "not_safe_for_work_nsfw_content": "(NSFW) contenido para adultos",
         "always_hide": "Ocultar siempre",
@@ -798,7 +885,28 @@
         "profile_about": "Sobre",
         "profile_location": "Localización",
         "profile_website": "Página Web",
-        "saved": "Saved!"
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
+        "saved": "Saved!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Avanzado",
+        "api_endpoint_options": "Opciones de punto final de API",
+        "endpoint": "Punto final",
+        "preferred": "Privilegiado?",
+        "remove": "Eliminar",
+        "add_api_endpoint": "Agregar punto final de API",
+        "reset_endpoints": "Restablecer puntos finales",
+        "error_bad_url":
+            "Esto parece ser una URL incorrecta, verifíquelo e intente nuevamente",
+        "error_bad_cookie": "No se pueden obtener puntos finales de la cookie",
+        "error_already_exists": "Este punto final ya está en la lista",
+        "error_cant_remove_active":
+            "No puede eliminar el punto final preferido actual. Seleccione primero un nuevo punto final preferido",
+        "error_cant_remove_all":
+            "Debe tener al menos un punto final en la lista"
     },
     "transfer_jsx": {
         "amount_is_in_form": "La cantidad está en el formato 99999.999",
@@ -811,7 +919,7 @@
         "convert_to_VESTING_TOKEN": "Convertir a %(VESTING_TOKEN)s",
         "balance_subject_to_3_day_withdraw_waiting_period":
             "El saldo está sujeto a 3 días de espera para la retirada",
-        "move_funds_to_another_account": "Mover fondos a otra steemscuenta.",
+        "move_funds_to_another_account": "Mover fondos a otra hivescuenta.",
         "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
             "Protege los fondos al pedir la retirada con un periodo de 3 días de espera",
         "withdraw_funds_after_the_required_3_day_waiting_period":
@@ -836,11 +944,13 @@
         "power_up": "Power up",
         "power_down": "Power down",
         "market": "Mercado",
+        "wallet": "Wallet",
+        "steem_wallet": "Steem Wallet",
         "convert_to_LIQUID_TOKEN": "Convertir a %(LIQUID_TOKEN)s",
         "withdraw_LIQUID_TOKEN": "Retirar %(LIQUID_TOKEN)s",
         "withdraw_DEBT_TOKENS": "Retirar %(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
-            "Los tokens valen alrededor de $1.00 de %(LIQUID_TICKER)s, ahora mismo recolectando %(sbdInterest)s%% APR.",
+            "Los tokens valen alrededor de $1.00 de %(LIQUID_TICKER)s, ahora mismo recolectando %(hbdInterest)s%% APR.",
         "tradeable_tokens_transferred":
             "Tradeable tokens that may be transferred anywhere at anytime.",
         "savings": "AHORROS",
@@ -851,13 +961,15 @@
             "Las transferencias están temporalmente inhabilitadas.",
         "history": "HISTORIA",
         "redeem_rewards": "Liquidar recompensas (Transferir al saldo)",
-        "buy_steem_or_steem_power": "Compra STEEM o STEEM POWER."
+        "buy_hive_or_hive_power": "Compra HIVE o HIVE POWER."
     },
     "powerdown_jsx": {
         "power_down": "Power Down",
         "amount": "Cantidad",
         "already_power_down":
             "Estás haciendo un power down de %(AMOUNT)s%(LIQUID_TICKER)s (%(WITHDRAWN)s%(LIQUID_TICKER)shan sido pagados hasta ahora). Ten en cuenta que si cambias la cantidad de \"power down\" la fecha de pago se reinicializará.",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "Estás delegando %(AMOUNT)s%(LIQUID_TICKER)s. Esa cantidad está \"bloquedada\" y no podrás hacer \"power down\" con ella hasta que hayas cancelado la delegación y el periodo de pagos  haya vencido.",
         "per_week": "Eso es %(AMOUNT)s%(LIQUID_TICKER)spor semana",
@@ -878,11 +990,12 @@
         "hi_user": "Hi %(username)s,",
         "blurb":
             "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "i_agree_to_steemits": "I agree to Steemit's"
     },
     "confirmtransactionform_jsx": {
         "confirm": "Confirm %(transactionType)s"
@@ -903,6 +1016,19 @@
     "sanitizedlink_jsx": {
         "phishylink_caution": "Link hidden; phishing attempt",
         "phishylink_reveal": "show link"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     },
     "market_jsx": {
         "action": "Acción",

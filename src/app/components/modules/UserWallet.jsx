@@ -2,11 +2,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { List } from 'immutable';
 import tt from 'counterpart';
 import TransferHistoryRow from 'app/components/cards/TransferHistoryRow';
 import TransactionError from 'app/components/elements/TransactionError';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
-import { numberWithCommas } from 'app/utils/StateFunctions';
+import {
+    numberWithCommas,
+    vestingSteem,
+    delegatedSteem,
+    powerdownSteem,
+    pricePerSteem,
+} from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
 import { FormattedHTMLMessage } from 'app/Translator';
@@ -14,10 +21,17 @@ import {
     LIQUID_TOKEN,
     LIQUID_TOKEN_UPPERCASE,
     VESTING_TOKEN,
+    USE_HIVE,
+    HIVE_ENGINE,
 } from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
+import * as appActions from 'app/redux/AppReducer';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
+import Icon from 'app/components/elements/Icon';
+import classNames from 'classnames';
+import FormattedAssetTokens from 'app/components/elements/FormattedAssetTokens';
 
 class UserWallet extends React.Component {
     constructor() {
@@ -27,7 +41,7 @@ class UserWallet extends React.Component {
         };
         this.onShowDepositSteem = e => {
             if (e && e.preventDefault) e.preventDefault();
-            const name = this.props.current_user.get('username');
+            const name = this.props.current_user;
             const new_window = window.open();
             new_window.opener = null;
             new_window.location =
@@ -52,9 +66,46 @@ class UserWallet extends React.Component {
         this.shouldComponentUpdate = shouldComponentUpdate(this, 'UserWallet');
     }
 
-    handleClaimRewards = account => {
+    componentWillMount() {
+        const { profile, fetchWalletProfile, accountname } = this.props;
+
+        if (
+            !profile ||
+            !profile.has('token_balances') ||
+            !profile.has('balance')
+        ) {
+            fetchWalletProfile(accountname);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        const { profile, accountname, fetchWalletProfile } = this.props;
+        if (prevProps.accountname != accountname) {
+            if (
+                !profile ||
+                !profile.has('token_balances') ||
+                !profile.has('balance')
+            ) {
+                fetchWalletProfile(accountname);
+            }
+        }
+    }
+
+    handleClaimRewards = profile => {
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account);
+        this.props.claimRewards(profile, useHive);
+    };
+    handleClaimTokenRewards = token => {
+        const { profile, claimTokenRewards, useHive } = this.props;
+        claimTokenRewards(profile, token, useHive);
+    };
+    handleClaimAllTokensRewards = () => {
+        const { profile, claimAllTokensRewards, useHive } = this.props;
+        const allTokenStatus = profile.get('all_token_status').toJS();
+        const pendingTokenSymbols = Object.values(allTokenStatus)
+            .filter(e => parseFloat(e.pending_token))
+            .map(({ symbol }) => symbol);
+        claimAllTokensRewards(profile, pendingTokenSymbols, useHive);
     };
     render() {
         const {
@@ -62,29 +113,47 @@ class UserWallet extends React.Component {
             onShowWithdrawSteem,
             onShowDepositPower,
         } = this;
-        const { account, current_user, gprops, scotPrecision } = this.props;
+        const {
+            profile,
+            current_user,
+            gprops,
+            scotPrecision,
+            useHive,
+        } = this.props;
 
-        // do not render if account is not loaded or available
-        if (!account) return null;
+        // do not render if profile is not loaded or available
+        if (
+            !profile ||
+            (!profile.has('token_balances') && !profile.has('balance'))
+        ) {
+            return null;
+        }
+        const allTokenBalances = profile.has('token_balances')
+            ? profile.get('token_balances').toJS()
+            : [];
+        const tokenBalances = allTokenBalances.find(
+            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+        ) || {
+            balance: '0',
+            stake: '0',
+            pendingUnstake: '0',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+        };
+        const otherTokenBalances = allTokenBalances
+            .filter(({ symbol }) => symbol !== LIQUID_TOKEN_UPPERCASE)
+            .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
+        const tokenUnstakes = profile.has('token_unstakes')
+            ? profile.get('token_unstakes').toJS()
+            : [];
 
-        const tokenBalances = account.has('token_balances')
-            ? account.get('token_balances').toJS()
-            : {
-                  balance: '0',
-                  stake: '0',
-                  pendingUnstake: '0',
-              };
-        const tokenUnstakes = account.has('token_unstakes')
-            ? account.get('token_unstakes').toJS()
-            : {
-                  quantityLeft: '0',
-              };
-
-        const tokenStatus = account.has('token_status')
-            ? account.get('token_status').toJS()
+        const tokenStatus = profile.has('token_status')
+            ? profile.get('token_status').toJS()
             : {
                   pending_token: 0,
               };
+        const allTokenStatus = profile.has('all_token_status')
+            ? profile.get('all_token_status').toJS()
+            : [];
         const balance = tokenBalances.balance;
         const delegatedStake = tokenBalances.delegationsOut || '0';
         const stakeBalance =
@@ -93,17 +162,26 @@ class UserWallet extends React.Component {
             parseFloat(delegatedStake) -
             parseFloat(tokenBalances.delegationsIn || '0');
         const pendingUnstakeBalance = tokenBalances.pendingUnstake;
-
-        let isMyAccount =
-            current_user &&
-            current_user.get('username') === account.get('name');
+        const tokenDelegations = profile.has('token_delegations')
+            ? profile.get('token_delegations').toJS()
+            : [];
+        const [snaxBalance] = profile.has('snax_balance')
+            ? profile.get('snax_balance').toJS()
+            : [];
+        const snax_balance_str = numberWithCommas(
+            parseFloat(snaxBalance).toString()
+        );
+        const pendingTokens = Object.values(allTokenStatus).filter(e =>
+            parseFloat(e.pending_token)
+        );
+        let isMyAccount = current_user && current_user === profile.get('name');
 
         const disabledWarning = false;
 
         const showTransfer = (asset, transferType, e) => {
             e.preventDefault();
             this.props.showTransfer({
-                to: isMyAccount ? null : account.get('name'),
+                to: isMyAccount ? null : profile.get('name'),
                 asset,
                 transferType,
             });
@@ -111,32 +189,34 @@ class UserWallet extends React.Component {
 
         const unstake = e => {
             e.preventDefault();
-            const name = account.get('name');
+            const name = profile.get('name');
             this.props.showPowerdown({
                 account: name,
                 stakeBalance: stakeBalance.toFixed(scotPrecision),
+                tokenUnstakes,
                 delegatedStake,
             });
         };
         const cancelUnstake = e => {
             e.preventDefault();
-            const name = account.get('name');
+            const name = profile.get('name');
             this.props.cancelUnstake({
                 account: name,
-                transactionId: tokenUnstakes.txID,
+                tokenUnstakes,
+                useHive,
             });
         };
 
         /// transfer log
         let idx = 0;
-        const transfer_log = account
-            .get('transfer_history')
+        const transfer_log = profile
+            .get('transfer_history', List())
             .map(item => {
                 return (
                     <TransferHistoryRow
                         key={idx++}
                         op={item.toJS()}
-                        context={account.get('name')}
+                        context={profile.get('name')}
                     />
                 );
             })
@@ -163,6 +243,14 @@ class UserWallet extends React.Component {
                 ),
             },
         ];
+        if (isMyAccount) {
+            balance_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: `https://${
+                    useHive ? 'hive' : 'steem'
+                }-engine.com/?p=market&t=${LIQUID_TOKEN_UPPERCASE}`,
+            });
+        }
         let power_menu = [
             {
                 value: tt('userwallet_jsx.power_down'),
@@ -171,7 +259,7 @@ class UserWallet extends React.Component {
             },
         ];
 
-        if (parseFloat(tokenUnstakes.quantityLeft) > 0) {
+        if (tokenUnstakes.length > 0) {
             power_menu.push({
                 value: 'Cancel Unstake',
                 link: '#',
@@ -207,7 +295,7 @@ class UserWallet extends React.Component {
                                 disabled={this.state.claimInProgress}
                                 className="button"
                                 onClick={e => {
-                                    this.handleClaimRewards(account);
+                                    this.handleClaimRewards(profile);
                                 }}
                             >
                                 {tt('userwallet_jsx.redeem_rewards')}
@@ -217,6 +305,88 @@ class UserWallet extends React.Component {
                 </div>
             );
         }
+
+        // -------
+        const vesting_steem = vestingSteem(profile.toJS(), gprops);
+        const delegated_steem = delegatedSteem(profile.toJS(), gprops);
+        // const powerdown_steem = powerdownSteem(profile.toJS(), gprops);
+
+        const savings_balance = profile.get('savings_balance');
+        const savings_sbd_balance = profile.get('savings_sbd_balance');
+
+        const powerDown = (cancel, e) => {
+            e.preventDefault();
+            const name = profile.get('name');
+            if (cancel) {
+                const vesting_shares = cancel
+                    ? '0.000000 VESTS'
+                    : profile.get('vesting_shares');
+                this.setState({ toggleDivestError: null });
+                const errorCallback = e2 => {
+                    this.setState({ toggleDivestError: e2.toString() });
+                };
+                const successCallback = () => {
+                    this.setState({ toggleDivestError: null });
+                };
+                this.props.withdrawVesting({
+                    account: name,
+                    vesting_shares,
+                    errorCallback,
+                    successCallback,
+                });
+            } else {
+                const to_withdraw = profile.get('to_withdraw');
+                const withdrawn = profile.get('withdrawn');
+                const vesting_shares = profile.get('vesting_shares');
+                const delegated_vesting_shares = profile.get(
+                    'delegated_vesting_shares'
+                );
+                this.props.showPowerdownSteem({
+                    account: name,
+                    to_withdraw,
+                    withdrawn,
+                    vesting_shares,
+                    delegated_vesting_shares,
+                });
+            }
+        };
+
+        const balance_steem = parseFloat(profile.get('balance', 0));
+        const saving_balance_steem = parseFloat(savings_balance || 0);
+        const divesting =
+            parseFloat(profile.get('vesting_withdraw_rate', 0)) > 0.0;
+        const sbd_balance = parseFloat(profile.get('sbd_balance', 0));
+        const sbd_balance_savings = parseFloat(savings_sbd_balance || 0);
+        const received_power_balance_str =
+            (delegated_steem < 0 ? '+' : '') +
+            numberWithCommas((-delegated_steem).toFixed(3));
+
+        const sbd_balance_str = numberWithCommas('$' + sbd_balance.toFixed(3)); // formatDecimal(account.sbd_balance, 3)
+
+        const walletUrl = useHive ? 'wallet.hive.blog' : 'steemitwallet.com';
+        const steem_menu = [
+            {
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${profile.get('name')}/transfers`,
+            },
+        ];
+        if (isMyAccount) {
+            steem_menu.push({
+                value: tt('userwallet_jsx.market'),
+                link: `https://${walletUrl}/market`,
+            });
+        }
+        const steem_power_menu = [
+            {
+                value: tt('userwallet_jsx.wallet'),
+                link: `https://${walletUrl}/@${profile.get('name')}/transfers`,
+            },
+        ];
+
+        const steem_balance_str = numberWithCommas(balance_steem.toFixed(3));
+        const power_balance_str = numberWithCommas(vesting_steem.toFixed(3));
+        const native_token_str = useHive ? 'Hive' : 'Steem';
+        const native_token_str_upper = useHive ? 'HIVE' : 'STEEM';
 
         return (
             <div className="UserWallet">
@@ -276,6 +446,109 @@ class UserWallet extends React.Component {
                             `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
                         )}
                         {netDelegatedStake != 0 ? (
+                            <div className="Delegations__view">
+                                <Tooltip
+                                    t={`${
+                                        VESTING_TOKEN
+                                    } delegated to/from this account`}
+                                >
+                                    ({received_stake_balance_str}{' '}
+                                    {LIQUID_TOKEN_UPPERCASE})
+                                </Tooltip>
+                                <a
+                                    href="#"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        const name = profile.get('name');
+                                        this.props.showDelegations({
+                                            account: name,
+                                            tokenDelegations,
+                                        });
+                                    }}
+                                >
+                                    <Icon
+                                        size="1x"
+                                        name="eye"
+                                        className="Delegations__view-icon"
+                                    />
+                                </a>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+                {!!parseFloat(pendingUnstakeBalance) && (
+                    <div className="UserWallet__balance row">
+                        <div className="column small-12">
+                            <span>
+                                Pending unstake: {pending_unstake_balance_str}{' '}
+                                {LIQUID_TOKEN_UPPERCASE}.
+                            </span>
+                            <TransactionError opType="withdraw_vesting" />
+                        </div>
+                    </div>
+                )}
+                <hr />
+                {/* STEEM */}
+                <div className="UserWallet__balance row">
+                    <div className="column small-12 medium-8">
+                        {native_token_str_upper}
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.liquid_token"
+                            params={{
+                                LIQUID_TOKEN: native_token_str,
+                                VESTING_TOKEN: `${
+                                    native_token_str_upper
+                                } POWER`,
+                            }}
+                        />
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_menu}
+                                el="li"
+                                selected={`${steem_balance_str} ${
+                                    native_token_str_upper
+                                }`}
+                            />
+                        ) : (
+                            `${steem_balance_str} ${native_token_str_upper}`
+                        )}
+                    </div>
+                </div>
+                {/* STEEM POWER */}
+                <div className="UserWallet__balance row zebra">
+                    <div className="column small-12 medium-8">
+                        {native_token_str_upper} POWER
+                        <FormattedHTMLMessage
+                            className="secondary"
+                            id="tips_js.influence_token"
+                        />
+                        {delegated_steem != 0 ? (
+                            <span className="secondary">
+                                {tt(
+                                    'tips_js.part_of_your_hive_power_is_currently_delegated',
+                                    { user_name: profile.get('name') }
+                                )}
+                            </span>
+                        ) : null}
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={`${power_balance_str}  ${
+                                    native_token_str_upper
+                                }`}
+                            />
+                        ) : (
+                            `${power_balance_str}  ${native_token_str_upper}`
+                        )}
+                        {delegated_steem != 0 ? (
                             <div
                                 style={{
                                     paddingRight: isMyAccount
@@ -283,25 +556,90 @@ class UserWallet extends React.Component {
                                         : null,
                                 }}
                             >
-                                <Tooltip t="{VESTING_TOKEN} delegated to/from this account">
-                                    ({received_stake_balance_str}{' '}
-                                    {LIQUID_TOKEN_UPPERCASE})
+                                <Tooltip
+                                    t={`${
+                                        native_token_str_upper
+                                    } POWER delegated to/from this account`}
+                                >
+                                    ({received_power_balance_str}{' '}
+                                    {native_token_str_upper})
                                 </Tooltip>
                             </div>
                         ) : null}
                     </div>
                 </div>
+                {/* Steem Dollars */}
                 <div className="UserWallet__balance row">
-                    <div className="column small-12">
-                        {!!parseFloat(pendingUnstakeBalance) && (
-                            <span>
-                                Pending unstake: {pending_unstake_balance_str}{' '}
-                                {LIQUID_TOKEN_UPPERCASE}.
-                            </span>
+                    <div className="column small-12 medium-8">
+                        {native_token_str_upper} DOLLARS
+                        <div className="secondary">
+                            {tt('userwallet_jsx.tradeable_tokens_transferred')}
+                        </div>
+                    </div>
+                    <div className="column small-12 medium-4">
+                        {isMyAccount ? (
+                            <DropdownMenu
+                                className="Wallet_dropdown"
+                                items={steem_power_menu}
+                                el="li"
+                                selected={sbd_balance_str}
+                            />
+                        ) : (
+                            sbd_balance_str
                         )}
-                        <TransactionError opType="withdraw_vesting" />
                     </div>
                 </div>
+                <hr />
+                {/* Engine Tokens */}
+                {otherTokenBalances && otherTokenBalances.length ? (
+                    <div
+                        className={classNames('UserWallet__balance', 'row', {
+                            zebra: parseFloat(pendingUnstakeBalance),
+                        })}
+                    >
+                        <div className="column small-12 medium-9">
+                            {native_token_str} Engine Tokens
+                        </div>
+                        {isMyAccount && (
+                            <div className="column small-12 medium-3">
+                                <button
+                                    disabled={pendingTokens.length === 0}
+                                    className="button hollow ghost slim tiny float-right"
+                                    onClick={this.handleClaimAllTokensRewards}
+                                >
+                                    All in one claim
+                                </button>
+                            </div>
+                        )}
+                        <div className="column small-12">
+                            <FormattedAssetTokens
+                                items={otherTokenBalances}
+                                isMyAccount={isMyAccount}
+                                pendingTokens={pendingTokens}
+                                handleClaimTokenRewards={
+                                    this.handleClaimTokenRewards
+                                }
+                            />
+                        </div>
+                    </div>
+                ) : null}
+                {/* SNAX Balance */}
+                {parseFloat(snaxBalance) ? (
+                    <div className="UserWallet__balance row">
+                        <div className="column small-12 medium-8">
+                            {' SNAX Tokens'}
+                            <FormattedHTMLMessage
+                                className="secondary"
+                                id="tips_js.snax_token"
+                            />
+                        </div>
+                        <div className="column small-12 medium-4">
+                            {snax_balance_str}
+                            {' SNAX'}
+                        </div>
+                    </div>
+                ) : null}
+
                 {disabledWarning && (
                     <div className="row">
                         <div className="column small-12">
@@ -351,19 +689,24 @@ export default connect(
     (state, ownProps) => {
         const gprops = state.global.get('props');
         const scotConfig = state.app.get('scotConfig');
+        const useHive = HIVE_ENGINE;
+
         return {
             ...ownProps,
-            gprops: state.global.get('props').toJS(),
+            gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            useHive,
         };
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: account => {
-            const username = account.get('name');
+        claimRewards: (profile, useHive) => {
+            const username = profile.get('name');
             const successCallback = () => {
                 dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
+                    userProfileActions.fetchWalletProfile({
+                        account: username,
+                    })
                 );
             };
 
@@ -380,8 +723,82 @@ export default connect(
                     type: 'custom_json',
                     operation,
                     successCallback,
+                    useHive,
                 })
             );
         },
+
+        claimTokenRewards: (profile, symbol, useHive) => {
+            const username = profile.get('name');
+            const successCallback = () => {
+                dispatch(
+                    appActions.addNotification({
+                        key: 'trx_' + Date.now(),
+                        message: `${symbol} Token Claim Completed.`,
+                        dismissAfter: 5000,
+                    })
+                );
+                dispatch(
+                    userProfileActions.fetchWalletProfile({
+                        account: username,
+                    })
+                );
+            };
+            const operation = {
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify({ symbol }),
+            };
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                    useHive,
+                })
+            );
+        },
+
+        claimAllTokensRewards: (profile, symbols, useHive) => {
+            const username = profile.get('name');
+            const successCallback = () => {
+                dispatch(
+                    appActions.addNotification({
+                        key: 'trx_' + Date.now(),
+                        message: tt('g.all_claim_completed'),
+                        dismissAfter: 5000,
+                    })
+                );
+                dispatch(
+                    userProfileActions.fetchWalletProfile({
+                        account: username,
+                    })
+                );
+            };
+            const json = symbols.map(symbol => ({ symbol }));
+            const operation = {
+                id: 'scot_claim_token',
+                required_posting_auths: [username],
+                json: JSON.stringify(json),
+            };
+            dispatch(
+                appActions.addNotification({
+                    key: 'trx_' + Date.now(),
+                    message: tt('g.all_claim_started', { seconds: 3 }),
+                    dismissAfter: 5000,
+                })
+            );
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation,
+                    successCallback,
+                    useHive,
+                })
+            );
+        },
+
+        fetchWalletProfile: account =>
+            dispatch(userProfileActions.fetchWalletProfile({ account })),
     })
 )(UserWallet);

@@ -64,6 +64,8 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             gptBasicSlots: config.gpt_basic_slots,
             gptCategorySlots: config.gpt_category_slots,
             gptBiddingSlots: config.gpt_bidding_slots,
+            gptBannedTags: config.gpt_banned_tags,
+            videoAdsEnabled: !!config.video_ads_enabled,
         };
         const cookieConsent = {
             enabled: !!config.cookie_consent_enabled,
@@ -77,10 +79,17 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
                 env: process.env.NODE_ENV,
                 walletUrl: config.wallet_url,
                 scotConfig: ctx.scotConfigData,
+                reviveEnabled: config.revive_enabled,
             },
         };
 
-        const { body, title, statusCode, meta } = await serverRender(
+        const {
+            body,
+            title,
+            statusCode,
+            meta,
+            redirectUrl,
+        } = await serverRender(
             ctx.request.url,
             initial_state,
             ErrorPage,
@@ -88,6 +97,13 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             offchain,
             ctx.state.requestTimer
         );
+
+        if (redirectUrl) {
+            console.log('Redirecting to', redirectUrl);
+            ctx.status = 302;
+            ctx.redirect(redirectUrl);
+            return;
+        }
 
         let assets;
         // If resolvedAssets argument parameter is falsey we infer that we are in
@@ -108,8 +124,10 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             shouldSeeAds: googleAds.enabled,
             gptEnabled: googleAds.gptEnabled,
             adClient: googleAds.client,
+            videoAdsEnabled: googleAds.videoAdsEnabled,
             gptBidding: googleAds.gptBidding,
             fomoId: config.fomo_id,
+            reviveEnabled: config.revive_enabled,
             shouldSeeCookieConsent: cookieConsent.enabled,
             cookieConsentApiKey: cookieConsent.api_key,
         };
@@ -118,6 +136,7 @@ async function appRender(ctx, locales = false, resolvedAssets = false) {
             '<!DOCTYPE html>' + renderToString(<ServerHTML {...props} />);
     } catch (err) {
         // Render 500 error page from server
+        console.error('AppRender error', err, redirect);
         const { error, redirect } = err;
         if (error) throw error;
 

@@ -13,7 +13,6 @@ export default class Reblog extends React.Component {
     static propTypes = {
         account: string,
         author: string,
-        parent_author: string,
         permlink: string,
         reblog: func,
     };
@@ -40,7 +39,7 @@ export default class Reblog extends React.Component {
         e.preventDefault();
         if (this.state.active) return;
         this.setState({ loading: true });
-        const { reblog, account, author, parent_author, permlink } = this.props;
+        const { reblog, account, author, permlink, hive } = this.props;
         reblog(
             account,
             author,
@@ -51,7 +50,8 @@ export default class Reblog extends React.Component {
             },
             () => {
                 this.setState({ active: false, loading: false });
-            }
+            },
+            hive
         );
     };
 
@@ -71,16 +71,19 @@ export default class Reblog extends React.Component {
     }
 
     render() {
-        if (this.props.author == this.props.account || this.props.parent_author)
-            return null;
-
         const state = this.state.active ? 'active' : 'inactive';
         const loading = this.state.loading ? ' loading' : '';
+        const { author, permlink } = this.props;
+
         return (
             <span
                 className={'Reblog__button Reblog__button-' + state + loading}
             >
-                <a href="#" onClick={this.reblog} title={tt('g.reblog')}>
+                <a
+                    href="#"
+                    onClick={this.reblog}
+                    title={`${tt('g.reblog')} @${author}/${permlink}`}
+                >
                     <Icon name="reblog" />
                 </a>
             </span>
@@ -95,20 +98,29 @@ module.exports = connect(
         return { ...ownProps, account };
     },
     dispatch => ({
-        reblog: (account, author, permlink, successCallback, errorCallback) => {
+        reblog: (
+            account,
+            author,
+            permlink,
+            successCallback,
+            errorCallback,
+            useHive
+        ) => {
             const json = ['reblog', { account, author, permlink }];
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
-                    confirm: tt('g.are_you_sure'),
+                    confirm:
+                        'This post will be added to your blog and shared with your followers.',
                     operation: {
                         id: 'follow',
                         required_posting_auths: [account],
                         json: JSON.stringify(json),
-                        __config: { title: tt('g.resteem_this_post') },
+                        __config: { title: tt('g.reblog_this_post') },
                     },
                     successCallback,
                     errorCallback,
+                    useHive,
                 })
             );
         },

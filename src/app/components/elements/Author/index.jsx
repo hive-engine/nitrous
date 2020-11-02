@@ -1,25 +1,27 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
+import tt from 'counterpart';
+import { List } from 'immutable';
+import ReactDOM, { findDOMNode } from 'react-dom';
+import Overlay from 'react-overlays/lib/Overlay';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Icon from 'app/components/elements/Icon';
-import { Link } from 'react-router';
-import { authorNameAndRep } from 'app/utils/ComponentFormatters';
-import AuthorDropdown from '../AuthorDropdown';
 import Reputation from 'app/components/elements/Reputation';
-import normalizeProfile from 'app/utils/NormalizeProfile';
-import AffiliationMap from 'app/utils/AffiliationMap';
-import tt from 'counterpart';
-import Overlay from 'react-overlays/lib/Overlay';
-import { findDOMNode } from 'react-dom';
+import { affiliationFromStake } from 'app/utils/AffiliationMap';
+import UserTitle from 'app/components/elements/UserTitle';
+import AuthorDropdown from '../AuthorDropdown';
+import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
+import { actions as fetchActions } from 'app/redux/FetchDataSaga';
 
 const { string, bool, number } = PropTypes;
 
 const closers = [];
 
 const fnCloseAll = () => {
-    var close;
+    let close;
     while ((close = closers.shift())) {
         close();
     }
@@ -28,15 +30,29 @@ const fnCloseAll = () => {
 class Author extends React.Component {
     static propTypes = {
         author: string.isRequired,
+        hideEditor: bool,
         follow: bool,
         mute: bool,
-        authorRepLog10: number,
+        authorRep: number,
         showAffiliation: bool,
+        role: string,
+        title: string,
+        community: string,
+        crossPostedBy: string,
+        crossPostAuthor: string,
+        resolveCrossPost: bool,
+        showRole: bool,
     };
     static defaultProps = {
         follow: true,
         mute: true,
         showAffiliation: false,
+        role: '',
+        title: '',
+        community: '',
+        crossPostedBy: null,
+        crossPostAuthor: null,
+        resolveCrossPost: true,
     };
 
     constructor(...args) {
@@ -46,7 +62,18 @@ class Author extends React.Component {
         this.close = this.close.bind(this);
     }
 
+    componentWillMount() {
+        const { stakedAccounts, getStakedAccounts } = this.props;
+        if (!stakedAccounts) {
+            getStakedAccounts();
+        }
+    }
+
     componentDidMount() {
+        const { stakedAccounts, getStakedAccounts } = this.props;
+        if (!stakedAccounts) {
+            getStakedAccounts();
+        }
         if (!this.authorProfileLink) {
             return;
         }
@@ -90,20 +117,58 @@ class Author extends React.Component {
     };
 
     shouldComponentUpdate = shouldComponentUpdate(this, 'Author');
+
     render() {
         const {
             author,
+            authorRep,
+            username,
             follow,
             mute,
-            authorRepLog10,
             showAffiliation,
-        } = this.props; // html
-        const { username } = this.props; // redux
-        const { name, about } = this.props.account
-            ? normalizeProfile(this.props.account.toJS())
-            : {};
+            blacklists,
+            showRole,
+            community,
+            permlink,
+            role,
+            title,
+            tribeCommunityTitle,
+            stakedAccounts,
+        } = this.props;
 
-        if (!(follow || mute) || username === author) {
+        const warn = blacklists && (
+            <span className="account_warn" title={blacklists.join(', ')}>
+                ({blacklists.length})
+            </span>
+        );
+
+        const affiliation = tribeCommunityTitle
+            ? tribeCommunityTitle
+            : affiliationFromStake(
+                  author,
+                  stakedAccounts ? stakedAccounts.get(author) : 0
+              );
+        const userTitle = (
+            <span>
+                {false &&
+                    community && (
+                        <UserTitle
+                            username={username}
+                            community={community}
+                            author={author}
+                            permlink={permlink}
+                            role={showRole ? role : null}
+                            title={title}
+                            hideEdit={this.props.hideEditor}
+                        />
+                    )}
+                {showAffiliation && affiliation ? (
+                    <span className="affiliation">{affiliation}</span>
+                ) : null}
+            </span>
+        );
+
+        if (!(follow || mute)) {
             return (
                 <span
                     className="author"
@@ -114,12 +179,9 @@ class Author extends React.Component {
                     <strong>
                         <Link to={'/@' + author}>{author}</Link>
                     </strong>{' '}
-                    <Reputation value={authorRepLog10} />
-                    {showAffiliation && AffiliationMap[author] ? (
-                        <span className="affiliation">
-                            {tt('g.affiliation_' + AffiliationMap[author])}
-                        </span>
-                    ) : null}
+                    {false && <Reputation value={authorRep} />}
+                    {warn}
+                    {userTitle}
                 </span>
             );
         }
@@ -133,24 +195,17 @@ class Author extends React.Component {
                 >
                     <strong>
                         <Link
-                            className="ptc"
                             ref={link => {
                                 this.authorProfileLink = link;
                             }}
                             to={'/@' + author}
                         >
-                            {author} <Reputation value={authorRepLog10} />
-                            {showAffiliation && AffiliationMap[author] ? (
-                                <span className="affiliation">
-                                    {tt(
-                                        'g.affiliation_' +
-                                            AffiliationMap[author]
-                                    )}
-                                </span>
-                            ) : null}
+                            {author} {false && <Reputation value={authorRep} />}
                             <Icon name="dropdown-arrow" />
                         </Link>
                     </strong>
+                    {warn}
+                    {userTitle}
                 </span>
                 <Overlay
                     show={this.state.show}
@@ -164,10 +219,9 @@ class Author extends React.Component {
                         author={author}
                         follow={follow}
                         mute={mute}
-                        authorRepLog10={authorRepLog10}
-                        name={name}
-                        about={about}
+                        authorRep={authorRep}
                         username={username}
+                        blacklists={blacklists}
                     />
                 </Overlay>
             </span>
@@ -175,18 +229,50 @@ class Author extends React.Component {
     }
 }
 
-import { connect } from 'react-redux';
+export default connect(
+    (state, props) => {
+        const { post, resolveCrossPost } = props;
+        const blacklists = post.get('blacklists', List()).toJS();
+        const crossPostedBy = post.get('cross_posted_by');
 
-export default connect((state, ownProps) => {
-    const { author, follow, mute, authorRepLog10 } = ownProps;
-    const username = state.user.getIn(['current', 'username']);
-    const account = state.global.getIn(['accounts', author]);
-    return {
-        author,
-        follow,
-        mute,
-        authorRepLog10,
-        username,
-        account,
-    };
-})(Author);
+        let author = post.get('author');
+        let authorRep = post.get('author_reputation');
+        if (resolveCrossPost && crossPostedBy) {
+            author = post.get('cross_post_author');
+            authorRep = post.get('cross_post_author_reputation');
+        }
+
+        const tribeCommunityTitle = state.global.getIn([
+            'community',
+            COMMUNITY_CATEGORY,
+            'team',
+            author,
+            'title',
+        ]);
+        const disableBlacklist = DISABLE_BLACKLIST;
+
+        return {
+            follow: typeof props.follow === 'undefined' ? true : props.follow,
+            mute: typeof props.mute === 'undefined' ? props.follow : props.mute,
+            username: state.user.getIn(['current', 'username']),
+            authorRep,
+            author,
+            community: post.get('community'), // UserTitle
+            permlink: post.get('permlink'), // UserTitle
+            role: post.get('author_role'), // UserTitle
+            title: post.get('author_title'), // UserTitle
+            blacklists:
+                !disableBlacklist && blacklists.length > 0 ? blacklists : null,
+            crossPostedBy: post.get('cross_posted_by'),
+            crossPostAuthor: post.get('cross_post_author'),
+            showRole: props.showRole,
+            tribeCommunityTitle,
+            stakedAccounts: state.global.get('stakedAccounts'),
+        };
+    },
+    dispatch => ({
+        getStakedAccounts: () => {
+            dispatch(fetchActions.getStakedAccounts());
+        },
+    })
+)(Author);

@@ -1,7 +1,8 @@
 /* global describe, it, before, beforeEach, after, afterEach */
 
 import { call, select, all, takeEvery } from 'redux-saga/effects';
-import steem, { api, broadcast } from '@steemit/steem-js';
+import steem, { api, broadcast } from '@hiveio/hive-js';
+import { callBridge } from 'app/utils/steemApi';
 import { cloneableGenerator } from 'redux-saga/utils';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import {
@@ -11,7 +12,7 @@ import {
     transactionWatches,
     broadcastOperation,
 } from './TransactionSaga';
-import { DEBT_TICKER } from 'app/client_config';
+import { APP_URL, POST_FOOTER, DEBT_TICKER } from 'app/client_config';
 
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
@@ -24,11 +25,11 @@ const operation = {
     body:
         "The Body is a pretty long chunck of text that represents the user's voice, it seems they have much to say, and this is one place where they can do that.",
     category: 'hi',
-    json_metadata: {
+    json_metadata: JSON.stringify({
         tags: ['hi'],
         app: 'steemit/0.1',
         format: 'markdown',
-    },
+    }),
     parent_author: 'candide',
     parent_permlink: 'cool',
     title: 'test',
@@ -39,6 +40,17 @@ const operation = {
 };
 
 const username = 'Beatrice';
+
+function addFooter(body, author, permlink) {
+    const footer = POST_FOOTER.replace(
+        '${POST_URL}',
+        `${APP_URL}/@${author}/${permlink}`
+    );
+    if (footer && !body.endsWith(footer)) {
+        return body + '\n\n' + footer;
+    }
+    return body;
+}
 
 describe('TransactionSaga', () => {
     describe('watch user actions and trigger appropriate saga', () => {
@@ -69,13 +81,17 @@ describe('TransactionSaga', () => {
     });
 
     describe('createPermlink', () => {
-        const gen = createPermlink(operation.title, operation.author);
+        const gen = createPermlink(operation.title, operation.author, true);
         it('should call the api to get a permlink if the title is valid', () => {
             const actual = gen.next().value;
             const mockCall = call(
-                [api, api.getContentAsync],
-                operation.author,
-                operation.title
+                callBridge,
+                'get_post_header',
+                {
+                    author: operation.author,
+                    permlink: operation.title,
+                },
+                true
             );
             expect(actual).toEqual(mockCall);
         });
@@ -91,15 +107,20 @@ describe('TransactionSaga', () => {
     });
 
     describe('preBroadcast_comment', () => {
-        let gen = preBroadcast_comment({ operation, username });
+        let gen = preBroadcast_comment({ operation, username, useHive: true });
 
         it('should call createPermlink', () => {
-            const permlink = gen.next(operation.title, operation.author).value;
+            const permlink = gen.next(operation.title, operation.author, true)
+                .value;
             const actual = permlink.next().value;
             const expected = call(
-                [api, api.getContentAsync],
-                operation.author,
-                operation.title
+                callBridge,
+                'get_post_header',
+                {
+                    author: operation.author,
+                    permlink: operation.title,
+                },
+                true
             );
             expect(expected).toEqual(actual);
         });
@@ -119,16 +140,24 @@ describe('TransactionSaga', () => {
                         __config: operation.__config,
                         memo: operation.memo,
                         permlink: 'mock-permlink-123',
-                        json_metadata: JSON.stringify(operation.json_metadata),
+                        json_metadata: operation.json_metadata,
                         title: (operation.title || '').trim(),
-                        body: operation.body,
+                        body: addFooter(
+                            operation.body,
+                            operation.author,
+                            'mock-permlink-123'
+                        ),
                     },
                 ],
             ];
             expect(actual).toEqual(expected);
         });
         it('should return a patch as body value if patch is smaller than body.', () => {
-            const originalBod = operation.body + 'minor difference';
+            const originalBod = addFooter(
+                operation.body + 'minor difference',
+                operation.author,
+                'mock-permlink-123'
+            );
             operation.__config.originalBody = originalBod;
             gen = preBroadcast_comment({ operation, username });
             gen.next(
@@ -138,7 +167,10 @@ describe('TransactionSaga', () => {
                 operation.parent_permlink
             );
             const actual = gen.next('mock-permlink-123').value;
-            const expected = createPatch(originalBod, operation.body);
+            const expected = createPatch(
+                originalBod,
+                addFooter(operation.body, operation.author, 'mock-permlink-123')
+            );
             expect(actual[0][1].body).toEqual(expected);
         });
         it('should return body as body value if patch is larger than body.', () => {
@@ -152,7 +184,11 @@ describe('TransactionSaga', () => {
                 operation.parent_permlink
             );
             const actual = gen.next('mock-permlink-123').value;
-            const expected = operation.body;
+            const expected = addFooter(
+                operation.body,
+                operation.author,
+                'mock-permlink-123'
+            );
             expect(actual[0][1].body).toEqual(expected, 'utf-8');
         });
     });

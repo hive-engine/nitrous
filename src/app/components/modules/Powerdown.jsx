@@ -4,15 +4,21 @@ import Slider from 'react-rangeslider';
 import tt from 'counterpart';
 import reactForm from 'app/utils/ReactForm';
 import * as globalActions from 'app/redux/GlobalReducer';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { LIQUID_TOKEN_UPPERCASE, VESTING_TOKEN } from 'app/client_config';
+import {
+    LIQUID_TOKEN_UPPERCASE,
+    VESTING_TOKEN,
+    HIVE_ENGINE,
+} from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
     constructor(props, context) {
         super(props, context);
-        const new_withdraw = props.stakeBalance - props.delegatedStake;
+        const new_withdraw =
+            props.stakeBalance - props.delegatedStake - props.lockedStake;
         this.state = {
             broadcasting: false,
             manual_entry: false,
@@ -26,7 +32,9 @@ class Powerdown extends React.Component {
             account,
             stakeBalance,
             delegatedStake,
+            lockedStake,
             scotPrecision,
+            useHive,
         } = this.props;
         const sliderChange = value => {
             this.setState({ new_withdraw: value, manual_entry: false });
@@ -54,8 +62,8 @@ class Powerdown extends React.Component {
             };
             // workaround bad math in react-rangeslider
             let withdraw = new_withdraw;
-            if (withdraw > stakeBalance - delegatedStake) {
-                withdraw = stakeBalance - delegatedStake;
+            if (withdraw > stakeBalance - delegatedStake - lockedStake) {
+                withdraw = stakeBalance - delegatedStake - lockedStake;
             }
             const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
@@ -63,6 +71,7 @@ class Powerdown extends React.Component {
                 unstakeAmount,
                 errorCallback,
                 successCallback,
+                useHive,
             });
         };
 
@@ -76,6 +85,16 @@ class Powerdown extends React.Component {
                 <li key="delegating">
                     {tt('powerdown_jsx.delegating', {
                         AMOUNT,
+                        LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
+                    })}
+                </li>
+            );
+        }
+        if (lockedStake !== 0) {
+            notes.push(
+                <li key="unstaking">
+                    {tt('powerdown_jsx.locked_in_unstake', {
+                        AMOUNT: formatBalance(lockedStake),
                         LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
                     })}
                 </li>
@@ -100,7 +119,7 @@ class Powerdown extends React.Component {
                 <Slider
                     value={new_withdraw}
                     step={1 / Math.pow(10, scotPrecision)}
-                    max={stakeBalance - delegatedStake}
+                    max={stakeBalance - delegatedStake - lockedStake}
                     format={formatBalance}
                     onChange={sliderChange}
                 />
@@ -139,15 +158,43 @@ export default connect(
         const account = values.get('account');
         const stakeBalance = parseFloat(values.get('stakeBalance'));
         const delegatedStake = parseFloat(values.get('delegatedStake'));
+        const tokenUnstakes = values.get('tokenUnstakes').toJS();
         const scotConfig = state.app.get('scotConfig');
-
+        const numberTransactions = scotConfig.getIn([
+            'config',
+            'tokenStats',
+            'total_token_balance',
+            'numberTransactions',
+        ]);
+        const scotPrecision = scotConfig.getIn(['info', 'precision'], 0);
+        const toFixedNoRounding = x => {
+            const xStr = x.toString();
+            const pointIndex = xStr.indexOf('.');
+            return +xStr.slice(
+                0,
+                pointIndex > -1 ? scotPrecision + 1 + pointIndex : undefined
+            );
+        };
+        const lockedStake = tokenUnstakes
+            .filter(unstake => unstake.numberTransactionsLeft > 1)
+            .map(
+                unstake =>
+                    parseFloat(unstake.quantityLeft) -
+                    toFixedNoRounding(
+                        parseFloat(unstake.quantity) / numberTransactions
+                    )
+            )
+            .reduce((x, y) => x + y, 0);
+        const useHive = HIVE_ENGINE;
         return {
             ...ownProps,
             account,
             stakeBalance,
+            lockedStake,
             delegatedStake,
             state,
-            scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            scotPrecision,
+            useHive,
         };
     },
     // mapDispatchToProps
@@ -165,11 +212,10 @@ export default connect(
             unstakeAmount,
             errorCallback,
             successCallback,
+            useHive,
         }) => {
             const successCallbackWrapper = (...args) => {
-                dispatch(
-                    globalActions.getState({ url: `@${account}/transfers` })
-                );
+                dispatch(userProfileActions.fetchWalletProfile({ account }));
                 return successCallback(...args);
             };
             const unstakeOperation = {
@@ -181,7 +227,7 @@ export default connect(
                 },
             };
             const operation = {
-                id: 'ssc-mainnet1',
+                id: useHive ? 'ssc-mainnet-hive' : 'ssc-mainnet1',
                 required_auths: [account],
                 json: JSON.stringify(unstakeOperation),
             };
@@ -191,6 +237,7 @@ export default connect(
                     operation,
                     successCallback: successCallbackWrapper,
                     errorCallback,
+                    useHive,
                 })
             );
         },
