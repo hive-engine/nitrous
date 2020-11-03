@@ -37,6 +37,7 @@ import {
     PREFER_HIVE,
 } from 'app/client_config';
 import { loadUserTemplates, saveUserTemplates } from 'app/utils/UserTemplates';
+import SuggestedTags from 'app/components/elements/SuggestedTags';
 
 const remarkable = new Remarkable({ html: true, linkify: false, breaks: true });
 
@@ -958,6 +959,21 @@ class ReplyEditor extends React.Component {
                                 </span>
                             )}
                         </div>
+
+                        <div
+                            className={vframe_section_shrink_class}
+                            style={{ marginTop: '0.5rem' }}
+                        >
+                            {isStory && (
+                                <span>
+                                    <SuggestedTags
+                                        selectedTags={tags.value}
+                                        onChange={tags.props.onChange}
+                                    />
+                                </span>
+                            )}
+                        </div>
+
                         {isStory && (
                             <div className={vframe_section_shrink_class}>
                                 <a href="#" onClick={toggleSideBySide}>
