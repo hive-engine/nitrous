@@ -18,7 +18,7 @@ class SuggestedTags extends Component {
     }
 
     render() {
-        const { tags, map, onClick } = this.props;
+        const { tags, map, onClick, level } = this.props;
         const { selected, children } = this.state;
 
         const hasChildren =
@@ -45,7 +45,7 @@ class SuggestedTags extends Component {
 
         return (
             <div>
-                <div className="SuggestedTags__horizontal">
+                <div className={`SuggestedTags__horizontal level_${level}`}>
                     {tags.map(link)}
                 </div>
                 {hasChildren ? (
@@ -53,6 +53,7 @@ class SuggestedTags extends Component {
                         tags={childTags}
                         map={children}
                         onClick={onClick}
+                        level={level + 1}
                     />
                 ) : null}
             </div>
@@ -66,5 +67,6 @@ export default connect(
         tags: ownProps.tags || Object.keys(TAG_LIST.toJS()),
         map: ownProps.map || TAG_LIST.toJS(),
         onClick: ownProps.onClick,
+        level: ownProps.level || 0,
     })
 )(SuggestedTags);
