@@ -743,15 +743,12 @@ class ReplyEditor extends React.Component {
             });
         };
 
-        const setTagInputRef = element => {
-            this.tagInput = element;
-        };
-
         const insertTag = tag => {
-            const tagsValue = this.tagInput.value;
-            const tags = tagsValue && tagsValue.toLowerCase().split(' ');
-            if (!tags || !tags.includes(tag)) {
-                this.tagInput.value = tagsValue ? tagsValue + ' ' + tag : tag;
+            const { tags } = this.state;
+            const tagsValue = tags.value;
+            const tagsList = tagsValue && tagsValue.toLowerCase().split(' ');
+            if (tag && (!tagsList || !tagsList.includes(tag.toLowerCase()))) {
+                tags.props.onChange(tagsValue ? tagsValue + ' ' + tag : tag);
             }
         };
 
@@ -959,7 +956,6 @@ class ReplyEditor extends React.Component {
                                     <TagInput
                                         {...tags.props}
                                         onChange={tags.props.onChange}
-                                        callbackRef={setTagInputRef}
                                         disabled={loading}
                                         isEdit={isEdit}
                                         tabIndex={3}
