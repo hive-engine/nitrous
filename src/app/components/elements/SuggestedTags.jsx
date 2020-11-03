@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { COMMUNITY_CATEGORY, APP_NAME, TAG_LIST } from 'app/client_config';
+import { TAG_LIST } from 'app/client_config';
 
 class SuggestedTags extends Component {
     constructor(props) {
