@@ -16,8 +16,22 @@
     &:hover {
       @include themify($themes) {
         background: themed('textColorAccent');
-        color: themed('backgroundColorOpaque');
+        color: themed('backgroundColor');
         border: themed('borderDark');
+      }
+    }
+    &.selected {
+      @include themify($themes) {
+        background: themed('backgroundColorOpaque');
+        color: themed('textColorPrimary');
+        border: themed('borderAccent');
+      }
+      &:hover {
+        @include themify($themes) {
+          background: themed('backgroundColor');
+          color: themed('textColorPrimary');
+          border: themed('borderDark');
+        }
       }
     }
   }

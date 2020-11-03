@@ -743,15 +743,6 @@ class ReplyEditor extends React.Component {
             });
         };
 
-        const insertTag = tag => {
-            const { tags } = this.state;
-            const tagsValue = tags.value;
-            const tagsList = tagsValue && tagsValue.toLowerCase().split(' ');
-            if (tag && (!tagsList || !tagsList.includes(tag.toLowerCase()))) {
-                tags.props.onChange(tagsValue ? tagsValue + ' ' + tag : tag);
-            }
-        };
-
         return (
             <div
                 className={classnames({
@@ -975,7 +966,10 @@ class ReplyEditor extends React.Component {
                         >
                             {isStory && (
                                 <span>
-                                    <SuggestedTags onClick={insertTag} />
+                                    <SuggestedTags
+                                        selectedTags={tags.value}
+                                        onChange={tags.props.onChange}
+                                    />
                                 </span>
                             )}
                         </div>
