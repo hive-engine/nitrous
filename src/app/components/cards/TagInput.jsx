@@ -30,7 +30,7 @@ class TagInput extends React.Component {
     }
 
     render() {
-        const { tabIndex, disabled, onChange } = this.props;
+        const { tabIndex, disabled, onChange, callbackRef } = this.props;
         const impProps = { ...this.props };
         const inputSanitized = cleanReduxInput(impProps);
 
@@ -56,7 +56,7 @@ class TagInput extends React.Component {
                     };
                     onChange(updatedEvent);
                 }}
-                ref="tagInputRef"
+                ref={callbackRef}
                 tabIndex={tabIndex}
                 disabled={disabled}
                 autoCapitalize="none"

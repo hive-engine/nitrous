@@ -1,0 +1,24 @@
+.SuggestedTags__horizontal {
+  max-width: 48rem;
+  margin: 0 auto 0.5rem;
+  a {
+    font-size: 95%;
+    display: inline-block;
+    margin: 0.1rem 0.4rem 0.1rem 0;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out;
+    @include themify($themes) {
+      background: themed('textColorAccent');
+      color: themed('backgroundColorOpaque');
+      border: themed('border');
+    }
+    &:hover {
+      @include themify($themes) {
+        background: themed('textColorAccent');
+        color: themed('backgroundColorOpaque');
+        border: themed('borderDark');
+      }
+    }
+  }
+}
