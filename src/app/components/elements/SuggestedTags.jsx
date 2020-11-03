@@ -12,20 +12,24 @@ class SuggestedTags extends Component {
     constructor(props) {
         super();
         this.state = {
+            selected: null,
             children: null,
         };
     }
 
     render() {
         const { tags, map, onClick } = this.props;
-        const { children } = this.state;
+        const { selected, children } = this.state;
 
-        const childTags = children
+        const hasChildren =
+            selected && children && tags && tags.includes(selected);
+        const childTags = hasChildren
             ? Array.isArray(children) ? children : Object.keys(children)
             : null;
 
         const onSelected = tag => {
             this.setState({
+                selected: tag,
                 children: map[tag],
             });
             onClick(tag);
@@ -44,7 +48,7 @@ class SuggestedTags extends Component {
                 <div className="SuggestedTags__horizontal">
                     {tags.map(link)}
                 </div>
-                {this.state.children ? (
+                {hasChildren ? (
                     <SuggestedTags
                         tags={childTags}
                         map={children}
