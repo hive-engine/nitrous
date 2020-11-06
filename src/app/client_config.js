@@ -697,10 +697,45 @@ const BLOG = {
     HIVE_ENGINE: true,
 };
 
+const DSOCIAL = {
+    APP_NAME: 'DSocial',
+    APP_ICON: 'dsocial',
+    APP_ICON_WIDTH: '110px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.d-social.io/',
+    APP_DOMAIN: 'www.d-social.io',
+    LIQUID_TOKEN: 'Dsl',
+    LIQUID_TOKEN_UPPERCASE: 'DSL',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'dsocial',
+    TAG_LIST: fromJSOrdered([
+        'dsocial',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'DSL POWER',
+    SITE_DESCRIPTION:
+        'DSocial is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called DSL, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'G-JBZP273GQB',
+    DISABLE_HIVE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
-    'frozen-retreat-15997.herokuapp.com': BLOG,
+    'localhost:8080': DSOCIAL,
+    'frozen-retreat-15997.herokuapp.com': DSOCIAL,
+    'd-social.io': DSOCIAL,
     'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,
     'www.lieta.io': LIETA,
