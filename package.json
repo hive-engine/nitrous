@@ -20,7 +20,8 @@
     "debug": "NODE_ENV=development webpack --config ./webpack/debug.config.js && rm -rf ./lib && babel src --source-maps --out-dir lib -D && node --inspect-brk lib/server/index.js",
     "checktranslations": "node scripts/check_translations.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "storybook-build": "build-storybook -c .storybook -o docs"
+    "storybook-build": "build-storybook -c .storybook -o docs",
+    "build:analyze": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
   "author": "HiveBlog",
   "license": "MIT",
@@ -222,7 +223,7 @@
     "svgo-loader": "1.2.1",
     "url-loader": "4.1.1",
     "webpack": "4.x.x",
-    "webpack-bundle-analyzer": "3.3.2",
+    "webpack-bundle-analyzer": "^4.1.0",
     "webpack-dev-middleware": "1.12.0",
     "webpack-livereload-plugin": "1"
   },
