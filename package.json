@@ -48,6 +48,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@hiveio/hive-js": "0.8.4",
     "@hiveio/hivescript": "^1.2.0",
     "@steem/crypto-session": "git+https://github.com/steemit/crypto-session.git#83a90b319ce5bc6a70362d52a15a815de7e729bb",
