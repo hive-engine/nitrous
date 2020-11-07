@@ -1,5 +1,6 @@
-import 'babel-core/register';
-import 'babel-polyfill';
+import '@babel/register';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import store from 'store';
 import { VIEW_MODE_WHISTLE, PARAM_VIEW_MODE } from 'shared/constants';

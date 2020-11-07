@@ -1,6 +1,6 @@
 language: node_js
-
-install: true
+node_js:
+    - 12
 
 script:
   - yarn run test
