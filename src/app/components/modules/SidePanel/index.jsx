@@ -126,8 +126,9 @@ const SidePanel = ({
                     </li>
                     {sidePanelLinks['internal'].map(makeLink)}
                     <li>
-                        <a className="menu-section">Help</a>
+                        <a className="menu-section">Community</a>
                     </li>
+                    {sidePanelLinks['organizational'].map(makeLink)}
                     <li>
                         <a href="https://discord.gg/sZCXZ9K" target="_blank">
                             Discord Support <Icon name="extlink" />
