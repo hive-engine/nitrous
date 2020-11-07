@@ -4,8 +4,6 @@ node_js:
 
 install: true
 
-before_script:
-  - npm install -g jest@23
 script:
   - yarn run test
 
