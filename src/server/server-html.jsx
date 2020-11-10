@@ -1,6 +1,6 @@
 import * as config from 'config';
 import React from 'react';
-import { APP_NAME } from 'app/client_config';
+import { APP_NAME, DISCORD_SERVER, DISCORD_CHANNEL } from 'app/client_config';
 
 export default function ServerHTML({
     body,
@@ -214,6 +214,20 @@ export default function ServerHTML({
                     <script
                         async
                         src="//servedby.revive-adserver.net/asyncjs.php"
+                    />
+                ) : null}
+                {DISCORD_SERVER ? (
+                    <script
+                        src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"
+                        async
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                      new Crate({
+                              server: "${DISCORD_SERVER}",
+                              channel: "${DISCORD_CHANNEL}",
+                            });`,
+                        }}
                     />
                 ) : null}
                 <script
