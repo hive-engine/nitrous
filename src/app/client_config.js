@@ -735,7 +735,7 @@ export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': DSOCIAL,
     'frozen-retreat-15997.herokuapp.com': DSOCIAL,
-    'd-social.com': DSOCIAL,
+    'www.d-social.com': DSOCIAL,
     'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,
     'www.lieta.io': LIETA,
