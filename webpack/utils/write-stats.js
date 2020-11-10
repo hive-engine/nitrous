@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function (stats) {
-    const publicPath = this.options.output.publicPath;
+    const publicPath = '/assets/';
     const json = stats.toJson();
 
     // get chunks by name and extensions

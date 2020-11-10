@@ -248,6 +248,20 @@ export default function ServerHTML({
                         src="//servedby.revive-adserver.net/asyncjs.php"
                     />
                 ) : null}
+                {hostConfig['DISCORD_SERVER'] ? (
+                    <script
+                        src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"
+                        async
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                      new Crate({
+                              server: "${hostConfig['DISCORD_SERVER']}",
+                              channel: "${hostConfig['DISCORD_CHANNEL']}",
+                            });`,
+                        }}
+                    />
+                ) : null}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `
