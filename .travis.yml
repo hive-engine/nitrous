@@ -1,4 +1,6 @@
 language: node_js
+node_js:
+    - 12
 
 services:
   - docker
@@ -6,8 +8,6 @@ services:
 before_install:
   #install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-
-install: true
 
 script:
   - docker build -t registry.heroku.com/sportstalksocial/web .

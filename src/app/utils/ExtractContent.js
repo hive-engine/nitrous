@@ -43,7 +43,9 @@ export function extractImageLink(json_metadata, body = null) {
             rtags = HtmlReady(htmlText, { mutate: false });
         }
 
-        [image_link] = Array.from(rtags.images);
+        if (rtags.images) {
+            [image_link] = Array.from(rtags.images);
+        }
     }
 
     // Was causing broken thumnails.  IPFS was not finding images uploaded to another server until a restart.
