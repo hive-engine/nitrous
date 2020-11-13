@@ -1190,6 +1190,30 @@
   dependencies:
     "@steemit/libcrypto" "^1.0.1"
 
+"@steemit/steem-js@0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@steemit/steem-js/-/steem-js-0.7.9.tgz#eab4e9b2b7b73205c99620c65608d525f35f72bd"
+  integrity sha512-7k/2JV+FdNDHZvzJ8l+dgll+6tuhuWNfpt6tEvb/nbRKl6duInAcqtF0QzxW43pMv78uQ4nMCIbvtq9KZkPGWA==
+  dependencies:
+    "@steemit/rpc-auth" "^1.1.1"
+    bigi "^1.4.2"
+    bluebird "^3.4.6"
+    browserify-aes "^1.0.6"
+    bs58 "^4.0.0"
+    buffer "^5.0.6"
+    bytebuffer "^5.0.1"
+    create-hash "^1.1.2"
+    create-hmac "^1.1.4"
+    cross-env "^5.0.0"
+    cross-fetch "^1.1.1"
+    debug "^2.6.8"
+    detect-node "^2.0.3"
+    ecurve "^1.0.5"
+    lodash "^4.16.4"
+    retry "^0.12.0"
+    secure-random "^1.1.2"
+    ws "^3.3.2"
+
 "@storybook/addon-actions@^3.2.19":
   version "3.3.12"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.3.12.tgz#1bd2668918a62f32c0907af14946cdd0c6be66f5"
