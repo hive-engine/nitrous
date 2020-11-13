@@ -249,5 +249,8 @@
     }
   },
   "optionalDependencies": {},
-  "resolutions": {}
+  "resolutions": {},
+  "browserslist": [
+      "defaults"
+  ]
 }
