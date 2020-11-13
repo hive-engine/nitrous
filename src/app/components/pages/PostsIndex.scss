@@ -409,9 +409,9 @@
     @include font-size(16px);
     overflow : hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: flex;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    flex-direction: column;
     a {
       font-weight: bold;
       @include themify($themes) {
@@ -459,9 +459,9 @@
     padding-top: 4px;
     overflow : hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: flex;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    flex-direction: column;
   }
   &__link {
     text-decoration: none;
@@ -530,11 +530,6 @@
         margin-top: 1em;
       }
     }
-  }
-
-  &__content-block--text {
-    -webkit-box-flex: 1;
-    box-flex: 1;
   }
 
   &__content-block--img + &__content-block--text {
@@ -784,7 +779,7 @@ a#changeLayout:focus {
         padding-top: 0px;
       }
       &__content {
-        display: -webkit-box;
+        display: flex;
         align-items: top;
       }
       &__footer {
