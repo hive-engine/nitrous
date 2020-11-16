@@ -29,7 +29,8 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_CHAT_MESSAGES : {
-            return state.set('chatMessages', state.get('chatMessages', List()).concat(payload).slice(-1000));
+            const chatMessages = state.get('chatMessages') || List();
+            return state.set('chatMessages', chatMessages.concat(payload).slice(-1000));
         }
 
         // Has Saga watcher.
@@ -38,7 +39,11 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_SOCKET_STATE : {
-            return state.set('socketState', payload);
+            const newState = state.set('socketState', payload);
+            if (payload === 'closed') {
+                return newState.set('chatMessages', null);
+            }
+            return newState;
         }
 
         // Has Saga watcher.

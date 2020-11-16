@@ -1,5 +1,7 @@
+import { Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
+import { findSigningKey } from 'app/redux/AuthSaga';
 import * as reducer from 'app/redux/ChatReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
@@ -26,6 +28,9 @@ function createChannel(socket) {
         socket.addEventListener('message', event => {
             emitter(JSON.parse(event.data));
         });
+        socket.addEventListener('close', event => {
+            emitter({ type: "close" });
+        });
         return () => {
             socket.close();
         }
@@ -33,44 +38,51 @@ function createChannel(socket) {
 }
 
 function* websocketSaga() {
-    const action = yield take('chat/CONNECT_WEBSOCKET');
-    socket = new WebSocket(BEECHAT_WS_URL);
-    const channel = createChannel(socket);
-    const username = yield select(state => state.user.getIn(['current', 'username']));
     while (true) {
-        const response = yield take(channel);
-        switch (response.type) {
-            case 'open': {
-                const accessToken = yield select(state => state.chat.getIn(['accessToken', username, 'accessToken']));
-                socket.send(JSON.stringify({ type: 'authenticate', payload: { token: accessToken } }));
-                break;
-            }
-
-            case 'status': {
-                if (response.payload.authenticated) {
-                    yield put(reducer.receiveSocketState('ready'));
-                } else {
-                    console.error('Failed to authenticate');
+        const action = yield take('chat/CONNECT_WEBSOCKET');
+        socket = new WebSocket(BEECHAT_WS_URL);
+        const channel = createChannel(socket);
+        const username = yield select(state => state.user.getIn(['current', 'username']));
+        while (socket) {
+            const response = yield take(channel);
+            switch (response.type) {
+                case 'open': {
+                    const accessToken = yield select(state => state.chat.getIn(['accessToken', username, 'accessToken']));
+                    socket.send(JSON.stringify({ type: 'authenticate', payload: { token: accessToken } }));
+                    break;
                 }
-                break;
-            }
 
-            case 'chat-message': {
-                yield put(reducer.receiveChatMessages([ response.payload ]));
-                break;
-            }
+                case 'close': {
+                    yield logout();
+                    break;
+                }
 
-            case 'reauthentication-required': {
-                const accessToken = yield select(state => state.chat.getIn(['accessToken', username]).toJS());
-                const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${accessToken.refreshToken}`});
-                accessToken.accessToken = refreshResponse.token;
-                yield put(
-                    reducer.receiveAccessToken(accessToken)
-                );
-                socket.send(JSON.stringify({ type: 'authenticate', payload: { token: accessToken } }));
-            }
+                case 'status': {
+                    if (response.payload.authenticated) {
+                        yield put(reducer.receiveSocketState('ready'));
+                    } else {
+                        console.error('Failed to authenticate');
+                    }
+                    break;
+                }
 
-            default:
+                case 'chat-message': {
+                    yield put(reducer.receiveChatMessages([ response.payload ]));
+                    break;
+                }
+
+                case 'reauthentication-required': {
+                    const accessToken = yield select(state => state.chat.getIn(['accessToken', username]).toJS());
+                    const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${accessToken.refreshToken}`});
+                    accessToken.accessToken = refreshResponse.token;
+                    yield put(
+                        reducer.receiveAccessToken(accessToken)
+                    );
+                    socket.send(JSON.stringify({ type: 'authenticate', payload: { token: accessToken.accessToken } }));
+                }
+
+                default:
+            }
         }
     }
 }
@@ -157,14 +169,14 @@ export function* login(action) {
         }
     } else {
         const signingKey = yield call(findSigningKey, {
-            opType: type,
-            needsActiveAuth,
+            opType: 'custom_json',
+            needsActiveAuth: false,
             username,
-            password,
-            useHive,
+            useHive: true,
         });
         if (signingKey) {
-            sig = Signature.signBufferSha256(message, signingKey);
+            const bufSha = hash.sha256(message);
+            sig = Signature.signBufferSha256(bufSha, signingKey).toHex();
         } else {
             console.error('No Signing Key for Chat Login');
             return;
@@ -192,4 +204,12 @@ export function* fetchChatMessages(action) {
   yield put(
       reducer.receiveChatMessages(chatMessages)
   );
+}
+
+export function* logout() {
+  if (socket) {
+      yield put(reducer.receiveSocketState('closed'));
+      socket.close();
+      socket = null;
+  }
 }
