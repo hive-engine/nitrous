@@ -4,6 +4,7 @@ import { sharedWatches } from 'app/redux/SagaShared';
 import { userWatches } from 'app/redux/UserSaga';
 import { authWatches } from 'app/redux/AuthSaga';
 import { transactionWatches } from 'app/redux/TransactionSaga';
+import { chatWatches } from 'app/redux/ChatSaga';
 import { communityWatches } from 'app/redux/CommunitySaga';
 import { userProfilesWatches } from 'app/redux/UserProfilesSaga';
 import { searchWatches } from 'app/redux/SearchSaga';
@@ -16,6 +17,7 @@ export default function* rootSaga() {
         ...sharedWatches,
         ...authWatches,
         ...transactionWatches,
+        ...chatWatches,
         ...communityWatches,
         ...userProfilesWatches,
         ...searchWatches,
