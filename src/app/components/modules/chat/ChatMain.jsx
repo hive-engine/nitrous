@@ -52,28 +52,25 @@ class ChatMain extends React.PureComponent {
     }
 
     componentDidMount() {
-        const {
-            username,
-            accessToken,
-            login,
-        } = this.props;
-        if (!accessToken) {
-            login(username);
-        }
+        this.componentDidUpdate();
         document.addEventListener('mousedown', this.handleClick, false);
     }
 
     componentDidUpdate() {
         const {
             username,
+            accessToken,
             chatMessages,
             socketState,
+            login,
             fetchChatMessages,
             connectWebsocket,
         } = this.props;
-        if (!chatMessages) {
+        if (!accessToken) {
+            login(username);
+        } else if (!chatMessages) {
             fetchChatMessages();
-        } else if (!socketState) {
+        } else if (socketState !== 'ready') {
             connectWebsocket();
         }
         const { newSelectionEnd } = this.state;
@@ -260,7 +257,7 @@ export default connect(
         const accessToken = state.chat.getIn(['accessToken', username]);
         const chatMessages = state.chat.get('chatMessages');
         const socketState = state.chat.get('socketState');
-        const loading = !accessToken || !chatMessages || !socketState;
+        const loading = !accessToken || !chatMessages || socketState !== 'ready';
 
         return {
             ...ownProps,
