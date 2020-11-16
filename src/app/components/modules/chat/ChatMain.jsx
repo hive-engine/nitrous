@@ -27,7 +27,7 @@ import {
     TextInput,
     TitleBar,
 } from '@livechat/ui-kit';
-import { APP_NAME } from 'app/client_config';
+import { CHAT_CONVERSATION_TITLE } from 'app/client_config';
 
 const unicodeEmojiRegex = emojiRegex();
 
@@ -129,7 +129,7 @@ class ChatMain extends React.PureComponent {
                                 <CloseIcon />
                             </IconButton>,
                         ]}
-                        title={`${APP_NAME} Chat`}
+                        title={CHAT_CONVERSATION_TITLE}
                     />
 
                     <div
@@ -182,7 +182,7 @@ class ChatMain extends React.PureComponent {
                             <CloseIcon />
                         </IconButton>,
                     ]}
-                    title={`${APP_NAME} Chat`}
+                    title={CHAT_CONVERSATION_TITLE}
                 />
                 <div
                     style={{

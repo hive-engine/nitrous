@@ -39,7 +39,6 @@ function* websocketSaga() {
     const username = yield select(state => state.user.getIn(['current', 'username']));
     while (true) {
         const response = yield take(channel);
-        console.log(response);
         switch (response.type) {
             case 'open': {
                 const accessToken = yield select(state => state.chat.getIn(['accessToken', username, 'accessToken']));
