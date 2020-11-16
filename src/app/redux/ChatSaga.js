@@ -62,7 +62,7 @@ function* websocketSaga() {
 
             case 'reauthentication-required': {
                 const accessToken = yield select(state => state.chat.getIn(['accessToken', username]).toJS());
-                const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${refreshToken}`});
+                const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${accessToken.refreshToken}`});
                 accessToken.accessToken = refreshResponse.token;
                 yield put(
                     reducer.receiveAccessToken(accessToken)
