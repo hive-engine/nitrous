@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { ThemeProvider, FixedWrapper, darkTheme } from '@livechat/ui-kit';
 import MinimizedIcon from 'app/components/modules/chat/MinimizedIcon';
 import ChatMain from 'app/components/modules/chat/ChatMain';
+import { CHAT_CONVERSATION_ID } from 'app/client_config';
 
 class Chat extends React.Component {
     render() {
         const { nightmodeEnabled } = this.props;
         const theme = nightmodeEnabled ? darkTheme : { vars: { 'primary-color': 'grey' }};
-        if (!this.props.currentAccount) {
+        if (!CHAT_CONVERSATION_ID || !this.props.currentAccount) {
             return null;
         }
         return (

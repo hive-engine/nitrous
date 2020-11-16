@@ -113,7 +113,7 @@ export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
-export const CHAT_CONVERSATION_ID = '01EP3CJ2NK4X7N0PCTXVK4012D';
+export const CHAT_CONVERSATION_ID = '';
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
