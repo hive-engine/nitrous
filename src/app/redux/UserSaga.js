@@ -11,6 +11,7 @@ import {
     PREFER_HIVE,
 } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
+import { logout as chatLogout } from 'app/redux/ChatSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
 import { receiveFeatureFlags } from 'app/redux/AppReducer';
@@ -799,6 +800,7 @@ function* logout(action) {
         localStorage.removeItem('autopost2');
     }
 
+    yield chatLogout();
     yield serverApiLogout();
 }
 
