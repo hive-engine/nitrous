@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form'; // @deprecated, instead use: app/utils/ReactForm.js
 import appReducer from './AppReducer';
+import chatReducer from './ChatReducer';
 import globalReducer from './GlobalReducer';
 import userReducer from './UserReducer';
 import transactionReducer from './TransactionReducer';
@@ -33,6 +34,7 @@ function initReducer(reducer, type) {
 }
 
 export default combineReducers({
+    chat: initReducer(chatReducer),
     community: initReducer(communityReducer),
     global: initReducer(globalReducer, 'global'),
     offchain: initReducer(offchainReducer),
