@@ -29,7 +29,7 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_CHAT_MESSAGES : {
-            return state.set('chatMessages', state.get('chatMessages', List()).concat(payload));
+            return state.set('chatMessages', state.get('chatMessages', List()).concat(payload).slice(-1000));
         }
 
         // Has Saga watcher.
