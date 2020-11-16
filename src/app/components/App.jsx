@@ -11,9 +11,9 @@ import Dialogs from 'app/components/modules/Dialogs';
 import Modals from 'app/components/modules/Modals';
 import WelcomePanel from 'app/components/elements/WelcomePanel';
 import tt from 'counterpart';
-import MinimizedIcon from 'app/components/modules/chat/MinimizedIcon';
-import { ThemeProvider, FixedWrapper, defaultTheme } from '@livechat/ui-kit'
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
+
+const Chat = process.env.BROWSER && require('app/components/modules/chat/Chat').default;
 
 class App extends React.Component {
     constructor(props) {
@@ -198,13 +198,7 @@ class App extends React.Component {
                 </div>
                 <Dialogs />
                 <Modals />
-                <ThemeProvider>
-                    <FixedWrapper.Root>
-                        <FixedWrapper.Minimized>
-                            <MinimizedIcon maximize={this.props.maximize} />
-                        </FixedWrapper.Minimized>
-                    </FixedWrapper.Root>
-                </ThemeProvider>
+                {process.env.BROWSER && (<Chat />)}
             </div>
         );
     }

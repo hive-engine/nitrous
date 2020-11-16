@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { IconButton, ChatIcon } from '@livechat/ui-kit';
 
 class MinimizedIcon extends React.Component {
     render() {

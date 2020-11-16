@@ -113,6 +113,7 @@ export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
+export const CHAT_CONVERSATION_ID = '01EP3CJ2NK4X7N0PCTXVK4012D';
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
@@ -120,3 +121,4 @@ export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
 export const INVEST_TOKEN_SHORT = HIVE_ENGINE ? 'HP' : 'SP';
 export const DEBT_TOKEN = HIVE_ENGINE ? 'HIVE DOLLAR' : 'STEEM DOLLAR';
 export const DEBT_TOKENS = HIVE_ENGINE ? 'HIVE DOLLARS' : 'STEEM DOLLARS';
+
