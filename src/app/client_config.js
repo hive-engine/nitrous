@@ -75,8 +75,8 @@ const WEEDCASH = {
     POSTED_VIA_NITROUS_ICON: 'weedcash',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
-    DISCORD_SERVER: '514943843154526208',
-    DISCORD_CHANNEL: '514943843154526210',
+    CHAT_CONVERSATION_ID: '01EQ9N7F815N9R184KYN12H0NR',
+    CHAT_CONVERSATION_TITLE: 'Weedcash Chat',
 };
 
 const TIX = {
@@ -109,6 +109,8 @@ const TIX = {
     COMMUNITY_CATEGORY: 'hive-177225',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const FOODIE = {
@@ -192,6 +194,8 @@ const FOODIE = {
     COMMUNITY_CATEGORY: 'hive-120586',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const KANDA = {
@@ -234,6 +238,8 @@ const KANDA = {
     COMMUNITY_CATEGORY: 'hive-182425',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const STEEMING = {
@@ -338,6 +344,8 @@ const ONLINEBUZZ = {
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     DISABLE_BLACKLIST: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const HIVELIST = {
@@ -400,6 +408,8 @@ const HIVELIST = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const ARCHON = {
@@ -434,6 +444,8 @@ const ARCHON = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const DBLOG = {
@@ -500,6 +512,8 @@ const INFOWARS = {
     COMMUNITY_CATEGORY: 'hive-172447',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const LIETA = {
@@ -533,6 +547,8 @@ const LIETA = {
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const AENEAS = {
@@ -664,6 +680,8 @@ const AENEAS = {
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-37',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const BLOG = {
@@ -697,6 +715,8 @@ const BLOG = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATION_ID: '01EPB6A2PPSW0BQVJ7WDDP568C',
+    CHAT_CONVERSATION_TITLE: 'BeeChat Trollbox',
 };
 
 const DSOCIAL = {
@@ -735,7 +755,7 @@ const DSOCIAL = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': DSOCIAL,
+    'localhost:8080': WEEDCASH,
     'frozen-retreat-15997.herokuapp.com': DSOCIAL,
     'www.d-social.com': DSOCIAL,
     'blogtoken.io': BLOG,
@@ -873,3 +893,4 @@ export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
+

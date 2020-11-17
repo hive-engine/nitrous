@@ -5,6 +5,7 @@ import { api as hiveApi, auth as hiveAuth } from '@hiveio/hive-js';
 import { PrivateKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 
 import { accountAuthLookup } from 'app/redux/AuthSaga';
+import { logout as chatLogout } from 'app/redux/ChatSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
 import { receiveFeatureFlags } from 'app/redux/AppReducer';
@@ -811,6 +812,7 @@ function* logout(action) {
         localStorage.removeItem('autopost2');
     }
 
+    yield chatLogout();
     yield serverApiLogout();
 }
 
