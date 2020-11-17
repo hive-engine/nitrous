@@ -151,6 +151,7 @@ class ChatMain extends React.PureComponent {
         }
         const onMessageSend = (message) => {
             sendChatMessage(message);
+            this.setState({ inputText: "" });
         };
         const addEmoji = (emoji) => {
             const cursorPosition = this.inputTextarea.selectionEnd;
@@ -161,10 +162,6 @@ class ChatMain extends React.PureComponent {
                 inputText: text.substring(0, this.inputTextarea.selectionStart) + emoji.native + text.substring(this.inputTextarea.selectionStart),
                 newSelectionEnd: cursorPosition + emoji.native.length,
             });
-        };
-        const onEmojiClick = (emoji, event) => {
-            console.log(emoji);
-            console.log(event);
         };
         return (
             <div
@@ -193,7 +190,7 @@ class ChatMain extends React.PureComponent {
                         {!chatMessages ? [] : chatMessages.toJS().map((chatMessage, index) => (
                             <MessageGroup
                                 key={index}
-                                avatar={imageProxy() + `u/${chatMessage.from}/avatar/small`}
+                                avatar={imageProxy(true) + `u/${chatMessage.from}/avatar/small`}
                                 isOwn={chatMessage.from === username}
                                 onlyFirstWithMeta
                             >
@@ -212,7 +209,7 @@ class ChatMain extends React.PureComponent {
                     </MessageList>
                 </div>
                 {showEmojiPicker && (
-                    <Picker set="twitter" onSelect={addEmoji} onClick={onEmojiClick} title="" style={{ position: 'absolute', bottom: '20px', right: '20px' }} ref={element => this.emojiPicker = element} />
+                    <Picker set="twitter" onSelect={addEmoji} title="" style={{ position: 'absolute', bottom: '20px', right: '20px' }} ref={element => this.emojiPicker = element} />
                 )}
                 <TextComposer onSend={onMessageSend} value={inputText} onChange={e => this.setState({ inputText: e.target.value })} >
                     <Row align="center">
@@ -225,13 +222,13 @@ class ChatMain extends React.PureComponent {
                                     <SendButton />
                                 </Fit>
                             </Row>
-                            {false && (<Row>
+                            <Row>
                                 <Fit>
                                     <IconButton>
                                         <EmojiIcon onClick={() => this.setState({ showEmojiPicker: true })} />
                                     </IconButton>
                                 </Fit>
-                            </Row>)}
+                            </Row>
                         </Column>
                     </Row>
                 </TextComposer>
