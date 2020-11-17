@@ -114,8 +114,8 @@ export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
-export const CHAT_CONVERSATION_ID = '01EPB6A2PPSW0BQVJ7WDDP568C';
-export const CHAT_CONVERSATION_TITLE = 'BeeChat Trollbox';
+export const CHAT_CONVERSATION_ID = '01EQBRPV0Q0MB5SYV3K8CJF9T1';
+export const CHAT_CONVERSATION_TITLE = 'Lassecash Chat';
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
