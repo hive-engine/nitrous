@@ -1449,13 +1449,13 @@ export default formId =>
                 const meta = isEdit ? jsonMetadata : {};
                 if (metaTags.size) meta.tags = metaTags.toJS();
                 else delete meta.tags;
-                if (rtags.usertags.size) meta.users = rtags.usertags;
+                if (rtags.usertags.size) meta.users = Array.from(rtags.usertags);
                 else delete meta.users;
                 if (rtags.images.size)
-                    meta.image = rtags.images; // TODO: save first image
+                    meta.image = Array.from(rtags.images).slice(0, 1);
                 else delete meta.image;
                 if (rtags.links.size)
-                    meta.links = rtags.links; // TODO: remove? save first?
+                    meta.links = Array.from(rtags.links).slice(0, 1);
                 else delete meta.links;
 
                 meta.app = `${APP_NAME.toLowerCase()}/0.1`;
