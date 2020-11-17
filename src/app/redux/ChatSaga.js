@@ -19,6 +19,14 @@ const BEECHAT_WS_URL = 'wss://ws.beechat.hive-engine.com';
 
 let socket;
 
+function* refreshToken(accessToken) {
+    const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${accessToken.refreshToken}`});
+    accessToken.accessToken = refreshResponse.token;
+    yield put(
+        reducer.receiveAccessToken(accessToken)
+    );
+}
+
 function createChannel(socket) {
     return eventChannel(emitter => {
         socket.addEventListener('open', event => {
@@ -72,11 +80,7 @@ function* websocketSaga() {
 
                 case 'reauthentication-required': {
                     const accessToken = yield select(state => state.chat.getIn(['accessToken', username]).toJS());
-                    const refreshResponse = yield call(callChatApi, 'users/refresh-token', {}, { 'Authorization': `Bearer ${accessToken.refreshToken}`});
-                    accessToken.accessToken = refreshResponse.token;
-                    yield put(
-                        reducer.receiveAccessToken(accessToken)
-                    );
+                    yield refreshToken(accessToken);
                     socket.send(JSON.stringify({ type: 'authenticate', payload: { token: accessToken.accessToken } }));
                 }
 
@@ -120,9 +124,16 @@ async function callChatApi(endpoint, params, headers) {
 
 function* authorizedCallChatApi(endpoint, params) {
     const current = yield select(state => state.user.get('current'));
-    const accessToken = yield select(state => state.chat.getIn(['accessToken', current.get('username'), 'accessToken']));
-    return yield call(callChatApi, endpoint, params,
-            { 'Authorization': `Bearer ${accessToken}`});
+    const accessToken = yield select(state => state.chat.getIn(['accessToken', current.get('username')]).toJS());
+    try {
+        return yield call(callChatApi, endpoint, params,
+            { 'Authorization': `Bearer ${accessToken.accessToken}`});
+    } catch (error) {
+        // try to refresh token and retry
+        yield refreshToken(accessToken);
+        return yield call(callChatApi, endpoint, params,
+            { 'Authorization': `Bearer ${accessToken.accessToken}`});
+    }
 }
 
 export function* login(action) {
