@@ -36,6 +36,7 @@ function formatMessage(message) {
         return Emoji({
             html: true,
             emoji: getEmojiDataFromNative(match, 'twitter', emojiData),
+            size: 24,
             fallback: (emoji, props) => {
                 return emoji ? `:${emoji.short_names[0]}:` : props.emoji
             },
