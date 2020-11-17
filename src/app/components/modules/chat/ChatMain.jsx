@@ -35,6 +35,7 @@ function formatMessage(message) {
         return Emoji({
             html: true,
             emoji: getEmojiDataFromNative(match, 'twitter', emojiData),
+            size: 24,
             fallback: (emoji, props) => {
                 return emoji ? `:${emoji.short_names[0]}:` : props.emoji
             },
@@ -192,7 +193,7 @@ class ChatMain extends React.PureComponent {
                         {!chatMessages ? [] : chatMessages.toJS().map((chatMessage, index) => (
                             <MessageGroup
                                 key={index}
-                                avatar={imageProxy() + `u/${chatMessage.from}/avatar/small`}
+                                avatar={imageProxy(true) + `u/${chatMessage.from}/avatar/small`}
                                 isOwn={chatMessage.from === username}
                                 onlyFirstWithMeta
                             >

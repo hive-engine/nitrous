@@ -753,10 +753,45 @@ const DSOCIAL = {
     DISABLE_HIVE: true,
 };
 
+const PIMP = {
+    APP_NAME: 'PimpStudio',
+    APP_ICON: 'pimpstudio',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.pimpstudio.cash/',
+    APP_DOMAIN: 'www.pimpsutdio.cash',
+    LIQUID_TOKEN: 'Pimp',
+    LIQUID_TOKEN_UPPERCASE: 'PIMP',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'pimp',
+    TAG_LIST: fromJSOrdered([
+        'pimp',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'PIMP POWER',
+    SITE_DESCRIPTION:
+        'PimpStudio is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called PIMP, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'G-3VQW60G4LG',
+    DISABLE_HIVE: true,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
-    'frozen-retreat-15997.herokuapp.com': DSOCIAL,
+    'localhost:8080': PIMP,
+    'frozen-retreat-15997.herokuapp.com': PIMP,
+    'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,
     'blogtoken.io': BLOG,
     'www.aeneas.blog': AENEAS,
