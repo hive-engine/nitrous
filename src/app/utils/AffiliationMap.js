@@ -105,8 +105,8 @@ const map = {
     sexandlove: 'Verified Creator',
     nancyxxx: 'Verified Creator', 
     mistressavanya: 'Verified Creator',
-    lowlightart: 'Verified Creator'
-    polyannie: 'Verified Creator'
+    lowlightart: 'Verified Creator',
+    polyannie: 'Verified Creator',
     Mistressavanya: 'Verified Creator',
     
 };
