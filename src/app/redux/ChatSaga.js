@@ -11,6 +11,7 @@ export const chatWatches = [
     takeEvery('chat/LOGIN', login),
     takeEvery('chat/FETCH_CHAT_MESSAGES', fetchChatMessages),
     takeEvery('chat/SEND_CHAT_MESSAGE', sendChatMessage),
+    takeEvery('chat/FETCH_CHAT_LIST', fetchChatList),
     fork(websocketSaga),
 ];
 
@@ -74,7 +75,7 @@ function* websocketSaga() {
                 }
 
                 case 'chat-message': {
-                    yield put(reducer.receiveChatMessages([ response.payload ]));
+                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ]}));
                     break;
                 }
 
@@ -91,13 +92,13 @@ function* websocketSaga() {
 }
 
 function* sendChatMessage(action) {
-    const { message } = action.payload;
-    const conversation_id = yield select(state => state.app.getIn(['hostConfig', 'CHAT_CONVERSATION_ID']));
+    const { conversationId, to, message } = action.payload;
     if (socket) {
         socket.send(JSON.stringify({
             type: 'chat-message',
             payload: {
-                conversation_id,
+                conversation_id: conversationId,
+                to,
                 message,
             },
         }));
@@ -211,10 +212,10 @@ export function* login(action) {
 
 
 export function* fetchChatMessages(action) {
-  const conversation_id = yield select(state => state.app.getIn(['hostConfig', 'CHAT_CONVERSATION_ID']));
-  const chatMessages = yield authorizedCallChatApi('messages/chats', { conversation_id });
+  const { conversationId } = action.payload;
+  const chatMessages = yield authorizedCallChatApi('messages/chats', { conversation_id: conversationId });
   yield put(
-      reducer.receiveChatMessages(chatMessages)
+      reducer.receiveChatMessages({ conversationId, chatMessages })
   );
 }
 
@@ -224,4 +225,12 @@ export function* logout() {
       socket.close();
       socket = null;
   }
+}
+
+export function* fetchChatList(action) {
+  const chatList = yield authorizedCallChatApi('messages/conversations');
+  const conversations = yield select(state => state.app.getIn(['hostConfig', 'CHAT_CONVERSATIONS']));
+  yield put(
+      reducer.receiveChatList(conversations.concat(chatList))
+  );
 }
