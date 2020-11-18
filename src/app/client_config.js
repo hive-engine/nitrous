@@ -75,6 +75,10 @@ const WEEDCASH = {
     POSTED_VIA_NITROUS_ICON: 'weedcash',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+        { id: '01EQ9N7F815N9R184KYN12H0NR', name: 'Weedcash Chat' },
+    ],
 };
 
 const TIX = {
@@ -107,6 +111,9 @@ const TIX = {
     COMMUNITY_CATEGORY: 'hive-177225',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const FOODIE = {
@@ -188,6 +195,9 @@ const FOODIE = {
     COMMUNITY_CATEGORY: 'hive-120586',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const KANDA = {
@@ -230,6 +240,9 @@ const KANDA = {
     COMMUNITY_CATEGORY: 'hive-182425',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const STEEMING = {
@@ -334,6 +347,9 @@ const ONLINEBUZZ = {
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     DISABLE_BLACKLIST: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const HIVELIST = {
@@ -396,6 +412,9 @@ const HIVELIST = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const ARCHON = {
@@ -430,6 +449,9 @@ const ARCHON = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const DBLOG = {
@@ -496,6 +518,9 @@ const INFOWARS = {
     COMMUNITY_CATEGORY: 'hive-172447',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 const LIETA = {
@@ -529,6 +554,9 @@ const LIETA = {
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 export const CONFIG_MAP = {
