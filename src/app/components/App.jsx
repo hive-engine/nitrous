@@ -13,7 +13,7 @@ import WelcomePanel from 'app/components/elements/WelcomePanel';
 import tt from 'counterpart';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
 
-const Chat = process.env.BROWSER && require('app/components/modules/chat/Chat').default;
+const ChatWrapper = process.env.BROWSER && require('app/components/modules/chat/ChatWrapper').default;
 
 class App extends React.Component {
     constructor(props) {
@@ -198,7 +198,7 @@ class App extends React.Component {
                 </div>
                 <Dialogs />
                 <Modals />
-                {process.env.BROWSER && (<Chat />)}
+                {process.env.BROWSER && (<ChatWrapper />)}
             </div>
         );
     }
