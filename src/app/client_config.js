@@ -102,6 +102,9 @@ const ONLINEBUZZ = {
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     DISABLE_BLACKLIST: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
 };
 
 export const CONFIG_MAP = {
