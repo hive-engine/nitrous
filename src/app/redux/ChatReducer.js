@@ -7,6 +7,8 @@ const RECEIVE_CHAT_MESSAGES = 'chat/RECEIVE_CHAT_MESSAGES';
 const CONNECT_WEBSOCKET = 'chat/CONNECT_WEBSOCKET';
 const RECEIVE_SOCKET_STATE = 'chat/RECEIVE_SOCKET_STATE';
 const SEND_CHAT_MESSAGE = 'chat/SEND_CHAT_MESSAGE';
+const FETCH_CHAT_LIST = 'chat/FETCH_CHAT_LIST';
+const RECEIVE_CHAT_LIST = 'chat/RECEIVE_CHAT_LIST';
 
 const defaultChatState = Map();
 
@@ -29,8 +31,18 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_CHAT_MESSAGES : {
-            const chatMessages = state.get('chatMessages') || List();
-            return state.set('chatMessages', chatMessages.concat(payload).slice(-1000));
+            const { conversationId, chatMessages } = payload;
+            const oldChatMessages = state.getIn(['chatMessages', conversationId]) || List();
+            return state.setIn(['chatMessages', conversationId], oldChatMessages.concat(chatMessages).slice(-1000));
+        }
+
+        // Has Saga watcher.
+        case FETCH_CHAT_LIST: {
+            return state;
+        }
+
+        case RECEIVE_CHAT_LIST : {
+            return state.set('chatList', fromJS(payload));
         }
 
         // Has Saga watcher.
@@ -90,3 +102,14 @@ export const sendChatMessage = payload => ({
     type: SEND_CHAT_MESSAGE,
     payload,
 });
+
+export const fetchChatList = payload => ({
+    type: FETCH_CHAT_LIST,
+    payload,
+});
+
+export const receiveChatList = payload => ({
+    type: RECEIVE_CHAT_LIST,
+    payload,
+});
+
