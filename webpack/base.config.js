@@ -9,6 +9,23 @@ const webpack_isomorphic_tools_plugin =
     new Webpack_isomorphic_tools_plugin(require('./webpack-isotools-config'))
         .development();
 
+const devMode = process.env.NODE_ENV !== 'production';
+
+const plugins = [
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            statsOptions: { source: false }
+        }),
+        function () {
+            this.plugin('done', writeStats);
+        },
+        webpack_isomorphic_tools_plugin,
+    ];
+if (!devMode) {
+    plugins.push(new MiniCssExtractPlugin());
+}
+
 const postcss_loader = {
     loader: 'postcss-loader',
     options: {
@@ -21,7 +38,7 @@ const postcss_loader = {
 };
 
 const css_loaders = [
-    MiniCssExtractPlugin.loader,
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
         loader: 'css-loader',
         options: {
@@ -32,7 +49,7 @@ const css_loaders = [
 ];
 
 const scss_loaders = [
-    MiniCssExtractPlugin.loader,
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
         loader: 'css-loader',
         options: {
@@ -112,18 +129,7 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'disabled',
-            generateStatsFile: true,
-            statsOptions: { source: false }
-        }),
-        function () {
-            this.plugin('done', writeStats);
-        },
-        webpack_isomorphic_tools_plugin,
-        new MiniCssExtractPlugin()
-    ],
+    plugins,
     resolve: {
         alias: {
             react: path.join(__dirname, '../node_modules', 'react'),
