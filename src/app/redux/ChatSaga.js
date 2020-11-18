@@ -5,13 +5,14 @@ import { findSigningKey } from 'app/redux/AuthSaga';
 import * as reducer from 'app/redux/ChatReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
-import { CHAT_CONVERSATION_ID } from 'app/client_config';
+import { CHAT_CONVERSATIONS } from 'app/client_config';
 import axios from 'axios';
 
 export const chatWatches = [
     takeEvery('chat/LOGIN', login),
     takeEvery('chat/FETCH_CHAT_MESSAGES', fetchChatMessages),
     takeEvery('chat/SEND_CHAT_MESSAGE', sendChatMessage),
+    takeEvery('chat/FETCH_CHAT_LIST', fetchChatList),
     fork(websocketSaga),
 ];
 
@@ -75,7 +76,7 @@ function* websocketSaga() {
                 }
 
                 case 'chat-message': {
-                    yield put(reducer.receiveChatMessages([ response.payload ]));
+                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ]}));
                     break;
                 }
 
@@ -92,12 +93,13 @@ function* websocketSaga() {
 }
 
 function* sendChatMessage(action) {
-    const { message } = action.payload;
+    const { conversationId, to, message } = action.payload;
     if (socket) {
         socket.send(JSON.stringify({
             type: 'chat-message',
             payload: {
-                conversation_id: CHAT_CONVERSATION_ID,
+                conversation_id: conversationId,
+                to,
                 message,
             },
         }));
@@ -211,9 +213,10 @@ export function* login(action) {
 
 
 export function* fetchChatMessages(action) {
-  const chatMessages = yield authorizedCallChatApi('messages/chats', { conversation_id: CHAT_CONVERSATION_ID });
+  const { conversationId } = action.payload;
+  const chatMessages = yield authorizedCallChatApi('messages/chats', { conversation_id: conversationId });
   yield put(
-      reducer.receiveChatMessages(chatMessages)
+      reducer.receiveChatMessages({ conversationId, chatMessages })
   );
 }
 
@@ -223,4 +226,11 @@ export function* logout() {
       socket.close();
       socket = null;
   }
+}
+
+export function* fetchChatList(action) {
+  const chatList = yield authorizedCallChatApi('messages/conversations');
+  yield put(
+      reducer.receiveChatList(CHAT_CONVERSATIONS.concat(chatList))
+  );
 }
