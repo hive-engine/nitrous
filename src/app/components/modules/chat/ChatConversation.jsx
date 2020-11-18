@@ -146,7 +146,7 @@ class ChatMain extends React.PureComponent {
               style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  height: '100%',
+                  height: '550px',
               }}
            >
               <div
