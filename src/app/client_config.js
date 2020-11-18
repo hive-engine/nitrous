@@ -759,7 +759,7 @@ const PIMP = {
     APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.pimpstudio.cash/',
-    APP_DOMAIN: 'www.pimpsutdio.cash',
+    APP_DOMAIN: 'www.pimpstudio.cash',
     LIQUID_TOKEN: 'Pimp',
     LIQUID_TOKEN_UPPERCASE: 'PIMP',
     APP_MAX_TAG: 10,
