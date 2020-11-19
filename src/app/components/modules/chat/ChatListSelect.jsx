@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
+import ChatLayout from 'app/components/modules/chat/ChatLayout';
 import * as chatActions from 'app/redux/ChatReducer';
 import { Avatar, ChatList, ChatListItem, Column, Row, Title } from '@livechat/ui-kit';
 
@@ -28,45 +29,51 @@ class ChatListSelect extends React.PureComponent {
     render() {
         const { 
             loading,
+            minimize,
             chatList,
             onSelect,
         } = this.props;
+        const title = "BeeChat Conversations";
         if (loading) {
             return (
-               <div
-                   style={{
-                       flexGrow: 1,
-                       minHeight: 0,
-                       height: '100%',
-                       background: '#fff',
-                   }}
-               >
-                   <center>
-                       <LoadingIndicator
-                           style={{ marginBottom: '2rem' }}
-                           type="circle"
-                       />
-                   </center>
-               </div>
+               <ChatLayout title={title} minimize={minimize}>
+                   <div
+                       style={{
+                           flexGrow: 1,
+                           minHeight: 0,
+                           height: '100%',
+                           background: '#fff',
+                       }}
+                   >
+                       <center>
+                           <LoadingIndicator
+                               style={{ marginBottom: '2rem' }}
+                               type="circle"
+                           />
+                       </center>
+                   </div>
+               </ChatLayout>
             );
         }
         return (
-           <div className='ChatListBackground'>
-               <ChatList>
-                   {chatList ? chatList.toJS().map(chat => (
-                       <ChatListItem key={chat.id} onClick={() => onSelect(chat)}>
-                           <Avatar letter={(chat.name ? chat.name : chat.members[0])[0]} />
-                           <Column fill>
-                               <Row justify>
-                                   <Title ellipses>
-                                       {chat.name || chat.members.join(', ')}
-                                   </Title>
-                               </Row>
-                           </Column>
-                       </ChatListItem>
-                   )) : []}
-               </ChatList>
-           </div>
+            <ChatLayout title={title} minimize={minimize}>
+                <div className='ChatListBackground'>
+                    <ChatList>
+                        {chatList ? chatList.toJS().map(chat => (
+                            <ChatListItem key={chat.id} onClick={() => onSelect(chat)}>
+                                <Avatar letter={(chat.name ? chat.name : chat.members[0])[0]} />
+                                <Column fill>
+                                    <Row justify>
+                                        <Title ellipses>
+                                            {chat.name || chat.members.join(', ')}
+                                        </Title>
+                                    </Row>
+                                </Column>
+                            </ChatListItem>
+                        )) : []}
+                    </ChatList>
+                </div>
+            </ChatLayout>
         );
     }
 }
