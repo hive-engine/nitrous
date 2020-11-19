@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
+import ChatLayout from 'app/components/modules/chat/ChatLayout';
 import * as chatActions from 'app/redux/ChatReducer';
 import { imageProxy } from 'app/utils/ProxifyUrl';
 import { getEmojiDataFromNative, Emoji, Picker } from 'emoji-mart';
@@ -103,26 +104,30 @@ class ChatMain extends React.PureComponent {
             chatMessages,
             sendChatMessage,
             loading,
+            minimize,
+            showChatList,
         } = this.props;
         const { showEmojiPicker, inputText } = this.state;
 
         if (loading) {
             return (
-               <div
-                   style={{
-                       flexGrow: 1,
-                       minHeight: 0,
-                       height: '100%',
-                       background: '#fff',
-                   }}
-               >
-                   <center>
-                       <LoadingIndicator
-                           style={{ marginBottom: '2rem' }}
-                           type="circle"
-                       />
-                   </center>
-               </div>
+               <ChatLayout title={title} minimize={minimize} showChatList={showChatList}>
+                   <div
+                       style={{
+                           flexGrow: 1,
+                           minHeight: 0,
+                           height: '100%',
+                           background: '#fff',
+                       }}
+                   >
+                       <center>
+                           <LoadingIndicator
+                               style={{ marginBottom: '2rem' }}
+                               type="circle"
+                           />
+                       </center>
+                   </div>
+               </ChatLayout>
             );
         }
         const onMessageSend = (message) => {
@@ -141,14 +146,9 @@ class ChatMain extends React.PureComponent {
                 newSelectionEnd: cursorPosition + emoji.native.length,
             });
         };
+        const title = conversation.name || (conversation.members.slice(0,3).join(', '));
         return (
-           <div
-              style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '550px',
-              }}
-           >
+           <ChatLayout title={title} minimize={minimize} showChatList={showChatList}>
               <div
                    style={{
                        flexGrow: 1,
@@ -202,7 +202,7 @@ class ChatMain extends React.PureComponent {
                        </Column>
                    </Row>
                </TextComposer>
-            </div>
+            </ChatLayout>
         );
     }
 }
