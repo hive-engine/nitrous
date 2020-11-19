@@ -116,7 +116,7 @@ export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
 export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-    { id: '01EQBRPV0Q0MB5SYV3K8CJF9T1', name: 'Lassecash Chat' },
+    { id: '01EQG1QQ5SNGM0FDJSTX0YNN8H', name: 'Lassecash Chat' },
 ];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
