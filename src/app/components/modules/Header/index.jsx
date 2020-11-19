@@ -313,7 +313,6 @@ class Header extends React.Component {
         };
         return (
             <Headroom
-                style={{zIndex: 100}}
                 onUnpin={e => this.headroomOnUnpin(e)}
                 onUnfix={e => this.headroomOnUnfix(e)}
             >
