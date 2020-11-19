@@ -23,7 +23,10 @@ const plugins = [
         webpack_isomorphic_tools_plugin,
     ];
 if (!devMode) {
-    plugins.push(new MiniCssExtractPlugin());
+    plugins.push(new MiniCssExtractPlugin({
+        filename: devMode ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+    }));
 }
 
 const postcss_loader = {
