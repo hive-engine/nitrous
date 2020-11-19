@@ -53,7 +53,7 @@ export default function reducer(state = defaultChatState, action) {
         case RECEIVE_SOCKET_STATE : {
             const newState = state.set('socketState', payload);
             if (payload === 'closed') {
-                return newState.set('chatMessages', null);
+                return newState.delete('chatMessages');
             }
             return newState;
         }
