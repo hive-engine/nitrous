@@ -122,6 +122,13 @@ export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
 export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    { id: '01EPB6A2PPSW0BQVJ7WDDP5682', name: 'BeeChat Trollbox' },
+    { id: '01EPB6A2PPSW0BQVJ7WDDP5683', name: 'BeeChat Trollbox' },
+    { id: '01EPB6A2PPSW0BQVJ7WDDP5684', name: 'BeeChat Trollbox' },
+    { id: '03EPB7A2PPSW0BQVJ7WDDP5684', name: 'BeeChat Trollbox' },
+    { id: '04EPB7A2PPSW0BQVJ7WDDP5684', name: 'BeeChat Trollbox' },
+    { id: '05EPB7A2PPSW0BQVJ7WDDP5684', name: 'BeeChat Trollbox' },
+    { id: '06EPB7A2PPSW0BQVJ7WDDP5684', name: 'BeeChat Trollbox' },
 ];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
