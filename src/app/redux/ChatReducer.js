@@ -1,4 +1,4 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS, List, Map, Set } from 'immutable';
 
 const LOGIN = 'chat/LOGIN';
 const RECEIVE_ACCESS_TOKEN = 'chat/RECEIVE_ACCESS_TOKEN';
@@ -9,6 +9,7 @@ const RECEIVE_SOCKET_STATE = 'chat/RECEIVE_SOCKET_STATE';
 const SEND_CHAT_MESSAGE = 'chat/SEND_CHAT_MESSAGE';
 const FETCH_CHAT_LIST = 'chat/FETCH_CHAT_LIST';
 const RECEIVE_CHAT_LIST = 'chat/RECEIVE_CHAT_LIST';
+const START_CHAT = 'chat/START_CHAT';
 
 const defaultChatState = Map();
 
@@ -33,7 +34,13 @@ export default function reducer(state = defaultChatState, action) {
         case RECEIVE_CHAT_MESSAGES : {
             const { conversationId, chatMessages } = payload;
             const oldChatMessages = state.getIn(['chatMessages', conversationId]) || List();
-            return state.setIn(['chatMessages', conversationId], oldChatMessages.concat(chatMessages).slice(-1000));
+            const oldChatIds = Set(oldChatMessages.map(m => m.get('id')));
+            return state.setIn(['chatMessages', conversationId],
+                oldChatMessages
+                    .concat(fromJS(chatMessages)
+                        .filter(m => !oldChatIds.has(m.get('id'))))
+                    .sort((x,y) => new Date(x.get('timestamp')) - new Date(y.get('timestamp')))
+                    .slice(-1000));
         }
 
         // Has Saga watcher.
@@ -60,6 +67,11 @@ export default function reducer(state = defaultChatState, action) {
 
         // Has Saga watcher.
         case SEND_CHAT_MESSAGE : {
+            return state;
+        }
+        
+        // Has Saga watcher.
+        case START_CHAT: {
             return state;
         }
 
@@ -110,6 +122,11 @@ export const fetchChatList = payload => ({
 
 export const receiveChatList = payload => ({
     type: RECEIVE_CHAT_LIST,
+    payload,
+});
+
+export const startChat = payload => ({
+    type: START_CHAT,
     payload,
 });
 
