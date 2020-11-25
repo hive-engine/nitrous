@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 import { Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
@@ -13,6 +14,7 @@ export const chatWatches = [
     takeEvery('chat/FETCH_CHAT_MESSAGES', fetchChatMessages),
     takeEvery('chat/SEND_CHAT_MESSAGE', sendChatMessage),
     takeEvery('chat/FETCH_CHAT_LIST', fetchChatList),
+    takeEvery('chat/START_CHAT', startChat),
     fork(websocketSaga),
 ];
 
@@ -233,4 +235,19 @@ export function* fetchChatList(action) {
   yield put(
       reducer.receiveChatList(CHAT_CONVERSATIONS.concat(chatList))
   );
+}
+
+export function* startChat(action) {
+  const { to, message } = action.payload;
+  if (socket) {
+        socket.send(JSON.stringify({
+            type: 'create-conversation',
+            payload: {
+                to,
+                message,
+            },
+        }));
+    } else {
+      console.error("Socket does not exist");
+    }
 }
