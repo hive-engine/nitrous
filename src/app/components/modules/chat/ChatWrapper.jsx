@@ -9,13 +9,14 @@ class ChatWrapper extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { conversation: null };
+        this.state = { conversation: null, newConversation: false };
     }
 
     render() {
         const { nightmodeEnabled } = this.props;
-        const { conversation } = this.state;
+        const { conversation, newConversation } = this.state;
         const setConversation = (conversation) => this.setState({ conversation });
+        const setNewConversation = (newConversation) => this.setState({ newConversation });
         const theme = nightmodeEnabled ? darkTheme : { vars: { 'primary-color': 'grey' }};
         theme.FixedWrapperMaximized = {
             css: {
@@ -29,7 +30,7 @@ class ChatWrapper extends React.Component {
             <ThemeProvider theme={theme} >
                 <FixedWrapper.Root>
                     <FixedWrapper.Maximized>
-                        <ChatMain conversation={conversation} setConversation={setConversation} />
+                        <ChatMain conversation={conversation} newConversation={newConversation} setConversation={setConversation} setNewConversation={setNewConversation} />
                     </FixedWrapper.Maximized>
                     <FixedWrapper.Minimized>
                         <MinimizedIcon />
