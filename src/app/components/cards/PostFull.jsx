@@ -25,6 +25,7 @@ import {
     APP_NAME,
     SHOW_AUTHOR_RECENT_POSTS,
     POSTED_VIA_NITROUS_ICON,
+    LIQUID_TOKEN_UPPERCASE
 } from 'app/client_config';
 import tt from 'counterpart';
 import { ifHivemind } from 'app/utils/Community';
@@ -118,6 +119,15 @@ class PostFull extends React.Component {
                 post.get('author'),
                 post.get('permlink'),
                 post.get('hive')
+            );
+        };
+        this.onTribeMute = () => {
+            const { tribeMute, post } = this.props;
+            tribeMute(
+                post.get('author'),
+                post.get('permlink'),
+                !post.get('muted'),
+                post.get('hive'),
             );
         };
     }
@@ -264,7 +274,13 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post, community, viewer_role },
+            props: {
+                username,
+                post,
+                community,
+                viewer_role,
+                tokenAccount,
+            },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -275,6 +291,7 @@ class PostFull extends React.Component {
             onShowReply,
             onShowEdit,
             onDeletePost,
+            onTribeMute,
         } = this;
         if (!post) return null;
         const communityName = community ? community.get('name') : null;
@@ -494,6 +511,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
+        const canTribeMute = username === tokenAccount;
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
@@ -597,6 +615,11 @@ class PostFull extends React.Component {
                                         {tt('g.delete')}
                                     </a>
                                 )}
+                                {canTribeMute && (
+                                    <a onClick={onTribeMute}>
+                                        Tribe-{ post.get('muted') ? 'Unmute' : 'Mute' }
+                                    </a>
+                                )}
                             </span>
                             <span className="PostFull__responses">
                                 <Link
@@ -654,6 +677,7 @@ export default connect(
 
         const category = post.get('category');
         const community = state.global.getIn(['community', category]);
+        const tokenAccount = state.app.getIn(['scotConfig', 'info', 'token_accoint']);
 
         return {
             post,
@@ -664,6 +688,7 @@ export default connect(
                 ['community', community, 'context', 'role'],
                 'guest'
             ),
+            tokenAccount,
         };
     },
     dispatch => ({
@@ -672,6 +697,23 @@ export default connect(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
+                    confirm: tt('g.are_you_sure'),
+                    useHive: hive,
+                })
+            );
+        },
+        tribeMute: (author, permlink, mute, hive) => {
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation: {
+                        id: 'scot_mute_post',
+                        json: JSON.stringify({
+                            symbol: LIQUID_TOKEN_UPPERCASE,
+                            authorperm: `@${author}/${permlink}`,
+                            mute,
+                        }),
+                    },
                     confirm: tt('g.are_you_sure'),
                     useHive: hive,
                 })
