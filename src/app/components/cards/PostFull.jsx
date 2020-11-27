@@ -709,7 +709,7 @@ export default connect(
                     operation: {
                         id: 'scot_mute_post',
                         json: JSON.stringify({
-                            symbol: LIQUID_TOKEN_UPPERCASE,
+                            token: LIQUID_TOKEN_UPPERCASE,
                             authorperm: `@${author}/${permlink}`,
                             mute,
                         }),
