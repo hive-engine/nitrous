@@ -677,7 +677,7 @@ export default connect(
 
         const category = post.get('category');
         const community = state.global.getIn(['community', category]);
-        const tokenAccount = state.app.getIn(['scotConfig', 'info', 'token_accoint']);
+        const tokenAccount = state.app.getIn(['scotConfig', 'config', 'token_accoint']);
 
         return {
             post,
