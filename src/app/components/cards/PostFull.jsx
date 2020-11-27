@@ -122,8 +122,9 @@ class PostFull extends React.Component {
             );
         };
         this.onTribeMute = () => {
-            const { tribeMute, post } = this.props;
+            const { username, tribeMute, post } = this.props;
             tribeMute(
+                username,
                 post.get('author'),
                 post.get('permlink'),
                 !post.get('muted'),
@@ -702,12 +703,13 @@ export default connect(
                 })
             );
         },
-        tribeMute: (author, permlink, mute, hive) => {
+        tribeMute: (username, author, permlink, mute, hive) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
                     operation: {
                         id: 'scot_mute_post',
+                        required_posting_auths: [username],
                         json: JSON.stringify({
                             token: LIQUID_TOKEN_UPPERCASE,
                             authorperm: `@${author}/${permlink}`,
