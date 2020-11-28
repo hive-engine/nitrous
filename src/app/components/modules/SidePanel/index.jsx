@@ -65,13 +65,6 @@ const SidePanel = ({
                     useHive ? 'hive' : 'steem'
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
-            {
-                value: 'leodex',
-                label: 'SteemLeo Dex',
-                link: `https://dex.steemleo.com/?token={
-                    LIQUID_TOKEN_UPPERCASE
-                }`,
-            },
         ],
 
         external: [],
