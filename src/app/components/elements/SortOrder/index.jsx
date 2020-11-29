@@ -24,20 +24,12 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
 
         let out = [
             {
-                label: tt('main_menu.trending'),
-                value: `/trending${tag}`,
-            },
-            {
-                label: tt('main_menu.hot'),
-                value: `/hot${tag}`,
+                label: "Curators' Choice",
+                value: '/@naturalmedicine/feed',
             },
             {
                 label: tt('g.new'),
                 value: `/created${tag}`,
-            },
-            {
-                label: tt('g.promoted'),
-                value: `/promoted${tag}`,
             },
         ];
 

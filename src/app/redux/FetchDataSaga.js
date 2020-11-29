@@ -104,8 +104,6 @@ export function* fetchState(location_change_action) {
     }
 
     if (
-        pathname === '/' ||
-        pathname === '' ||
         pathname.indexOf('trending') !== -1 ||
         pathname.indexOf('hot') !== -1
     ) {
@@ -136,7 +134,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending`;
+    if (url === '/') url = `/@naturalmedicine/feed`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)

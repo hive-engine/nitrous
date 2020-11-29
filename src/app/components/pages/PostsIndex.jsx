@@ -28,7 +28,7 @@ const noFriendsText = (
         You haven't followed anyone yet!<br />
         <br />
         <span style={{ fontSize: '1.1rem' }}>
-            <Link to="/">Explore Trending</Link>
+            <Link to="/">Explore Curated</Link>
         </span>
         <br />
     </div>
@@ -263,7 +263,9 @@ class PostsIndex extends React.Component {
         // page title
         let page_title = tt('g.all_tags');
         if (order === 'feed') {
-            if (account_name === this.props.username)
+            if (account_name === 'naturalmedicine') {
+                page_title = "Curators' Choice";
+            } else if (account_name === this.props.username)
                 page_title = 'My friends' || tt('posts_index.my_feed');
             else
                 //page_title = tt('posts_index.accountnames_feed', {
@@ -391,16 +393,21 @@ module.exports = {
             // route can be e.g. trending/food (order/category);
             //   or, @username/feed (category/order). Branch on presence of `@`.
             const route = ownProps.routeParams;
-            const account_name =
+            let account_name =
                 route.order && route.order[0] == '@'
                     ? route.order.slice(1).toLowerCase()
                     : null;
-            const category = account_name
+            let category = account_name
                 ? route.order
                 : route.category ? route.category.toLowerCase() : null;
-            const order = account_name
+            let order = account_name
                 ? route.category
-                : route.order || 'trending';
+                : route.order;
+            if (!order) {
+                order = 'feed';
+                category = '@naturalmedicine';
+                account_name = 'naturalmedicine';
+            }
 
             const hive = ifHivemind(category);
             const community = state.global.getIn(['community', hive], null);

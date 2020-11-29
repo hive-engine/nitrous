@@ -9,7 +9,7 @@ const reg = pattern => {
         )
         .replace(
             '<sort>',
-            '(hot|trending|promoted|payout|payout_comments|muted|created)'
+            '(curated|hot|trending|promoted|payout|payout_comments|muted|created)'
         )
         .replace('<tag>', '([\\w\\W\\d-]{1,32})')
         .replace('<permlink>', '([\\w\\d-]+)')
@@ -31,7 +31,7 @@ export const routeRegex = {
 
 export default function resolveRoute(path) {
     // index
-    if (path === '/') return { page: 'PostsIndex', params: ['trending'] };
+    if (path === '/') return { page: 'PostsIndex', params: ['home', 'naturalmedicine'] };
 
     // static
     if (path === '/welcome') return { page: 'Welcome' };
