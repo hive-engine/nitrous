@@ -259,7 +259,7 @@ async function fetchMissingData(
             filteredContent[key] = {
                 author_reputation: authorRep[d.author],
                 body: d.desc,
-                body_length: d.desc.length,
+                body_length: d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
@@ -940,7 +940,7 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
                 } else {
                     content = {
                         body: scotData.desc,
-                        body_length: scotData.desc.length,
+                        body_length: scotData.desc.length + 1,
                         permlink: scotData.authorperm.split('/')[1],
                         category: scotData.tags.split(',')[0],
                         children: scotData.children,

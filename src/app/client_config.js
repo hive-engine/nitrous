@@ -147,11 +147,9 @@ const FOODIE = {
         vegan: [],
         recipes: [],
         community: [
-            'appics',
             'cleanplanet',
             'innerblocks',
             'ecotrain',
-            'steembasicincome',
             'weedcash',
             'vegansofsteemit',
         ],
@@ -186,7 +184,7 @@ const FOODIE = {
     },
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
+    POST_FOOTER: '\n\n---\n\n<center><sub>Posted via [foodiesunite.net](${POST_URL})</sub></center>',
     COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
@@ -196,7 +194,7 @@ const FOODIE = {
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: [
-        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+        { id: '01ER4Z5GK5GK9X40W7G0P6S0B7', name: 'Foodie Buzz' },
     ],
 };
 

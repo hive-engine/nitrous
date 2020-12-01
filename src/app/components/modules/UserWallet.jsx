@@ -86,10 +86,9 @@ class UserWallet extends React.Component {
     }
 
     handleClaimRewards = profile => {
-        const scotTokenSymbol = this.props.scotTokenSymbol;
-        const useHive = this.props.useHive;
+        const { scotTokenSymbol, claimRewards, useHive } = this.props;
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(account, scotTokenSymbol, useHive);
+        claimRewards(profile, scotTokenSymbol, useHive);
     };
     handleClaimTokenRewards = token => {
         const { profile, claimTokenRewards, useHive } = this.props;
