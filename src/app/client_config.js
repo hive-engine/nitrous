@@ -114,6 +114,8 @@ export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
     { id: '01EQBANRVFWS6P6362ZK02HFSM', name: 'City of Neoxian' },
 ];
+export const APPEND_TRENDING_TAGS_COUNT = 0;
+export const TRENDING_TAGS_TO_IGNORE = [];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
