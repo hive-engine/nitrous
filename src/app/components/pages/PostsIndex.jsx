@@ -72,13 +72,16 @@ class PostsIndex extends React.Component {
             community,
             subscriptions,
             username,
+            categories,
             getSubscriptions,
             getCommunity,
+            getCategories,
         } = this.props;
         if (!subscriptions && username) getSubscriptions(username);
         if (ifHivemind(category) && !community) {
             getCommunity(category);
         }
+        if (!categories) getCategories();
     }
 
     componentDidUpdate(prevProps) {
@@ -161,7 +164,7 @@ class PostsIndex extends React.Component {
     }
 
     searchCategories(cat, parent, categories) {
-        if (!cat) return { par: parent, cats: categories, found: false };
+        if (!cat || !categories) return { par: parent, cats: categories, found: false };
 
         // leaf nodes
         if (List.isList(categories)) {
@@ -442,7 +445,7 @@ module.exports = {
                 username,
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 topics: state.global.getIn(['topics'], List()),
-                categories: TAG_LIST,
+                categories: state.global.get('categories'),
                 pinned: state.offchain.get('pinned_posts'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
@@ -456,6 +459,8 @@ module.exports = {
                 dispatch(fetchDataSagaActions.requestData(args)),
             getCommunity: category =>
                 dispatch(fetchDataSagaActions.getCommunity(category)),
+            getCategories: () =>
+                dispatch(fetchDataSagaActions.getCategories()),
         })
     )(PostsIndex),
 };

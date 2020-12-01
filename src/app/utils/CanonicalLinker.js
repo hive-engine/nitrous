@@ -31,21 +31,6 @@ function build_scheme(scheme, post) {
         .join(post.permlink);
 }
 
-function allowed_app(app) {
-    // apps which follow (reciprocate) canonical URLs (as of 2020-03-21)
-    const whitelist = [
-        'hive',
-        'hiveblog',
-        'peakd',
-        'steemit',
-        'esteem',
-        'steempeak',
-        'travelfeed',
-    ];
-
-    return whitelist.includes(app);
-}
-
 export function makeCanonicalLink(post, metadata) {
     let scheme;
 
@@ -55,7 +40,7 @@ export function makeCanonicalLink(post, metadata) {
 
         const app = read_md_app(metadata);
 
-        if (app && allowed_app(app)) {
+        if (app) {
             scheme = Apps[app] ? Apps[app].url_scheme : null;
         }
     }
