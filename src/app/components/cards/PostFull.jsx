@@ -121,6 +121,17 @@ class PostFull extends React.Component {
                 post.get('hive')
             );
         };
+        this.onTribeMute = () => {
+            const { username, hostConfig, tribeMute, post } = this.props;
+            tribeMute(
+                username,
+                hostConfig['LIQUID_TOKEN_UPPERCASE'],
+                post.get('author'),
+                post.get('permlink'),
+                !post.get('muted'),
+                post.get('hive'),
+            );
+        };
     }
 
     componentWillMount() {
@@ -268,7 +279,14 @@ class PostFull extends React.Component {
 
     render() {
         const {
-            props: { username, post, hostConfig, community, viewer_role },
+            props: {
+                username,
+                post,
+                community,
+                viewer_role,
+                hostConfig,
+                tokenAccount,
+            },
             state: {
                 PostFullReplyEditor,
                 PostFullEditEditor,
@@ -279,6 +297,7 @@ class PostFull extends React.Component {
             onShowReply,
             onShowEdit,
             onDeletePost,
+            onTribeMute,
         } = this;
         const {
             APP_NAME,
@@ -357,7 +376,7 @@ class PostFull extends React.Component {
 
         // TODO: get global loading state
         //loading = !bIllegalContentUser && !bDMCAStop && partial data loaded;
-        const bShowLoading = false;
+        const bShowLoading = !post || post.get('body').length < post.get('body_length');
 
         // hide images if user is on blacklist
         const hideImages = ImageUserBlockList.includes(author);
@@ -505,6 +524,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
+        const canTribeMute = username === tokenAccount;
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
@@ -616,6 +636,11 @@ class PostFull extends React.Component {
                                         {tt('g.delete')}
                                     </a>
                                 )}
+                                {canTribeMute && (
+                                    <a onClick={onTribeMute}>
+                                        Tribe-{ post.get('muted') ? 'Unmute' : 'Mute' }
+                                    </a>
+                                )}
                             </span>
                             <span className="PostFull__responses">
                                 <Link
@@ -673,6 +698,7 @@ export default connect(
 
         const category = post.get('category');
         const community = state.global.getIn(['community', category]);
+        const tokenAccount = state.app.getIn(['scotConfig', 'config', 'token_account']);
 
         return {
             hostConfig: state.app.get('hostConfig', Map()).toJS(),
@@ -684,6 +710,7 @@ export default connect(
                 ['community', community, 'context', 'role'],
                 'guest'
             ),
+            tokenAccount,
         };
     },
     dispatch => ({
@@ -692,6 +719,24 @@ export default connect(
                 transactionActions.broadcastOperation({
                     type: 'delete_comment',
                     operation: { author, permlink },
+                    confirm: tt('g.are_you_sure'),
+                    useHive: hive,
+                })
+            );
+        },
+        tribeMute: (username, token, author, permlink, mute, hive) => {
+            dispatch(
+                transactionActions.broadcastOperation({
+                    type: 'custom_json',
+                    operation: {
+                        id: 'scot_mute_post',
+                        required_posting_auths: [username],
+                        json: JSON.stringify({
+                            token,
+                            authorperm: `@${author}/${permlink}`,
+                            mute,
+                        }),
+                    },
                     confirm: tt('g.are_you_sure'),
                     useHive: hive,
                 })

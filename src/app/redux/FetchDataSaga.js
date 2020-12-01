@@ -44,6 +44,7 @@ const GET_UNREAD_ACCOUNT_NOTIFICATIONS =
 const MARK_NOTIFICATIONS_AS_READ = 'fetchDataSaga/MARK_NOTIFICATIONS_AS_READ';
 const GET_REWARDS_DATA = 'fetchDataSaga/GET_REWARDS_DATA';
 const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
+const GET_CATEGORIES = 'fetchDataSaga/GET_CATEGORIES';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -64,6 +65,7 @@ export const fetchDataWatches = [
     ),
     takeEvery(GET_REWARDS_DATA, getRewardsDataSaga),
     fork(getStakedAccountsSaga),
+    takeEvery(GET_CATEGORIES, getCategories),
     takeEvery(MARK_NOTIFICATIONS_AS_READ, markNotificationsAsReadSaga),
 ];
 
@@ -294,6 +296,24 @@ function* fetchCommunity(tag) {
     } catch (e) {
         console.log(`Error fetching community ${tag}.`);
     }
+}
+
+export function* getCategories(action) {
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+    const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
+    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE '] || [];
+    const trendingCategories = APPEND_TRENDING_TAGS_COUNT === 0 ? [] : yield call(
+        getScotDataAsync,
+        'get_trending_tags',
+        {
+            token: hostConfig['LIQUID_TOKEN_UPPERCASE'],
+        }
+    );
+    const ignoreTags = new Set(hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE));
+    const toAdd = trendingCategories.filter(c => !ignoreTags.has(c)).slice(0, APPEND_TRENDING_TAGS_COUNT);
+    yield put(globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd)));
 }
 
 /**
@@ -907,6 +927,11 @@ export const actions = {
 
     getStakedAccounts: payload => ({
         type: GET_STAKED_ACCOUNTS,
+        payload,
+    }),
+    
+    getCategories: payload => ({
+        type: GET_CATEGORIES,
         payload,
     }),
 };
