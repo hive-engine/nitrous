@@ -39,6 +39,7 @@ const SHOW_DIALOG = 'global/SHOW_DIALOG';
 const HIDE_DIALOG = 'global/HIDE_DIALOG';
 const RECEIVE_REWARDS = 'global/RECEIVE_REWARDS';
 const RECEIVE_STAKED_ACCOUNTS = 'global/RECEIVE_STAKED_ACCOUNTS';
+const RECEIVE_CATEGORIES = 'global/RECEIVE_CATEGORIES';
 
 const postKey = (author, permlink) => {
     if ((author || '') === '' || (permlink || '') === '') return null;
@@ -191,6 +192,12 @@ export default function reducer(state = defaultState, action = {}) {
             });
             return state.set('stakedAccounts', fromJS(stakedAccounts));
         }
+        
+        case RECEIVE_CATEGORIES: {
+            return state.set('categories', fromJS(action.payload));
+        }
+
+
 
         case RECEIVE_CONTENT: {
             const content = fromJS(payload.content);
@@ -465,6 +472,11 @@ export const receiveRewards = payload => ({
 
 export const receiveStakedAccounts = payload => ({
     type: RECEIVE_STAKED_ACCOUNTS,
+    payload,
+});
+
+export const receiveCategories = payload => ({
+    type: RECEIVE_CATEGORIES,
     payload,
 });
 
