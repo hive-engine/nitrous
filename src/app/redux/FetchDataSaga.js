@@ -304,7 +304,12 @@ export function* getCategories(action) {
     );
     const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
     const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE '] || [];
-    const trendingCategories = APPEND_TRENDING_TAGS_COUNT === 0 ? [] : yield call(
+
+    if (APPEND_TRENDING_TAGS_COUNT === 0) {
+        yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
+        return;
+    }
+    const trendingCategories = yield call(
         getScotDataAsync,
         'get_trending_tags',
         {
