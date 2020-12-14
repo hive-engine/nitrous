@@ -292,7 +292,11 @@ function* fetchCommunity(tag) {
 }
 
 export function* getCategories(action) {
-    const trendingCategories = APPEND_TRENDING_TAGS_COUNT === 0 ? [] : yield call(
+    if (APPEND_TRENDING_TAGS_COUNT === 0) {
+        yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
+        return;
+    }
+    const trendingCategories = yield call(
         getScotDataAsync,
         'get_trending_tags',
         {
