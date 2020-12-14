@@ -79,7 +79,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://scot-api.steem-engine.com/${path}`, params);
+    return await callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
@@ -663,13 +663,19 @@ export async function getCommunityStateAsync(
 
 async function loadThread(account, permlink, useHive) {
     const author = account.slice(1);
-    const content = await callBridge(
+    let content = await callBridge(
         'get_discussion',
         { author, permlink },
         useHive
     );
-
-    if (content) {
+    if (!content || !content[`${author}/${permlink}`]) {
+        content = {};
+        content[`${author}/${permlink}`] = await callBridge(
+            'get_post',
+            { author, permlink },
+            useHive
+        );
+    } else {
         const {
             content: preppedContent,
             keys,
