@@ -108,8 +108,9 @@ const map = {
     lowlightart: 'Verified Creator',
     polyannie: 'Verified Creator',
     Mistressavanya: 'Verified Creator',
-    sugarvit: 'Verified Creator',
+    sugarvits: 'Verified Creator',
     averagecouple: 'Verified Creator',
+    
     
     
 };
