@@ -293,7 +293,7 @@ function* fetchCommunity(tag) {
 
 export function* getCategories(action) {
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
-        yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
+        yield put(globalActions.receiveCategories(TAG_LIST));
         return;
     }
     const trendingCategories = yield call(
