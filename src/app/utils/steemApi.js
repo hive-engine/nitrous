@@ -4,7 +4,7 @@ import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://steemapi.cryptoempirebot.com/rpc/');
 
 async function callApi(url, params) {
     return await axios({
@@ -23,19 +23,22 @@ async function callApi(url, params) {
 
 export async function getSteemEngineAccountHistoryAsync(account, limit) {
     limit = limit || 100;
-    return callApi('https://api.steem-engine.com/accounts/history', {
-        account,
-        limit,
-        offset: 0,
-        type: 'user',
-        symbol: LIQUID_TOKEN_UPPERCASE,
-        v: new Date().getTime(),
-    });
+    return callApi(
+        'https://steemapi.cryptoempirebot.com/history/accountHistory',
+        {
+            account,
+            limit,
+            offset: 0,
+            type: 'user',
+            symbol: LIQUID_TOKEN_UPPERCASE,
+            v: new Date().getTime(),
+        }
+    );
 }
 
 async function getFullScotAccountHistoryAsync(account) {
     const transfers = await callApi(
-        'https://history.steem-engine.com/accountHistory',
+        'https://steemapi.cryptoempirebot.com/history/accountHistory',
         {
             account,
             limit: 50,
@@ -57,7 +60,7 @@ async function getFullScotAccountHistoryAsync(account) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return callApi(`https://scot-api.steem-engine.com/${path}`, params);
+    return callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
