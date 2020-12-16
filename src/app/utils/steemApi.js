@@ -4,7 +4,7 @@ import stateCleaner from 'app/redux/stateCleaner';
 import axios from 'axios';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://steemapi.cryptoempirebot/rpc');
+const ssc = new SSC('https://steemapi.cryptoempirebot.com/rpc');
 
 async function callApi(url, params) {
     return await axios({
