@@ -8,7 +8,7 @@ import {
 } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from 'sscjs';
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://steemapi.cryptoempirebot..com/rpc');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;

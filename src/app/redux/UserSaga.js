@@ -27,7 +27,7 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://steemapi.cryptoempirebot/rpc');
 
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
