@@ -1,5 +1,5 @@
 import SSC from 'sscjs';
-const ssc = new SSC('https://steemapi.cryptoempirebot.com/rpc');
+const ssc = new SSC('https://api.steem-engine.net/rpc');
 import { api } from '@steemit/steem-js';
 
 async function getScotHolder(symbol, cnt, offset) {
