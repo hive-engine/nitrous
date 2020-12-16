@@ -23,7 +23,7 @@ async function callApi(url, params) {
 
 async function getSteemEngineAccountHistoryAsync(account) {
     const transfers = await callApi(
-        'https://steemapi.cryptoempirebot.com/history/accountHistory',
+        'https://steemapi.steem-engine.net/history/accountHistory',
         {
             account,
             limit: 50,
@@ -45,7 +45,7 @@ async function getSteemEngineAccountHistoryAsync(account) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
+    return callApi(`https://scot-api.steem-engine.net/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {

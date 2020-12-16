@@ -50,7 +50,7 @@ class PendingOrderItem extends React.PureComponent {
                 <td className={classNames('text-center', 'uppercase')}>
                     <a
                         className={classNames('type', item.type)}
-                        href={`https://steem-engine.com/?p=market&t=${
+                        href={`https://steem-engine.net/?p=market&t=${
                             item.symbol
                         }`}
                         target="_blank"
