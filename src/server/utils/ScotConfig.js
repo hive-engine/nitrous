@@ -125,13 +125,8 @@ ScotConfig.prototype.refresh = async function() {
             hiveTotalTokenBalances,
             hiveTokenBurnBalances,
         ] = await Promise.all([
-            ssc.find('tokens', 'tokens', {
-                symbol: { $in: tokenList },
-            }),
-            ssc.find('tokens', 'balances', {
-                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
-                symbol: { $in: tokenList },
-            }),
+            Promise.resolve([]), //ssc.find('tokens', 'tokens', { symbol: { $in: tokenList }, }),
+            Promise.resolve([]), //ssc.find('tokens', 'balances', { account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) }, symbol: { $in: tokenList }, }),
             hiveSsc.find('tokens', 'tokens', {
                 symbol: { $in: hiveTokenList },
             }),
