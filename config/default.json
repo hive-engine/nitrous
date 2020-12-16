@@ -5,8 +5,7 @@
   "helmet": {
     "directives": {
       "childSrc": "'self' emb.d.tube player.twitch.tv www.youtube.com staticxx.facebook.com w.soundcloud.com player.vimeo.com",
-      //"connectSrc": "https://history.steem-engine.net https://servedby.revive-adserver.net https://api.steemzzang.com https://api.steem-engine.net https://scot-api.steem-engine.net https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us",
-	  "connectSrc": "https://history.steem-engine.net https://servedby.revive-adserver.net  https://api.steemzzang.com https://pagead2.googlesyndication.com https://steemd.minnowsupportproject.org https://cdn.snax.one https://steemapi.steem-engine.net https://scot-api.steem-engine.net https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us https://apisct.cloud",
+	  "connectSrc": "https://history.steem-engine.net https://servedby.revive-adserver.net  https://api.steemzzang.com https://pagead2.googlesyndication.com https://steemd.minnowsupportproject.org https://cdn.snax.one https://steemapi.steem-engine.net https://scot-api.cryptoempirebot.com https://steemitimages.com securepubads.g.doubleclick.net 'self' steemit.com https://api.steemit.com api.blocktrades.us https://apisct.cloud",
 "defaultSrc": "tpc.googlesyndication.com 'self' emb.d.tube www.youtube.com staticxx.facebook.com player.vimeo.com *.streamrail.com img.3speakcontent.online lbry.tv *.wistia.com",
       "fontSrc": "data: fonts.gstatic.com",
       "frameAncestors": "'none'",

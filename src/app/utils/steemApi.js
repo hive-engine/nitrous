@@ -45,7 +45,7 @@ async function getSteemEngineAccountHistoryAsync(account) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return callApi(`https://scot-api.steem-engine.net/${path}`, params);
+    return callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
