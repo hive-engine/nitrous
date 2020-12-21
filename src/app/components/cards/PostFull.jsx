@@ -136,23 +136,6 @@ class PostFull extends React.Component {
                 this.successDelete
             );
         };
-
-        const username = props.username;
-        const content = props.cont.get(props.post);
-        const author = content.get('author');
-        const permlink = content.get('permlink');
-
-        if (username && author !== username) {
-            const minSecond = 10;
-            const maxSecond = 20;
-            const randomSecond =
-                Math.floor(Math.random() * (maxSecond - minSecond + 1)) +
-                minSecond;
-
-            setTimeout(() => {
-                this.showLuckyBoxIcon(username, author, permlink);
-            }, randomSecond * 1000);
-        }
     }
 
     componentWillMount() {
