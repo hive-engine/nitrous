@@ -1,6 +1,7 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const writeStats = require('./utils/write-stats');
 
 const Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin');
@@ -8,33 +9,65 @@ const webpack_isomorphic_tools_plugin =
     new Webpack_isomorphic_tools_plugin(require('./webpack-isotools-config'))
         .development();
 
-const css_loaders = [
-    {
-        loader: 'style-loader',
+const devMode = process.env.NODE_ENV !== 'production';
+
+const plugins = [
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            statsOptions: { source: false }
+        }),
+        function () {
+            this.plugin('done', writeStats);
+        },
+        webpack_isomorphic_tools_plugin,
+    ];
+if (!devMode) {
+    plugins.push(new MiniCssExtractPlugin({
+        filename: devMode ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+    }));
+}
+
+const postcss_loader = {
+    loader: 'postcss-loader',
+    options: {
+        postcssOptions: {
+            plugins: [
+                'autoprefixer',
+            ],
+        },
     },
+};
+
+const css_loaders = [
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
         loader: 'css-loader',
+        options: {
+            importLoaders: 1,
+        },
     },
-    {
-        loader: 'autoprefixer-loader'
-    }
-]
+    postcss_loader,
+];
 
 const scss_loaders = [
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
         loader: 'css-loader',
+        options: {
+            importLoaders: 1,
+        },
     },
-    {
-        loader: 'autoprefixer-loader'
-    },
+    postcss_loader,
     {
         loader: 'sass-loader'
     }
-]
+];
 
 module.exports = {
     entry: {
-        app: ['babel-polyfill', './src/app/Main.js'],
+        app: ['core-js/stable', './src/app/Main.js'],
         vendor: [
             'react',
             'react-dom',
@@ -61,8 +94,17 @@ module.exports = {
     },
     module: {
         rules: [
-            {test: /\.(jpe?g|png)/, use: 'url-loader?limit=4096'},
-            {test: /\.json$/, use: 'json-loader'},
+            {
+                test: /\.(jpe?g|png)/, use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 4096,
+                            esModule: false,
+                        },
+                    },
+                ],
+            },
             {test: /\.js$|\.jsx$/, exclude: [/node_modules/, /\*\/app\/assets\/static\/\*\.js/], use: 'babel-loader'},
             {test: /\.svg$/, use: 'svg-inline-loader'},
             {
@@ -75,29 +117,22 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: scss_loaders
-                })
+                use: scss_loaders
             },
             {
                 test: /\.md/,
-                use: 'raw-loader'
+                use: [
+                    {
+                        loader: 'raw-loader',
+                        options: {
+                            esModule: false,
+                        },
+                    },
+                ],
             }
         ]
     },
-    plugins: [
-        function () {
-            this.plugin('done', writeStats);
-        },
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-           names: 'vendor',
-           minChunks: Infinity
-        }),
-        webpack_isomorphic_tools_plugin,
-        new ExtractTextPlugin('[name]-[chunkhash].css')
-    ],
+    plugins,
     resolve: {
         alias: {
             react: path.join(__dirname, '../node_modules', 'react'),

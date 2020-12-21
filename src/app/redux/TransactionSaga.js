@@ -14,12 +14,12 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { APP_URL, POST_FOOTER } from 'app/client_config';
+import { APP_URL, COMMENT_FOOTER, POST_FOOTER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
 
-const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 import { callBridge } from 'app/utils/steemApi';
 import {
@@ -367,7 +367,7 @@ function* broadcastPayload({
                             }
                         );
                     } else {
-                        sendOperationsWithHiveSigners(
+                        sendOperationsWithHiveSigner(
                             operations,
                             {},
                             (err, result) => {
@@ -561,14 +561,15 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
 
     const postUrl = `${APP_URL}/@${author}/${permlink}`;
     // Add footer
-    const footer = POST_FOOTER.replace('${POST_URL}', postUrl);
+    const footer = (parent_author === ''
+        ? POST_FOOTER
+        : COMMENT_FOOTER
+    ).replace('${POST_URL}', postUrl);
     if (footer && !body.endsWith(footer)) {
         body += '\n\n' + footer;
     }
 
     // TODO Slightly smaller blockchain comments: if body === json_metadata.steem.link && Object.keys(steem).length > 1 remove steem.link ..This requires an adjust of get_state and the API refresh of the comment to put the steem.link back if Object.keys(steem).length >= 1
-
-    const md = operation.json_metadata;
 
     let body2;
     if (originalBody) {
@@ -576,9 +577,13 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
         // Putting body into buffer will expand Unicode characters into their true length
         if (patch && patch.length < new Buffer(body, 'utf-8').length)
             body2 = patch;
-    } else if (typeof md !== 'string' && !md.canonical_url) {
+    } else {
         // Creation - set up canonical url
-        md.canonical_url = postUrl;
+        const parsedMeta = JSON.parse(operation.json_metadata);
+        if (!parsedMeta.canonical_url) {
+            parsedMeta.canonical_url = postUrl;
+        }
+        operation.json_metadata = JSON.stringify(parsedMeta);
     }
     if (!body2) body2 = body;
 
@@ -605,20 +610,22 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
             allow_votes = true,
             allow_curation_rewards = true,
         } = comment_options;
-        comment_op.push([
-            'comment_options',
-            {
-                author,
-                permlink,
-                max_accepted_payout,
-                percent_steem_dollars,
-                allow_votes,
-                allow_curation_rewards,
-                extensions: comment_options.extensions
-                    ? comment_options.extensions
-                    : [],
-            },
-        ]);
+        const commentOptionsOp = {
+            author,
+            permlink,
+            max_accepted_payout,
+            allow_votes,
+            allow_curation_rewards,
+            extensions: comment_options.extensions
+                ? comment_options.extensions
+                : [],
+        };
+        if (useHive) {
+            commentOptionsOp.percent_hbd = percent_steem_dollars;
+        } else {
+            commentOptionsOp.percent_steem_dollars = percent_steem_dollars;
+        }
+        comment_op.push(['comment_options', commentOptionsOp]);
     }
 
     return comment_op;
@@ -636,16 +643,20 @@ export function* createPermlink(title, author, useHive) {
 
         // ensure the permlink is unique
         let postExists = false;
-        const head = yield call(
-            callBridge,
-            'get_post_header',
-            {
-                author,
-                permlink: s,
-            },
-            !!useHive
-        );
-        postExists = head && !!head.category;
+        try {
+            const head = yield call(
+                callBridge,
+                'get_post_header',
+                {
+                    author,
+                    permlink: s,
+                },
+                !!useHive
+            );
+            postExists = head && !!head.category;
+        } catch (e) {
+            // suppress not found errors
+        }
         if (postExists) {
             const noise = base58
                 .encode(secureRandom.randomBuffer(4))

@@ -29,6 +29,9 @@ import {
     HIVE_ENGINE,
     LIQUID_TOKEN_UPPERCASE,
     COMMUNITY_CATEGORY,
+    TAG_LIST,
+    APPEND_TRENDING_TAGS_COUNT,
+    TRENDING_TAGS_TO_IGNORE,
 } from 'app/client_config';
 import {
     fetchCrossPosts,
@@ -49,6 +52,8 @@ const GET_UNREAD_ACCOUNT_NOTIFICATIONS =
     'fetchDataSaga/GET_UNREAD_ACCOUNT_NOTIFICATIONS';
 const MARK_NOTIFICATIONS_AS_READ = 'fetchDataSaga/MARK_NOTIFICATIONS_AS_READ';
 const GET_REWARDS_DATA = 'fetchDataSaga/GET_REWARDS_DATA';
+const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
+const GET_CATEGORIES = 'fetchDataSaga/GET_CATEGORIES';
 
 export const fetchDataWatches = [
     takeLatest(REQUEST_DATA, fetchData),
@@ -68,6 +73,8 @@ export const fetchDataWatches = [
         getUnreadAccountNotificationsSaga
     ),
     takeEvery(GET_REWARDS_DATA, getRewardsDataSaga),
+    fork(getStakedAccountsSaga),
+    takeEvery(GET_CATEGORIES, getCategories),
     takeEvery(MARK_NOTIFICATIONS_AS_READ, markNotificationsAsReadSaga),
 ];
 
@@ -262,24 +269,45 @@ function* fetchCommunity(tag) {
     const currentUsername = currentUser && currentUser.get('username');
     const useHive = PREFER_HIVE;
 
-    // TODO: If no current user is logged in, skip the observer param.
-    const community = yield call(
-        callBridge,
-        'get_community',
-        {
-            name: tag,
-            observer: currentUsername,
-        },
-        useHive
-    );
-
-    // TODO: Handle error state
-    if (community.name)
-        yield put(
-            globalActions.receiveCommunity({
-                [tag]: { ...community },
-            })
+    try {
+        // TODO: If no current user is logged in, skip the observer param.
+        const community = yield call(
+            callBridge,
+            'get_community',
+            {
+                name: tag,
+                observer: currentUsername,
+            },
+            useHive
         );
+
+        // TODO: Handle error state
+        if (community.name)
+            yield put(
+                globalActions.receiveCommunity({
+                    [tag]: { ...community },
+                })
+            );
+    } catch (e) {
+        console.log(`Error fetching community ${tag}.`);
+    }
+}
+
+export function* getCategories(action) {
+    if (APPEND_TRENDING_TAGS_COUNT === 0) {
+        yield put(globalActions.receiveCategories(TAG_LIST));
+        return;
+    }
+    const trendingCategories = yield call(
+        getScotDataAsync,
+        'get_trending_tags',
+        {
+            token: LIQUID_TOKEN_UPPERCASE,
+        }
+    );
+    const ignoreTags = new Set(TAG_LIST.concat(TRENDING_TAGS_TO_IGNORE));
+    const toAdd = trendingCategories.filter(c => !ignoreTags.has(c)).slice(0, APPEND_TRENDING_TAGS_COUNT);
+    yield put(globalActions.receiveCategories(TAG_LIST.concat(toAdd)));
 }
 
 /**
@@ -680,6 +708,36 @@ export function* getRewardsDataSaga(action) {
     yield put(appActions.fetchDataEnd());
 }
 
+function* getStakedAccountsSaga() {
+    while (true) {
+        const action = yield take(GET_STAKED_ACCOUNTS);
+        const loadedStakedAccounts = yield select(state =>
+            state.global.has('stakedAccounts')
+        );
+        const precision = yield select(state =>
+            state.app.getIn(['scotConfig', 'info', 'precision'], 0)
+        );
+        if (!loadedStakedAccounts) {
+            const params = { token: LIQUID_TOKEN_UPPERCASE };
+            try {
+                const stakedAccounts = yield call(
+                    getScotDataAsync,
+                    'get_staked_accounts',
+                    params
+                );
+                yield put(
+                    globalActions.receiveStakedAccounts({
+                        stakedAccounts,
+                        precision,
+                    })
+                );
+            } catch (error) {
+                console.error('~~ Saga getStakedAccountsSaga error ~~>', error);
+            }
+        }
+    }
+}
+
 function* fetchScotInfo() {
     const scotInfo = yield call(getScotDataAsync, 'info', {
         token: LIQUID_TOKEN_UPPERCASE,
@@ -843,6 +901,16 @@ export const actions = {
 
     getRewardsData: payload => ({
         type: GET_REWARDS_DATA,
+        payload,
+    }),
+
+    getStakedAccounts: payload => ({
+        type: GET_STAKED_ACCOUNTS,
+        payload,
+    }),
+    
+    getCategories: payload => ({
+        type: GET_CATEGORIES,
         payload,
     }),
 };

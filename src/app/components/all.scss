@@ -50,6 +50,10 @@
 // modules
 @import "./modules/Header/styles";
 @import "./modules/LoginForm";
+@import "./modules/chat/ChatConversation";
+@import "./modules/chat/ChatListSelect";
+@import "./modules/chat/ChatMain";
+@import "./modules/chat/MinimizedIcon";
 @import "./modules/SidePanel/styles";
 @import "./modules/Settings";
 @import "./modules/UserWallet";

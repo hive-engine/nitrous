@@ -1,5 +1,7 @@
 {
     "g": {
+        "administrator": "admin",
+        "administrators": "admins",
         "age": "时间",
         "amount": "数量",
         "and": "和",
@@ -10,9 +12,10 @@
         "beneficiaries": "Beneficiaries",
         "bid": "买价",
         "blog": "博客",
+        "profile": "Profile",
         "browse": "浏览",
         "buy": "购买",
-        "buy_steem_power": "Buy Steem Power",
+        "buy_hive_power": "Buy Hive Power",
         "buy_or_sell": "买或卖",
         "by": "by",
         "cancel": "取消",
@@ -21,6 +24,18 @@
         "clear": "清除",
         "close": "关闭",
         "collapse_or_expand": "折叠/展开",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+            "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
         "comments": "评论",
         "confirm": "确认",
         "convert": "转换",
@@ -32,7 +47,12 @@
         "external_link_message": "This link will take you away from the app",
         "affiliation_steemit": "Steemit Team",
         "affiliation_sm": "Steem Monsters Team",
+        "affiliation_hive": "Hive Team",
         "feed": "动态",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
         "follow": "关注",
         "for": "对于",
         "from": "从",
@@ -58,6 +78,7 @@
         "newer": "较新的",
         "next": "下一个",
         "no": "不是",
+        "notifications": "Notifications",
         "ok": "好",
         "older": "较旧的",
         "or": "或者",
@@ -67,6 +88,7 @@
         "permissions": "权限",
         "phishy_message":
             "Link expanded to plain text; beware of a potential phishing attempt",
+        "pin": "Pin",
         "post": "发布",
         "post_as_user": "Post as %(username)s",
         "posts": "文章",
@@ -104,11 +126,18 @@
         "sell": "卖出",
         "settings": "设置",
         "share_this_post": "分享这篇文章",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
         "show": "显示",
         "sign_in": "登录",
         "sign_up": "注册",
         "since": "自从",
         "submit": "提交",
+        "subscriptions": "Subscriptions",
         "power_up": "Power Up",
         "submit_a_story": "发表故事",
         "tag": "标签",
@@ -123,6 +152,7 @@
         "type": "类型",
         "unfollow": "取消关注",
         "unmute": "取消屏蔽",
+        "unpin": "Unpin",
         "unknown": "未知",
         "upvote": "点赞",
         "upvote_post": "点赞的文章",
@@ -249,6 +279,7 @@
         "all_claim_started":
             "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
         "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Buy Steem Power",
         "post_as": "发布为",
         "vote_currently_exists_user_must_be_indicate_a_to_reject_witness":
             "已经投过此见证人，你是否想取消此见证人的投票"
@@ -276,13 +307,17 @@
         "app_center": "Hive应用中心",
         "business_center": "Businesses Accepting Hive",
         "api_docs": "Hive API文档",
+        "bluepaper": "Hive Bluepaper",
+        "smt_whitepaper": "SMT Whitepaper",
         "whitepaper": "Hive白皮书",
         "intro_tagline": "妙笔生金",
         "intro_paragraph":
             "你的思想是有有价值的。赶快加入发表文章获得赏金的社区。",
+        "jobs": "Jobs at Hive",
         "hive_proposals": "Hive Proposals",
         "blockexplorer": "Blockexplorer",
-        "what_is_hive": "What is Hive?"
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer"
     },
     "main_menu": {
         "hot": "热门",
@@ -298,6 +333,8 @@
         "uploading": "上传",
         "draft_saved": "草稿已保存。",
         "editor": "编辑器",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
         "insert_images_by_dragging_dropping": "通过拖拽插入图片",
         "pasting_from_the_clipboard": "从剪贴板粘贴",
         "selecting_them": "选择它们",
@@ -312,7 +349,11 @@
         "update_post": "更新帖子",
         "markdown_not_supported": "这里不支持Markdown标记语言",
         "advanced_settings": "Advanced settings",
-        "beneficiaries_set": "%(count)s set"
+        "beneficiaries_set": "%(count)s set",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
@@ -325,6 +366,15 @@
         "beneficiary_percent_total_invalid":
             "Beneficiary total percentage must be less than 100"
     },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
+    },
     "category_selector_jsx": {
         "tag_your_story": "标签: 第一个标签是您文章的主要类别。",
         "select_a_tag": "选择一个标签",
@@ -335,14 +385,23 @@
         "use_spaces_to_separate_tags": "使用空格分隔标签",
         "use_only_allowed_characters": "只使用小写字母、数字和一个破折号",
         "must_start_with_a_letter": "必须从一个字母开始",
-        "must_end_with_a_letter_or_number": "必须以字母或数字结尾"
+        "must_end_with_a_letter_or_number": "必须以字母或数字结尾",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
     },
     "post_advanced_settings_jsx": {
         "payout_option_header": "Author rewards",
         "payout_option_description":
             "What type of tokens do you want as rewards from this post?",
         "current_default": "Default",
-        "update_default_in_settings": "Update"
+        "update_default_in_settings": "Update",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
     },
     "postfull_jsx": {
         "this_post_is_not_available_due_to_a_copyright_claim":
@@ -371,6 +430,8 @@
         "user_hasnt_followed_anything_yet":
             "看起来%(name)s还没有关注任何人!如果%(name)s最近添加关注了新的用户，他们的个性化主页上将会有显示。",
         "user_hasnt_had_any_replies_yet": "%(name)s目前还没有回复",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
         "looks_like_you_havent_posted_anything_yet":
             "Looks like you haven't posted anything yet.",
         "create_a_post": "Create a Post",
@@ -500,7 +561,11 @@
         "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
             "%(VESTING_TOKEN)s可以转给你自己或其他人，但是只有转回%(LIQUID_TOKEN)s后，才可以进行下一次转账。",
         "part_of_your_hive_power_is_currently_delegated":
-            "有一部分HIVE POWER是代理给你使用的。代理的HIVE POWER是为了帮助新用户在Hive上进行操作。你被代理的数量可能会有波动。"
+            "有一部分HIVE POWER是代理给你使用的。代理的HIVE POWER是为了帮助新用户在Hive上进行操作。你被代理的数量可能会有波动。",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.net' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
     "promote_post_jsx": {
         "promote_post": "推广帖子",
@@ -522,8 +587,8 @@
     "postsummary_jsx": {
         "reblogged": "已转发的",
         "reblogged_by": "被转发的",
-        "this_post_is": "这篇帖子是",
-        "you_can": "你可以",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
         "reveal_it": "显示它",
         "adjust_your": "调整你的",
         "display_preferences": "显示偏好",
@@ -612,8 +677,8 @@
         "request_id": "Request ID: %(request_id)s",
         "stake_to": "Staked %(amount)s to ",
         "stake_from": "Staked %(amount)s from ",
-        "unstake": "Started unstake of %(amount)",
-        "cancel_unstake": "Cancelled unstaked on %(amount)",
+        "unstake": "Started unstake of %(amount)s",
+        "cancel_unstake": "Cancelled unstaked on %(amount)s",
         "issue_from": "Issued %(amount)s"
     },
     "savingswithdrawhistory_jsx": {
@@ -639,6 +704,7 @@
         "curation_rewards_by": "审查收入 by",
         "author_rewards_by": "作者收入 by",
         "replies_to": "回复",
+        "posts_by": "Posts by %(username)s",
         "comments_by": "评论"
     },
     "loginform_jsx": {
@@ -730,6 +796,8 @@
         "location_is_too_long": "位置字段的字符过多",
         "website_url_is_too_long": "网站URL太长",
         "public_profile_settings": "公开主页设置",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
         "preferences": "显示私人文章设置",
         "not_safe_for_work_nsfw_content": "不适合在工作时显示的(NSFW)内容",
         "always_hide": "总是隐藏",
@@ -747,8 +815,28 @@
         "profile_about": "关于",
         "profile_location": "位置",
         "profile_website": "网站",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
         "saved": "Saved!",
-        "choose_preferred_api_endpoint": "选择您的首选API节点"
+        "choose_preferred_api_endpoint": "选择您的首选API节点",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Advanced",
+        "api_endpoint_options": "API Endpoint Options",
+        "endpoint": "Endpoint",
+        "preferred": "Preferred?",
+        "remove": "Remove",
+        "add_api_endpoint": "Add API Endpoint",
+        "reset_endpoints": "Reset Endpoints",
+        "error_bad_url":
+            "This appears to be a bad URL, please check it and try again",
+        "error_bad_cookie": "Unable to get endpoints from cookie",
+        "error_already_exists": "This endpoint is already in the list",
+        "error_cant_remove_active":
+            "You can't remove the current preferred endpoint. Please select a new preferred endpoint first",
+        "error_cant_remove_all":
+            "You must have at least one endpoint in the list"
     },
     "transfer_jsx": {
         "amount_is_in_form": "金额以99999.999的形式出现",
@@ -792,6 +880,8 @@
         "withdraw_DEBT_TOKENS": "取出%(DEBT_TOKENS)s",
         "tokens_worth_about_1_of_LIQUID_TICKER":
             "价值约为1.00美金的%(LIQUID_TICKER)s，目前正在获得%(hbdInterest)s%%的利息。",
+        "tradeable_tokens_transferred":
+            "Tradeable tokens that may be transferred anywhere at anytime.",
         "savings": "储蓄",
         "estimated_account_value": "账户估值",
         "next_power_down_is_scheduled_to_happen":
@@ -806,6 +896,8 @@
         "amount": "数量",
         "already_power_down":
             "您已经在Power Down%(AMOUNT)s%(LIQUID_TICKER)s(%(WITHDRAWN)s目前得到%(LIQUID_TICKER)s)。如果你想改变Power Down的总额，你的周期固定奖励数量也会发生变化。",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
         "delegating":
             "你正在代理出%(AMOUNT)s%(LIQUID_TICKER)s。该数量将被锁定并且不能Power Down，直到你取消代理，并经过一个完整的支付周期。",
         "per_week": "这是每周%(AMOUNT)s%(LIQUID_TICKER)s 。",
@@ -825,11 +917,12 @@
         "hi_user": "Hi %(username)s,",
         "blurb":
             "Our Terms of Service set the rules and guidelines that you must accept and follow in order to use Steemit and our Privacy Policy explains the type of information we collect and what we do with it. Don't worry, we don't sell your data to anyone. We do use it to meet legal requirements and to learn how to make Steemit better.",
-        "i_agree_to_steemits": "I agree to Steemit's",
+        "i_agree_to_hives": "I agree to Hive's",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
         "continue": "Continue",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "i_agree_to_steemits": "I agree to Steemit's"
     },
     "confirmtransactionform_jsx": {
         "confirm": "Confirm %(transactionType)s"
@@ -853,6 +946,16 @@
     },
     "delegations_jsx": {
         "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
     },
     "market_jsx": {
         "action": "功能",

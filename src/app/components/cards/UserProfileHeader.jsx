@@ -8,21 +8,31 @@ import Tooltip from 'app/components/elements/Tooltip';
 import DateJoinWrapper from 'app/components/elements/DateJoinWrapper';
 import tt from 'counterpart';
 import Userpic from 'app/components/elements/Userpic';
-import AffiliationMap from 'app/utils/AffiliationMap';
+import { affiliationFromStake } from 'app/utils/AffiliationMap';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import SanitizedLink from 'app/components/elements/SanitizedLink';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { COMMUNITY_CATEGORY } from 'app/client_config';
+import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
+import { actions as fetchActions } from 'app/redux/FetchDataSaga';
 
 class UserProfileHeader extends React.Component {
+    componentWillMount() {
+        const { stakedAccounts, getStakedAccounts } = this.props;
+        if (!stakedAccounts) {
+            getStakedAccounts();
+        }
+    }
+
     render() {
         const {
             current_user,
             accountname,
             profile,
             tribeCommunityTitle,
+            disableBlacklist,
+            stakedAccounts,
         } = this.props;
         const isMyAccount = current_user === accountname;
 
@@ -42,22 +52,26 @@ class UserProfileHeader extends React.Component {
         }
 
         const _lists = profile.get('blacklists').toJS();
-        const blacklists = _lists.length > 0 && (
-            <DropdownMenu
-                title="Blacklisted on:"
-                className="UserProfile__blacklists"
-                items={_lists.map(list => {
-                    return { value: list };
-                })}
-                el="div"
-            >
-                <span className="account_warn">({_lists.length})</span>
-            </DropdownMenu>
-        );
+        const blacklists = !disableBlacklist &&
+            _lists.length > 0 && (
+                <DropdownMenu
+                    title="Blacklisted on:"
+                    className="UserProfile__blacklists"
+                    items={_lists.map(list => {
+                        return { value: list };
+                    })}
+                    el="div"
+                >
+                    <span className="account_warn">({_lists.length})</span>
+                </DropdownMenu>
+            );
 
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
-            : AffiliationMap[accountname];
+            : affiliationFromStake(
+                  accountname,
+                  stakedAccounts ? stakedAccounts.get(accountname) : 0
+              );
         return (
             <div className="UserProfile__banner row expanded">
                 <div className="column" style={cover_image_style}>
@@ -141,20 +155,29 @@ class UserProfileHeader extends React.Component {
     }
 }
 
-export default connect((state, props) => {
-    const current_user = state.user.getIn(['current', 'username']);
-    const accountname = props.accountname;
-    const tribeCommunityTitle = state.global.getIn([
-        'community',
-        COMMUNITY_CATEGORY,
-        'team',
-        accountname,
-        'title',
-    ]);
-    return {
-        current_user,
-        accountname,
-        profile: props.profile,
-        tribeCommunityTitle,
-    };
-})(UserProfileHeader);
+export default connect(
+    (state, props) => {
+        const current_user = state.user.getIn(['current', 'username']);
+        const accountname = props.accountname;
+        const tribeCommunityTitle = state.global.getIn([
+            'community',
+            COMMUNITY_CATEGORY,
+            'team',
+            accountname,
+            'title',
+        ]);
+        return {
+            current_user,
+            accountname,
+            profile: props.profile,
+            tribeCommunityTitle,
+            disableBlacklist: DISABLE_BLACKLIST,
+            stakedAccounts: state.global.get('stakedAccounts'),
+        };
+    },
+    dispatch => ({
+        getStakedAccounts: () => {
+            dispatch(fetchActions.getStakedAccounts());
+        },
+    })
+)(UserProfileHeader);

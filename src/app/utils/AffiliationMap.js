@@ -38,4 +38,9 @@ const map = {
     rehan12: 'Verified Creator',
 };
 
+export function affiliationFromStake(accountName, stake) {
+    // Put stake based breakdowns here.
+    return map[accountName];
+}
+
 export default map;

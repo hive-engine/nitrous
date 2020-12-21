@@ -1006,9 +1006,9 @@ class ReplyEditor extends React.Component {
                                                     )}
                                                 {this.props.payoutType ===
                                                     '50%' &&
-                                                    tt(
-                                                        'reply_editor.default_50_50'
-                                                    )}
+                                                    (hive
+                                                        ? '50% HBD / 50% HP'
+                                                        : '50% SBD / 50% SP')}
                                                 {this.props.payoutType ===
                                                     '100%' &&
                                                     tt(
@@ -1451,13 +1451,13 @@ export default formId =>
                 const meta = isEdit ? jsonMetadata : {};
                 if (metaTags.size) meta.tags = metaTags.toJS();
                 else delete meta.tags;
-                if (rtags.usertags.size) meta.users = rtags.usertags;
+                if (rtags.usertags.size) meta.users = Array.from(rtags.usertags);
                 else delete meta.users;
                 if (rtags.images.size)
-                    meta.image = rtags.images; // TODO: save first image
+                    meta.image = Array.from(rtags.images).slice(0, 1);
                 else delete meta.image;
                 if (rtags.links.size)
-                    meta.links = rtags.links; // TODO: remove? save first?
+                    meta.links = Array.from(rtags.links).slice(0, 1);
                 else delete meta.links;
 
                 meta.app = `${APP_NAME.toLowerCase()}/0.1`;
@@ -1507,7 +1507,14 @@ export default formId =>
                             break;
                         default: // 50% steem power, 50% sd+steem
                     }
-                    if (SCOT_DEFAULT_BENEFICIARY_ACCOUNT) {
+                    if (
+                        SCOT_DEFAULT_BENEFICIARY_ACCOUNT &&
+                        beneficiaries.filter(
+                            elt =>
+                                elt.username ===
+                                SCOT_DEFAULT_BENEFICIARY_ACCOUNT
+                        ).length == 0
+                    ) {
                         beneficiaries.push({
                             username: SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
                             percent: SCOT_DEFAULT_BENEFICIARY_PERCENT,

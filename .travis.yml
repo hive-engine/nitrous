@@ -8,6 +8,8 @@ before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
 install: true
+node_js:
+    - 12
 
 script:
   - docker build -t registry.heroku.com/battlegamesio/web .

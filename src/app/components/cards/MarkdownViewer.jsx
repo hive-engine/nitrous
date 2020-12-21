@@ -119,9 +119,9 @@ class MarkdownViewer extends Component {
                         noImage: noImage && allowNoImage,
                     })
                 );
-            } catch (e) {
-                cleanText = '';
-                console.error('bad input');
+            } catch(e) {
+                cleanText = ''
+                console.error('bad input')
             }
         }
 

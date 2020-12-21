@@ -38,6 +38,8 @@ const FETCH_JSON_RESULT = 'global/FETCH_JSON_RESULT';
 const SHOW_DIALOG = 'global/SHOW_DIALOG';
 const HIDE_DIALOG = 'global/HIDE_DIALOG';
 const RECEIVE_REWARDS = 'global/RECEIVE_REWARDS';
+const RECEIVE_STAKED_ACCOUNTS = 'global/RECEIVE_STAKED_ACCOUNTS';
+const RECEIVE_CATEGORIES = 'global/RECEIVE_CATEGORIES';
 
 const postKey = (author, permlink) => {
     if ((author || '') === '' || (permlink || '') === '') return null;
@@ -180,6 +182,22 @@ export default function reducer(state = defaultState, action = {}) {
         case RECEIVE_REWARDS: {
             return state.set('rewards', fromJS(payload.rewards));
         }
+
+        case RECEIVE_STAKED_ACCOUNTS: {
+            const stakedAccounts = {};
+            payload.stakedAccounts.forEach(acc => {
+                stakedAccounts[acc['name']] =
+                    parseFloat(acc['staked_tokens']) /
+                    Math.pow(10, payload.precision);
+            });
+            return state.set('stakedAccounts', fromJS(stakedAccounts));
+        }
+        
+        case RECEIVE_CATEGORIES: {
+            return state.set('categories', fromJS(action.payload));
+        }
+
+
 
         case RECEIVE_CONTENT: {
             const content = fromJS(payload.content);
@@ -449,6 +467,16 @@ export const notificationsLoading = payload => ({
 
 export const receiveRewards = payload => ({
     type: RECEIVE_REWARDS,
+    payload,
+});
+
+export const receiveStakedAccounts = payload => ({
+    type: RECEIVE_STAKED_ACCOUNTS,
+    payload,
+});
+
+export const receiveCategories = payload => ({
+    type: RECEIVE_CATEGORIES,
     payload,
 });
 

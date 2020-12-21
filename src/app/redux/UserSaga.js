@@ -11,6 +11,7 @@ import {
     PREFER_HIVE,
 } from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
+import { logout as chatLogout } from 'app/redux/ChatSaga';
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
 import { receiveFeatureFlags } from 'app/redux/AppReducer';
@@ -33,7 +34,7 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from 'sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const steemSsc = new SSC('https://api.steem-engine.com/rpc');
+const steemSsc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 import {
@@ -799,6 +800,7 @@ function* logout(action) {
         localStorage.removeItem('autopost2');
     }
 
+    yield chatLogout();
     yield serverApiLogout();
 }
 

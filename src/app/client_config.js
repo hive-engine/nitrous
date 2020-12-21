@@ -115,6 +115,8 @@ export const REVIVE_ADS = {
 export const ALLOW_MASTER_PW = false;
 // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
 export const POST_FOOTER = '';
+// Footer to attach to commments. ${POST_URL} is a macro that can be used, will be expanded to the URL of the commment.
+export const COMMENT_FOOTER = '';
 export const SCOT_TAG_FIRST = false;
 export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
@@ -126,6 +128,12 @@ export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
 export const HIVE_ENGINE = true;
+export const DISABLE_BLACKLIST = false;
+export const CHAT_CONVERSATIONS = [
+    { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+];
+export const APPEND_TRENDING_TAGS_COUNT = 0;
+export const TRENDING_TAGS_TO_IGNORE = [];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
     ? 'HIVE POWER'
@@ -133,3 +141,4 @@ export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
 export const INVEST_TOKEN_SHORT = HIVE_ENGINE ? 'HP' : 'SP';
 export const DEBT_TOKEN = HIVE_ENGINE ? 'HIVE DOLLAR' : 'STEEM DOLLAR';
 export const DEBT_TOKENS = HIVE_ENGINE ? 'HIVE DOLLARS' : 'STEEM DOLLARS';
+

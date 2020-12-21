@@ -47,13 +47,23 @@ export const setHiveSignerAccessToken = (
     hiveSignerClient.setAccessToken(access_token);
 };
 
+function getUri(ops, params) {
+    if (ops.length > 1 || ops[0][0] != 'custom_json' ||
+        ops[0][1].id != 'ssc-mainnet-hive') {
+        return encodeOps(ops, params);
+    }
+    return `hive://sign/custom_json?id=ssc-mainnet-hive&required_auths=${JSON.stringify(ops[0][1].required_auths)}&json=${ops[0][1].json}`;
+}
+
 export const sendOperationsWithHiveSigner = (ops, params, cb) => {
     if (!params) params = {};
     if (!params.callback && isBrowser()) {
         params.callback = window.location.href;
     }
-    const uri = encodeOps(ops, params);
-    const webUrl = uri.replace('hive://', `${HIVE_SIGNER_URL}/`);
+    const uri = getUri(ops, params);
+    const webUrl = uri
+        .replace('hive://', `${HIVE_SIGNER_URL}/`)
+        .concat('&authority=active&required_posting_auths=[]');
     if (cb && isBrowser()) {
         window.location = webUrl;
     }

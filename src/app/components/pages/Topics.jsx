@@ -5,6 +5,8 @@ import { browserHistory } from 'react-router';
 import tt from 'counterpart';
 import PropTypes from 'prop-types';
 import NativeSelect from 'app/components/elements/NativeSelect';
+import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
+import { ifHivemind } from 'app/utils/Community';
 import { List } from 'immutable';
 
 const buildPrefix = level => {
@@ -17,6 +19,7 @@ const buildPrefix = level => {
 
 const buildCategories = (categories, level, max) => {
     const prefix = buildPrefix(level);
+    if (!categories) return List();
     if (List.isList(categories)) {
         return categories.map(c => prefix + c);
     } else {
@@ -32,9 +35,13 @@ const buildCategories = (categories, level, max) => {
     }
 };
 
-const parseCategory = cat => {
+const parseCategory = (cat, communityMap) => {
     const tag = cat.replace(/\>/g, '');
-    const label = cat.replace(/\>/g, '\u00a0\u00a0\u00a0');
+    let label = cat.replace(/\>/g, '\u00a0\u00a0\u00a0');
+
+    if (ifHivemind(tag) && communityMap && communityMap[tag]) {
+        label = label.replace(tag, communityMap[tag]);
+    }
     return { tag, label };
 };
 
@@ -52,6 +59,16 @@ class Topics extends Component {
     static defaultProps = {
         current: '',
     };
+
+    componentDidUpdate() {
+        const { categories, communityMap, getCommunity } = this.props;
+        categories.forEach(c => {
+            const { tag } = parseCategory(c);
+            if (ifHivemind(tag) && !communityMap[tag]) {
+                getCommunity(tag);
+            }
+        });
+    }
 
     handleChange = selectedOption => {
         browserHistory.push(selectedOption.value);
@@ -81,6 +98,7 @@ class Topics extends Component {
             subscriptions,
             communities,
             categories,
+            communityMap,
         } = this.props;
         const currentOrder = this.props.order;
         const order = currentOrder == 'feed' ? 'trending' : currentOrder;
@@ -104,7 +122,8 @@ class Topics extends Component {
             const opts = extras(username).concat(
                 categories
                     .map(cat => {
-                        const { tag, label } = parseCategory(cat);
+                        const { tag, label } = parseCategory(cat, communityMap);
+                        
                         const link = order ? `/${order}/${tag}` : `/${tag}`;
                         return { value: link, label: label };
                     })
@@ -194,7 +213,7 @@ class Topics extends Component {
         }
 
         const categoriesLinks = categories.map(cat => {
-            const { tag, label } = parseCategory(cat);
+            const { tag, label } = parseCategory(cat, communityMap);
             const link = order ? `/${order}/${tag}` : `/hot/${tag}`;
             return (
                 <li className="c-sidebar__list-item" key={tag}>
@@ -299,10 +318,22 @@ export default connect(
             0,
             ownProps.levels
         );
+        const communityMap = {};
+        categories.forEach(c => {
+            const { tag } = parseCategory(c);
+            if (ifHivemind(tag)) {
+                communityMap[tag] = state.global.getIn(['community', ifHivemind(tag), 'title'], null);
+            }
+        });
         return {
             ...ownProps,
             communities: state.global.get('community'),
             categories,
+            communityMap,
         };
-    }
+    },
+    dispatch => ({
+        getCommunity: category =>
+            dispatch(fetchDataSagaActions.getCommunity(category)),
+    })
 )(Topics);

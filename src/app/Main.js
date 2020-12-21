@@ -1,5 +1,6 @@
-import 'babel-core/register';
-import 'babel-polyfill';
+import '@babel/register';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import store from 'store';
 import { VIEW_MODE_WHISTLE, PARAM_VIEW_MODE } from 'shared/constants';
@@ -99,6 +100,8 @@ function runApp(initial_state) {
         retry: true,
         useAppbaseApi: !!config.steemd_use_appbase,
     });
+    steem.config.set('address_prefix', config.address_prefix);
+    steem.config.set('chain_id', config.chain_id);
     hive.api.setOptions({
         url: currentApiEndpoint,
         retry: true,
@@ -106,8 +109,6 @@ function runApp(initial_state) {
         alternative_api_endpoints: alternativeApiEndpoints,
         failover_threshold: config.failover_threshold,
     });
-    hive.config.set('address_prefix', config.address_prefix);
-    hive.config.set('chain_id', config.chain_id);
 
     window.$STM_Config = config;
     plugins(config);
@@ -137,12 +138,15 @@ function runApp(initial_state) {
         window.location.hash
     }`;
 
-    try {
-        clientRender(initial_state);
-    } catch (error) {
-        console.error('render_error', error);
-        serverApiRecordEvent('client_error', error);
-    }
+    hive.utils.autoDetectApiVersion().then(() => {
+        hive.broadcast.updateOperations();
+        try {
+            clientRender(initial_state);
+        } catch (error) {
+            console.error('render_error', error);
+            serverApiRecordEvent('client_error', error);
+        }
+    });
 }
 
 if (!window.Intl) {

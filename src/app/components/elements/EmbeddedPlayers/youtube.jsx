@@ -130,8 +130,8 @@ export function genIframeMd(idx, id, width, height, startTime) {
     return (
         <YoutubePreview
             key={`youtube-${id}-${idx}`}
-            width={width}
-            height={height}
+            width={parseInt(width)}
+            height={parseInt(height)}
             youTubeId={id}
             startTime={startTime}
             frameBorder="0"

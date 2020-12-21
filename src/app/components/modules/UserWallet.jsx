@@ -27,7 +27,7 @@ import {
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as appActions from 'app/redux/AppReducer';
-import { actions as UserProfilesSagaActions } from 'app/redux/UserProfilesSaga';
+import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import Icon from 'app/components/elements/Icon';
 import classNames from 'classnames';
@@ -92,8 +92,9 @@ class UserWallet extends React.Component {
     }
 
     handleClaimRewards = profile => {
+        const { claimRewards, useHive } = this.props;
         this.setState({ claimInProgress: true }); // disable the claim button
-        this.props.claimRewards(profile, useHive);
+        claimRewards(profile, useHive);
     };
     handleClaimTokenRewards = token => {
         const { profile, claimTokenRewards, useHive } = this.props;
@@ -144,9 +145,7 @@ class UserWallet extends React.Component {
             .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
         const tokenUnstakes = profile.has('token_unstakes')
             ? profile.get('token_unstakes').toJS()
-            : {
-                  quantityLeft: '0',
-              };
+            : [];
 
         const tokenStatus = profile.has('token_status')
             ? profile.get('token_status').toJS()
@@ -195,6 +194,7 @@ class UserWallet extends React.Component {
             this.props.showPowerdown({
                 account: name,
                 stakeBalance: stakeBalance.toFixed(scotPrecision),
+                tokenUnstakes,
                 delegatedStake,
             });
         };
@@ -203,7 +203,7 @@ class UserWallet extends React.Component {
             const name = profile.get('name');
             this.props.cancelUnstake({
                 account: name,
-                transactionId: tokenUnstakes.txID,
+                tokenUnstakes,
                 useHive,
             });
         };
@@ -260,7 +260,7 @@ class UserWallet extends React.Component {
             },
         ];
 
-        if (parseFloat(tokenUnstakes.quantityLeft) > 0) {
+        if (tokenUnstakes.length > 0) {
             power_menu.push({
                 value: 'Cancel Unstake',
                 link: '#',
@@ -705,7 +705,7 @@ export default connect(
             const username = profile.get('name');
             const successCallback = () => {
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -740,7 +740,7 @@ export default connect(
                     })
                 );
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -771,7 +771,7 @@ export default connect(
                     })
                 );
                 dispatch(
-                    UserProfilesSagaActions.fetchWalletProfile({
+                    userProfileActions.fetchWalletProfile({
                         account: username,
                     })
                 );
@@ -800,6 +800,6 @@ export default connect(
         },
 
         fetchWalletProfile: account =>
-            dispatch(UserProfilesSagaActions.fetchWalletProfile({ account })),
+            dispatch(userProfileActions.fetchWalletProfile({ account })),
     })
 )(UserWallet);

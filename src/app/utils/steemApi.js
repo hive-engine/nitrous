@@ -18,7 +18,7 @@ import {
 import axios from 'axios';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export async function callBridge(method, params, useHive = true) {
@@ -63,7 +63,7 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
     const transfers = await callApi(
         hive
             ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://api.steem-engine.com/history/accountHistory',
+            : 'https://api.steem-engine.net/history/accountHistory',
         {
             account,
             limit: 50,
@@ -80,11 +80,12 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
         .concat(history)
+        .filter(a => Date.now() - new Date(a.timestamp) < 14 * 24 * 3600 * 1000)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://scot-api.steem-engine.com/${path}`, params);
+    return await callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
@@ -124,7 +125,7 @@ export async function getWalletAccount(account, useHive) {
         engineApi.find('tokens', 'balances', {
             account,
         }),
-        engineApi.findOne('tokens', 'pendingUnstakes', {
+        engineApi.find('tokens', 'pendingUnstakes', {
             account,
             symbol: LIQUID_TOKEN_UPPERCASE,
         }),
@@ -202,7 +203,7 @@ function mergeContent(content, scotData) {
             if (!scotVoted.has(v.voter)) {
                 content.active_votes.push({
                     voter: v.voter,
-                    percent: v.percent,
+                    percent: Math.sign(v.rshares),
                     rshares: 0,
                 });
             }
@@ -259,7 +260,7 @@ async function fetchMissingData(tag, feedType, state, feedData, useHive) {
             filteredContent[key] = {
                 author_reputation: authorRep[d.author],
                 body: d.desc,
-                body_length: d.desc.length,
+                body_length: d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
@@ -502,6 +503,7 @@ export async function getContentAsync(author, permlink) {
             hiveContent.permlink === permlink)
     ) {
         content = hiveContent;
+        content.hive = true;
         useHive = true;
     }
     if (useHive) {
@@ -742,7 +744,7 @@ export async function getStateAsync(url, observer, ssr = false) {
             /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
         ) &&
         !path.match(
-            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|settings|followers|followed)?)?$/
+            /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|followers|followed)?)?$/
         );
 
     let raw = {
@@ -867,7 +869,7 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
                 } else {
                     content = {
                         body: scotData.desc,
-                        body_length: scotData.desc.length,
+                        body_length: scotData.desc.length + 1,
                         permlink: scotData.authorperm.split('/')[1],
                         category: scotData.tags.split(',')[0],
                         children: scotData.children,
