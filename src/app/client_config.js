@@ -16,11 +16,11 @@ export const APP_DOMAIN = 'www.lassecash.com';
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'lassecash';
 export const TAG_LIST = fromJSOrdered([
-    'earthislight',
     'cryptocurrency',
     'anarchocapitalism',
     'keto',
-    'lassecash',
+    'flatearth',
+    'truthbombs',
 ]);
 export const LIQUID_TOKEN = 'Lassecash';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
