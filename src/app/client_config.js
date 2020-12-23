@@ -119,7 +119,7 @@ const TIX = {
 const FOODIE = {
     APP_NAME: 'FoodiesUnite',
     APP_ICON: 'foodies',
-    APP_ICON_WIDTH: '90px',
+    APP_ICON_WIDTH: '240px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://foodiesunite.net',
     APP_DOMAIN: 'foodiesunite.net',
