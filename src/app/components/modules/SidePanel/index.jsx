@@ -207,8 +207,13 @@ const SidePanel = ({
         organizational_LIST: [
             {
                 value: 'HiveList_Main',
-                label: 'HiveList',
-                link: 'https://hivelist.io/',
+                label: 'Home',
+                link: 'https://hivelist.io/classifieds',
+            },
+            {
+                value: 'HiveList_Token',
+                label: 'LIST Token',
+                link: 'https://hivelist.io/list-token',
             },
             {
                 value: 'HiveList_Store',
