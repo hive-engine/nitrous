@@ -18,7 +18,7 @@ import {
 import axios from 'axios';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
 
 export async function callBridge(method, params, useHive = true) {
@@ -63,7 +63,7 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
     const transfers = await callApi(
         hive
             ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://api.steem-engine.com/history/accountHistory',
+            : 'https://api.steem-engine.net/history/accountHistory',
         {
             account,
             limit: 50,
