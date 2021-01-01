@@ -373,6 +373,10 @@ class ReplyEditor extends React.Component {
         }
     };
 
+    goSwapPage = () => {
+        window.open('/market');
+    };
+
     upload = (file, name = '') => {
         const { uploadImage } = this.props;
         this.setState({
@@ -759,10 +763,17 @@ class ReplyEditor extends React.Component {
                                 !isEdit && (
                                     <div className="">
                                         {tt(
-                                            'reply_editor.set_free_posting_msg'
+                                            'reply_editor.need_SCT_for_posting'
                                         )}
                                     </div>
                                 )}
+                            <button
+                                type="button"
+                                className="c-sidebar--right--link"
+                                onClick={this.goSwapPage}
+                            >
+                                {tt('g.buySCT')}
+                            </button>
                             {!loading && (
                                 <button
                                     type="submit"
@@ -793,7 +804,7 @@ class ReplyEditor extends React.Component {
                                         {tt('g.cancel')}
                                     </button>
                                 )}
-                            {!loading &&
+                            {/* {!loading &&
                                 !this.props.onCancel && (
                                     <button
                                         // className="button hollow no-border"
@@ -805,7 +816,7 @@ class ReplyEditor extends React.Component {
                                             'reply_editor.set_krwp_beneficiary'
                                         )}
                                     </button>
-                                )}
+                                )} */}
                             {!loading &&
                                 !this.props.onCancel && (
                                     <button
@@ -1146,17 +1157,18 @@ export default formId =>
                         });
                     }
                     if (beneficiaries && beneficiaries.length > 0) {
-                        const krwpBene = beneficiaries.filter(
-                            e => e.username === 'sct.krwp'
-                        );
+                        // 무료 포스팅 기능 삭제
+                        // const krwpBene = beneficiaries.filter(
+                        //     e => e.username === 'sct.krwp'
+                        // );
 
-                        if (
-                            krwpBene &&
-                            krwpBene.length > 0 &&
-                            krwpBene[0].percent === '100'
-                        ) {
-                            payFee = false;
-                        }
+                        // if (
+                        //     krwpBene &&
+                        //     krwpBene.length > 0 &&
+                        //     krwpBene[0].percent === '100'
+                        // ) {
+                        //     payFee = false;
+                        // }
 
                         if (!__config.comment_options) {
                             __config.comment_options = {};
