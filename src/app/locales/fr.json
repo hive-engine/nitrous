@@ -277,6 +277,7 @@
         "noticeMessanger": "Notice Telegram",
         "luckydraw": "Lucky Draw",
         "sctswap": "Token Swap",
+        "buySCT": "Purchase SCT(Token Swap)",
         "exchangeNow": "Exchange Coin"
     },
     "swap": {
@@ -351,7 +352,9 @@
         "lack_balance":
             "Not enough posting fee %(fee)s SCT.(You need to set beneficiary(@sct.krwp 100). Your balance is %(balance)s SCT.",
         "set_free_posting_msg":
-            "If you set up a free post, it will be 100 percent Benefiery set to @sct.krwp and you will not pay a posting fee (you will receive the full rewards in KRWP)."
+            "If you set up a free post, it will be 100 percent Benefiery set to @sct.krwp and you will not pay a posting fee (you will receive the full rewards in KRWP).",
+        "need_SCT_for_posting":
+            "Posting consumes 1SCT of posting Fee. If not, the Write button is disabled. If you do not have SCT, please post after purchase."
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
