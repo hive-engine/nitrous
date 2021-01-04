@@ -18,7 +18,7 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.com/rpc');
+const ssc = new SSC('https://api.steem-engine.net/rpc');
 
 export const transactionWatches = [
     takeEvery(transactionActions.BROADCAST_OPERATION, broadcastOperation),
