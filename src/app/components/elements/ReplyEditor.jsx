@@ -767,13 +767,16 @@ class ReplyEditor extends React.Component {
                                         )}
                                     </div>
                                 )}
-                            <button
-                                type="button"
-                                className="c-sidebar--right--link"
-                                onClick={this.goSwapPage}
-                            >
-                                {tt('g.buySCT')}
-                            </button>
+                            {isStory &&
+                                !isEdit && (
+                                    <button
+                                        type="button"
+                                        className="c-sidebar--right--link"
+                                        onClick={this.goSwapPage}
+                                    >
+                                        {tt('g.buySCT')}
+                                    </button>
+                                )}
                             {!loading && (
                                 <button
                                     type="submit"
