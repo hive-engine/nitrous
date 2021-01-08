@@ -8,6 +8,8 @@ import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak'
 import twitterRegex from 'app/components/elements/EmbeddedPlayers/twitter';
 import spotifyRegex from 'app/components/elements/EmbeddedPlayers/spotify';
 import mixcloudRegex from 'app/components/elements/EmbeddedPlayers/mixcloud';
+import archiveorg from 'app/components/elements/EmbeddedPlayers/archiveorg';
+import bandcamp from 'app/components/elements/EmbeddedPlayers/bandcamp';
 
 describe('Links', () => {
     it('all', () => {
@@ -279,33 +281,33 @@ describe('Performance', () => {
     it('threespeak', () => {
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat'
+            'https://3speak.co/watch?v=artemislives/tvxkobat'
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl'
+            'https://3speak.co/watch?v=artemislives/tvxkobat&jwsource=cl'
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/embed?v=artemislives/tvxkobat'
+            'https://3speak.co/embed?v=artemislives/tvxkobat'
         );
     });
     it('threespeakId', () => {
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat',
+            'https://3speak.co/watch?v=artemislives/tvxkobat',
             'artemislives/tvxkobat',
             1
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl',
+            'https://3speak.co/watch?v=artemislives/tvxkobat&jwsource=cl',
             'artemislives/tvxkobat',
             1
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/embed?v=artemislives/tvxkobat',
+            'https://3speak.co/embed?v=artemislives/tvxkobat',
             'artemislives/tvxkobat',
             1
         );
@@ -313,7 +315,7 @@ describe('Performance', () => {
     it('threespeakImageLink', () => {
         match(
             threespeakRegex.htmlReplacement,
-            '<a href="https://3speak.online/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+            '<a href="https://3speak.co/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
         );
     });
     it('twitter', () => {
@@ -347,11 +349,25 @@ describe('Performance', () => {
     it('mixcloud', () => {
         match(
             mixcloudRegex.main,
-            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane/'
+            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane/',
+            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane'
         );
         match(
             mixcloudRegex.sanitize,
             'https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FMagneticMagazine%2Fambient-meditations-vol-21-anane%2F'
+        );
+    });
+    it('archiveorg', () => {
+        match(archiveorg.main, 'https://archive.org/details/geometry_dash_1.9');
+        match(
+            archiveorg.sanitize,
+            'https://archive.org/embed/geometry_dash_1.9'
+        );
+    });
+    it('bandcamp', () => {
+        match(
+            bandcamp.sanitize,
+            'https://bandcamp.com/EmbeddedPlayer/album=313320652/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/'
         );
     });
 });

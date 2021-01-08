@@ -60,13 +60,20 @@ export default ({
     transformTags: {
         iframe: (tagName, attribs) => {
             const srcAtty = attribs.src;
+            const widthAtty = attribs.width;
+            const heightAtty = attribs.height;
             const {
                 validUrl,
                 useSandbox,
                 sandboxAttributes,
                 width,
                 height,
-            } = validateEmbbeddedPlayerIframeUrl(srcAtty, large);
+            } = validateEmbbeddedPlayerIframeUrl(
+                srcAtty,
+                large,
+                widthAtty,
+                heightAtty
+            );
 
             if (validUrl !== false) {
                 const iframe = {
