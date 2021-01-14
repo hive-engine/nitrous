@@ -6,7 +6,7 @@
 
 **Natural Medicine is a social media platform for enthusiasts of natural health; from herbalism and essential oils, food as medicine, meditation and spirituality - as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centered practices.**
 
-Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts, which provide more information about what kind of topics are supported. They are written by our bloggers, for our bloggers.
+Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts, which provide more information about what kind of topics are supported. If in doubt, browse our CURATORS feed, showing reblogs from our curators, or any of our 'best of' editorial posts such as [MINDFUL LIFE](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/mindful-life-curation-patterns-health-habits-food), [LOTUS FOR YOGIS](https://www.naturalmedicine.io/hive-120078/@lotusshares/mudras-outdoor-yoga-trikonasana-and-more), [PLANT POWER](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/happy-plantbased-new-year-tamarind-rice-soul-food-khmer-snacks-sushi-and-more) or [LOTUS LOVE](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/lotus-love-sunday-editorial-let-your-healing-bring-out-the-warrior-in-you). We even have an editorial about astrology and astral events - check it our [here](https://www.naturalmedicine.io/hive-120078/@lotusshares/orrery-astrology-eclipse-conjunction-saturn-jupiter-sun-moon). 
 
 - [For Vegans](https://naturalmedicine.io/naturalmedicine/@plantstoplanks/lotus-coin-for-vegans-communities-coming-together) by @plantstoplanks
 - [For Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
@@ -25,7 +25,9 @@ Our platform enables users to reward and earn LOTUS by publishing or interacting
 
 </div>
 
-Natural Medicine is a second layer to the **HIVE** blockchain, so, you'll need HIVE keys to sign in. For a free account, use our [referral link]() which takes you to [HIVE ONBOARDING](). ***You must keep your keys secure as they allow you to access any earned funds, post and perform any other transactions on the blockchain.***
+Natural Medicine is a second layer to the **HIVE** blockchain, so, you'll need HIVE keys to sign in. For a free account, use our [referral link](https://hiveonboard.com?ref=naturalmedicine) which takes you to [HIVE ONBOARDING](https://hiveonboard.com/). It's completely safe and designed to make it easy for new users to get quick access to all our social media blockchain has to offer! 
+
+***You must keep your keys secure as they allow you to access any earned funds, post and perform any other transactions on the blockchain.***
 
 Natural Medicine is merely one way to interact with the HIVE blockchain. There are other 'front ends' and 'dapps' or decentralised apps such as [LeoFinance](https://leofinance.io/) or [Creative Coin](https://www.creativecoin.xyz/created) for musicians and artists. There's something on the HIVE blockchain for everyone!
 
