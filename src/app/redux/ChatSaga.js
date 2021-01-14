@@ -13,6 +13,7 @@ export const chatWatches = [
     takeEvery('chat/LOGIN', login),
     takeEvery('chat/FETCH_CHAT_MESSAGES', fetchChatMessages),
     takeEvery('chat/SEND_CHAT_MESSAGE', sendChatMessage),
+    takeEvery('chat/MARK_READ', markRead),
     takeEvery('chat/FETCH_CHAT_LIST', fetchChatList),
     takeEvery('chat/START_CHAT', startChat),
     fork(websocketSaga),
@@ -111,14 +112,12 @@ function* sendChatMessage(action) {
 }
 
 function* markRead(action) {
-    const { conversationId, to, message } = action.payload;
+    const { conversationId } = action.payload;
     if (socket) {
         socket.send(JSON.stringify({
-            type: 'chat-message',
+            type: 'acknowledgment',
             payload: {
                 conversation_id: conversationId,
-                to,
-                message,
             },
         }));
     } else {

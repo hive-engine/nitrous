@@ -7,6 +7,7 @@ const RECEIVE_CHAT_MESSAGES = 'chat/RECEIVE_CHAT_MESSAGES';
 const CONNECT_WEBSOCKET = 'chat/CONNECT_WEBSOCKET';
 const RECEIVE_SOCKET_STATE = 'chat/RECEIVE_SOCKET_STATE';
 const SEND_CHAT_MESSAGE = 'chat/SEND_CHAT_MESSAGE';
+const MARK_READ = 'chat/MARK_READ';
 const FETCH_CHAT_LIST = 'chat/FETCH_CHAT_LIST';
 const RECEIVE_CHAT_LIST = 'chat/RECEIVE_CHAT_LIST';
 const START_CHAT = 'chat/START_CHAT';
@@ -76,6 +77,11 @@ export default function reducer(state = defaultChatState, action) {
         }
         
         // Has Saga watcher.
+        case MARK_READ : {
+            return state;
+        }
+        
+        // Has Saga watcher.
         case START_CHAT: {
             return state;
         }
@@ -117,6 +123,11 @@ export const receiveSocketState = payload => ({
 
 export const sendChatMessage = payload => ({
     type: SEND_CHAT_MESSAGE,
+    payload,
+});
+
+export const markRead = payload => ({
+    type: MARK_READ,
     payload,
 });
 

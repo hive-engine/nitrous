@@ -83,7 +83,7 @@ class ChatListSelect extends React.PureComponent {
                                         <Title ellipses>
                                             {chat.name || otherMembers(chat).join(', ')}
                                         </Title>
-                                        <Subtitle nowrap>
+                                        <Subtitle nowrap style={{marginLeft: '0.2em'}}>
                                             {chat.unread} unread
                                         </Subtitle>
                                     </Row>
