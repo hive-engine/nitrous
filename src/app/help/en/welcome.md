@@ -8,25 +8,26 @@
 
 Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts, which provide more information about what kind of topics are supported. They are written by our bloggers, for our bloggers.
 
-- [Lotus for Vegans](https://naturalmedicine.io/naturalmedicine/@plantstoplanks/lotus-coin-for-vegans-communities-coming-together) by @plantstoplanks
-- [Lotus for Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
-- [Lotus for Herbalists](https://www.naturalmedicine.io/naturalmedicine/@riverflows/a-token-for-herb-lovers-why-i-m-in-love-with-lotus) by @riverflows
-- [Lotus for Homesteaders](https://www.naturalmedicine.io/naturalmedicine/@nateonsteemit/lotus-coin-for-homesteaders) by @nateonsteemit
-- [Lotus for Scientists](https://naturalmedicine.io/naturalmedicine/@alchemage/lotus-token-for-scientists-a-call-for-more-science-in-the-natural-medicine-community) by @alchemage
-- [Lotus For Yogis](https://www.naturalmedicine.io/yoga/@naturalmedicine/get-paid-instantly-for-writing-about-yoga) by @riverflows
+- [For Vegans](https://naturalmedicine.io/naturalmedicine/@plantstoplanks/lotus-coin-for-vegans-communities-coming-together) by @plantstoplanks
+- [For Meditators](https://www.naturalmedicine.io/mindfulness/@naturalmedicine/introducing-lotus-for-the-mindful-life-community) by @riverflows
+- [For Herbalists](https://www.naturalmedicine.io/naturalmedicine/@riverflows/a-token-for-herb-lovers-why-i-m-in-love-with-lotus) by @riverflows
+- [For Homesteaders](https://www.naturalmedicine.io/naturalmedicine/@nateonsteemit/lotus-coin-for-homesteaders) by @nateonsteemit
+- [For Scientists](https://naturalmedicine.io/naturalmedicine/@alchemage/lotus-token-for-scientists-a-call-for-more-science-in-the-natural-medicine-community) by @alchemage
+- [For Yogis](https://www.naturalmedicine.io/yoga/@naturalmedicine/get-paid-instantly-for-writing-about-yoga) by @riverflows
 
-Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for HIVE (the token for the HIVE blockchain)and into mainstream currencies such as USD. **Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests.**
+Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for HIVE (the token for the HIVE blockchain)and into mainstream currencies such as USD.
+
+**Whilst rewards are a bonus, many of our users appreciate the interaction they have with others who share similiar interests almost more than the rewards! Abundance takes many forms.**
+
 <div style="text-align: center;">
 
-![](https://i.imgur.com/idnZZvl.png)
+![](https://imgur.com/a/0AZ649f)
 
 </div>
 
-Natural Medicine offers free accounts to new users. Simply email us at at welcome@naturalmedicine.io with a short explanation of why you'd like to join our platform, and a potential username or two. Please allow 24 hours for account processing - we are very much human! You will then recieve a PDF with your passkeys, which you ***must keep secure as they allow you to access any earned funds, post and perform any other transactions on the blockchain.***
+Natural Medicine is a second layer to the **HIVE** blockchain, so, you'll need HIVE keys to sign in. For a free account, use our [referral link]() which takes you to [HIVE ONBOARDING](). ***You must keep your keys secure as they allow you to access any earned funds, post and perform any other transactions on the blockchain.***
 
-*If you already have a HIVE account, you do not need a new account on www.naturalmedicine.io.*
-
-Once you have signed in, you will then be able to use the same keys to sign in to any of the HIVE front ends, such as [Peakd](https://peakd.com/c/hive-120078/created), which we recommend for non natural medicine related content, saving drafts and more. We call these various ways to interact with the HIVE blockchain 'front ends' and 'dapps' or decentralised apps. There's something on the HIVE blockchain for everyone!
+Natural Medicine is merely one way to interact with the HIVE blockchain. There are other 'front ends' and 'dapps' or decentralised apps such as [LeoFinance](https://leofinance.io/) or [Creative Coin](https://www.creativecoin.xyz/created) for musicians and artists. There's something on the HIVE blockchain for everyone!
 
 **Below you'll find some more information about the various intricacies of Natural Medicine, it's reward system, and its link to the HIVE platform. For more information, please feel free to join our Discord by clicking [here](https://discord.gg/2pwc5Gf). There is always a friendly person to help you out!**
 
@@ -38,13 +39,16 @@ Once you have signed in, you will then be able to use the same keys to sign in t
 
 </div>
 
-- [BUYING & SELLING LOTUS - A How To](https://www.naturalmedicine.io/naturalmedicine/@riverflows/how-to-trade-lotus-or-any-other-token-in-steem-engine)
+- [How to Send LOTUS - A Visual Guide](https://naturalmedicine.io/hive-120078/@lotusshares/a-pictorial-guide-to-sending-burning-hive-engine-tokens)
+- [How to Buy LOTUS Tokens on HIVE ENGINE - An Easy Visual Guide](https://peakd.com/hive-120078/@lotusshares/a-guided-tutorial-on-how-to-buy-lotus-tokens)
+- [How to Buy LOTUS Tokens on LEODEX - A Trading Platform for HIVE second layer tokens and more](https://www.naturalmedicine.io/hive-167922/@lotusshares/how-to-buy-lotus-on-leodex-a-visual-guide-for-newbies-to-token-buying)
 - [BADGES - Advertise your Identity & Jazz Up Your Profile](https://naturalmedicine.io/naturalmedicine/@riverflows/want-a-badge-next-to-your-user-name-on-naturalmedicine-io-advertise-your-gig-business-blog-or-identity)
 - [CONTENT GUIDELINES](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/standards-for-content-and-a-little-note-about-rewards-and-downvotes)
-- [CURATION TRAILS AND AUTOVOTES - A Guide](https://peakd.com/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
+- [CURATION TRAILS AND AUTOVOTES - A Guide](https://naturalmedicine.io/naturalmedicine/@naturalmedicine/how-to-follow-a-trail-and-set-automatic-upvotes-for-your-favourite-curators-and-users)
 - [DELEGATION  - What is it , and how do I do it?](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/delegations-enabled-for-natural-medicine-tribe)
+- [HOW TO DELEGATE - SPANISH/ENGLISH VISUAL GUIDE](https://naturalmedicine.io/hive-120078/@lotusshares/como-delegar-una-guia-visual-how-to-delegate-a-visual-guide)
 - [FORMATTING - How do I make my post look great?](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/formatting-tips-plus-post-your-code-to-win)
-- [HIVE BROWSER EXTENSION - An easy way to store your keys]() - coming
+- [HIVE KEYCHAIN - An easy way to store your keys]() - coming
 - [LOTUS STORE - More on Advertising your Product](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/introducing-potential-use-case-tags-and-lotus-store)
 - [MANIFESTO - Our ethos](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/the-natural-medicine-manifesto-complete-summary)
 - [MAKING MY POST VISIBLE - A Guide to Advertising](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/promoted-and-pinned-posts-advertise-your-project-product-or-passion)
