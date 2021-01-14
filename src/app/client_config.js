@@ -412,9 +412,9 @@ const HIVELIST = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: [
-        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-    ],
+    CHAT_CONVERSATIONS: null,
+    DISCORD_SERVER: '714648560443850783', // HiveHustlers
+    DISCORD_CHANNEL: '744375332122918942', // #hivelist-chat
 };
 
 const ARCHON = {
@@ -799,7 +799,7 @@ const PIMP = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': WEEDCASH,
+    'localhost:8080': HIVELIST,
     'frozen-retreat-15997.herokuapp.com': PIMP,
     'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,
