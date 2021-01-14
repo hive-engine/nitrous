@@ -13,7 +13,7 @@ export const APP_ICON = 'sports';
 export const APP_URL = 'https://www.sportstalksocial.com';
 export const APP_DOMAIN = 'www.sportstalksocial.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 10;
+export const APP_MAX_TAG = 15;
 export const SCOT_TAG = 'sportstalk';
 export const TAG_LIST = fromJSOrdered({
     football: {
@@ -116,6 +116,28 @@ export const TAG_LIST = fromJSOrdered({
                 'sunshinestarsfc',
                 'warriwolvesfc',
                 'wikkitouristfc',
+            ],
+            ligue1: [
+                'angers',
+                'bordeaux',
+                'brest',
+                'dijon',
+                'lens',
+                'lille',
+                'lorient',
+                'lyon',
+                'marseille',
+                'metz',
+                'monaco',
+                'montpellier',
+                'nantes',
+                'nice',
+                'nimes',
+                'psg',
+                'reims',
+                'rennes',
+                'asse',
+                'strasbourg',
             ],
         },
     },
@@ -480,11 +502,6 @@ export const TAG_LIST = fromJSOrdered({
             ],
         },
     },
-    combat: {
-        boxing: [],
-        mma: ['ufc'],
-        wrestling: ['wwe', 'aew', 'njpw', 'roh'],
-    },
     hockey: {
         nhl: {
             nhleastern: [
@@ -524,6 +541,9 @@ export const TAG_LIST = fromJSOrdered({
             ],
         },
     },
+    boxing: [],
+    mma: ['ufc'],
+    cricket: [],
     sports: {
         golf: [
             'masters',
@@ -533,9 +553,11 @@ export const TAG_LIST = fromJSOrdered({
         ],
         tennis: ['wimbledon', 'usopen', 'australianopen', 'frenchopen'],
         volleyball: [],
-        cricket: [],
+        wrestling: ['wwe', 'aew', 'njpw', 'roh'],
         rugby: [],
         lacrosse: [],
+        handball: [],
+        kabaddi: [],
         billards: ['pool', 'snooker'],
         cycling: ['giroditalia', 'tourdefrance', 'lavuelta'],
         motorsports: ['nascar', 'indycar', 'nhra', 'formulaone', 'motocross'],
@@ -578,6 +600,7 @@ export const TAG_LIST = fromJSOrdered({
             'rodeo',
         ],
         tabletennis: [],
+        badminton: [],
         bowling: [],
         outdoors: ['fishing', 'hunting', 'kayaking', 'shooting'],
         esports: [
@@ -598,7 +621,14 @@ export const TAG_LIST = fromJSOrdered({
         'fantasybasketball',
         'fantasyfootball',
     ],
-    actifit: [],
+    sportsgov: [
+        'sportsproposals',
+        'sportspetitions',
+    ],
+    tribes: [
+        'actifit',
+        'archon',
+    ],
 });
 export const LIQUID_TOKEN = 'Sports';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
@@ -628,7 +658,7 @@ export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
 // meta info
-export const TWITTER_HANDLE = '@SportsTalkSteem';
+export const TWITTER_HANDLE = '@SportsTalkHive';
 export const SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/hive-blog-share.png';
 export const TWITTER_SHARE_IMAGE =
@@ -690,8 +720,7 @@ export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [
     'sportsprojects',
     'sportspartners',
-    'sportspromo',
-    'getsports',
+    'sports-gov',
 ];
 export const PREFER_HIVE = true;
 export const DISABLE_HIVE = false;
