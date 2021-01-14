@@ -35,10 +35,15 @@ export default function reducer(state = defaultChatState, action) {
             const { conversationId, chatMessages } = payload;
             const oldChatMessages = state.getIn(['chatMessages', conversationId]) || List();
             const oldChatIds = Set(oldChatMessages.map(m => m.get('id')));
-            return state.setIn(['chatMessages', conversationId],
+            const newChatMessages = fromJS(chatMessages)
+                        .filter(m => !oldChatIds.has(m.get('id')));
+            const unread = newChatMessages.filter(m => !m.get('read')).size;
+            const newState = state.set('chatList', state.get('chatList').map(c => {
+                return c.get('id') === conversationId ? c.set('unread', unread) : c;
+            }));
+            return newState.setIn(['chatMessages', conversationId],
                 oldChatMessages
-                    .concat(fromJS(chatMessages)
-                        .filter(m => !oldChatIds.has(m.get('id'))))
+                    .concat(newChatMessages)
                     .sort((x,y) => new Date(x.get('timestamp')) - new Date(y.get('timestamp')))
                     .slice(-1000));
         }

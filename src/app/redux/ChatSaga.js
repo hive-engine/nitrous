@@ -110,6 +110,22 @@ function* sendChatMessage(action) {
     }
 }
 
+function* markRead(action) {
+    const { conversationId, to, message } = action.payload;
+    if (socket) {
+        socket.send(JSON.stringify({
+            type: 'chat-message',
+            payload: {
+                conversation_id: conversationId,
+                to,
+                message,
+            },
+        }));
+    } else {
+      console.error("Socket does not exist");
+    }
+}
+
 async function callChatApi(endpoint, params, headers) {
     return await axios({
         url: `${BEECHAT_API_URL}/${endpoint}`,
@@ -232,9 +248,14 @@ export function* logout() {
 
 export function* fetchChatList(action) {
   const chatList = yield authorizedCallChatApi('messages/conversations');
+  const finalChatList = CHAT_CONVERSATIONS.concat(chatList);
   yield put(
-      reducer.receiveChatList(CHAT_CONVERSATIONS.concat(chatList))
+      reducer.receiveChatList(finalChatList)
   );
+  for (let i = 0; i < finalChatList.length; i += 1) {
+      const chat = finalChatList[i];
+      yield fetchChatMessages({ payload: { conversationId: chat.id }});
+  }
 }
 
 export function* startChat(action) {
