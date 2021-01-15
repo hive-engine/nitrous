@@ -21,7 +21,7 @@ Our platform enables users to reward and earn LOTUS by publishing or interacting
 
 <div style="text-align: center;">
 
-![](https://imgur.com/a/0AZ649f)
+![Adobe_Post_20210115_0827260.5914288941183383.png](https://files.peakd.com/file/peakd-hive/riverflows/9EBLpnB9-Adobe_Post_20210115_0827260.5914288941183383.png)
 
 </div>
 
@@ -87,18 +87,14 @@ Whilst earning is not guaranteed and dependent on the quality of your content an
 - Join in our challenges which reward in both LOTUS and HIVE
 - Look out for our whale account @uplotus, which rewards excellent content and reshares (commonly called 'reblogging' your post to users) 
 - Have a chance to be curated in ['best of' posts](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/a-collection-of-best-natural-health-posts-curation-71) which are collated weekly by our lotus curators for further exposure. 
-- [Write for us](https://www.naturalmedicine.io/naturalmedicine/@naturalmedicine/community-jobs-earn-for-writing-for-our-tribe) on various natural health topics. 
-<div style="text-align: center;">
-
+- Write for us on @lotusshares, our sister account. Editorial topics welcomed - please contact us in our [Discord](). 
 
 
 </div>
 
-We also share the best of the best on our [Twitter](https://twitter.com/Lotus_Medicine) and [Facebook](https://www.facebook.com/Natural-Medicine-On-Steem-1003470073174904/) accounts, giving your blogs even more exposure. 
+We also share the best of the best on our [Twitter](https://twitter.com/Lotus_Medicine) giving your blogs even more exposure. 
 
-![](https://imgur.com/a/vaf0yun)
-
-
+![Adobe_Post_20210115_0921290.7773618675910082.png](https://files.peakd.com/file/peakd-hive/riverflows/ed1VyRAD-Adobe_Post_20210115_0921290.7773618675910082.png)
 
 <a href="#Table_of_Contents">^</a>
 
@@ -138,7 +134,7 @@ If someone [delegates](https://naturalmedicine.io/hive-120078/@naturalmedicine/d
 
 **Hive Dollars** is another HIVE token which is often rewarded on posts. You can send these to your bank account via a cryptocurrency wallet. Read more about that [here](). *Link Coming*
 
->**In your LOTUS wallet on NaturalMedicine.io, claims are automatic. You might like to exchange LOTUS for HIVE in [Steem Engine](https://steem-engine.com/). Currently, there are a few changes that mean we still need the old 'engine' that was is associated with Steem. Remember what we said about using the same keys for everything on the HIVE blockchain? The same applies here - but only if you previously had a STEEM account - if your HIVE account is brand new, you will have to create one. In Steem Engine, you can find out which tokens you hold, which you have invested or ‘staked’ (or ‘powered up’). You can also claim your earnt tokens in [SteemEngine](https://steem-engine.com/), as well as sell them and buy other tokens, or buy HIVE. You can then exchange your HIVE and HBD for bitcoin on a third-party exchange such as Ionomy, or power it up so that you earn more HIVE!**
+>**In your LOTUS wallet on NaturalMedicine.io, claims are automatic. You might like to exchange LOTUS for HIVE in [HIVE Engine](https://hive-engine.com/?p=balances&a=lotuscoin) or [LEODEX](https://leodex.io/market/LOTUS). Remember what we said about using the same keys for everything on the HIVE blockchain? The same applies here. In HIVE Engine or on LEODEX, you can find out which tokens you hold, which you have invested or ‘staked’ (or ‘powered up’). You can also claim your earnt tokens, as well as sell them and buy other tokens, or buy HIVE. You can then exchange your HIVE and HBD for bitcoin on a third-party exchange such as [Ionomy](https://ionomy.com/), or power it up so that you earn more HIVE!**
 
 <a href="#Table_of_Contents">^</a>
 
@@ -154,6 +150,6 @@ We encourage everyone who might be reading any medical advice based on content t
 
 <div style="text-align: center;">
 
-![](https://i.imgur.com/1VUQm9l.png)
+![Adobe_Post_20210115_0847200.012098058371349696.png](https://files.peakd.com/file/peakd-hive/riverflows/dWpcUOJd-Adobe_Post_20210115_0847200.012098058371349696.png)
 
 </div>
