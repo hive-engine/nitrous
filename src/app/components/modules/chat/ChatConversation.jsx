@@ -66,6 +66,7 @@ class ChatMain extends React.PureComponent {
             login,
             fetchChatMessages,
             connectWebsocket,
+            markRead,
         } = this.props;
         if (!accessToken) {
             login(username);
@@ -73,6 +74,8 @@ class ChatMain extends React.PureComponent {
             fetchChatMessages(conversation.id);
         } else if (socketState !== 'ready') {
             connectWebsocket();
+        } else if (conversation.unread) {
+            markRead(conversation.id);
         }
         const { newSelectionEnd } = this.state;
         if (newSelectionEnd) {
@@ -238,6 +241,9 @@ export default connect(
         },
         sendChatMessage: (conversationId, to, message) => {
             dispatch(chatActions.sendChatMessage({ conversationId, to, message }));
+        },
+        markRead: (conversationId) => {
+            dispatch(chatActions.markRead({ conversationId }));
         },
     }),
 )(ChatMain);

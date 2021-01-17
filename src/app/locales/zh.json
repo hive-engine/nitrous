@@ -567,7 +567,7 @@
         "part_of_your_hive_power_is_currently_delegated":
             "有一部分HIVE POWER是代理给你使用的。代理的HIVE POWER是为了帮助新用户在Hive上进行操作。你被代理的数量可能会有波动。",
         "steem_engine_tokens":
-            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+            "<a href='https://steem-engine.net' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
         "snax_token":
             "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>."
     },
