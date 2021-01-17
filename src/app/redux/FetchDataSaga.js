@@ -758,79 +758,37 @@ function* fetchAuthorRecentPosts(action) {
         category,
         author,
         permlink,
-        accountname,
-        postFilter,
         limit,
     } = action.payload;
 
     const call_name = 'get_discussions_by_blog';
-    yield put(globalActions.fetchingData({ category, order }));
     const args = {
-        tag: accountname,
+        tag: author,
         token: LIQUID_TOKEN_UPPERCASE,
         limit: limit + 1,
     };
-    yield put(appActions.fetchDataBegin());
     try {
-        const firstPermlink = permlink;
-        let fetched = 0;
-        let fetchLimitReached = false;
-        let fetchDone = false;
-        let batch = 0;
-        let lastValue;
-        let endOfData;
-        while (!fetchDone) {
-            const feedData = yield call(getScotDataAsync, call_name, args);
-
-            endOfData = feedData.length < limit;
-            lastValue =
-                feedData.length > 0 ? feedData[feedData.length - 1] : null;
-
-            // Set next arg.
-            args.start_author = lastValue.author;
-            args.start_permlink = lastValue.permlink;
-
-            batch += 1;
-            fetchLimitReached = batch >= constants.MAX_BATCHES;
-
-            // Still return all data but only count ones matching the filter.
-            // Rely on UI to actually hide the posts.
-            fetched += postFilter
-                ? feedData.filter(postFilter).length
-                : feedData.length;
-
-            fetchDone = fetchLimitReached || fetched >= limit;
-
-            let data = postFilter ? feedData.filter(postFilter) : feedData;
-            if (fetchDone && fetched > limit) {
-                data = data.slice(0, limit - (fetched - data.length));
-            }
-            data = data.map(item => ({
+        const feedData = yield call(getScotDataAsync, call_name, args);
+        const data = feedData
+            .filter(item => item.permlink !== permlink)
+            .map(item => ({
                 ...item,
                 body: item.desc,
-                body_length: item.desc.length,
+                body_length: item.desc.length + 1,
                 category: item.tags.split(',')[0],
                 replies: [], // intentional
             }));
 
-            yield put(
-                globalActions.receiveAuthorRecentPosts({
-                    data,
-                    order,
-                    category,
-                    author,
-                    firstPermlink,
-                    accountname,
-                    fetching: !fetchDone,
-                    endOfData,
-                })
-            );
-        }
+        yield put(
+            globalActions.receiveAuthorRecentPosts({
+                data,
+                order,
+                category,
+            })
+        );
     } catch (error) {
         console.error('~~ Saga fetchData error ~~>', call_name, args, error);
-        yield put(appActions.steemApiError(error.message));
     }
-    yield put(appActions.fetchDataEnd());
 }
 
 // Action creators
