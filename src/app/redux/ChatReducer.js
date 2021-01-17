@@ -7,6 +7,7 @@ const RECEIVE_CHAT_MESSAGES = 'chat/RECEIVE_CHAT_MESSAGES';
 const CONNECT_WEBSOCKET = 'chat/CONNECT_WEBSOCKET';
 const RECEIVE_SOCKET_STATE = 'chat/RECEIVE_SOCKET_STATE';
 const SEND_CHAT_MESSAGE = 'chat/SEND_CHAT_MESSAGE';
+const MARK_READ = 'chat/MARK_READ';
 const FETCH_CHAT_LIST = 'chat/FETCH_CHAT_LIST';
 const RECEIVE_CHAT_LIST = 'chat/RECEIVE_CHAT_LIST';
 const START_CHAT = 'chat/START_CHAT';
@@ -32,13 +33,18 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_CHAT_MESSAGES : {
-            const { conversationId, chatMessages } = payload;
+            const { conversationId, chatMessages, currentUser } = payload;
             const oldChatMessages = state.getIn(['chatMessages', conversationId]) || List();
             const oldChatIds = Set(oldChatMessages.map(m => m.get('id')));
-            return state.setIn(['chatMessages', conversationId],
+            const newChatMessages = fromJS(chatMessages)
+                        .filter(m => !oldChatIds.has(m.get('id')));
+            const unread = newChatMessages.filter(m => m.get('from') !== currentUser && !m.get('read')).size;
+            const newState = state.set('chatList', state.get('chatList').map(c => {
+                return c.get('id') === conversationId ? c.set('unread', unread) : c;
+            }));
+            return newState.setIn(['chatMessages', conversationId],
                 oldChatMessages
-                    .concat(fromJS(chatMessages)
-                        .filter(m => !oldChatIds.has(m.get('id'))))
+                    .concat(newChatMessages)
                     .sort((x,y) => new Date(x.get('timestamp')) - new Date(y.get('timestamp')))
                     .slice(-1000));
         }
@@ -68,6 +74,13 @@ export default function reducer(state = defaultChatState, action) {
         // Has Saga watcher.
         case SEND_CHAT_MESSAGE : {
             return state;
+        }
+        
+        // Has Saga watcher.
+        case MARK_READ : {
+            return state.set('chatList', state.get('chatList').map(c => {
+                return c.get('id') === payload.conversationId ? c.set('unread', 0) : c;
+            }));
         }
         
         // Has Saga watcher.
@@ -112,6 +125,11 @@ export const receiveSocketState = payload => ({
 
 export const sendChatMessage = payload => ({
     type: SEND_CHAT_MESSAGE,
+    payload,
+});
+
+export const markRead = payload => ({
+    type: MARK_READ,
     payload,
 });
 
