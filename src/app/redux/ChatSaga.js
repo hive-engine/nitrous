@@ -79,7 +79,7 @@ function* websocketSaga() {
                 }
 
                 case 'chat-message': {
-                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ]}));
+                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ], currentUser: username}));
                     break;
                 }
 

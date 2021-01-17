@@ -74,7 +74,7 @@ class ChatMain extends React.PureComponent {
             fetchChatMessages(conversation.id);
         } else if (socketState !== 'ready') {
             connectWebsocket();
-        } else {
+        } else if (conversation.unread) {
             markRead(conversation.id);
         }
         const { newSelectionEnd } = this.state;

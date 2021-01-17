@@ -33,12 +33,12 @@ export default function reducer(state = defaultChatState, action) {
         }
 
         case RECEIVE_CHAT_MESSAGES : {
-            const { conversationId, chatMessages } = payload;
+            const { conversationId, chatMessages, currentUser } = payload;
             const oldChatMessages = state.getIn(['chatMessages', conversationId]) || List();
             const oldChatIds = Set(oldChatMessages.map(m => m.get('id')));
             const newChatMessages = fromJS(chatMessages)
                         .filter(m => !oldChatIds.has(m.get('id')));
-            const unread = newChatMessages.filter(m => !m.get('read')).size;
+            const unread = newChatMessages.filter(m => m.get('from') !== currentUser && !m.get('read')).size;
             const newState = state.set('chatList', state.get('chatList').map(c => {
                 return c.get('id') === conversationId ? c.set('unread', unread) : c;
             }));
@@ -78,7 +78,9 @@ export default function reducer(state = defaultChatState, action) {
         
         // Has Saga watcher.
         case MARK_READ : {
-            return state;
+            return state.set('chatList', state.get('chatList').map(c => {
+                return c.get('id') === payload.conversationId ? c.set('unread', 0) : c;
+            }));
         }
         
         // Has Saga watcher.
