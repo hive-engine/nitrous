@@ -18,15 +18,12 @@ const formatDate = date => {
 
 class AuthorRecentPosts extends React.PureComponent {
     componentDidMount() {
-        // this.getDiscussionsByAuthor();
         const { author, permlink } = this.props;
-        const postFilter = value =>
-            value.author === author && value.permlink !== permlink;
         this.props.fetchAuthorRecentPosts({
             order: 'recent_user_posts',
             category: author,
-            accountname: author,
-            postFilter,
+            author,
+            permlink,
             limit: MAX_LIMIT,
         });
     }

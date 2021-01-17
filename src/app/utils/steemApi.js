@@ -85,7 +85,7 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://scot-api.cryptoempirebot.com/${path}`, params);
+    return await callApi(`https://scot-api.hive-engine.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
@@ -601,6 +601,10 @@ async function loadThread(account, permlink, useHive) {
     );
 
     if (content) {
+        // Detect fetch with scot vs fetch with getState. We use body length vs body to tell
+        // if it was a partial fetch. To clean up later.
+        const k = `${author}/${permlink}`;
+        content[k].body_length = content[k].body.length;
         const {
             content: preppedContent,
             keys,
