@@ -13,6 +13,7 @@ export const chatWatches = [
     takeEvery('chat/LOGIN', login),
     takeEvery('chat/FETCH_CHAT_MESSAGES', fetchChatMessages),
     takeEvery('chat/SEND_CHAT_MESSAGE', sendChatMessage),
+    takeEvery('chat/MARK_READ', markRead),
     takeEvery('chat/FETCH_CHAT_LIST', fetchChatList),
     takeEvery('chat/START_CHAT', startChat),
     fork(websocketSaga),
@@ -78,7 +79,7 @@ function* websocketSaga() {
                 }
 
                 case 'chat-message': {
-                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ]}));
+                    yield put(reducer.receiveChatMessages({ conversationId: response.payload.conversation_id, chatMessages: [ response.payload ], currentUser: username}));
                     break;
                 }
 
@@ -103,6 +104,20 @@ function* sendChatMessage(action) {
                 conversation_id: conversationId,
                 to,
                 message,
+            },
+        }));
+    } else {
+      console.error("Socket does not exist");
+    }
+}
+
+function* markRead(action) {
+    const { conversationId } = action.payload;
+    if (socket) {
+        socket.send(JSON.stringify({
+            type: 'acknowledgment',
+            payload: {
+                conversation_id: conversationId,
             },
         }));
     } else {
@@ -232,9 +247,14 @@ export function* logout() {
 
 export function* fetchChatList(action) {
   const chatList = yield authorizedCallChatApi('messages/conversations');
+  const finalChatList = CHAT_CONVERSATIONS.concat(chatList);
   yield put(
-      reducer.receiveChatList(CHAT_CONVERSATIONS.concat(chatList))
+      reducer.receiveChatList(finalChatList)
   );
+  for (let i = 0; i < finalChatList.length; i += 1) {
+      const chat = finalChatList[i];
+      yield fetchChatMessages({ payload: { conversationId: chat.id }});
+  }
 }
 
 export function* startChat(action) {
