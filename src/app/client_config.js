@@ -71,9 +71,7 @@ export const SHARE_IMAGE =
 export const TWITTER_SHARE_IMAGE =
     'https://' + APP_DOMAIN + '/images/hive-blog-twshare.png';
 export const SITE_DESCRIPTION =
-    'BattleGames is a social media platform where everyone gets paid for ' +
-    'creating and curating content. It leverages a robust digital points system, called BATTLE, that ' +
-    'supports real value for digital rewards through market price discovery and liquidity';
+    'The Battlegames Social Hub is an open source decentralized social media platform built on the HIVE blockchain.';
 
 // various
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
