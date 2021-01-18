@@ -6,7 +6,7 @@ import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import ChatLayout from 'app/components/modules/chat/ChatLayout';
 import { imageProxy } from 'app/utils/ProxifyUrl';
 import * as chatActions from 'app/redux/ChatReducer';
-import { Avatar, ChatList, ChatListItem, Column, Row, Title } from '@livechat/ui-kit';
+import { Avatar, ChatList, ChatListItem, Column, Row, Title, Subtitle } from '@livechat/ui-kit';
 
 class ChatListSelect extends React.PureComponent {
 
@@ -83,6 +83,9 @@ class ChatListSelect extends React.PureComponent {
                                         <Title ellipses>
                                             {chat.name || otherMembers(chat).join(', ')}
                                         </Title>
+                                        <Subtitle nowrap style={{marginLeft: '0.2em'}}>
+                                            {chat.unread} unread
+                                        </Subtitle>
                                     </Row>
                                 </Column>
                             </ChatListItem>
