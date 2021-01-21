@@ -16,6 +16,24 @@ const getValidImage = array => {
         : null;
 };
 
+export function extractRtags(body = null) {
+    let rtags;
+    {
+        const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
+        const htmlText = isHtml
+            ? body
+            : remarkable.render(
+                  body.replace(
+                      /<!--([\s\S]+?)(-->|$)/g,
+                      '(html comment removed: $1)'
+                  )
+              );
+        rtags = HtmlReady(htmlText, { mutate: false });
+    }
+
+    return rtags;
+}
+
 export function extractImageLink(json_metadata, body = null) {
     let json = Iterable.isIterable(json_metadata)
         ? json_metadata.toJS()
@@ -29,19 +47,7 @@ export function extractImageLink(json_metadata, body = null) {
 
     // If nothing found in json metadata, parse body and check images/links
     if (!image_link) {
-        let rtags;
-        {
-            const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
-            const htmlText = isHtml
-                ? body
-                : remarkable.render(
-                      body.replace(
-                          /<!--([\s\S]+?)(-->|$)/g,
-                          '(html comment removed: $1)'
-                      )
-                  );
-            rtags = HtmlReady(htmlText, { mutate: false });
-        }
+        const rtags = extractRtags(body);
 
         if (rtags.images) {
             [image_link] = Array.from(rtags.images);
