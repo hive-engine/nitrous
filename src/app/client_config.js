@@ -35,10 +35,11 @@ export const TAG_LIST = fromJSOrdered({
         'homesteading',
         'ecotrain',
     ],
-    foodismedicine: ['healthyeating', 'vegan'],
+    foodismedicine: ['healthyeating', 'vegan', 'keto', 'vegetarian'],
     spirituality: ['mindfulness', 'meditation'],
     somaticarts: ['yoga', 'taichi'],
     education: ['homeschooling'],
+    self: ['arttherapy','selfhelp', 'mentalhealthawareness'],
 });
 export const LIQUID_TOKEN = 'Lotus';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
