@@ -986,14 +986,47 @@ class ReplyEditor extends React.Component {
                             )}
                         </div>
                         {isStory && (
-                            <div className={vframe_section_shrink_class}>
-                                <a href="#" onClick={toggleSideBySide}>
-                                    {(enableSideBySide &&
-                                        tt(
-                                            'reply_editor.disable_sidebyside'
-                                        )) ||
-                                        tt('reply_editor.enable_sidebyside')}
-                                </a>
+                            <div>
+                                <div className={vframe_section_shrink_class}>
+                                    <a href="#" onClick={toggleSideBySide}>
+                                        {(enableSideBySide &&
+                                            tt(
+                                                'reply_editor.disable_sidebyside'
+                                            )) ||
+                                            tt(
+                                                'reply_editor.enable_sidebyside'
+                                            )}
+                                    </a>
+                                </div>
+                                {Array.from(rtags.images).length > 0 && (
+                                    <div className="ReplyEditor__options__cover_image_selector">
+                                        <h6>
+                                            {tt(
+                                                'reply_editor.select_cover_image'
+                                            )}
+                                            :
+                                        </h6>
+                                        <div className="ReplyEditor__options__image_selector">
+                                            {Array.from(rtags.images).map(
+                                                image => {
+                                                    return (
+                                                        <div
+                                                            className="ReplyEditor__options__image_selector__image_container"
+                                                            style={{
+                                                                backgroundImage: `url(${
+                                                                    image
+                                                                })`,
+                                                            }}
+                                                            onClick={
+                                                                onSelectCoverImage
+                                                            }
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                         <div
@@ -1061,36 +1094,6 @@ class ReplyEditor extends React.Component {
                                                         </span>
                                                     )}
                                             </div>
-                                            {Array.from(rtags.images).length >
-                                                0 && (
-                                                <div className="ReplyEditor__options__cover_image_selector">
-                                                    <h6>
-                                                        {tt(
-                                                            'reply_editor.select_cover_image'
-                                                        )}
-                                                        :
-                                                    </h6>
-                                                    <div className="ReplyEditor__options__image_selector">
-                                                        {Array.from(
-                                                            rtags.images
-                                                        ).map(image => {
-                                                            return (
-                                                                <div
-                                                                    className="ReplyEditor__options__image_selector__image_container"
-                                                                    style={{
-                                                                        backgroundImage: `url(${
-                                                                            image
-                                                                        })`,
-                                                                    }}
-                                                                    onClick={
-                                                                        onSelectCoverImage
-                                                                    }
-                                                                />
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            )}
                                             <a
                                                 href="#"
                                                 onClick={

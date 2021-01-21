@@ -4,6 +4,7 @@ import sanitize from 'sanitize-html';
 import { htmlDecode } from 'app/utils/Html';
 import HtmlReady from 'shared/HtmlReady';
 import Remarkable from 'remarkable';
+import _ from 'lodash';
 
 const remarkable = new Remarkable({ html: true, linkify: false });
 
@@ -39,10 +40,11 @@ export function extractImageLink(json_metadata, body = null) {
         ? json_metadata.toJS()
         : json_metadata;
     if (!json) json = {};
+    const jsonImage = _.get(json, 'image', json.get('image'));
     let image_link;
 
     try {
-        image_link = json && json.image ? getValidImage(json.image) : null;
+        image_link = jsonImage ? getValidImage(Array.from(jsonImage)) : null;
     } catch (error) {}
 
     // If nothing found in json metadata, parse body and check images/links
