@@ -40,7 +40,12 @@ export function extractImageLink(json_metadata, body = null) {
         ? json_metadata.toJS()
         : json_metadata;
     if (!json) json = {};
-    const jsonImage = _.get(json, 'image', json.get('image'));
+    let jsonImage;
+    if (typeof json.get === 'function') {
+        jsonImage = json.get('image');
+    } else {
+        jsonImage = _.get(json, 'image');
+    }
     let image_link;
 
     try {
