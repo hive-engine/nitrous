@@ -11,28 +11,8 @@ import { Avatar, ChatList, ChatListItem, Column, Row, Title, Subtitle } from '@l
 class ChatListSelect extends React.PureComponent {
 
     componentDidMount() {
-        this.componentDidUpdate();
-    }
-
-    componentDidUpdate() {
-        const {
-            username,
-            accessToken,
-            chatList,
-            socketState,
-            login,
-            fetchChatList,
-            connectWebsocket,
-            onSelect,
-        } = this.props;
-        if (!accessToken) {
-            login(username);
-        } else {
-            if (!chatList) {
-                fetchChatList();
-            } else if (socketState !== 'ready') {
-                connectWebsocket();
-            }
+        if (!this.props.initiatedChat) {
+            this.props.initiateChat();
         }
     }
 
@@ -73,7 +53,7 @@ class ChatListSelect extends React.PureComponent {
                 <div className='ChatListBackground'>
                     <ChatList style={{overflowY: 'auto'}}>
                         {chatList ? chatList.toJS().map(chat => (
-                            <ChatListItem key={chat.id} onClick={() => onSelect(chat)}>
+                            <ChatListItem key={chat.id} onClick={() => onSelect(chat.id)}>
                                 <Avatar
                                     letter={(chat.name ? chat.name : otherMembers(chat)[0])[0]}
                                     imgUrl={!chat.name && chat.members && otherMembers(chat).length == 1 ? `${imageProxy()}u/${otherMembers(chat)[0]}/avatar/small` : null}
@@ -110,6 +90,7 @@ export default connect(
     (state, ownProps) => {
         const currentAccount = state.user.get('current');
         const username = currentAccount.get('username');
+        const initiatedChat = state.chat.get('initiateChat');
         const accessToken = state.chat.getIn(['accessToken', username]);
         const chatList = state.chat.get('chatList');
         const socketState = state.chat.get('socketState');
@@ -124,14 +105,8 @@ export default connect(
         };
     },
     dispatch => ({
-        login: (username) => {
-            dispatch(chatActions.login({ username }));
-        },
-        fetchChatList: () => {
-            dispatch(chatActions.fetchChatList());
-        },
-        connectWebsocket: () => {
-            dispatch(chatActions.connectWebsocket());
+        initiateChat: () => {
+            dispatch(chatActions.initiateChat());
         },
     }),
 )(ChatListSelect);
