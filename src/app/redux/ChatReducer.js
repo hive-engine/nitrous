@@ -11,6 +11,7 @@ const MARK_READ = 'chat/MARK_READ';
 const FETCH_CHAT_LIST = 'chat/FETCH_CHAT_LIST';
 const RECEIVE_CHAT_LIST = 'chat/RECEIVE_CHAT_LIST';
 const START_CHAT = 'chat/START_CHAT';
+const INITIATE_CHAT = 'chat/INITIATE_CHAT';
 
 const defaultChatState = Map();
 
@@ -88,6 +89,10 @@ export default function reducer(state = defaultChatState, action) {
             return state;
         }
 
+        case INITIATE_CHAT: {
+            return state.set('initiateChat', true);
+        }
+
         default:
             return state;
     }
@@ -148,3 +153,7 @@ export const startChat = payload => ({
     payload,
 });
 
+export const initiateChat = payload => ({
+    type: INITIATE_CHAT ,
+    payload,
+});
