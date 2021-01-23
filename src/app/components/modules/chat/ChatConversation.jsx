@@ -52,6 +52,9 @@ class ChatMain extends React.PureComponent {
     }
 
     componentDidMount() {
+        if (!this.props.initiatedChat) {
+            this.props.initiateChat();
+        }
         this.componentDidUpdate();
         document.addEventListener('mousedown', this.handleClick, false);
     }
@@ -63,18 +66,9 @@ class ChatMain extends React.PureComponent {
             conversation,
             chatMessages,
             socketState,
-            login,
-            fetchChatMessages,
-            connectWebsocket,
             markRead,
         } = this.props;
-        if (!accessToken) {
-            login(username);
-        } else if (!chatMessages) {
-            fetchChatMessages(conversation.id);
-        } else if (socketState !== 'ready') {
-            connectWebsocket();
-        } else if (conversation.unread) {
+        if (accessToken && chatMessages && socketState === 'ready' && conversation.unread) {
             markRead(conversation.id);
         }
         const { newSelectionEnd } = this.state;
@@ -212,16 +206,20 @@ class ChatMain extends React.PureComponent {
 
 export default connect(
     (state, ownProps) => {
-        const conversation = ownProps.conversation;
+        const conversation = ownProps.conversation.toJS();
         const currentAccount = state.user.get('current');
         const username = currentAccount.get('username');
+        const initiatedChat = state.chat.get('initiateChat');
         const accessToken = state.chat.getIn(['accessToken', username]);
         const chatMessages = state.chat.getIn(['chatMessages', conversation.id]);
         const socketState = state.chat.get('socketState');
         const loading = !accessToken || !chatMessages || socketState !== 'ready';
 
         return {
-            ...ownProps,
+            conversation,
+            minimize: ownProps.minimize,
+            showChatList: ownProps.showChatList,
+            initiatedChat,
             accessToken,
             username,
             chatMessages,
@@ -230,14 +228,8 @@ export default connect(
         };
     },
     dispatch => ({
-        login: (username) => {
-            dispatch(chatActions.login({ username }));
-        },
-        fetchChatMessages: (conversationId) => {
-            dispatch(chatActions.fetchChatMessages({ conversationId }));
-        },
-        connectWebsocket: () => {
-            dispatch(chatActions.connectWebsocket());
+        initiateChat: () => {
+            dispatch(chatActions.initiateChat());
         },
         sendChatMessage: (conversationId, to, message) => {
             dispatch(chatActions.sendChatMessage({ conversationId, to, message }));
