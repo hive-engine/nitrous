@@ -118,7 +118,7 @@ export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
     { id: '01EQG1QQ5SNGM0FDJSTX0YNN8H', name: 'Lassecash Chat' },
 ];
-export const APPEND_TRENDING_TAGS_COUNT = 10;
+export const APPEND_TRENDING_TAGS_COUNT = 20;
 export const TRENDING_TAGS_TO_IGNORE = ['leofinance'];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
