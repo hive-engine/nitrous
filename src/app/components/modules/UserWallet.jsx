@@ -208,7 +208,7 @@ class UserWallet extends React.Component {
         if (isMyAccount) {
             balance_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: `https://steem-engine.com/?p=market&t=${
+                link: `https://steem-engine.net/?p=market&t=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
