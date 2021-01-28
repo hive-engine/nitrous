@@ -146,12 +146,10 @@
   }
 
   div.videoWrapper {
-    width: 100%;
-    height: auto;
     position: relative;
+    text-align: center;
 
     iframe {
-      width: 100%;
       left: 0;
       top: 0;
     }
