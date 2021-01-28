@@ -315,7 +315,7 @@ describe('Performance', () => {
     it('threespeakImageLink', () => {
         match(
             threespeakRegex.htmlReplacement,
-            '<a href="https://3speak.co/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+            '<a href="https://3speak.co/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://images.hive.blog/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
         );
     });
     it('twitter', () => {
@@ -386,24 +386,20 @@ const compare = (matching, re, input, output = input, pos = 0) => {
     if (matching) {
         assert(
             m,
-            `No match --> ${input} --> output ${
-                output
-            } --> using ${re.toString()}`
+            `No match --> ${input} --> output ${output} --> using ${re.toString()}`
         );
         // console.log('m', m)
         assert.equal(
             m[pos],
             output,
-            `Unmatched ${m[pos]} --> input ${input} --> output ${
-                output
-            } --> using ${re.toString()}`
+            `Unmatched ${
+                m[pos]
+            } --> input ${input} --> output ${output} --> using ${re.toString()}`
         );
     } else {
         assert(
             !m,
-            `False match --> input ${input} --> output ${
-                output
-            } --> using ${re.toString()}`
+            `False match --> input ${input} --> output ${output} --> using ${re.toString()}`
         );
     }
 };
