@@ -286,4 +286,10 @@ ul.PostsList__summaries > li {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .articles__feature-img img {
+      width: 100%;
+      max-height: 56.25vw;
+      object-fit: cover;
+  }
 }
