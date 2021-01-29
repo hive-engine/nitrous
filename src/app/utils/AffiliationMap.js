@@ -16,7 +16,6 @@ const map = {
     artemislives: 'Pure Thai Natural Products',
     nainaztengra:
         'Unlimited Abundance Blissful Happiness and Unconditional Love',
-    ravenlotus: 'Lotus Curator',
     riverlotus: 'Lotus Curator',
     bynarikode: 'Helpie Curator',
     naturalmedicine: 'Natural Medicine Official',
@@ -25,6 +24,7 @@ const map = {
     tryskele: 'Be The Change',
     'a1-shroom-spores': 'Hemp token owner',
     justinparke: 'Italist',
+    whatamidoing: 'Lotus Lover & Fire Starter',
 };
 
 export function affiliationFromStake(accountName, stake) {
