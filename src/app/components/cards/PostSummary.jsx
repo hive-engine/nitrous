@@ -33,7 +33,7 @@ const CURATOR_VESTS_THRESHOLD = 1.0 * 1000.0 * 1000.0;
 // TODO: document why ` ` => `%20` is needed, and/or move to base fucntion
 const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
 
-const vote_weights = (post) => {
+const vote_weights = post => {
     const rshares = post.get('net_rshares');
     const dn = post.getIn(['stats', 'flag_weight']);
     const up = Math.max(String(parseInt(rshares / 2, 10)).length - 10, 0);
@@ -141,7 +141,9 @@ class PostSummary extends React.Component {
                         <UserNames names={[crossPostedBy]} />{' '}
                         {tt('postsummary_jsx.crossposted')}{' '}
                         <Link
-                            to={`${crossPostCategory}/@${crossPostAuthor}/${crossPostPermlink}`}
+                            to={`${crossPostCategory}/@${crossPostAuthor}/${
+                                crossPostPermlink
+                            }`}
                         >
                             @{crossPostAuthor}/{crossPostPermlink}
                         </Link>
@@ -297,7 +299,7 @@ class PostSummary extends React.Component {
 
         let dots;
         if (net_vests >= CURATOR_VESTS_THRESHOLD) {
-            const _dots = (cnt) => {
+            const _dots = cnt => {
                 return cnt > 0 ? '•'.repeat(cnt) : null;
             };
             const { up, dn } = vote_weights(post);
@@ -394,33 +396,35 @@ class PostSummary extends React.Component {
             );
         }
 
-        if (!image_link) {
+        let listImgMedium;
+        let listImgLarge;
+        if (!image_link && !isReply) {
             image_link = `https://images.hive.blog/u/${author}/avatar`;
+            listImgMedium = `https://images.hive.blog/u/${
+                author
+            }/avatar/medium`;
+            listImgLarge = `https://images.hive.blog/u/${author}/avatar/large`;
+        } else if (image_link) {
+            listImgMedium = proxify(image_link, '256x512');
+            listImgLarge = proxify(image_link, '640x480');
         }
 
         let thumb = null;
         if (!gray && image_link && !ImageUserBlockList.includes(author)) {
-            // on mobile, we always use blog layout style -- there's no toggler
-            // on desktop, we offer a choice of either blog or list
-            // if blogmode is false, output an image with a srcset
-            // which has the 256x512 for whatever the large breakpoint is where the list layout is used
-            // and the 640 for lower than that
-            if (this.props.blogmode) {
-                image_link = proxify(image_link, '640x480');
-                thumb = (
-                    <img className="articles__feature-img" src={image_link} />
-                );
-            } else {
-                const listImg = proxify(image_link, '256x512');
-                thumb = (
+            thumb = (
+                <span className="articles__feature-img-container">
                     <picture className="articles__feature-img">
-                        <source srcSet={listImg} media="(min-width: 1000px)" />
+                        <source
+                            srcSet={listImgMedium}
+                            media="(min-width: 1000px)"
+                        />
+                        <source
+                            srcSet={listImgLarge}
+                            media="(max-width: 999px)"
+                        />
                         <img srcSet={image_link} />
                     </picture>
-                );
-            }
-            thumb = (
-                <span className="articles__feature-img-container">{thumb}</span>
+                </span>
             );
         }
 
