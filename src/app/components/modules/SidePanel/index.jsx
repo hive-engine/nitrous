@@ -96,6 +96,11 @@ const SidePanel = ({
                 internal: true,
             },
             {
+                value: 'lassecashwitness',
+                label: 'Witness',
+                link: 'https://primersion.com/he-witnesses',
+            },
+            {
                 value: 'lassedswap',
                 label: 'Dswap',
                 link: 'https://dswap.trade',
