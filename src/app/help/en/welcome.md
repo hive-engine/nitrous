@@ -8,12 +8,15 @@
 
 Many healing modalities are supported from ayurveda to TCM, qi gong and yoga, as well as homesteading community members who might invest in organic principles or grow plants such as herbs and cannabis as medicine and food. Please read some of the posts, which provide more information about what kind of topics are supported. If in doubt, browse our CURATORS feed, showing reblogs from our curators, or any of our 'best of' editorial posts such as [MINDFUL LIFE](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/mindful-life-curation-patterns-health-habits-food), [LOTUS FOR YOGIS](https://www.naturalmedicine.io/hive-120078/@lotusshares/mudras-outdoor-yoga-trikonasana-and-more), [PLANT POWER](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/happy-plantbased-new-year-tamarind-rice-soul-food-khmer-snacks-sushi-and-more) or [LOTUS LOVE](https://www.naturalmedicine.io/hive-120078/@naturalmedicine/lotus-love-sunday-editorial-let-your-healing-bring-out-the-warrior-in-you). We even have an editorial about astrology and astral events - check it our [here](https://www.naturalmedicine.io/hive-120078/@lotusshares/orrery-astrology-eclipse-conjunction-saturn-jupiter-sun-moon). 
 
+And if you're a wellness blogger of any kind or your blog content suits our community, you can post straight from your blog with the Wordpress plugin EXXP without logging onto the site at all, and still earn rewards! Read all about it [here](https://peakd.com/hive-120078/@lotusshares/exxp-plug-in-posting-straight-from-your-blog-to-hive-and-naturalmedicine-io). 
+
 - [For Vegans](https://peakd.com/hive-120078/@lotusshares/want-to-earn-for-your-vegan-content) 
-- [For Meditators]() - link coming
+- [For Mindful Lives](https://peakd.com/hive-120078/@lotusshares/get-the-earnings-flowing-with-spiritual-and-mindful-content)
 - [For Herbalists](https://peakd.com/hive-120078/@lotusshares/medicine-for-the-people-why-i-get-buzzed-about-lotus-want-to-earn-from-your-own-plant-medicine-content)
 - [For Homesteaders]() - link coming
-- [For Scientists]() - link coming
+- [For Science Minded Health Bloggers](https://peakd.com/hive-120078/@lotusshares/are-you-a-naturopath-a-researcher-a-scientist-or-just-appreciate-the-more-scientific-based-writing-on-health-subjects-from) 
 - [For Yogis](https://www.naturalmedicine.io/yoga/@naturalmedicine/get-paid-instantly-for-writing-about-yoga)
+- [For Foragers & Wildcrafters](https://peakd.com/hive-120078/@lotusshares/earn-for-your-wildcrafting-foraging-funghi-and-mushroom-content-with-natural-medicine)
 
 Our platform enables users to reward and earn LOTUS by publishing or interacting with others on the platform. This token or coin can be exchanged for HIVE (the token for the HIVE blockchain)and into mainstream currencies such as USD.
 
