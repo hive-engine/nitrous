@@ -800,7 +800,7 @@ const PIMP = {
 const GRADNIUM = {
     APP_NAME: 'Gradnium',
     APP_ICON: 'gradnium',
-    APP_ICON_WIDTH: '140px',
+    APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.gradnium.com',
     APP_DOMAIN: 'www.gradnium.com',
