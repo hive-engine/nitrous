@@ -1,4 +1,81 @@
 $themes: (
+  grad-light: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  grad-dark: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
   pimp-light: (
     colorAccent: $color-pimp,
     colorAccentHover: $color-pimp,
@@ -1870,6 +1947,26 @@ $themes: (
       border-color: $color-pimp;
       color: $color-pimp;
       outline-color: $color-pimp;
+    }
+  }
+}
+
+.theme-grad-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-grad-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-grad;
+      color: $color-grad;
+      outline-color: $color-grad;
     }
   }
 }
