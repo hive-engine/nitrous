@@ -31,6 +31,10 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
                 label: tt('g.new'),
                 value: `/created${tag}`,
             },
+            {   
+                label: tt('g.promoted'),    
+                value: `/promoted${tag}`,   
+            },
         ];
 
         if (!topMenu) {
