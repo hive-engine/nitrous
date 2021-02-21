@@ -835,6 +835,7 @@ export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': HIVELIST,
     'frozen-retreat-15997.herokuapp.com': GRADNIUM,
+    'www.gradnium.com': GRADNIUM,
     'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,
     'blogtoken.io': BLOG,
