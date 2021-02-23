@@ -9,12 +9,7 @@ import _ from 'lodash';
 const remarkable = new Remarkable({ html: true, linkify: false });
 
 const getValidImage = array => {
-    return array &&
-        Array.isArray(array) &&
-        array.length >= 1 &&
-        typeof array[0] === 'string'
-        ? array[0]
-        : null;
+    return array && Array.isArray(array) && array.length >= 1 && typeof array[0] === 'string' ? array[0] : null;
 };
 
 export function extractRtags(body = null) {
@@ -23,12 +18,7 @@ export function extractRtags(body = null) {
         const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
         const htmlText = isHtml
             ? body
-            : remarkable.render(
-                  body.replace(
-                      /<!--([\s\S]+?)(-->|$)/g,
-                      '(html comment removed: $1)'
-                  )
-              );
+            : remarkable.render(body.replace(/<!--([\s\S]+?)(-->|$)/g, '(html comment removed: $1)'));
         rtags = HtmlReady(htmlText, { mutate: false });
     }
 
@@ -88,12 +78,12 @@ export function extractBodySummary(body, strip_quotes = false) {
     // Grab only the first line (not working as expected. does rendering/sanitizing strip newlines?)
     desc = desc.trim().split('\n')[0];
 
-    if (desc.length > 140) {
-        desc = desc.substring(0, 140).trim();
+    if (desc.length > 200) {
+        desc = desc.substring(0, 200).trim();
 
         // Truncate, remove the last (likely partial) word (along with random punctuation), and add ellipses
         desc = desc
-            .substring(0, 120)
+            .substring(0, 180)
             .trim()
             .replace(/[,!\?]?\s+[^\s]+$/, '…');
     }
