@@ -420,7 +420,7 @@ const HIVELIST = {
 const HIVEHUSTLERS = {
     APP_NAME: 'HiveHustlers',
     APP_ICON: 'hivehustlers',
-    APP_ICON_WIDTH: '175x',
+    APP_ICON_WIDTH: '175px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.hivehustlers.io',
     APP_DOMAIN: 'www.hivehustlers.io',
@@ -468,7 +468,7 @@ const HIVEHUSTLERS = {
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: null,
     DISCORD_SERVER: '714648560443850783', // HiveHustlers
-    DISCORD_CHANNEL: '744375332122918942', // #hivelist-chat
+    DISCORD_CHANNEL: '714648560443850786', // #hustlers-lounge
 };
 
 const ARCHON = {
