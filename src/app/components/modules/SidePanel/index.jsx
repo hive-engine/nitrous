@@ -257,7 +257,7 @@ const SidePanel = ({
                 label: 'Hivelist',
                 link: 'https://hivelist.io',
             },
-        ]
+        ],
 
         organizational_ASH: [
             {
