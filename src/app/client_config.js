@@ -417,6 +417,60 @@ const HIVELIST = {
     DISCORD_CHANNEL: '744375332122918942', // #hivelist-chat
 };
 
+const HIVEHUSTLERS = {
+    APP_NAME: 'HiveHustlers',
+    APP_ICON: 'hivehustlers',
+    APP_ICON_WIDTH: '175x',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.hivehustlers.io',
+    APP_DOMAIN: 'www.hivehustlers.io',
+    LIQUID_TOKEN: 'Hustler',
+    LIQUID_TOKEN_UPPERCASE: 'HUSTLER',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'hivehustlers',
+	TAG_LIST: fromJSOrdered([
+		'hivehustlers',
+        'hustler',
+        'hivecommerce',
+        'hivelist',
+        'forsale',
+        'services',
+        'gigs',
+        'contests',
+        'ctp',
+        'leofinance',
+        'weedcash',
+        'entrepreneur',
+        'ecommerce',
+        'business',
+        'dcity',
+        'nftshowroom',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'HUSTLER POWER',
+    SITE_DESCRIPTION:
+        'HiveHustlers is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called HUSTLER, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: '',
+    SDC_GTAG_MEASUREMENT_ID: 'G-100QXN02XM',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: null,
+    DISCORD_SERVER: '714648560443850783', // HiveHustlers
+    DISCORD_CHANNEL: '744375332122918942', // #hivelist-chat
+};
+
 const ARCHON = {
     APP_NAME: 'ArchonApp',
     APP_ICON: 'archon',
@@ -833,8 +887,9 @@ const GRADNIUM = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': HIVELIST,
-    'frozen-retreat-15997.herokuapp.com': GRADNIUM,
+    'localhost:8080': HIVEHUSTLERS,
+    'frozen-retreat-15997.herokuapp.com': HIVEHUSTLERS,
+    'www.hivehustlers.io': HIVEHUSTLERS,
     'www.gradnium.com': GRADNIUM,
     'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,

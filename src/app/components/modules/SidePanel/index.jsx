@@ -231,6 +231,33 @@ const SidePanel = ({
                 link: 'https://discord.gg/ZapSfYj',
             },
         ],
+        organizational_HUSTLER: [
+            {
+                value: 'Hustler_chat',
+                label: 'HustlerChat',
+                link: 'https://www.hivehustlers.com/hustlerchat/',
+            },
+            {
+                value: 'Hustler_resources',
+                label: 'Resource Library',
+                link: 'https://www.hivehustlers.com/hustler-resources/',
+            },
+            {
+                value: 'Hustler_tokenecon',
+                label: 'Token Economy',
+                link: 'https://www.hivehustlers.com/token-economy/',
+            },
+            {
+                value: 'Hustler_hivecommerce',
+                label: 'Hivecommerce',
+                link: 'https://hivecommerce.org/',
+            },
+            {
+                value: 'Hustler_hivelist',
+                label: 'Hivelist',
+                link: 'https://hivelist.io',
+            },
+        ]
 
         organizational_ASH: [
             {
