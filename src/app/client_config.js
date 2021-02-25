@@ -471,6 +471,43 @@ const HIVEHUSTLERS = {
     DISCORD_CHANNEL: '714648560443850786', // #hustlers-lounge
 };
 
+const REVELATION = {
+    APP_NAME: 'ProjectRevelation',
+    APP_ICON: 'projectrevelation',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.projectrevelation.io/',
+    APP_DOMAIN: 'www.projectrevelation.io',
+    LIQUID_TOKEN: 'Revx',
+    LIQUID_TOKEN_UPPERCASE: 'REVX',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'revx',
+	TAG_LIST: fromJSOrdered([
+		'revx',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'REVX POWER',
+    SITE_DESCRIPTION:
+        'ProjectRevolution is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called REVX, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: '',
+    SDC_GTAG_MEASUREMENT_ID: 'G-KR1KJL19KV',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: null,
+}
+
 const ARCHON = {
     APP_NAME: 'ArchonApp',
     APP_ICON: 'archon',
@@ -888,7 +925,8 @@ const GRADNIUM = {
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': HIVEHUSTLERS,
-    'frozen-retreat-15997.herokuapp.com': HIVEHUSTLERS,
+    'frozen-retreat-15997.herokuapp.com': REVELATION,
+    'www.projectrevelation.io': REVELATION,
     'www.hivehustlers.io': HIVEHUSTLERS,
     'www.gradnium.com': GRADNIUM,
     'www.pimpstudio.cash': PIMP,
