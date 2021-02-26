@@ -409,6 +409,7 @@ const HIVELIST = {
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: 'https://hivelist.github.io/',
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-34',
+    COMMUNITY_CATEGORY: 'hive-150840',
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
@@ -469,6 +470,7 @@ const HIVEHUSTLERS = {
     CHAT_CONVERSATIONS: null,
     DISCORD_SERVER: '714648560443850783', // HiveHustlers
     DISCORD_CHANNEL: '714648560443850786', // #hustlers-lounge
+    COMMUNITY_CATEGORY: 'hive-183630',
 };
 
 const REVELATION = {
@@ -507,6 +509,7 @@ const REVELATION = {
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: null,
     APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: 'hive-198141',
 };
 
 const VIBES = {
@@ -545,6 +548,7 @@ const VIBES = {
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: null,
     APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: 'hive-175836',
 };
 
 const ARCHON = {
@@ -582,6 +586,7 @@ const ARCHON = {
     CHAT_CONVERSATIONS: [
         { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
     ],
+    COMMUNITY_CATEGORY: 'hive-177956',
 };
 
 const DBLOG = {
@@ -960,6 +965,7 @@ const GRADNIUM = {
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: [],
     APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: 'hive-101093',
 };
 
 const POB = {
@@ -995,6 +1001,7 @@ const POB = {
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: [],
     APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: 'hive-150329',
 };
 
 export const CONFIG_MAP = {
