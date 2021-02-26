@@ -1000,7 +1000,8 @@ const POB = {
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': HIVEHUSTLERS,
-    'frozen-retreat-15997.herokuapp.com': VIBES,
+    'frozen-retreat-15997.herokuapp.com': POB,
+    'www.proofofbrain.io': POB,
     'www.musicforlife.io': VIBES,
     'www.projectrevelation.io': REVELATION,
     'www.hivehustlers.io': HIVEHUSTLERS,
