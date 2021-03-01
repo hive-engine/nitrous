@@ -657,10 +657,10 @@ class ReplyEditor extends React.Component {
             defaultPayoutType,
             payoutType,
             beneficiaries,
-            hive,
             hostConfig,
             maxAcceptedPayout,
         } = this.props;
+        const hive = this.props.hive !== false && hostConfig['PREFER_HIVE'];
         const {
             submitting,
             valid,
@@ -995,7 +995,7 @@ class ReplyEditor extends React.Component {
                                                         }
                                                     </div>
                                                 )}
-                                            <div>
+                                            {(this.props.payoutType === '0%' || this.props.payoutType === '100%') && (<div>
                                                 {tt('g.rewards')}
                                                 {': '}
                                                 {this.props.payoutType ===
@@ -1008,7 +1008,7 @@ class ReplyEditor extends React.Component {
                                                     tt(
                                                         'reply_editor.power_up_100'
                                                     ) + `(on ${hive ? 'Hive' : 'Steem'})`}
-                                            </div>
+                                            </div>)}
                                             <div>
                                                 {beneficiaries &&
                                                     beneficiaries.length >
