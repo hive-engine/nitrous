@@ -992,7 +992,8 @@ const POB = {
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [proofofbrain.io](${POST_URL})</sub></center>',
     COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'G-TESG0YWB7G',
@@ -1002,6 +1003,7 @@ const POB = {
     CHAT_CONVERSATIONS: [],
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: 'hive-150329',
+    POSTED_VIA_NITROUS_ICON: 'proofofbrain',
 };
 
 export const CONFIG_MAP = {

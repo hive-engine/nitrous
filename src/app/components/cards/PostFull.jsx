@@ -305,6 +305,7 @@ class PostFull extends React.Component {
             POSTED_VIA_NITROUS_ICON,
             COMMUNITY_CATEGORY,
             SHOW_AUTHOR_RECENT_POSTS,
+            PREFER_HIVE,
         } = hostConfig;
         if (!post) return null;
         const communityName = community ? community.get('name') : null;
@@ -319,8 +320,8 @@ class PostFull extends React.Component {
             cross_post_author: crossPostAuthor,
             cross_post_permlink: crossPostPermlink,
             cross_post_category: crossPostCategory,
-            hive,
         } = content;
+        const hive = content.hive === false ? content.hive : PREFER_HIVE;
         const jsonMetadata = showReply ? null : post.get('json_metadata');
         const link = `/${category}/@${author}/${permlink}`;
         let app_info = '';
