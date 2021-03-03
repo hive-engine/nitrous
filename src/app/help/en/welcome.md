@@ -1,7 +1,7 @@
 
 <div style="text-align: center;">
 
-![](https://i.imgur.com/nxeSc65.png)
+![](https://imgur.com/UvdGqWd.png)
 </div>
 
 **Natural Medicine is a social media platform for enthusiasts of natural health; from herbalism and essential oils, food as medicine, meditation and spirituality - as well as the relationship of human beings to the natural world through wild-crafting, permaculture and other 'healthy' earth centered practices.**
