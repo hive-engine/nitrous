@@ -66,7 +66,7 @@
     }
   },
   "video_ads_enabled": null,
-  "gpt_enabled": false,
+  "gpt_enabled": true,
   "gpt_basic_slots": {
     "bottom-of-post": {
       "path": "/21784675435/steemit_bottom-of-post",
