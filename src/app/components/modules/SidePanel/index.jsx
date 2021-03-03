@@ -70,9 +70,19 @@ const SidePanel = ({
         external: [],
         organizational: [
             {
+                value: 'home',
+                label: 'Home',
+                link: 'https://naturalmedicine.app',
+            },
+            {
                 value: 'welcome',
                 label: tt('navigation.welcome'),
                 link: `/welcome`,
+            },
+            {
+                value: 'lotuschat',
+                label: 'LotusChat',
+                link: 'https://naturalmedicine.app/lotuschat',
             },
             {
                 value: 'discord',
