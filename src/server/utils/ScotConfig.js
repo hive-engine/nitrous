@@ -67,6 +67,10 @@ ScotConfig.prototype.refresh = async function() {
         );
         scotConfig.forEach(c => {
             if (configTokens.has(c.token)) {
+                if (c.token === 'PIMP' && not c['hive_engine_enabled']) {
+                    // Only use hive side of PIMP token
+                    return;
+                }
                 const scotMinerTokens = Object.keys(JSON.parse(c.miner_tokens));
 
                 scotConfigMap[c.token] = c;

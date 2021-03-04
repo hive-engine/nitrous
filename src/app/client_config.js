@@ -233,6 +233,43 @@ const BLOG = {
     ],
 };
 
+const PIMP = {
+    APP_NAME: 'PimpToken',
+    APP_ICON: 'pimptoken',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://pimp.media',
+    APP_DOMAIN: 'pimp.media',
+    LIQUID_TOKEN: 'Pimp',
+    LIQUID_TOKEN_UPPERCASE: 'PIMP',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'pimp',
+    TAG_LIST: fromJSOrdered(['pimp']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'PIMP POWER',
+    SITE_DESCRIPTION:
+        'PimpToken is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called PIMP, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-NNF38J0317',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    CHAT_CONVERSATIONS: [
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
+    APPEND_TRENDING_TAGS_COUNT: 10,
+}
+
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': BLOG,
@@ -270,6 +307,7 @@ export const CONFIG_MAP = {
     },
     'foodiesunite.net': FOODIE,
     'weedcash.network': WEEDCASH,
+    'pimp.media': PIMP,
 };
 
 // FIXME figure out best way to do this on both client and server from env
