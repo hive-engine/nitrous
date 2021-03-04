@@ -158,23 +158,6 @@ class PostsIndexLayout extends React.Component {
                             <ReviveAd adKey="sidebar_right" />
                         </div>
                     ) : null}
-                    {scotTokenSymbol === 'INFOWARS' && (
-                        <iframe
-                            width="320"
-                            height="200"
-                            src="https://www.youtube.com/embed/rbL8Mur9ejk"
-                            frameBorder="0"
-                            allowFullScreen
-                        />
-                    )}
-                    {scotTokenSymbol === 'KANDA' && (
-                        <a href="https://discord.telokanda.com">
-                            <img
-                                width="320"
-                                src="/images/telokandabanner.png"
-                            />
-                        </a>
-                    )}
                 </aside>
 
                 <aside className="c-sidebar c-sidebar--left">
