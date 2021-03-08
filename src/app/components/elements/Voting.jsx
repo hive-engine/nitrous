@@ -270,7 +270,7 @@ class Voting extends React.Component {
         const applyRewardsCurve = r =>
             Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
             rewardData.reward_pool /
-            rewardData.pending_rshares;
+            (r + rewardData.pending_rshares);
 
         const rsharesTotal = active_votes
             ? active_votes
