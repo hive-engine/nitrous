@@ -267,10 +267,10 @@ class Voting extends React.Component {
             (getDate(last_payout) < getDate(cashout_time) ||
                 scot_pending_token > 0);
 
-        const applyRewardsCurve = r =>
-            Math.pow(Math.max(0, r), rewardData.author_curve_exponent) *
-            rewardData.reward_pool /
-            (r + rewardData.pending_rshares);
+        const applyRewardsCurve = r => {
+            const curvedRshare = Math.pow(Math.max(0, r), rewardData.author_curve_exponent);
+            return curvedRshare * rewardData.reward_pool /
+            (curvedRshare + rewardData.pending_rshares);
 
         const rsharesTotal = active_votes
             ? active_votes
