@@ -271,6 +271,7 @@ class Voting extends React.Component {
             const curvedRshare = Math.pow(Math.max(0, r), rewardData.author_curve_exponent);
             return curvedRshare * rewardData.reward_pool /
             (curvedRshare + rewardData.pending_rshares);
+        };
 
         const rsharesTotal = active_votes
             ? active_votes
