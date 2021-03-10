@@ -211,14 +211,14 @@ class ReplyEditor extends React.Component {
                     (!values.title || values.title.trim() === ''
                         ? tt('g.required')
                         : values.title.length > 255
-                          ? tt('reply_editor.shorten_title')
-                          : null),
+                        ? tt('reply_editor.shorten_title')
+                        : null),
                 category: isStory && validateCategory(values.category, !isEdit),
                 body: !values.body
                     ? tt('g.required')
                     : values.body.length > maxKb * 1024
-                      ? tt('reply_editor.exceeds_maximum_length', { maxKb })
-                      : null,
+                    ? tt('reply_editor.exceeds_maximum_length', { maxKb })
+                    : null,
             }),
         });
     }
@@ -633,8 +633,7 @@ class ReplyEditor extends React.Component {
                             )}
                         </div>
                         <div className={vframe_section_shrink_class}>
-                            {isStory &&
-                                !isEdit && (
+                            {isStory && !isEdit && (
                                     <div className="ReplyEditor__options">
                                         <div>
                                             <div>
@@ -988,15 +987,41 @@ export default formId =>
                     return;
                 }
 
-                const metaTags = allTags(
-                    category,
-                    originalPost.category,
-                    rtags.hashtags
+				const formCategories = OrderedSet(
+                    category
+                        ? category
+                              .trim()
+                              .replace(/#/g, '')
+                              .split(/ +/)
+                        : []
                 );
+
+                const rootCategory =
+                    originalPost && originalPost.category
+                        ? originalPost.category
+                        : SCOT_TAG_FIRST
+                        ? SCOT_TAG
+                        : formCategories.first();
+                let allCategories = OrderedSet([...formCategories.toJS()]);
+                if (/^[-a-z\d]+$/.test(rootCategory))
+                    allCategories = allCategories.add(rootCategory);
+
+                let postHashtags = [...rtags.hashtags];
+                // "- allCategories.includes(SCOT_TAG) ? 0 : 1" to save the last tag space for SCOT_TAG
+                while (
+                    allCategories.size <
+                    MAX_TAG - allCategories.includes(SCOT_TAG)
+                        ? 0
+                        : 1 && postHashtags.length > 0
+                ) {
+                    allCategories = allCategories.add(postHashtags.shift());
+                }
+                // Add scot tag
+                allCategories = allCategories.add(SCOT_TAG);
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
-                if (metaTags.size) meta.tags = metaTags.toJS();
+                if (allCategories.size) meta.tags = allCategories.toJS();
                 else delete meta.tags;
                 if (rtags.usertags.size) meta.users = rtags.usertags;
                 else delete meta.users;
@@ -1073,8 +1098,8 @@ export default formId =>
                                                 a.username < b.username
                                                     ? -1
                                                     : a.username > b.username
-                                                      ? 1
-                                                      : 0
+                                                    ? 1
+                                                    : 0
                                         )
                                         .map(elt => ({
                                             account: elt.username,

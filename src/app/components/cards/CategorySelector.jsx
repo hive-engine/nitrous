@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
-import { APP_MAX_TAG } from 'app/client_config';
+import { 
+	APP_MAX_TAG,
+	SCOT_TAG,
+	MAIN_TAG_LIST,
+} from 'app/client_config';
 
 const MAX_TAG = APP_MAX_TAG || 10;
 
@@ -71,36 +75,25 @@ class CategorySelector extends React.Component {
 
         const impProps = { ...this.props };
         const categoryInput = (
-            <span>
-                <input
-                    type="text"
-                    {...cleanReduxInput(impProps)}
-                    ref="categoryRef"
-                    tabIndex={tabIndex}
-                    disabled={disabled}
-                    autoCapitalize="none"
-                />
-                {categories.map((c, idx) => {
-                    return (
-                        <span key={idx}>
-                            <a
-                                key={idx}
-                                value={c}
-                                onClick={() => {
-                                    if (!impProps.value.includes(c)) {
-                                        impProps.onChange(
-                                            `${impProps.value} ${c}`.trim()
-                                        );
-                                    }
-                                }}
-                            >
-                                #{c}
-                            </a>{' '}
-                            &nbsp;
-                        </span>
-                    );
-                })}
-            </span>
+            <div>
+				<span>
+					<input
+						type="text"
+						{...cleanReduxInput(impProps)}
+						ref="categoryRef"
+						tabIndex={tabIndex}
+						disabled={disabled}
+						autoCapitalize="none"
+					/>
+				</span>
+				Main Tag(Required)
+                <br />
+                {this.categoryTag(MAIN_TAG_LIST, impProps)}
+                <br />
+				Topic Tag(Required)
+                <br />
+				{this.categoryTag(TAG_LIST, impProps)}
+            </div>
         );
 
         const categorySelect = (
