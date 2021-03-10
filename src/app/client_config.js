@@ -14,6 +14,7 @@ export const APP_DOMAIN = 'www.steemzzang.com';
 export const SCOT_TAG = 'zzan';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
+export const MAIN_TAG_LIST = fromJSOrdered(['zzan']);
 export const TAG_LIST = fromJSOrdered([
     'zzan',
     'notice',
