@@ -672,7 +672,7 @@ export const SITE_DESCRIPTION =
 export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
 
 // Revive Ads
-export const NO_ADS_STAKE_THRESHOLD = 500000;
+export const NO_ADS_STAKE_THRESHOLD = 50000000000;
 export const REVIVE_ADS = {
     header_banner: {
         zoneId: '1848',
