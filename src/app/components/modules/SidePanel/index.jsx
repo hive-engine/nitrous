@@ -61,7 +61,7 @@ const SidePanel = ({
             {
                 value: 'richlist',
                 label: 'Rich List',
-                link: `https://tribes.rocks/lens/?page=rich_list&token=${
+                link: `https://happyberrysboy.github.io/happigon.github.io/#/token/${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
