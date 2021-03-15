@@ -583,7 +583,7 @@ export default connect(
     state => {
         const walletUrl = state.app.get('walletUrl');
         const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
-        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE'], true);
         const disableHive = state.app.getIn(['hostConfig', 'DISABLE_HIVE']);
         const showLoginWarning = state.user.get('show_login_warning');
         const loginError = state.user.get('login_error');

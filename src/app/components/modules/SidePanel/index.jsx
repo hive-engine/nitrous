@@ -386,7 +386,7 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
-        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE'], true);
         return {
             walletUrl,
             scotTokenSymbol,
