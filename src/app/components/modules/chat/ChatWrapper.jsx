@@ -41,7 +41,7 @@ class ChatWrapper extends React.PureComponent {
     }
 
     render() {
-        const { preferHive, defaultChatConversations, nightmodeEnabled } = this.props;
+        const { preferHive, defaultChatConversations, chatList, nightmodeEnabled } = this.props;
         const { selectedConversationId, newConversation } = this.state;
         const setConversation = (selectedConversationId) => this.setState({ selectedConversationId });
         const setNewConversation = (newConversation) => this.setState({ newConversation });
