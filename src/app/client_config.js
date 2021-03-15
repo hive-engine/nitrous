@@ -1000,7 +1000,9 @@ const POB = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: [],
+    CHAT_CONVERSATIONS: [
+        { id: '01F0VCHCMREVR281TN6X6N51N2', name: 'Proof of Brain' },
+    ],
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
