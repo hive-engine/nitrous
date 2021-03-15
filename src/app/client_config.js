@@ -149,7 +149,8 @@ const FOODIE = {
     },
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '\n\n---\n\n<center><sub>Posted via [foodiesunite.net](${POST_URL})</sub></center>',
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [foodiesunite.net](${POST_URL})</sub></center>',
     COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: null,
@@ -257,8 +258,10 @@ const PIMP = {
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [pimp.media](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [pimp.media](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'G-NNF38J0317',
     DISABLE_STEEM: true,
@@ -268,7 +271,8 @@ const PIMP = {
         { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
     ],
     APPEND_TRENDING_TAGS_COUNT: 10,
-}
+    COMMUNITY_CATEGORY: 'hive-111011',
+};
 
 export const CONFIG_MAP = {
     // testing heroku/local options
