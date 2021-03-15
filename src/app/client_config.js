@@ -18,6 +18,7 @@ export const SCOT_TAG = 'bilpcoin';
 export const TAG_LIST = fromJSOrdered([
     'money',
     'music',
+    'nfts',
     'gaming',
     'crypto',
     'life',
@@ -121,7 +122,7 @@ export const DISABLE_BLACKLIST = false;
 export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
 ];
-export const APPEND_TRENDING_TAGS_COUNT = 0;
+export const APPEND_TRENDING_TAGS_COUNT = 10;
 export const TRENDING_TAGS_TO_IGNORE = [];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE

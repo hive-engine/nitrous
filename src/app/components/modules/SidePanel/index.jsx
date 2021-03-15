@@ -65,6 +65,11 @@ const SidePanel = ({
                     useHive ? 'hive' : 'steem'
                 }-engine.com/?p=market&t=${scotTokenSymbol}`,
             },
+            {
+                value: 'leodex',
+                label: 'LeoDex',
+                link: 'https://leodex.io/market/BPC',
+            },
         ],
 
         external: [
@@ -101,9 +106,19 @@ const SidePanel = ({
                 link: 'https://discord.gg/evpRvx5',
             },
             {
-                value: 'twitter',
-                label: 'Twitter',
+                value: 'twitter_bilpcoin',
+                label: 'Twitter @bilpcoin',
                 link: 'https://twitter.com/bilpcoin',
+            },
+            {
+                value: 'twitter_bilpcoinc',
+                label: 'Twitter @bilpcoinc',
+                link: 'https://twitter.com/bilpcoinc',
+            },
+            {
+                value: 'twitter_bilpcoinpromo',
+                label: 'Twitter @bilpcoinpromo',
+                link: 'https://twitter.com/bilpcoinpromo',
             },
             {
                 value: 'instagram',
