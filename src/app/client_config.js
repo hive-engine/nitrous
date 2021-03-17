@@ -13,7 +13,7 @@ export const APP_ICON = 'lassecash';
 export const APP_URL = 'https://www.lassecash.com';
 export const APP_DOMAIN = 'www.lassecash.com';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 10;
+export const APP_MAX_TAG = 20;
 export const SCOT_TAG = 'lassecash';
 export const TAG_LIST = fromJSOrdered([]);
 export const LIQUID_TOKEN = 'Lassecash';
