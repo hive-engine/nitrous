@@ -657,10 +657,10 @@ class ReplyEditor extends React.Component {
             defaultPayoutType,
             payoutType,
             beneficiaries,
-            hive,
             hostConfig,
             maxAcceptedPayout,
         } = this.props;
+        const hive = this.props.hive !== false && hostConfig['PREFER_HIVE'];
         const {
             submitting,
             valid,
@@ -995,7 +995,7 @@ class ReplyEditor extends React.Component {
                                                         }
                                                     </div>
                                                 )}
-                                            <div>
+                                            {(this.props.payoutType === '0%' || this.props.payoutType === '100%') && (<div>
                                                 {tt('g.rewards')}
                                                 {': '}
                                                 {this.props.payoutType ===
@@ -1004,16 +1004,11 @@ class ReplyEditor extends React.Component {
                                                         'reply_editor.decline_payout'
                                                     )}
                                                 {this.props.payoutType ===
-                                                    '50%' &&
-                                                    (hive
-                                                        ? '50% HBD / 50% HP'
-                                                        : '50% SBD / 50% SP')}
-                                                {this.props.payoutType ===
                                                     '100%' &&
                                                     tt(
                                                         'reply_editor.power_up_100'
-                                                    )}
-                                            </div>
+                                                    ) + `(on ${hive ? 'Hive' : 'Steem'})`}
+                                            </div>)}
                                             <div>
                                                 {beneficiaries &&
                                                     beneficiaries.length >
