@@ -565,7 +565,7 @@ class ReplyEditor extends React.Component {
                                                     : ''
                                             }
                                             disabled={loading}
-                                            rows={isStory ? 10 : 3}
+                                            rows={isStory ? 10 : 7}
                                             placeholder={
                                                 isStory
                                                     ? tt('g.write_your_story')
