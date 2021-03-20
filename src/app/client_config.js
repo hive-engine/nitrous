@@ -14,7 +14,7 @@ export const APP_DOMAIN = 'www.steemzzang.com';
 export const SCOT_TAG = 'zzan';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
-export const MAIN_TAG_LIST = fromJSOrdered(['zzan']);
+export const MAIN_TAG_LIST = fromJSOrdered(['hive-160196']);
 export const TAG_LIST = fromJSOrdered([
     'zzan',
     'notice',
@@ -127,6 +127,6 @@ export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
 export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
 export const SHOW_AUTHOR_RECENT_POSTS = true;
 export const POSTED_VIA_NITROUS_ICON = 'app'; // put corresponding svg in src/app/assets/icons/___.svg
-export const COMMUNITY_CATEGORY = '';
+export const COMMUNITY_CATEGORY = 'hive-160196';
 export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [];
