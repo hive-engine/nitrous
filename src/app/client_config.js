@@ -623,7 +623,7 @@ const GRADNIUM = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: [],
+    CHAT_CONVERSATIONS: null,
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: 'hive-101093',
 };
@@ -668,10 +668,47 @@ const POB = {
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
 };
 
+const CINETV = {
+    APP_NAME: 'CineTV',
+    APP_ICON: 'cinetv',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.cinetv.io',
+    APP_DOMAIN: 'www.cinetv.io',
+    LIQUID_TOKEN: 'Cine',
+    LIQUID_TOKEN_UPPERCASE: 'CINE',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'cinetv',
+    TAG_LIST: fromJSOrdered(['cine', 'cinetv']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'CINE POWER',
+    SITE_DESCRIPTION:
+        'CineTV is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called CINE, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-7GY47S41VV',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: null,
+    CHAT_CONVERSATIONS: null,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': HIVEHUSTLERS,
-    'frozen-retreat-15997.herokuapp.com': POB,
+    'localhost:8080': CINETV,
+    'frozen-retreat-15997.herokuapp.com': CINETV,
+    'www.cinetv.io': CINETV,
     'www.proofofbrain.io': POB,
     'www.musicforlife.io': VIBES,
     'www.projectrevelation.io': REVELATION,
