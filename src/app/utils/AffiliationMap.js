@@ -1,14 +1,4 @@
 const map = {
-    FOODIE: {
-        jasonbu: 'SuperFoodie',
-        lmon: 'SuperFoodie',
-        foodiesunite: 'Foodie Team',
-        foodiebountiful: 'Foodie Team',
-    },
-
-    PESOS: {
-        yehey: 'Founder',
-    },
 
     //steemit
     elipowell: 'Steemit',
