@@ -1,51 +1,47 @@
-<center><iframe width="560" height="315" src="https://www.youtube.com/embed/vHp5UkPBx70" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vHp5UkPBx70" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<center>![](https://images.hive.blog/DQmbQcu815Zc67p6WN3Xvoy856aehQzQkNAXwZ5A3Z43Csz/image.png)</center>
+<center>![image.png](https://images.hive.blog/DQmQTeTuBSYQv4G9u5nS2YKzujG18tiy21nqa2tEV3JuJmx/image.png)</center>
 
 
 Welcome to LASSECASH
---
-
-We created this place to be a more personal space for smaller content creators and bloggers.
-
-Here you have the option to be part of something from the start and getting a decent stake does not cost much, here in the beginning stages.
-
-LASSECASH is like HIVE, you can blog from either www.lassecash.com, hive.blog or any other condenser site, as long as you use the ‘lassecash’ tag in your post’s tags box, then the post will appear at the HIVE blokchain and on the LASSECASH condenser site.
-
-Purpose of LASSECASH
---
-
-Rewarding truth content, social interaction and personal posts. The original idea was to create a space for anarcho capitalists to monetize their content, but the first half year of LASSECASH’s life has shown that we attract all kinds of people, that just want to have fun and earn money at the same time. For this reason, we think that LASSECASH reward social interaction more then truth content.
+-
+Rewarding anarchy, crypto and truth.
 
 
-<center>![](https://images.hive.blog/DQmR7EaUFzuT1CLFZEj5mpiv13FLEYC2uDJwff854QGDYZB/image.png)</center>
 
-Distribution
---
-We operate with the K.I.S.S. model (Keep It Simple Stupid). So the distribution is quite simple. Initially 20 million is the first 10 years of rewards, distributed from @lassecash via the scotbot.
 
-20 million is for rewards after 10 years period. The reason for this, is that blockchain tech evolve so fast, so it is good to have these extra tokens set aside for after the first 10 years.
 
-The Scotbot is a creation of the HIVE ENGINE team and they distribute LASSECASH for each post.
+Static inflation first 2 years (until 24/4-2021)
+-
+Inflation until now, per year: 1750000 LASSECASH (given 100% via proof of brain).
 
-11 million is allocated for promotion and profit for Lasse Ehlers (@lasseehlers). As we write this there are ~9.4 million in @lasseehlers's account, so already ~1.6 million has been used for promotions.
+Dynamic inflation in the future
+-
+Inflation will be dynamically decided by tribe leader per the 24/4 – 2021 (the first day of year 3), probably changed each year. If new stuff comes out, like DeFi on Hive Engine, then it can be changed anytime to provide the best possible features for the Tribe. Inflation is dynamically changed in a responsible way, to create the best conditions and hopefully higher prices for LASSECASH tribe token.
 
-If HIVE SMTs or any other project show a better technology then current HIVE ENGINE tribes, then LASSECASH can be swapped to such a new technology, but for now we are very happy with the HIVE ENGINE tribe technology.
+Per 24/4 - 2021 (the first day of year 3), the inflation schedule will be:
 
-If you compare to any other tribe, even the APPICS token, then they all have a huge token supply, often issued millions or billions more then LASSECASH. This is in our view not serious, as scarcity of a token is very important for the tribemembers valutation of the token. As an example Bitcoin has 21 million max coins ever and with LASSECASH its MAX 51 millions tokens ever. In effect LASSECASH is much more scares then HIVE and all other tribes (including APPICS), which all have an ever expanding token supply with inflation.
 
-Scotbot parameters
---
+<center>![image.png](https://images.hive.blog/DQmWJvSkg24EYjx64Fv87bbZJyjMXgF5mJsC1xQAdW6zSFG/image.png)</center>
 
-We tweaked the parameters of the Scotbot to be more successful then HIVE. The powerdown time is 26 payments every 7 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
+
+
+Notes on distribution
+-
+
+If you compare to any other tribe, then they all have a huge token supply, often issued millions or billions more then LASSECASH. This is in our view not serious, as scarcity of a token is very important for the tribemembers valutation of the token. As an example Bitcoin has 21 million max coins ever and with LASSECASH its MAX 51 millions tokens ever. In effect LASSECASH is much more scares then HIVE and all other tribes, which all have an ever expanding token supply with potentially a lot of inflation.
+
+
+Scotbot parameters and liquidity rewards
+-
+We tweaked the parameters of the Scotbot to be more successful then HIVE and all other tribes. The powerdown time is 26 payments every 7 day over 6 months. This is made to incentivize longterm mentality. Furthermore the payout ration is 90% LASSECASH POWER and 10% LASSECASH, this is another huge difference from HIVE.
+
+Diesel pool rewards are payout on a weekly basis, depending on how much liquidity you provide to the SWAP.HIVE/LASSECASH pool.
 
 Lasse as leader of LASSECASH
---
+-
+Lasse Ehlers is naturally the leader of the LASSECASH tribe and will be the one to resolve any potential dispute or drama, since he has the biggest stake.
 
-Lasse Ehlers is naturally the leader of the LASSECASH tribe and will be the one to resolve any dispute or drama, since he has the biggest stake.
-
-
-
-<center>https://images.hive.blog/640x0/https://images.hive.blog/DQmbFnDzZBm8PTQdkCitomayGtqGRPYrZvaBrY1LxHPx1SB/image.png</center>
-
+<center>
+![image.png](https://images.hive.blog/DQmXSzyGpWD7bcCCLQw5ZiAP1GFG4bDDk4FZot4tvGvYqRs/image.png)
+</center>
