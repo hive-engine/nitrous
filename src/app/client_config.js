@@ -558,6 +558,41 @@ const DSOCIAL = {
     DISABLE_HIVE: true,
 };
 
+const PHOTO = {
+    APP_NAME: 'PhotoStreem',
+    APP_ICON: 'photostreem',
+    APP_ICON_WIDTH: '150px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.photostreem.com/',
+    APP_DOMAIN: 'www.photostreem.com',
+    LIQUID_TOKEN: 'Photo',
+    LIQUID_TOKEN_UPPERCASE: 'PHOTO',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'photo',
+    TAG_LIST: fromJSOrdered([
+        'photo',
+    ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'PHOTO POWER',
+    SITE_DESCRIPTION:
+        'PhotoStreem is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called PHOTO, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    PINNED_POSTS_URL: null,
+    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-15',
+    DISABLE_HIVE: true,
+    APPEND_TRENDING_TAGS_COUNT: 10,
+};
+
 const PIMP = {
     APP_NAME: 'PimpStudio',
     APP_ICON: 'pimpstudio',
@@ -742,8 +777,9 @@ const BROADHIVE = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': BROADHIVE,
-    'frozen-retreat-15997.herokuapp.com': BROADHIVE,
+    'localhost:8080': PHOTO,
+    'frozen-retreat-15997.herokuapp.com': PHOTO,
+    'www.photostreem.com': PHOTO,
     'www.broadhive.org': BROADHIVE,
     'www.cinetv.io': CINETV,
     'www.proofofbrain.io': POB,
