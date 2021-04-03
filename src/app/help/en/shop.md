@@ -1,19 +1,14 @@
 T-shirts for sale. The design is made by Lasse Ehlers @lasseehlers and Carlos Serrano @zaxan . 
 
-
 T-shirt #1, for sale for $50.
 
-![image.png](https://images.hive.blog/DQmWAUFMs7eXv7JHjWHA1Hw1gT4ApozL4thgraXFeVj7rTP/image.png)
+![image.png](https://images.hive.blog/DQmPQBpqGuEqnHhftAdTXPDqhH4WRmo2DP3RtGsCSg8Hobj/image.png)
 
 T-shirt #2, for sale for $50.
 
-![image.png](https://images.hive.blog/DQmbUCpy9WBWervqkHxm1JfL9rGoag4BKSjgtddn1gwZgkZ/image.png)
-
-T-shirt #3, for sale for $50.
-
 ![image.png](https://images.hive.blog/DQmQu6tyxzup2KCC9WgjB2Ur24vS2eznNn35SMdarNujQw1/image.png)
 
-T-shirt #4, for sale for $50.
+T-shirt #3, for sale for $50.
 
 ![image.png](https://images.hive.blog/DQmSCZ391NAQcsE8Ss2sfL2q26mgBk8Apjer6Eb6mf4HtBv/image.png)
 
