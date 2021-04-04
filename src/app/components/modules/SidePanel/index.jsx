@@ -103,11 +103,6 @@ const SidePanel = ({
                 link: 'https://www.cryptex24.io/registration?ref=cfdb40ad',
             },
             {
-                value: 'ASH_richamster',
-                label: 'Richamster',
-                link: 'https://richamster.com/?referral=h1F5TOeCoLPq',
-            },
-            {
                 value: 'ASH_Leodex',
                 label: 'LEO Dex',
                 link: 'https://leodex.io/market/ASH',
