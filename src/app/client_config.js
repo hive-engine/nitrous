@@ -689,7 +689,8 @@ const POB = {
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
         '\n\n---\n\n<center><sub>Posted via [proofofbrain.io](${POST_URL})</sub></center>',
-    COMMENT_FOOTER: '',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [proofofbrain.io](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     SDC_GTAG_MEASUREMENT_ID: 'G-TESG0YWB7G',
     DISABLE_STEEM: true,
