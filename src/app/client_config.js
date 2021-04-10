@@ -674,7 +674,7 @@ const POB = {
     LIQUID_TOKEN_UPPERCASE: 'POB',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'proofofbrain',
-    TAG_LIST: fromJSOrdered(['proofofbrain']),
+    TAG_LIST: fromJSOrdered([]),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'POB POWER',

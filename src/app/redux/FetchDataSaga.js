@@ -303,7 +303,7 @@ export function* getCategories(action) {
         state.app.get('hostConfig', Map()).toJS()
     );
     const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
-    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE '] || [];
+    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
 
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
         yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
