@@ -700,7 +700,7 @@ const POB = {
         { id: '01F0VCHCMREVR281TN6X6N51N2', name: 'Proof of Brain' },
     ],
     APPEND_TRENDING_TAGS_COUNT: 20,
-    TRENDING_TAGS_TO_IGNORE: [
+    TRENDING_TAGS_TO_IGNORE: fromJSOrdered([
         'proofofbrain',
         'neoxian',
         'palnet',
@@ -711,7 +711,7 @@ const POB = {
         'ash',
         'aeneas',
         'creativecoin',
-    ],
+    ]),
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
 };
