@@ -699,7 +699,7 @@ const POB = {
     CHAT_CONVERSATIONS: [
         { id: '01F0VCHCMREVR281TN6X6N51N2', name: 'Proof of Brain' },
     ],
-    APPEND_TRENDING_TAGS_COUNT: 20,
+    APPEND_TRENDING_TAGS_COUNT: 30,
     TRENDING_TAGS_TO_IGNORE: fromJSOrdered([
         'proofofbrain',
         'neoxian',
