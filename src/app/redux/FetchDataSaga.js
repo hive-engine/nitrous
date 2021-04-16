@@ -302,8 +302,10 @@ export function* getCategories(action) {
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
     );
-    const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
-    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
+    const APPEND_TRENDING_TAGS_COUNT =
+        hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
+    const TRENDING_TAGS_TO_IGNORE =
+        hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
 
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
         yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
@@ -316,9 +318,15 @@ export function* getCategories(action) {
             token: hostConfig['LIQUID_TOKEN_UPPERCASE'],
         }
     );
-    const ignoreTags = new Set(hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE));
-    const toAdd = trendingCategories.filter(c => !ignoreTags.has(c)).slice(0, APPEND_TRENDING_TAGS_COUNT);
-    yield put(globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd)));
+    const ignoreTags = new Set(
+        hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE)
+    );
+    const toAdd = trendingCategories
+        .filter(c => !ignoreTags.has(c))
+        .slice(0, APPEND_TRENDING_TAGS_COUNT);
+    yield put(
+        globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd))
+    );
 }
 
 /**
@@ -763,6 +771,7 @@ function* fetchScotInfo() {
     const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const scotInfo = yield call(getScotDataAsync, 'info', {
         token: scotTokenSymbol,
+        hive: scotTokenSymbol == 'PIMP' ? '1' : null,
     });
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }
@@ -777,13 +786,7 @@ function* fetchFollows(action) {
 }
 
 function* fetchAuthorRecentPosts(action) {
-    const {
-        order,
-        category,
-        author,
-        permlink,
-        limit,
-    } = action.payload;
+    const { order, category, author, permlink, limit } = action.payload;
 
     const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
@@ -892,7 +895,7 @@ export const actions = {
         type: GET_STAKED_ACCOUNTS,
         payload,
     }),
-    
+
     getCategories: payload => ({
         type: GET_CATEGORIES,
         payload,

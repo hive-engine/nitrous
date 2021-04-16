@@ -57,6 +57,11 @@ ScotConfig.prototype.refresh = async function() {
     try {
         const scotConfig = await getScotDataAsync('config', {});
         const scotInfo = await getScotDataAsync('info', {});
+        const pimpScotInfo = await getScotDataAsync('info', {
+            token: 'PIMP',
+            hive: '1',
+        });
+        scotInfo['PIMP'] = pimpScotInfo;
         const scotConfigMap = {};
         let tokenList = [];
         let hiveTokenList = [];
@@ -67,7 +72,7 @@ ScotConfig.prototype.refresh = async function() {
         );
         scotConfig.forEach(c => {
             if (configTokens.has(c.token)) {
-                if (c.token === 'PIMP' && not c['hive_engine_enabled']) {
+                if (c.token === 'PIMP' && !c['hive_engine_enabled']) {
                     // Only use hive side of PIMP token
                     return;
                 }
@@ -129,8 +134,11 @@ ScotConfig.prototype.refresh = async function() {
             hiveTotalTokenBalances,
             hiveTokenBurnBalances,
         ] = await Promise.all([
-            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList }, }),
-            ssc.find('tokens', 'balances', { account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) }, symbol: { $in: tokenList }, }),
+            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList } }),
+            ssc.find('tokens', 'balances', {
+                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
+                symbol: { $in: tokenList },
+            }),
             hiveSsc.find('tokens', 'tokens', {
                 symbol: { $in: hiveTokenList },
             }),
