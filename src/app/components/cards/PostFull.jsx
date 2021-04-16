@@ -286,6 +286,7 @@ class PostFull extends React.Component {
                 viewer_role,
                 hostConfig,
                 tokenAccount,
+                muteAccount,
             },
             state: {
                 PostFullReplyEditor,
@@ -524,7 +525,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
-        const canTribeMute = username === tokenAccount;
+        const canTribeMute = username === tokenAccount || username === muteAccount;
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
@@ -699,6 +700,7 @@ export default connect(
         const category = post.get('category');
         const community = state.global.getIn(['community', category]);
         const tokenAccount = state.app.getIn(['scotConfig', 'config', 'token_account']);
+        const muteAccount = state.app.getIn(['scotConfig', 'config', 'muting_account']);
 
         return {
             hostConfig: state.app.get('hostConfig', Map()).toJS(),
@@ -711,6 +713,7 @@ export default connect(
                 'guest'
             ),
             tokenAccount,
+            muteAccount,
         };
     },
     dispatch => ({
