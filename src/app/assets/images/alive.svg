@@ -93,7 +93,7 @@
 	<style type="text/css">
 		@font-face {
 			font-family: 'lora'; 
-			src: url('./images/lora.ttf');
+			src: url('/images/lora.ttf');
 		}
 	</style>
 	<radialGradient id="fillGrad303" cx="51.675%" cy="11.548%" fx="51.675%" fy="11.548%" r="83.165%">
@@ -256,7 +256,7 @@
 	<style type="text/css">
 		@font-face {
 			font-family: 'comfortaa'; 
-			src: url('./images/comfortaa.ttf');
+			src: url('/images/comfortaa.ttf');
 		}
 	</style>
 	<radialGradient id="fillGrad522" cx="50.000%" cy="50.000%" fx="50.000%" fy="50.000%" r="50.000%">
