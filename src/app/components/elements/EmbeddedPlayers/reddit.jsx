@@ -109,8 +109,8 @@ export function normalizeEmbedUrl(url) {
     const match = url.match(regex.main);
 
     if (match && match.length >= 2) {
-        const tweetId = match[2].split('?').shift();
-        return `https://www.reddit.com/${match[1]}/status/${tweetId}`;
+        const redditId = match[2].split('?').shift();
+        return `https://www.reddit.com/${match[1]}/status/${redditId}`;
     }
 
     return false;
@@ -156,7 +156,7 @@ export function genIframeMd(idx, redditId, w, h, metadata) {
         return (
             <div
                 key={`reddit-${redditId}-${idx}`}
-                className="tweetWrapper"
+                className="redditWrapper"
                 dangerouslySetInnerHTML={generateRedditCode(metadata)}
             />
         );

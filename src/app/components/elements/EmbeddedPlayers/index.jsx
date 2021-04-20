@@ -12,6 +12,7 @@ import * as twitter from 'app/components/elements/EmbeddedPlayers/twitter';
 import * as vimeo from 'app/components/elements/EmbeddedPlayers/vimeo';
 import * as youtube from 'app/components/elements/EmbeddedPlayers/youtube';
 import * as reddit from 'app/components/elements/EmbeddedPlayers/reddit';
+import * as gist from 'app/components/elements/EmbeddedPlayers/gist';
 
 const supportedProviders = {
     archiveorg,
@@ -27,6 +28,7 @@ const supportedProviders = {
     vimeo,
     youtube,
     reddit,
+    gist,
 };
 
 export default supportedProviders;
@@ -72,8 +74,6 @@ export function validateIframeUrl(url, large = true, width = null, height = null
             validUrl: false,
         };
     }
-
-    console.log('wid', width, height);
 
     const providersKeys = Object.keys(supportedProviders);
     for (let pi = 0; pi < providersKeys.length; pi += 1) {
