@@ -870,7 +870,7 @@ const BROADHIVE = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': ALIVE,
+    'localhost:8080': PHOTO,
     'frozen-retreat-15997.herokuapp.com': ALIVE,
     'www.wearealiveand.social': ALIVE,
     'www.photostreem.com': PHOTO,
