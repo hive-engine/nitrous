@@ -19,11 +19,9 @@ Dynamic inflation in the future
 -
 Inflation will be dynamically decided by tribe leader per the 24/4 – 2021 (the first day of year 3), probably changed each year. If new stuff comes out, like DeFi on Hive Engine, then it can be changed anytime to provide the best possible features for the Tribe. Inflation is dynamically changed in a responsible way, to create the best conditions and hopefully higher prices for LASSECASH tribe token.
 
-Per 24/4 - 2021 (the first day of year 3), the inflation schedule will be:
+Per 24/4 - 2021 (the first day of year 3), the inflation will continue to be 1750000 LASSECASH (given 100% via proof of brain).
 
-
-<center>![image.png](https://images.hive.blog/DQmWJvSkg24EYjx64Fv87bbZJyjMXgF5mJsC1xQAdW6zSFG/image.png)</center>
-
+*Rewards for liquidity providing via Diesel pools are postponed into to the unknown future.*
 
 
 Notes on distribution
