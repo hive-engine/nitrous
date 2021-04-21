@@ -477,38 +477,12 @@ async function getContentFromBridge(author, permlink, useHive = true) {
 export async function getContentAsync(author, permlink) {
     let content;
     let scotData;
-    const [steemitContent, hiveContent] = await Promise.all([
-        getContentFromBridge(author, permlink, false),
-        DISABLE_HIVE
-            ? Promise.resolve(null)
-            : getContentFromBridge(author, permlink, true),
-    ]);
-    let useHive = false;
-    if (
-        steemitContent &&
-        steemitContent.author === author &&
-        steemitContent.permlink === permlink
-    ) {
-        content = steemitContent;
-    }
-    if (
-        (PREFER_HIVE ||
-            !(
-                steemitContent &&
-                steemitContent.author === author &&
-                steemitContent.permlink === permlink
-            )) &&
-        (hiveContent &&
-            hiveContent.author === author &&
-            hiveContent.permlink === permlink)
-    ) {
-        content = hiveContent;
+    if (PREFER_HIVE) {
+        content = await getContentFromBridge(author, permlink, true),
         content.hive = true;
-        useHive = true;
-    }
-    if (useHive) {
         scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
     } else {
+        content = await getContentFromBridge(author, permlink, false),
         scotData = await getScotDataAsync(`@${author}/${permlink}`);
     }
     if (!content) {
