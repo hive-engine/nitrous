@@ -39,7 +39,7 @@ function callProviderMethod(provider, methodName, ...parms) {
         return method(...parms);
     }
 
-    return null;
+    return false;
 }
 
 // Set only those attributes in `sandboxAttributes`, that are minimally
