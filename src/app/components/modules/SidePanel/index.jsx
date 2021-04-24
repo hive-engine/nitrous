@@ -119,6 +119,19 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
+        organizational_ALIVE: [
+            {
+                value: 'ALIVE_about',
+                label: 'We Are Alive - What Is This Tribe About? - And What To Post Here?',
+                link: '/@flaxz/nkugscpq',
+                internal: true,
+            },
+            {
+                value: 'ALIVE_discord',
+                label: 'Discord',
+                link: 'https://discord.gg/qXqv63J',
+            },
+        ],
         organizational_WEED: [
             {
                 value: 'orgsite',
