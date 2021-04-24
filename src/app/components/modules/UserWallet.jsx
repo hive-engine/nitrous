@@ -207,7 +207,7 @@ class UserWallet extends React.Component {
         if (isMyAccount) {
             balance_menu.push({
                 value: tt('userwallet_jsx.market'),
-                link: `https://steem-engine.com/?p=market&t=${
+                link: `https://steem-engine.net/?p=market&t=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             });
@@ -250,7 +250,8 @@ class UserWallet extends React.Component {
                     <div className="columns small-12">
                         <div className="UserWallet__claimbox">
                             <span className="UserWallet__claimbox-text">
-                              {tt('userwallet_jsx.your_current_rewards')}: {rewards_str}
+                                {tt('userwallet_jsx.your_current_rewards')}:{' '}
+                                {rewards_str}
                             </span>
                             <button
                                 disabled={this.state.claimInProgress}
