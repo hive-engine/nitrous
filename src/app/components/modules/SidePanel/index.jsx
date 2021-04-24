@@ -55,7 +55,7 @@ const SidePanel = ({
             {
                 value: 'steemengine',
                 label: 'Steem Engine',
-                link: `https://steem-engine.com/?p=market&t=${
+                link: `https://steem-engine.net/?p=market&t=${
                     LIQUID_TOKEN_UPPERCASE
                 }`,
             },
@@ -88,11 +88,11 @@ const SidePanel = ({
                 label: 'Rich list',
                 link: `https://jacobyu.net/scot-manager/`,
             },
-            {
-                value: 'exchangeNow',
-                label: 'Exchange Now',
-                link: '/support.html',
-            },
+            // {
+            //     value: 'exchangeNow',
+            //     label: 'Exchange Now',
+            //     link: '/support.html',
+            // },
         ],
         exchanges: [
             {
