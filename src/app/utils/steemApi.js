@@ -301,6 +301,9 @@ export async function attachScotData(
     useHive,
     ssr = false
 ) {
+    if (url === '') {
+        url = 'trending';
+    }
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
