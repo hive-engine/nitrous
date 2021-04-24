@@ -57,6 +57,12 @@ https://open.spotify.com/episode/523CYPCmCXdv8uBME5yzZ7?si=l2uwhVjERe21N86grg3ZE
 ## threespeak iframe embedded from link
 https://3speak.co/watsch?v=threespeak/iaarkpvf
 
+## truvvl direct html iframe markup
+<iframe src="https://embed.truvvl.com/@tvt3st/prague-to-sarajevo-cool-places-in-europe-europe-prague-zagreb-bosnia-20210420t103208397z"></iframe>
+
+## truvvl iframe embedded from link
+Not supported
+
 ## twitch direct html iframe markup
 <iframe src="https://player.twitch.tv/?channel=tfue" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
 

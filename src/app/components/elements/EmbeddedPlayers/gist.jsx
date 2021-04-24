@@ -7,7 +7,7 @@ import EmbeddedGist from './EmbeddedGist';
  */
 // <script src="https://gist.github.com/huysbs/647a50197b95c4027550a2cc558af6aa.js"></script>
 const regex = {
-    main: /(https:\/\/gist\.github\.com\/((.*?)\/(.*?))\.js)/i,
+    main: /(https?:\/\/gist\.github\.com\/((.*?)\/(.*)))/i,
     sanitize: /(https:\/\/gist\.github\.com\/((.*?)\/(.*?))\.js)/i,
     htmlReplacement: /<script src="(https:\/\/gist\.github\.com\/((.*?)\/(.*?))\.js)"><\/script>/i,
 };

@@ -7,6 +7,7 @@ import * as mixcloud from 'app/components/elements/EmbeddedPlayers/mixcloud';
 import * as soundcloud from 'app/components/elements/EmbeddedPlayers/soundcloud';
 import * as spotify from 'app/components/elements/EmbeddedPlayers/spotify';
 import * as threespeak from 'app/components/elements/EmbeddedPlayers/threespeak';
+import * as truvvl from 'app/components/elements/EmbeddedPlayers/truvvl';
 import * as twitch from 'app/components/elements/EmbeddedPlayers/twitch';
 import * as twitter from 'app/components/elements/EmbeddedPlayers/twitter';
 import * as vimeo from 'app/components/elements/EmbeddedPlayers/vimeo';
@@ -19,16 +20,17 @@ const supportedProviders = {
     bandcamp,
     dapplr,
     dtube,
+    gist,
     mixcloud,
+    reddit,
     soundcloud,
     spotify,
     threespeak,
+    truvvl,
     twitch,
     twitter,
     vimeo,
     youtube,
-    reddit,
-    gist,
 };
 
 export default supportedProviders;
