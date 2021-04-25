@@ -4,15 +4,11 @@ import linksRe, { any as linksAny } from 'app/utils/Links';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import * as Phishing from 'app/utils/Phishing';
-import {
-    embedNode as EmbeddedPlayerEmbedNode,
-    preprocessHtml,
-} from 'app/components/elements/EmbeddedPlayers';
+import { embedNode as EmbeddedPlayerEmbedNode, preprocessHtml } from 'app/components/elements/EmbeddedPlayers';
 import { extractMetadata as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 export const getPhishingWarningMessage = () => tt('g.phishy_message');
-export const getExternalLinkWarningMessage = () =>
-    tt('g.external_link_message');
+export const getExternalLinkWarningMessage = () => tt('g.external_link_message');
 
 const noop = () => {};
 const DOMParser = new xmldom.DOMParser({
@@ -84,7 +80,7 @@ const XMLSerializer = new xmldom.XMLSerializer();
     If hideImages and mutate is set to true all images will be replaced
     by <pre> elements containing just the image url.
 */
-export default function (html, { mutate = true, hideImages = false } = {}) {
+export default function(html, { mutate = true, hideImages = false } = {}) {
     const state = { mutate };
     state.hashtags = new Set();
     state.usertags = new Set();
@@ -92,21 +88,14 @@ export default function (html, { mutate = true, hideImages = false } = {}) {
     state.images = new Set();
     state.links = new Set();
     try {
-        const doc = DOMParser.parseFromString(
-            preprocessHtml(html),
-            'text/html'
-        );
+        const doc = DOMParser.parseFromString(preprocessHtml(html), 'text/html');
         traverse(doc, state);
         if (mutate) {
             if (hideImages) {
-                for (const image of Array.from(
-                    doc.getElementsByTagName('img')
-                )) {
+                for (const image of Array.from(doc.getElementsByTagName('img'))) {
                     const pre = doc.createElement('pre');
                     pre.setAttribute('class', 'image-url-only');
-                    pre.appendChild(
-                        doc.createTextNode(image.getAttribute('src'))
-                    );
+                    pre.appendChild(doc.createTextNode(image.getAttribute('src')));
                     image.parentNode.replaceChild(pre, image);
                 }
             } else {
@@ -121,17 +110,14 @@ export default function (html, { mutate = true, hideImages = false } = {}) {
         };
     } catch (error) {
         // xmldom error is bad
-        console.error(
-            'rendering error',
-            JSON.stringify({ error: error.message, html })
-        );
+        console.error('rendering error', JSON.stringify({ error: error.message, html }));
         return { html: '' };
     }
 }
 
 function traverse(node, state, depth = 0) {
     if (!node || !node.childNodes) return;
-    Array.from(node.childNodes).forEach((child) => {
+    Array.from(node.childNodes).forEach(child => {
         // console.log(depth, 'child.tag,data', child.tagName, child.data)
         const tag = child.tagName ? child.tagName.toLowerCase() : null;
         if (tag) state.htmltags.add(tag);
@@ -192,13 +178,12 @@ function iframe(state, child) {
     if (!mutate) return;
 
     const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
-    if (tag === 'div' && child.parentNode.classList && child.parentNode.classList.contains('videoWrapper')) {
+    if (tag === 'div' && child.parentNode.classList.contains('videoWrapper')) {
         return;
+    }
+
     const html = XMLSerializer.serializeToString(child);
-    child.parentNode.replaceChild(
-        DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`),
-        child
-    );
+    child.parentNode.replaceChild(DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`), child);
 }
 
 function img(state, child) {
@@ -222,7 +207,7 @@ function img(state, child) {
 function proxifyImages(doc) {
     if (!doc) return;
 
-    Array.from(doc.getElementsByTagName('img')).forEach((node) => {
+    Array.from(doc.getElementsByTagName('img')).forEach(node => {
         const url = node.getAttribute('src');
 
         if (!linksRe.local.test(url)) {
@@ -236,9 +221,7 @@ function proxifyImages(doc) {
 
 function linkifyNode(child, state) {
     try {
-        const tag = child.parentNode.tagName
-            ? child.parentNode.tagName.toLowerCase()
-            : child.parentNode.tagName;
+        const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
         if (tag === 'code') return;
         if (tag === 'a') return;
 
@@ -248,18 +231,9 @@ function linkifyNode(child, state) {
         child = EmbeddedPlayerEmbedNode(child, state.links, state.images);
 
         const data = XMLSerializer.serializeToString(child);
-        const content = linkify(
-            data,
-            state.mutate,
-            state.hashtags,
-            state.usertags,
-            state.images,
-            state.links
-        );
+        const content = linkify(data, state.mutate, state.hashtags, state.usertags, state.images, state.links);
         if (mutate && content !== data) {
-            const newChild = DOMParser.parseFromString(
-                `<span>${content}</span>`
-            );
+            const newChild = DOMParser.parseFromString(`<span>${content}</span>`);
             child.parentNode.replaceChild(newChild, child);
             return newChild;
         }
@@ -270,7 +244,7 @@ function linkifyNode(child, state) {
 
 function linkify(content, mutate, hashtags, usertags, images, links) {
     // hashtag
-    content = content.replace(/(^|\s)(#[-a-z\d]+)/gi, (tag) => {
+    content = content.replace(/(^|\s)(#[-a-z\d]+)/gi, tag => {
         if (/#[\d]+$/.test(tag)) return tag; // Don't allow numbers to be tags
         const space = /^\s/.test(tag) ? tag[0] : '';
         const tag2 = tag.trim().substring(1);
@@ -294,13 +268,11 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
 
             if (!mutate) return `${preceedings}${user}`;
 
-            return valid
-                ? `${preceedings}<a href="/@${userLower}">@${user}</a>`
-                : `${preceedings}@${user}`;
+            return valid ? `${preceedings}<a href="/@${userLower}">@${user}</a>` : `${preceedings}@${user}`;
         }
     );
 
-    content = content.replace(linksAny('gi'), (ln) => {
+    content = content.replace(linksAny('gi'), ln => {
         if (linksRe.image.test(ln)) {
             if (images) images.add(ln);
             return `<img src="${ipfsPrefix(ln)}" />`;
@@ -310,8 +282,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
         if (/\.(zip|exe)$/i.test(ln)) return ln;
 
         // do not linkify phishy links
-        if (Phishing.looksPhishy(ln))
-            return `<div title='${getPhishingWarningMessage()}' class='phishy'>${ln}</div>`;
+        if (Phishing.looksPhishy(ln)) return `<div title='${getPhishingWarningMessage()}' class='phishy'>${ln}</div>`;
 
         if (links) links.add(ln);
         return `<a href="${ipfsPrefix(ln)}">${ln}</a>`;

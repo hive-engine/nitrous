@@ -113,6 +113,10 @@
     max-height: 75vw;
   }
 
+  iframe.truvvl-iframe {
+    max-height: initial;
+  }
+
   .tweetWrapper iframe {
       max-height: inherit;
   }

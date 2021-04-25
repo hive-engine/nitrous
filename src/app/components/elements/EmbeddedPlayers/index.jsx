@@ -79,8 +79,8 @@ export function validateIframeUrl(url, large = true, width = null, height = null
 
     const providersKeys = Object.keys(supportedProviders);
     for (let pi = 0; pi < providersKeys.length; pi += 1) {
-        const providerName = providersKeys[pi];
-        const provider = supportedProviders[providerName];
+        const providerId = providersKeys[pi];
+        const provider = supportedProviders[providerId];
 
         const validUrl = callProviderMethod(provider, 'validateIframeUrl', url);
 
@@ -93,7 +93,7 @@ export function validateIframeUrl(url, large = true, width = null, height = null
         if (validUrl !== false) {
             const sandboxConfig = getProviderSandboxConfig(provider);
             return {
-                providerId: provider.id,
+                providerId,
                 sandboxAttributes: sandboxConfig.sandboxAttributes || [],
                 useSandbox: sandboxConfig.useSandbox,
                 width: iframeDimensions.width.toString(),

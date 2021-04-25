@@ -129,13 +129,14 @@ export function genIframeMd(idx, id, width, height) {
         webkitallowfullscreen: 'webkitallowfullscreen',
         mozallowfullscreen: 'mozallowfullscreen',
         allowFullScreen: 'allowFullScreen',
+        className: 'truvvl-iframe',
     };
     if (sandbox) {
         iframeProps.sandbox = sandbox;
     }
 
     return (
-        <div key={`bandcamp-${id}-${idx}`} className="videoWrapper">
+        <div key={`truvvl-${id}-${idx}`} className="videoWrapper">
             <iframe
                 title="truvvl.com embedded player"
                 // eslint-disable-next-line react/jsx-props-no-spreading
