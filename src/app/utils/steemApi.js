@@ -69,7 +69,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
         account,
         token: symbol,
         limit: 50,
-        hive: hive ? '1' : '0',
+        //hive: hive ? '1' : '0',
     });
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
@@ -83,10 +83,11 @@ export async function getScotDataAsync(path, params) {
 }
 
 export async function getScotAccountDataAsync(account) {
+    // TODO: use HE SMT
     const data = await getScotDataAsync(`@${account}`, {});
     const hiveData = false
         ? null
-        : await getScotDataAsync(`@${account}`, { hive: 1 });
+        : await getScotDataAsync(`@${account}`, { /*hive: 1*/ });
     return { data, hiveData };
 }
 
@@ -503,7 +504,7 @@ export async function attachScotData(
                         const v = entry[1];
                         // Fetch SCOT data
                         const scotData = await getScotDataAsync(`@${k}`, {
-                            hive: useHive ? '1' : '',
+                            //hive: useHive ? '1' : '',
                         });
                         if (useHive) {
                             state.content[k].hive = true;
@@ -555,7 +556,7 @@ export async function getContentAsync(
     if (preferHive) {
         content = await getContentFromBridge(author, permlink, true),
         content.hive = true;
-        scotData = await getScotDataAsync(`@${author}/${permlink}`, {hive: 1, token: scotTokenSymbol});
+        scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
     } else {
         content = await getContentFromBridge(author, permlink, false),
         scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
