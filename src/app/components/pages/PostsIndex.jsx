@@ -585,10 +585,10 @@ class PostsIndex extends React.Component {
                 <aside className="c-sidebar c-sidebar--left">
                     <Notices notices={this.props.notices} />
 
-                    <Iframe
+                    {/* <Iframe
                         title="Rfdax Converter"
                         src="https://rfdax.steemscan.com?sct.admin"
-                    />
+                    /> */}
 
                     <Topics
                         order={topics_order}
