@@ -291,7 +291,7 @@ function setFeedHiveParam(feedParams, hostConfig) {
         feedParams.hive = '0';
     }
     if (hostConfig['DISABLE_STEEM']) {
-        feedParams.hive = '1';
+        //feedParams.hive = '1';
     }
 }
 
