@@ -8,7 +8,7 @@ const PAL = {
     APP_URL: 'https://www.palnet.io',
     APP_DOMAIN: 'www.palnet.io',
     LIQUID_TOKEN: 'PAL',
-    LIQUID_TOKEN_UPPERCASE: 'PAL',
+    LIQUID_TOKEN_UPPERCASE: 'PAL-1',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'palnet',
     TAG_LIST: fromJSOrdered(['palnet']),

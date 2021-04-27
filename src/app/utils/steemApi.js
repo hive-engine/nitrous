@@ -102,7 +102,8 @@ export async function getAccount(account, useHive) {
     return profile ? profile : {};
 }
 
-export async function getWalletAccount(account, useHive, scotTokenSymbol) {
+export async function getWalletAccount(account, useHive, hesmtTokenSymbol) {
+    const scotTokenSymbol = hesmtTokenSymbol.split('-')[0];
     const bridgeAccountObject = await getAccount(account, useHive);
 
     const hiveEngine = useHive;

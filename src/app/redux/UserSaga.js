@@ -293,7 +293,7 @@ function* usernamePasswordLogin2({
         return;
     }
     // fetch SCOT stake
-    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'].split('-')[0];
     const ssc = hostConfig['HIVE_ENGINE'] ? hiveSsc : steemSsc;
     const token_balances = yield call(
         [ssc, ssc.findOne],
