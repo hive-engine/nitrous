@@ -2,8 +2,8 @@ import { fromJSOrdered } from './utils/immutable';
 
 const PAL = {
     APP_NAME: 'PalnetHE',
-    APP_ICON: 'proofofbrain',
-    APP_ICON_WIDTH: '40px',
+    APP_ICON: 'pal',
+    APP_ICON_WIDTH: '125px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.palnet.io',
     APP_DOMAIN: 'www.palnet.io',
