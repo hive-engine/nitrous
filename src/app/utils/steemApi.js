@@ -504,6 +504,7 @@ export async function attachScotData(
                         const v = entry[1];
                         // Fetch SCOT data
                         const scotData = await getScotDataAsync(`@${k}`, {
+                            token: scotTokenSymbol,
                             //hive: useHive ? '1' : '',
                         });
                         if (useHive) {
@@ -511,7 +512,7 @@ export async function attachScotData(
                         }
                         mergeContent(
                             state.content[k],
-                            scotData[liquidTokenUppercase],
+                            scotData[scotTokenSymbol],
                             liquidTokenUppercase
                         );
                     })
@@ -564,7 +565,7 @@ export async function getContentAsync(
     if (!content) {
         return content;
     }
-    mergeContent(content, scotData, scotTokenSymbol.split('-')[0]);
+    mergeContent(content, scotData[scotTokenSymbol], scotTokenSymbol.split('-')[0]);
     return content;
 }
 
