@@ -52,7 +52,7 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
+async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive) {
     const transfers = await callApi(
         hive
             ? 'https://accounts.hive-engine.com/accountHistory'
@@ -62,12 +62,12 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
             limit: 50,
             offset: 0,
             type: 'user',
-            symbol,
+            scotTokenSymbol.split('-')[0],
         }
     );
     const history = await getScotDataAsync('get_account_history', {
         account,
-        token: symbol,
+        token: scotTokenSymbol,
         limit: 50,
         //hive: hive ? '1' : '0',
     });
@@ -104,6 +104,7 @@ export async function getAccount(account, useHive) {
 }
 
 export async function getWalletAccount(account, useHive, scotTokenSymbol) {
+    const liquidTokenUppercase = scotTokenSymbol.split('-')[0];
     const bridgeAccountObject = await getAccount(account, useHive);
 
     const hiveEngine = useHive;
@@ -122,13 +123,13 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         }),
         engineApi.find('tokens', 'pendingUnstakes', {
             account,
-            symbol: scotTokenSymbol,
+            symbol: liquidTokenUppercase,
         }),
         getScotAccountDataAsync(account),
         getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hiveEngine),
         engineApi.find('tokens', 'delegations', {
             $or: [{ from: account }, { to: account }],
-            symbol: scotTokenSymbol,
+            symbol: liquidTokenUppercase,
         }),
         await getAccountFromNodeApi(account, useHive),
     ]);
@@ -145,8 +146,8 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         const tokenStatusData = useHive
             ? tokenStatuses.hiveData
             : tokenStatuses.data;
-        if (tokenStatusData[scotTokenSymbol]) {
-            bridgeAccountObject.token_status = tokenStatusData[scotTokenSymbol];
+        if (tokenStatusData[liquidTokenUppercase]) {
+            bridgeAccountObject.token_status = tokenStatusData[liquidTokenUppercase];
             bridgeAccountObject.all_token_status = tokenStatusData;
         }
     }
@@ -345,7 +346,7 @@ export async function attachScotData(
             state['profiles'][account] = await getWalletAccount(
                 account,
                 useHive,
-                liquidTokenUppercase
+                scotTokenSymbol
             );
         }
 
