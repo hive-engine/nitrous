@@ -40,6 +40,7 @@ const PAL = {
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': PAL,
+    'eonhetest.herokuapp.com': PAL,
 };
 
 // FIXME figure out best way to do this on both client and server from env
