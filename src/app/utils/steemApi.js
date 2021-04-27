@@ -11,8 +11,8 @@ import {
 import axios from 'axios';
 import SSC from 'sscjs';
 
-const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const ssc = new SSC('https://hetest.cryptoempirebot.com');
+const hiveSsc = new SSC('https://hetest.cryptoempirebot.com');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -79,7 +79,7 @@ async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://scot-api.hive-engine.com/${path}`, params);
+    return await callApi(`https://hetest.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
