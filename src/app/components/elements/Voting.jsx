@@ -234,7 +234,6 @@ class Voting extends React.Component {
 
         const { votingUp, votingDown, showWeight, showWeightDir } = this.state;
 
-        const scotDenom = Math.pow(10, scotPrecision);
         // Incorporate regeneration time.
         const currentVp = votingData
             ? Math.min(
@@ -282,13 +281,13 @@ class Voting extends React.Component {
         if (scotData) {
             scot_pending_token = applyRewardsCurve(rsharesTotal);
 
-            scot_total_curator_payout = parseInt(
+            scot_total_curator_payout = parseFloat(
                 scotData.get('curator_payout_value')
             );
-            scot_total_author_payout = parseInt(
+            scot_total_author_payout = parseFloat(
                 scotData.get('total_payout_value')
             );
-            scot_token_bene_payout = parseInt(
+            scot_token_bene_payout = parseFloat(
                 scotData.get('beneficiaries_payout_value')
             );
             promoted = parseInt(scotData.get('promoted'));
@@ -298,14 +297,6 @@ class Voting extends React.Component {
             payout = cashout_active
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
-
-            // divide by scotDenom
-            scot_pending_token /= scotDenom;
-            scot_total_curator_payout /= scotDenom;
-            scot_total_author_payout /= scotDenom;
-            scot_token_bene_payout /= scotDenom;
-            payout /= scotDenom;
-            promoted /= scotDenom;
         }
         const total_votes = post.getIn(['stats', 'total_votes']);
         if (payout < 0.0) payout = 0.0;
@@ -335,7 +326,7 @@ class Voting extends React.Component {
                     currentVp /
                     (10000 * 100);
                 const newValue = applyRewardsCurve(rsharesTotal + rshares);
-                valueEst = (newValue / scotDenom - scot_pending_token).toFixed(
+                valueEst = (newValue - scot_pending_token).toFixed(
                     scotPrecision
                 );
             }
@@ -589,7 +580,7 @@ class Voting extends React.Component {
                 const denom =
                     rsharesTotal > 0
                         ? applyRewardsCurve(rsharesTotal)
-                        : scotDenom;
+                        : 1;
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (

@@ -313,7 +313,7 @@ export function* getCategories(action) {
         getScotDataAsync,
         'get_trending_tags',
         {
-            token: `${hostConfig['LIQUID_TOKEN_UPPERCASE']}-${hostConfig['HIVE_ENGINE_SMT']}`,
+            token: hostConfig['LIQUID_TOKEN_UPPERCASE'],
         }
     );
     const ignoreTags = new Set(hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE));
@@ -760,7 +760,7 @@ function* fetchScotInfo() {
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
     );
-    const scotTokenSymbol = `${hostConfig['LIQUID_TOKEN_UPPERCASE']}-${hostConfig['HIVE_ENGINE_SMT']}`;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const scotInfo = yield call(getScotDataAsync, 'info', {
         token: scotTokenSymbol,
     });
@@ -785,13 +785,9 @@ function* fetchAuthorRecentPosts(action) {
         limit,
     } = action.payload;
 
-    const liquidTokenUppercase = yield select(state =>
+    const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
     );
-    const heSmt = yield select(state =>
-        state.app.getIn(['hostConfig', 'HIVE_ENGINE_SMT'])
-    );
-    const scotTokenSymbol = `${liquidTokenUppercase}-${heSmt}`;
 
     const call_name = 'get_discussions_by_blog';
     const args = {

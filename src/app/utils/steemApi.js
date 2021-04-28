@@ -62,7 +62,7 @@ async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive)
             limit: 50,
             offset: 0,
             type: 'user',
-            scotTokenSymbol.split('-')[0],
+            scotTokenSymbol,
         }
     );
     const history = await getScotDataAsync('get_account_history', {
@@ -104,7 +104,6 @@ export async function getAccount(account, useHive) {
 }
 
 export async function getWalletAccount(account, useHive, scotTokenSymbol) {
-    const liquidTokenUppercase = scotTokenSymbol.split('-')[0];
     const bridgeAccountObject = await getAccount(account, useHive);
 
     const hiveEngine = useHive;
@@ -123,13 +122,13 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         }),
         engineApi.find('tokens', 'pendingUnstakes', {
             account,
-            symbol: liquidTokenUppercase,
+            symbol: scotTokenSymbol,
         }),
         getScotAccountDataAsync(account),
         getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hiveEngine),
         engineApi.find('tokens', 'delegations', {
             $or: [{ from: account }, { to: account }],
-            symbol: liquidTokenUppercase,
+            symbol: scotTokenSymbol,
         }),
         await getAccountFromNodeApi(account, useHive),
     ]);
@@ -146,8 +145,8 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         const tokenStatusData = useHive
             ? tokenStatuses.hiveData
             : tokenStatuses.data;
-        if (tokenStatusData[liquidTokenUppercase]) {
-            bridgeAccountObject.token_status = tokenStatusData[liquidTokenUppercase];
+        if (tokenStatusData[scotTokenSymbol]) {
+            bridgeAccountObject.token_status = tokenStatusData[scotTokenSymbol];
             bridgeAccountObject.all_token_status = tokenStatusData;
         }
     }
@@ -185,7 +184,7 @@ async function getAuthorRep(feedData, useHive) {
     */
 }
 
-function mergeContent(content, scotData, liquidTokenUppercase) {
+function mergeContent(content, scotData, scotTokenSymbol) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
     const voted = content.active_votes;
@@ -216,7 +215,7 @@ function mergeContent(content, scotData, liquidTokenUppercase) {
     content.parent_permlink = parentPermlink;
 
     content.scotData = {};
-    content.scotData[liquidTokenUppercase] = scotData;
+    content.scotData[scotTokenSymbol] = scotData;
     content.json_metadata = o2j.ifStringParseJSON(content.json_metadata);
 }
 
@@ -225,7 +224,7 @@ async function fetchMissingData(
     feedType,
     state,
     feedData,
-    liquidTokenUppercase,
+    scotTokenSymbol,
     useHive
 ) {
     if (!state.content) {
@@ -270,7 +269,7 @@ async function fetchMissingData(
         } else {
             filteredContent[key] = state.content[key];
         }
-        mergeContent(filteredContent[key], d, liquidTokenUppercase);
+        mergeContent(filteredContent[key], d, scotTokenSymbol);
         discussionIndex.push(key);
     });
     state.content = filteredContent;
@@ -309,8 +308,7 @@ export async function attachScotData(
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
-    const liquidTokenUppercase = hostConfig['LIQUID_TOKEN_UPPERCASE'];
-    const scotTokenSymbol = `${liquidTokenUppercase}-${hostConfig['HIVE_ENGINE_SMT']}`;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
@@ -333,7 +331,7 @@ export async function attachScotData(
             feedType,
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -371,7 +369,7 @@ export async function attachScotData(
             'feed',
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -399,7 +397,7 @@ export async function attachScotData(
             'blog',
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -426,7 +424,7 @@ export async function attachScotData(
             'posts',
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -453,7 +451,7 @@ export async function attachScotData(
             'comments',
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -480,7 +478,7 @@ export async function attachScotData(
             'replies',
             state,
             feedData,
-            liquidTokenUppercase,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -514,7 +512,7 @@ export async function attachScotData(
                         mergeContent(
                             state.content[k],
                             scotData[scotTokenSymbol],
-                            liquidTokenUppercase
+                            scotTokenSymbol
                         );
                     })
             );
@@ -523,7 +521,7 @@ export async function attachScotData(
                 .filter(
                     entry =>
                         (entry[1].scotData &&
-                            entry[1].scotData[liquidTokenUppercase]) ||
+                            entry[1].scotData[scotTokenSymbol]) ||
                         (entry[1].parent_author && entry[1].parent_permlink)
                 )
                 .forEach(entry => {
@@ -865,8 +863,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
 }
 
 export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
-    const liquidTokenUppercase = hostConfig['LIQUID_TOKEN_UPPERCASE'];
-    const scotTokenSymbol = `${liquidTokenUppercase}-${hostConfig['HIVE_ENGINE_SMT']}`;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const fetchSize = args.limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -943,7 +940,7 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
                         replies: [], // intentional
                     };
                 }
-                mergeContent(content, scotData, liquidTokenUppercase);
+                mergeContent(content, scotData, scotTokenSymbol);
                 return content;
             })
         );

@@ -8,8 +8,8 @@ import { numberWithCommas } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
 
-function formatScotAmount(quantity, precision) {
-    return (quantity / Math.pow(10, precision)).toFixed(precision);
+function formatScotAmount(quantity) {
+    return quantity;
 }
 
 const postLink = (socialUrl, author, permlink) => (
@@ -119,8 +119,7 @@ class TransferHistoryRow extends React.Component {
                 <span>
                     {tt(['transferhistoryrow_jsx', 'staking_reward'], {
                         amount: `${formatScotAmount(
-                            op.int_amount,
-                            op.precision
+                            op.quantity,
                         )} ${scotTokenSymbol}`,
                     })}
                 </span>
@@ -135,8 +134,7 @@ class TransferHistoryRow extends React.Component {
                 <span>
                     {tt(['transferhistoryrow_jsx', op.type], {
                         amount: `${formatScotAmount(
-                            op.int_amount,
-                            op.precision
+                            op.quantity,
                         )} ${scotTokenSymbol}`,
                     })}
                     {op.type != 'mining_reward' &&
