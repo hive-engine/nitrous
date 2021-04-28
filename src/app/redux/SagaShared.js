@@ -77,7 +77,7 @@ function* showTransactionErrorNotification() {
 
 export function* getContent({ author, permlink, resolve, reject }) {
     const scotTokenSymbol = yield select(state =>
-        `${state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])}-${state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])}`
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
     );
     const preferHive = yield select(state =>
         state.app.getIn(['hostConfig', 'PREFER_HIVE'])
