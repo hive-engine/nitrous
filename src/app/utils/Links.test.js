@@ -189,8 +189,11 @@ describe('Performance', () => {
     });
     it('threespeak', () => {
         match(threespeakRegex.main, 'https://3speak.co/watch?v=artemislives/tvxkobat');
+        match(threespeakRegex.main, 'https://3speak.tv/watch?v=artemislives/tvxkobat');
         match(threespeakRegex.main, 'https://3speak.co/watch?v=artemislives/tvxkobat&jwsource=cl');
+        match(threespeakRegex.main, 'https://3speak.tv/watch?v=artemislives/tvxkobat&jwsource=cl');
         match(threespeakRegex.main, 'https://3speak.co/embed?v=artemislives/tvxkobat');
+        match(threespeakRegex.main, 'https://3speak.tv/embed?v=artemislives/tvxkobat');
     });
     it('threespeakId', () => {
         match(threespeakRegex.main, 'https://3speak.co/watch?v=artemislives/tvxkobat', 'artemislives/tvxkobat', 1);
@@ -200,7 +203,16 @@ describe('Performance', () => {
             'artemislives/tvxkobat',
             1
         );
-        match(threespeakRegex.main, 'https://3speak.co/embed?v=artemislives/tvxkobat', 'artemislives/tvxkobat', 1);
+        match(threespeakRegex.main, 'https://3speak.tv/embed?v=artemislives/tvxkobat', 'artemislives/tvxkobat', 1);
+
+        match(threespeakRegex.main, 'https://3speak.tv/watch?v=artemislives/tvxkobat', 'artemislives/tvxkobat', 1);
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/watch?v=artemislives/tvxkobat&jwsource=cl',
+            'artemislives/tvxkobat',
+            1
+        );
+        match(threespeakRegex.main, 'https://3speak.tv/embed?v=artemislives/tvxkobat', 'artemislives/tvxkobat', 1);
     });
     it('threespeakImageLink', () => {
         match(
