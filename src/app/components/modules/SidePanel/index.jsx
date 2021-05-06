@@ -119,6 +119,13 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
+        organizational_LERN: [
+            {
+                value: 'LERN_discord',
+                label: 'Discord',
+                link: 'https://discord.gg/vKXmCEmFkT',
+            },
+        ],
         organizational_ALIVE: [
             {
                 value: 'ALIVE_about',

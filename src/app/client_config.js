@@ -241,7 +241,7 @@ const REVELATION = {
 };
 
 const LERN = {
-    APP_NAME: 'LernHerstory',
+    APP_NAME: 'LERNBlogs by LERNHerstory',
     APP_ICON: 'lern',
     APP_ICON_WIDTH: '70px',
     APP_ICON_HEIGHT: '40px',
