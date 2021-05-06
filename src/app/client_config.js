@@ -870,27 +870,9 @@ const BROADHIVE = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': PHOTO,
-    'frozen-retreat-15997.herokuapp.com': ALIVE,
-    'www.wearealiveand.social': ALIVE,
-    'www.photostreem.com': PHOTO,
-    'www.broadhive.org': BROADHIVE,
-    'www.cinetv.io': CINETV,
-    'www.proofofbrain.io': POB,
+    'localhost:8080': LERN,
+    'scotlern.herokuapp.com': LERN,
     'www.lernblogs.com': LERN,
-    'www.musicforlife.io': VIBES,
-    'www.projectrevelation.io': REVELATION,
-    'www.hivehustlers.io': HIVEHUSTLERS,
-    'www.gradnium.com': GRADNIUM,
-    'www.pimpstudio.cash': PIMP,
-    'www.d-social.com': DSOCIAL,
-    'www.aeneas.blog': AENEAS,
-    'www.lieta.io': LIETA,
-    'www.archonapp.net': ARCHON,
-    'www.hivelist.org': HIVELIST,
-    'nitrous.telokanda.com': KANDA,
-    'www.trafficinsider.org': TIX,
-    'www.cryptowars.me': INFOWARS,
 };
 
 // FIXME figure out best way to do this on both client and server from env

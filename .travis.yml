@@ -10,17 +10,17 @@ before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
 script:
-  - docker build -t registry.heroku.com/frozen-retreat-15997/web .
+  - docker build -t registry.heroku.com/scotlern/web .
 
 deploy:
   provider: script
   script:
     bash docker_push
   on:
-    branch: scotty_multi
+    branch: scotty_lern
 
 # safelist
 branches:
   only:
   - master
-  - scotty_multi
+  - scotty_lern
