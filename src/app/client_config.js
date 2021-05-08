@@ -267,8 +267,10 @@ const LERN = {
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
+    POST_FOOTER:
+        '\n\n---\n\n<center><sub>Published on [LERNblogs.com](${POST_URL})</sub></center>',
+    COMMENT_FOOTER:
+        '\n\n---\n\n<center><sub>Posted via [LERNblogs.com](${POST_URL})</sub></center>',
     SCOT_TAG_FIRST: false,
     PINNED_POSTS_URL: '',
     SDC_GTAG_MEASUREMENT_ID: 'G-TX4HJ2V8VM',
