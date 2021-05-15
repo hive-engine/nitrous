@@ -667,6 +667,7 @@ class ReplyEditor extends React.Component {
             maxAcceptedPayout,
         } = this.props;
         const hive = this.props.hive !== false && hostConfig['PREFER_HIVE'];
+        const appDomain = hostConfig['APP_DOMAIN'];
         const {
             submitting,
             valid,
@@ -688,7 +689,7 @@ class ReplyEditor extends React.Component {
         // This will be used to display the cover image selector.
         let rtags;
         if (isStory) {
-            rtags = extractRtags(body.value);
+            rtags = extractRtags(appDomain, hive, body.value);
         }
 
         const errorCallback = estr => {
