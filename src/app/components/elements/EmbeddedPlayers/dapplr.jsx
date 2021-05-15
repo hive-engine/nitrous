@@ -13,7 +13,7 @@ export default regex;
  */
 export const sandboxConfig = {
     useSandbox: true,
-    sandboxAttributes: [],
+    sandboxAttributes: ['allow-scripts', 'allow-same-origin', 'allow-popups'],
 };
 
 /**
