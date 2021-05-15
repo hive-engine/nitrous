@@ -177,7 +177,7 @@
         &.selected {
             opacity: 1;
             @include themify($themes) {
-                border: 3px solid $color-hive-red;
+                border: 3px solid themed('colorAccent');
             }
         }
 
