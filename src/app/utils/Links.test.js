@@ -1,7 +1,6 @@
 import assert from 'assert';
 import secureRandom from 'secure-random';
 import links, * as linksRe from 'app/utils/Links';
-import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
 import { APP_DOMAIN } from 'app/client_config';
 import youtubeRegex from 'app/components/elements/EmbeddedPlayers/youtube';
 import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak';
