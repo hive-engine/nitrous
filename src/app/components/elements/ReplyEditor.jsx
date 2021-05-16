@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import reactForm from 'app/utils/ReactForm';
-import { Map } from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
@@ -40,7 +39,12 @@ let imagesToUpload = [];
 function allTags(userInput, originalCategory, hashtags, hostConfig) {
     // take space-delimited user input
     let tags = OrderedSet(
-        userInput ? userInput.trim().replace(/#/g, '').split(/ +/) : []
+        userInput
+            ? userInput
+                  .trim()
+                  .replace(/#/g, '')
+                  .split(/ +/)
+            : []
     );
 
     if (hostConfig['SCOT_TAG_FIRST']) {
@@ -174,7 +178,7 @@ class ReplyEditor extends React.Component {
             this.props.defaultBeneficiaries.toArray().length > 0 &&
             this.props.referralSystem != 'disabled'
         ) {
-            this.props.defaultBeneficiaries.toArray().forEach((element) => {
+            this.props.defaultBeneficiaries.toArray().forEach(element => {
                 const label = element.get('label');
                 const name = element.get('name');
                 const weight = parseInt(element.get('weight'));
@@ -190,11 +194,11 @@ class ReplyEditor extends React.Component {
                     ) {
                         if (
                             qualifiedBeneficiaries.find(
-                                (beneficiary) => beneficiary.username === name
+                                beneficiary => beneficiary.username === name
                             )
                         ) {
                             qualifiedBeneficiaries.find(
-                                (beneficiary) => beneficiary.username === name
+                                beneficiary => beneficiary.username === name
                             ).percent += parseInt((weight / 100).toFixed(0));
                         } else {
                             qualifiedBeneficiaries.push({
@@ -370,7 +374,7 @@ class ReplyEditor extends React.Component {
             instance: this,
             name: 'replyForm',
             initialValues: props.initialValues,
-            validation: (values) => {
+            validation: values => {
                 const markdownRegex = /(?:\*[\w\s]*\*|\#[\w\s]*\#|_[\w\s]*_|~[\w\s]*~|\]\s*\(|\]\s*\[)/;
                 let bodyValidation = null;
                 if (!values.body) {
@@ -380,9 +384,8 @@ class ReplyEditor extends React.Component {
                     values.body &&
                     new Blob([values.body]).size >= maxKb * 1024 - 256
                 ) {
-                    bodyValidation = `Post body exceeds ${
-                        maxKb * 1024 - 256
-                    } bytes.`;
+                    bodyValidation = `Post body exceeds ${maxKb * 1024 -
+                        256} bytes.`;
                 }
                 return {
                     title:
@@ -390,7 +393,17 @@ class ReplyEditor extends React.Component {
                         (!values.title || values.title.trim() === ''
                             ? tt('g.required')
                             : values.title.length > 255
-                    tags: isStory && validateTagInput(values.tags, hostConfig['APP_MAX_TAG'], !isEdit),
+                              ? tt('reply_editor.shorten_title')
+                              : markdownRegex.test(values.title)
+                                ? tt('reply_editor.markdown_not_supported')
+                                : null),
+                    tags:
+                        isStory &&
+                        validateTagInput(
+                            values.tags,
+                            hostConfig['APP_MAX_TAG'],
+                            !isEdit
+                        ),
                     body: bodyValidation,
                 };
             },
@@ -412,7 +425,7 @@ class ReplyEditor extends React.Component {
         title.props.onChange(e);
     };
 
-    onCancel = (e) => {
+    onCancel = e => {
         if (e) e.preventDefault();
         const { formId, onCancel, defaultPayoutType } = this.props;
         const { replyForm, body } = this.state;
@@ -432,14 +445,14 @@ class ReplyEditor extends React.Component {
     };
 
     // As rte_editor is updated, keep the (invisible) 'body' field in sync.
-    onChange = (rte_value) => {
+    onChange = rte_value => {
         this.refs.rte.setState({ state: rte_value });
         const html = stateToHtml(rte_value);
         const { body } = this.state;
         if (body.value !== html) body.props.onChange(html);
     };
 
-    toggleRte = (e) => {
+    toggleRte = e => {
         e.preventDefault();
         const hostConfig = this.props.hostConfig;
         const appDomain = hostConfig['APP_DOMAIN'];
@@ -463,7 +476,7 @@ class ReplyEditor extends React.Component {
         }
     }
 
-    showAdvancedSettings = (e) => {
+    showAdvancedSettings = e => {
         e.preventDefault();
 
         this.props.setPayoutType(this.props.formId, this.props.payoutType);
@@ -480,7 +493,7 @@ class ReplyEditor extends React.Component {
         this.props.showAdvancedSettings(this.props.formId);
     };
 
-    displayErrorMessage = (message) => {
+    displayErrorMessage = message => {
         this.setState({
             progress: { error: message },
         });
@@ -524,7 +537,7 @@ class ReplyEditor extends React.Component {
         this.dropzone.open();
     };
 
-    onPasteCapture = (e) => {
+    onPasteCapture = e => {
         try {
             if (e.clipboardData) {
                 // @TODO: currently it seems to capture only one file, try to find a fix for multiple files
@@ -568,7 +581,9 @@ class ReplyEditor extends React.Component {
 
             if (imageToUpload.temporaryTag === '') {
                 imagesUploadCount++;
-                imageToUpload.temporaryTag = `![Uploading image #${imagesUploadCount}...]()`;
+                imageToUpload.temporaryTag = `![Uploading image #${
+                    imagesUploadCount
+                }...]()`;
                 placeholder += `\n${imageToUpload.temporaryTag}\n`;
             }
         }
@@ -583,13 +598,13 @@ class ReplyEditor extends React.Component {
         );
     };
 
-    upload = (image) => {
+    upload = image => {
         const { uploadImage } = this.props;
         this.setState({
             progress: { message: tt('reply_editor.uploading') },
         });
 
-        uploadImage(image.file, (progress) => {
+        uploadImage(image.file, progress => {
             const { body } = this.state;
 
             if (progress.url) {
@@ -652,6 +667,7 @@ class ReplyEditor extends React.Component {
             maxAcceptedPayout,
         } = this.props;
         const hive = this.props.hive !== false && hostConfig['PREFER_HIVE'];
+        const appDomain = hostConfig['APP_DOMAIN'];
         const {
             submitting,
             valid,
@@ -673,10 +689,10 @@ class ReplyEditor extends React.Component {
         // This will be used to display the cover image selector.
         let rtags;
         if (isStory) {
-            rtags = extractRtags(body.value);
+            rtags = extractRtags(appDomain, hive, body.value);
         }
 
-        const errorCallback = (estr) => {
+        const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
         };
         const isEdit = type === 'edit';
@@ -746,7 +762,7 @@ class ReplyEditor extends React.Component {
             });
         };
 
-        const onSelectCoverImage = (event) => {
+        const onSelectCoverImage = event => {
             const { target } = event;
 
             const postImages = document.getElementsByClassName(
@@ -778,15 +794,17 @@ class ReplyEditor extends React.Component {
                         'large-6': enableSideBySide,
                     })}
                 >
-                    {isStory && !isEdit && username && (
-                        <PostCategoryBanner
-                            communityName={community}
-                            disabledCommunity={disabledCommunity}
-                            username={username}
-                            onCancel={this.shiftTagInput.bind(this)}
-                            onUndo={this.unshiftTagInput.bind(this)}
-                        />
-                    )}
+                    {isStory &&
+                        !isEdit &&
+                        username && (
+                            <PostCategoryBanner
+                                communityName={community}
+                                disabledCommunity={disabledCommunity}
+                                username={username}
+                                onCancel={this.shiftTagInput.bind(this)}
+                                onUndo={this.unshiftTagInput.bind(this)}
+                            />
+                        )}
                     <div
                         ref="draft"
                         className="ReplyEditor__draft ReplyEditor__draft-hide"
@@ -848,16 +866,17 @@ class ReplyEditor extends React.Component {
                                                       )}`}
                                             </a>
                                         )}
-                                        {!rte && (isHtml || !body.value) && (
-                                            <a
-                                                href="#"
-                                                onClick={this.toggleRte}
-                                            >
-                                                {`📰 ${tt(
-                                                    'reply_editor.editor'
-                                                )}`}
-                                            </a>
-                                        )}
+                                        {!rte &&
+                                            (isHtml || !body.value) && (
+                                                <a
+                                                    href="#"
+                                                    onClick={this.toggleRte}
+                                                >
+                                                    {`📰 ${tt(
+                                                        'reply_editor.editor'
+                                                    )}`}
+                                                </a>
+                                            )}
                                     </div>
                                     {titleError}
                                 </span>
@@ -895,7 +914,7 @@ class ReplyEditor extends React.Component {
                                         disableClick
                                         multiple
                                         accept="image/*"
-                                        ref={(node) => {
+                                        ref={node => {
                                             this.dropzone = node;
                                         }}
                                     >
@@ -1001,7 +1020,7 @@ class ReplyEditor extends React.Component {
                                         </h6>
                                         <div className="ReplyEditor__options__image_selector">
                                             {Array.from(rtags.images).map(
-                                                (image) => {
+                                                image => {
                                                     return (
                                                         <div
                                                             key={image}
@@ -1014,7 +1033,9 @@ class ReplyEditor extends React.Component {
                                                                 }
                                                             )}
                                                             style={{
-                                                                backgroundImage: `url(${image})`,
+                                                                backgroundImage: `url(${
+                                                                    image
+                                                                })`,
                                                             }}
                                                             onClick={
                                                                 onSelectCoverImage
@@ -1032,67 +1053,81 @@ class ReplyEditor extends React.Component {
                             className={vframe_section_shrink_class}
                             style={{ marginTop: '0.5rem' }}
                         >
-                            {isStory && !isEdit && (
-                                <div className="ReplyEditor__options">
-                                    <h6>{tt('reply_editor.post_options')}:</h6>
-                                    <div>
-                                        {this.props.maxAcceptedPayout !==
-                                            null &&
-                                            this.props.maxAcceptedPayout !==
-                                                0 && (
-                                                <div>
-                                                    {tt(
-                                                        'post_advanced_settings_jsx.max_accepted_payout'
-                                                    )}
-                                                    {': '}
-                                                    {
-                                                        this.props
-                                                            .maxAcceptedPayout
-                                                    }{' '}
-                                                </div>
-                                            )}
+                            {isStory &&
+                                !isEdit && (
+                                    <div className="ReplyEditor__options">
+                                        <h6>
+                                            {tt('reply_editor.post_options')}:
+                                        </h6>
                                         <div>
-                                            {tt('g.rewards')}
-                                            {': '}
-                                            {this.props.payoutType === '0%' &&
-                                                tt(
-                                                    'reply_editor.decline_payout'
-                                                )}
-                                            {this.props.payoutType === '50%' &&
-                                                tt(
-                                                    'reply_editor.default_50_50'
-                                                )}
-                                            {this.props.payoutType === '100%' &&
-                                                tt('reply_editor.power_up_100')}
-                                        </div>
-                                        <div>
-                                            {beneficiaries &&
-                                                beneficiaries.length > 0 && (
-                                                    <span>
-                                                        {tt('g.beneficiaries')}
-                                                        {': '}
+                                            {this.props.maxAcceptedPayout !==
+                                                null &&
+                                                this.props.maxAcceptedPayout !==
+                                                    0 && (
+                                                    <div>
                                                         {tt(
-                                                            'reply_editor.beneficiaries_set',
-                                                            {
-                                                                count:
-                                                                    beneficiaries.length,
-                                                            }
+                                                            'post_advanced_settings_jsx.max_accepted_payout'
                                                         )}
+                                                        {': '}
+                                                        {
+                                                            this.props
+                                                                .maxAcceptedPayout
+                                                        }{' '}
+                                                    </div>
                                                 )}
+                                            <div>
+                                                {tt('g.rewards')}
+                                                {': '}
+                                                {this.props.payoutType ===
+                                                    '0%' &&
+                                                    tt(
+                                                        'reply_editor.decline_payout'
+                                                    )}
+                                                {this.props.payoutType ===
+                                                    '50%' &&
+                                                    tt(
+                                                        'reply_editor.default_50_50'
+                                                    )}
+                                                {this.props.payoutType ===
+                                                    '100%' &&
+                                                    tt(
+                                                        'reply_editor.power_up_100'
+                                                    )}
+                                            </div>
+                                            <div>
+                                                {beneficiaries &&
+                                                    beneficiaries.length >
+                                                        0 && (
+                                                        <span>
+                                                            {tt(
+                                                                'g.beneficiaries'
+                                                            )}
+                                                            {': '}
+                                                            {tt(
+                                                                'reply_editor.beneficiaries_set',
+                                                                {
+                                                                    count:
+                                                                        beneficiaries.length,
+                                                                }
+                                                            )}
+                                                        </span>
+                                                    )}
+                                            </div>
+                                            <a
+                                                href="#"
+                                                onClick={
+                                                    this.showAdvancedSettings
+                                                }
+                                            >
+                                                {tt(
+                                                    'reply_editor.advanced_settings'
+                                                )}
+                                            </a>{' '}
+                                            <br />
+                                            &nbsp;
                                         </div>
-                                        <a
-                                            href="#"
-                                            onClick={this.showAdvancedSettings}
-                                        >
-                                            {tt(
-                                                'reply_editor.advanced_settings'
-                                            )}
-                                        </a>{' '}
-                                        <br />
-                                        &nbsp;
                                     </div>
-                                </div>
-                            )}
+                                )}
                         </div>
                         <div className={vframe_section_shrink_class}>
                             {postError && (
@@ -1119,26 +1154,28 @@ class ReplyEditor extends React.Component {
                                 </span>
                             )}
                             &nbsp;{' '}
-                            {!loading && this.props.onCancel && (
-                                <button
-                                    type="button"
-                                    className="secondary hollow button no-border"
-                                    tabIndex={5}
-                                    onClick={onCancel}
-                                >
-                                    {tt('g.cancel')}
-                                </button>
-                            )}
-                            {!loading && !this.props.onCancel && (
-                                <button
-                                    className="button hollow no-border"
-                                    tabIndex={5}
-                                    disabled={submitting}
-                                    onClick={onCancel}
-                                >
-                                    {tt('g.clear')}
-                                </button>
-                            )}
+                            {!loading &&
+                                this.props.onCancel && (
+                                    <button
+                                        type="button"
+                                        className="secondary hollow button no-border"
+                                        tabIndex={5}
+                                        onClick={onCancel}
+                                    >
+                                        {tt('g.cancel')}
+                                    </button>
+                                )}
+                            {!loading &&
+                                !this.props.onCancel && (
+                                    <button
+                                        className="button hollow no-border"
+                                        tabIndex={5}
+                                        disabled={submitting}
+                                        onClick={onCancel}
+                                    >
+                                        {tt('g.clear')}
+                                    </button>
+                                )}
                             {!isStory &&
                                 !isEdit &&
                                 this.props.payoutType != '50%' && (
@@ -1181,17 +1218,22 @@ class ReplyEditor extends React.Component {
                             </div>
                         )}
                     </div>
-                    {!loading && !rte && body.value && (
-                        <div
-                            className={classnames({
-                                Preview: true,
-                                'side-by-side': enableSideBySide,
-                                vframe_section_shrink_class: true,
-                            })}
-                        >
-                            <MarkdownViewer text={body.value} large={isStory} />
-                        </div>
-                    )}
+                    {!loading &&
+                        !rte &&
+                        body.value && (
+                            <div
+                                className={classnames({
+                                    Preview: true,
+                                    'side-by-side': enableSideBySide,
+                                    vframe_section_shrink_class: true,
+                                })}
+                            >
+                                <MarkdownViewer
+                                    text={body.value}
+                                    large={isStory}
+                                />
+                            </div>
+                        )}
                 </div>
             </div>
         );
@@ -1206,7 +1248,7 @@ function stripHtmlWrapper(text) {
     return m && m.length === 2 ? m[1] : text;
 }
 // See also MarkdownViewer render
-const isHtmlTest = (text) => /^<html>/.test(text);
+const isHtmlTest = text => /^<html>/.test(text);
 
 function stateToHtml(state) {
     let html = serializeHtml(state);
@@ -1234,7 +1276,7 @@ function stateFromMarkdown(markdown, appDomain, preferHive) {
     return stateFromHtml(html);
 }
 
-export default (formId) =>
+export default formId =>
     connect(
         // mapStateToProps
         (state, ownProps) => {
@@ -1266,8 +1308,8 @@ export default (formId) =>
 
             const jsonMetadata = ownProps.jsonMetadata
                 ? ownProps.jsonMetadata instanceof Map
-                    ? ownProps.jsonMetadata.toJS()
-                    : ownProps.jsonMetadata
+                  ? ownProps.jsonMetadata.toJS()
+                  : ownProps.jsonMetadata
                 : {};
 
             let tags = category;
@@ -1372,10 +1414,10 @@ export default (formId) =>
         },
 
         // mapDispatchToProps
-        (dispatch) => ({
+        dispatch => ({
             uploadImage: (file, progress) =>
                 dispatch(userActions.uploadImage({ file, progress })),
-            showAdvancedSettings: (formId) =>
+            showAdvancedSettings: formId =>
                 dispatch(userActions.showPostAdvancedSettings({ formId })),
             setPayoutType: (formId, payoutType) =>
                 dispatch(
@@ -1449,9 +1491,9 @@ export default (formId) =>
                           // permlink,  assigned in TransactionSaga
                       }
                     : // edit existing
-                    isEdit
-                    ? { author, permlink, parent_author, parent_permlink }
-                    : null;
+                      isEdit
+                      ? { author, permlink, parent_author, parent_permlink }
+                      : null;
 
                 if (!linkProps) throw new Error('Unknown type: ' + type);
 
@@ -1473,7 +1515,7 @@ export default (formId) =>
                     });
                 }
 
-                allowedTags.forEach((tag) => {
+                allowedTags.forEach(tag => {
                     rtags.htmltags.delete(tag);
                 });
                 if (isHtml) rtags.htmltags.delete('html'); // html tag allowed only in HTML mode
@@ -1481,7 +1523,7 @@ export default (formId) =>
                     errorCallback(
                         'Please remove the following HTML elements from your post: ' +
                             Array(...rtags.htmltags)
-                                .map((tag) => `<${tag}>`)
+                                .map(tag => `<${tag}>`)
                                 .join(', ')
                     );
                     return;
@@ -1601,14 +1643,15 @@ export default (formId) =>
                                 0,
                                 {
                                     beneficiaries: beneficiaries
-                                        .sort((a, b) =>
-                                            a.username < b.username
-                                                ? -1
-                                                : a.username > b.username
-                                                ? 1
-                                                : 0
+                                        .sort(
+                                            (a, b) =>
+                                                a.username < b.username
+                                                    ? -1
+                                                    : a.username > b.username
+                                                      ? 1
+                                                      : 0
                                         )
-                                        .map((elt) => ({
+                                        .map(elt => ({
                                             account: elt.username,
                                             weight: Math.round(
                                                 parseFloat(elt.percent) * 100
