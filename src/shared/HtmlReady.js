@@ -4,15 +4,11 @@ import linksRe, { any as linksAny } from 'app/utils/Links';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import * as Phishing from 'app/utils/Phishing';
-import {
-    embedNode as EmbeddedPlayerEmbedNode,
-    preprocessHtml,
-} from 'app/components/elements/EmbeddedPlayers';
+import { embedNode as EmbeddedPlayerEmbedNode, preprocessHtml } from 'app/components/elements/EmbeddedPlayers';
 import { extractMetadata as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 export const getPhishingWarningMessage = () => tt('g.phishy_message');
-export const getExternalLinkWarningMessage = () =>
-    tt('g.external_link_message');
+export const getExternalLinkWarningMessage = () => tt('g.external_link_message');
 
 const noop = () => {};
 const DOMParser = new xmldom.DOMParser({
@@ -92,21 +88,14 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
     state.images = new Set();
     state.links = new Set();
     try {
-        const doc = DOMParser.parseFromString(
-            preprocessHtml(html),
-            'text/html'
-        );
+        const doc = DOMParser.parseFromString(preprocessHtml(html), 'text/html');
         traverse(doc, state);
         if (mutate) {
             if (hideImages) {
-                for (const image of Array.from(
-                    doc.getElementsByTagName('img')
-                )) {
+                for (const image of Array.from(doc.getElementsByTagName('img'))) {
                     const pre = doc.createElement('pre');
                     pre.setAttribute('class', 'image-url-only');
-                    pre.appendChild(
-                        doc.createTextNode(image.getAttribute('src'))
-                    );
+                    pre.appendChild(doc.createTextNode(image.getAttribute('src')));
                     image.parentNode.replaceChild(pre, image);
                 }
             } else {
@@ -121,10 +110,7 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
         };
     } catch (error) {
         // xmldom error is bad
-        console.error(
-            'rendering error',
-            JSON.stringify({ error: error.message, html })
-        );
+        console.error('rendering error', JSON.stringify({ error: error.message, html }));
         return { html: '' };
     }
 }
@@ -160,10 +146,8 @@ function link(state, child) {
             // Unlink potential phishing attempts
             if (
                 (url.indexOf('#') !== 0 && // Allow in-page links
-                    (child.textContent.match(/(www\.)?steemit\.com/i) &&
-                        !url.match(
-                            /https?:\/\/(.*@)?(www\.)?steemit\.com/i
-                        ))) ||
+                    child.textContent.match(/(www\.)?steemit\.com/i) &&
+                    !url.match(/https?:\/\/(.*@)?(www\.)?steemit\.com/i)) ||
                 Phishing.looksPhishy(url)
             ) {
                 const phishyDiv = child.ownerDocument.createElement('div');
@@ -193,19 +177,13 @@ function iframe(state, child) {
     const { mutate } = state;
     if (!mutate) return;
 
-    const tag = child.parentNode.tagName
-        ? child.parentNode.tagName.toLowerCase()
-        : child.parentNode.tagName;
-    if (
-        tag == 'div' &&
-        child.parentNode.getAttribute('class') == 'videoWrapper'
-    )
+    const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
+    if (tag === 'div' && child.parentNode.classList.contains('videoWrapper')) {
         return;
+    }
+
     const html = XMLSerializer.serializeToString(child);
-    child.parentNode.replaceChild(
-        DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`),
-        child
-    );
+    child.parentNode.replaceChild(DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`), child);
 }
 
 function img(state, child) {
@@ -228,18 +206,22 @@ function img(state, child) {
 // For all img elements with non-local URLs, prepend the proxy URL (e.g. `https://img0.steemit.com/0x0/`)
 function proxifyImages(doc) {
     if (!doc) return;
+
     Array.from(doc.getElementsByTagName('img')).forEach(node => {
         const url = node.getAttribute('src');
-        if (!linksRe.local.test(url))
-            node.setAttribute('src', proxifyImageUrl(url, true));
+
+        if (!linksRe.local.test(url)) {
+            console.log('proxifyImage proxifying image', url);
+            const proxifiedImageUrl = proxifyImageUrl(url, true);
+            console.log('proxifiedUrl', proxifiedImageUrl);
+            node.setAttribute('src', proxifiedImageUrl);
+        }
     });
 }
 
 function linkifyNode(child, state) {
     try {
-        const tag = child.parentNode.tagName
-            ? child.parentNode.tagName.toLowerCase()
-            : child.parentNode.tagName;
+        const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
         if (tag === 'code') return;
         if (tag === 'a') return;
 
@@ -249,18 +231,9 @@ function linkifyNode(child, state) {
         child = EmbeddedPlayerEmbedNode(child, state.links, state.images);
 
         const data = XMLSerializer.serializeToString(child);
-        const content = linkify(
-            data,
-            state.mutate,
-            state.hashtags,
-            state.usertags,
-            state.images,
-            state.links
-        );
+        const content = linkify(data, state.mutate, state.hashtags, state.usertags, state.images, state.links);
         if (mutate && content !== data) {
-            const newChild = DOMParser.parseFromString(
-                `<span>${content}</span>`
-            );
+            const newChild = DOMParser.parseFromString(`<span>${content}</span>`);
             child.parentNode.replaceChild(newChild, child);
             return newChild;
         }
@@ -284,7 +257,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
     // usertag (mention)
     // Cribbed from https://github.com/twitter/twitter-text/blob/v1.14.7/js/twitter-text.js#L90
     content = content.replace(
-        /(^|[^a-zA-Z0-9_!#$%&*@＠\/]|(^|[^a-zA-Z0-9_+~.-\/#]))[@＠]([a-z][-\.a-z\d]+[a-z\d])/gi,
+        /(^|[^a-zA-Z0-9_!#$%&*@＠\/=]|(^|[^a-zA-Z0-9_+~.-\/#=]))[@＠]([a-z][-\.a-z\d]+[a-z\d])/gi,
         (match, preceeding1, preceeding2, user) => {
             const userLower = user.toLowerCase();
             const valid = validate_account_name(userLower) == null;
@@ -295,9 +268,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
 
             if (!mutate) return `${preceedings}${user}`;
 
-            return valid
-                ? `${preceedings}<a href="/@${userLower}">@${user}</a>`
-                : `${preceedings}@${user}`;
+            return valid ? `${preceedings}<a href="/@${userLower}">@${user}</a>` : `${preceedings}@${user}`;
         }
     );
 
@@ -311,10 +282,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
         if (/\.(zip|exe)$/i.test(ln)) return ln;
 
         // do not linkify phishy links
-        if (Phishing.looksPhishy(ln))
-            return `<div title='${getPhishingWarningMessage()}' class='phishy'>${
-                ln
-            }</div>`;
+        if (Phishing.looksPhishy(ln)) return `<div title='${getPhishingWarningMessage()}' class='phishy'>${ln}</div>`;
 
         if (links) links.add(ln);
         return `<a href="${ipfsPrefix(ln)}">${ln}</a>`;
