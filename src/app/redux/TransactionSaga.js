@@ -16,7 +16,7 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const steemSsc = new SSC('https://hetest.cryptoempirebot.com');
 const hiveSsc = new SSC('https://hetest.cryptoempirebot.com');

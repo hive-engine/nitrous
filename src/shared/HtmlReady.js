@@ -163,10 +163,8 @@ function link(state, child) {
             // Unlink potential phishing attempts
             if (
                 (url.indexOf('#') !== 0 && // Allow in-page links
-                    (child.textContent.match(/(www\.)?steemit\.com/i) &&
-                        !url.match(
-                            /https?:\/\/(.*@)?(www\.)?steemit\.com/i
-                        ))) ||
+                    child.textContent.match(/(www\.)?steemit\.com/i) &&
+                    !url.match(/https?:\/\/(.*@)?(www\.)?steemit\.com/i)) ||
                 Phishing.looksPhishy(url)
             ) {
                 const phishyDiv = child.ownerDocument.createElement('div');
@@ -199,11 +197,10 @@ function iframe(state, child) {
     const tag = child.parentNode.tagName
         ? child.parentNode.tagName.toLowerCase()
         : child.parentNode.tagName;
-    if (
-        tag == 'div' &&
-        child.parentNode.getAttribute('class') == 'videoWrapper'
-    )
+    if (tag === 'div' && child.parentNode.classList.contains('videoWrapper')) {
         return;
+    }
+
     const html = XMLSerializer.serializeToString(child);
     child.parentNode.replaceChild(
         DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`),
@@ -231,10 +228,16 @@ function img(state, child) {
 // For all img elements with non-local URLs, prepend the proxy URL (e.g. `https://img0.steemit.com/0x0/`)
 function proxifyImages(doc, appDomain, useHive) {
     if (!doc) return;
+
     Array.from(doc.getElementsByTagName('img')).forEach(node => {
         const url = node.getAttribute('src');
-        if (!linksRe.local(appDomain).test(url))
-            node.setAttribute('src', proxifyImageUrl(url, useHive, true));
+
+        if (!linksRe.local(appDomain).test(url)) {
+            console.log('proxifyImage proxifying image', url);
+            const proxifiedImageUrl = proxifyImageUrl(url, useHive, true);
+            console.log('proxifiedUrl', proxifiedImageUrl);
+            node.setAttribute('src', proxifiedImageUrl);
+        }
     });
 }
 
@@ -287,7 +290,7 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
     // usertag (mention)
     // Cribbed from https://github.com/twitter/twitter-text/blob/v1.14.7/js/twitter-text.js#L90
     content = content.replace(
-        /(^|[^a-zA-Z0-9_!#$%&*@＠\/]|(^|[^a-zA-Z0-9_+~.-\/#]))[@＠]([a-z][-\.a-z\d]+[a-z\d])/gi,
+        /(^|[^a-zA-Z0-9_!#$%&*@＠\/=]|(^|[^a-zA-Z0-9_+~.-\/#=]))[@＠]([a-z][-\.a-z\d]+[a-z\d])/gi,
         (match, preceeding1, preceeding2, user) => {
             const userLower = user.toLowerCase();
             const valid = validate_account_name(userLower) == null;

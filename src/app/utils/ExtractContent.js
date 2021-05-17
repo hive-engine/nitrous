@@ -4,56 +4,51 @@ import sanitize from 'sanitize-html';
 import { htmlDecode } from 'app/utils/Html';
 import HtmlReady from 'shared/HtmlReady';
 import Remarkable from 'remarkable';
+import _ from 'lodash';
 
 const remarkable = new Remarkable({ html: true, linkify: false });
 
-const getValidImage = image => {
-    if (!image) {
-        return null;
-    }
-    if (
-        Array.isArray(image) &&
-        image.length >= 1 &&
-        typeof image[0] === 'string'
-    ) {
-        return image[0];
-    }
-    if (typeof image === 'string') {
-        return image;
-    }
-    return null;
+const getValidImage = array => {
+    return array && Array.isArray(array) && array.length >= 1 && typeof array[0] === 'string' ? array[0] : null;
 };
+
+export function extractRtags(appDomain, hive, body = null) {
+    let rtags;
+    {
+        const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
+        const htmlText = isHtml
+            ? body
+            : remarkable.render(body.replace(/<!--([\s\S]+?)(-->|$)/g, '(html comment removed: $1)'));
+        rtags = HtmlReady(htmlText, {
+            appDomain,
+            useHive: hive,
+            mutate: false
+        });
+    }
+
+    return rtags;
+}
 
 export function extractImageLink(json_metadata, appDomain, hive, body = null) {
     let json = Iterable.isIterable(json_metadata)
         ? json_metadata.toJS()
         : json_metadata;
     if (!json) json = {};
+    let jsonImage;
+    if (typeof json.get === 'function') {
+        jsonImage = json.get('image');
+    } else {
+        jsonImage = _.get(json, 'image');
+    }
     let image_link;
 
     try {
-        image_link = json && json.image ? getValidImage(json.image) : null;
+        image_link = jsonImage ? getValidImage(Array.from(jsonImage)) : null;
     } catch (error) {}
 
     // If nothing found in json metadata, parse body and check images/links
     if (!image_link) {
-        let rtags;
-        {
-            const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
-            const htmlText = isHtml
-                ? body
-                : remarkable.render(
-                      body.replace(
-                          /<!--([\s\S]+?)(-->|$)/g,
-                          '(html comment removed: $1)'
-                      )
-                  );
-            rtags = HtmlReady(htmlText, {
-                mutate: false,
-                appDomain,
-                useHive: hive,
-            });
-        }
+        const rtags = extractRtags(appDomain, hive, body);
 
         if (rtags.images) {
             [image_link] = Array.from(rtags.images);
@@ -87,12 +82,12 @@ export function extractBodySummary(body, strip_quotes = false) {
     // Grab only the first line (not working as expected. does rendering/sanitizing strip newlines?)
     desc = desc.trim().split('\n')[0];
 
-    if (desc.length > 140) {
-        desc = desc.substring(0, 140).trim();
+    if (desc.length > 200) {
+        desc = desc.substring(0, 200).trim();
 
         // Truncate, remove the last (likely partial) word (along with random punctuation), and add ellipses
         desc = desc
-            .substring(0, 120)
+            .substring(0, 180)
             .trim()
             .replace(/[,!\?]?\s+[^\s]+$/, '…');
     }

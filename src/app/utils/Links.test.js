@@ -1,12 +1,17 @@
 import assert from 'assert';
 import secureRandom from 'secure-random';
 import links, * as linksRe from 'app/utils/Links';
-import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
 import youtubeRegex from 'app/components/elements/EmbeddedPlayers/youtube';
 import threespeakRegex from 'app/components/elements/EmbeddedPlayers/threespeak';
 import twitterRegex from 'app/components/elements/EmbeddedPlayers/twitter';
 import spotifyRegex from 'app/components/elements/EmbeddedPlayers/spotify';
 import mixcloudRegex from 'app/components/elements/EmbeddedPlayers/mixcloud';
+import archiveorg from 'app/components/elements/EmbeddedPlayers/archiveorg';
+import bandcamp from 'app/components/elements/EmbeddedPlayers/bandcamp';
+import redditRegex from 'app/components/elements/EmbeddedPlayers/reddit';
+import gist from 'app/components/elements/EmbeddedPlayers/gist';
+import truvvl from 'app/components/elements/EmbeddedPlayers/truvvl';
+import { PARAM_VIEW_MODE, VIEW_MODE_WHISTLE } from '../../shared/constants';
 
 describe('Links', () => {
     it('all', () => {
@@ -233,6 +238,15 @@ describe('Performance', () => {
             assert(match[0] === 'https://example.com/img.jpeg', 'no match');
         }
     });
+    it('remote, ' + largeData.length + ' bytes x 10,000', () => {
+        for (let i = 0; i < 10000; i++) {
+            const match = (largeData + 'https://example.com').match(
+                linksRe.remote()
+            );
+            assert(match, 'no match');
+            assert(match[0] === 'https://example.com', 'no match');
+        }
+    });
     it('youTube', () => {
         match(youtubeRegex.main, 'https://youtu.be/xG7ajrbj4zs?t=7s');
         match(
@@ -267,33 +281,64 @@ describe('Performance', () => {
     it('threespeak', () => {
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat'
+            'https://3speak.co/watch?v=artemislives/tvxkobat'
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl'
+            'https://3speak.tv/watch?v=artemislives/tvxkobat'
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/embed?v=artemislives/tvxkobat'
+            'https://3speak.co/watch?v=artemislives/tvxkobat&jwsource=cl'
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/watch?v=artemislives/tvxkobat&jwsource=cl'
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.co/embed?v=artemislives/tvxkobat'
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/embed?v=artemislives/tvxkobat'
         );
     });
     it('threespeakId', () => {
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat',
+            'https://3speak.co/watch?v=artemislives/tvxkobat',
             'artemislives/tvxkobat',
             1
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/watch?v=artemislives/tvxkobat&jwsource=cl',
+            'https://3speak.co/watch?v=artemislives/tvxkobat&jwsource=cl',
             'artemislives/tvxkobat',
             1
         );
         match(
             threespeakRegex.main,
-            'https://3speak.online/embed?v=artemislives/tvxkobat',
+            'https://3speak.tv/embed?v=artemislives/tvxkobat',
+            'artemislives/tvxkobat',
+            1
+        );
+
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/watch?v=artemislives/tvxkobat',
+            'artemislives/tvxkobat',
+            1
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/watch?v=artemislives/tvxkobat&jwsource=cl',
+            'artemislives/tvxkobat',
+            1
+        );
+        match(
+            threespeakRegex.main,
+            'https://3speak.tv/embed?v=artemislives/tvxkobat',
             'artemislives/tvxkobat',
             1
         );
@@ -301,7 +346,7 @@ describe('Performance', () => {
     it('threespeakImageLink', () => {
         match(
             threespeakRegex.htmlReplacement,
-            '<a href="https://3speak.online/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://steemitimages.com/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
+            '<a href="https://3speak.co/watch?v=artemislives/tvxkobat" rel="noopener" title="This link will take you away from steemit.com" class="steem-keychain-checked"><img src="https://images.hive.blog/768x0/https://img.3speakcontent.online/tvxkobat/post.png"></a>'
         );
     });
     it('twitter', () => {
@@ -322,24 +367,98 @@ describe('Performance', () => {
             '<blockquote><p>Dear government and elites in the UK, a short thread about your attempted suppression of Tommy Robinson through your ability to control private enterprises like Twitter, Facebook and YouTube /1</p>&amp;mdash; 🇮🇱Dr BrianofLondon.me (<a href="/@brianoflondon" class="keychainify-checked">@brianoflondon</a>) <a href="https://twitter.com/brianoflondon/status/1219518959168389121?ref_src=twsrc%5Etfw" rel="nofollow noopener" title="This link will take you away from hive.blog">January 21, 2020</a></blockquote>'
         );
     });
+    it('reddit', () => {
+        match(
+            redditRegex.main,
+            'https://www.reddit.com/r/Kefir/comments/l1ntst/is_this_kahn_yeast_its_always_start_appearing/'
+        );
+        match(
+            redditRegex.sanitize,
+            'https://www.reddit.com/r/Kefir/comments/l1ntst/is_this_kahn_yeast_its_always_start_appearing/'
+        );
+        match(
+            redditRegex.htmlReplacement,
+            '<blockquote class="reddit-card" data-card-created="1614855336"><a href="https://www.reddit.com/r/CryptoCurrency/comments/lxcmup/to_all_the_small_hodlers_keeping_your_coins_at_an/">To all the small hodlers, keeping your coins at an exchange might be the best thing for you</a> from <a href="http://www.reddit.com/r/CryptoCurrency">r/CryptoCurrency</a></blockquote>\n' +
+                '<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>'
+        );
+        match(
+            redditRegex.htmlReplacement,
+            '<blockquote class="reddit-card" data-card-created="1614855336"><a href="https://www.reddit.com/r/CryptoCurrency/comments/lxcmup/to_all_the_small_hodlers_keeping_your_coins_at_an/">To all the small hodlers, keeping your coins at an exchange might be the best thing for you</a> from <a href="http://www.reddit.com/r/CryptoCurrency">r/CryptoCurrency</a></blockquote>\n' +
+                '<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>'
+        );
+    });
     it('spotify', () => {
         match(
             spotifyRegex.main,
             'https://open.spotify.com/playlist/37i9dQZF1DWSDCcNkUu5tr?si=WPhzYzqATGSIa0d3kbNgBg'
         );
         match(
+            spotifyRegex.main,
+            'https://open.spotify.com/show/37i9dQZF1DWSDCcNkUu5tr?si=WPhzYzqATGSIa0d3kbNgBg'
+        );
+        match(
+            spotifyRegex.main,
+            'https://open.spotify.com/episode/37i9dQZF1DWSDCcNkUu5tr?si=WPhzYzqATGSIa0d3kbNgBg'
+        );
+        match(
             spotifyRegex.sanitize,
             'https://open.spotify.com/embed/playlist/37i9dQZF1DWSDCcNkUu5tr'
+        );
+        match(
+            spotifyRegex.sanitize,
+            'https://open.spotify.com/embed-podcast/show/37i9dQZF1DWSDCcNkUu5tr'
+        );
+        match(
+            spotifyRegex.sanitize,
+            'https://open.spotify.com/embed-podcast/episode/37i9dQZF1DWSDCcNkUu5tr'
         );
     });
     it('mixcloud', () => {
         match(
             mixcloudRegex.main,
-            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane/'
+            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane/',
+            'https://www.mixcloud.com/MagneticMagazine/ambient-meditations-vol-21-anane'
         );
         match(
             mixcloudRegex.sanitize,
             'https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FMagneticMagazine%2Fambient-meditations-vol-21-anane%2F'
+        );
+    });
+    it('archiveorg', () => {
+        match(archiveorg.main, 'https://archive.org/details/geometry_dash_1.9');
+        match(
+            archiveorg.sanitize,
+            'https://archive.org/embed/geometry_dash_1.9'
+        );
+    });
+    it('bandcamp', () => {
+        match(
+            bandcamp.sanitize,
+            'https://bandcamp.com/EmbeddedPlayer/album=313320652/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/'
+        );
+    });
+    it('gist', () => {
+        match(
+            gist.main,
+            'https://gist.github.com/huysbs/647a50197b95c4027550a2cc558af6aa'
+        );
+        match(
+            gist.sanitize,
+            'https://gist.github.com/huysbs/647a50197b95c4027550a2cc558af6aa.js'
+        );
+        match(
+            gist.htmlReplacement,
+            '<script src="https://gist.github.com/huysbs/647a50197b95c4027550a2cc558af6aa.js"></script>'
+        );
+    });
+    it('truvvl', () => {
+        match(
+            truvvl.main,
+            'https://travelfeed.io/@tvt3st/prague-to-sarajevo-cool-places-in-europe-europe-prague-zagreb-bosnia-20210420t103208397z'
+        );
+        match(
+            truvvl.sanitize,
+            'https://embed.truvvl.com/@tvt3st/prague-to-sarajevo-cool-places-in-europe-europe-prague-zagreb-bosnia-20210420t103208397z'
         );
     });
 });

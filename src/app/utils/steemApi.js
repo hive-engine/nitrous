@@ -9,7 +9,7 @@ import {
 } from 'app/utils/CrossPosts';
 
 import axios from 'axios';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://hetest.cryptoempirebot.com');
 const hiveSsc = new SSC('https://hetest.cryptoempirebot.com');
