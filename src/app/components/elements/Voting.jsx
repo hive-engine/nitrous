@@ -38,18 +38,6 @@ const MAX_VOTES_DISPLAY = 20;
 const MAX_WEIGHT = 10000;
 const MIN_PAYOUT = 0.02;
 
-function amt(string_amount) {
-    return parsePayoutAmount(string_amount);
-}
-
-function fmt(decimal_amount, asset = null) {
-    return formatDecimal(decimal_amount).join('') + (asset ? ' ' + asset : '');
-}
-
-function abs(value) {
-    return Math.abs(parseInt(value));
-}
-
 class Voting extends React.Component {
     static propTypes = {
         // HTML properties
@@ -293,7 +281,7 @@ class Voting extends React.Component {
             scot_token_bene_payout = parseFloat(
                 scotData.get('beneficiaries_payout_value')
             );
-            promoted = parseInt(scotData.get('promoted'));
+            promoted = parseIntFloat(scotData.get('promoted'));
             decline_payout = scotData.get('decline_payout');
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_token_bene_payout;
