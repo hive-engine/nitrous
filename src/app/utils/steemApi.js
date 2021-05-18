@@ -16,7 +16,7 @@ import {
 } from 'app/client_config';
 
 import axios from 'axios';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
@@ -287,6 +287,9 @@ async function addAccountToState(state, account, useHive) {
 }
 
 export async function attachScotData(url, state, useHive, ssr = false) {
+    if (url === '') {
+        url = 'trending';
+    }
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );

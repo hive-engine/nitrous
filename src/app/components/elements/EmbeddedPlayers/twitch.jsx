@@ -5,7 +5,7 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    sanitize: /^(https?:)?\/\/player\.twitch.tv\/.*/i,
+    sanitize: /^(https?:)?\/\/player\.twitch\.tv\/\?(channel|video)=([A-Za-z0-9]+)/i,
     main: /https?:\/\/(?:www.)?twitch\.tv\/(?:(videos)\/)?([a-zA-Z0-9][\w]{3,24})/i,
 };
 export default regex;
@@ -19,6 +19,15 @@ export const sandboxConfig = {
     sandboxAttributes: [],
 };
 
+function getParentDomain() {
+    let parentDomain = $STM_Config.site_domain;
+    if (typeof window !== 'undefined') {
+        parentDomain = window.location.hostname;
+    }
+
+    return parentDomain;
+}
+
 /**
  * Check if the iframe code in the post editor is to an allowed URL
  * <iframe src="https://player.twitch.tv/?channel=tfue" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
@@ -29,7 +38,9 @@ export function validateIframeUrl(url) {
     const match = url.match(regex.sanitize);
 
     if (match) {
-        return url;
+        return `https://player.twitch.tv/?${match[2]}=${
+            match[3]
+        }&parent=${getParentDomain()}`;
     }
 
     return false;
@@ -47,10 +58,12 @@ export function normalizeEmbedUrl(url) {
         if (match[1] === undefined) {
             return `https://player.twitch.tv/?autoplay=false&channel=${
                 match[2]
-            }`;
+            }&parent=${getParentDomain()}`;
         }
 
-        return `https://player.twitch.tv/?autoplay=false&video=${match[1]}`;
+        return `https://player.twitch.tv/?autoplay=false&video=${
+            match[1]
+        }&parent=${getParentDomain()}`;
     }
 
     return false;
@@ -73,8 +86,12 @@ function extractMetadata(data) {
         url: m[0],
         canonical:
             m[1] === `videos`
-                ? `https://player.twitch.tv/?video=${m[2]}`
-                : `https://player.twitch.tv/?channel=${m[2]}`,
+                ? `https://player.twitch.tv/?video=${
+                      m[2]
+                  }&parent=${getParentDomain()}`
+                : `https://player.twitch.tv/?channel=${
+                      m[2]
+                  }&parent=${getParentDomain()}`,
     };
 }
 
@@ -100,17 +117,13 @@ export function embedNode(child, links /*images*/) {
 /**
  * Generates the Markdown/HTML code to override the detected URL with an iFrame
  * @param idx
- * @param threespeakId
+ * @param id
  * @param width
  * @param height
  * @returns {*}
  */
 export function genIframeMd(idx, id, width, height) {
-    let parentDomain = $STM_Config.site_domain;
-    if (typeof window !== 'undefined') {
-        parentDomain = window.location.hostname;
-    }
-    const url = `https://player.twitch.tv/${id}&parent=${parentDomain}`;
+    const url = `https://player.twitch.tv/${id}?parent=${getParentDomain()}`;
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
