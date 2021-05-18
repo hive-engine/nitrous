@@ -83,12 +83,16 @@ export async function getScotDataAsync(path, params) {
 }
 
 export async function getScotAccountDataAsync(account) {
-    // TODO: use HE SMT
-    const data = await getScotDataAsync(`@${account}`, {});
-    const hiveData = false
-        ? null
-        : await getScotDataAsync(`@${account}`, { /*hive: 1*/ });
-    return { data, hiveData };
+    const sscData = hiveSsc.find('comments', 'votingPower', { account });
+    const data = {};
+    sscData.forEach(vpData => {
+        data[vpData.rewardPoolId] = {
+            last_vote_time = new Date(vpData.lastVoteTimestamp),
+            last_downvote_time = new Date(vpData.lastVoteTimestamp),
+            voting_power = vpData.votingPower,
+            downvoting_power = vpData.downvotingPower,
+    });
+    return { data };
 }
 
 async function getAccountFromNodeApi(account, useHive) {

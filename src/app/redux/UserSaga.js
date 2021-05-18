@@ -967,22 +967,13 @@ function* uploadImage({
 
 function* lookupVotingPower({ payload: { account } }) {
     const accountData = yield call(getScotAccountDataAsync, account);
-    // TODO- link to hive engine instead
-    const scotTokenSymbol = yield select(state =>
-        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    const rewardPoolId = yield select(state =>
+        state.app.getIn(['hostConfig', 'HIVE_ENGINE_SMT'])
     );
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData.data[scotTokenSymbol],
+            ...accountData.data[rewardPoolId],
         })
     );
-    if (accountData.hiveData) {
-        yield put(
-            userActions.setHiveVotingPower({
-                account,
-                ...accountData.hiveData[scotTokenSymbol],
-            })
-        );
-    }
 }
