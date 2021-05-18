@@ -311,7 +311,7 @@ class Voting extends React.Component {
                 : this.state.sliderWeight.down;
             const s = up ? '' : '-';
             let valueEst = '';
-            if (cashout_active && ((up && currentVp) || (!up && currentDownvotePower)) {
+            if (cashout_active && ((up && currentVp) || (!up && currentDownvotePower))) {
                 const stakedTokens = votingData.get('staked_tokens');
                 const multiplier = votingData.get(
                     up
