@@ -9,7 +9,7 @@ import {
 } from 'app/utils/CrossPosts';
 
 import axios from 'axios';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
@@ -301,6 +301,9 @@ export async function attachScotData(
     useHive,
     ssr = false
 ) {
+    if (url === '') {
+        url = 'trending';
+    }
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
@@ -548,36 +551,12 @@ export async function getContentAsync(
 ) {
     let content;
     let scotData;
-    const [steemitContent, hiveContent] = await Promise.all([
-        getContentFromBridge(author, permlink, false),
-        getContentFromBridge(author, permlink, true),
-    ]);
-    let useHive = false;
-    if (
-        steemitContent &&
-        steemitContent.author === author &&
-        steemitContent.permlink === permlink
-    ) {
-        content = steemitContent;
-    }
-    if (
-        (preferHive ||
-            !(
-                steemitContent &&
-                steemitContent.author === author &&
-                steemitContent.permlink === permlink
-            )) &&
-        (hiveContent &&
-            hiveContent.author === author &&
-            hiveContent.permlink === permlink)
-    ) {
-        content = hiveContent;
+    if (preferHive) {
+        content = await getContentFromBridge(author, permlink, true),
         content.hive = true;
-        useHive = true;
-    }
-    if (useHive) {
         scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
     } else {
+        content = await getContentFromBridge(author, permlink, false),
         scotData = await getScotDataAsync(`@${author}/${permlink}`);
     }
     if (!content) {

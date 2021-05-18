@@ -98,11 +98,6 @@ const SidePanel = ({
                 link: 'https://www.cryptex24.io/registration?ref=cfdb40ad',
             },
             {
-                value: 'ASH_richamster',
-                label: 'Richamster',
-                link: 'https://richamster.com/?referral=h1F5TOeCoLPq',
-            },
-            {
                 value: 'ASH_Leodex',
                 label: 'LEO Dex',
                 link: 'https://leodex.io/market/ASH',
@@ -119,6 +114,291 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
+<<<<<<< HEAD
+||||||| merged common ancestors
+        organizational_WEED: [
+            {
+                value: 'orgsite',
+                label: 'About WeedCash',
+                link: 'https://weedcash.org/',
+            },
+            {
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/jMHX3d8',
+            },
+            {
+                value: 'weed_store',
+                label: 'WeedCash Store',
+                link: 'https://weedcash.store',
+            },
+        ],
+        organizational_LAGO: [
+            {
+                value: 'lago_orgsite',
+                label: 'LagoTube',
+                link: 'https://tube.lago.com.gt/',
+            },
+        ],
+        organizational_DIAMOND: [
+            {
+                value: 'diamond_guide',
+                label: 'Guide to SteemDiamond',
+                internal: true,
+                link: '/@diamondtoken/guide-to-steemdiamond',
+            },
+            {
+                value: 'diamond_staking',
+                label: 'Diamond Staking',
+                internal: true,
+                link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
+            },
+            {
+                value: 'diamond_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/steemdiamond',
+            },
+            {
+                value: 'diamond_richlist',
+                label: 'Rich List',
+                link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
+            },
+        ],
+        organizational_KANDA: [
+            {
+                value: 'telokanda_site',
+                label: 'Telokanda.com',
+                link: 'https://telokanda.com',
+            },
+            {
+                value: 'kanda_discord',
+                label: 'Discord',
+                link: 'https://discord.telokanda.com',
+            },
+            {
+                value: 'kanda_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/telokanda',
+            },
+            {
+                value: 'telos',
+                label: 'Telos',
+                link: 'https://app.telos.net',
+            },
+            {
+                value: 'SQRL',
+                label: 'SQRL',
+                link: 'https://sqrlwallet.io',
+            },
+            {
+                value: 'kanda_challengedapp',
+                label: 'Earn More: ChallengeDapp GPS EOS and Kanda for Africa',
+                link: 'https://challengedapp.io/',
+            },
+        ],
+        organizational_LIST: [
+            {
+                value: 'HiveList_Main',
+                label: 'Home',
+                link: 'https://hivelist.io/classifieds',
+            },
+            {
+                value: 'HiveList_Token',
+                label: 'LIST Token',
+                link: 'https://hivelist.io/list-token',
+            },
+            {
+                value: 'HiveList_Store',
+                label: 'Store',
+                link: 'https://hivelist.store',
+            },
+            {
+                value: 'HiveList_Services',
+                label: 'Services',
+                link: 'https://hivelist.io/services/',
+            },
+            {
+                value: 'HiveList_Discord',
+                label: 'Discord',
+                link: 'https://discord.gg/ZapSfYj',
+            },
+        ],
+        organizational_HUSTLER: [
+            {
+                value: 'Hustler_chat',
+                label: 'HustlerChat',
+                link: 'https://www.hivehustlers.com/hustlerchat/',
+            },
+            {
+                value: 'Hustler_resources',
+                label: 'Resource Library',
+                link: 'https://www.hivehustlers.com/hustler-resources/',
+            },
+            {
+                value: 'Hustler_tokenecon',
+                label: 'Token Economy',
+                link: 'https://www.hivehustlers.com/token-economy/',
+            },
+            {
+                value: 'Hustler_hivecommerce',
+                label: 'Hivecommerce',
+                link: 'https://hivecommerce.org/',
+            },
+            {
+                value: 'Hustler_hivelist',
+                label: 'Hivelist',
+                link: 'https://hivelist.io',
+            },
+        ],
+=======
+        organizational_ALIVE: [
+            {
+                value: 'ALIVE_about',
+                label: 'We Are Alive - What Is This Tribe About? - And What To Post Here?',
+                link: '/@flaxz/nkugscpq',
+                internal: true,
+            },
+            {
+                value: 'ALIVE_discord',
+                label: 'Discord',
+                link: 'https://discord.gg/qXqv63J',
+            },
+        ],
+        organizational_WEED: [
+            {
+                value: 'orgsite',
+                label: 'About WeedCash',
+                link: 'https://weedcash.org/',
+            },
+            {
+                value: 'discord',
+                label: 'Discord',
+                link: 'https://discord.gg/jMHX3d8',
+            },
+            {
+                value: 'weed_store',
+                label: 'WeedCash Store',
+                link: 'https://weedcash.store',
+            },
+        ],
+        organizational_LAGO: [
+            {
+                value: 'lago_orgsite',
+                label: 'LagoTube',
+                link: 'https://tube.lago.com.gt/',
+            },
+        ],
+        organizational_DIAMOND: [
+            {
+                value: 'diamond_guide',
+                label: 'Guide to SteemDiamond',
+                internal: true,
+                link: '/@diamondtoken/guide-to-steemdiamond',
+            },
+            {
+                value: 'diamond_staking',
+                label: 'Diamond Staking',
+                internal: true,
+                link: '/@diamondtoken/diamond-proof-of-stake-is-now-live',
+            },
+            {
+                value: 'diamond_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/steemdiamond',
+            },
+            {
+                value: 'diamond_richlist',
+                label: 'Rich List',
+                link: 'https://steem-engine.rocks/tokens/DIAMOND/richlist',
+            },
+        ],
+        organizational_KANDA: [
+            {
+                value: 'telokanda_site',
+                label: 'Telokanda.com',
+                link: 'https://telokanda.com',
+            },
+            {
+                value: 'kanda_discord',
+                label: 'Discord',
+                link: 'https://discord.telokanda.com',
+            },
+            {
+                value: 'kanda_telegram',
+                label: 'Telegram',
+                link: 'https://t.me/telokanda',
+            },
+            {
+                value: 'telos',
+                label: 'Telos',
+                link: 'https://app.telos.net',
+            },
+            {
+                value: 'SQRL',
+                label: 'SQRL',
+                link: 'https://sqrlwallet.io',
+            },
+            {
+                value: 'kanda_challengedapp',
+                label: 'Earn More: ChallengeDapp GPS EOS and Kanda for Africa',
+                link: 'https://challengedapp.io/',
+            },
+        ],
+        organizational_LIST: [
+            {
+                value: 'HiveList_Main',
+                label: 'Home',
+                link: 'https://hivelist.io/classifieds',
+            },
+            {
+                value: 'HiveList_Token',
+                label: 'LIST Token',
+                link: 'https://hivelist.io/list-token',
+            },
+            {
+                value: 'HiveList_Store',
+                label: 'Store',
+                link: 'https://hivelist.store',
+            },
+            {
+                value: 'HiveList_Services',
+                label: 'Services',
+                link: 'https://hivelist.io/services/',
+            },
+            {
+                value: 'HiveList_Discord',
+                label: 'Discord',
+                link: 'https://discord.gg/ZapSfYj',
+            },
+        ],
+        organizational_HUSTLER: [
+            {
+                value: 'Hustler_chat',
+                label: 'HustlerChat',
+                link: 'https://www.hivehustlers.com/hustlerchat/',
+            },
+            {
+                value: 'Hustler_resources',
+                label: 'Resource Library',
+                link: 'https://www.hivehustlers.com/hustler-resources/',
+            },
+            {
+                value: 'Hustler_tokenecon',
+                label: 'Token Economy',
+                link: 'https://www.hivehustlers.com/token-economy/',
+            },
+            {
+                value: 'Hustler_hivecommerce',
+                label: 'Hivecommerce',
+                link: 'https://hivecommerce.org/',
+            },
+            {
+                value: 'Hustler_hivelist',
+                label: 'Hivelist',
+                link: 'https://hivelist.io',
+            },
+        ],
+>>>>>>> scotty_multi
 
         organizational_ASH: [
             {

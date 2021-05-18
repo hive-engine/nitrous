@@ -1,7 +1,17 @@
 $themes: (
+<<<<<<< HEAD
   steeming-light: (
     colorAccent: $color-steeming,
     colorAccentHover: $color-steeming,
+||||||| merged common ancestors
+  pob-light: (
+    colorAccent: $color-pob,
+    colorAccentHover: $color-pob,
+=======
+  alive-light: (
+    colorAccent: $color-alive,
+    colorAccentHover: $color-alive,
+>>>>>>> scotty_multi
     colorAccentReverse: $color-blue-black,
     colorWhite: $color-white,
     backgroundColor: $color-background-off-white,
@@ -17,29 +27,71 @@ $themes: (
     border: 1px solid $color-border-light,
     borderLight: 1px solid $color-border-light-lightest,
     borderDark: 1px solid $color-text-gray,
+<<<<<<< HEAD
     borderAccent: 1px solid $color-steeming,
+||||||| merged common ancestors
+    borderAccent: 1px solid $color-pob,
+=======
+    borderAccent: 1px solid $color-alive,
+>>>>>>> scotty_multi
     borderDotted: 1px dotted $color-border-light,
     borderTransparent: transparent,
     iconColorSecondary: #cacaca,
     textColorPrimary: $color-text-dark,
     textColorSecondary: $color-text-gray,
+<<<<<<< HEAD
     textColorAccent: $color-steeming,
     textColorAccentHover: $color-steeming,
+||||||| merged common ancestors
+    textColorAccent: $color-pob,
+    textColorAccentHover: $color-pob,
+=======
+    textColorAccent: $color-alive,
+    textColorAccentHover: $color-alive,
+>>>>>>> scotty_multi
     textColorError: $color-text-red,
+<<<<<<< HEAD
     contentBorderAccent: $color-steeming,
+||||||| merged common ancestors
+    contentBorderAccent: $color-pob,
+=======
+    contentBorderAccent: $color-alive,
+>>>>>>> scotty_multi
     buttonBackground: $color-blue-black,
+<<<<<<< HEAD
     buttonBackgroundHover: $color-steeming,
+||||||| merged common ancestors
+    buttonBackgroundHover: $color-pob,
+=======
+    buttonBackgroundHover: $color-alive,
+>>>>>>> scotty_multi
     buttonText: $color-text-white,
     buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
     buttonTextHover: $color-white,
+<<<<<<< HEAD
     buttonBoxShadow: $color-steeming,
+||||||| merged common ancestors
+    buttonBoxShadow: $color-pob,
+=======
+    buttonBoxShadow: $color-alive,
+>>>>>>> scotty_multi
     buttonBoxShadowHover: $color-blue-black,
     modalBackgroundColor: $color-white,
     modalTextColorPrimary: $color-text-dark,
   ),
+<<<<<<< HEAD
   steeming-dark: (
     colorAccent: $color-steeming,
     colorAccentHover: $color-steeming,
+||||||| merged common ancestors
+  pob-dark: (
+    colorAccent: $color-pob,
+    colorAccentHover: $color-pob,
+=======
+  alive-dark: (
+    colorAccent: $color-alive,
+    colorAccentHover: $color-alive,
+>>>>>>> scotty_multi
     colorAccentReverse: $color-white,
     colorWhite: $color-white,
     backgroundColor: $color-background-dark,
@@ -55,30 +107,72 @@ $themes: (
     border: 1px solid $color-border-dark,
     borderLight: 1px solid $color-border-dark-lightest,
     borderDark: 1px solid $color-text-gray-light,
+<<<<<<< HEAD
     borderAccent: 1px solid $color-steeming,
+||||||| merged common ancestors
+    borderAccent: 1px solid $color-pob,
+=======
+    borderAccent: 1px solid $color-alive,
+>>>>>>> scotty_multi
     borderDotted: 1px dotted $color-border-dark,
     borderTransparent: transparent,
     iconColorSecondary: $color-text-gray-light,
     textColorPrimary: $color-text-white,
     textColorSecondary: $color-text-gray-light,
+<<<<<<< HEAD
     textColorAccent: $color-steeming,
     textColorAccentHover: $color-steeming,
+||||||| merged common ancestors
+    textColorAccent: $color-pob,
+    textColorAccentHover: $color-pob,
+=======
+    textColorAccent: $color-alive,
+    textColorAccentHover: $color-alive,
+>>>>>>> scotty_multi
     textColorError: $color-text-red,
+<<<<<<< HEAD
     contentBorderAccent: $color-steeming,
+||||||| merged common ancestors
+    contentBorderAccent: $color-pob,
+=======
+    contentBorderAccent: $color-alive,
+>>>>>>> scotty_multi
     buttonBackground: $color-white,
+<<<<<<< HEAD
     buttonBackgroundHover: $color-steeming,
+||||||| merged common ancestors
+    buttonBackgroundHover: $color-pob,
+=======
+    buttonBackgroundHover: $color-alive,
+>>>>>>> scotty_multi
     buttonText: $color-blue-dark,
     buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
     buttonTextHover: $color-white,
+<<<<<<< HEAD
     buttonBoxShadow: $color-steeming,
+||||||| merged common ancestors
+    buttonBoxShadow: $color-pob,
+=======
+    buttonBoxShadow: $color-alive,
+>>>>>>> scotty_multi
     buttonBoxShadowHover: $color-white,
     inputPriceWarning: rgba(255, 153, 0, 0.83),
     modalBackgroundColor: $color-white,
     modalTextColorPrimary: $color-text-dark,
   ),
+<<<<<<< HEAD
   onlinebuzz-light: (
     colorAccent: $color-onlinebuzz,
     colorAccentHover: $color-onlinebuzz,
+||||||| merged common ancestors
+  vibes-light: (
+    colorAccent: $color-vibes,
+    colorAccentHover: $color-vibes,
+=======
+  lern-light: (
+    colorAccent: $color-lern,
+    colorAccentHover: $color-lern,
+>>>>>>> scotty_multi
     colorAccentReverse: $color-blue-black,
     colorWhite: $color-white,
     backgroundColor: $color-background-off-white,
@@ -94,29 +188,71 @@ $themes: (
     border: 1px solid $color-border-light,
     borderLight: 1px solid $color-border-light-lightest,
     borderDark: 1px solid $color-text-gray,
+<<<<<<< HEAD
     borderAccent: 1px solid $color-onlinebuzz,
+||||||| merged common ancestors
+    borderAccent: 1px solid $color-vibes,
+=======
+    borderAccent: 1px solid $color-lern,
+>>>>>>> scotty_multi
     borderDotted: 1px dotted $color-border-light,
     borderTransparent: transparent,
     iconColorSecondary: #cacaca,
     textColorPrimary: $color-text-dark,
     textColorSecondary: $color-text-gray,
+<<<<<<< HEAD
     textColorAccent: $color-onlinebuzz,
     textColorAccentHover: $color-onlinebuzz,
+||||||| merged common ancestors
+    textColorAccent: $color-vibes,
+    textColorAccentHover: $color-vibes,
+=======
+    textColorAccent: $color-lern,
+    textColorAccentHover: $color-lern,
+>>>>>>> scotty_multi
     textColorError: $color-text-red,
+<<<<<<< HEAD
     contentBorderAccent: $color-onlinebuzz,
+||||||| merged common ancestors
+    contentBorderAccent: $color-vibes,
+=======
+    contentBorderAccent: $color-lern,
+>>>>>>> scotty_multi
     buttonBackground: $color-blue-black,
+<<<<<<< HEAD
     buttonBackgroundHover: $color-onlinebuzz,
+||||||| merged common ancestors
+    buttonBackgroundHover: $color-vibes,
+=======
+    buttonBackgroundHover: $color-lern,
+>>>>>>> scotty_multi
     buttonText: $color-text-white,
     buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
     buttonTextHover: $color-white,
+<<<<<<< HEAD
     buttonBoxShadow: $color-onlinebuzz,
+||||||| merged common ancestors
+    buttonBoxShadow: $color-vibes,
+=======
+    buttonBoxShadow: $color-lern,
+>>>>>>> scotty_multi
     buttonBoxShadowHover: $color-blue-black,
     modalBackgroundColor: $color-white,
     modalTextColorPrimary: $color-text-dark,
   ),
+<<<<<<< HEAD
   onlinebuzz-dark: (
     colorAccent: $color-onlinebuzz,
     colorAccentHover: $color-onlinebuzz,
+||||||| merged common ancestors
+  vibes-dark: (
+    colorAccent: $color-vibes,
+    colorAccentHover: $color-vibes,
+=======
+  lern-dark: (
+    colorAccent: $color-lern,
+    colorAccentHover: $color-lern,
+>>>>>>> scotty_multi
     colorAccentReverse: $color-white,
     colorWhite: $color-white,
     backgroundColor: $color-background-dark,
@@ -132,22 +268,3340 @@ $themes: (
     border: 1px solid $color-border-dark,
     borderLight: 1px solid $color-border-dark-lightest,
     borderDark: 1px solid $color-text-gray-light,
+<<<<<<< HEAD
     borderAccent: 1px solid $color-onlinebuzz,
+||||||| merged common ancestors
+    borderAccent: 1px solid $color-vibes,
+=======
+    borderAccent: 1px solid $color-lern,
+>>>>>>> scotty_multi
     borderDotted: 1px dotted $color-border-dark,
     borderTransparent: transparent,
     iconColorSecondary: $color-text-gray-light,
     textColorPrimary: $color-text-white,
     textColorSecondary: $color-text-gray-light,
+<<<<<<< HEAD
     textColorAccent: $color-onlinebuzz,
     textColorAccentHover: $color-onlinebuzz,
+||||||| merged common ancestors
+    textColorAccent: $color-vibes,
+    textColorAccentHover: $color-vibes,
+=======
+    textColorAccent: $color-lern,
+    textColorAccentHover: $color-lern,
+>>>>>>> scotty_multi
     textColorError: $color-text-red,
+<<<<<<< HEAD
     contentBorderAccent: $color-onlinebuzz,
+||||||| merged common ancestors
+    contentBorderAccent: $color-vibes,
+=======
+    contentBorderAccent: $color-lern,
+>>>>>>> scotty_multi
     buttonBackground: $color-white,
+<<<<<<< HEAD
     buttonBackgroundHover: $color-onlinebuzz,
+||||||| merged common ancestors
+    buttonBackgroundHover: $color-vibes,
+=======
+    buttonBackgroundHover: $color-lern,
+>>>>>>> scotty_multi
     buttonText: $color-blue-dark,
     buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
     buttonTextHover: $color-white,
+<<<<<<< HEAD
     buttonBoxShadow: $color-onlinebuzz,
+||||||| merged common ancestors
+    buttonBoxShadow: $color-vibes,
+=======
+    buttonBoxShadow: $color-lern,
+>>>>>>> scotty_multi
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+<<<<<<< HEAD
+);
+||||||| merged common ancestors
+  revx-light: (
+    colorAccent: $color-revx,
+    colorAccentHover: $color-revx,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-revx,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-revx,
+    textColorAccentHover: $color-revx,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-revx,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-revx,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-revx,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  revx-dark: (
+    colorAccent: $color-revx,
+    colorAccentHover: $color-revx,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-revx,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-revx,
+    textColorAccentHover: $color-revx,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-revx,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-revx,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-revx,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  hustler-light: (
+    colorAccent: $color-hustler,
+    colorAccentHover: $color-hustler,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-hustler,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-hustler,
+    textColorAccentHover: $color-hustler,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-hustler,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-hustler,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-hustler,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  hustler-dark: (
+    colorAccent: $color-hustler,
+    colorAccentHover: $color-hustler,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-hustler,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-hustler,
+    textColorAccentHover: $color-hustler,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-hustler,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-hustler,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-hustler,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  grad-light: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  grad-dark: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pimp-light: (
+    colorAccent: $color-pimp,
+    colorAccentHover: $color-pimp,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-pimp,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-pimp,
+    textColorAccentHover: $color-pimp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pimp,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-pimp,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pimp,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pimp-dark: (
+    colorAccent: $color-pimp,
+    colorAccentHover: $color-pimp,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-pimp,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-pimp,
+    textColorAccentHover: $color-pimp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pimp,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-pimp,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pimp,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dsl-light: (
+    colorAccent: $color-dsl,
+    colorAccentHover: $color-dsl,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-dsl,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-dsl,
+    textColorAccentHover: $color-dsl,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dsl,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-dsl,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dsl,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dsl-dark: (
+    colorAccent: $color-dsl,
+    colorAccentHover: $color-dsl,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-dsl,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-dsl,
+    textColorAccentHover: $color-dsl,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dsl,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-dsl,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dsl,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  blog-light: (
+    colorAccent: $color-blog,
+    colorAccentHover: $color-blog,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-blog,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-blog,
+    textColorAccentHover: $color-blog,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-blog,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-blog,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-blog,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  blog-dark: (
+    colorAccent: $color-blog,
+    colorAccentHover: $color-blog,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-blog,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-blog,
+    textColorAccentHover: $color-blog,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-blog,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-blog,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-blog,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  ash-light: (
+    colorAccent: $color-ash,
+    colorAccentHover: $color-ash,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-ash,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-ash,
+    textColorAccentHover: $color-ash,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-ash,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-ash,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-ash,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  ash-dark: (
+    colorAccent: $color-ash,
+    colorAccentHover: $color-ash,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-ash,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-ash,
+    textColorAccentHover: $color-ash,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-ash,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-ash,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-ash,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  gile-light: (
+    colorAccent: $color-gile,
+    colorAccentHover: $color-gile,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-gile,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-gile,
+    textColorAccentHover: $color-gile,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-gile,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-gile,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-gile,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  gile-dark: (
+    colorAccent: $color-gile,
+    colorAccentHover: $color-gile,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-gile,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-gile,
+    textColorAccentHover: $color-gile,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-gile,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-gile,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-gile,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  archon-light: (
+    colorAccent: $color-archon,
+    colorAccentHover: $color-archon,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-archon,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-archon,
+    textColorAccentHover: $color-archon,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-archon,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-archon,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-archon,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  archon-dark: (
+    colorAccent: $color-archon,
+    colorAccentHover: $color-archon,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-archon,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-archon,
+    textColorAccentHover: $color-archon,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-archon,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-archon,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-archon,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  list-light: (
+    colorAccent: $color-list,
+    colorAccentHover: $color-list,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-list,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-list,
+    textColorAccentHover: $color-list,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-list,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-list,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-list,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  list-dark: (
+    colorAccent: $color-list,
+    colorAccentHover: $color-list,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-list,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-list,
+    textColorAccentHover: $color-list,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-list,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-list,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-list,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  kanda-light: (
+    colorAccent: $color-kanda,
+    colorAccentHover: $color-kanda,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-kanda,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-kanda,
+    textColorAccentHover: $color-kanda,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-kanda,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-kanda,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-kanda,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  kanda-dark: (
+    colorAccent: $color-kanda,
+    colorAccentHover: $color-kanda,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-kanda,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-kanda,
+    textColorAccentHover: $color-kanda,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-kanda,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-kanda,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-kanda,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  tix-light: (
+    colorAccent: $color-tix,
+    colorAccentHover: $color-tix,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-tix,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-tix,
+    textColorAccentHover: $color-tix,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-tix,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-tix,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-tix,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  tix-dark: (
+    colorAccent: $color-tix,
+    colorAccentHover: $color-tix,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-tix,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-tix,
+    textColorAccentHover: $color-tix,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-tix,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-tix,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-tix,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  infowars-light: (
+    colorAccent: $color-infowars,
+    colorAccentHover: $color-infowars,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-infowars,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-infowars,
+    textColorAccentHover: $color-infowars,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-infowars,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-infowars,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-infowars,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  infowars-dark: (
+    colorAccent: $color-infowars,
+    colorAccentHover: $color-infowars,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-infowars,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-infowars,
+    textColorAccentHover: $color-infowars,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-infowars,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-infowars,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-infowars,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pesos-light: (
+    colorAccent: $color-pesos,
+    colorAccentHover: $color-pesos,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-pesos,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-pesos,
+    textColorAccentHover: $color-pesos,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pesos,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-pesos,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pesos,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pesos-dark: (
+    colorAccent: $color-pesos,
+    colorAccentHover: $color-pesos,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-pesos,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-pesos,
+    textColorAccentHover: $color-pesos,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pesos,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-pesos,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pesos,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  diamond-light: (
+    colorAccent: $color-diamond,
+    colorAccentHover: $color-diamond,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-diamond,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-diamond,
+    textColorAccentHover: $color-diamond,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-diamond,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-diamond,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-diamond,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  diamond-dark: (
+    colorAccent: $color-diamond,
+    colorAccentHover: $color-diamond,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-diamond,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-diamond,
+    textColorAccentHover: $color-diamond,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-diamond,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-diamond,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-diamond,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  lago-light: (
+    colorAccent: $color-lago,
+    colorAccentHover: $color-lago,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-lago,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-lago,
+    textColorAccentHover: $color-lago,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-lago,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-lago,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-lago,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  lago-dark: (
+    colorAccent: $color-lago,
+    colorAccentHover: $color-lago,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-lago,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-lago,
+    textColorAccentHover: $color-lago,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-lago,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-lago,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-lago,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  foodie-light: (
+    colorAccent: $color-foodie,
+    colorAccentHover: $color-foodie,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-foodie,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-foodie,
+    textColorAccentHover: $color-foodie,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-foodie,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-foodie,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-foodie,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  foodie-dark: (
+    colorAccent: $color-foodie,
+    colorAccentHover: $color-foodie,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-foodie,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-foodie,
+    textColorAccentHover: $color-foodie,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-foodie,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-foodie,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-foodie,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  vitp-light: (
+    colorAccent: $color-vitp,
+    colorAccentHover: $color-vitp,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-vitp,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-vitp,
+    textColorAccentHover: $color-vitp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-vitp,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-vitp,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-vitp,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  vitp-dark: (
+    colorAccent: $color-vitp,
+    colorAccentHover: $color-vitp,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-vitp,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-vitp,
+    textColorAccentHover: $color-vitp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-vitp,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-vitp,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-vitp,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dblog-light: (
+    colorAccent: $color-dblog,
+    colorAccentHover: $color-dblog,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-dblog,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    roundedCorners: 5px,
+    roundedCornersTop: 5px 5px 0 0,
+    roundedCornersBottom: 0px 0px 5px 5px,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-dblog,
+    textColorAccentHover: $color-dblog,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dblog,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-dblog,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dblog,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dblog-dark: (
+    colorAccent: $color-dblog,
+    colorAccentHover: $color-dblog,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-dblog,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-dblog,
+    textColorAccentHover: $color-dblog,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dblog,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-dblog,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dblog,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  weed-light: (
+    colorAccent: $color-weed,
+    colorAccentHover: $color-weed,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white-dark,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowOddBackgroundColor: #e5e5e5,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-weed,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    roundedCorners: 5px,
+    roundedCornersTop: 5px 5px 0 0,
+    roundedCornersBottom: 0px 0px 5px 5px,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-weed,
+    textColorAccentHover: $color-weed,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-weed,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-weed,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-weed,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  weed-dark: (
+    colorAccent: $color-weed,
+    colorAccentHover: $color-weed,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-less-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-less-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowOddBackgroundColor: #283239,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark-lightest,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-weed,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    roundedCorners: 5px,
+    roundedCornersTop: 5px 5px 0 0,
+    roundedCornersBottom: 0px 0px 5px 5px,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-weed,
+    textColorAccentHover: $color-weed,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-weed,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-weed,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-weed,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-background-dark,
+    modalTextColorPrimary: $color-text-white,
+  ),
+);
+
+/*
+ * Implementation of themes
+ */
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+
+// Utility classes to be used with @extend
+
+.link {
+  text-decoration: none;
+  transition: 0.2s all ease-in-out;
+  &--primary {
+    @include themify($themes) {
+      color: themed('textColorPrimary');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorPrimary');
+      }
+    }
+    &:hover, &:focus {
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+    }
+  }
+  &--secondary {
+    @include themify($themes) {
+      color: themed('textColorSecondary');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorSecondary');
+      }
+    }
+    &:hover, &:focus {
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+    }
+  }
+  &--accent {
+    @include themify($themes) {
+      color: themed('textColorAccent');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+    }
+    &:hover, &:focus {
+      @include themify($themes) {
+        color: themed('textColorAccentHover');
+      }
+    }
+  }
+}
+
+.e-btn-hollow {
+  background-color: transparent;
+  transition: 0.2s all ease-in-out;
+  box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+  @include themify($themes) {
+    border: themed('borderAccent');
+    color: themed('textColorAccent');
+  }
+  &:hover {
+    @include themify($themes) {
+      border: themed('borderDark');
+      color: themed('textColorPrimary');
+    }
+  }
+}
+
+.e-btn {
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s all ease-in-out;
+  text-transform: capitalize;
+  border-radius: 0;
+  text-decoration: none;
+  @include font-size(18px);
+  @include themify($themes) {
+    background-color: themed('buttonBackground');
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0px 0px themed('buttonBoxShadow');
+    color: themed('buttonText');
+  }
+  &:hover, &:focus {
+    @include themify($themes) {
+      background-color: themed('buttonBackgroundHover');
+      box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 4px 4px 0 0 themed('buttonBoxShadowHover');
+      color: themed('buttonTextHover');
+      text-shadow: themed('buttonTextShadow');
+    }
+  }
+  &:visited, &:active {
+    @include themify($themes) {
+      color: themed('buttonText');
+    }
+    &:hover, &:focus {
+      @include themify($themes) {
+        color: themed('buttonTextHover');
+      }
+    }
+  }
+}
+
+.button.disabled, .button[disabled] {
+  opacity: 0.25;
+  cursor: not-allowed;
+  box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+  @include themify($themes) {
+    background-color: themed('buttonBackground');
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+    color: themed('buttonText');
+  }
+  &:hover {
+    @include themify($themes) {
+      background-color: themed('buttonBackground');
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      color: themed('buttonText');
+    }
+  }
+}
+
+// This button class doesn't applying theming (just straight styles). To be used when there are no theming classes available (e.g. in modals and static server pages in signup)
+
+.e-btn {
+  &--black {
+    background-color: $color-blue-black;
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 $color-black;
+    color: $color-white;
+    &:hover, &:focus {
+      background-color: $color-black;
+      box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 $color-blue-black;
+      color: $color-white;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.20);
+    }
+    &:visited, &:active {
+      background-color: $color-blue-black;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 $color-black;
+      color: $color-white;
+    }
+    &.disabled, &[disabled] {
+      opacity: 0.25;
+      cursor: not-allowed;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      &:hover, &:focus {
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        background-color: $color-blue-black;
+        color: $color-white;
+      }
+    }
+    &.hollow {
+      background-color: transparent;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      color: $color-text-gray;
+      font-weight: normal;
+      transition: 0.2s all ease-in-out;
+      border: transparent;
+      &:hover, &:focus {
+        background-color: transparent;
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        color: $color-blue-dark;
+        font-weight: normal;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.0);
+      }
+      &:visited, &:active {
+        background-color: transparent;
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        color: $color-text-gray;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+.theme-vitp-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-vitp-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-vitp;
+      color: $color-vitp;
+      outline-color: $color-vitp;
+    }
+  }
+}
+
+.theme-dblog-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-dblog-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-dblog;
+      color: $color-dblog;
+      outline-color: $color-dblog;
+    }
+  }
+}
+
+.theme-weed-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-weed-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-weed;
+      color: $color-weed;
+      outline-color: $color-weed;
+    }
+  }
+}
+
+.theme-foodie-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-foodie-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-foodie;
+      color: $color-foodie;
+      outline-color: $color-foodie;
+    }
+  }
+}
+
+.theme-lago-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-lago-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-lago;
+      color: $color-lago;
+      outline-color: $color-lago;
+    }
+  }
+}
+
+.theme-diamond-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-diamond-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-diamond;
+      color: $color-diamond;
+      outline-color: $color-diamond;
+    }
+  }
+}
+
+.theme-pesos-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-pesos-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pesos;
+      color: $color-pesos;
+      outline-color: $color-pesos;
+    }
+  }
+}
+
+.theme-infowars-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-infowars-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-infowars;
+      color: $color-infowars;
+      outline-color: $color-infowars;
+    }
+  }
+}
+
+.theme-tix-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-tix-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-tix;
+      color: $color-tix;
+      outline-color: $color-tix;
+    }
+  }
+}
+
+.theme-kanda-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-kanda-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-kanda;
+      color: $color-kanda;
+      outline-color: $color-kanda;
+    }
+  }
+}
+
+.theme-pesos-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-pesos-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pesos;
+      color: $color-pesos;
+      outline-color: $color-pesos;
+    }
+  }
+}
+
+.theme-list-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+=======
+  photo-light: (
+    colorAccent: $color-photo,
+    colorAccentHover: $color-photo,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-photo,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-photo,
+    textColorAccentHover: $color-photo,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-photo,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-photo,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-photo,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  photo-dark: (
+    colorAccent: $color-photo,
+    colorAccentHover: $color-photo,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-photo,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-photo,
+    textColorAccentHover: $color-photo,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-photo,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-photo,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-photo,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  bht-light: (
+    colorAccent: $color-bht,
+    colorAccentHover: $color-bht,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-bht,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-bht,
+    textColorAccentHover: $color-bht,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-bht,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-bht,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-bht,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  bht-dark: (
+    colorAccent: $color-bht,
+    colorAccentHover: $color-bht,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-bht,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-bht,
+    textColorAccentHover: $color-bht,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-bht,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-bht,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-bht,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  cine-light: (
+    colorAccent: $color-cine,
+    colorAccentHover: $color-cine,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-cine,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-cine,
+    textColorAccentHover: $color-cine,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-cine,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-cine,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-cine,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  cine-dark: (
+    colorAccent: $color-cine,
+    colorAccentHover: $color-cine,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-cine,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-cine,
+    textColorAccentHover: $color-cine,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-cine,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-cine,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-cine,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pob-light: (
+    colorAccent: $color-pob,
+    colorAccentHover: $color-pob,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-pob,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-pob,
+    textColorAccentHover: $color-pob,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pob,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-pob,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pob,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pob-dark: (
+    colorAccent: $color-pob,
+    colorAccentHover: $color-pob,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-pob,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-pob,
+    textColorAccentHover: $color-pob,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pob,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-pob,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pob,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  vibes-light: (
+    colorAccent: $color-vibes,
+    colorAccentHover: $color-vibes,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-vibes,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-vibes,
+    textColorAccentHover: $color-vibes,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-vibes,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-vibes,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-vibes,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  vibes-dark: (
+    colorAccent: $color-vibes,
+    colorAccentHover: $color-vibes,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-vibes,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-vibes,
+    textColorAccentHover: $color-vibes,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-vibes,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-vibes,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-vibes,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  revx-light: (
+    colorAccent: $color-revx,
+    colorAccentHover: $color-revx,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-revx,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-revx,
+    textColorAccentHover: $color-revx,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-revx,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-revx,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-revx,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  revx-dark: (
+    colorAccent: $color-revx,
+    colorAccentHover: $color-revx,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-revx,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-revx,
+    textColorAccentHover: $color-revx,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-revx,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-revx,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-revx,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  hustler-light: (
+    colorAccent: $color-hustler,
+    colorAccentHover: $color-hustler,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-hustler,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-hustler,
+    textColorAccentHover: $color-hustler,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-hustler,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-hustler,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-hustler,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  hustler-dark: (
+    colorAccent: $color-hustler,
+    colorAccentHover: $color-hustler,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-hustler,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-hustler,
+    textColorAccentHover: $color-hustler,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-hustler,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-hustler,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-hustler,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  grad-light: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  grad-dark: (
+    colorAccent: $color-grad,
+    colorAccentHover: $color-grad,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-grad,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-grad,
+    textColorAccentHover: $color-grad,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-grad,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-grad,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-grad,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pimp-light: (
+    colorAccent: $color-pimp,
+    colorAccentHover: $color-pimp,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-pimp,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-pimp,
+    textColorAccentHover: $color-pimp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pimp,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-pimp,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pimp,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  pimp-dark: (
+    colorAccent: $color-pimp,
+    colorAccentHover: $color-pimp,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-pimp,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-pimp,
+    textColorAccentHover: $color-pimp,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-pimp,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-pimp,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-pimp,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dsl-light: (
+    colorAccent: $color-dsl,
+    colorAccentHover: $color-dsl,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-dsl,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-dsl,
+    textColorAccentHover: $color-dsl,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dsl,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-dsl,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dsl,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  dsl-dark: (
+    colorAccent: $color-dsl,
+    colorAccentHover: $color-dsl,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-dsl,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-dsl,
+    textColorAccentHover: $color-dsl,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-dsl,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-dsl,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-dsl,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  ash-light: (
+    colorAccent: $color-ash,
+    colorAccentHover: $color-ash,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-ash,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-ash,
+    textColorAccentHover: $color-ash,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-ash,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-ash,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-ash,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  ash-dark: (
+    colorAccent: $color-ash,
+    colorAccentHover: $color-ash,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-ash,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-ash,
+    textColorAccentHover: $color-ash,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-ash,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-ash,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-ash,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  gile-light: (
+    colorAccent: $color-gile,
+    colorAccentHover: $color-gile,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-gile,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-gile,
+    textColorAccentHover: $color-gile,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-gile,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-gile,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-gile,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  gile-dark: (
+    colorAccent: $color-gile,
+    colorAccentHover: $color-gile,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-gile,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-gile,
+    textColorAccentHover: $color-gile,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-gile,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-gile,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-gile,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  archon-light: (
+    colorAccent: $color-archon,
+    colorAccentHover: $color-archon,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-archon,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-archon,
+    textColorAccentHover: $color-archon,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-archon,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-archon,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-archon,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  archon-dark: (
+    colorAccent: $color-archon,
+    colorAccentHover: $color-archon,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-archon,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-archon,
+    textColorAccentHover: $color-archon,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-archon,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-archon,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-archon,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  list-light: (
+    colorAccent: $color-list,
+    colorAccentHover: $color-list,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-list,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-list,
+    textColorAccentHover: $color-list,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-list,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-list,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-list,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  list-dark: (
+    colorAccent: $color-list,
+    colorAccentHover: $color-list,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-list,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-list,
+    textColorAccentHover: $color-list,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-list,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-list,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-list,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  kanda-light: (
+    colorAccent: $color-kanda,
+    colorAccentHover: $color-kanda,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-kanda,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-kanda,
+    textColorAccentHover: $color-kanda,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-kanda,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-kanda,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-kanda,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  kanda-dark: (
+    colorAccent: $color-kanda,
+    colorAccentHover: $color-kanda,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-kanda,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-kanda,
+    textColorAccentHover: $color-kanda,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-kanda,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-kanda,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-kanda,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  tix-light: (
+    colorAccent: $color-tix,
+    colorAccentHover: $color-tix,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-tix,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-tix,
+    textColorAccentHover: $color-tix,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-tix,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-tix,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-tix,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  tix-dark: (
+    colorAccent: $color-tix,
+    colorAccentHover: $color-tix,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-tix,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-tix,
+    textColorAccentHover: $color-tix,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-tix,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-tix,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-tix,
+    buttonBoxShadowHover: $color-white,
+    inputPriceWarning: rgba(255, 153, 0, 0.83),
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  infowars-light: (
+    colorAccent: $color-infowars,
+    colorAccentHover: $color-infowars,
+    colorAccentReverse: $color-blue-black,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-off-white,
+    backgroundColorEmphasis: $color-background-almost-white,
+    backgroundColorOpaque: $color-background-off-white,
+    backgroundTransparent: transparent,
+    moduleBackgroundColor: $color-white,
+    menuBackgroundColor: $color-background-dark,
+    moduleMediumBackgroundColor: $color-transparent,
+    navBackgroundColor: $color-white,
+    highlightBackgroundColor: #f3faf0,
+    tableRowEvenBackgroundColor: #f4f4f4,
+    border: 1px solid $color-border-light,
+    borderLight: 1px solid $color-border-light-lightest,
+    borderDark: 1px solid $color-text-gray,
+    borderAccent: 1px solid $color-infowars,
+    borderDotted: 1px dotted $color-border-light,
+    borderTransparent: transparent,
+    iconColorSecondary: #cacaca,
+    textColorPrimary: $color-text-dark,
+    textColorSecondary: $color-text-gray,
+    textColorAccent: $color-infowars,
+    textColorAccentHover: $color-infowars,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-infowars,
+    buttonBackground: $color-blue-black,
+    buttonBackgroundHover: $color-infowars,
+    buttonText: $color-text-white,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0.20),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-infowars,
+    buttonBoxShadowHover: $color-blue-black,
+    modalBackgroundColor: $color-white,
+    modalTextColorPrimary: $color-text-dark,
+  ),
+  infowars-dark: (
+    colorAccent: $color-infowars,
+    colorAccentHover: $color-infowars,
+    colorAccentReverse: $color-white,
+    colorWhite: $color-white,
+    backgroundColor: $color-background-dark,
+    backgroundColorEmphasis: $color-background-super-dark,
+    backgroundColorOpaque: $color-blue-dark,
+    moduleBackgroundColor: $color-background-dark,
+    backgroundTransparent: transparent,
+    menuBackgroundColor: $color-blue-dark,
+    moduleMediumBackgroundColor: $color-background-dark,
+    navBackgroundColor: $color-background-dark,
+    highlightBackgroundColor: $color-blue-black-darkest,
+    tableRowEvenBackgroundColor: #212C33,
+    border: 1px solid $color-border-dark,
+    borderLight: 1px solid $color-border-dark-lightest,
+    borderDark: 1px solid $color-text-gray-light,
+    borderAccent: 1px solid $color-infowars,
+    borderDotted: 1px dotted $color-border-dark,
+    borderTransparent: transparent,
+    iconColorSecondary: $color-text-gray-light,
+    textColorPrimary: $color-text-white,
+    textColorSecondary: $color-text-gray-light,
+    textColorAccent: $color-infowars,
+    textColorAccentHover: $color-infowars,
+    textColorError: $color-text-red,
+    contentBorderAccent: $color-infowars,
+    buttonBackground: $color-white,
+    buttonBackgroundHover: $color-infowars,
+    buttonText: $color-blue-dark,
+    buttonTextShadow: 0 1px 0 rgba(0,0,0,0),
+    buttonTextHover: $color-white,
+    buttonBoxShadow: $color-infowars,
     buttonBoxShadowHover: $color-white,
     inputPriceWarning: rgba(255, 153, 0, 0.83),
     modalBackgroundColor: $color-white,
@@ -348,7 +3802,7 @@ $themes: (
   }
 }
 
-.theme-steeming-light {
+.theme-infowars-light {
   background-color: $white;
   color: $color-text-dark;
   @include MQ(M) {
@@ -356,19 +3810,19 @@ $themes: (
   }
 }
 
-.theme-steeming-dark {
+.theme-infowars-dark {
   background-color: $color-background-dark;
   color: $color-text-white;
   .button.hollow {
     &:hover, &:focus {
-      border-color: $color-steeming;
-      color: $color-steeming;
-      outline-color: $color-steeming;
+      border-color: $color-infowars;
+      color: $color-infowars;
+      outline-color: $color-infowars;
     }
   }
 }
 
-.theme-onlinebuzz-light {
+.theme-tix-light {
   background-color: $white;
   color: $color-text-dark;
   @include MQ(M) {
@@ -376,14 +3830,782 @@ $themes: (
   }
 }
 
-.theme-onlinebuzz-dark {
+.theme-tix-dark {
   background-color: $color-background-dark;
   color: $color-text-white;
   .button.hollow {
     &:hover, &:focus {
+      border-color: $color-tix;
+      color: $color-tix;
+      outline-color: $color-tix;
+    }
+  }
+}
+
+.theme-kanda-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-kanda-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-kanda;
+      color: $color-kanda;
+      outline-color: $color-kanda;
+    }
+  }
+}
+
+.theme-list-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-list-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-list;
+      color: $color-list;
+      outline-color: $color-list;
+    }
+  }
+}
+
+.theme-archon-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-archon-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-archon;
+      color: $color-archon;
+      outline-color: $color-archon;
+    }
+  }
+}
+
+.theme-gile-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-gile-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-gile;
+      color: $color-gile;
+      outline-color: $color-gile;
+    }
+  }
+}
+
+.theme-ash-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-ash-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-ash;
+      color: $color-ash;
+      outline-color: $color-ash;
+    }
+  }
+}
+
+.theme-dsl-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+>>>>>>> scotty_multi
+
+<<<<<<< HEAD
+/*
+ * Implementation of themes
+ */
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+||||||| merged common ancestors
+.theme-list-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-list;
+      color: $color-list;
+      outline-color: $color-list;
+=======
+.theme-dsl-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-dsl;
+      color: $color-dsl;
+      outline-color: $color-dsl;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+@function themed($key) {
+  @return map-get($theme-map, $key);
+||||||| merged common ancestors
+.theme-archon-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+=======
+.theme-pimp-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+>>>>>>> scotty_multi
+}
+
+<<<<<<< HEAD
+||||||| merged common ancestors
+.theme-archon-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-archon;
+      color: $color-archon;
+      outline-color: $color-archon;
+    }
+  }
+}
+=======
+.theme-pimp-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pimp;
+      color: $color-pimp;
+      outline-color: $color-pimp;
+    }
+  }
+}
+>>>>>>> scotty_multi
+
+<<<<<<< HEAD
+// Utility classes to be used with @extend
+||||||| merged common ancestors
+.theme-gile-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+=======
+.theme-grad-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+>>>>>>> scotty_multi
+
+<<<<<<< HEAD
+.link {
+  text-decoration: none;
+  transition: 0.2s all ease-in-out;
+  &--primary {
+    @include themify($themes) {
+      color: themed('textColorPrimary');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorPrimary');
+      }
+    }
+||||||| merged common ancestors
+.theme-gile-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+=======
+.theme-grad-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+>>>>>>> scotty_multi
+    &:hover, &:focus {
+<<<<<<< HEAD
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+||||||| merged common ancestors
+      border-color: $color-gile;
+      color: $color-gile;
+      outline-color: $color-gile;
+=======
+      border-color: $color-grad;
+      color: $color-grad;
+      outline-color: $color-grad;
+>>>>>>> scotty_multi
+    }
+  }
+<<<<<<< HEAD
+  &--secondary {
+    @include themify($themes) {
+      color: themed('textColorSecondary');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorSecondary');
+      }
+    }
+||||||| merged common ancestors
+}
+
+.theme-ash-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-ash-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+=======
+}
+
+.theme-hustler-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-hustler-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+>>>>>>> scotty_multi
+    &:hover, &:focus {
+<<<<<<< HEAD
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+||||||| merged common ancestors
+      border-color: $color-ash;
+      color: $color-ash;
+      outline-color: $color-ash;
+=======
+      border-color: $color-hustler;
+      color: $color-hustler;
+      outline-color: $color-hustler;
+>>>>>>> scotty_multi
+    }
+  }
+<<<<<<< HEAD
+  &--accent {
+    @include themify($themes) {
+      color: themed('textColorAccent');
+    }
+    &:visited, &:active {
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
+    }
+||||||| merged common ancestors
+}
+
+.theme-blog-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-blog-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+=======
+}
+
+.theme-revx-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-revx-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+>>>>>>> scotty_multi
+    &:hover, &:focus {
+<<<<<<< HEAD
+      @include themify($themes) {
+        color: themed('textColorAccentHover');
+      }
+||||||| merged common ancestors
+      border-color: $color-blog;
+      color: $color-blog;
+      outline-color: $color-blog;
+=======
+      border-color: $color-revx;
+      color: $color-revx;
+      outline-color: $color-revx;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+.e-btn-hollow {
+  background-color: transparent;
+  transition: 0.2s all ease-in-out;
+  box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+  @include themify($themes) {
+    border: themed('borderAccent');
+    color: themed('textColorAccent');
+||||||| merged common ancestors
+.theme-dsl-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+=======
+.theme-vibes-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+>>>>>>> scotty_multi
+  }
+<<<<<<< HEAD
+  &:hover {
+    @include themify($themes) {
+      border: themed('borderDark');
+      color: themed('textColorPrimary');
+||||||| merged common ancestors
+}
+
+.theme-dsl-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-dsl;
+      color: $color-dsl;
+      outline-color: $color-dsl;
+=======
+}
+
+.theme-vibes-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-vibes;
+      color: $color-vibes;
+      outline-color: $color-vibes;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+.e-btn {
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s all ease-in-out;
+  text-transform: capitalize;
+  border-radius: 0;
+  text-decoration: none;
+  @include font-size(18px);
+  @include themify($themes) {
+    background-color: themed('buttonBackground');
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0px 0px themed('buttonBoxShadow');
+    color: themed('buttonText');
+||||||| merged common ancestors
+.theme-pimp-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+=======
+.theme-pob-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+>>>>>>> scotty_multi
+  }
+<<<<<<< HEAD
+  &:hover, &:focus {
+    @include themify($themes) {
+      background-color: themed('buttonBackgroundHover');
+      box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 4px 4px 0 0 themed('buttonBoxShadowHover');
+      color: themed('buttonTextHover');
+      text-shadow: themed('buttonTextShadow');
+||||||| merged common ancestors
+}
+
+.theme-pimp-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pimp;
+      color: $color-pimp;
+      outline-color: $color-pimp;
+=======
+}
+
+.theme-pob-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-pob;
+      color: $color-pob;
+      outline-color: $color-pob;
+>>>>>>> scotty_multi
+    }
+  }
+<<<<<<< HEAD
+  &:visited, &:active {
+    @include themify($themes) {
+      color: themed('buttonText');
+    }
+||||||| merged common ancestors
+}
+
+.theme-grad-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-grad-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+=======
+}
+
+.theme-cine-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+.theme-cine-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+>>>>>>> scotty_multi
+    &:hover, &:focus {
+<<<<<<< HEAD
+      @include themify($themes) {
+        color: themed('buttonTextHover');
+      }
+||||||| merged common ancestors
+      border-color: $color-grad;
+      color: $color-grad;
+      outline-color: $color-grad;
+=======
+      border-color: $color-cine;
+      color: $color-cine;
+      outline-color: $color-cine;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+.button.disabled, .button[disabled] {
+  opacity: 0.25;
+  cursor: not-allowed;
+  box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+  @include themify($themes) {
+    background-color: themed('buttonBackground');
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+    color: themed('buttonText');
+||||||| merged common ancestors
+.theme-hustler-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+=======
+.theme-bht-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+>>>>>>> scotty_multi
+  }
+<<<<<<< HEAD
+  &:hover {
+    @include themify($themes) {
+      background-color: themed('buttonBackground');
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      color: themed('buttonText');
+||||||| merged common ancestors
+}
+
+.theme-hustler-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-hustler;
+      color: $color-hustler;
+      outline-color: $color-hustler;
+=======
+}
+
+.theme-bht-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+      border-color: $color-bht;
+      color: $color-bht;
+      outline-color: $color-bht;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+// This button class doesn't applying theming (just straight styles). To be used when there are no theming classes available (e.g. in modals and static server pages in signup)
+||||||| merged common ancestors
+.theme-revx-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+=======
+.theme-photo-light {
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+>>>>>>> scotty_multi
+
+<<<<<<< HEAD
+.e-btn {
+  &--black {
+    background-color: $color-blue-black;
+    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 $color-black;
+    color: $color-white;
+||||||| merged common ancestors
+.theme-revx-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+=======
+.theme-photo-dark {
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+>>>>>>> scotty_multi
+    &:hover, &:focus {
+<<<<<<< HEAD
+      background-color: $color-black;
+      box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 $color-blue-black;
+      color: $color-white;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.20);
+    }
+    &:visited, &:active {
+      background-color: $color-blue-black;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 5px 5px 0 0 $color-black;
+      color: $color-white;
+    }
+    &.disabled, &[disabled] {
+      opacity: 0.25;
+      cursor: not-allowed;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      &:hover, &:focus {
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        background-color: $color-blue-black;
+        color: $color-white;
+      }
+    }
+    &.hollow {
+      background-color: transparent;
+      box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+      color: $color-text-gray;
+      font-weight: normal;
+      transition: 0.2s all ease-in-out;
+      border: transparent;
+      &:hover, &:focus {
+        background-color: transparent;
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        color: $color-blue-dark;
+        font-weight: normal;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.0);
+      }
+      &:visited, &:active {
+        background-color: transparent;
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+        color: $color-text-gray;
+        font-weight: normal;
+      }
+||||||| merged common ancestors
+      border-color: $color-revx;
+      color: $color-revx;
+      outline-color: $color-revx;
+=======
+      border-color: $color-photo;
+      color: $color-photo;
+      outline-color: $color-photo;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+.theme-steeming-light {
+||||||| merged common ancestors
+.theme-vibes-light {
+=======
+.theme-lern-light {
+>>>>>>> scotty_multi
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+<<<<<<< HEAD
+.theme-steeming-dark {
+||||||| merged common ancestors
+.theme-vibes-dark {
+=======
+.theme-lern-dark {
+>>>>>>> scotty_multi
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+<<<<<<< HEAD
+      border-color: $color-steeming;
+      color: $color-steeming;
+      outline-color: $color-steeming;
+||||||| merged common ancestors
+      border-color: $color-vibes;
+      color: $color-vibes;
+      outline-color: $color-vibes;
+=======
+      border-color: $color-lern;
+      color: $color-lern;
+      outline-color: $color-lern;
+>>>>>>> scotty_multi
+    }
+  }
+}
+
+<<<<<<< HEAD
+.theme-onlinebuzz-light {
+||||||| merged common ancestors
+.theme-pob-light {
+=======
+.theme-alive-light {
+>>>>>>> scotty_multi
+  background-color: $white;
+  color: $color-text-dark;
+  @include MQ(M) {
+    background-color: $color-background-off-white;
+  }
+}
+
+<<<<<<< HEAD
+.theme-onlinebuzz-dark {
+||||||| merged common ancestors
+.theme-pob-dark {
+=======
+.theme-alive-dark {
+>>>>>>> scotty_multi
+  background-color: $color-background-dark;
+  color: $color-text-white;
+  .button.hollow {
+    &:hover, &:focus {
+<<<<<<< HEAD
       border-color: $color-onlinebuzz;
       color: $color-onlinebuzz;
       outline-color: $color-onlinebuzz;
+||||||| merged common ancestors
+      border-color: $color-pob;
+      color: $color-pob;
+      outline-color: $color-pob;
+=======
+      border-color: $color-alive;
+      color: $color-alive;
+      outline-color: $color-alive;
+>>>>>>> scotty_multi
     }
   }
 }

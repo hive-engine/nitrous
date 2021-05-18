@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import reactForm from 'app/utils/ReactForm';
+import _ from 'lodash';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import * as transactionActions from 'app/redux/TransactionReducer';
@@ -13,6 +15,7 @@ import SlateEditor, {
     deserializeHtml,
     getDemoState,
 } from 'app/components/elements/SlateEditor';
+import { extractRtags } from 'app/utils/ExtractContent';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
 import PostCategoryBanner from 'app/components/elements/PostCategoryBanner';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -372,6 +375,7 @@ class ReplyEditor extends React.Component {
             name: 'replyForm',
             initialValues: props.initialValues,
             validation: values => {
+                const markdownRegex = /(?:\*[\w\s]*\*|\#[\w\s]*\#|_[\w\s]*_|~[\w\s]*~|\]\s*\(|\]\s*\[)/;
                 let bodyValidation = null;
                 if (!values.body) {
                     bodyValidation = tt('g.required');
@@ -390,7 +394,9 @@ class ReplyEditor extends React.Component {
                             ? tt('g.required')
                             : values.title.length > 255
                               ? tt('reply_editor.shorten_title')
-                              : null),
+                              : markdownRegex.test(values.title)
+                                ? tt('reply_editor.markdown_not_supported')
+                                : null),
                     tags:
                         isStory &&
                         validateTagInput(
@@ -661,6 +667,7 @@ class ReplyEditor extends React.Component {
             maxAcceptedPayout,
         } = this.props;
         const hive = this.props.hive !== false && hostConfig['PREFER_HIVE'];
+        const appDomain = hostConfig['APP_DOMAIN'];
         const {
             submitting,
             valid,
@@ -671,6 +678,19 @@ class ReplyEditor extends React.Component {
         const { progress, noClipboardData } = this.state;
         const disabled = submitting || !valid;
         const loading = submitting || this.state.loading;
+
+        let selectedCoverImage = '';
+        const jsonMetadataImages = _.get(jsonMetadata, 'image', []);
+        if (jsonMetadataImages && jsonMetadataImages.length > 0) {
+            selectedCoverImage = _.get(jsonMetadataImages, '[0]');
+        }
+
+        // Generate an array of images used in the post body.
+        // This will be used to display the cover image selector.
+        let rtags;
+        if (isStory) {
+            rtags = extractRtags(appDomain, hive, body.value);
+        }
 
         const errorCallback = estr => {
             this.setState({ postError: estr, loading: false });
@@ -742,6 +762,23 @@ class ReplyEditor extends React.Component {
             });
         };
 
+        const onSelectCoverImage = event => {
+            const { target } = event;
+
+            const postImages = document.getElementsByClassName(
+                'ReplyEditor__options__image_selector__image_container'
+            );
+            for (let pi = 0; pi < postImages.length; pi += 1) {
+                const postImage = postImages[pi];
+                postImage.classList.remove('selected');
+            }
+
+            target.classList.add('selected');
+            selectedCoverImage = target.style.backgroundImage
+                .slice(4, -1)
+                .replace(/"/g, '');
+        };
+
         return (
             <div
                 className={classnames({
@@ -789,6 +826,7 @@ class ReplyEditor extends React.Component {
                                 ...data,
                                 ...replyParams,
                                 startLoadingIndicator,
+                                selectedCoverImage,
                             };
                             reply(replyPayload);
                         })}
@@ -834,7 +872,7 @@ class ReplyEditor extends React.Component {
                                                     href="#"
                                                     onClick={this.toggleRte}
                                                 >
-                                                    {`${tt(
+                                                    {`📰 ${tt(
                                                         'reply_editor.editor'
                                                     )}`}
                                                 </a>
@@ -912,7 +950,8 @@ class ReplyEditor extends React.Component {
                                         {tt('reply_editor.or_by')}{' '}
                                         <a onClick={this.onOpenClick}>
                                             {tt('reply_editor.selecting_them')}
-                                        </a>.
+                                        </a>
+                                        .
                                     </p>
                                     {progress.message && (
                                         <div className="info">
@@ -959,14 +998,55 @@ class ReplyEditor extends React.Component {
                             )}
                         </div>
                         {isStory && (
-                            <div className={vframe_section_shrink_class}>
-                                <a href="#" onClick={toggleSideBySide}>
-                                    {(enableSideBySide &&
-                                        tt(
-                                            'reply_editor.disable_sidebyside'
-                                        )) ||
-                                        tt('reply_editor.enable_sidebyside')}
-                                </a>
+                            <div>
+                                <div className={vframe_section_shrink_class}>
+                                    <a href="#" onClick={toggleSideBySide}>
+                                        {(enableSideBySide &&
+                                            tt(
+                                                'reply_editor.disable_sidebyside'
+                                            )) ||
+                                            tt(
+                                                'reply_editor.enable_sidebyside'
+                                            )}
+                                    </a>
+                                </div>
+                                {Array.from(rtags.images).length > 0 && (
+                                    <div className="ReplyEditor__options__cover_image_selector">
+                                        <h6>
+                                            {tt(
+                                                'reply_editor.select_cover_image'
+                                            )}
+                                            :
+                                        </h6>
+                                        <div className="ReplyEditor__options__image_selector">
+                                            {Array.from(rtags.images).map(
+                                                image => {
+                                                    return (
+                                                        <div
+                                                            key={image}
+                                                            className={classNames(
+                                                                'ReplyEditor__options__image_selector__image_container',
+                                                                {
+                                                                    selected:
+                                                                        image ===
+                                                                        selectedCoverImage,
+                                                                }
+                                                            )}
+                                                            style={{
+                                                                backgroundImage: `url(${
+                                                                    image
+                                                                })`,
+                                                            }}
+                                                            onClick={
+                                                                onSelectCoverImage
+                                                            }
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                         <div
@@ -992,10 +1072,10 @@ class ReplyEditor extends React.Component {
                                                         {
                                                             this.props
                                                                 .maxAcceptedPayout
-                                                        }
+                                                        }{' '}
                                                     </div>
                                                 )}
-                                            {(this.props.payoutType === '0%' || this.props.payoutType === '100%') && (<div>
+                                            <div>
                                                 {tt('g.rewards')}
                                                 {': '}
                                                 {this.props.payoutType ===
@@ -1004,11 +1084,16 @@ class ReplyEditor extends React.Component {
                                                         'reply_editor.decline_payout'
                                                     )}
                                                 {this.props.payoutType ===
+                                                    '50%' &&
+                                                    tt(
+                                                        'reply_editor.default_50_50'
+                                                    )}
+                                                {this.props.payoutType ===
                                                     '100%' &&
                                                     tt(
                                                         'reply_editor.power_up_100'
-                                                    ) + `(on ${hive ? 'Hive' : 'Steem'})`}
-                                            </div>)}
+                                                    )}
+                                            </div>
                                             <div>
                                                 {beneficiaries &&
                                                     beneficiaries.length >
@@ -1384,6 +1469,7 @@ export default formId =>
                 startLoadingIndicator,
                 hostConfig,
                 useHive,
+                selectedCoverImage,
             }) => {
                 const appDomain = hostConfig['APP_DOMAIN'];
                 const preferHive = hostConfig['PREFER_HIVE'];
@@ -1452,16 +1538,40 @@ export default formId =>
 
                 // merge
                 const meta = isEdit ? jsonMetadata : {};
-                if (metaTags.size) meta.tags = metaTags.toJS();
-                else delete meta.tags;
-                if (rtags.usertags.size) meta.users = Array.from(rtags.usertags);
-                else delete meta.users;
-                if (rtags.images.size)
-                    meta.image = Array.from(rtags.images).slice(0, 1);
-                else delete meta.image;
-                if (rtags.links.size)
+
+                if (metaTags.size) {
+                    meta.tags = metaTags.toJS();
+                } else {
+                    delete meta.tags;
+                }
+
+                if (rtags.usertags.size) {
+                    meta.users = Array.from(rtags.usertags);
+                } else {
+                    delete meta.users;
+                }
+
+                if (rtags.images.size) {
+                    const moveToFirst = (array, first) => {
+                        array.sort((x, y) => {
+                            return x === first ? -1 : y === first ? 1 : 0;
+                        });
+                    };
+                    meta.image = Array.from(rtags.images);
+
+                    // If a cover image has been manually selected,
+                    // move it to the first element of the image array.
+                    if (selectedCoverImage) {
+                        moveToFirst(meta.image, selectedCoverImage);
+                    }
+                } else {
+                    delete meta.image;
+                }
+                if (rtags.links.size) {
                     meta.links = Array.from(rtags.links).slice(0, 1);
-                else delete meta.links;
+                } else {
+                    delete meta.links;
+                }
 
                 meta.app = `${hostConfig['APP_NAME'].toLowerCase()}/0.1`;
                 if (isStory) {

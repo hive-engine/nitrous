@@ -24,40 +24,17 @@ export default function ServerHTML({
         <html lang="en">
             <head>
                 <meta charSet="utf-8" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 {meta &&
                     meta.map(m => {
                         if (m.title) {
                             page_title = m.title;
                             return null;
                         }
-                        if (m.canonical)
-                            return (
-                                <link
-                                    key="canonical"
-                                    rel="canonical"
-                                    href={m.canonical}
-                                />
-                            );
-                        if (m.name && m.content)
-                            return (
-                                <meta
-                                    key={m.name}
-                                    name={m.name}
-                                    content={m.content}
-                                />
-                            );
+                        if (m.canonical) return <link key="canonical" rel="canonical" href={m.canonical} />;
+                        if (m.name && m.content) return <meta key={m.name} name={m.name} content={m.content} />;
                         if (m.property && m.content)
-                            return (
-                                <meta
-                                    key={m.property}
-                                    property={m.property}
-                                    content={m.content}
-                                />
-                            );
+                            return <meta key={m.property} property={m.property} content={m.content} />;
                         return null;
                     })}
                 <link
@@ -121,53 +98,6 @@ export default function ServerHTML({
                     }/apple-icon-152x152.png`}
                 />
                 <link
-                    rel="apple-touch-icon"
-                    sizes="180x180"
-                    href={`/images/favicons/${
-                        faviconSubfolder
-                    }/apple-icon-180x180.png`}
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    sizes="192x192"
-                    href={`/images/favicons/${
-                        faviconSubfolder
-                    }/android-icon-192x192.png`}
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    sizes="32x32"
-                    href={`/images/favicons/${
-                        faviconSubfolder
-                    }/favicon-32x32.png`}
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    sizes="96x96"
-                    href={`/images/favicons/${
-                        faviconSubfolder
-                    }/favicon-96x96.png`}
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    sizes="16x16"
-                    href={`/images/favicons/${
-                        faviconSubfolder
-                    }/favicon-16x16.png`}
-                />
-                <meta name="msapplication-TileColor" content="#ffffff" />
-                <meta
-                    name="msapplication-TileImage"
-                    content={`/images/favicons/${
-                        faviconSubfolder
-                    }/ms-icon-144x144.png`}
-                />
-                <meta name="theme-color" content="#ffffff" />
-                <link
                     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600"
                     rel="stylesheet"
                     type="text/css"
@@ -177,14 +107,7 @@ export default function ServerHTML({
                     rel="stylesheet"
                     type="text/css"
                 />
-                {assets.style.map((href, idx) => (
-                    <link
-                        href={href}
-                        key={idx}
-                        rel="stylesheet"
-                        type="text/css"
-                    />
-                ))}
+                {assets.style.map((href, idx) => <link href={href} key={idx} rel="stylesheet" type="text/css" />)}
                 {gptEnabled ? (
                     <script
                         dangerouslySetInnerHTML={{
@@ -202,10 +125,7 @@ export default function ServerHTML({
                     />
                 ) : null}
                 {gptEnabled ? (
-                    <script
-                        src="//m.servedby-buysellads.com/monetization.js"
-                        type="text/javascript"
-                    />
+                    <script src="//m.servedby-buysellads.com/monetization.js" type="text/javascript" />
                 ) : null}
                 {shouldSeeCookieConsent ? (
                     <script
@@ -283,18 +203,12 @@ export default function ServerHTML({
                         `,
                     }}
                 />
+                <script async src="https://embed.redditmedia.com/widgets/platform.js" charSet="UTF-8" />
                 <title>{page_title}</title>
             </head>
             <body>
-                {
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{ __html: body }}
-                    />
-                }
-                {assets.script.map((href, idx) => (
-                    <script key={idx} src={href} />
-                ))}
+                {<div id="content" dangerouslySetInnerHTML={{ __html: body }} />}
+                {assets.script.map((href, idx) => <script key={idx} src={href} />)}
                 {/* gptEnabled ? (
                     <script
                         dangerouslySetInnerHTML={{

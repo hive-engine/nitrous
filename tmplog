@@ -1,0 +1,31 @@
+(node:31406) DeprecationWarning: Tapable.plugin is deprecated. Use new API on `.hooks` instead
+DEPRECATION WARNING on line 244, column 5 of node_modules/foundation-sites/scss/components/_table.scss: 
+@elseif is deprecated and will not be supported in future Sass versions.
+Use "@else if" instead.
+    ╷
+244 │     @elseif($table-stripe == odd) {
+    │     ^^^^^^^
+    ╵
+
+DEPRECATION WARNING on line 260, column 5 of node_modules/foundation-sites/scss/components/_table.scss: 
+@elseif is deprecated and will not be supported in future Sass versions.
+Use "@else if" instead.
+    ╷
+260 │     @elseif($table-stripe == odd) {
+    │     ^^^^^^^
+    ╵
+
+DEPRECATION WARNING: As of Dart Sass 2.0.0, !global assignments won't be able to
+declare new variables. Consider adding `$theme-map: null` at the root of the
+stylesheet.
+
+    ╷
+135 │       $theme-map: () !global;
+    │       ^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    src/app/assets/stylesheets/_themes.scss 135:7  themify()
+    src/app/assets/stylesheets/_themes.scss 177:5  @import
+    src/app/assets/stylesheets/app.scss 10:9       root stylesheet
+
+updated webpack-stats-prod.json
+[BABEL] Note: The code generator has deoptimised the styling of /home/smoke/steemit/nitrous/src/app/assets/static/jspdf.min.js as it exceeds the max of 500KB.
