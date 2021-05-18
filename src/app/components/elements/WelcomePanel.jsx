@@ -12,7 +12,7 @@ export default class WelcomePanel extends React.Component {
 
     render() {
         const signup = (
-            <a className="button ghost fade-in--5" href={SIGNUP_URL}>
+            <a className="button ghost fade-in--5" href={HIVE_SIGNUP_URL}>
                 {tt('navigation.sign_up')}
             </a>
         );

@@ -156,3 +156,35 @@
 .Dropdown__root___1B9ta {
   color: black!important;
 }
+
+.ReplyEditor__options__cover_image_selector {
+    margin-top: 10px;
+}
+
+.ReplyEditor__options__image_selector {
+    .ReplyEditor__options__image_selector__image_container {
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border: 1px solid grey;
+        background-size: cover;
+        display: inline-block;
+        transition: width 0.5s, height 0.5s;
+        vertical-align: top;
+        opacity: 0.5;
+
+        &.selected {
+            opacity: 1;
+            @include themify($themes) {
+                border: 3px solid themed('colorAccent');
+            }
+        }
+
+        &:hover {
+            opacity: 1;
+            width: 120px;
+            height: 120px;
+        }
+    }
+}

@@ -104,15 +104,6 @@ class AuthorDropdown extends Component {
                                 <br />
                                 <small>Following</small>
                             </div>
-                            <div className="columns small-4">
-                                {spv}
-                                {unit} HP<br />
-                                <small>
-                                    {rank > 0
-                                        ? `#${numberWithCommas(rank)}`
-                                        : ''}
-                                </small>
-                            </div>
                         </div>
                     )}
                     {<div className="Author__bio">{about}</div>}

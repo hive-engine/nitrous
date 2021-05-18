@@ -348,7 +348,7 @@
         "selecting_them": "selecting them",
         "image_upload": "Image upload",
         "power_up_100": "Power Up 100%%",
-        "default_50_50": "50%% HBD / 50%% HP",
+        "default_50_50": "50%% liquid / 50%% staked",
         "decline_payout": "Decline Payout",
         "check_this_to_auto_upvote_your_post":
             "Check this to auto-upvote your post",
@@ -362,7 +362,8 @@
         "tags_input": "Enter your tags separated by a space",
         "enable_sidebyside": "Enable side-by-side editor",
         "disable_sidebyside": "Disable side-by-side editor",
-        "post_options": "Post options"
+        "post_options": "Post options",
+        "select_cover_image": "Select your cover image"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",

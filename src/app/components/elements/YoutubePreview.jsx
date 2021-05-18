@@ -43,10 +43,10 @@ class YoutubePreview extends React.Component {
             const thumbnail =
                 width <= 320
                     ? 'mqdefault.jpg'
-                    : width <= 480 ? 'hqdefault.jpg' : '0.jpg';
-            const previewLink = `https://img.youtube.com/vi/${youTubeId}/${
-                thumbnail
-            }`;
+                    : width <= 480
+                    ? 'hqdefault.jpg'
+                    : '0.jpg';
+            const previewLink = `https://img.youtube.com/vi/${youTubeId}/${thumbnail}`;
 
             return (
                 <div
@@ -56,14 +56,14 @@ class YoutubePreview extends React.Component {
                         backgroundImage: 'url(' + previewLink + ')',
                         height: `${height}px`,
                     }}
+                    role="button"
+                    tabIndex={0}
                 >
                     <div className="play" />
                 </div>
             );
         }
-        const autoPlaySrc = `https://www.youtube.com/embed/${
-            youTubeId
-        }?autoplay=1&autohide=1&${dataParams}&start=${startTime}`;
+        const autoPlaySrc = `https://www.youtube.com/embed/${youTubeId}?autoplay=1&autohide=1&${dataParams}&start=${startTime}`;
 
         return (
             <div className="videoWrapper">
@@ -73,6 +73,7 @@ class YoutubePreview extends React.Component {
                     src={autoPlaySrc}
                     frameBorder="0"
                     allowFullScreen="true"
+                    title="Youtube video player"
                 />
             </div>
         );

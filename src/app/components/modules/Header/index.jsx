@@ -426,6 +426,8 @@ const mapStateToProps = (state, ownProps) => {
         return {
             username: null,
             loggedIn: false,
+            appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+            preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE'], true),
             community: state.global.get('community', Map({})),
         };
     }
@@ -483,7 +485,7 @@ const mapStateToProps = (state, ownProps) => {
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
         appName: state.app.getIn(['hostConfig', 'APP_NAME']),
-        preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE']),
+        preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE'], true),
         content,
         unreadNotificationCount,
         notificationActionPending: state.global.getIn([

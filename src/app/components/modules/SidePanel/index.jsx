@@ -98,11 +98,6 @@ const SidePanel = ({
                 link: 'https://www.cryptex24.io/registration?ref=cfdb40ad',
             },
             {
-                value: 'ASH_richamster',
-                label: 'Richamster',
-                link: 'https://richamster.com/?referral=h1F5TOeCoLPq',
-            },
-            {
                 value: 'ASH_Leodex',
                 label: 'LEO Dex',
                 link: 'https://leodex.io/market/ASH',
@@ -117,6 +112,19 @@ const SidePanel = ({
             {
                 label: tt('navigation.chat'),
                 link: 'https://openhive.chat/home',
+            },
+        ],
+        organizational_ALIVE: [
+            {
+                value: 'ALIVE_about',
+                label: 'We Are Alive - What Is This Tribe About? - And What To Post Here?',
+                link: '/@flaxz/nkugscpq',
+                internal: true,
+            },
+            {
+                value: 'ALIVE_discord',
+                label: 'Discord',
+                link: 'https://discord.gg/qXqv63J',
             },
         ],
         organizational_WEED: [
@@ -219,6 +227,33 @@ const SidePanel = ({
                 value: 'HiveList_Discord',
                 label: 'Discord',
                 link: 'https://discord.gg/ZapSfYj',
+            },
+        ],
+        organizational_HUSTLER: [
+            {
+                value: 'Hustler_chat',
+                label: 'HustlerChat',
+                link: 'https://www.hivehustlers.com/hustlerchat/',
+            },
+            {
+                value: 'Hustler_resources',
+                label: 'Resource Library',
+                link: 'https://www.hivehustlers.com/hustler-resources/',
+            },
+            {
+                value: 'Hustler_tokenecon',
+                label: 'Token Economy',
+                link: 'https://www.hivehustlers.com/token-economy/',
+            },
+            {
+                value: 'Hustler_hivecommerce',
+                label: 'Hivecommerce',
+                link: 'https://hivecommerce.org/',
+            },
+            {
+                value: 'Hustler_hivelist',
+                label: 'Hivelist',
+                link: 'https://hivelist.io',
             },
         ],
 
@@ -349,7 +384,7 @@ export default connect(
             'hostConfig',
             'LIQUID_TOKEN_UPPERCASE',
         ]);
-        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE'], true);
         return {
             walletUrl,
             scotTokenSymbol,
