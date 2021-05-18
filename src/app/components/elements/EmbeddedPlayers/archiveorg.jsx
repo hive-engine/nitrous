@@ -5,16 +5,25 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    main: /(?:https?:\/\/(?:(?:open.spotify.com\/playlist\/(.*))))/i,
-    sanitize: /^https:\/\/open\.spotify\.com\/embed\/playlist\/(.*)/i,
+    sanitize: /^https:\/\/archive\.org\/embed\/(.*)/i,
+    main: /^https:\/\/archive\.org\/details\/(.*)/i,
 };
-
 export default regex;
 
-export function getIframeDimensions() {
+export function getIframeDimensions(...args) {
+    // Since we can't tell the difference between video and audio embed players from the URL, lets use the width/height
+    // provided by archive.org's iframe HTML code.
+    const [large, , width, height] = args;
+    if (width && height) {
+        return {
+            width,
+            height,
+        };
+    }
+
     return {
-        width: '100%',
-        height: '240',
+        width: large ? 640 : 480,
+        height: large ? 360 : 270,
     };
 }
 
@@ -23,18 +32,14 @@ export function getIframeDimensions() {
  * @type {useSandbox: boolean, sandboxAttributes: string[]}
  */
 export const sandboxConfig = {
-    useSandbox: true,
-    sandboxAttributes: [
-        'allow-scripts',
-        'allow-same-origin',
-        'allow-popups',
-        'allow-forms',
-    ],
+    useSandbox: false,
+    sandboxAttributes: [],
 };
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
- * <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWSDCcNkUu5tr" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+ * <iframe src="https://archive.org/embed/namaz-nasil-kilinir" width="640" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+ * <iframe src="https://archive.org/embed/geometry_dash_1.9" width="500" height="140" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
  * @param url
  * @returns {boolean|*}
  */
@@ -45,10 +50,8 @@ export function validateIframeUrl(url) {
         return false;
     }
 
-    return `https://open.spotify.com/embed/playlist/${match[1]}`;
+    return 'https://archive.org/embed/' + match[1];
 }
-
-//////
 
 /**
  * Rewrites the embedded URL to a normalized format
@@ -56,10 +59,10 @@ export function validateIframeUrl(url) {
  * @returns {string|boolean}
  */
 export function normalizeEmbedUrl(url) {
-    const match = url.match(regex.contentId);
+    const match = url.match(regex.sanitize);
 
     if (match && match.length >= 2) {
-        return `https://player.spotify.com/video/${match[1]}`;
+        return `https://archive.org/embed/${match[1]}`;
     }
 
     return false;
@@ -81,8 +84,7 @@ function extractMetadata(data) {
         id: m[1],
         url: m[0],
         startTime: startTime ? startTime[1] : 0,
-        canonical: `https://open.spotify.com/playlist/${m[1]}`,
-        // thumbnail: requires a callback - http://stackoverflow.com/questions/1361149/get-img-thumbnails-from-spotify
+        canonical: `https://archive.org/embed/${m[1]}`,
     };
 }
 
@@ -95,16 +97,19 @@ function extractMetadata(data) {
 export function embedNode(child, links /*images*/) {
     try {
         const { data } = child;
-        const spotify = extractMetadata(data);
-        if (!spotify) return child;
+        const archiveorg = extractMetadata(data);
+        if (!archiveorg) return child;
 
         child.data = data.replace(
-            spotify.url,
-            `~~~ embed:${spotify.id} spotify ~~~`
+            archiveorg.url,
+            `~~~ embed:${archiveorg.id} archiveorg ~~~`
         );
 
-        if (links) links.add(spotify.canonical);
-        // if(images) images.add(spotify.thumbnail) // not available
+        if (links) {
+            links.add(archiveorg.canonical);
+        }
+
+        if (links) links.add(archiveorg.canonical);
     } catch (error) {
         console.log(error);
     }
@@ -117,10 +122,11 @@ export function embedNode(child, links /*images*/) {
  * @param id
  * @param width
  * @param height
+ * @param startTime
  * @returns {*}
  */
 export function genIframeMd(idx, id, width, height) {
-    const url = `https://open.spotify.com/embed/playlist/${id}`;
+    const url = `https://archive.org/embed/${id}`;
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
@@ -147,9 +153,9 @@ export function genIframeMd(idx, id, width, height) {
     }
 
     return (
-        <div key={`spotify-${id}-${idx}`} className="videoWrapper">
+        <div key={`archiveorg-${id}-${idx}`} className="videoWrapper">
             <iframe
-                title="spotify embedded player"
+                title="Archive.org embedded player"
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...iframeProps}
             />
