@@ -6,7 +6,9 @@ import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
 import { List } from 'immutable';
 
-const MAX_TAGS = 8;
+import { APP_MAX_TAG } from 'app/client_config';
+
+const MAX_TAGS = APP_MAX_TAG || 10;
 
 class TagInput extends React.Component {
     static propTypes = {
