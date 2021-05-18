@@ -8,19 +8,23 @@
  * <proxy>/{int}x{int}/[<proxy>/{int}x{int}/]<proxy>/<file url>
  * @type {RegExp}
  */
-const rProxyDomain = /^http(s)?:\/\/steemit(dev|stage)?images.com\//g;
-const rProxyDomainsDimensions = /http(s)?:\/\/steemit(dev|stage)?images.com\/([0-9]+x[0-9]+)\//g;
+const rProxyDomain = /^http(s)?:\/\/images.hive.blog\//g;
+const rProxyDomainsDimensions = /http(s)?:\/\/images.hive.blog\/([0-9]+x[0-9]+)\//g;
 const NATURAL_SIZE = '0x0/';
 const CAPPED_SIZE = '768x0/';
 const DOUBLE_CAPPED_SIZE = '1536x0/';
 
 export const imageProxy = useHive =>
     useHive ? $STM_Config.hive_img_proxy_prefix : $STM_Config.img_proxy_prefix;
-export const defaultSrcSet = url =>
-    `${url} 1x, ${url.replace(CAPPED_SIZE, DOUBLE_CAPPED_SIZE)} 2x`;
-export const isDefaultImageSize = url =>
-    url.startsWith(`${imageProxy()}${CAPPED_SIZE}`);
-export const defaultWidth = () => Number.parseInt(CAPPED_SIZE.split('x')[0]);
+export const defaultSrcSet = (url) => {
+    return `${url} 1x, ${url.replace(CAPPED_SIZE, DOUBLE_CAPPED_SIZE)} 2x`;
+};
+export const isDefaultImageSize = (url) => {
+    return url.startsWith(`${imageProxy()}${CAPPED_SIZE}`);
+};
+export const defaultWidth = () => {
+    return Number.parseInt(CAPPED_SIZE.split('x')[0]);
+};
 
 /**
  * Strips all proxy domains from the beginning of the url. Adds the global proxy if dimension is specified
@@ -30,7 +34,7 @@ export const defaultWidth = () => Number.parseInt(CAPPED_SIZE.split('x')[0]);
  *                                          if true, preserves the first {int}x{int} in a proxy url. If not found, uses 0x0
  * @returns string
  */
-export function proxifyImageUrl(url, useHive, dimensions = false) {
+export const proxifyImageUrl = (url, useHive, dimensions = false) => {
     const proxyList = url.match(rProxyDomainsDimensions);
     let respUrl = url;
     if (proxyList) {
@@ -65,4 +69,4 @@ export function proxifyImageUrl(url, useHive, dimensions = false) {
         }
     }
     return respUrl;
-}
+};
