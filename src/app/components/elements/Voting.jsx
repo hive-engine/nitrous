@@ -225,6 +225,7 @@ class Voting extends React.Component {
             scotData,
             scotPrecision,
             voteRegenSec,
+            downvoteRegenSec,
             rewardData,
             tokenBeneficiary,
             useHive,
