@@ -281,7 +281,7 @@ class Voting extends React.Component {
             scot_token_bene_payout = parseFloat(
                 scotData.get('beneficiaries_payout_value')
             );
-            promoted = parseIntFloat(scotData.get('promoted'));
+            promoted = parseFloat(scotData.get('promoted'));
             decline_payout = scotData.get('decline_payout');
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_token_bene_payout;
