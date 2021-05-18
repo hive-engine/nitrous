@@ -349,12 +349,8 @@ class PostSummary extends React.Component {
                     >
                         <div className="PostSummary__nsfw-warning">
                             {summary_header}
-                            <span className="nsfw-flag">
-                                nsfw
-                            </span>&nbsp;&nbsp;<span
-                                role="button"
-                                onClick={this.onRevealNsfw}
-                            >
+                            <span className="nsfw-flag">nsfw</span>&nbsp;&nbsp;
+                            <span role="button" onClick={this.onRevealNsfw}>
                                 <a>{tt('postsummary_jsx.reveal_it')}</a>
                             </span>{' '}
                             {tt('g.or') + ' '}
@@ -365,7 +361,8 @@ class PostSummary extends React.Component {
                                         {tt(
                                             'postsummary_jsx.display_preferences'
                                         )}
-                                    </Link>.
+                                    </Link>
+                                    .
                                 </span>
                             ) : (
                                 <span>
@@ -376,7 +373,8 @@ class PostSummary extends React.Component {
                                     </a>{' '}
                                     {tt(
                                         'postsummary_jsx.to_save_your_preferences'
-                                    )}.
+                                    )}
+                                    .
                                 </span>
                             )}
                             {summary_footer}
@@ -398,28 +396,35 @@ class PostSummary extends React.Component {
             );
         }
 
+        let listImgMedium;
+        let listImgLarge;
+        if (!image_link && !isReply) {
+            image_link = `https://images.hive.blog/u/${author}/avatar`;
+            listImgMedium = `https://images.hive.blog/u/${
+                author
+            }/avatar/medium`;
+            listImgLarge = `https://images.hive.blog/u/${author}/avatar/large`;
+        } else if (image_link) {
+            listImgMedium = proxify(image_link, '256x512');
+            listImgLarge = proxify(image_link, '640x480');
+        }
+
         let thumb = null;
         if (!gray && image_link && !ImageUserBlockList.includes(author)) {
-            // on mobile, we always use blog layout style -- there's no toggler
-            // on desktop, we offer a choice of either blog or list
-            // if blogmode is false, output an image with a srcset
-            // which has the 256x512 for whatever the large breakpoint is where the list layout is used
-            // and the 640 for lower than that
-            const blogImg = proxify(image_link, '640x480');
-
-            if (this.props.blogmode) {
-                thumb = <img className="articles__feature-img" src={blogImg} />;
-            } else {
-                const listImg = proxify(image_link, '256x512');
-                thumb = (
-                    <picture className="articles__feature-img">
-                        <source srcSet={listImg} media="(min-width: 1000px)" />
-                        <img srcSet={blogImg} />
-                    </picture>
-                );
-            }
             thumb = (
-                <span className="articles__feature-img-container">{thumb}</span>
+                <span className="articles__feature-img-container">
+                    <picture className="articles__feature-img">
+                        <source
+                            srcSet={listImgMedium}
+                            media="(min-width: 1000px)"
+                        />
+                        <source
+                            srcSet={listImgLarge}
+                            media="(max-width: 999px)"
+                        />
+                        <img srcSet={image_link} />
+                    </picture>
+                </span>
             );
         }
 

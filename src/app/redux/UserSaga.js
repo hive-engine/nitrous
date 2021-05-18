@@ -31,7 +31,7 @@ import {
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
