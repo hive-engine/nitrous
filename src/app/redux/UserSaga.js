@@ -967,6 +967,9 @@ function* uploadImage({
 
 function* lookupVotingPower({ payload: { account } }) {
     const accountData = yield call(getScotAccountDataAsync, account);
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     const rewardPoolId = yield select(state =>
         state.app.getIn(['hostConfig', 'HIVE_ENGINE_SMT'])
     );
@@ -974,6 +977,7 @@ function* lookupVotingPower({ payload: { account } }) {
         userActions.setVotingPower({
             account,
             ...accountData.data[rewardPoolId],
+            staked_tokens: accountData.tokenData[scotTokenSymbol],
         })
     );
 }
