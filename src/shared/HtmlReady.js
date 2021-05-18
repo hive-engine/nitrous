@@ -194,10 +194,8 @@ function iframe(state, child) {
     const { mutate } = state;
     if (!mutate) return;
 
-    const tag = child.parentNode.tagName
-        ? child.parentNode.tagName.toLowerCase()
-        : child.parentNode.tagName;
-    if (tag === 'div' && child.parentNode.classList.contains('videoWrapper')) {
+    const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
+    if (tag === 'div' && child.parentNode.classList && child.parentNode.classList.contains('videoWrapper')) {
         return;
     }
 
