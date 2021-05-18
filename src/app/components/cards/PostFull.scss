@@ -20,6 +20,9 @@
     border: themed('border');
     background-color: themed('moduleBackgroundColor');
   }
+  @media screen and (max-width: 63.9375em) {
+      padding-top: 1rem;
+  }
   .button.hollow {
     @include themify($themes) {
       border: themed('borderAccent');
@@ -102,12 +105,15 @@
   @include themify($themes) {
     border-bottom: themed('border');
   }
-  > h1 {
-    overflow: hidden;
+  h1 {
     font-family: $body-font-family;
-    font-size: 240%;
+    font-size: 1.6rem;
     font-weight: 800;
     line-height: 1.1;
+    word-break: break-word;
+    @media screen and (max-width: 39.9375em) {
+      font-size: 1.3rem;
+    }
     .Icon {
       margin: 0 0 0 0.5rem;
       vertical-align: -30%;

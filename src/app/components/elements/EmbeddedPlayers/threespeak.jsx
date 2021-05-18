@@ -6,11 +6,11 @@ import React from 'react';
  */
 const regex = {
     // eslint-disable-next-line no-useless-escape
-    sanitize: /^https:\/\/3speak\.online\/embed\?v=([A-Za-z0-9_\-\/]+)(&.*)?$/,
+    sanitize: /^https:\/\/3speak\.(?:online|co|tv)\/embed\?v=([A-Za-z0-9_\-\/]+)(&.*)?$/,
     // eslint-disable-next-line no-useless-escape
-    main: /(?:https?:\/\/(?:(?:3speak\.online\/watch\?v=)|(?:3speak\.online\/embed\?v=)))([A-Za-z0-9_\-\/]+)(&.*)?/i,
+    main: /(?:https?:\/\/(?:(?:3speak\.(?:online|co|tv)\/watch\?v=)|(?:3speak\.(?:online|co|tv)\/embed\?v=)))([A-Za-z0-9_\-\/]+)(&.*)?/i,
     // eslint-disable-next-line no-useless-escape
-    htmlReplacement: /<a href="(https?:\/\/3speak\.online\/watch\?v=([A-Za-z0-9_\-\/]+))".*<img.*?><\/a>/i,
+    htmlReplacement: /<a href="(https?:\/\/3speak\.(?:online|co|tv)\/watch\?v=([A-Za-z0-9_\-\/]+))".*<img.*?><\/a>/i,
     embedShorthand: /~~~ embed:(.*?)\/(.*?) threespeak ~~~/,
 };
 export default regex;
@@ -34,16 +34,11 @@ export const sandboxConfig = {
  * @returns {*}
  */
 export function genIframeMd(idx, threespeakId, width, height) {
-    const url = `https://3speak.online/embed?v=${threespeakId}`;
+    const url = `https://3speak.co/embed?v=${threespeakId}`;
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
-        if (
-            Object.prototype.hasOwnProperty.call(
-                sandboxConfig,
-                'sandboxAttributes'
-            )
-        ) {
+        if (Object.prototype.hasOwnProperty.call(sandboxConfig, 'sandboxAttributes')) {
             sandbox = sandboxConfig.sandboxAttributes.join(' ');
         }
     }
@@ -72,7 +67,7 @@ export function genIframeMd(idx, threespeakId, width, height) {
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
- * <iframe src="https://3speak.online/embed?v=threespeak/iaarkpvf"></iframe>
+ * <iframe src="https://3speak.co/embed?v=threespeak/iaarkpvf"></iframe>
  * @param url
  * @returns {boolean|*}
  */
@@ -95,7 +90,7 @@ export function normalizeEmbedUrl(url) {
     const match = url.match(regex.contentId);
 
     if (match && match.length >= 2) {
-        return `https://3speak.online/embed?v=${match[1]}`;
+        return `https://3speak.co/embed?v=${match[1]}`;
     }
 
     return false;
@@ -120,7 +115,7 @@ export function extractMetadata(data) {
         fullId,
         url,
         canonical: url,
-        thumbnail: `https://img.3speakcontent.online/${id}/post.png`,
+        thumbnail: `https://img.3speakcontent.co/${id}/post.png`,
     };
 }
 
@@ -136,10 +131,7 @@ export function embedNode(child, links, images) {
         const threespeak = extractMetadata(data);
 
         if (threespeak) {
-            child.data = data.replace(
-                threespeak.url,
-                `~~~ embed:${threespeak.id} threespeak ~~~`
-            );
+            child.data = data.replace(threespeak.url, `~~~ embed:${threespeak.fullId} threespeak ~~~`);
 
             if (links) {
                 links.add(threespeak.canonical);
@@ -154,9 +146,7 @@ export function embedNode(child, links, images) {
             // So we are handling thumbnail URL extraction differently.
             const match = data.match(regex.embedShorthand);
             if (match && images) {
-                const imageUrl = `https://img.3speakcontent.online/${
-                    match[2]
-                }/post.png`;
+                const imageUrl = `https://img.3speakcontent.co/${match[2]}/post.png`;
                 images.add(imageUrl);
             }
         }
@@ -179,10 +169,7 @@ export function preprocessHtml(child) {
             // to replace the image/anchor tag created by 3Speak dApp
             const threespeak = extractMetadata(child);
             if (threespeak) {
-                child = child.replace(
-                    regex.htmlReplacement,
-                    `~~~ embed:${threespeak.fullId} threespeak ~~~`
-                );
+                child = child.replace(regex.htmlReplacement, `~~~ embed:${threespeak.fullId} threespeak ~~~`);
             }
         }
     } catch (error) {

@@ -46,6 +46,7 @@ const css_loaders = [
         loader: 'css-loader',
         options: {
             importLoaders: 1,
+            esModule: false,
         },
     },
     postcss_loader,
@@ -57,6 +58,7 @@ const scss_loaders = [
         loader: 'css-loader',
         options: {
             importLoaders: 1,
+            esModule: false,
         },
     },
     postcss_loader,
