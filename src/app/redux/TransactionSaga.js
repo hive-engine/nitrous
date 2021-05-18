@@ -17,7 +17,7 @@ import * as userActions from 'app/redux/UserReducer';
 import { APP_URL, COMMENT_FOOTER, POST_FOOTER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
