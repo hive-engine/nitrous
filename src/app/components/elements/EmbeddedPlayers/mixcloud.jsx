@@ -5,7 +5,7 @@ import React from 'react';
  * @type {{htmlReplacement: RegExp, main: RegExp, sanitize: RegExp}}
  */
 const regex = {
-    main: /(?:https?:\/\/(?:(?:www\.mixcloud.com(\/(.*?)\/(.*?)\/))))/i,
+    main: /https:\/\/www\.mixcloud\.com(\/[^/]+\/[^/]+)/i,
     sanitize: /^https:\/\/www\.mixcloud\.com\/widget\/iframe\/.*?feed=(.*)/i,
 };
 
@@ -75,11 +75,10 @@ function extractMetadata(data) {
     const startTime = m.input.match(/t=(\d+)s?/);
 
     return {
-        id: m[1],
+        id: `${m[1]}/`,
         url: m[0],
         startTime: startTime ? startTime[1] : 0,
         canonical: `https://open.mixcloud.com/playlist/${m[1]}`,
-        // thumbnail: requires a callback - http://stackoverflow.com/questions/1361149/get-img-thumbnails-from-mixcloud
     };
 }
 

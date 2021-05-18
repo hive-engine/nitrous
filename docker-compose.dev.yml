@@ -19,7 +19,9 @@ services:
 
             SDC_IMAGE_PROXY_PREFIX: https://images.hive.blog/
             SDC_UPLOAD_IMAGE_URL: https://images.hive.blog
-            SDC_HELMET_CONNECTSRC: "'self' http://hiveblog.local https://api.hive.blog https://images.hive.blog"
+            SDC_HELMET_CONNECTSRC: "'self' http://hiveblog.local https://api.hive.blog https://images.hive.blog https://www.reddit.com"
+            SDC_HELMET_STYLESRC: "'self' 'unsafe-inline' fonts.googleapis.com platform.twitter.com www.reddit.com cdn.embedly.com"
+            SDC_HELMET_FONTSRC: "data: fonts.gstatic.com cdn.embedly.com"
         volumes:
             - ./yarn.lock:/var/app/yarn.lock
             - ./package.json:/var/app/package.json
