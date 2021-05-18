@@ -270,12 +270,15 @@ class Voting extends React.Component {
             rewardData.reward_pool /
             rewardData.pending_rshares;
 
-        const rsharesTotal = active_votes
-            ? active_votes
+        let rsharesTotal = 0;
+        if (active_votes && active_votes.size) {
+            rsharesTotal = active_votes
                   .toJS()
                   .map(x => x.rshares)
-                  .reduce((x, y) => x + y, 0)
-            : 0;
+                  .reduce((x, y) => x + y, 0);
+        } else if (scotData) {
+            rsharesTotal = scotData.get('vote_rshares');
+        }
 
         if (scotData) {
             scot_pending_token = applyRewardsCurve(rsharesTotal);

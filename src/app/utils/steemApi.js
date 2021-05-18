@@ -300,6 +300,7 @@ export async function attachScotData(url, state, useHive, ssr = false) {
         const discussionQuery = {
             token: LIQUID_TOKEN_UPPERCASE,
             limit: 20,
+            no_votes: 1,
         };
         if (tag) {
             discussionQuery.tag = tag;
@@ -797,6 +798,7 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
     let discussionQuery = {
         ...args,
         token: LIQUID_TOKEN_UPPERCASE,
+        no_votes: 1,
     };
     if (callNameMatch) {
         order = callNameMatch[1].toLowerCase();
