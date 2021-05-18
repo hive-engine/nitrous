@@ -87,10 +87,10 @@ export async function getScotAccountDataAsync(account) {
     const data = {};
     sscData.forEach(vpData => {
         data[vpData.rewardPoolId] = {
-            last_vote_time = new Date(vpData.lastVoteTimestamp),
-            last_downvote_time = new Date(vpData.lastVoteTimestamp),
-            voting_power = vpData.votingPower,
-            downvoting_power = vpData.downvotingPower,
+            last_vote_time: new Date(vpData.lastVoteTimestamp),
+            last_downvote_time: new Date(vpData.lastVoteTimestamp),
+            voting_power: vpData.votingPower,
+            downvoting_power: vpData.downvotingPower,
     });
     return { data };
 }
