@@ -8,10 +8,10 @@ import Userpic from './Userpic';
 import { Center } from 'decorators';
 
 const store = createStore(rootReducer);
-global.$STM_Config = { img_proxy_prefix: 'https://steemitimages.com/' };
+global.$STM_Config = { img_proxy_prefix: 'https://images.hive.blog/' };
 
 storiesOf('Elements', module)
     .addDecorator(withKnobs)
     .addDecorator(Center)
-    .addDecorator(getStory => <Provider store={store}>{getStory()}</Provider>)
+    .addDecorator((getStory) => <Provider store={store}>{getStory()}</Provider>)
     .add('Userpic', () => <Userpic account={'maitland'} />);
