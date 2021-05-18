@@ -367,7 +367,8 @@
         "tags_input": "Enter your tags separated by a space",
         "enable_sidebyside": "Enable side-by-side editor",
         "disable_sidebyside": "Disable side-by-side editor",
-        "post_options": "Post options"
+        "post_options": "Post options",
+        "select_cover_image": "Select your cover image"
     },
     "beneficiary_selector_jsx": {
         "header": "Who should receive any rewards?",
