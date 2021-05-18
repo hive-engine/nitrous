@@ -91,6 +91,7 @@ export async function getScotAccountDataAsync(account) {
             last_downvote_time: new Date(vpData.lastVoteTimestamp),
             voting_power: vpData.votingPower,
             downvoting_power: vpData.downvotingPower,
+        };
     });
     return { data };
 }
