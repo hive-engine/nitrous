@@ -299,6 +299,7 @@ export async function attachScotData(
     state,
     hostConfig,
     useHive,
+    observer,
     ssr = false
 ) {
     if (url === '') {
@@ -314,7 +315,11 @@ export async function attachScotData(
         const discussionQuery = {
             token: scotTokenSymbol,
             limit: 20,
+            no_votes: 1,
         };
+        if (observer) {
+            discussionQuery.voter = observer;
+        }
         if (tag) {
             discussionQuery.tag = tag;
         }
@@ -854,7 +859,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, hostConfig, useHive, ssr);
+    await attachScotData(path, raw, hostConfig, useHive, observer, ssr);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
@@ -877,7 +882,11 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
     let discussionQuery = {
         ...args,
         token: scotTokenSymbol,
+        no_votes: 1,
     };
+    if (args.observer) {
+        discussionQuery.voter = args.observer;
+    }
     if (callNameMatch) {
         order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {
