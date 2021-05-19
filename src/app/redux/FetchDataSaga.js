@@ -189,6 +189,7 @@ export function* getPromotedState(pathname) {
         return;
     }
 
+    let username = null;
     if (process.env.BROWSER) {
         [username] = yield select(state => [
             state.user.getIn(['current', 'username']),
