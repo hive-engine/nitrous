@@ -535,11 +535,6 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
         'weight'
     );
     // update again with new $$ amount from the steemd node
-    yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
-        })
-    );
     // May not update immediately. Delay by 10 seconds.
     yield new Promise((resolve, reject) =>
         setTimeout(() => {
@@ -547,6 +542,11 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
         }, 10000)
     );
     yield call(getContent, { author, permlink });
+    yield put(
+        globalActions.remove({
+            key: `transaction_vote_active_${author}_${permlink}`,
+        })
+    );
     yield put(userActions.lookupVotingPower({ account: username }));
 }
 
