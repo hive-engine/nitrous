@@ -83,8 +83,11 @@ export async function getScotDataAsync(path, params) {
 }
 
 export async function getScotAccountDataAsync(account) {
+    console.log('loading voting power');
     const sscData = await hiveSsc.find('comments', 'votingPower', { account });
+    console.log('loading token balances');
     const sscTokenData = await hiveSsc.find('tokens', 'balances', { account });
+    console.log('done');
     const data = {};
     sscData.forEach(vpData => {
         data[vpData.rewardPoolId] = {
