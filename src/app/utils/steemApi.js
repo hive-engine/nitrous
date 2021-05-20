@@ -83,13 +83,10 @@ export async function getScotDataAsync(path, params) {
 }
 
 export async function getScotAccountDataAsync(account) {
-    console.log('loading voting power');
-    const sscData = await hiveSsc.find('comments', 'votingPower', { account });
-    console.log('loading token balances');
+    const sscVpData = await hiveSsc.find('comments', 'votingPower', { account });
     const sscTokenData = await hiveSsc.find('tokens', 'balances', { account });
-    console.log('done');
     const data = {};
-    sscData.forEach(vpData => {
+    sscVpData.forEach(vpData => {
         data[vpData.rewardPoolId] = {
             last_vote_time: new Date(vpData.lastVoteTimestamp),
             last_downvote_time: new Date(vpData.lastVoteTimestamp),
@@ -98,8 +95,8 @@ export async function getScotAccountDataAsync(account) {
         };
     });
     const tokenData = {};
-    sscTokenData.forEach(tokenData => {
-        tokenData[tokenData.symbol] = parseFloat(tokenData.stake) + parseFloat(tokenData.delegationsIn);
+    sscTokenData.forEach(d => {
+        tokenData[d.symbol] = parseFloat(d.stake) + parseFloat(d.delegationsIn);
     });
     return { data, tokenData };
 }
