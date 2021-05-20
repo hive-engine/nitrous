@@ -337,10 +337,18 @@ class Voting extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
-                    {currentVp ? (
+                    {up && currentVp ? (
                         <div className="voting-power-display">
                             {tt('voting_jsx.voting_power')}:{' '}
                             {currentVp.toFixed(1)}%
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {!up && currentDownvotePower ? (
+                        <div className="voting-power-display">
+                            {tt('voting_jsx.voting_power')}:{' '}
+                            {currentDownvotePower.toFixed(1)}%
                         </div>
                     ) : (
                         ''
