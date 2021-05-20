@@ -334,7 +334,7 @@ function* usernamePasswordLogin2({
             })
         );
         // Fetch voting power
-        yield put(userActions.lookupVotingPower({ account: username }));
+        yield userActions.lookupVotingPower({ account: username });
         return;
     }
 
@@ -648,7 +648,7 @@ function* usernamePasswordLogin2({
     }
 
     // Fetch voting power
-    yield put(userActions.lookupVotingPower({ account: username }));
+    yield userActions.lookupVotingPower({ account: username });
 
     if (!autopost && saveLogin) yield put(userActions.saveLogin());
 
