@@ -286,7 +286,7 @@ async function addAccountToState(state, account, useHive) {
     }
 }
 
-export async function attachScotData(url, state, useHive, ssr = false) {
+export async function attachScotData(url, state, useHive, observer, ssr = false) {
     if (url === '') {
         url = 'trending';
     }
@@ -300,7 +300,11 @@ export async function attachScotData(url, state, useHive, ssr = false) {
         const discussionQuery = {
             token: LIQUID_TOKEN_UPPERCASE,
             limit: 20,
+            no_votes: 1,
         };
+        if (observer) {
+            discussionQuery.voter = observer;
+        }
         if (tag) {
             discussionQuery.tag = tag;
         }
@@ -775,7 +779,7 @@ export async function getStateAsync(url, observer, ssr = false) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, useHive, ssr);
+    await attachScotData(path, raw, useHive, observer, ssr);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
@@ -797,7 +801,11 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
     let discussionQuery = {
         ...args,
         token: LIQUID_TOKEN_UPPERCASE,
+        no_votes: 1,
     };
+    if (args.observer) {
+        discussionQuery.voter = args.observer;
+    }
     if (callNameMatch) {
         order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {
