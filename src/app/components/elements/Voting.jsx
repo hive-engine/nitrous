@@ -225,6 +225,7 @@ class Voting extends React.Component {
             scotData,
             scotPrecision,
             voteRegenSec,
+            downvoteRegenSec,
             rewardData,
             hostConfig,
             tokenBeneficiary,
@@ -245,6 +246,16 @@ class Voting extends React.Component {
                   10000
               ) / 100
             : 0;
+        const currentDownvotePower = votingData
+            ? Math.min(
+                  votingData.get('downvoting_power') +
+                      (new Date() - getDate(votingData.get('last_downvote_time'))) *
+                          10000 /
+                          (1000 * downvoteRegenSec),
+                  10000
+              ) / 100
+            : 0;
+
         // Token values
         let scot_pending_token = 0;
         let scot_total_author_payout = 0;
@@ -315,7 +326,7 @@ class Voting extends React.Component {
                 : this.state.sliderWeight.down;
             const s = up ? '' : '-';
             let valueEst = '';
-            if (cashout_active && currentVp) {
+            if (cashout_active && ((up && currentVp) || (!up && currentDownvotePower))) {
                 const stakedTokens = votingData.get('staked_tokens');
                 const multiplier = votingData.get(
                     up
@@ -328,7 +339,7 @@ class Voting extends React.Component {
                     (up ? 1 : -1) *
                     stakedTokens *
                     Math.min(multiplier * b, 10000) *
-                    currentVp /
+                    (up ? currentVp : currentDownvotePower) /
                     (10000 * 100);
                 const newValue = applyRewardsCurve(rsharesTotal + rshares);
                 valueEst = (newValue / scotDenom - scot_pending_token).toFixed(
@@ -347,10 +358,18 @@ class Voting extends React.Component {
                         onChangeComplete={this.storeSliderWeight(up)}
                         tooltip={false}
                     />
-                    {currentVp ? (
+                    {up && currentVp ? (
                         <div className="voting-power-display">
                             {tt('voting_jsx.voting_power')}:{' '}
                             {currentVp.toFixed(1)}%
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {!up && currentDownvotePower ? (
+                        <div className="voting-power-display">
+                            {tt('voting_jsx.voting_power')}:{' '}
+                            {currentDownvotePower.toFixed(1)}%
                         </div>
                     ) : (
                         ''
@@ -782,7 +801,7 @@ export default connect(
             ? current_account.get('username')
             : null;
         const votingData = current_account
-            ? current_account.get(useHive ? 'hive_voting' : 'voting')
+            ? current_account.get('voting')
             : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
@@ -815,6 +834,10 @@ export default connect(
             scotPrecision: scotConfig.getIn(['info', 'precision']),
             voteRegenSec: scotConfig.getIn(
                 ['config', 'vote_regeneration_seconds'],
+                5 * 24 * 60 * 60
+            ),
+            downvoteRegenSec: scotConfig.getIn(
+                ['config', 'downvote_regeneration_seconds'],
                 5 * 24 * 60 * 60
             ),
             rewardData,
