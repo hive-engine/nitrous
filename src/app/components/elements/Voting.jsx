@@ -801,7 +801,7 @@ export default connect(
             ? current_account.get('username')
             : null;
         const votingData = current_account
-            ? current_account.get('voting')
+            ? current_account.get(useHive ? 'hive_voting' : 'voting')
             : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
