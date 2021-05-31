@@ -274,7 +274,7 @@ async function fetchMissingData(
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
-                replies: [], // intentional
+                replies: [],
             };
         } else {
             filteredContent[key] = state.content[key];
@@ -282,6 +282,18 @@ async function fetchMissingData(
         mergeContent(filteredContent[key], d, scotTokenSymbol);
         discussionIndex.push(key);
     });
+    // second pass for replies
+    if (feedType === 'state') {
+        feedData.forEach(d => {
+            const key = d.authorperm.substr(1);
+            if (d.parent_author && d.parent_permlink) {
+                const pkey = `${d.parent_author}/${parent_permlink}`;
+                if (filteredContent[pkey]) {
+                    filteredContent[pkey].replies.push(key);
+                }
+            }
+        });
+    }
     state.content = filteredContent;
     if (!state.discussion_idx[tag]) {
         state.discussion_idx[tag] = {};
@@ -493,6 +505,27 @@ export async function attachScotData(
             'replies',
             state,
             feedData,
+            scotTokenSymbol,
+            useHive
+        );
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?@([^\/]+)\/([^\/]+)$/);
+    if (urlParts) {
+        const account = urlParts[1];
+        const permlink = urlParts[2];
+        const stateParams = {
+            token: scotTokenSymbol,
+            account,
+            permlink,
+        };
+        let stateData = await getScotDataAsync('get_state', stateParams);
+        await fetchMissingData(
+            `@${account}`,
+            'state',
+            state,
+            stateData,
             scotTokenSymbol,
             useHive
         );
@@ -814,7 +847,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
         path = path.substring(0, path.length - 1);
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded =
+    const steemitApiStateNeeded = false;/*
         path !== '' &&
         !path.match(/^(login|submit)\.html$/) &&
         !path.match(
@@ -822,7 +855,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
         ) &&
         !path.match(
             /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|followers|followed)?)?$/
-        );
+        );*/
 
     let raw = {
         accounts: {},
