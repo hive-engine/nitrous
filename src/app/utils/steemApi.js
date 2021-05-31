@@ -511,10 +511,10 @@ export async function attachScotData(
         return;
     }
 
-    urlParts = url.match(/^[\/]?@([^\/]+)\/([^\/]+)$/);
+    urlParts = url.match(/^[\/]?([^\/]+)\/@([^\/]+)\/([^\/]+)$/);
     if (urlParts) {
-        const account = urlParts[1];
-        const permlink = urlParts[2];
+        const account = urlParts[2];
+        const permlink = urlParts[3];
         const stateParams = {
             token: scotTokenSymbol,
             account,
