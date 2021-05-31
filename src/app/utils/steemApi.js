@@ -287,7 +287,7 @@ async function fetchMissingData(
         feedData.forEach(d => {
             const key = d.authorperm.substr(1);
             if (d.parent_author && d.parent_permlink) {
-                const pkey = `${d.parent_author}/${parent_permlink}`;
+                const pkey = `${d.parent_author}/${d.parent_permlink}`;
                 if (filteredContent[pkey]) {
                     filteredContent[pkey].replies.push(key);
                 }
