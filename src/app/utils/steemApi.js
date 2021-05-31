@@ -513,16 +513,16 @@ export async function attachScotData(
 
     urlParts = url.match(/^[\/]?([^\/]+)\/@([^\/]+)\/([^\/]+)$/);
     if (urlParts) {
-        const account = urlParts[2];
+        const author = urlParts[2];
         const permlink = urlParts[3];
         const stateParams = {
             token: scotTokenSymbol,
-            account,
+            author,
             permlink,
         };
         let stateData = await getScotDataAsync('get_state', stateParams);
         await fetchMissingData(
-            `@${account}`,
+            `@${author}/${permlink}`,
             'state',
             state,
             stateData,
