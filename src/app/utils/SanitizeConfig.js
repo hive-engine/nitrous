@@ -93,7 +93,7 @@ export default ({ large = true, highQualityPost = true, noImage = false, sanitiz
             if (noImage) return { tagName: 'div', text: noImageText };
             //See https://github.com/punkave/sanitize-html/issues/117
             let { src, alt } = attribs;
-            if (!/^(https?:)?\/\//i.test(src)) {
+            if (!/^(https?:)?\/\//i.test(src.trim())) {
                 console.log('Blocked, image tag src does not appear to be a url', tagName, attribs);
                 sanitizeErrors.push('An image in this post did not save properly.');
                 return { tagName: 'img', attribs: { src: 'brokenimg.jpg' } };
