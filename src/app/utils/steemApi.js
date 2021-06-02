@@ -240,23 +240,23 @@ async function fetchMissingData(
     if (!state.content) {
         state.content = {};
     }
-    const missingKeys = feedData
-        .filter(d => d.desc == null || d.children == null)
-        .map(d => d.authorperm.substr(1))
-        .filter(k => !state.content[k]);
-    const missingContent = await Promise.all(
-        missingKeys.map(k => {
-            const authorPermlink = k.split('/');
-            console.log('Unexpected missing: ' + authorPermlink);
-            return (useHive ? hive.api : steem.api).getContentAsync(
-                authorPermlink[0],
-                authorPermlink[1]
-            );
-        })
-    );
-    missingContent.forEach(c => {
-        state.content[`${c.author}/${c.permlink}`] = c;
-    });
+    //const missingKeys = feedData
+    //    .filter(d => d.desc == null || d.children == null)
+    //    .map(d => d.authorperm.substr(1))
+    //    .filter(k => !state.content[k]);
+    //const missingContent = await Promise.all(
+    //    missingKeys.map(k => {
+    //        const authorPermlink = k.split('/');
+    //        console.log('Unexpected missing: ' + authorPermlink);
+    //        return (useHive ? hive.api : steem.api).getContentAsync(
+    //            authorPermlink[0],
+    //            authorPermlink[1]
+    //        );
+    //    })
+    //);
+    //missingContent.forEach(c => {
+    //    state.content[`${c.author}/${c.permlink}`] = c;
+    //});
 
     if (!state.discussion_idx) {
         state.discussion_idx = {};
@@ -269,8 +269,8 @@ async function fetchMissingData(
         if (!state.content[key]) {
             filteredContent[key] = {
                 author_reputation: authorRep[d.author],
-                body: d.desc,
-                body_length: d.desc.length + 1,
+                body: d.body ? d.body : d.desc,
+                body_length: d.body ? d.body.length : d.desc + 1,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
