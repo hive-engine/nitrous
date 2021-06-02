@@ -283,7 +283,7 @@ async function fetchMissingData(
         discussionIndex.push(key);
     });
     // second pass for replies
-    if (feedType === 'state') {
+    if (feedType === 'thread') {
         feedData.forEach(d => {
             const key = d.authorperm.substr(1);
             if (d.parent_author && d.parent_permlink) {
@@ -515,15 +515,15 @@ export async function attachScotData(
     if (urlParts) {
         const author = urlParts[2];
         const permlink = urlParts[3];
-        const stateParams = {
+        const threadParams = {
             token: scotTokenSymbol,
             author,
             permlink,
         };
-        let stateData = await getScotDataAsync('get_state', stateParams);
+        let threadData = await getScotDataAsync('get_thread', threadParams);
         await fetchMissingData(
             `@${author}/${permlink}`,
-            'state',
+            'thread',
             state,
             stateData,
             scotTokenSymbol,
