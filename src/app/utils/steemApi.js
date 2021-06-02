@@ -525,7 +525,7 @@ export async function attachScotData(
             `@${author}/${permlink}`,
             'thread',
             state,
-            stateData,
+            threadData,
             scotTokenSymbol,
             useHive
         );
