@@ -270,7 +270,7 @@ async function fetchMissingData(
             filteredContent[key] = {
                 author_reputation: authorRep[d.author],
                 body: d.body ? d.body : d.desc,
-                body_length: d.body ? d.body.length : d.desc + 1,
+                body_length: d.body ? d.body.length : d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
