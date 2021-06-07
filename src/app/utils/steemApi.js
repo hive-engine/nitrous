@@ -11,8 +11,8 @@ import {
 import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
-const ssc = new SSC('https://hetest.cryptoempirebot.com');
-const hiveSsc = new SSC('https://hetest.cryptoempirebot.com');
+const ssc = new SSC('https://api2.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://api2.hive-engine.com/rpc');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(

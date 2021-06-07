@@ -4,8 +4,8 @@ import NodeCache from 'node-cache';
 import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from '@hive-engine/sscjs';
-const ssc = new SSC('https://hetest.cryptoempirebot.com');
-const hiveSsc = new SSC('https://hetest.cryptoempirebot.com');
+const ssc = new SSC('https://api2.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://api2.hive-engine.com/rpc');
 import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
