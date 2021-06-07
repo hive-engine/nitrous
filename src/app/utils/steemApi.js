@@ -152,9 +152,7 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         bridgeAccountObject.token_unstakes = tokenUnstakes;
     }
     if (tokenStatuses) {
-        const tokenStatusData = useHive
-            ? tokenStatuses.hiveData
-            : tokenStatuses.data;
+        const tokenStatusData = tokenStatuses.data;
         if (tokenStatusData[scotTokenSymbol]) {
             bridgeAccountObject.token_status = tokenStatusData[scotTokenSymbol];
             bridgeAccountObject.all_token_status = tokenStatusData;
