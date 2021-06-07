@@ -1,23 +1,23 @@
 import { fromJSOrdered } from './utils/immutable';
 
-const PAL = {
-    APP_NAME: 'PalnetHE',
-    APP_ICON: 'pal',
-    APP_ICON_WIDTH: '125px',
+const DUNK = {
+    APP_NAME: 'DunkSocial',
+    APP_ICON: 'dunksocial',
+    APP_ICON_WIDTH: '50px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.palnet.io',
-    APP_DOMAIN: 'www.palnet.io',
-    LIQUID_TOKEN: 'PAL',
-    LIQUID_TOKEN_UPPERCASE: 'PAL',
+    APP_URL: 'https://www.dunksocial.io',
+    APP_DOMAIN: 'www.dunksocial.io',
+    LIQUID_TOKEN: 'DUNK',
+    LIQUID_TOKEN_UPPERCASE: 'DUNK',
     APP_MAX_TAG: 10,
-    SCOT_TAG: 'palnet',
-    TAG_LIST: fromJSOrdered(['palnet']),
+    SCOT_TAG: 'dunk',
+    TAG_LIST: fromJSOrdered(['dunk', 'dunksocial']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'PAL POWER',
+    VESTING_TOKEN: 'DUNK POWER',
     SITE_DESCRIPTION:
-        'Palnet is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called PAL, that ' +
+        'DunkSocial is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called DUNK, that ' +
         'supports real value for digital rewards through market price discovery and liquidity',
     // Revive Ads
     NO_ADS_STAKE_THRESHOLD: 9999999999,
@@ -27,15 +27,14 @@ const PAL = {
     POST_FOOTER: '',
     COMMENT_FOOTER: '',
     SCOT_TAG_FIRST: false,
-    SDC_GTAG_MEASUREMENT_ID: null,
+    SDC_GTAG_MEASUREMENT_ID: 'G-LHBWFW0JD5',
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     HIVE_ENGINE_SMT: 1,
     APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: 'hive-121744',
+    COMMUNITY_CATEGORY: null,
     CHAT_CONVERSATIONS: null,
-    GOOGLE_AD_CLIENT: 'ca-pub-5975884733498941',
 };
 
 export const CONFIG_MAP = {
