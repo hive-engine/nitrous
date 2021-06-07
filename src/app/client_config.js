@@ -42,6 +42,7 @@ export const CONFIG_MAP = {
     'localhost:8080': DUNK,
     'eonhetest.herokuapp.com': DUNK,
     'www.dunksocial.io': DUNK,
+    'dunksocial.io': DUNK,
 };
 
 // FIXME figure out best way to do this on both client and server from env
