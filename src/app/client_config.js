@@ -39,8 +39,9 @@ const DUNK = {
 
 export const CONFIG_MAP = {
     // testing heroku/local options
-    'localhost:8080': PAL,
-    'eonhetest.herokuapp.com': PAL,
+    'localhost:8080': DUNK,
+    'eonhetest.herokuapp.com': DUNK,
+    'www.dunksocial.io': DUNK,
 };
 
 // FIXME figure out best way to do this on both client and server from env
