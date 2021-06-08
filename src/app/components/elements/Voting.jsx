@@ -293,7 +293,7 @@ class Voting extends React.Component {
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
         }
-        const total_votes = post.getIn(['stats', 'total_votes']);
+        const total_votes = active_votes ? active_votes.size : 0;
         if (payout < 0.0) payout = 0.0;
 
         const votingUpActive = voting && votingUp;
