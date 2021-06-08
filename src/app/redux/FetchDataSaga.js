@@ -56,7 +56,7 @@ const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
 const GET_CATEGORIES = 'fetchDataSaga/GET_CATEGORIES';
 
 export const fetchDataWatches = [
-    takeLatest(REQUEST_DATA, fetchData),
+    fork(fetchDataSaga),
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
@@ -87,6 +87,11 @@ export function* getPostHeader(action) {
 
 let is_initial_state = true;
 export function* fetchState(location_change_action) {
+    // Cancel any outstanding fetch calls (e.g. next page feed). Existing state calls will
+    // automatically be cancelled by takeLatest.
+    if (activeFetchDataTask) {
+        yield cancel(activeFetchDataTask);
+    }
     const { pathname } = location_change_action.payload;
     const m = pathname.match(/^\/@([a-z0-9\.-]+)(\/notifications)?/);
     if (m && m.length >= 2) {
@@ -444,6 +449,17 @@ export function* markNotificationsAsReadSaga(action) {
         );
     } catch (error) {
         yield put(globalActions.notificationsLoading(false));
+    }
+}
+
+let activeFetchDataTask;
+function* fetchDataSaga() {
+    while (true) {
+        const action = yield take(REQUEST_DATA);
+        if (activeFetchDataTask) {
+            yield cancel(activeFetchDataTask);
+        }
+        activeFetchDataTask = yield fork(fetchData, action);
     }
 }
 
