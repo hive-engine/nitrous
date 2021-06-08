@@ -1,6 +1,7 @@
 import {
     all,
     call,
+    cancel,
     put,
     fork,
     select,
