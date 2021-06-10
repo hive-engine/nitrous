@@ -53,23 +53,19 @@ async function callApi(url, params) {
 }
 
 async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive) {
-    const transfers = await callApi(
-        hive
-            ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://api.steem-engine.net/history/accountHistory',
+    const transfers = await callApi('https://accounts.hive-engine.com/accountHistory',
         {
             account,
             limit: 50,
             offset: 0,
             type: 'user',
-            scotTokenSymbol,
+            symbol: scotTokenSymbol,
         }
     );
     const history = await getScotDataAsync('get_account_history', {
         account,
         token: scotTokenSymbol,
         limit: 50,
-        //hive: hive ? '1' : '0',
     });
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
     return transfers
