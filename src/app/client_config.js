@@ -35,6 +35,7 @@ const DUNK = {
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: null,
     CHAT_CONVERSATIONS: null,
+    PINNED_POSTS_URL: 'https://robminnick23.github.io/',
 };
 
 export const CONFIG_MAP = {
