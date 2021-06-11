@@ -60,8 +60,8 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: 'Tribaldex',
-                link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
+                label: useHive ? 'Tribaldex' : 'Steem Engine',
+                link: useHive ? `https://tribaldex.com/trade/${scotTokenSymbol}` : `https://steem-engine.net/?p=market&t=${scotTokenSymbol}`,
             },
         ],
 
