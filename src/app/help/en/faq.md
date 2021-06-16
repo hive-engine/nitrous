@@ -3,16 +3,16 @@
 
 
 ## <span id="What_is_lassecash">What is LASSECASH?</span>
-Social media with rewards. Its a token to the HIVE blockchain administrated by a Scot.Bot.
+LasseCash is a tribe built by Hive Engine. We reward "Anarchy, Crypto, Truth" content.
 
 ## <span id="Who_is_behind_lassecash">Who is behind LASSECASH?</span>
-Lasse Ehlers contributed with the name, idea and face for LASSECASH. LASSECASH is developed by the HIVE-ENGINE TEAM and @zaxan made all graphics. The community of LASSECASH consist of all the users of LASSECASH, who owns the platform in the form of LASSECASH POWER.
+Lasse Ehlers ( @lasseehlers ) contributed with the name, idea and face for LasseCash. LasseCash is developed by the HIVE-ENGINE TEAM and Carlos Serrano ( @Zaxan ) made all graphics. The community of LasseCash consist of all the tribe members of LasseCash, who owns the tribe in the form of LASSECASH and LASSECASH POWER.
 
-## <span id="Do_I_need_wallet">Do I need a wallet to use and hold LASSECASH?</span>
-Yes, you need a HIVE wallet, there are several ways to [create a HIVE wallet](https://signup.hive.io/).
-
-## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
-You can ask it at the LASSECASH Discord server, the link is here: https://discord.gg/5JW2w9t
+## <span id="Do_I_need_wallet">Do I need an account to use and hold LasseCash?</span>
+Yes, you need a HIVE account, there are several ways to [create a HIVE account](https://signup.hive.io).
 
 ## <span of="hive_keys_safe">Are my Hive keys safe on the site? </span>
 We recommend using the browser add-on "Hive keychain" (only works on chrome browser and brave browser) for your Hive keys. It's open source and trusted by a large group of people.
+
+## <span id="Do_you_have_discord">I have a different question, where do I ask it? </span>
+You can ask any question in LasseCash Discord server, the link is here: https://discord.gg/5JW2w9t
