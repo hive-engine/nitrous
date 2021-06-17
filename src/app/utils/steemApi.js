@@ -528,7 +528,7 @@ export async function attachScotData(
 
     if (state.content) {
         Object.entries(state.content).forEach(entry => {
-            if (useHive) {
+            if (useHive && entry[1]) {
                 entry[1].hive = true;
             }
         });
@@ -548,7 +548,7 @@ export async function attachScotData(
                             token: scotTokenSymbol,
                             //hive: useHive ? '1' : '',
                         });
-                        if (useHive) {
+                        if (useHive && state.content[k]) {
                             state.content[k].hive = true;
                         }
                         mergeContent(
