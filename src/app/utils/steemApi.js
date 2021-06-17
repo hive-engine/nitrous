@@ -302,15 +302,6 @@ async function addAccountToState(state, account, useHive) {
     }
 }
 
-function setFeedHiveParam(feedParams, hostConfig) {
-    if (hostConfig['DISABLE_HIVE']) {
-        feedParams.hive = '0';
-    }
-    if (hostConfig['DISABLE_STEEM']) {
-        //feedParams.hive = '1';
-    }
-}
-
 export async function attachScotData(
     url,
     state,
@@ -340,7 +331,6 @@ export async function attachScotData(
         if (tag) {
             discussionQuery.tag = tag;
         }
-        setFeedHiveParam(discussionQuery, hostConfig);
         let callName = `get_discussions_by_${feedType}`;
         if (feedType === 'payout_comments') {
             callName = 'get_comment_discussions_by_payout';
@@ -383,7 +373,6 @@ export async function attachScotData(
             tag: account,
             limit: 20,
         };
-        setFeedHiveParam(feedParams, hostConfig);
         let feedData = await getScotDataAsync('get_feed', feedParams);
         await fetchMissingData(
             `@${account}`,
@@ -405,7 +394,6 @@ export async function attachScotData(
             limit: 20,
             include_reblogs: true,
         };
-        setFeedHiveParam(feedParams, hostConfig);
         let feedData = await getScotDataAsync(
             'get_discussions_by_blog',
             feedParams
@@ -432,7 +420,6 @@ export async function attachScotData(
             tag: account,
             limit: 20,
         };
-        setFeedHiveParam(feedParams, hostConfig);
         let feedData = await getScotDataAsync(
             'get_discussions_by_blog',
             feedParams
@@ -459,7 +446,6 @@ export async function attachScotData(
             tag: account,
             limit: 20,
         };
-        setFeedHiveParam(feedParams, hostConfig);
         let feedData = await getScotDataAsync(
             'get_discussions_by_comments',
             feedParams
@@ -486,7 +472,6 @@ export async function attachScotData(
             tag: account,
             limit: 20,
         };
-        setFeedHiveParam(feedParams, hostConfig);
         let feedData = await getScotDataAsync(
             'get_discussions_by_replies',
             feedParams
@@ -597,7 +582,9 @@ export async function getContentAsync(
     let scotData;
     if (preferHive) {
         content = await getContentFromBridge(author, permlink, true),
-        content.hive = true;
+        if (content) {
+            content.hive = true;
+        }
         scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
     } else {
         content = await getContentFromBridge(author, permlink, false),
@@ -965,7 +952,6 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
             // If empty string, remove from query.
             delete discussionQuery.tag;
         }
-        setFeedHiveParam(discussionQuery, hostConfig);
         feedData = await getScotDataAsync(callName, discussionQuery);
         feedData = await Promise.all(
             feedData.map(async scotData => {
