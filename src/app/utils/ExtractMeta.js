@@ -3,7 +3,7 @@ import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
 
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 
-const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
+const proxify = (url, size) => proxifyImageUrl(url, true, size).replace(/ /g, '%20');
 
 function addSiteMeta(metas, hostConfig) {
     metas.push({ title: hostConfig['APP_NAME'] });
