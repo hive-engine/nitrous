@@ -67,6 +67,18 @@ const SidePanel = ({
                 link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
             },
             {
+                value: 'lassevideos',
+                label: 'Videos',
+                link: '/videos.html',
+                internal: true,
+            },
+            {
+                value: 'lassenfts',
+                label: 'NFTs',
+                link: '/nfts.html',
+                internal: true,
+            },
+            {
                 value: 'lasseshop',
                 label: 'Shop',
                 link: '/shop',

@@ -26,6 +26,14 @@ export default {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Faq')]);
             //});
+        } else if (route.page === 'Videos') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Videos')]);
+            //});
+        } else if (route.page === 'Nfts') {
+            //require.ensure([], (require) => {
+            cb(null, [require('app/components/pages/Nfts')]);
+            //});
         } else if (route.page === 'Login') {
             //require.ensure([], (require) => {
             cb(null, [require('app/components/pages/Login')]);
