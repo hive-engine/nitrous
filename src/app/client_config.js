@@ -40,7 +40,7 @@ const DUNK = {
 
 const CENT = {
     APP_NAME: 'CentSocial',
-    APP_ICON: 'centsocial',
+    APP_ICON: 'cent',
     APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.centsocial.org',
