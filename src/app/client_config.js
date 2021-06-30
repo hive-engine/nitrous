@@ -38,16 +38,51 @@ const DUNK = {
     PINNED_POSTS_URL: 'https://robminnick23.github.io/',
 };
 
-export const CONFIG_MAP = {
-    // testing heroku/local options
-    'localhost:8080': DUNK,
-    'eonhetest.herokuapp.com': DUNK,
-    'www.dunksocial.io': DUNK,
-    'dunksocial.io': DUNK,
+const CENT = {
+    APP_NAME: 'CentSocial',
+    APP_ICON: 'centsocial',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.centsocial.org',
+    APP_DOMAIN: 'www.centsocial.io',
+    LIQUID_TOKEN: 'CENT',
+    LIQUID_TOKEN_UPPERCASE: 'CENT',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'cent',
+    TAG_LIST: fromJSOrdered(['cent', 'economy']),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'CENT POWER',
+    SITE_DESCRIPTION:
+        'CentSocial is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called CENT, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-HSQW2JJ769',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    HIVE_ENGINE_SMT: 2,
+    APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: null,
+    CHAT_CONVERSATIONS: null,
 };
 
-// FIXME figure out best way to do this on both client and server from env
-// vars. client should read $STM_Config, server should read config package.
+export const CONFIG_MAP = {
+    // testing heroku/local options
+    'localhost:8080': CENT,
+    'eonhetest.herokuapp.com': CENT,
+    'www.dunksocial.io': DUNK,
+    'dunksocial.io': DUNK,
+    'www.centsocial.org': CENT,
+};
 
 export const HIVE_SIGNER_APP = 'ewd';
 

@@ -3,9 +3,9 @@ echo $1 # lowercase token
 echo $2 # app name
 
 mkdir -p src/app/assets/static/$1
-cp src/app/assets/static/list/manifest.json src/app/assets/static/$1/manifest.json
-sed -i -e "s!list!$1!" src/app/assets/static/$1/manifest.json
-sed -i -e "s!HiveList!$2!" src/app/assets/static/$1/manifest.json
+cp src/app/assets/static/dunk/manifest.json src/app/assets/static/$1/manifest.json
+sed -i -e "s!dunk!$1!" src/app/assets/static/$1/manifest.json
+sed -i -e "s!DunkSocial!$2!" src/app/assets/static/$1/manifest.json
 
 THEMES=$(cat <<END_HEREDOC
 \$themes: (
