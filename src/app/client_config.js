@@ -75,13 +75,51 @@ const CENT = {
     CHAT_CONVERSATIONS: null,
 };
 
+const BEATCZ = {
+    APP_NAME: 'Beatzchain',
+    APP_ICON: 'beatcz',
+    APP_ICON_WIDTH: '40px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.beatzchain.com',
+    APP_DOMAIN: 'www.beatzchain.com',
+    LIQUID_TOKEN: 'BEATCZ',
+    LIQUID_TOKEN_UPPERCASE: 'BEATCZ',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'beatcz',
+    TAG_LIST: fromJSOrdered(['beatzchain', 'beatcz' ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'BEATCZ POWER',
+    SITE_DESCRIPTION:
+        'Beatzchain is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called BEATCZ, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-JEF024D6TZ',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    HIVE_ENGINE_SMT: 3,
+    APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: null,
+    CHAT_CONVERSATIONS: null,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': CENT,
-    'eonhetest.herokuapp.com': CENT,
+    'eonhetest.herokuapp.com': BEATCZ,
     'www.dunksocial.io': DUNK,
     'dunksocial.io': DUNK,
     'www.centsocial.org': CENT,
+    'www.beatzchain.com': BEATCZ,
 };
 
 export const HIVE_SIGNER_APP = 'ewd';
