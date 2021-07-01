@@ -43,8 +43,8 @@ const CENT = {
     APP_ICON: 'cent',
     APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.centsocial.org',
-    APP_DOMAIN: 'www.centsocial.io',
+    APP_URL: 'https://www.centblog.org',
+    APP_DOMAIN: 'www.centblog.io',
     LIQUID_TOKEN: 'CENT',
     LIQUID_TOKEN_UPPERCASE: 'CENT',
     APP_MAX_TAG: 10,
@@ -118,7 +118,7 @@ export const CONFIG_MAP = {
     'eonhetest.herokuapp.com': BEATCZ,
     'www.dunksocial.io': DUNK,
     'dunksocial.io': DUNK,
-    'www.centsocial.org': CENT,
+    'www.centblog.org': CENT,
     'www.beatzchain.com': BEATCZ,
 };
 
