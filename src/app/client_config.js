@@ -768,6 +768,9 @@ const POB = {
         'ash',
         'aeneas',
         'creativecoin',
+        'broadhive',
+        'lassecash',
+        'weedcash'
     ]),
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
