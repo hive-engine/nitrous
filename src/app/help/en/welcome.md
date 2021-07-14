@@ -36,7 +36,7 @@ Badges
 
 Each account get s a badge depending on how much LASSECASH POWER they have:
 
-![image.png](https://images.hive.blog/DQmSXcF6m5jziuhgEH5nNCuxkzKhYyN4XEJZJMeapD8foX4/image.png)
+<center>![image.png](https://images.hive.blog/DQmSXcF6m5jziuhgEH5nNCuxkzKhYyN4XEJZJMeapD8foX4/image.png)</center>
 
 Lasse as leader of LasseCash
 --
