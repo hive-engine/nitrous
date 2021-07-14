@@ -14,6 +14,6 @@ class Faq extends React.Component {
 }
 
 module.exports = {
-    path: 'faq.html',
+    path: 'faq',
     component: Faq,
 };

@@ -14,6 +14,6 @@ class Videos extends React.Component {
 }
 
 module.exports = {
-    path: 'videos.html',
+    path: 'videos',
     component: Videos,
 };

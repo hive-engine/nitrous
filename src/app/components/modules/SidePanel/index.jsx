@@ -69,13 +69,13 @@ const SidePanel = ({
             {
                 value: 'lassevideos',
                 label: 'Videos',
-                link: '/videos.html',
+                link: '/videos',
                 internal: true,
             },
             {
                 value: 'lassenfts',
                 label: 'NFTs',
-                link: '/nfts.html',
+                link: '/nfts',
                 internal: true,
             },
             {
@@ -98,7 +98,7 @@ const SidePanel = ({
             {
                 value: 'lassefaq',
                 label: 'FAQ',
-                link: '/faq.html',
+                link: '/faq',
                 internal: true,
             },
             {

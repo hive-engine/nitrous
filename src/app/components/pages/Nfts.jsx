@@ -14,6 +14,6 @@ class Nfts extends React.Component {
 }
 
 module.exports = {
-    path: 'nfts.html',
+    path: 'nfts',
     component: Nfts,
 };

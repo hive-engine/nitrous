@@ -18,7 +18,7 @@ export default class WelcomePanel extends React.Component {
         );
 
         const learn = (
-            <Link href="/faq.html" className="button ghost fade-in--7">
+            <Link href="/faq" className="button ghost fade-in--7">
                 {tt('navigation.learn_more')}
             </Link>
         );

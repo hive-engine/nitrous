@@ -35,13 +35,10 @@ export default function resolveRoute(path) {
 
     // static
     if (path === '/welcome') return { page: 'Welcome' };
-    if (path === '/faq.html') return { page: 'Faq' };
-    if (path === '/videos.html') return { page: 'Videos' };
-    if (path === '/nfts.html') return { page: 'Nfts' };
-    if (path === '/about.html') return { page: 'About' };
-    if (path === '/support.html') return { page: 'Support' };
-    if (path === '/privacy.html') return { page: 'Privacy' };
-    if (path === '/tos.html') return { page: 'Tos' };
+    if (path === '/faq') return { page: 'Faq' };
+    if (path === '/videos') return { page: 'Videos' };
+    if (path === '/nfts') return { page: 'Nfts' };
+    if (path === '/about') return { page: 'About' };
     if (path === '/promotion') return { page: 'Promotion' };
     if (path === '/shop') return { page: 'Shop' };
 
