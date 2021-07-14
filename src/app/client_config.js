@@ -33,7 +33,7 @@ const DUNK = {
     HIVE_ENGINE: true,
     HIVE_ENGINE_SMT: 1,
     APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: null,
+    COMMUNITY_CATEGORY: 'hive-195254',
     CHAT_CONVERSATIONS: null,
     PINNED_POSTS_URL: 'https://robminnick23.github.io/',
 };
