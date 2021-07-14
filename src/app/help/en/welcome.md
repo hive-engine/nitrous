@@ -31,6 +31,13 @@ We tweaked the parameters of the Scot.bot. to be more successful then HIVE and a
 
 Diesel pool rewards are payout on a weekly basis (When it comes), depending on how much liquidity you provide to the SWAP.HIVE/LASSECASH pool.
 
+Badges
+--
+
+Each account get s a badge depending on how much LASSECASH POWER they have:
+
+![image.png](https://images.hive.blog/DQmSXcF6m5jziuhgEH5nNCuxkzKhYyN4XEJZJMeapD8foX4/image.png)
+
 Lasse as leader of LasseCash
 --
 
