@@ -1072,6 +1072,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.13.9":
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.4.5":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
@@ -4523,12 +4530,12 @@ cross-fetch@^1.1.1:
     node-fetch "1.7.3"
     whatwg-fetch "2.0.3"
 
-cross-fetch@^3.0.1:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.5.tgz#2739d2981892e7ab488a7ad03b92df2816e03f4c"
-  integrity sha512-FFLcLtraisj5eteosnX1gf01qYDCOc4fDy0+euOt8Kn9YBY2NtXL/pCoYPavw24NIQkQqm5ZOLsGD5Zzj0gyew==
+cross-fetch@^3.0.6:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
+  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
   dependencies:
-    node-fetch "2.6.0"
+    node-fetch "2.6.1"
 
 cross-spawn@^3.0.0:
   version "3.0.1"
@@ -6844,19 +6851,19 @@ history@^3.0.0:
     query-string "^4.2.2"
     warning "^3.0.0"
 
-hive-uri@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/hive-uri/-/hive-uri-0.2.2.tgz#60d57a77a2c7a6394471f700e436f3f9822c737d"
-  integrity sha512-95XH50GsJ+ZuWsLQaNcqYiZ6lmoVDawjG+BCgERqOkoy57b+OgHeNDPeYYY9qkNIi0ThcaYRi6RHVcLbI5EfBw==
+hive-uri@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/hive-uri/-/hive-uri-0.2.3.tgz#a0d9bc69d44423e660c84dd57fdadb6994481b8d"
+  integrity sha512-q6zp2sh5fjs6cf4T2oHvXt4IFNMmGBTRT5uKuxK/y//5XXCSbOGY/B/DKfK+7hwT8arMhcnbtKdlKarZu2SsXA==
 
-hivesigner@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/hivesigner/-/hivesigner-3.2.1.tgz#1b75d3d0b2e1316fae4128e86831f88d6b3d4d88"
-  integrity sha512-udSCOByBW0pXkcNYhXjhLX1oSB3FIBt2DJPX6NO0M6/Q3hq1VBEgpuGpeZ//wjkZ+Ds/L6564RP/NpZIC8BF1w==
+hivesigner@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/hivesigner/-/hivesigner-3.2.7.tgz#a11ebb08b704e12422b36fda301a8c2cc78571ea"
+  integrity sha512-jzohlNW0bDakLDP7eNqMtzw/5LU1GxYpZM8+H5XZ+Sp1c4eQIR6H076GpH/scgcmTeYdoWJ08vly/fwBOEZcbA==
   dependencies:
-    babel-runtime "^6.26.0"
-    cross-fetch "^3.0.1"
-    hive-uri "^0.2.2"
+    "@babel/runtime" "^7.13.9"
+    cross-fetch "^3.0.6"
+    hive-uri "^0.2.3"
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -9427,10 +9434,10 @@ node-fetch@1.7.3, node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+node-fetch@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-gyp@^3.8.0:
   version "3.8.0"
