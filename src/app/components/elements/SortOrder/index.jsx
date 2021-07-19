@@ -16,7 +16,7 @@ const SortOrder = ({ topic, sortOrder, horizontal, pathname }) => {
 
     if (pathname === '/') {
         tag = '';
-        sort = 'trending';
+        sort = 'created';
     }
 
     const sorts = (tag, topMenu = false) => {

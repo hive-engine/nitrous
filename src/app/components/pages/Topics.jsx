@@ -80,7 +80,7 @@ class Topics extends Component {
             tagOnly: `/trending/${currentTag}`,
             orderOnly: `/${currentOrder}`,
             tagWithOrder: `/${currentOrder}/${currentTag}`,
-            default: `/trending`,
+            default: `/@naturalmedicine/feed`,
         };
         if (currentOrder === 'feed') return opts['feed'];
         if (currentTag && currentOrder) return opts['tagWithOrder'];
@@ -101,13 +101,13 @@ class Topics extends Component {
             communityMap,
         } = this.props;
         const currentOrder = this.props.order;
-        const order = currentOrder == 'feed' ? 'trending' : currentOrder;
+        const order = currentOrder == 'feed' ? 'created' : currentOrder;
 
         if (compact) {
             const extras = username => {
                 const ex = {
                     allTags: order => ({
-                        value: `/${order}`,
+                        value: currentOrder == 'feed' ? '/@naturalmedicine/feed' : `/${order}`,
                         label: `${tt('g.all_tags_mobile')}`,
                     }),
                     myFeed: name => ({
