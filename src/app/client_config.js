@@ -110,6 +110,7 @@ const BEATCZ = {
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: 'hive-123620',
     CHAT_CONVERSATIONS: null,
+    DEFAULT_URL: '/created',
 };
 
 export const CONFIG_MAP = {

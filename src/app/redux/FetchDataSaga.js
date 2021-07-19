@@ -141,7 +141,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending`;
+    if (url === '/') url = hostConfig['DEFAULT_URL'] ? hostConfig['DEFAULT_URL'] : `/trending`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
