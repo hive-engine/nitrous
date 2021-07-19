@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import NativeSelect from 'app/components/elements/NativeSelect';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import { ifHivemind } from 'app/utils/Community';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
 const buildPrefix = level => {
     let a = '';
