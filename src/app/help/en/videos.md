@@ -53,7 +53,7 @@ https://www.youtube.com/watch?v=4rY4h_Q09m4
 
 Best flat earth documentary till date:
 
-https://youtu.be/WAeBPskvP4Y
+[![image.png](https://images.hive.blog/DQmUzxvVKpNmhdhfzMYVRuMoawbXws8YgZfC5UWBcfqwmUF/image.png)](https://odysee.com/@ODDTV:b/level-(2021)-first-flat-earth:6)
 
 Rocket hitting the dome
 
