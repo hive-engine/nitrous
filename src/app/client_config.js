@@ -770,7 +770,8 @@ const POB = {
         'creativecoin',
         'broadhive',
         'lassecash',
-        'weedcash'
+        'weedcash',
+        'cent',
     ]),
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
