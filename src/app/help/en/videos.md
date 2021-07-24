@@ -1,5 +1,5 @@
 <span id="disable_router_nav_history_direction_check"></span>
-# 12 lessons on crypto currency
+# 12 lessons on cryptocurrency
 
 What is a blockchain?
 
