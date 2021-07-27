@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import NativeSelect from 'app/components/elements/NativeSelect';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import { ifHivemind } from 'app/utils/Community';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
 const buildPrefix = level => {
     let a = '';
@@ -99,15 +99,17 @@ class Topics extends Component {
             communities,
             categories,
             communityMap,
+            hostConfig,
         } = this.props;
         const currentOrder = this.props.order;
         const order = currentOrder == 'feed' ? 'trending' : currentOrder;
+        const defaultUrl = hostConfig.get('DEFAULT_URL', '/trending');
 
         if (compact) {
             const extras = username => {
                 const ex = {
                     allTags: order => ({
-                        value: `/${order}`,
+                        value: currentOrder == 'feed' ? defaultUrl : `/${order}`,
                         label: `${tt('g.all_tags_mobile')}`,
                     }),
                     myFeed: name => ({
@@ -325,11 +327,13 @@ export default connect(
                 communityMap[tag] = state.global.getIn(['community', ifHivemind(tag), 'title'], null);
             }
         });
+        const hostConfig = state.app.get('hostConfig', Map());
         return {
             ...ownProps,
             communities: state.global.get('community'),
             categories,
             communityMap,
+            hostConfig,
         };
     },
     dispatch => ({

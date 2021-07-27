@@ -525,7 +525,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
-        const canTribeMute = username === tokenAccount || username === muteAccount;
+        const canTribeMute = username === tokenAccount || (muteAccount && username === muteAccount);
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
