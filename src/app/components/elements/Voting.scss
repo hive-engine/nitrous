@@ -115,9 +115,9 @@
   padding-right: 0.5rem;
   svg {
     @include themify($themes) {
+      border: 1px solid themed('colorAccent');
       border-right-color: transparent;
       border-top-color: transparent;
-      border: 1px solid themed('colorAccent');
     }
     border-radius: 50%;
     animation: loading 500ms infinite linear;
