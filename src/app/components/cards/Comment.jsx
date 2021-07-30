@@ -378,7 +378,7 @@ class CommentImpl extends React.Component {
                         </div>
                         <span className="Comment__header-user">
                             <div className="Comment__Userpic-small">
-                                <Userpic account={author} />
+                                <Userpic account={author} hive={preferHive} />
                             </div>
                             <Author
                                 post={post}
