@@ -10,17 +10,16 @@ before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
 script:
-  - docker build -t registry.heroku.com/eonhetest/web .
+  - docker build -t registry.heroku.com/scotbuild/web .
 
 deploy:
   provider: script
   script:
     bash docker_push
   on:
-    branch: scotty_hesmt
+    branch: scotty_build2
 
 # safelist
 branches:
   only:
-  - master
-  - scotty_hesmt
+  - scotty_build2
