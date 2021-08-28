@@ -30,9 +30,9 @@ const SidebarLinks = ({ username, topics }) => (
                 <li className="c-sidebar__list-item">
                     <a
                         className="c-sidebar__link"
-                        href="https://forum.splinterlands.io/"
+                        href="https://splinterlands.com/"
                     >
-                        Splinterlands Forum
+                        Splinterlands 
                     </a>
                 </li>
             </ul>

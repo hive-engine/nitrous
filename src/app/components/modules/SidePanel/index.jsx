@@ -74,9 +74,9 @@ const SidePanel = ({
 
         organizational: [
             {
-                value: 'forum',
-                label: 'Forum',
-                link: 'https://forum.splinterlands.io/',
+                value: 'splinterlands',
+                label: 'Splinterlands',
+                link: 'https://splinterlands.com/',
             },
         ],
 

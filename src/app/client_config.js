@@ -15,11 +15,7 @@ export const APP_DOMAIN = 'www.splintertalk.io';
 // max num of tags. if unset, default is 10. This is due to previous hardcoded number.
 export const APP_MAX_TAG = 10;
 export const SCOT_TAG = 'spt';
-export const TAG_LIST = fromJSOrdered([
-    'spt',
-    'splinterlands',
-    'steemmonsters',
-]);
+export const TAG_LIST = fromJSOrdered([]);
 export const LIQUID_TOKEN = 'SPT';
 // sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
 export const LIQUID_TOKEN_UPPERCASE = 'SPT';
@@ -114,8 +110,9 @@ export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
 export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
 ];
-export const APPEND_TRENDING_TAGS_COUNT = 0;
+export const APPEND_TRENDING_TAGS_COUNT = 10;
 export const TRENDING_TAGS_TO_IGNORE = [];
 
 export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
