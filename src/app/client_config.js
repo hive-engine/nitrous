@@ -110,7 +110,6 @@ export const HIVE_ENGINE = true;
 export const DISABLE_BLACKLIST = false;
 export const CHAT_CONVERSATIONS = [
     { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-    { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
 ];
 export const APPEND_TRENDING_TAGS_COUNT = 10;
 export const TRENDING_TAGS_TO_IGNORE = [];
