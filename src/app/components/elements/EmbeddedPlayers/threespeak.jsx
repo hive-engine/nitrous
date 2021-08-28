@@ -34,7 +34,7 @@ export const sandboxConfig = {
  * @returns {*}
  */
 export function genIframeMd(idx, threespeakId, width, height) {
-    const url = `https://3speak.co/embed?v=${threespeakId}`;
+    const url = `https://3speak.tv/embed?v=${threespeakId}`;
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
@@ -67,7 +67,7 @@ export function genIframeMd(idx, threespeakId, width, height) {
 
 /**
  * Check if the iframe code in the post editor is to an allowed URL
- * <iframe src="https://3speak.co/embed?v=threespeak/iaarkpvf"></iframe>
+ * <iframe src="https://3speak.tv/embed?v=threespeak/iaarkpvf"></iframe>
  * @param url
  * @returns {boolean|*}
  */
@@ -90,7 +90,7 @@ export function normalizeEmbedUrl(url) {
     const match = url.match(regex.contentId);
 
     if (match && match.length >= 2) {
-        return `https://3speak.co/embed?v=${match[1]}`;
+        return `https://3speak.tv/embed?v=${match[1]}`;
     }
 
     return false;
