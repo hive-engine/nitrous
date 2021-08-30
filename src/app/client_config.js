@@ -279,45 +279,6 @@ const ALIVE = {
     COMMUNITY_CATEGORY: 'hive-155221',
 };
 
-const VIBES = {
-    APP_NAME: 'MusicForLife',
-    APP_ICON: 'musicforlife',
-    APP_ICON_WIDTH: '40px',
-    APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.musicforlife.io',
-    APP_DOMAIN: 'www.musicforlife.io',
-    LIQUID_TOKEN: 'Vibes',
-    LIQUID_TOKEN_UPPERCASE: 'VIBES',
-    APP_MAX_TAG: 10,
-    SCOT_TAG: 'musicforlife',
-	TAG_LIST: fromJSOrdered([
-		'musicforlife',
-    ]),
-    INTERLEAVE_PROMOTED: true,
-    PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'VIBES POWER',
-    SITE_DESCRIPTION:
-        'MusicForLife is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called VIBES, that ' +
-        'supports real value for digital rewards through market price discovery and liquidity',
-    // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
-    ALLOW_MASTER_PW: false,
-    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
-    SCOT_TAG_FIRST: false,
-    PINNED_POSTS_URL: '',
-    SDC_GTAG_MEASUREMENT_ID: 'G-8SB0V2MDLS',
-    DISABLE_STEEM: true,
-    PREFER_HIVE: true,
-    HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: null,
-    APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: 'hive-175836',
-};
-
 const ARCHON = {
     APP_NAME: 'ArchonApp',
     APP_ICON: 'archon',
@@ -386,42 +347,6 @@ const INFOWARS = {
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
     COMMUNITY_CATEGORY: 'hive-172447',
-    PREFER_HIVE: true,
-    HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: [
-        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-    ],
-};
-
-const LIETA = {
-    APP_NAME: 'Lieta',
-    APP_ICON: 'lieta',
-    APP_ICON_WIDTH: '156px',
-    APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.lieta.io',
-    APP_DOMAIN: 'www.lieta.io',
-    LIQUID_TOKEN: 'Gile',
-    LIQUID_TOKEN_UPPERCASE: 'GILE',
-    APP_MAX_TAG: 15,
-    SCOT_TAG: 'lieta',
-    COMMUNITY_CATEGORY: 'hive-109522',
-    TAG_LIST: fromJSOrdered(['lieta']),
-    INTERLEAVE_PROMOTED: true,
-    PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'LIETA POWER',
-    SITE_DESCRIPTION:
-        'Lieta is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called GILE, that ' +
-        'supports real value for digital rewards through market price discovery and liquidity',
-    // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
-    ALLOW_MASTER_PW: false,
-    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
-    SCOT_TAG_FIRST: false,
-    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: [
@@ -860,14 +785,12 @@ export const CONFIG_MAP = {
     'www.broadhive.org': BROADHIVE,
     'www.cinetv.io': CINETV,
     'www.proofofbrain.io': POB,
-    'www.musicforlife.io': VIBES,
     'www.projectrevelation.io': REVELATION,
     'www.hivehustlers.io': HIVEHUSTLERS,
     'www.gradnium.com': GRADNIUM,
     'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,
     'www.aeneas.blog': AENEAS,
-    'www.lieta.io': LIETA,
     'www.archonapp.cc': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
