@@ -83,7 +83,7 @@ const KANDA = {
 const HIVELIST = {
     APP_NAME: 'HiveList',
     APP_ICON: 'hivelist',
-    APP_ICON_WIDTH: '170px',
+    APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://hivelist.org',
     APP_DOMAIN: 'hivelist.org',
