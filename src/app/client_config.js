@@ -754,3 +754,7 @@ export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [
     'sportsprojects',
     'sports-gov',
 ];
+
+export const HIVE_ENGINE = true;
+export const LIQUID_TOKEN_UPPERCASE = 'SPORTS';
+
