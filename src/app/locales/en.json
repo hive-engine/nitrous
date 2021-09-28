@@ -122,7 +122,6 @@
         "rewards": "Rewards",
         "save": "Save",
         "saved": "Saved",
-        "scottube": "SportsTube",
         "search": "Search",
         "sell": "Sell",
         "settings": "Settings",
@@ -281,10 +280,6 @@
                 "Legitimate users, including employees of Hive, will never ask you for a private key or master password.",
             "checkbox": "I understand"
         },
-        "tagline": "Sports Talk Social: Latest Sports News and Discussions",
-        "site_title": "%(order)s %(category)s News, Posts and Discussions",
-        "site_description":
-            "View the latest \"%(category)s\" news and discussions at Sports Talk Social. Join the discussions and get rewarded for your efforts.",
         "total": "Total",
         "circulating": "Circulating",
         "burn": "Burn",
@@ -353,7 +348,7 @@
         "selecting_them": "selecting them",
         "image_upload": "Image upload",
         "power_up_100": "Power Up 100%%",
-        "default_50_50": "50%% HBD / 50%% HP",
+        "default_50_50": "50%% liquid / 50%% staked",
         "decline_payout": "Decline Payout",
         "check_this_to_auto_upvote_your_post":
             "Check this to auto-upvote your post",
@@ -719,7 +714,7 @@
         "alternative_sources": "Open in alternative Hive dApps"
     },
     "header_jsx": {
-        "home": "Sports Talk Social: Latest Sports News and Discussions",
+        "home": "home",
         "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",

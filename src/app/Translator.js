@@ -42,6 +42,9 @@ tt.registerTranslations('pl', require('app/locales/pl.json'));
 tt.registerTranslations('ja', require('app/locales/counterpart/ja'));
 tt.registerTranslations('ja', require('app/locales/ja.json'));
 
+tt.registerTranslations('ua', require('app/locales/counterpart/ua'));
+tt.registerTranslations('ua', require('app/locales/ua.json'));
+
 if (process.env.NODE_ENV === 'production') {
     tt.setFallbackLocale('en');
 }

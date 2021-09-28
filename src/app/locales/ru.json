@@ -124,7 +124,6 @@
         "rewards": "вознаграждение",
         "save": "Сохранить",
         "saved": "Сохранено",
-        "scottube": "SportsTube",
         "search": "Поиск",
         "sell": "Продать",
         "settings": "Настройки",
@@ -769,7 +768,7 @@
         "alternative_sources": "Альтернативные источники"
     },
     "header_jsx": {
-        "home": "Sports Talk Social: Latest Sports News and Discussions",
+        "home": "лента",
         "create_a_post": "Создать пост",
         "change_account_password": "Изменить пароль аккаунта",
         "create_account": "Создать Аккаунт",

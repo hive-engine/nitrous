@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -17,13 +18,6 @@ import {
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import Tooltip from 'app/components/elements/Tooltip';
 import { FormattedHTMLMessage } from 'app/Translator';
-import {
-    LIQUID_TOKEN,
-    LIQUID_TOKEN_UPPERCASE,
-    VESTING_TOKEN,
-    USE_HIVE,
-    HIVE_ENGINE,
-} from 'app/client_config';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as appActions from 'app/redux/AppReducer';
@@ -92,9 +86,9 @@ class UserWallet extends React.Component {
     }
 
     handleClaimRewards = profile => {
-        const { claimRewards, useHive } = this.props;
+        const { scotTokenSymbol, claimRewards, useHive } = this.props;
         this.setState({ claimInProgress: true }); // disable the claim button
-        claimRewards(profile, useHive);
+        claimRewards(profile, scotTokenSymbol, useHive);
     };
     handleClaimTokenRewards = token => {
         const { profile, claimTokenRewards, useHive } = this.props;
@@ -119,6 +113,9 @@ class UserWallet extends React.Component {
             current_user,
             gprops,
             scotPrecision,
+            scotTokenName,
+            scotTokenSymbol,
+            scotVestingToken,
             useHive,
         } = this.props;
 
@@ -133,15 +130,15 @@ class UserWallet extends React.Component {
             ? profile.get('token_balances').toJS()
             : [];
         const tokenBalances = allTokenBalances.find(
-            ({ symbol }) => symbol === LIQUID_TOKEN_UPPERCASE
+            ({ symbol }) => symbol === scotTokenSymbol
         ) || {
             balance: '0',
             stake: '0',
             pendingUnstake: '0',
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         };
         const otherTokenBalances = allTokenBalances
-            .filter(({ symbol }) => symbol !== LIQUID_TOKEN_UPPERCASE)
+            .filter(({ symbol }) => symbol !== scotTokenSymbol)
             .sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
         const tokenUnstakes = profile.has('token_unstakes')
             ? profile.get('token_unstakes').toJS()
@@ -230,7 +227,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: showTransfer.bind(
                     this,
-                    LIQUID_TOKEN_UPPERCASE,
+                    scotTokenSymbol,
                     'Transfer to Account'
                 ),
             },
@@ -239,7 +236,7 @@ class UserWallet extends React.Component {
                 link: '#',
                 onClick: showTransfer.bind(
                     this,
-                    VESTING_TOKEN,
+                    scotVestingToken,
                     'Transfer to Account'
                 ),
             },
@@ -249,7 +246,7 @@ class UserWallet extends React.Component {
                 value: tt('userwallet_jsx.market'),
                 link: `https://${
                     useHive ? 'hive' : 'steem'
-                }-engine.com/?p=market&t=${LIQUID_TOKEN_UPPERCASE}`,
+                }-engine.com/?p=market&t=${scotTokenSymbol}`,
             });
         }
         let power_menu = [
@@ -280,8 +277,7 @@ class UserWallet extends React.Component {
         );
 
         const reward = tokenStatus.pending_token / Math.pow(10, scotPrecision);
-        const rewards_str =
-            reward > 0 ? `${reward} ${LIQUID_TOKEN_UPPERCASE}` : null;
+        const rewards_str = reward > 0 ? `${reward} ${scotTokenSymbol}` : null;
 
         let claimbox;
         if (current_user && rewards_str && isMyAccount) {
@@ -403,11 +399,14 @@ class UserWallet extends React.Component {
                 </div>
                 <div className="UserWallet__balance row">
                     <div className="column small-12 medium-8">
-                        {LIQUID_TOKEN_UPPERCASE}
+                        {scotTokenSymbol}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.liquid_token"
-                            params={{ LIQUID_TOKEN, VESTING_TOKEN }}
+                            params={{
+                                LIQUID_TOKEN: scotTokenName,
+                                VESTING_TOKEN: scotVestingToken,
+                            }}
                         />
                     </div>
                     <div className="column small-12 medium-4">
@@ -416,18 +415,16 @@ class UserWallet extends React.Component {
                                 className="Wallet_dropdown"
                                 items={balance_menu}
                                 el="li"
-                                selected={`${balance_str} ${
-                                    LIQUID_TOKEN_UPPERCASE
-                                }`}
+                                selected={`${balance_str} ${scotTokenSymbol}`}
                             />
                         ) : (
-                            `${balance_str} ${LIQUID_TOKEN_UPPERCASE}`
+                            `${balance_str} ${scotTokenSymbol}`
                         )}
                     </div>
                 </div>
                 <div className="UserWallet__balance row zebra">
                     <div className="column small-12 medium-8">
-                        {VESTING_TOKEN}
+                        {scotVestingToken}
                         <FormattedHTMLMessage
                             className="secondary"
                             id="tips_js.influence_token"
@@ -440,21 +437,21 @@ class UserWallet extends React.Component {
                                 items={power_menu}
                                 el="li"
                                 selected={`${stake_balance_str} ${
-                                    LIQUID_TOKEN_UPPERCASE
+                                    scotTokenSymbol
                                 }`}
                             />
                         ) : (
-                            `${stake_balance_str} ${LIQUID_TOKEN_UPPERCASE}`
+                            `${stake_balance_str} ${scotTokenSymbol}`
                         )}
                         {netDelegatedStake != 0 ? (
                             <div className="Delegations__view">
                                 <Tooltip
                                     t={`${
-                                        VESTING_TOKEN
+                                        scotVestingToken
                                     } delegated to/from this account`}
                                 >
                                     ({received_stake_balance_str}{' '}
-                                    {LIQUID_TOKEN_UPPERCASE})
+                                    {scotTokenSymbol})
                                 </Tooltip>
                                 <a
                                     href="#"
@@ -482,7 +479,7 @@ class UserWallet extends React.Component {
                         <div className="column small-12">
                             <span>
                                 Pending unstake: {pending_unstake_balance_str}{' '}
-                                {LIQUID_TOKEN_UPPERCASE}.
+                                {scotTokenSymbol}.
                             </span>
                             <TransactionError opType="withdraw_vesting" />
                         </div>
@@ -599,7 +596,7 @@ class UserWallet extends React.Component {
                         })}
                     >
                         <div className="column small-12 medium-9">
-                            {native_token_str} Engine Tokens
+                            {useHive ? 'Hive' : 'Steem'} Engine Tokens
                         </div>
                         {isMyAccount && (
                             <div className="column small-12 medium-3">
@@ -690,19 +687,31 @@ export default connect(
     (state, ownProps) => {
         const gprops = state.global.get('props');
         const scotConfig = state.app.get('scotConfig');
-        const useHive = HIVE_ENGINE;
+        const scotTokenName = state.app.getIn(['hostConfig', 'LIQUID_TOKEN']);
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const scotVestingToken = state.app.getIn([
+            'hostConfig',
+            'VESTING_TOKEN',
+        ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
 
         return {
             ...ownProps,
             gprops: gprops ? gprops.toJS() : {},
             scotPrecision: scotConfig.getIn(['info', 'precision'], 0),
+            scotTokenName,
+            scotTokenSymbol,
+            scotVestingToken,
             useHive,
         };
     },
     // mapDispatchToProps
     dispatch => ({
-        claimRewards: (profile, useHive) => {
-            const username = profile.get('name');
+        claimRewards: (account, scotTokenSymbol, useHive) => {
+            const username = account.get('name');
             const successCallback = () => {
                 dispatch(
                     userProfileActions.fetchWalletProfile({
@@ -715,7 +724,7 @@ export default connect(
                 id: 'scot_claim_token',
                 required_posting_auths: [username],
                 json: JSON.stringify({
-                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    symbol: scotTokenSymbol,
                 }),
             };
 

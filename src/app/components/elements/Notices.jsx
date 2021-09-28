@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 import tt from 'counterpart';
 import { Link } from 'react-router';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
@@ -71,7 +72,13 @@ const SteemitNotices = ({ notices }) => {
 
 module.exports = connect(state => ({
     notices: state.offchain
-        .get('pinned_posts')
-        .get('notices')
+        .getIn(
+            [
+                'pinned_posts',
+                state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE']),
+                'notices',
+            ],
+            Map()
+        )
         .toJS(),
 }))(SteemitNotices);

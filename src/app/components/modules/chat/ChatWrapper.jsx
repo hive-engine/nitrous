@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { ThemeProvider, FixedWrapper, darkTheme } from '@livechat/ui-kit';
 import MinimizedIcon from 'app/components/modules/chat/MinimizedIcon';
 import ChatMain from 'app/components/modules/chat/ChatMain';
-import { CHAT_CONVERSATIONS } from 'app/client_config';
 import * as chatActions from 'app/redux/ChatReducer';
 
 class ChatWrapper extends React.PureComponent {
@@ -42,7 +41,7 @@ class ChatWrapper extends React.PureComponent {
     }
 
     render() {
-        const { nightmodeEnabled, chatList } = this.props;
+        const { preferHive, defaultChatConversations, chatList, nightmodeEnabled } = this.props;
         const { selectedConversationId, newConversation } = this.state;
         const setConversation = (selectedConversationId) => this.setState({ selectedConversationId });
         const setNewConversation = (newConversation) => this.setState({ newConversation });
@@ -52,7 +51,7 @@ class ChatWrapper extends React.PureComponent {
                 height: '600px',
             },
         };
-        if (!CHAT_CONVERSATIONS || !this.props.currentUsername) {
+        if (!preferHive || !defaultChatConversations || !this.props.currentUsername) {
             return null;
         }
         const conversation = selectedConversationId ? chatList.find(c => c.get('id') === selectedConversationId) : null;
@@ -74,6 +73,8 @@ class ChatWrapper extends React.PureComponent {
 export default connect(
     (state, ownProps) => {
         const currentUsername = state.user.getIn(['current', 'username']);
+        const defaultChatConversations = state.app.getIn(['hostConfig', 'CHAT_CONVERSATIONS']);
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
         const initiatedChat = state.chat.get('initiateChat');
         const accessToken = state.chat.getIn(['accessToken', currentUsername]);
         const chatList = state.chat.get('chatList');
@@ -81,7 +82,9 @@ export default connect(
         const loading = !accessToken || !chatList || socketState !== 'ready';
         return {
             ...ownProps,
+            preferHive,
             currentUsername,
+            defaultChatConversations,
             nightmodeEnabled: state.app.getIn(['user_preferences', 'nightmode']),
             accessToken,
             chatList,

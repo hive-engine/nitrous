@@ -104,14 +104,18 @@
     background-color: $color-white;
     color: $color-blue-black;
     border: none;
-    box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0 0 $color-teal;
+    @include themify($themes) {
+        box-shadow: 0px 0px 0px 0 rgba(0,0,0,0), 2px 2px 0 0 themed('colorAccent');
+    }
     padding: 16px;
     margin-right: 18px;
     @include font-size(16px);
     cursor: pointer;
     font-family: $font-primary;
     &:hover, &:focus {
-      background-color: $color-teal;
+      @include themify($themes) {
+          background-color: themed('colorAccent');
+      }
       color: $color-white;
       box-shadow: 0px 0px 0px 0 rgba(0,0,0,0.1), 4px 4px 0 0 $color-white;
       text-shadow: 0 1px 0 rgba(0,0,0,0.20);
@@ -132,6 +136,14 @@
       top: 0.5rem;
     }
   }
+  .button.hollow {
+      background: none;
+      box-shadow: none;
+      @include themify($themes) {
+          color: themed('colorAccent');
+          border: 1px solid themed('colorAccent');
+      }
+  }
 
   .button.ghost {
     background: transparent;
@@ -140,8 +152,10 @@
     box-shadow: 0px 0px 0px 0 #30414A, 2px 2px 0 0 #30414A;
     @include opacity(0);
     &:hover, &:focus {
-      box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 $color-teal;
-    }
+        @include themify($themes) {
+            box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 themed('colorAccent');
+        } 
+    } 
   }
 
   .heroImage {

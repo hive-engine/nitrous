@@ -122,7 +122,6 @@
         "rewards": "Ricompense",
         "save": "Salva",
         "saved": "Salvato",
-        "scottube": "SportsTube",
         "search": "Cerca",
         "sell": "Vendi",
         "settings": "Impostazioni",
@@ -733,7 +732,7 @@
         "alternative_sources": "Fonti alternative"
     },
     "header_jsx": {
-        "home": "Sports Talk Social: Latest Sports News and Discussions",
+        "home": "Home",
         "create_a_post": "Crea un post",
         "change_account_password": "Cambia la password dell'account",
         "create_account": "Crea un account",

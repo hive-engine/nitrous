@@ -26,15 +26,6 @@ import {
     callBridge,
 } from 'app/utils/steemApi';
 import {
-    PREFER_HIVE,
-    HIVE_ENGINE,
-    LIQUID_TOKEN_UPPERCASE,
-    COMMUNITY_CATEGORY,
-    TAG_LIST,
-    APPEND_TRENDING_TAGS_COUNT,
-    TRENDING_TAGS_TO_IGNORE,
-} from 'app/client_config';
-import {
     fetchCrossPosts,
     augmentContentWithCrossPost,
 } from 'app/utils/CrossPosts';
@@ -95,22 +86,25 @@ export function* fetchState(location_change_action) {
     }
     const { pathname } = location_change_action.payload;
     const m = pathname.match(/^\/@([a-z0-9\.-]+)(\/notifications)?/);
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
     if (m && m.length >= 2) {
         const username = m[1];
-        yield fork(fetchFollowCount, username, PREFER_HIVE);
+        yield fork(fetchFollowCount, username, hostConfig['PREFER_HIVE']);
         yield fork(
             loadFollows,
             'getFollowersAsync',
             username,
             'blog',
-            PREFER_HIVE
+            hostConfig['PREFER_HIVE']
         );
         yield fork(
             loadFollows,
             'getFollowingAsync',
             username,
             'blog',
-            PREFER_HIVE
+            hostConfig['PREFER_HIVE']
         );
     }
 
@@ -120,7 +114,7 @@ export function* fetchState(location_change_action) {
         pathname.indexOf('trending') !== -1 ||
         pathname.indexOf('hot') !== -1
     ) {
-        yield fork(getPromotedState, pathname);
+        yield fork(getPromotedState, pathname, hostConfig);
     }
 
     // `ignore_fetch` case should only trigger on initial page load. No need to call
@@ -147,7 +141,7 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = `/trending`;
+    if (url === '/') url = hostConfig['DEFAULT_URL'] ? hostConfig['DEFAULT_URL'] : `/trending`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
@@ -163,12 +157,18 @@ export function* fetchState(location_change_action) {
                 state.user.getIn(['current', 'username']),
             ]);
         }
-        const state = yield call(getStateAsync, url, username, false);
+        const state = yield call(
+            getStateAsync,
+            url,
+            hostConfig,
+            username,
+            false
+        );
         yield put(globalActions.receiveState(state));
         yield call(fetchScotInfo);
         yield call(syncPinnedPosts);
-        if (COMMUNITY_CATEGORY) {
-            yield put(actions.getCommunity(COMMUNITY_CATEGORY));
+        if (hostConfig['COMMUNITY_CATEGORY']) {
+            yield put(actions.getCommunity(hostConfig['COMMUNITY_CATEGORY']));
         }
     } catch (error) {
         console.error('~~ Saga fetchState error ~~>', url, error);
@@ -183,7 +183,7 @@ export function* fetchState(location_change_action) {
  *
  * @param {String} pathname
  */
-export function* getPromotedState(pathname) {
+export function* getPromotedState(pathname, hostConfig) {
     const m = pathname.match(/^\/[a-z]*\/(.*)\/?/);
     const tag = m ? m[1] : '';
 
@@ -201,7 +201,7 @@ export function* getPromotedState(pathname) {
             state.user.getIn(['current', 'username']),
         ]);
     }
-    const state = yield call(getStateAsync, `/promoted/${tag}`, username, false);
+    const state = yield call(getStateAsync, `/promoted/${tag}`, hostConfig, username, false);
     yield put(globalActions.receiveState(state));
 }
 
@@ -209,9 +209,12 @@ function* syncPinnedPosts() {
     // Bail if we're rendering serverside since there is no localStorage
     if (!process.env.BROWSER) return null;
 
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
     // Get pinned posts from the store.
     const pinnedPosts = yield select(state =>
-        state.offchain.get('pinned_posts')
+        state.offchain.getIn(['pinned_posts', scotTokenSymbol])
     );
 
     // Mark seen posts.
@@ -279,7 +282,9 @@ function* getCommunitySaga() {
 function* fetchCommunity(tag) {
     const currentUser = yield select(state => state.user.get('current'));
     const currentUsername = currentUser && currentUser.get('username');
-    const useHive = PREFER_HIVE;
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'], false)
+    );
 
     try {
         // TODO: If no current user is logged in, skip the observer param.
@@ -306,20 +311,26 @@ function* fetchCommunity(tag) {
 }
 
 export function* getCategories(action) {
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+    const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
+    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
+
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
-        yield put(globalActions.receiveCategories(TAG_LIST));
+        yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));
         return;
     }
     const trendingCategories = yield call(
         getScotDataAsync,
         'get_trending_tags',
         {
-            token: LIQUID_TOKEN_UPPERCASE,
+            token: hostConfig['LIQUID_TOKEN_UPPERCASE'],
         }
     );
-    const ignoreTags = new Set(TAG_LIST.concat(TRENDING_TAGS_TO_IGNORE));
+    const ignoreTags = new Set(hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE));
     const toAdd = trendingCategories.filter(c => !ignoreTags.has(c)).slice(0, APPEND_TRENDING_TAGS_COUNT);
-    yield put(globalActions.receiveCategories(TAG_LIST.concat(toAdd)));
+    yield put(globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd)));
 }
 
 /**
@@ -478,6 +489,9 @@ export function* fetchData(action) {
 
     let useBridge = false;
 
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
     yield put(globalActions.fetchingData({ order, category }));
     let call_name, args;
     if (order === 'trending') {
@@ -608,6 +622,7 @@ export function* fetchData(action) {
                     fetchFeedDataAsync,
                     useHive,
                     call_name,
+                    hostConfig,
                     args
                 );
                 data = feedData;
@@ -744,6 +759,9 @@ export function* getRewardsDataSaga(action) {
 function* getStakedAccountsSaga() {
     while (true) {
         const action = yield take(GET_STAKED_ACCOUNTS);
+        const scotTokenSymbol = yield select(state =>
+            state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+        );
         const loadedStakedAccounts = yield select(state =>
             state.global.has('stakedAccounts')
         );
@@ -751,7 +769,7 @@ function* getStakedAccountsSaga() {
             state.app.getIn(['scotConfig', 'info', 'precision'], 0)
         );
         if (!loadedStakedAccounts) {
-            const params = { token: LIQUID_TOKEN_UPPERCASE };
+            const params = { token: scotTokenSymbol };
             try {
                 const stakedAccounts = yield call(
                     getScotDataAsync,
@@ -772,8 +790,12 @@ function* getStakedAccountsSaga() {
 }
 
 function* fetchScotInfo() {
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const scotInfo = yield call(getScotDataAsync, 'info', {
-        token: LIQUID_TOKEN_UPPERCASE,
+        token: scotTokenSymbol,
     });
     yield put(appActions.receiveScotInfo(fromJS(scotInfo)));
 }
@@ -796,10 +818,14 @@ function* fetchAuthorRecentPosts(action) {
         limit,
     } = action.payload;
 
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
+
     const call_name = 'get_discussions_by_blog';
     const args = {
         tag: author,
-        token: LIQUID_TOKEN_UPPERCASE,
+        token: scotTokenSymbol,
         limit: limit + 1,
     };
     try {

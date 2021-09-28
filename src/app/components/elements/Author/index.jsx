@@ -13,7 +13,6 @@ import Reputation from 'app/components/elements/Reputation';
 import { affiliationFromStake } from 'app/utils/AffiliationMap';
 import UserTitle from 'app/components/elements/UserTitle';
 import AuthorDropdown from '../AuthorDropdown';
-import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
 import { actions as fetchActions } from 'app/redux/FetchDataSaga';
 
 const { string, bool, number } = PropTypes;
@@ -126,6 +125,8 @@ class Author extends React.Component {
             follow,
             mute,
             showAffiliation,
+            scotTokenSymbol,
+            hive,
             blacklists,
             showRole,
             community,
@@ -145,6 +146,7 @@ class Author extends React.Component {
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
             : affiliationFromStake(
+                  scotTokenSymbol,
                   author,
                   stakedAccounts ? stakedAccounts.get(author) : 0
               );
@@ -221,6 +223,7 @@ class Author extends React.Component {
                         mute={mute}
                         authorRep={authorRep}
                         username={username}
+                        hive={hive}
                         blacklists={blacklists}
                     />
                 </Overlay>
@@ -242,6 +245,15 @@ export default connect(
             authorRep = post.get('cross_post_author_reputation');
         }
 
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const COMMUNITY_CATEGORY = state.app.getIn([
+            'hostConfig',
+            'COMMUNITY_CATEGORY',
+        ]);
+
         const tribeCommunityTitle = state.global.getIn([
             'community',
             COMMUNITY_CATEGORY,
@@ -249,7 +261,10 @@ export default connect(
             author,
             'title',
         ]);
-        const disableBlacklist = DISABLE_BLACKLIST;
+        const disableBlacklist = state.app.getIn([
+            'hostConfig',
+            'DISABLE_BLACKLIST',
+        ]);
 
         return {
             follow: typeof props.follow === 'undefined' ? true : props.follow,
@@ -267,6 +282,7 @@ export default connect(
             crossPostAuthor: post.get('cross_post_author'),
             showRole: props.showRole,
             tribeCommunityTitle,
+            scotTokenSymbol,
             stakedAccounts: state.global.get('stakedAccounts'),
         };
     },

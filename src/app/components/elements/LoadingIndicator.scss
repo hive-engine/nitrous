@@ -138,7 +138,9 @@
         padding-bottom:2em;
         div {
             border-width:1px;
-            border-color: $color-teal;
+            @include themify($themes) {
+              border-color: themed('colorAccent');
+            }
             border-right-color: transparent;
             border-top-color: transparent;
         }
@@ -148,7 +150,9 @@
         width: $circle-radius;
         height: $circle-radius;
         margin: 4px;
-        border: 1px solid $color-teal;
+        @include themify($themes) {
+          border: 1px solid themed('colorAccent');
+        }
         border-radius: 50%;
         border-right-color: transparent;
         border-top-color: transparent;

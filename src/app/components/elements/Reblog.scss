@@ -17,7 +17,9 @@
 .Reblog__button.loading {
   padding-right: 0.5rem;
   svg {
-    border: 1px solid $color-teal;
+    @include themify($themes) {
+      border: 1px solid themed('colorAccent');
+    }
     border-radius: 100%;
     border-right-color: transparent;
     border-top-color: transparent;

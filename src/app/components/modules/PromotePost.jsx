@@ -5,20 +5,20 @@ import ReactDOM from 'react-dom';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import LoadingIndicator from 'app/components/elements/LoadingIndicator';
-import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import tt from 'counterpart';
 
 class PromotePost extends Component {
     static propTypes = {
         author: PropTypes.string.isRequired,
         permlink: PropTypes.string.isRequired,
+        scotTokenSymbol: PropTypes.string.isRequired,
+        promotedPostAccount: PropTypes.string.isRequired,
     };
 
     constructor(props) {
         super(props);
         this.state = {
             amount: '1.0',
-            asset: '',
             loading: false,
             amountError: '',
             trxError: '',
@@ -26,7 +26,6 @@ class PromotePost extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.errorCallback = this.errorCallback.bind(this);
         this.amountChange = this.amountChange.bind(this);
-        // this.assetChange = this.assetChange.bind(this);
     }
 
     componentDidMount() {
@@ -45,8 +44,9 @@ class PromotePost extends Component {
             author,
             permlink,
             hive,
-            currentUser,
+            scotTokenSymbol,
             promotedPostAccount,
+            currentUser,
             onClose,
             hiveEngine,
         } = this.props;
@@ -54,8 +54,9 @@ class PromotePost extends Component {
         this.setState({ loading: true });
         console.log('-- PromotePost.onSubmit -->');
         this.props.dispatchSubmit({
+            scotTokenSymbol,
+            promotedPostAccount,
             amount,
-            asset: LIQUID_TOKEN_UPPERCASE,
             author,
             permlink,
             hive,
@@ -73,15 +74,9 @@ class PromotePost extends Component {
         this.setState({ amount });
     }
 
-    // assetChange(e) {
-    //     const asset = e.target.value;
-    //     console.log('-- PromotePost.assetChange -->', e.target.value);
-    //     this.setState({asset});
-    // }
-
     render() {
         const { amount, loading, amountError, trxError } = this.state;
-        const { currentUser } = this.props;
+        const { currentUser, scotTokenSymbol } = this.props;
         const balance = currentUser.has('token_balances')
             ? parseFloat(currentUser.getIn(['token_balances', 'balance']))
             : 0;
@@ -99,7 +94,7 @@ class PromotePost extends Component {
                         <p>
                             {tt(
                                 'promote_post_jsx.spend_your_DEBT_TOKEN_to_advertise_this_post',
-                                { DEBT_TOKEN: LIQUID_TOKEN_UPPERCASE }
+                                { DEBT_TOKEN: scotTokenSymbol }
                             )}.
                         </p>
                         <hr />
@@ -118,7 +113,7 @@ class PromotePost extends Component {
                                         onChange={this.amountChange}
                                     />
                                     <span className="input-group-label">
-                                        {LIQUID_TOKEN_UPPERCASE}
+                                        {scotTokenSymbol}
                                     </span>
                                     <div className="error">{amountError}</div>
                                 </div>
@@ -126,9 +121,7 @@ class PromotePost extends Component {
                         </div>
                         <div>
                             {tt('g.balance', {
-                                balanceValue: `${balance} ${
-                                    LIQUID_TOKEN_UPPERCASE
-                                }`,
+                                balanceValue: `${balance} ${scotTokenSymbol}`,
                             })}
                         </div>
                         <br />
@@ -159,13 +152,14 @@ class PromotePost extends Component {
     }
 }
 
-// const AssetBalance = ({onClick, balanceValue}) =>
-//     <a onClick={onClick} style={{borderBottom: '#A09F9F 1px dotted', cursor: 'pointer'}}>Balance: {balanceValue}</a>
-
 export default connect(
     (state, ownProps) => {
         const currentUser = state.user.getIn(['current']);
-        const hiveEngine = HIVE_ENGINE;
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const hiveEngine = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
         const promotedPostAccount = state.app.getIn(
             ['scotConfig', 'config', 'promoted_post_account'],
             'null'
@@ -173,6 +167,7 @@ export default connect(
         return {
             ...ownProps,
             currentUser,
+            scotTokenSymbol,
             promotedPostAccount,
             hiveEngine,
         };
@@ -181,8 +176,8 @@ export default connect(
     // mapDispatchToProps
     dispatch => ({
         dispatchSubmit: ({
+            scotTokenSymbol,
             amount,
-            asset,
             author,
             permlink,
             hive,
@@ -204,7 +199,7 @@ export default connect(
                 contractName: 'tokens',
                 contractAction: 'transfer',
                 contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    symbol: scotTokenSymbol,
                     to: promotedPostAccount,
                     quantity: amount,
                     memo: `${hive && !hiveEngine ? 'h' : ''}@${author}/${

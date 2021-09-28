@@ -122,7 +122,6 @@
         "rewards": "보상",
         "save": "Save",
         "saved": "Saved",
-        "scottube": "SportsTube",
         "search": "Search",
         "sell": "판매",
         "settings": "설정",
@@ -724,7 +723,7 @@
         "alternative_sources": "Alternative Sources"
     },
     "header_jsx": {
-        "home": "Sports Talk Social: Latest Sports News and Discussions",
+        "home": "home",
         "create_a_post": "Create a post",
         "change_account_password": "Change Account Password",
         "create_account": "Create Account",

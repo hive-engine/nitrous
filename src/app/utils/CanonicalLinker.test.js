@@ -1,7 +1,5 @@
 import { makeCanonicalLink } from './CanonicalLinker';
-import { APP_NAME, APP_URL, PREFER_HIVE } from 'app/client_config';
-
-const DEFAULT_URL = PREFER_HIVE ? 'https://hive.blog' : 'https://steemit.com';
+const DEFAULT_URL = 'https://hive.blog';
 
 describe('makeCanonicalLink', () => {
     const post_data = {
@@ -45,6 +43,14 @@ describe('makeCanonicalLink', () => {
             'handles posts from hive blog',
             { ...post_data, json_metadata: { app: 'hiveblog/0.1' } },
             'https://hive.blog/testing/@test/test-post',
+        ],
+        [
+            'handles posts from app',
+            {
+                ...post_data,
+                json_metadata: { app: `appname/0.1` },
+            },
+            `${DEFAULT_URL}/testing/@test/test-post`,
         ],
         [
             'handles badly formatted app strings',

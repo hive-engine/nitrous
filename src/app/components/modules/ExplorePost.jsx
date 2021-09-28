@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { APP_URL } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Icon from 'app/components/elements/Icon';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -38,8 +37,9 @@ class ExplorePost extends Component {
     render() {
         const link = this.props.permlink;
         const title = this.props.title;
-        const appLink = APP_URL + link;
-        const md = `[${title}](${APP_URL}${link})`;
+        const appUrl = this.props.appUrl;
+        const appLink = appUrl + link;
+        const md = `[${title}](${appUrl}${link})`;
         let text =
             this.state.copied == true
                 ? tt('explorepost_jsx.copied')
@@ -89,4 +89,10 @@ class ExplorePost extends Component {
     }
 }
 
-export default connect()(ExplorePost);
+export default connect((state, ownProps) => {
+    const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
+    return {
+        appUrl,
+        ...ownProps,
+    };
+})(ExplorePost);

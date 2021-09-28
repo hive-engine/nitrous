@@ -12,9 +12,8 @@ import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import reactForm from 'app/utils/ReactForm';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import tt from 'counterpart';
-import { APP_URL, DISABLE_HIVE } from 'app/client_config';
 import { PrivateKey, PublicKey } from '@hiveio/hive-js/lib/auth/ecc';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import PdfDownload from 'app/components/elements/PdfDownload';
 import { hiveSignerClient } from 'app/utils/HiveSigner';
 import { getQueryStringParams } from 'app/utils/Links';
@@ -108,8 +107,9 @@ class LoginForm extends Component {
     SignUp() {
         const onType = document.getElementsByClassName('OpAction')[0]
             .textContent;
-        serverApiRecordEvent('FreeMoneySignUp', onType);
-        window.location.href = SIGNUP_URL;
+        window.location.href = this.props.preferHive
+            ? HIVE_SIGNUP_URL
+            : SIGNUP_URL;
     }
 
     useKeychainToggle = () => {
@@ -165,6 +165,7 @@ class LoginForm extends Component {
     };
 
     render() {
+        const appUrl = this.props.appUrl;
         if (!process.env.BROWSER) {
             return (
                 <div className="row">
@@ -194,7 +195,7 @@ class LoginForm extends Component {
                                 </a>{' '}
                                 {tt(
                                     'loginform_jsx.are_well_tested_and_known_to_work_with',
-                                    { APP_URL }
+                                    { appUrl }
                                 )}
                             </p>
                         </div>
@@ -226,6 +227,7 @@ class LoginForm extends Component {
             hideWarning,
             afterLoginRedirectToWelcome,
             msg,
+            disableHive,
         } = this.props;
         const { username, password, useKeychain, saveLogin } = this.state;
         const { valid, handleSubmit } = this.state.login;
@@ -510,7 +512,7 @@ class LoginForm extends Component {
             </form>
         );
 
-        const moreLoginMethods = DISABLE_HIVE ? null : (
+        const moreLoginMethods = disableHive ? null : (
             <div className="row buttons">
                 <div className="column">
                     <a
@@ -580,6 +582,9 @@ export default connect(
     // mapStateToProps
     state => {
         const walletUrl = state.app.get('walletUrl');
+        const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE'], true);
+        const disableHive = state.app.getIn(['hostConfig', 'DISABLE_HIVE']);
         const showLoginWarning = state.user.get('show_login_warning');
         const loginError = state.user.get('login_error');
         const currentUser = state.user.get('current');
@@ -620,6 +625,9 @@ export default connect(
             initialValues,
             initialUsername,
             msg,
+            appUrl,
+            preferHive,
+            disableHive,
             offchain_user: state.offchain.get('user'),
         };
     },

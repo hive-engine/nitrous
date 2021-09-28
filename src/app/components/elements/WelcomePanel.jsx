@@ -2,7 +2,7 @@ import React from 'react';
 import CloseButton from 'app/components/elements/CloseButton';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 
 export default class WelcomePanel extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class WelcomePanel extends React.Component {
 
     render() {
         const signup = (
-            <a className="button ghost fade-in--5" href={SIGNUP_URL}>
+            <a className="button ghost fade-in--5" href={HIVE_SIGNUP_URL}>
                 {tt('navigation.sign_up')}
             </a>
         );

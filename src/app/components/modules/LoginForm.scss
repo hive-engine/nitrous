@@ -35,8 +35,10 @@
     @include font-size(16px);
 
     &:hover {
-      border: 1px solid $color-teal-dark;
-      color: $color-teal-dark;
+      @include themify($themes) {
+        border: 1px solid themed('colorAccent');
+        color: themed('colorAccent');
+      }
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.05);
     }
   }

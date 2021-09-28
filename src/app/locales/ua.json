@@ -1,0 +1,1019 @@
+{
+    "g": {
+        "administrator": "admin",
+        "administrators": "admins",
+        "age": "вік",
+        "amount": "Кількість",
+        "and": "і",
+        "are_you_sure": "Ви впевнені?",
+        "ask": "Пропозиції (ASK)",
+        "balance": "Баланс: %(balanceValue)s-и",
+        "balances": "Баланси",
+        "beneficiaries": "Beneficiaries",
+        "bid": "Купівля",
+        "blog": "Мій Блог",
+        "profile": "Мій профіль",
+        "browse": "Browse",
+        "buy": "Купити",
+        "buy_hive_power": "Buy Hive Power",
+        "buy_or_sell": "Купити або Продати",
+        "by": "опублікував(-ла)",
+        "cancel": "Cкасувати",
+        "change_password": "Змінити пароль",
+        "choose_language": "Виберіть мову",
+        "clear": "Очистити",
+        "close": "Закрити",
+        "collapse_or_expand": "Згорнути/Розгорнути",
+        "communities": "Communities",
+        "community_settings_header": "Community Settings",
+        "community_settings_description": "What does your community stand for?",
+        "community_list_header": "Communities",
+        "community_user_role_add_description":
+            "Set the role of a user in this community.",
+        "community_user_role_edit_description":
+              "Changing @%(username)s's role.",
+        "community_user_role_add_header": "Add User Role",
+        "community_user_role_edit_header": "Change User Role",
+        "community_user_title_edit_header": "Change User Title",
+        "community_user_title_edit_description": "Set Title for @%(username)s",
+        "comments": "Коментарі",
+        "confirm": "Підтвердіть",
+        "convert": "Конвертувати",
+        "date": "Дата",
+        "delete": "Видалити",
+        "dismiss": "Відхилити",
+        "edit": "Редагувати",
+        "email": "Електронна пошта",
+        "external_link_message": "Це джерело знаходиться за межами hive.blog",
+        "affiliation_steemit": "Команда Hive.",
+        "affiliation_sm": "Команда Steem Monsters",
+        "affiliation_hive": "Hive Team",
+        "feed": "Стрічка",
+        "flag": "Flag",
+        "flag_this_post": "Flag this %(type)s",
+        "flag_this_post_description":
+            "Please provide a note regarding your decision to flag this %(type)s, it will be reviewed by community moderators.",
+        "follow": "Слідкувати",
+        "for": " за ",
+        "from": " від ",
+        "go_back": "Назад",
+        "hide": "Приховати",
+        "in": "в",
+        "in_reply_to": "у відповідь на",
+        "insufficient_balance": "Недостатній баланс",
+        "invalid_amount": "Недійсна сума",
+        "links": "Мої посилання",
+        "joined": "Приєднався(-лася)",
+        "loading": "Завантаження",
+        "login": "Вхід",
+        "logout": "Вийти",
+        "memo": "Пам'ятка",
+        "mute": "В бан",
+        "my_blog": "Мій блог",
+        "my_comments": "Мої коментарі",
+        "my_feed": "Моя стрічка",
+        "my_replies": "Відповіді для вас",
+        "my_wallet": "Мій гаманець",
+        "new": "Нове",
+        "newer": "Найновіше",
+        "next": "Наступний",
+        "no": "Ні",
+        "notifications": "Notifications",
+        "ok": "Добре",
+        "older": "Найстаріший",
+        "or": "або",
+        "order_placed": "Замовлення розміщено: %(order)s-і",
+        "password": "Пароль",
+        "payouts": "Виплати",
+        "permissions": "Дозволи",
+        "phishy_message":
+            "Джерело розширено до простого тексту; остерігайтеся потенційної спроби фішингу!",
+        "pin": "Pin",
+        "post": "Допис",
+        "post_as_user": "Опублікувати як %(username)s",
+        "posts": "Усі Дописи",
+        "powered_up_100": "100%% у Силі Голосу",
+        "preview": "Попередній перегляд",
+        "previous": "Попередній",
+        "price": "Ціна",
+        "print": "Видрукувати",
+        "promote": "Просувати",
+        "promoted": "Промо-контент",
+        "re": "RE",
+        "re_to": "RE: %(topic)s",
+        "read_offical_blog": "Hive Блог",
+        "recent_password": "Останній пароль",
+        "receive": "Отримувати ",
+        "remove": "Видалити",
+        "remove_vote": "Прибрати голос",
+        "replied_to": "відповів(ла) на %(account)s",
+        "replies": "Відповіді",
+        "reply": "Відповісти",
+        "reply_count": {
+            "zero": "жодних відповідей",
+            "one": "1 відповідь",
+            "other": "%(count)s відповіді(-ей)"
+        },
+        "reputation": "Репутація",
+        "reveal_comment": "Розкрийте коментар",
+        "will_be_hidden_due_to_low_rating":
+            "Буде приховано через низький рейтинг",
+        "request": "запит",
+        "required": "Вимагається",
+        "rewards": "Нагороди",
+        "save": "Зберегти",
+        "saved": "Збережено",
+        "search": "Пошук",
+        "sell": "Продати",
+        "settings": "Налаштування",
+        "share_this_post": "Поділитися цим дописом",
+        "mute_this_post": "Mute post/comment",
+        "mute_this_post_description":
+            "Please provide a note regarding your decision to mute this content.",
+        "unmute_this_post": "Unmute this post/comment",
+        "unmute_this_post_description":
+            "Please provide a note regarding your decision to unmute this content.",
+        "show": "Показати",
+        "sign_in": "Увійти",
+        "sign_up": "Зареєструватися",
+        "since": "з тих пір %(date)s",
+        "submit": "Надіслати",
+        "subscriptions": "Subscriptions",
+        "power_up": "Голосувати за",
+        "submit_a_story": "Опублікувати",
+        "tag": "Тег",
+        "to": " до ",
+        "topics": "Теми",
+        "toggle_nightmode": "Увімкнути нічний режим",
+        "all_tags": "Усі теги",
+        "all_tags_mobile": "Весь вміст",
+        "transfer": "Передача ",
+        "trending_topics": "Модні теми",
+        "try_again": "Спробуйте ще раз",
+        "type": "Тип",
+        "unfollow": "Не слідкувати",
+        "unmute": "Увімкнути читання",
+        "unpin": "Unpin",
+        "unknown": "Невідомий",
+        "upvote": "Проголосувати",
+        "upvote_post": "Проголосувати за допис",
+        "username": "Ім'я користувача",
+        "version": "Версія",
+        "vote": "Голосувати",
+        "votes": "голосів",
+        "wallet": "Гаманець",
+        "warning": "warning",
+        "yes": "Так",
+        "posting": "Публікація",
+        "owner": "Власник",
+        "active": "Активний",
+        "account_not_found": "Обліковий запис не знайдено",
+        "this_is_wrong_password": "Це неправильний пароль",
+        "do_you_need_to": "Вам потрібно",
+        "account_name": "Назва рахунку",
+        "recover_your_account": "відновити свій рахунок",
+        "reset_usernames_password": "Скидання %(username)s Паролю",
+        "this_will_update_usernames_authtype_key":
+            "Це оновить %(username)s %(authType)s ключ",
+        "passwords_do_not_match": "Паролі не співпадають",
+        "you_need_private_password_or_key_not_a_public_key":
+            "Вам потрібен приватний пароль або ключ (не відкритий ключ)",
+        "the_rules_of_APP_NAME": {
+            "one": "Перше правило %(APP_NAME)s - не втрачайте свій пароль.",
+            "second": "Друге правило %(APP_NAME)s - Не втрачайте свій пароль.",
+            "third":
+                "Третє правило %(APP_NAME)s - Ми не можемо відновити ваш пароль.",
+            "fourth":
+                "Четверте правило: якщо ви можете запам'ятати пароль, він не захищений.",
+            "fifth":
+                "П'яте правило: використовуйте лише випадково згенеровані паролі.",
+            "sixth": "Шосте правило: нікому не вказуйте свій пароль.",
+            "seventh":
+                "Сьоме правило: Завжди створюйте резервну копію свого пароля."
+        },
+        "recover_password": "Відновити обліковий запис",
+        "current_password": "Поточний пароль",
+        "generated_password": "Створений пароль",
+        "backup_password_by_storing_it":
+            "Створіть резервну копію, зберігаючи її в диспетчері паролів або текстовому файлі",
+        "enter_account_show_password":
+            "Введіть дійсне ім’я облікового запису, щоб показати пароль",
+        "click_to_generate_password": "Натисніть, щоб створити пароль",
+        "re_enter_generate_password": "Повторно введіть створений пароль",
+        "understand_that_APP_NAME_cannot_recover_password":
+            "Я розумію, що %(APP_NAME)s не зможу відновити втрачені паролі",
+        "i_saved_password": "Я надійно зберег свій створений пароль",
+        "update_password": "Оновити пароль",
+        "confirm_password": "Підтвердьте пароль",
+        "account_updated": "Обліковий запис оновлено",
+        "password_must_be_characters_or_more":
+            "Пароль повинен бути %(amount)s-в символів або більше",
+        "need_password_or_key":
+            "Вам потрібен приватний пароль або ключ (не відкритий ключ)",
+        "login_to_see_memo": "увійдіть, щоб побачити нагадування",
+        "new_password": "Новий пароль",
+        "incorrect_password": "Неправильний пароль",
+        "username_does_not_exist": "Ім'я користувача не існує",
+        "account_name_should_start_with_a_letter":
+            "Назва обліковки має починатися з літери.",
+        "account_name_should_be_shorter":
+            "Назва облікового запису повинна бути коротшою.",
+        "account_name_should_be_longer":
+            "Назва облікового запису повинна бути довшою.",
+        "account_name_should_have_only_letters_digits_or_dashes":
+            "У назві обліковки повинні бути лише літери, цифри, крапки або тире.",
+        "cannot_increase_reward_of_post_within_the_last_minute_before_payout":
+            "Неможливо збільшити винагороду за повідомлення за останню хвилину перед виплатою",
+        "only_one_APP_NAME_account_allowed_per_ip_address_every_10_minutes":
+            "Лише один акаунт Steem дозволений на IP-адресу кожні 10 хвилин",
+        "reblog_this_post": "Reblog This Post",
+        "reblog": "Рехайв",
+        "write_your_story": "Напишіть свою історію ...",
+        "remember_voting_and_posting_key":
+            "Запам’ятайте ключі для голосування та створення записів",
+        "auto_login_question_mark": "Автоматичний вхід?",
+        "hide_private_key": "Сховати приватний ключ",
+        "show_private_key": "Показати приватний ключ",
+        "login_to_show": "Увійдіть, щоб показати",
+        "not_valid_email": "Неправильна електронна пошта",
+        "thank_you_for_being_an_early_visitor_to_APP_NAME":
+            "Дякуємо, що були першим відвідувачем %(APP_NAME)s. Ми повернемось до вас при першій можливій нагоді.",
+        "author_rewards": "Авторські нагороди",
+        "curation_rewards": "Кураторські нагороди",
+        "sorry_your_reddit_account_doesnt_have_enough_karma":
+            "На жаль, у вашому обліковому записі Reddit недостатньо Reddit Karma, щоб отримати право на безкоштовну реєстрацію. Будь ласка, додайте свій електронний лист для місця у списку очікування",
+        "register_with_facebook": "Зареєструватися за допомогою Facebook",
+        "or_click_the_button_below_to_register_with_facebook":
+            "Або натисніть кнопку нижче, щоб зареєструватися за допомогою Facebook",
+        "server_returned_error": "Упс.. Ми отримали помилку.",
+        "APP_NAME_support": "%(APP_NAME)s Підтримка",
+        "please_email_questions_to":
+            "Свої запитання надішліть електронною поштою",
+        "next_7_strings_single_block": {
+            "authors_get_paid_when_people_like_you_upvote_their_post":
+                "Автори отримують зарплату, коли такі люди, як ви, вподобають їх допис",
+            "if_you_enjoyed_what_you_read_earn_amount":
+                "Якщо вам сподобалося те, що ви прочитали тут, створіть свій акаунт сьогодні і почніть заробляти БЕЗКОШТОВНІ STEEM!",
+            "free_hive": "FREE HIVE!",
+            "sign_up_earn_hive": "Sign up now to earn ",
+            "free_steem": "БЕЗКОШТОВНІ STEEM!",
+            "sign_up_earn_steem": "Зареєструйтесь зараз, щоб заробити "
+        },
+        "next_3_strings_together": {
+            "show_more": "Показати більше",
+            "show_less": "Показати менше",
+            "value_posts": "допис низької вартості"
+        },
+        "read_only_mode":
+            "Завдяки сервісному обслуговуванню ми працюємо лише в режимі читання. Просимо вибачення за незручності.",
+        "tags_and_topics": "Теги",
+        "show_more_topics": "Переглянути всі теги",
+        "basic": "Основні",
+        "advanced": "Розширений",
+        "views": {
+            "zero": "Ніхто не бачив",
+            "one": "%(count)s Переглянуло",
+            "other": "%(count)s Переглянуло"
+        },
+        "responses": {
+            "zero": "Немає відповідей",
+            "one": "%(count)s Відповідь",
+            "other": "%(count)s Відповідей"
+        },
+        "post_key_warning": {
+            "confirm":
+                "Ви збираєтесь опублікувати приватний ключ STEEM або головний пароль. Ви, ймовірно, втратите контроль над пов’язаним обліковим записом та всіма його коштами.",
+            "warning":
+                "Законні користувачі, включаючи співробітників Hive Inc., ніколи не просять у вас приватного ключа або головного пароля.",
+            "checkbox": "Я розумію"
+        },
+        "total": "Усього емітовано",
+        "circulating": "В обігу",
+        "burn": "Спалено",
+        "staking": "Застекано",
+        "written_from": "Posted from %(app_name)s",
+        "all_claim_started":
+            "Claiming all pending tokens. It will be completed after about %(seconds)s seconds.",
+        "all_claim_completed": "Claims completed!",
+        "buy_steem_power": "Купити Steem Силу",
+        "resteem_this_post": "Рехайв цього Допису"
+    },
+    "navigation": {
+        "about": "Про Hive, Inc.",
+        "explore": "Досліджувати",
+        "APP_NAME_whitepaper": "%(APP_NAME)s Whitepaper",
+        "third_party_exchanges": "Сторонні біржі:",
+        "buy_LIQUID_TOKEN": "Купити %(LIQUID_TOKEN)s-и",
+        "sell_LIQUID_TOKEN": "Продати %(LIQUID_TOKEN)s-и",
+        "currency_market": "Ринок валюти",
+        "stolen_account_recovery": "Відновлення викрадених рахунків",
+        "change_account_password": "Змінити пароль облікового запису",
+        "vote_for_witnesses": "Голосувати за Блок Продюсерів",
+        "advertise": "Реклама",
+        "media_kit": "Media Kit",
+        "privacy_policy": "Політика конфіденційності",
+        "terms_of_service": "Умови обслуговування",
+        "sign_up": "Зареєструватися",
+        "learn_more": "Дізнатись більше",
+        "welcome": "Ласкаво просимо",
+        "faq": "FAQ",
+        "chat": "Steem Чат",
+        "app_center": "Програми, побудовані на Hive",
+        "business_center": "Компанії, які приймають Steem",
+        "api_docs": "Документи Hive API",
+        "bluepaper": "Steem Bluepaper",
+        "smt_whitepaper": "SMT Whitepaper",
+        "whitepaper": "Steem Whitepaper",
+        "intro_tagline": "Ваш голос чогось вартий",
+        "intro_paragraph":
+            "Отримуйте платню за хороший вміст. Опублікуйте та опублікуйте статті на Hive, щоб отримати свою частку в щоденному пулі нагород.",
+        "jobs": "Робота в Hive",
+        "hive_proposals": "Hive Proposals",
+        "blockexplorer": "Blockexplorer",
+        "what_is_hive": "What is Hive?",
+        "block_explorer": "Block Explorer",
+        "steem_proposals": "Hive Пропозиції"
+    },
+    "main_menu": {
+        "hot": "Гаряче",
+        "trending": "Популярне"
+    },
+    "reply_editor": {
+        "shorten_title": "Скоротіть назву",
+        "exceeds_maximum_length": "Максимальна довжина перевищує (%(maxKb)sKB)",
+        "including_the_category": " (включаючи категорію '%(rootCategory)s')",
+        "use_limited_amount_of_tags":
+            "Ви маєте %(tagsLength)s-ів, всього тегів%(includingCategory)s. Будь ласка, використовуйте лише 5 у своєму дописі та рядку категорії.",
+        "are_you_sure_you_want_to_clear_this_form":
+            "Ви впевнені, що хочете вийти з редактора коментарів?",
+        "uploading": "Завантаження...",
+        "draft_saved": "Чернетка збережена.",
+        "editor": "Редактор",
+        "enable_markdown_editor": "Enable Markdown Editor",
+        "view_html_source": "View HTML source",
+        "insert_images_by_dragging_dropping":
+            "Вставте світлину, перетягуючи та опускаючи, ",
+        "pasting_from_the_clipboard": "обклеювання з буфера обміну, ",
+        "selecting_them": "виберіть їх",
+        "image_upload": "Завантажити світлину",
+        "power_up_100": "Сила Голосу 100%%",
+        "default_50_50": "50%% HBD / 50%% HP",
+        "decline_payout": "Відхилити виплату",
+        "check_this_to_auto_upvote_your_post":
+            "Перевірте це, щоб автоматично оновити свою публікацію",
+        "markdown_styling_guide": "Посібник зі стилізації по розмітки",
+        "or_by": "або за",
+        "title": "Назва допису",
+        "update_post": "Оновити допис",
+        "markdown_not_supported": "Тут не підтримується розмітка*Markdown",
+        "advanced_settings": "Розширені налаштування",
+        "beneficiaries_set": "%(count)s набір",
+        "tags_input": "Enter your tags separated by a space",
+        "enable_sidebyside": "Enable side-by-side editor",
+        "disable_sidebyside": "Disable side-by-side editor",
+        "post_options": "Post options"
+    },
+    "beneficiary_selector_jsx": {
+        "header": "Хто повинен отримати нагороди?",
+        "add": "Додати обліковий запис",
+        "exceeds_max_beneficiaries": "Може мати не більше 8 бенефіціарів",
+        "beneficiary_cannot_be_self": "Не можна вказати себе як бенефіціара",
+        "beneficiary_cannot_be_duplicate": "Бенефіціар не може бути дублікатом",
+        "beneficiary_percent_invalid":
+            "Процент бенефіціара повинен становити від 1-100",
+        "beneficiary_percent_total_invalid":
+            "Загальний відсоток бенефіціара повинен бути менше 100"
+    },
+    "post_template_selector_jsx": {
+        "templates": "Post templates",
+        "templates_description":
+            "Manage your post templates, other settings here will also be saved/loaded.",
+        "choose_template": "-- Choose a template to load --",
+        "create_template_first": "Please create a template first",
+        "new_template_name": "Name of a new template",
+        "template_saved": "Template saved successfully"
+    },
+    "category_selector_jsx": {
+        "tag_your_story":
+            "Тег (до 8 тегів), перший тег - ваша основна категорія.",
+        "select_a_tag": "Виберіть тег",
+        "maximum_tag_length_is_24_characters":
+            "Максимальна довжина тегу - 24 символи",
+        "use_limited_amount_of_categories":
+            "Будь ласка, використовуйте лише %(amount)s категорії",
+        "use_only_lowercase_letters": "Використовуйте лише малі літери",
+        "use_one_dash": "Використовуйте лише один тире",
+        "use_spaces_to_separate_tags":
+            "Використовуйте пробіли для розділення тегів",
+        "use_only_allowed_characters":
+            "Використовуйте лише малі літери, цифри та один тире",
+        "must_start_with_a_letter": "Починати треба з літери",
+        "must_end_with_a_letter_or_number":
+            "Потрібно закінчити буквою або цифрою",
+        "must_not_include_hivemind_community_owner":
+            "Post already has %(hive)s tag by default, please do not include another 'hive-' tag."
+    },
+    "post_advanced_settings_jsx": {
+        "payout_option_header": "Авторські нагороди",
+        "payout_option_description":
+            "Який тип жетонів ви хочете отримати як винагороду від цієї публікації?",
+        "current_default": "За замовчуванням",
+        "update_default_in_settings": "Оновлення",
+        "load_template": "Load template",
+        "delete_template": "Delete template",
+        "max_accepted_payout": "Maximum Accepted Payout",
+        "max_accepted_payout_description":
+            "HBD value of the maximum payout this post will receive.",
+        "unlimited": "No limit",
+        "custom_value": "Custom value"
+    },
+    "postfull_jsx": {
+        "this_post_is_not_available_due_to_a_copyright_claim":
+            "Ця публікація недоступна через претензію на авторське право.",
+        "share_on_facebook": "Поширити у Facebook",
+        "share_on_twitter": "Поширити у Twitter",
+        "share_on_reddit": "Поширити у Reddit",
+        "share_on_linkedin": "Поширити у Linkedin",
+        "recent_password": "Останній пароль",
+        "in_week_convert_DEBT_TOKEN_to_LIQUID_TOKEN":
+            "За 3,5 дні конвертує %(amount)s %(DEBT_TOKEN)s в %(LIQUID_TOKEN)s",
+        "view_the_full_context": "Переглянути повний контекст",
+        "view_the_direct_parent": "Переглянути попереднє повідомлення",
+        "you_are_viewing_a_single_comments_thread_from":
+            "Ви переглядаєте унікальний коментар до публікації",
+        "recent_posts_by_author": "Recent Posts by %(author)s"
+    },
+    "recoveraccountstep1_jsx": {
+        "recover_account_intro":
+            "Час від часу ключ власника Steemian може бути порушений. На відновлення вкраденого облікового запису надається 30 днів законному власникові рахунку, щоб відновити свій рахунок з моменту, коли злодій змінив свій власний ключ. Відновлення вкраденого облікового запису можна використовувати лише на %(APP_URL)s якщо власник облікового запису раніше вказав '%(APP_NAME)s' як свого довіреного облікового запису та дотримувався Загальних умов обслуговування %(APP_NAME)s's."
+    },
+    "user_profile": {
+        "unknown_account": "Невідомий рахунок",
+        "user_hasnt_made_any_posts_yet":
+            "Виглядає так, що %(name)s ще не зробив(-ла) жодної публікації!",
+        "user_hasnt_started_bloggin_yet":
+            "Виглядає так, що %(name)s ще не почав(-ла) вести блог!",
+        "user_hasnt_followed_anything_yet":
+            "Виглядає так, що %(name)s не встиг(-ла) підписатись на жодного користувача! %(name)s А якщо нещодавно додали нових користувачів, яких почав(-ла) слідкувати, а їхня персоналізована срічка буде заповнена, коли з’явиться новий вміст.",
+        "user_hasnt_had_any_replies_yet":
+            "%(name)s ще не отримав(-ла) жодної відповіді",
+        "user_hasnt_had_any_notifications_yet":
+            "%(name)s hasn't had any notifications yet",
+        "looks_like_you_havent_posted_anything_yet":
+            "Схоже, ви ще нічого не опублікували.",
+        "create_a_post": "Створити допис",
+        "explore_trending_articles": "Ознайомтеся з тенденційними статтями",
+        "read_the_quick_start_guide": "Прочитайте Посібник із швидкого початку",
+        "browse_the_faq": "Browse The FAQ",
+        "followers": "Followers",
+        "this_is_users_reputations_score_it_is_based_on_history_of_votes":
+            "Це показник репутації %(name)s's.\n\nРейтинг репутації базується на історії голосів, отриманих за рахунок, і використовується для приховування контенту низької якості.",
+        "follower_count": {
+            "zero": "Жодниного послідовника",
+            "one": "1 послідовник",
+            "other": "%(count)s послідовники(-ів)"
+        },
+        "followed_count": {
+            "zero": "Ні за ким не слідкує",
+            "one": "1 слідкує",
+            "other": "%(count)s слідкують"
+        },
+        "post_count": {
+            "zero": "Жодного допису",
+            "one": "1 допис",
+            "other": "%(count)s дописів"
+        },
+        "hide_reblogs": "Hide Reblogs",
+        "show_all": "Показати все",
+        "hide_resteems": "Сховати Рехайви"
+    },
+    "post_jsx": {
+        "now_showing_comments_with_low_ratings":
+            "Зараз показуються коментарі з низькою оцінкою",
+        "sort_order": "Порядок сортування",
+        "comments_were_hidden_due_to_low_ratings":
+            "Коментарі були приховані через низькі оцінки",
+        "comment_sort_order": {
+            "trending": "Тенденції",
+            "votes": "Голоси",
+            "age": "Вік",
+            "reputation": "Репутація"
+        }
+    },
+    "voting_jsx": {
+        "flagging_post_can_remove_rewards_the_flag_should_be_used_for_the_following":
+            "Позначення допису може видалити нагороди та зробити цей матеріал менш помітним. Деякі поширені причини прапора",
+        "disagreement_on_rewards": "Незгода на винагороду",
+        "fraud_or_plagiarism": "Шахрайство або плагіат",
+        "hate_speech_or_internet_trolling":
+            "Мова ненависті чи Інтернет-тролінг",
+        "intentional_miss_categorized_content_or_spam":
+            "Навмисна публікація єресі або спам",
+        "pending_payout": "Очікується сума виплати: $%(value)s",
+        "payout_declined": "Виплата відхилена",
+        "max_accepted_payout": "Макс. прийнята виплата: $%(value)s",
+        "promotion_cost": "Вартість просування $%(value)s",
+        "past_payouts": "Минулі виплати $%(value)s",
+        "past_payouts_author": " - Автор $%(value)s",
+        "past_payouts_curators": " - Куратори $%(value)s",
+        "removing_your_vote": "Видалення вашого голосу",
+        "removing_your_vote_will_reset_curation_rewards_for_this_post":
+            "Вилучення голосу призведе до скидання вашої винагороди за цю посаду",
+        "changing_to_an_upvote": "Changing to an Up-Vote",
+        "changing_to_an_upvote_will_reset_curation_rewards_for_this_post":
+            "Якщо змінити функцію Голоса, як дізлайк, то скидаються ваші винагороди за цю посаду",
+        "changing_to_a_downvote": "Змінити на Дізлайк",
+        "changing_to_a_downvote_will_reset_curation_rewards_for_this_post":
+            "Якщо змінити функцію Пониження голосу, ви скинете ваші винагороди за цю посаду",
+        "confirm_flag": "Підтвердити прапор",
+        "and_more": "і %(count)s більше",
+        "votes_plural": {
+            "one": "%(count)s голос",
+            "other": "%(count)s голоси"
+        },
+        "voting_power": "Voting Power",
+        "estimated_vote": "Estimated Vote Value",
+        "must_reached_minimum_payout":
+            "(сума для виплати повинна досягати 0,02$)",
+        "payout": "Виплата",
+        "breakdown": "Усі виплати"
+    },
+    "votesandcomments_jsx": {
+        "no_responses_yet_click_to_respond":
+            "Ще немає коментарів. Клацніть, щоб прокоментувати.",
+        "response_count_tooltip": {
+            "zero": "коментарів немає. Клацніть, щоб прокоментувати.",
+            "one": "1 коментар. Клацніть, щоб прокоментувати.",
+            "other": "%(count)s коментаря(-ів). Клацніть, щоб прокоментувати."
+        },
+        "vote_count": {
+            "zero": "Жодного голосу",
+            "one": "1 голос",
+            "other": "%(count)s голоси(-ів)"
+        }
+    },
+    "userkeys_jsx": {
+        "public": "Публічно",
+        "private": "Приватно",
+        "public_something_key": "Публічний %(key)s Ключ",
+        "private_something_key": "Приватний %(key)s Ключ",
+        "posting_key_is_required_it_should_be_different":
+            "Ключ Допису використовується для розміщення та голосування. Він повинен відрізнятися від активного та власницького ключа.",
+        "the_active_key_is_used_to_make_transfers_and_place_orders":
+            "Активний ключ використовується для здійснення переказів та розміщення замовлень на внутрішньому ринку.",
+        "the_owner_key_is_required_to_change_other_keys":
+            "Власницький ключ - це головний ключ для облікового запису, і він необхідний для зміни інших ключів.",
+        "the_private_key_or_password_should_be_kept_offline":
+            "Приватний ключ або пароль для власника ключа повинні зберігатися в режимі офлайн якомога безпечному місці.",
+        "the_memo_key_is_used_to_create_and_read_memos":
+            "Пам'ятковий ключ використовується для створення та читання нагадувань."
+    },
+    "suggestpassword_jsx": {
+        "APP_NAME_cannot_recover_passwords_keep_this_page_in_a_secure_location":
+            "%(APP_NAME)s не вдається відновити паролі. Зберігайте цю сторінку в надійному місці, наприклад: пожежобезпечному сейфі чи просто сейфі.",
+        "APP_NAME_password_backup": "%(APP_NAME)s Резервне копіювання пароля",
+        "APP_NAME_password_backup_required":
+            "%(APP_NAME)s Резервне копіювання пароля (обов’язково)",
+        "after_printing_write_down_your_user_name":
+            "Після друку, запишіть своє ім’я користувача"
+    },
+    "converttohive_jsx": {
+        "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
+            "Your existing %(DEBT_TOKEN)s are liquid and transferable. Instead you may wish to trade %(DEBT_TOKEN)s directly in this site under %(link)s or transfer to an external market.",
+        "this_is_a_price_feed_conversion":
+            "This is a price feed conversion. The 3.5 day delay is necessary to prevent abuse from gaming the price feed average.",
+        "convert_to_LIQUID_TOKEN": "Convert to %(LIQUID_TOKEN)s",
+        "DEBT_TOKEN_will_be_unavailable":
+            "This action will take place 3.5 days from now and can not be canceled. These %(DEBT_TOKEN)s will immediately become unavailable."
+    },
+    "tips_js": {
+        "liquid_token":
+            "Торгові токени, які можна перенести будь-де в будь-який час.<br/>%(LIQUID_TOKEN)s-и можна конвертувати в %(VESTING_TOKEN)s-и у процесі, який називається Сила Голосу.",
+        "influence_token":
+            "Токени впливу, які дають вам більше контролю над виплатами за допис та дозволяють заробляти на винагороді за курацію.",
+        "estimated_value":
+            "Орієнтовне значення базується на середньому значенні %(LIQUID_TOKEN)s-и у доларах США.",
+        "non_transferable":
+            "%(VESTING_TOKEN)s-и є непередаваним і вимагає 3 місяців (13 платежів), щоб перетворити назад у %(LIQUID_TOKEN)s-и.",
+        "converted_VESTING_TOKEN_can_be_sent_to_yourself_but_can_not_transfer_again":
+            "Конвертовано %(VESTING_TOKEN)s-и можна надіслати самому собі або комусь іншому, але не можна перенести знову без перетворення на %(LIQUID_TOKEN)s-и.",
+        "part_of_your_hive_power_is_currently_delegated":
+            "Part of %(user_name)s's HIVE POWER is currently delegated. Delegation is donated for influence or to help new users perform actions on Hive. Your delegation amount can fluctuate.",
+        "steem_engine_tokens":
+            "<a href='https://steem-engine.com' class='external-link' target='_blank'>Steem Engine</a> is a smart contracts side-chain platform for the Steem blockchain.",
+        "snax_token":
+            "Snax is a blockchain platform created for people to receive rewards for their social activity. It can be integrated with your Steem acount. Read more about Snax at <a href='https://snax.one' class='external-link' target='_blank'>Snax.One</a>.",
+        "part_of_your_steem_power_is_currently_delegated":
+            "Частка %(user_name)s's STEEM POWER наразі делегована. Делегація надається за вплив або для допомоги новим користувачам у виконанні дій на Hive. Сума вашої делегації може коливатися."
+    },
+    "promote_post_jsx": {
+        "promote_post": "Просувати Допис",
+        "spend_your_DEBT_TOKEN_to_advertise_this_post":
+            "Витратьте свої %(DEBT_TOKEN)s-и щоб рекламувати цю публікацію в розділі промоціонованого вмісту",
+        "you_successfully_promoted_this_post":
+            "Ви успішно просунули цю публікацію",
+        "this_post_was_hidden_due_to_low_ratings":
+            "Цей допис був прихований через низькі оцінки"
+    },
+    "about_jsx": {
+        "about_app": "Про %(APP_NAME)s",
+        "about_app_details":
+            "%(APP_NAME)s це платформа соціальних медіа, де кожен отримує плату за створення та курації контенту. А саме наша соціальна мережа використовує надійну систему цифрових балів під назвою Steem, яка підтримує реальну цінність для цифрових винагород за рахунок виявлення ринкової ціни та ліквідності.",
+        "learn_more_at_app_url": "Дізнатись більше %(APP_URL)s",
+        "resources": "Ресурси"
+    },
+    "markdownviewer_jsx": {
+        "images_were_hidden_due_to_low_ratings":
+            "Світлина була прихована через низьку оцінку."
+    },
+    "postsummary_jsx": {
+        "reblogged": "reblogged",
+        "reblogged_by": "Reblogged by",
+        "crossposted": "cross-posted",
+        "crossposted_from": "Cross-posted from",
+        "reveal_it": "Виявити",
+        "adjust_your": "підкоригуйте свій",
+        "display_preferences": "налаштування відображення",
+        "create_an_account": "створити обліковку",
+        "to_save_your_preferences": "щоб зберегти свої вподобання",
+        "resteemed": "рехайвнуто",
+        "resteemed_by": "Рехайвнув(-ла)"
+    },
+    "posts_index": {
+        "empty_feed_1": "Схоже, ви ще ні за ким не слідкуєте",
+        "empty_feed_2":
+            "Якщо ви нещодавно додали нових користувачів для перегляду, ваша персоналізована стрічка заповниться, коли у них з’явиться новий вміст",
+        "empty_feed_3": "Ознайомтеся з тенденційними дописів",
+        "empty_feed_4": "Прочитайте Посібник із швидкого початку",
+        "empty_feed_5": "Перегляньте поширені запитання",
+        "my_feed": "Моя стрічку",
+        "accountnames_feed": "%(account_name)s Стрічка"
+    },
+    "transferhistoryrow_jsx": {
+        "to_savings": "to savings",
+        "from_savings": "from savings",
+        "cancel_transfer_from_savings":
+            "Cancel transfer from savings (request %(request_id)s)",
+        "stop_power_down": "Stop power down",
+        "withdraw_vesting": "Start power down of %(powerdown_vests)s STEEM",
+        "start_power_down_of": "Start power down of",
+        "receive_interest_of": "Receive interest of",
+        "bad_actor_caution": "Caution",
+        "bad_actor_explained":
+            "This is from an account that looks fraudulent. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "bad_actor_reveal_memo": "I understand the risk; show anyway.",
+        "from_negative_rep_user_caution": "Caution",
+        "from_negative_rep_user_explained":
+            "This is from an account with a bad reputation. If you wish, you may temporarily reveal this memo which may contain dangerous links.",
+        "from_negative_rep_user_reveal_memo":
+            "I understand the risk; show anyway.",
+        "claim_reward_balance": {
+            "three_rewards":
+                "Claim rewards: %(first_reward)s, %(second_reward)s and %(third_reward)s",
+            "two_rewards":
+                "Claim rewards: %(first_reward)s and %(second_reward)s",
+            "one_reward": "Claim rewards: %(reward)s"
+        },
+        "interest": "Receive interest of %(interest)s",
+        "fill_convert_request":
+            "Fill convert request: %(amount_in)s for %(amount_out)s",
+        "fill_order": {
+            "filled_by_current_owner":
+                "Paid %(open_pays)s for %(current_pays)s",
+            "open_owner_filled_my_order":
+                "Paid %(current_pays)s for %(open_pays)s"
+        },
+        "transfer_to_vesting": {
+            "from_self": {
+                "no_to": "Transfer %(amount)s to STEEM POWER",
+                "to_someone": "Transfer %(amount)s STEEM POWER to "
+            },
+            "to_self": "Receive %(amount)s STEEM POWER from ",
+            "from_user_to_user":
+                " Transfer %(amount)s STEEM POWER from %(from)s to "
+        },
+        "transfer": {
+            "from_self": {
+                "to_savings": "Transfer to savings %(amount)s to ",
+                "from_savings": "Transfer from savings %(amount)s to ",
+                "not_savings": "Transfer %(amount)s to "
+            },
+            "to_self": {
+                "to_savings": "Receive from savings %(amount)s from ",
+                "from_savings": "Transfer from savings %(amount)s from ",
+                "not_savings": "Received %(amount)s from "
+            },
+            "to_someone_from_someone": {
+                "to_savings":
+                    "Transfer to savings %(amount)s from %(from)s to %(to)s",
+                "from_savings":
+                    "Transfer from savings %(amount)s from %(from)s to %(to)s",
+                "not_savings": "Transfer %(amount)s from %(from)s to %(to)s"
+            }
+        },
+        "author_reward": "Author reward: %(amount)s for ",
+        "curation_reward": "Curation reward: %(amount)s for ",
+        "comment_benefactor_reward":
+            "Comment benefactor reward: %(amount)s for ",
+        "staking_reward": "Staking reward: %(amount)s",
+        "mining_reward": "Mining reward: %(amount)s",
+        "request_id": "Request ID: %(request_id)s",
+        "stake_to": "Staked %(amount)s to ",
+        "stake_from": "Staked %(amount)s from ",
+        "unstake": "Started unstake of %(amount)s",
+        "cancel_unstake": "Cancelled unstaked on %(amount)s",
+        "issue_from": "Issued %(amount)s"
+    },
+    "savingswithdrawhistory_jsx": {
+        "cancel_this_withdraw_request": "Cancel this withdraw request?",
+        "pending_savings_withdrawals": "PENDING SAVINGS WITHDRAWS",
+        "withdraw": "Withdraw %(amount)s",
+        "to": "to %(to)s",
+        "from_to": "from %(from)s to %(to)s"
+    },
+    "explorepost_jsx": {
+        "copied": "Скопійовано!",
+        "copy": "КОПІЮВАТИ",
+        "alternative_sources": "Альтернативні джерела"
+    },
+    "header_jsx": {
+        "home": "Дім",
+        "create_a_post": "Створити допис",
+        "change_account_password": "Змінити пароль облікового запису",
+        "create_account": "Створити рахунок",
+        "stolen_account_recovery": "Відновлення викраденого рахунку",
+        "people_following": "Люди, що стежать %(username)s",
+        "people_followed_by": "Люди стежели за %(username)s",
+        "curation_rewards_by": "Кураторські нагороди від %(username)s",
+        "author_rewards_by": "Авторські нагороди %(username)s",
+        "replies_to": "Відповіді на %(username)s",
+        "posts_by": "Posts by %(username)s",
+        "comments_by": "Коментарі від %(username)s"
+    },
+    "loginform_jsx": {
+        "you_need_a_private_password_or_key":
+            "Вам потрібен приватний пароль або ключ (не Публічний ключ)",
+        "cryptography_test_failed": "Тест на криптографію не вдався",
+        "unable_to_log_you_in":
+            "Ми не зможемо увійти до вас за допомогою цього браузера.",
+        "the_latest_versions_of": "The latest versions of ",
+        "are_well_tested_and_known_to_work_with":
+            "добре перевірені і відомо, що вони працюють %(APP_URL)s.",
+        "due_to_server_maintenance":
+            "Завдяки сервісному обслуговуванню ми працюємо лише в режимі читання. Просимо вибачення за незручності.",
+        "login_to_vote": "Увійдіть, щоб голосувати",
+        "login_to_post": "Увійдіть, щоб написати допис",
+        "login_to_comment": "Увійдіть, щоб коментувати",
+        "posting": "Публікується",
+        "active_or_owner": "Активний або Власницький",
+        "this_password_is_bound_to_your_account_owner_key":
+            "Цей пароль пов'язаний з власницьким ключем вашого облікового запису і не може використовуватися для входу на цей сайт.",
+        "however_you_can_use_it_to": "Однак ви можете використовувати це для ",
+        "update_your_password": "оновити свій пароль",
+        "to_obtain_a_more_secure_set_of_keys":
+            "щоб отримати більш безпечний набір ключів.",
+        "this_password_is_bound_to_your_account_active_key":
+            "Цей пароль прив’язаний до активного ключа вашого облікового запису і не може використовуватися для входу на цю сторінку.",
+        "you_may_use_this_active_key_on_other_more":
+            "Ви можете використовувати цей активний ключ на інших захищених сторінках, таких як сторінки Гаманець або Маркет.",
+        "you_account_has_been_successfully_created":
+            "Ваш обліковку успішно створено!",
+        "you_account_has_been_successfully_recovered":
+            "Ваш обліковку успішно відновлено!",
+        "password_update_succes":
+            "Пароль для %(accountName)s було успішно оновлено",
+        "password_info":
+            "Цей пароль або приватний ключ було введено неправильно. Ймовірно, є помилка рукописного тексту або введення даних. Підказка: пароль або приватний ключ, згенерований Hive, ніколи не буде містити символів 0 (нуль), O (літери o), I (літери i) та l (малі регістри L).",
+        "enter_your_username": "Введіть своє ім’я користувача",
+        "password_or_wif": "Пароль або WIF",
+        "this_operation_requires_your_key_or_master_password":
+            "Ця операція вимагає вашого %(authType)s ключ або головний пароль.",
+        "keep_me_logged_in": "Тримайте мене в системі",
+        "amazing_community": "дивовижна спільнота",
+        "to_comment_and_reward_others":
+            " коментувати та винагороджувати інших.",
+        "signup_button": "Зареєструйтесь зараз, щоб заробити ",
+        "signup_button_emphasis": "БЕЗКОШТОВНІ STEEM!",
+        "sign_up_get_steem": "Зареєструйтесь зараз. Отримуйте STEEM!",
+        "returning_users": "Повернення користувачів: ",
+        "login_warning_title": "Увійти за допомогою ключа, який не є публічний",
+        "login_warning_body":
+            "Ви намагаєтесь використовувати ключ із більшою кількістю дозволів, ніж потрібно для щоденного використання Hive.blog. Оскільки ключі та паролі частіше піддаються крадіжкам, наполегливо рекомендуємо використовувати Ваш Дописовий ключ для входу.",
+        "continue_anyway": "Продовжуйте все одно",
+        "login_warning_link_text":
+            "Відкрийте мій гаманець Hive для доступу та перегляду мого Дописового ключа",
+        "join_our": "Приєднуйтесь до наших",
+        "sign_transfer": "Підпишіться, щоб завершити передачу",
+        "use_keychain": "Використовуйте розширення KEYCHAIN",
+        "more_login_methods": "more login methods"
+    },
+    "chainvalidation_js": {
+        "account_name_should_not_be_empty":
+            "Ім'я облікового запису не повинно бути порожнім.",
+        "account_name_should_be_longer":
+            "Назва облікового запису повинна бути довшою.",
+        "account_name_should_be_shorter":
+            "Назва облікового запису повинна бути коротшою.",
+        "each_account_segment_should_start_with_a_letter":
+            "Кожен сегмент обліковки повинен починатися з літери.",
+        "each_account_segment_should_have_only_letters_digits_or_dashes":
+            "У кожному сегменті облікового запису повинні бути лише літери, цифри або тире.",
+        "each_account_segment_should_have_only_one_dash_in_a_row":
+            "Кожен сегмент обліковки повинен мати лише один тире в ряд.",
+        "each_account_segment_should_end_with_a_letter_or_digit":
+            "Кожен сегмент обліковки повинен закінчуватися літерою або цифрою.",
+        "each_account_segment_should_be_longer":
+            "Кожен сегмент обліковки повинен бути довшим.",
+        "verified_exchange_no_memo": "Ви повинні додати пам’ятку для переказу.",
+        "badactor":
+            "З обережністю надсилайте на цю обліковку. Будь ласка, перевірте правопис від можливого фішингу.",
+        "memo_has_privatekey":
+            "Будь ласка, не включайте те, що видається приватним ключем або паролем.",
+        "memo_is_privatekey": "Не використовуйте приватні ключі в примітках.",
+        "memo_is_password": "Не використовуйте паролі в примітках."
+    },
+    "settings_jsx": {
+        "invalid_url": "Недійсна URL-адреса",
+        "name_is_too_long": "Ім'я задовге",
+        "name_must_not_begin_with": "Ім'я не повинно починатися з @",
+        "about_is_too_long": "Розділ про себе занадто довгий",
+        "location_is_too_long": "Локація занадто довга",
+        "website_url_is_too_long": "URL-адреса веб-сайту задовга",
+        "public_profile_settings": "Налаштування загальнодоступного профілю",
+        "witness_owner_is_too_long": "Witness owner username is too long",
+        "witness_description_is_too_long": "Witness description is too long",
+        "preferences": "Переваги",
+        "not_safe_for_work_nsfw_content": "Небезпечний для роботи (NSFW) вміст",
+        "always_hide": "Завжди ховати",
+        "always_warn": "Завжди попереджати",
+        "always_show": "Завжди показувати",
+        "choose_default_blog_payout": "Нагороди Блогу",
+        "choose_default_comment_payout": "Нагороди Коментарів",
+        "muted_users": "Заглушені користувачі",
+        "update": "Оновити",
+        "upload_image": "Завантажити світлину",
+        "uploading_image": "Завантаження світлини",
+        "profile_image_url": "URL-адреса світлини профілю",
+        "cover_image_url": "URL-адресу світлини обкладинки",
+        "profile_name": "Відображуване ім'я",
+        "profile_about": "Про мене",
+        "profile_location": "Місцезнаходження",
+        "profile_website": "Веб-сайт",
+        "profile_witness_owner": "Witness owner",
+        "profile_witness_description": "Witness description",
+        "saved": "Збережено!",
+        "choose_preferred_api_endpoint": "Choose Your Preferred API Node",
+        "default_beneficiaries": "Referral System",
+        "default_beneficiaries_enabled": "Use Default Beneficiaries",
+        "default_beneficiaries_disabled": "Opt-Out Referral System",
+        "advanced": "Advanced",
+        "api_endpoint_options": "API Endpoint Options",
+        "endpoint": "Endpoint",
+        "preferred": "Preferred?",
+        "remove": "Remove",
+        "add_api_endpoint": "Add API Endpoint",
+        "reset_endpoints": "Reset Endpoints",
+        "error_bad_url":
+            "This appears to be a bad URL, please check it and try again",
+        "error_bad_cookie": "Unable to get endpoints from cookie",
+        "error_already_exists": "This endpoint is already in the list",
+        "error_cant_remove_active":
+            "You can't remove the current preferred endpoint. Please select a new preferred endpoint first",
+        "error_cant_remove_all":
+            "You must have at least one endpoint in the list"
+    },
+    "transfer_jsx": {
+        "amount_is_in_form": "Сума у формі 99999.999",
+        "insufficient_funds": "Недостатньо коштів",
+        "use_only_3_digits_of_precison": "Використовуйте лише 3 цифри точності",
+        "send_to_account": "Надіслати на рахунок",
+        "asset": "Актив",
+        "this_memo_is_private": "Ця примітка є приватною",
+        "this_memo_is_public": "Ця пам’ятка є загальнодоступною",
+        "convert_to_VESTING_TOKEN": "Конвертувати в %(VESTING_TOKEN)s-и",
+        "balance_subject_to_3_day_withdraw_waiting_period":
+            "Залишки за умови 3-денного зняття періоду очікування.",
+        "move_funds_to_another_account":
+            "Перемістіть кошти на інший рахунок Steem.",
+        "protect_funds_by_requiring_a_3_day_withdraw_waiting_period":
+            "Захистіть кошти, вимагаючи 3-денного періоду очікування зняття.",
+        "withdraw_funds_after_the_required_3_day_waiting_period":
+            "Вилучіть кошти після необхідного 3-денного періоду очікування.",
+        "from": "Від",
+        "to": "Кому",
+        "asset_currently_collecting":
+            "%(asset)s наразі збирає %(interest)s%% КВТ.",
+        "beware_of_spam_and_phishing_links":
+            "Остерігайтеся спаму та фішингових посилань у пам’ятках про передачу. Не відкривайте джерело від користувачів, яким ви не довіряєте. Не надайте свої приватні ключі жодним стороннім веб-сайтам.",
+        "transactions_make_take_a_few_minutes":
+            "Операції не відображатимуться, поки їх не підтвердять на блокчейні, що може зайняти кілька хвилин.",
+        "autocomplete_previous_transfers": "попередні перекази",
+        "autocomplete_user_following": "послідовники",
+        "confirm_transfer": "Переведення %(amount)s від %(from)s кому %(to)s?"
+    },
+    "userwallet_jsx": {
+        "transfer": "Переведення",
+        "conversion_complete_tip": "Буде завершено %(date)s",
+        "in_conversion": "%(amount)s в конверсії",
+        "transfer_to_savings": "Перехід до заощаджень",
+        "power_up": "Збільшити Силу",
+        "power_down": "Зменшити Силу",
+        "market": "Маркет",
+        "wallet": "Wallet",
+        "steem_wallet": "Steem Wallet",
+        "convert_to_LIQUID_TOKEN": "Конвертувати в %(LIQUID_TOKEN)s-и",
+        "withdraw_LIQUID_TOKEN": "Вивести %(LIQUID_TOKEN)s-и",
+        "withdraw_DEBT_TOKENS": "Вивести %(DEBT_TOKENS)s-и",
+        "tokens_worth_about_1_of_LIQUID_TICKER":
+            "Токени вартістю близько $1,00 %(LIQUID_TICKER)s-и, наразі збирає %(sbdInterest)s-и%% КВТ.",
+        "tradeable_tokens_transferred":
+            "Торгові токени, які можна перенести будь-де в будь-який час.",
+        "savings": "ЗБЕРЕЖЕННЯ",
+        "estimated_account_value": "Орієнтовна вартість рахунку",
+        "next_power_down_is_scheduled_to_happen":
+            "Наступне зменшення сили планується відбутися",
+        "transfers_are_temporary_disabled": "Переведення тимчасово відключені.",
+        "history": "ІСТОРІЯ",
+        "redeem_rewards": "Отримати нагороди (перевести на баланс)",
+        "buy_hive_or_hive_power": "Buy HIVE or HIVE POWER",
+        "buy_steem_or_steem_power": "Купити STEEM або STEEM СИЛУ"
+    },
+    "powerdown_jsx": {
+        "power_down": "Unstake",
+        "amount": "Amount",
+        "already_power_down":
+            "You are already unstaking %(AMOUNT)s %(LIQUID_TICKER)s (%(WITHDRAWN)s %(LIQUID_TICKER)s paid out so far). Note that if you change the unstake amount the payout schedule will reset.",
+        "locked_in_unstake":
+            "You have %(AMOUNT)s %(LIQUID_TICKER)s stake locked in pending unstakes.",
+        "delegating":
+            "You are delegating %(AMOUNT)s %(LIQUID_TICKER)s. That amount is locked up and not available to unstake until the delegation is removed and a full reward period has passed.",
+        "per_week": "That's ~%(AMOUNT)s %(LIQUID_TICKER)s per week.",
+        "warning":
+            "Leaving less than %(AMOUNT)s %(VESTING_TOKEN)s in your account is not recommended and can leave your account in a unusable state.",
+        "error": "Unable to unstake (ERROR: %(MESSAGE)s)"
+    },
+    "checkloginowner_jsx": {
+        "your_password_permissions_were_reduced":
+            "Ваші дозволи паролів були зменшені",
+        "if_you_did_not_make_this_change":
+            "Якщо ви не робили цієї зміни, то будь ласка",
+        "ownership_changed_on": "Власник змінився ",
+        "deadline_for_recovery_is": "Кінцевий термін для відновлення є",
+        "i_understand_dont_show_again": "Я розумію, не показуй мені знову"
+    },
+    "termsagree_jsx": {
+        "please_review": "Перегляньте наші умови, щоб продовжити",
+        "hi_user": "Вітаю, %(username)s!",
+        "blurb":
+            "Наші Загальні положення та умови встановлюють правила та рекомендації, які ви повинні прийняти та дотримуватися, щоб використовувати Hive, а наша Політика конфіденційності пояснює тип інформації, яку ми збираємо, і що ми робимо з нею. Не хвилюйтесь, ми не продаємо ваші дані нікому. Ми використовуємо його для задоволення юридичних вимог та для того, щоб зробити Hive кращим.",
+        "i_agree_to_hives": "I agree to Hive's",
+        "terms_of_service": "Умови обслуговування",
+        "privacy_policy": "Політика конфіденційності",
+        "continue": "Продовжувати",
+        "cancel": "Відмінити",
+        "i_agree_to_Hives": "Я погоджуюсь із Hive's"
+    },
+    "confirmtransactionform_jsx": {
+        "confirm": "Підтвердіти %(transactionType)s"
+    },
+    "modals_jsx": {
+        "your_transaction_failed": "Не вдалося обробити транзакцію",
+        "out_of_bandwidth_title": "Чому? Ви вичерпали ресурсні кредити",
+        "out_of_bandwidth_reason":
+            "Такі дії, як публікація та голосування, використовують обчислювальні ресурси, розміщення реальної вартості на членів спільноти, які керують блокчейн Steem для всіх.",
+        "out_of_bandwidth_reason_2":
+            "Щоб зберегти речі вільними, Steem інтелектуально розподіляє ресурсні кредити кожному користувачеві на основі їхніх запасів Steem Сила, які можна використовувати для подання обмеженої кількості безплатних транзакцій. Якщо користувачеві не вистачає ресурсних кредитів, їм потрібно буде зачекати, коли він поповниться, або придбати додаткову потужність Steem. Ця система визначає пріоритетність дій сумлінних членів громади, обмежуючи спам.",
+        "out_of_bandwidth_option_title": "Щоб продовжувати взаємодію на Hive.:",
+        "out_of_bandwidth_option_1": "Купуйте та утримуйте більше Steem Сили",
+        "out_of_bandwidth_option_2":
+            "Зачекайте, поки ваші ресурсні кредити поповняться",
+        "out_of_bandwidth_option_3":
+            "Зачекайте, поки використання мережі зменшиться"
+    },
+    "sanitizedlink_jsx": {
+        "phishylink_caution": "Джерело приховано; спроба фішингу",
+        "phishylink_reveal": "показати джерело"
+    },
+    "delegations_jsx": {
+        "delegations": "Delegations"
+    },
+    "notificationslist_jsx": {
+        "mark_all_as_read": "Mark all as read",
+        "load_more": "Load more...",
+        "all": "All",
+        "replies": "Replies",
+        "follows": "Follows",
+        "resteems": "Resteems",
+        "upvotes": "Upvotes",
+        "mentions": "Mentions"
+    },
+    "converttosteem_jsx": {
+        "your_existing_DEBT_TOKEN_are_liquid_and_transferable":
+            "Ваші %(DEBT_TOKEN)s-и є рідкими та передаваними. Натомість, якщо ви бажаєте торгувати %(DEBT_TOKEN)s безпосередньо можна на цьому веб-сайті %(link)s або скористуватись на зовнішнім ринком.",
+        "this_is_a_price_feed_conversion":
+            "Це конверсія ринкової ставки. Кінцевий термін на 3,5 дня необхідний, щоб уникнути зловживань тих, хто намагається зробити ставку на короткострокові зміни середнього ринкового курсу.",
+        "convert_to_LIQUID_TOKEN": "Convert to %(LIQUID_TOKEN)s",
+        "DEBT_TOKEN_will_be_unavailable":
+            "Ця дія відбуватиметься через 3,5 дня і не може бути скасована.Ці(-ей) %(DEBT_TOKEN)s-и негайно стануть недоступними."
+    }
+}

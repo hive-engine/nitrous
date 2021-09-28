@@ -14,7 +14,6 @@ import SanitizedLink from 'app/components/elements/SanitizedLink';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
-import { COMMUNITY_CATEGORY, DISABLE_BLACKLIST } from 'app/client_config';
 import { actions as fetchActions } from 'app/redux/FetchDataSaga';
 
 class UserProfileHeader extends React.Component {
@@ -31,6 +30,8 @@ class UserProfileHeader extends React.Component {
             accountname,
             profile,
             tribeCommunityTitle,
+            scotTokenSymbol,
+            preferHive,
             disableBlacklist,
             stakedAccounts,
         } = this.props;
@@ -47,7 +48,9 @@ class UserProfileHeader extends React.Component {
         if (cover_image) {
             cover_image_style = {
                 backgroundImage:
-                    'url(' + proxifyImageUrl(cover_image, '2048x512') + ')',
+                    'url(' +
+                    proxifyImageUrl(cover_image, preferHive, '2048x512') +
+                    ')',
             };
         }
 
@@ -69,6 +72,7 @@ class UserProfileHeader extends React.Component {
         const affiliation = tribeCommunityTitle
             ? tribeCommunityTitle
             : affiliationFromStake(
+                  scotTokenSymbol,
                   accountname,
                   stakedAccounts ? stakedAccounts.get(accountname) : 0
               );
@@ -84,7 +88,11 @@ class UserProfileHeader extends React.Component {
                         </div>
                     </div>
                     <h1>
-                        <Userpic account={accountname} hideIfDefault />
+                        <Userpic
+                            account={accountname}
+                            hive={preferHive}
+                            hideIfDefault
+                        />
                         {name || accountname} {blacklists}
                         {affiliation ? (
                             <span className="affiliation">{affiliation}</span>
@@ -159,6 +167,11 @@ export default connect(
     (state, props) => {
         const current_user = state.user.getIn(['current', 'username']);
         const accountname = props.accountname;
+
+        const COMMUNITY_CATEGORY = state.app.getIn([
+            'hostConfig',
+            'COMMUNITY_CATEGORY',
+        ]);
         const tribeCommunityTitle = state.global.getIn([
             'community',
             COMMUNITY_CATEGORY,
@@ -166,12 +179,23 @@ export default connect(
             accountname,
             'title',
         ]);
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const disableBlacklist = state.app.getIn([
+            'hostConfig',
+            'DISABLE_BLACKLIST',
+        ]);
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
         return {
             current_user,
             accountname,
             profile: props.profile,
             tribeCommunityTitle,
-            disableBlacklist: DISABLE_BLACKLIST,
+            scotTokenSymbol,
+            preferHive,
+            disableBlacklist,
             stakedAccounts: state.global.get('stakedAccounts'),
         };
     },

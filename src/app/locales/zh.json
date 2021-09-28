@@ -122,7 +122,6 @@
         "rewards": "奖励",
         "save": "保存",
         "saved": "已保存",
-        "scottube": "SportsTube",
         "search": "搜索",
         "sell": "卖出",
         "settings": "设置",
@@ -695,7 +694,7 @@
         "alternative_sources": "其他资源"
     },
     "header_jsx": {
-        "home": "Sports Talk Social: Latest Sports News and Discussions",
+        "home": "主页",
         "create_a_post": "发表帖子",
         "change_account_password": "修改账户密码",
         "create_account": "创建账户",

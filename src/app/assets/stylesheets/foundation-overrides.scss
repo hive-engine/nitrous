@@ -17,7 +17,9 @@
   .VerticalMenu {
     a:hover {
       background-color: #f6f6f6;
-      color: $color-teal-dark;
+      @include themify($themes) {
+        color: themed('textColorAccent');
+      }
     }     
   }
 }
@@ -115,14 +117,14 @@ tbody tr:nth-child(even) {
 }
 
 .reveal {
-  box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.1), 7px 7px 0 0 $color-teal;   
-  border-radius: 0 30px;
+  border-radius: 0;
   border: transparent;
   transition: 0.2s all ease-in-out;
   outline: none;
   @include themify($themes) {
     background-color: themed('modalBackgroundColor');
     color: themed('modalTextColorPrimary');
+    box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 themed('colorAccent');
   }
   label {
     @include themify($themes) {
@@ -146,7 +148,9 @@ tbody tr:nth-child(even) {
   border-radius: 3px;
   background-color:$color-border-light;
   div {
-    background-color: $color-teal;
+    @include themify($themes) {
+      background-color: themed('colorAccent');
+    }
     border-radius: 3px;
     border: none;
     height: 8px;

@@ -8,18 +8,11 @@ import {
     augmentContentWithCrossPost,
 } from 'app/utils/CrossPosts';
 
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    PREFER_HIVE,
-    DISABLE_HIVE,
-    HIVE_ENGINE,
-} from 'app/client_config';
-
 import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
-const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const ssc = new SSC('https://api2.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://api2.hive-engine.com/rpc');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -59,22 +52,19 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account, hive) {
-    const transfers = await callApi(
-        hive
-            ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://api.steem-engine.net/history/accountHistory',
+async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive) {
+    const transfers = await callApi('https://accounts.hive-engine.com/accountHistory',
         {
             account,
             limit: 50,
             offset: 0,
             type: 'user',
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         }
     );
     const history = await getScotDataAsync('get_account_history', {
         account,
-        token: LIQUID_TOKEN_UPPERCASE,
+        token: scotTokenSymbol,
         limit: 50,
     });
     transfers.forEach(x => (x.timestamp = x.timestamp * 1000));
@@ -85,15 +75,26 @@ async function getSteemEngineAccountHistoryAsync(account, hive) {
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://scot-api.hive-engine.com/${path}`, params);
+    return await callApi(`https://hetest.cryptoempirebot.com/scot/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
-    const data = await getScotDataAsync(`@${account}`, {});
-    const hiveData = DISABLE_HIVE
-        ? null
-        : await getScotDataAsync(`@${account}`, { hive: 1 });
-    return { data, hiveData };
+    const sscVpData = await hiveSsc.find('comments', 'votingPower', { account });
+    const sscTokenData = await hiveSsc.find('tokens', 'balances', { account });
+    const data = {};
+    sscVpData.forEach(vpData => {
+        data[vpData.rewardPoolId] = {
+            last_vote_time: new Date(vpData.lastVoteTimestamp),
+            last_downvote_time: new Date(vpData.lastVoteTimestamp),
+            voting_power: vpData.votingPower,
+            downvoting_power: vpData.downvotingPower,
+        };
+    });
+    const tokenData = {};
+    sscTokenData.forEach(d => {
+        tokenData[d.symbol] = parseFloat(d.stake) + parseFloat(d.delegationsIn);
+    });
+    return { data, tokenData };
 }
 
 async function getAccountFromNodeApi(account, useHive) {
@@ -108,10 +109,10 @@ export async function getAccount(account, useHive) {
     return profile ? profile : {};
 }
 
-export async function getWalletAccount(account, useHive) {
+export async function getWalletAccount(account, useHive, scotTokenSymbol) {
     const bridgeAccountObject = await getAccount(account, useHive);
 
-    const hiveEngine = HIVE_ENGINE;
+    const hiveEngine = useHive;
     const engineApi = hiveEngine ? hiveSsc : ssc;
     const [
         tokenBalances,
@@ -127,13 +128,13 @@ export async function getWalletAccount(account, useHive) {
         }),
         engineApi.find('tokens', 'pendingUnstakes', {
             account,
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         }),
         getScotAccountDataAsync(account),
-        getSteemEngineAccountHistoryAsync(account, hiveEngine),
+        getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hiveEngine),
         engineApi.find('tokens', 'delegations', {
             $or: [{ from: account }, { to: account }],
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         }),
         await getAccountFromNodeApi(account, useHive),
     ]);
@@ -147,12 +148,9 @@ export async function getWalletAccount(account, useHive) {
         bridgeAccountObject.token_unstakes = tokenUnstakes;
     }
     if (tokenStatuses) {
-        const tokenStatusData = useHive
-            ? tokenStatuses.hiveData
-            : tokenStatuses.data;
-        if (tokenStatusData[LIQUID_TOKEN_UPPERCASE]) {
-            bridgeAccountObject.token_status =
-                tokenStatusData[LIQUID_TOKEN_UPPERCASE];
+        const tokenStatusData = tokenStatuses.data;
+        if (tokenStatusData[scotTokenSymbol]) {
+            bridgeAccountObject.token_status = tokenStatusData[scotTokenSymbol];
             bridgeAccountObject.all_token_status = tokenStatusData;
         }
     }
@@ -190,7 +188,7 @@ async function getAuthorRep(feedData, useHive) {
     */
 }
 
-function mergeContent(content, scotData) {
+function mergeContent(content, scotData, scotTokenSymbol) {
     const parentAuthor = content.parent_author;
     const parentPermlink = content.parent_permlink;
     const voted = content.active_votes;
@@ -221,32 +219,38 @@ function mergeContent(content, scotData) {
     content.parent_permlink = parentPermlink;
 
     content.scotData = {};
-    content.scotData[LIQUID_TOKEN_UPPERCASE] = scotData;
-
+    content.scotData[scotTokenSymbol] = scotData;
     content.json_metadata = o2j.ifStringParseJSON(content.json_metadata);
 }
 
-async function fetchMissingData(tag, feedType, state, feedData, useHive) {
+async function fetchMissingData(
+    tag,
+    feedType,
+    state,
+    feedData,
+    scotTokenSymbol,
+    useHive
+) {
     if (!state.content) {
         state.content = {};
     }
-    const missingKeys = feedData
-        .filter(d => d.desc == null || d.children == null)
-        .map(d => d.authorperm.substr(1))
-        .filter(k => !state.content[k]);
-    const missingContent = await Promise.all(
-        missingKeys.map(k => {
-            const authorPermlink = k.split('/');
-            console.log('Unexpected missing: ' + authorPermlink);
-            return (useHive ? hive.api : steem.api).getContentAsync(
-                authorPermlink[0],
-                authorPermlink[1]
-            );
-        })
-    );
-    missingContent.forEach(c => {
-        state.content[`${c.author}/${c.permlink}`] = c;
-    });
+    //const missingKeys = feedData
+    //    .filter(d => d.desc == null || d.children == null)
+    //    .map(d => d.authorperm.substr(1))
+    //    .filter(k => !state.content[k]);
+    //const missingContent = await Promise.all(
+    //    missingKeys.map(k => {
+    //        const authorPermlink = k.split('/');
+    //        console.log('Unexpected missing: ' + authorPermlink);
+    //        return (useHive ? hive.api : steem.api).getContentAsync(
+    //            authorPermlink[0],
+    //            authorPermlink[1]
+    //        );
+    //    })
+    //);
+    //missingContent.forEach(c => {
+    //    state.content[`${c.author}/${c.permlink}`] = c;
+    //});
 
     if (!state.discussion_idx) {
         state.discussion_idx = {};
@@ -259,19 +263,31 @@ async function fetchMissingData(tag, feedType, state, feedData, useHive) {
         if (!state.content[key]) {
             filteredContent[key] = {
                 author_reputation: authorRep[d.author],
-                body: d.desc,
-                body_length: d.desc.length + 1,
+                body: d.body ? d.body : d.desc,
+                body_length: d.body ? d.body.length : d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
                 category: d.tags.split(',')[0],
                 children: d.children,
-                replies: [], // intentional
+                replies: [],
             };
         } else {
             filteredContent[key] = state.content[key];
         }
-        mergeContent(filteredContent[key], d);
+        mergeContent(filteredContent[key], d, scotTokenSymbol);
         discussionIndex.push(key);
     });
+    // second pass for replies
+    if (feedType === 'thread') {
+        feedData.forEach(d => {
+            const key = d.authorperm.substr(1);
+            if (d.parent_author && d.parent_permlink) {
+                const pkey = `${d.parent_author}/${d.parent_permlink}`;
+                if (filteredContent[pkey]) {
+                    filteredContent[pkey].replies.push(key);
+                }
+            }
+        });
+    }
     state.content = filteredContent;
     if (!state.discussion_idx[tag]) {
         state.discussion_idx[tag] = {};
@@ -286,19 +302,26 @@ async function addAccountToState(state, account, useHive) {
     }
 }
 
-export async function attachScotData(url, state, useHive, observer, ssr = false) {
+export async function attachScotData(
+    url,
+    state,
+    hostConfig,
+    useHive,
+    observer,
+    ssr = false
+) {
     if (url === '') {
         url = 'trending';
     }
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
-    const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     if (urlParts) {
         const feedType = urlParts[1];
         const tag = urlParts[3] || '';
         const discussionQuery = {
-            token: LIQUID_TOKEN_UPPERCASE,
+            token: scotTokenSymbol,
             limit: 20,
             no_votes: 1,
         };
@@ -314,7 +337,14 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
         }
         // first call feed.
         let feedData = await getScotDataAsync(callName, discussionQuery);
-        await fetchMissingData(tag, feedType, state, feedData, useHive);
+        await fetchMissingData(
+            tag,
+            feedType,
+            state,
+            feedData,
+            scotTokenSymbol,
+            useHive
+        );
         return;
     }
 
@@ -324,7 +354,8 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
         if (ssr) {
             state['profiles'][account] = await getWalletAccount(
                 account,
-                useHive
+                useHive,
+                scotTokenSymbol
             );
         }
 
@@ -337,39 +368,62 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
     urlParts = url.match(/^[\/]?@([^\/]+)\/feed[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_feed', {
-            token: LIQUID_TOKEN_UPPERCASE,
+        const feedParams = {
+            token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
-        await fetchMissingData(`@${account}`, 'feed', state, feedData, useHive);
+        };
+        let feedData = await getScotDataAsync('get_feed', feedParams);
+        await fetchMissingData(
+            `@${account}`,
+            'feed',
+            state,
+            feedData,
+            scotTokenSymbol,
+            useHive
+        );
         return;
     }
 
     urlParts = url.match(/^[\/]?@([^\/]+)(\/blog)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_blog', {
-            token: LIQUID_TOKEN_UPPERCASE,
+        const feedParams = {
+            token: scotTokenSymbol,
             tag: account,
             limit: 20,
             include_reblogs: true,
-        });
+        };
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_blog',
+            feedParams
+        );
         if (ssr) {
             await addAccountToState(state, account, useHive);
         }
-        await fetchMissingData(`@${account}`, 'blog', state, feedData, useHive);
+        await fetchMissingData(
+            `@${account}`,
+            'blog',
+            state,
+            feedData,
+            scotTokenSymbol,
+            useHive
+        );
         return;
     }
 
     urlParts = url.match(/^[\/]?@([^\/]+)(\/posts)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_blog', {
-            token: LIQUID_TOKEN_UPPERCASE,
+        const feedParams = {
+            token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_blog',
+            feedParams
+        );
         if (ssr) {
             await addAccountToState(state, account, useHive);
         }
@@ -378,6 +432,7 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
             'posts',
             state,
             feedData,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -386,11 +441,15 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
     urlParts = url.match(/^[\/]?@([^\/]+)(\/comments)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_comments', {
-            token: LIQUID_TOKEN_UPPERCASE,
+        const feedParams = {
+            token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_comments',
+            feedParams
+        );
         if (ssr) {
             await addAccountToState(state, account, useHive);
         }
@@ -399,6 +458,7 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
             'comments',
             state,
             feedData,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -407,11 +467,15 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
     urlParts = url.match(/^[\/]?@([^\/]+)(\/replies)?[\/]?$/);
     if (urlParts) {
         const account = urlParts[1];
-        let feedData = await getScotDataAsync('get_discussions_by_replies', {
-            token: LIQUID_TOKEN_UPPERCASE,
+        const feedParams = {
+            token: scotTokenSymbol,
             tag: account,
             limit: 20,
-        });
+        };
+        let feedData = await getScotDataAsync(
+            'get_discussions_by_replies',
+            feedParams
+        );
         if (ssr) {
             await addAccountToState(state, account, useHive);
         }
@@ -420,6 +484,28 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
             'replies',
             state,
             feedData,
+            scotTokenSymbol,
+            useHive
+        );
+        return;
+    }
+
+    urlParts = url.match(/^[\/]?([^\/]+)\/@([^\/]+)\/([^\/]+)$/);
+    if (urlParts) {
+        const author = urlParts[2];
+        const permlink = urlParts[3];
+        const threadParams = {
+            token: scotTokenSymbol,
+            author,
+            permlink,
+        };
+        let threadData = await getScotDataAsync('get_thread', threadParams);
+        await fetchMissingData(
+            `@${author}/${permlink}`,
+            'thread',
+            state,
+            threadData,
+            scotTokenSymbol,
             useHive
         );
         return;
@@ -427,7 +513,7 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
 
     if (state.content) {
         Object.entries(state.content).forEach(entry => {
-            if (useHive) {
+            if (useHive && entry[1]) {
                 entry[1].hive = true;
             }
         });
@@ -444,11 +530,16 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
                         const v = entry[1];
                         // Fetch SCOT data
                         const scotData = await getScotDataAsync(`@${k}`, {
-                            hive: useHive ? '1' : '',
+                            token: scotTokenSymbol,
+                            //hive: useHive ? '1' : '',
                         });
+                        if (useHive && state.content[k]) {
+                            state.content[k].hive = true;
+                        }
                         mergeContent(
                             state.content[k],
-                            scotData[LIQUID_TOKEN_UPPERCASE]
+                            scotData[scotTokenSymbol],
+                            scotTokenSymbol
                         );
                     })
             );
@@ -457,7 +548,7 @@ export async function attachScotData(url, state, useHive, observer, ssr = false)
                 .filter(
                     entry =>
                         (entry[1].scotData &&
-                            entry[1].scotData[LIQUID_TOKEN_UPPERCASE]) ||
+                            entry[1].scotData[scotTokenSymbol]) ||
                         (entry[1].parent_author && entry[1].parent_permlink)
                 )
                 .forEach(entry => {
@@ -481,21 +572,28 @@ async function getContentFromBridge(author, permlink, useHive = true) {
     }
 }
 
-export async function getContentAsync(author, permlink) {
+export async function getContentAsync(
+    author,
+    permlink,
+    scotTokenSymbol,
+    preferHive
+) {
     let content;
     let scotData;
-    if (PREFER_HIVE) {
-        content = await getContentFromBridge(author, permlink, true),
-        content.hive = true;
-        scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
+    if (preferHive) {
+        content = await getContentFromBridge(author, permlink, true);
+        if (content) {
+            content.hive = true;
+        }
+        scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
     } else {
-        content = await getContentFromBridge(author, permlink, false),
-        scotData = await getScotDataAsync(`@${author}/${permlink}`);
+        content = await getContentFromBridge(author, permlink, false);
+        scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
     }
     if (!content) {
         return content;
     }
-    mergeContent(content, scotData[LIQUID_TOKEN_UPPERCASE]);
+    mergeContent(content, scotData[scotTokenSymbol], scotTokenSymbol.split('-')[0]);
     return content;
 }
 
@@ -575,17 +673,19 @@ export async function getCommunityStateAsync(
 
 async function loadThread(account, permlink, useHive) {
     const author = account.slice(1);
-    const content = await callBridge(
+    let content = await callBridge(
         'get_discussion',
         { author, permlink },
         useHive
     );
-
-    if (content) {
-        // Detect fetch with scot vs fetch with getState. We use body length vs body to tell
-        // if it was a partial fetch. To clean up later.
-        const k = `${author}/${permlink}`;
-        content[k].body_length = content[k].body.length;
+    if (!content || !content[`${author}/${permlink}`]) {
+        content = {};
+        content[`${author}/${permlink}`] = await callBridge(
+            'get_post',
+            { author, permlink },
+            useHive
+        );
+    } else {
         const {
             content: preppedContent,
             keys,
@@ -599,6 +699,12 @@ async function loadThread(account, permlink, useHive) {
                 crossPosts[crossPostKey]
             );
         }
+    }
+    if (content) {
+        // Detect fetch with scot vs fetch with getState. We use body length vs body to tell
+        // if it was a partial fetch. To clean up later.
+        const k = `${author}/${permlink}`;
+        content[k].body_length = content[k].body.length;
     }
 
     return { content };
@@ -711,7 +817,7 @@ function parsePath(url) {
     return { page, tag, sort, key };
 }
 
-export async function getStateAsync(url, observer, ssr = false) {
+export async function getStateAsync(url, hostConfig, observer, ssr = false) {
     // strip off query string
     let path = url.split('?')[0];
 
@@ -722,7 +828,7 @@ export async function getStateAsync(url, observer, ssr = false) {
         path = path.substring(0, path.length - 1);
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded =
+    const steemitApiStateNeeded = false;/*
         path !== '' &&
         !path.match(/^(login|submit)\.html$/) &&
         !path.match(
@@ -730,7 +836,7 @@ export async function getStateAsync(url, observer, ssr = false) {
         ) &&
         !path.match(
             /^@[^\/]+(\/(feed|blog|comments|recent-replies|transfers|posts|replies|followers|followed)?)?$/
-        );
+        );*/
 
     let raw = {
         accounts: {},
@@ -742,7 +848,7 @@ export async function getStateAsync(url, observer, ssr = false) {
     let useHive = false;
     if (steemitApiStateNeeded) {
         // First get Hive state
-        if (DISABLE_HIVE) {
+        if (hostConfig['DISABLE_HIVE']) {
             console.log('Fetching state from Steem.');
             raw = await getCommunityStateAsync(url, observer, ssr, false);
         } else {
@@ -771,7 +877,7 @@ export async function getStateAsync(url, observer, ssr = false) {
         }
     } else {
         // Use Prefer HIVE setting
-        useHive = PREFER_HIVE;
+        useHive = hostConfig['PREFER_HIVE'];
     }
     if (!raw.accounts) {
         raw.accounts = {};
@@ -779,13 +885,14 @@ export async function getStateAsync(url, observer, ssr = false) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, useHive, observer, ssr);
+    await attachScotData(path, raw, hostConfig, useHive, observer, ssr);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
 }
 
-export async function fetchFeedDataAsync(useHive, call_name, args) {
+export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
     const fetchSize = args.limit;
     let feedData;
     // To indicate if there are no further pages in feed.
@@ -800,7 +907,7 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
     let callName;
     let discussionQuery = {
         ...args,
-        token: LIQUID_TOKEN_UPPERCASE,
+        token: scotTokenSymbol,
         no_votes: 1,
     };
     if (args.observer) {
@@ -865,7 +972,7 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
                         replies: [], // intentional
                     };
                 }
-                mergeContent(content, scotData);
+                mergeContent(content, scotData, scotTokenSymbol);
                 return content;
             })
         );
@@ -878,22 +985,6 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
         // this indicates no further pages in feed.
         endOfData = feedData.length < fetchSize;
         lastValue = feedData.length > 0 ? feedData[feedData.length - 1] : null;
-    } else {
-        feedData = await (useHive ? hive.api : steem.api)[call_name](args);
-        feedData = await Promise.all(
-            feedData.map(async post => {
-                const k = `${post.author}/${post.permlink}`;
-                const scotData = await getScotDataAsync(`@${k}`);
-                mergeContent(post, scotData[LIQUID_TOKEN_UPPERCASE]);
-                return post;
-            })
-        );
-        // endOfData check and lastValue setting should go before any filtering,
-        endOfData = feedData.length < fetchSize;
-        lastValue = feedData.length > 0 ? feedData[feedData.length - 1] : null;
-        feedData = feedData.filter(
-            post => post.scotData && post.scotData[LIQUID_TOKEN_UPPERCASE]
-        );
     }
     return { feedData, endOfData, lastValue };
 }

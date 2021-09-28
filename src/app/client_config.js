@@ -1,21 +1,17 @@
 import { fromJSOrdered } from './utils/immutable';
 
-// sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const APP_NAME = 'SportsTalkSocial';
-// sometimes APP_NAME is written in non-latin characters, but they are needed for technical purposes
-// ie. "Голос" > "Golos"
-export const APP_NAME_LATIN = 'SportsTalkSocial';
-export const APP_NAME_UPPERCASE = 'SPORTSTALKSOCIAL';
-export const APP_ICON = 'sports';
-
-// FIXME figure out best way to do this on both client and server from env
-// vars. client should read $STM_Config, server should read config package.
-export const APP_URL = 'https://www.sportstalksocial.com';
-export const APP_DOMAIN = 'www.sportstalksocial.com';
-// max num of tags. if unset, default is 10. This is due to previous hardcoded number.
-export const APP_MAX_TAG = 15;
-export const SCOT_TAG = 'sportstalk';
-export const TAG_LIST = fromJSOrdered({
+const SPORTS = {
+    APP_NAME: 'SportsTalkSocial',
+    APP_ICON: 'sports',
+    APP_ICON_WIDTH: '50px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.sportstalk.social',
+    APP_DOMAIN: 'www.sportstalk.social',
+    LIQUID_TOKEN: 'SPORTS',
+    LIQUID_TOKEN_UPPERCASE: 'SPORTS',
+    APP_MAX_TAG: 15,
+    SCOT_TAG: 'sportstalk',
+    TAG_LIST: fromJSOrdered({
         football: {
             tourneyplay: {
                 afcon: ['afcon2019', 'afcon2021'],
@@ -674,24 +670,76 @@ export const TAG_LIST = fromJSOrdered({
             'pob',
             ],
         },
-});
-export const LIQUID_TOKEN = 'Sports';
-// sometimes it's impossible to use html tags to style coin name, hence usage of _UPPERCASE modifier
-export const LIQUID_TOKEN_UPPERCASE = 'SPORTS';
-// used as backup
-export const SCOT_DENOM = 1000;
-export const VOTE_WEIGHT_DROPDOWN_THRESHOLD = 1;
-export const VESTING_TOKEN = 'SPORTS POWER';
-export const INTERLEAVE_PROMOTED = true;
+    }),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'SPORTS POWER',
+    SITE_DESCRIPTION:
+        'SportsTalkSocial is a sports focused social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called SPORTS, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 50000000000,
+    REVIVE_ADS: {
+      header_banner: {
+          zoneId: '1848',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      sidebar_left: {
+          zoneId: '1849',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      sidebar_right: {
+          zoneId: '1850',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      post_footer_abovecomments: {
+          zoneId: '1851',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      post_footer_betweencomments: {
+          zoneId: '1852',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      feed: {
+          zoneId: '1847',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+      feed_small: {
+          zoneId: '1903',
+          reviveId: '727bec5e09208690b050ccfc6a45d384',
+      },
+    },
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-LHBWFW0JD5',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    HIVE_ENGINE_SMT: 9,
+    POSTED_VIA_NITROUS_ICON: 'sportstalk',
+    COMMUNITY_CATEGORY: 'hive-101690',
+    CHAT_CONVERSATIONS: [
+        { id: '01EYM90246AEWTX8A4HYABXG6G', name: 'SportsTalkSocial Main Chat' },
+        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
+    ],
+    SHOW_TOKEN_STATS: true,
+    TWITTER_HANDLE: '@SportsTalkHive',
+};
+
+export const CONFIG_MAP = {
+    // testing heroku/local options
+    'localhost:8080': SPORTS,
+    'www.sportstalk.social': SPORTS,
+};
 
 export const HIVE_SIGNER_APP = 'ewd';
 
 export const CURRENCY_SIGN = '$';
 export const WIKI_URL = ''; // https://wiki.golos.io/
-export const LANDING_PAGE_URL = 'https://hive.io';
-export const TERMS_OF_SERVICE_URL = 'https://' + APP_DOMAIN + '/tos.html';
-export const PRIVACY_POLICY_URL = 'https://' + APP_DOMAIN + '/privacy.html';
-export const WHITEPAPER_URL = 'https://hive.io/hive-whitepaper.pdf';
 
 // these are dealing with asset types, not displaying to client, rather sending data over websocket
 export const LIQUID_TICKER = 'HIVE';
@@ -702,85 +750,7 @@ export const DEFAULT_LANGUAGE = 'en'; // used on application internationalizatio
 export const DEFAULT_CURRENCY = 'USD';
 export const ALLOWED_CURRENCIES = ['USD'];
 
-// meta info
-export const TWITTER_HANDLE = '@SportsTalkHive';
-export const SHARE_IMAGE =
-    'https://' + APP_DOMAIN + '/images/hive-blog-share.png';
-export const TWITTER_SHARE_IMAGE =
-    'https://' + APP_DOMAIN + '/images/hive-blog-twshare.png';
-export const SITE_DESCRIPTION =
-    'SportsTalkSocial is a sports focused social media platform where everyone gets ' +
-    'paid for creating and curating content. It leverages a robust digital points system, called SPORTS, ' +
-    'that supports real value for digital rewards through market price discovery and liquidity';
-
-// various
-export const SUPPORT_EMAIL = 'support@' + APP_DOMAIN;
-
-// Revive Ads
-export const NO_ADS_STAKE_THRESHOLD = 50000000000;
-export const REVIVE_ADS = {
-    header_banner: {
-        zoneId: '1848',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    sidebar_left: {
-        zoneId: '1849',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    sidebar_right: {
-        zoneId: '1850',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    post_footer_abovecomments: {
-        zoneId: '1851',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    post_footer_betweencomments: {
-        zoneId: '1852',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    feed: {
-        zoneId: '1847',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-    feed_small: {
-        zoneId: '1903',
-        reviveId: '727bec5e09208690b050ccfc6a45d384',
-    },
-};
-
-// Other configurations
-export const ALLOW_MASTER_PW = false;
-// Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-export const POST_FOOTER = '';
-// Footer to attach to commments. ${POST_URL} is a macro that can be used, will be expanded to the URL of the commment.
-export const COMMENT_FOOTER = '';
-export const SCOT_TAG_FIRST = false;
-export const SCOT_DEFAULT_BENEFICIARY_ACCOUNT = '';
-export const SCOT_DEFAULT_BENEFICIARY_PERCENT = 0; // between 0 amd 100
-export const SHOW_AUTHOR_RECENT_POSTS = true;
-export const POSTED_VIA_NITROUS_ICON = 'sportstalk'; // put corresponding svg in src/app/assets/icons/___.svg
-export const COMMUNITY_CATEGORY = 'hive-101690';
-export const SHOW_TOKEN_STATS = true;
 export const TOKEN_STATS_EXCLUDE_ACCOUNTS = [
     'sportsprojects',
     'sports-gov',
 ];
-export const PREFER_HIVE = true;
-export const DISABLE_HIVE = false;
-export const HIVE_ENGINE = true;
-export const DISABLE_BLACKLIST = false;
-export const CHAT_CONVERSATIONS = [
-    { id: '01EYM90246AEWTX8A4HYABXG6G', name: 'SportsTalkSocial Main Chat' },
-    { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-];
-export const APPEND_TRENDING_TAGS_COUNT = 0;
-export const TRENDING_TAGS_TO_IGNORE = ['sportsignore'];
-
-export const INVEST_TOKEN_UPPERCASE = HIVE_ENGINE
-    ? 'HIVE POWER'
-    : 'STEEM POWER';
-export const INVEST_TOKEN_SHORT = HIVE_ENGINE ? 'HP' : 'SP';
-export const DEBT_TOKEN = HIVE_ENGINE ? 'HIVE DOLLAR' : 'STEEM DOLLAR';
-export const DEBT_TOKENS = HIVE_ENGINE ? 'HIVE DOLLARS' : 'STEEM DOLLARS';
-
