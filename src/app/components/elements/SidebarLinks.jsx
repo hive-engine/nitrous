@@ -27,26 +27,6 @@ const SidebarLinks = ({ username, scotTokenSymbol, topics }) => (
                         {tt('g.my_wallet')}
                     </a>
                 </li>
-                {scotTokenSymbol === 'LAGO' && (
-                    <li className="c-sidebar__list-item">
-                        <a
-                            className="c-sidebar__link"
-                            href="https://tube.lago.com.gt"
-                        >
-                            LagoTube
-                        </a>
-                    </li>
-                )}
-                {scotTokenSymbol === 'WEED' && (
-                    <li className="c-sidebar__list-item">
-                        <a
-                            className="c-sidebar__link"
-                            href="https://video.weedcash.network"
-                        >
-                            WeedCash DTube
-                        </a>
-                    </li>
-                )}
             </ul>
         </div>
     </div>
