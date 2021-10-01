@@ -301,7 +301,7 @@ class PostsIndex extends React.Component {
         if (!username && posts.size && category === 'my') {
             postsIndexDisplay = <Callout>{emptyText}</Callout>;
         }
-        if (order === 'feed' && !username) {
+        if (order === 'feed' && !username && !posts.size) {
             postsIndexDisplay = <Callout>{emptyText}</Callout>;
         }
 
