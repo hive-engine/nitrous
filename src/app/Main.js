@@ -138,15 +138,11 @@ function runApp(initial_state) {
         window.location.hash
     }`;
 
-    hive.utils.autoDetectApiVersion().then(() => {
-        hive.broadcast.updateOperations();
-        try {
-            clientRender(initial_state);
-        } catch (error) {
-            console.error('render_error', error);
-            serverApiRecordEvent('client_error', error);
-        }
-    });
+    try {
+        clientRender(initial_state);
+    } catch (error) {
+        console.error('render_error', error);
+    }
 }
 
 if (!window.Intl) {
