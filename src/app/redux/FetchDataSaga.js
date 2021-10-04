@@ -1,6 +1,7 @@
 import {
     all,
     call,
+    cancel,
     put,
     fork,
     select,
@@ -56,7 +57,7 @@ const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
 const GET_CATEGORIES = 'fetchDataSaga/GET_CATEGORIES';
 
 export const fetchDataWatches = [
-    takeLatest(REQUEST_DATA, fetchData),
+    fork(fetchDataSaga),
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
@@ -87,6 +88,11 @@ export function* getPostHeader(action) {
 
 let is_initial_state = true;
 export function* fetchState(location_change_action) {
+    // Cancel any outstanding fetch calls (e.g. next page feed). Existing state calls will
+    // automatically be cancelled by takeLatest.
+    if (activeFetchDataTask) {
+        yield cancel(activeFetchDataTask);
+    }
     const { pathname } = location_change_action.payload;
     const m = pathname.match(/^\/@([a-z0-9\.-]+)(\/notifications)?/);
     if (m && m.length >= 2) {
@@ -189,7 +195,13 @@ export function* getPromotedState(pathname) {
         return;
     }
 
-    const state = yield call(getStateAsync, `/promoted/${tag}`);
+    let username = null;
+    if (process.env.BROWSER) {
+        [username] = yield select(state => [
+            state.user.getIn(['current', 'username']),
+        ]);
+    }
+    const state = yield call(getStateAsync, `/promoted/${tag}`, username, false);
     yield put(globalActions.receiveState(state));
 }
 
@@ -441,6 +453,17 @@ export function* markNotificationsAsReadSaga(action) {
     }
 }
 
+let activeFetchDataTask;
+function* fetchDataSaga() {
+    while (true) {
+        const action = yield take(REQUEST_DATA);
+        if (activeFetchDataTask) {
+            yield cancel(activeFetchDataTask);
+        }
+        activeFetchDataTask = yield fork(fetchData, action);
+    }
+}
+
 export function* fetchData(action) {
     const {
         order,
@@ -464,6 +487,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'hot') {
         call_name = 'getDiscussionsByHotAsync';
@@ -472,6 +496,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'promoted') {
         call_name = 'getDiscussionsByPromotedAsync';
@@ -480,6 +505,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'payout') {
         call_name = 'getPostDiscussionsByPayoutAsync';
@@ -488,6 +514,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'payout_comments') {
         call_name = 'getCommentDiscussionsByPayoutAsync';
@@ -496,6 +523,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'created') {
         call_name = 'getDiscussionsByCreatedAsync';
@@ -504,6 +532,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_replies') {
         call_name = 'getDiscussionsByRepliesAsync';
@@ -512,6 +541,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_feed') {
         // https://github.com/steemit/steem/issues/249
@@ -521,6 +551,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_author') {
         call_name = 'getDiscussionsByBlogAsync';
@@ -529,6 +560,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_comments') {
         call_name = 'getDiscussionsByCommentsAsync';
@@ -537,6 +569,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (category[0] == '@') {
         call_name = 'get_account_posts';

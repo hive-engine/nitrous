@@ -16,7 +16,7 @@ import {
 } from 'app/client_config';
 
 import axios from 'axios';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
@@ -286,7 +286,10 @@ async function addAccountToState(state, account, useHive) {
     }
 }
 
-export async function attachScotData(url, state, useHive, ssr = false) {
+export async function attachScotData(url, state, useHive, observer, ssr = false) {
+    if (url === '') {
+        url = 'trending';
+    }
     let urlParts = url.match(
         /^(trending|hot|created|promoted|payout|payout_comments)($|\/([^\/]+)$)/
     );
@@ -297,7 +300,11 @@ export async function attachScotData(url, state, useHive, ssr = false) {
         const discussionQuery = {
             token: LIQUID_TOKEN_UPPERCASE,
             limit: 20,
+            no_votes: 1,
         };
+        if (observer) {
+            discussionQuery.voter = observer;
+        }
         if (tag) {
             discussionQuery.tag = tag;
         }
@@ -477,38 +484,12 @@ async function getContentFromBridge(author, permlink, useHive = true) {
 export async function getContentAsync(author, permlink) {
     let content;
     let scotData;
-    const [steemitContent, hiveContent] = await Promise.all([
-        getContentFromBridge(author, permlink, false),
-        DISABLE_HIVE
-            ? Promise.resolve(null)
-            : getContentFromBridge(author, permlink, true),
-    ]);
-    let useHive = false;
-    if (
-        steemitContent &&
-        steemitContent.author === author &&
-        steemitContent.permlink === permlink
-    ) {
-        content = steemitContent;
-    }
-    if (
-        (PREFER_HIVE ||
-            !(
-                steemitContent &&
-                steemitContent.author === author &&
-                steemitContent.permlink === permlink
-            )) &&
-        (hiveContent &&
-            hiveContent.author === author &&
-            hiveContent.permlink === permlink)
-    ) {
-        content = hiveContent;
+    if (PREFER_HIVE) {
+        content = await getContentFromBridge(author, permlink, true),
         content.hive = true;
-        useHive = true;
-    }
-    if (useHive) {
         scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
     } else {
+        content = await getContentFromBridge(author, permlink, false),
         scotData = await getScotDataAsync(`@${author}/${permlink}`);
     }
     if (!content) {
@@ -798,7 +779,7 @@ export async function getStateAsync(url, observer, ssr = false) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, useHive, ssr);
+    await attachScotData(path, raw, useHive, observer, ssr);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
@@ -820,7 +801,11 @@ export async function fetchFeedDataAsync(useHive, call_name, args) {
     let discussionQuery = {
         ...args,
         token: LIQUID_TOKEN_UPPERCASE,
+        no_votes: 1,
     };
+    if (args.observer) {
+        discussionQuery.voter = args.observer;
+    }
     if (callNameMatch) {
         order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {
