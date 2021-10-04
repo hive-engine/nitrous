@@ -22,6 +22,7 @@ import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
+import AAd from 'app/components/elements/AAd';
 import SortOrder from 'app/components/elements/SortOrder';
 import { Map } from 'immutable';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
@@ -337,6 +338,10 @@ class Header extends React.Component {
                     </div>
                     <div style={showReviveAd ? {} : { display: 'none' }}>
                         <ReviveAd adKey="header_banner" />
+                    </div>
+
+                    <div style="display:flex;justify-content:center;">
+                    <iframe data-aa="1606644" src="//ad.a-ads.com/1606644" scrolling="no" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden" allowtransparency="true"></iframe>
                     </div>
 
                     <nav className="row Header__nav">
