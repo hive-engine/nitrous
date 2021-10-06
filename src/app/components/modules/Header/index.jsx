@@ -339,7 +339,7 @@ class Header extends React.Component {
                         <ReviveAd adKey="header_banner" />
                     </div>
 
-                    <div style="display:flex;justify-content:center;">
+                    <div style={{ display: 'flex', justifyContent: 'center' >
                     <iframe data-aa="1606644" src="//ad.a-ads.com/1606644" scrolling="no" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden" allowtransparency="true"></iframe>
                     </div>
 
