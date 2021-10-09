@@ -1177,10 +1177,10 @@
   dependencies:
     axios "^0.21.1"
 
-"@hiveio/hive-js@0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.8.4.tgz#26d474115cf040721da1440f8075d3d3a888353b"
-  integrity sha512-uvpTYAZPiIyRxIcPWHHo/10On6s2KocpdOfjouyv/CaUXkbvTFDqTu9imClSESSv2KdzoMUucjJ79Q7BjyBRsA==
+"@hiveio/hive-js@^0.8.13":
+  version "0.8.13"
+  resolved "https://registry.yarnpkg.com/@hiveio/hive-js/-/hive-js-0.8.13.tgz#f4c099d13cae7e6b4530abe42c0712be2f334129"
+  integrity sha512-txRsjNYElc+frU2nYnOWtCD5lGoE2ZZcJ7ULyyorojcMiY4qfGpEKFvGxIYdD4BgqwGPnExIQhzTpPzuWJ7Njw==
   dependencies:
     "@steemit/rpc-auth" "^1.1.1"
     bigi "^1.4.2"
@@ -1196,6 +1196,7 @@
     debug "^2.6.8"
     detect-node "^2.0.3"
     ecurve "^1.0.5"
+    jsbi "^3.1.4"
     lodash "^4.16.4"
     retry "^0.12.0"
     secure-random "^1.1.2"
@@ -8137,6 +8138,11 @@ js-yaml@~3.7.0:
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
+
+jsbi@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.4.tgz#9654dd02207a66a4911b4e4bb74265bc2cbc9dd0"
+  integrity sha512-52QRRFSsi9impURE8ZUbzAMCLjPm4THO7H2fcuIvaaeFTbSysvkodbQQXIVsNgq/ypDbq6dJiuGKL0vZ/i9hUg==
 
 jsbn@~0.1.0:
   version "0.1.1"
