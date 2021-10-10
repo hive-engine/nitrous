@@ -75,7 +75,7 @@ async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive)
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://hetest.cryptoempirebot.com/scot/${path}`, params);
+    return await callApi(`https://smtscot.cryptoempirebot.com/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
