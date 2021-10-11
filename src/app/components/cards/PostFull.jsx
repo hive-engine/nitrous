@@ -325,7 +325,7 @@ class PostFull extends React.Component {
         const jsonMetadata = showReply ? null : post.get('json_metadata');
         const link = `/${category}/@${author}/${permlink}`;
         let app_info = '';
-        if (jsonMetadata) app_info = jsonMetadata.app;
+        if (jsonMetadata) app_info = jsonMetadata.get('app');
 
         const { category, title, body } = content;
 

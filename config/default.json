@@ -42,7 +42,7 @@
   "steemd_connection_server": "https://api.steemit.com",
   "hive_connection_client": "https://api.hive.blog",
   "hive_connection_server": "https://api.hive.blog",
-  "steemd_use_appbase": false,
+  "steemd_use_appbase": true,
   "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
   "alternative_api_endpoints": "https://api.openhive.network https://api.hive.blog",
   "failover_threshold": 3,

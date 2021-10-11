@@ -69,6 +69,13 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
+        organizational_BHT: [
+            {
+                value: 'BHT_gigs',
+                label: 'BroadHiveGigs',
+                link: 'https://www.broadhivegigs.space',
+            },
+        ],
         organizational_ALIVE: [
             {
                 value: 'ALIVE_about',
