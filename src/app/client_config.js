@@ -701,6 +701,8 @@ const POB = {
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
     DISABLE_BLACKLIST: true,
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'proofofbrainio',
+    SCOT_DEFAULT_BENEFICIARY_PERCENT: 10, // between 0 and 100
 };
 
 const CINETV = {
