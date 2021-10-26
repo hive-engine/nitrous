@@ -588,11 +588,11 @@ class Voting extends React.Component {
                     const vote = avotes[i];
                     vote.estimate = (
                         pot *
-                        (applyRewardsCurve(currRshares + vote.rshares) -
+                        (applyRewardsCurve(currRshares + parseFloat(vote.rshares)) -
                             applyRewardsCurve(currRshares)) /
                         denom
                     ).toFixed(scotPrecision);
-                    currRshares += vote.rshares;
+                    currRshares += parseFloat(vote.rshares);
                 }
             }
 
