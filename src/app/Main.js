@@ -108,6 +108,7 @@ function runApp(initial_state) {
         useAppbaseApi: !!config.steemd_use_appbase,
         alternative_api_endpoints: alternativeApiEndpoints,
         failover_threshold: config.failover_threshold,
+        rebranded_api: true,
     });
 
     window.$STM_Config = config;
