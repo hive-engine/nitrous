@@ -98,12 +98,33 @@ const SidePanel = ({
                 link: '/submit.html',
             },
         ],
-        extras_WEED: [
+        organizational_BEATCZ: [
             {
-                value: 'whitepaper',
+                value: 'beatczWhitepaper',
                 label: 'White Paper',
+                link: '/@polarmystro/beatzpaper-beatzchain-white-paper',
                 internal: true,
-                link: '/@coffeebuds/weedcash-network-white-paper',
+            },
+            {
+                value: 'beatczRoadmap',
+                label: 'Roadmap',
+                link: '/@polarmystro/beatzchain-beatcz-roadmap',
+                internal: true,
+            },
+            {
+                value: 'beatczDiscord',
+                label: 'Discord',
+                link: 'https://discord.gg/TckRe8P9Wg',
+            },
+            {
+                value: 'beatczTwitter',
+                label: 'Twitter',
+                link: 'https://twitter.com/Polar_Maestro',
+            },
+            {
+                value: 'beatczTiktok',
+                label: 'TikTok',
+                link: 'https://www.tiktok.com/@polarmaestro',
             },
         ],
     };
