@@ -214,6 +214,11 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     if (title) {
         content.title = title;
     }
+    // Remove hide/gray stats
+    if (content.stats) {
+        content.stats.hide = false;
+        content.stats.gray = false;
+    }
     // Prefer parent author / permlink of content
     content.parent_author = parentAuthor;
     content.parent_permlink = parentPermlink;
