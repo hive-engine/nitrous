@@ -102,13 +102,13 @@ const SidePanel = ({
             {
                 value: 'beatczWhitepaper',
                 label: 'White Paper',
-                link: '/@polarmystro/beatzpaper-beatzchain-white-paper',
+                link: '/hive-123620/@polarmystro/beatzpaper-beatzchain-white-paper',
                 internal: true,
             },
             {
                 value: 'beatczRoadmap',
                 label: 'Roadmap',
-                link: '/@polarmystro/beatzchain-beatcz-roadmap',
+                link: '/hive-123620/@polarmystro/beatzchain-beatcz-roadmap',
                 internal: true,
             },
             {
