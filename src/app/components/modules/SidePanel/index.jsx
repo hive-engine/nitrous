@@ -102,14 +102,12 @@ const SidePanel = ({
             {
                 value: 'beatczWhitepaper',
                 label: 'White Paper',
-                link: '/hive-123620/@polarmystro/beatzpaper-beatzchain-white-paper',
-                internal: true,
+                link: 'https://peakd.com/@polarmystro/beatzpaper-beatzchain-white-paper',
             },
             {
                 value: 'beatczRoadmap',
                 label: 'Roadmap',
-                link: '/hive-123620/@polarmystro/beatzchain-beatcz-roadmap',
-                internal: true,
+                link: 'https://peakd.com/@polarmystro/beatzchain-beatcz-roadmap',
             },
             {
                 value: 'beatczDiscord',
