@@ -339,8 +339,8 @@ class Header extends React.Component {
                         <ReviveAd adKey="header_banner" />
                     </div>
 
-                    <div className="aadCenter">
-                    <iframe data-aa="1606644" src="//ad.a-ads.com/1606644" scrolling="no" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden" allowtransparency="true"></iframe>
+                    <div className="aadcenter">
+                    <iframe data-aa="1606644" src="//ad.a-ads.com/1606644" scrolling="no" className="aadstyle" allowtransparency="true"></iframe>
                     </div>
 
                     <nav className="row Header__nav">

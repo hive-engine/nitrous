@@ -199,7 +199,15 @@ span.Header__hamburger.toggle-menu {
 }
 
 
-.aadCenter {
+.aadcenter {
   display: flex;
   justify-content: center;
+}
+
+.aadstyle {
+  border: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
