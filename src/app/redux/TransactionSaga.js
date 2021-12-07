@@ -20,7 +20,7 @@ import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from '@hive-engine/sscjs';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 import { callBridge } from 'app/utils/steemApi';
 import {
     isLoggedInWithHiveSigner,
