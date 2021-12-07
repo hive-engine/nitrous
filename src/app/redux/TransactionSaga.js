@@ -18,8 +18,8 @@ import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from '@hive-engine/sscjs';
 
-const steemSsc = new SSC('https://api2.hive-engine.com/rpc');
-const hiveSsc = new SSC('https://api2.hive-engine.com/rpc');
+const steemSsc = new SSC('https://ha.herpc.dtools.dev');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 import { callBridge } from 'app/utils/steemApi';
 import {
     isLoggedInWithHiveSigner,
