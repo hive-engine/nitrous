@@ -206,7 +206,7 @@
     "webpack-bundle-analyzer": "3.3.2"
   },
   "engines": {
-    "node": ">=8.7.0",
+    "node": "12.x",
     "npm": ">=5.4.2"
   },
   "lint-staged": {
