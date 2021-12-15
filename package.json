@@ -138,7 +138,7 @@
     "redux-saga": "0.16.0",
     "remarkable": "1.7.1",
     "sanitize-html": "1.14.1",
-    "sass-loader": "10.0.5",
+    "sass-loader": "9.0.3",
     "secure-random": "1.1.1",
     "sendgrid": "4.10.0",
     "speakingurl": "9.0.0",
