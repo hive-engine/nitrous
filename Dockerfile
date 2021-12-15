@@ -3,7 +3,6 @@ FROM node:12.16.2 as development
 WORKDIR /var/app
 
 COPY package.json yarn.lock ./
-COPY patches ./patches
 
 RUN yarn install --non-interactive --frozen-lockfile --ignore-optional
 
