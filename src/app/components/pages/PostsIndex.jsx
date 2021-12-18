@@ -411,7 +411,7 @@ module.exports = {
                 : route.category ? route.category.toLowerCase() : null;
             const order = account_name
                 ? route.category
-                : route.order || 'trending';
+                : route.order || (hostConfig.get('DEFAULT_URL', '/trending').split('/')[1]);
 
             const hive = ifHivemind(category);
             const community = state.global.getIn(['community', hive], null);
