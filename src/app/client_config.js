@@ -158,7 +158,7 @@ export const CONFIG_MAP = {
     'dunksocial.io': DUNK,
     'www.centblog.org': CENT,
     'www.beatzchain.com': BEATCZ,
-    'www.vybranium.com': VYB
+    'www.vybrainium.com': VYB
 };
 
 export const HIVE_SIGNER_APP = 'ewd';
