@@ -113,7 +113,7 @@ const BEATCZ = {
     DEFAULT_URL: '/created',
 };
 
-const VYN = {
+const VYB = {
     APP_NAME: 'VerifyYourBrain',
     APP_ICON: 'vyb',
     APP_ICON_WIDTH: '74px',
