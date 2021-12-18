@@ -113,14 +113,52 @@ const BEATCZ = {
     DEFAULT_URL: '/created',
 };
 
+const VYN = {
+    APP_NAME: 'VerifyYourBrain',
+    APP_ICON: 'vyb',
+    APP_ICON_WIDTH: '74px',
+    APP_ICON_HEIGHT: '40px',
+    APP_URL: 'https://www.vybrainium.com',
+    APP_DOMAIN: 'www.vybrainium.com',
+    LIQUID_TOKEN: 'VYB',
+    LIQUID_TOKEN_UPPERCASE: 'VYB',
+    APP_MAX_TAG: 10,
+    SCOT_TAG: 'vyb',
+    TAG_LIST: fromJSOrdered(['vyb', 'proofofbrain' ]),
+    INTERLEAVE_PROMOTED: true,
+    PROMOTED_POST_ACCOUNT: 'null',
+    VESTING_TOKEN: 'VYB POWER',
+    SITE_DESCRIPTION:
+        'VerifyYourBrain is a social media platform where everyone gets paid for ' +
+        'creating and curating content. It leverages a robust digital points system, called VYB, that ' +
+        'supports real value for digital rewards through market price discovery and liquidity',
+    // Revive Ads
+    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    REVIVE_ADS: {},
+    ALLOW_MASTER_PW: false,
+    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
+    POST_FOOTER: '',
+    COMMENT_FOOTER: '',
+    SCOT_TAG_FIRST: false,
+    SDC_GTAG_MEASUREMENT_ID: 'G-M22CPJ7HK2',
+    DISABLE_STEEM: true,
+    PREFER_HIVE: true,
+    HIVE_ENGINE: true,
+    HIVE_ENGINE_SMT: 15,
+    APPEND_TRENDING_TAGS_COUNT: 10,
+    COMMUNITY_CATEGORY: null,
+    CHAT_CONVERSATIONS: null,
+};
+
 export const CONFIG_MAP = {
     // testing heroku/local options
     'localhost:8080': CENT,
-    'eonhetest.herokuapp.com': BEATCZ,
+    'eonhetest.herokuapp.com': VYB,
     'www.dunksocial.io': DUNK,
     'dunksocial.io': DUNK,
     'www.centblog.org': CENT,
     'www.beatzchain.com': BEATCZ,
+    'www.vybranium.com': VYB
 };
 
 export const HIVE_SIGNER_APP = 'ewd';
