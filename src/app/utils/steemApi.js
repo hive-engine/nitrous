@@ -219,13 +219,9 @@ function mergeContent(content, scotData, scotTokenSymbol) {
         content.stats.hide = false;
         content.stats.gray = false;
     }
-    // Prefer parent author / permlink of content
-    content.parent_author = parentAuthor;
-    content.parent_permlink = parentPermlink;
 
     content.scotData = {};
     content.scotData[scotTokenSymbol] = scotData;
-    content.json_metadata = o2j.ifStringParseJSON(content.json_metadata);
 }
 
 async function fetchMissingData(
