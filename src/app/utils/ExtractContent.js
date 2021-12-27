@@ -29,6 +29,11 @@ export function extractImageLink(json_metadata, body = null) {
     let json = Iterable.isIterable(json_metadata)
         ? json_metadata.toJS()
         : json_metadata;
+    if (typeof json === 'string') {
+        try {
+            json = JSON.parse(json);
+        } catch (error) {}
+    }
     if (!json) json = {};
     let jsonImage;
     if (typeof json.get === 'function') {
