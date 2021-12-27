@@ -12,7 +12,7 @@ import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
