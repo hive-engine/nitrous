@@ -224,6 +224,17 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     content.scotData[scotTokenSymbol] = scotData;
 }
 
+function getCategory(d) {
+    let category = d.tags.split(',')[0];
+    if (d.url) {
+        const parts = d.url.split("/");
+        if (parts.length > 1) {
+            category = parts[1];
+        }
+    }
+    return category;
+}
+
 async function fetchMissingData(
     tag,
     feedType,
@@ -267,7 +278,7 @@ async function fetchMissingData(
                 body: d.body ? d.body : d.desc,
                 body_length: d.body ? d.body.length : d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
-                category: d.tags.split(',')[0],
+                category: getCategory(d),
                 children: d.children,
                 replies: [],
             };
@@ -968,7 +979,7 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
                         body: scotData.desc,
                         body_length: scotData.desc.length + 1,
                         permlink: scotData.authorperm.split('/')[1],
-                        category: scotData.tags.split(',')[0],
+                        category: getCategory(scotData),
                         children: scotData.children,
                         replies: [], // intentional
                     };
