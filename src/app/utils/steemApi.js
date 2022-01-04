@@ -219,6 +219,9 @@ function mergeContent(content, scotData, scotTokenSymbol) {
         content.stats.hide = false;
         content.stats.gray = false;
     }
+    if (typeof content.jsonMetadata === "string") {
+        content.jsonMetadata = JSON.parse(content.jsonMetadata);
+    }
 
     content.scotData = {};
     content.scotData[scotTokenSymbol] = scotData;
