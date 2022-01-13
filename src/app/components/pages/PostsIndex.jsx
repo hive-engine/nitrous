@@ -185,6 +185,9 @@ class PostsIndex extends React.Component {
     goSCTSWAP = () => {
         window.open('/market');
     };
+    goHODLS = () => {
+        window.open('https://hodls.money/');
+    };
     goPicpPick = () => {
         window.open('https://apisct.cloud/manager');
     };
@@ -455,6 +458,13 @@ class PostsIndex extends React.Component {
                         onClick={this.goSCTSWAP}
                     >
                         {tt('g.sctswap')}
+                    </button>
+                    <button
+                        type="button"
+                        className="c-sidebar--right--link"
+                        onClick={this.goHODLS}
+                    >
+                        {tt('g.hodls_money')}
                     </button>
 
                     {this.props.isBrowser && (
