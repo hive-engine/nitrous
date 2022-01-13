@@ -126,12 +126,12 @@ class UserWallet extends React.Component {
         const tokenDelegations = account.has('token_delegations')
             ? account.get('token_delegations').toJS()
             : [];
-        const [snaxBalance] = account.has('snax_balance')
-            ? account.get('snax_balance').toJS()
-            : [];
-        const snax_balance_str = numberWithCommas(
-            parseFloat(snaxBalance).toString()
-        );
+        // const [snaxBalance] = account.has('snax_balance')
+        //     ? account.get('snax_balance').toJS()
+        //     : [];
+        // const snax_balance_str = numberWithCommas(
+        //     parseFloat(snaxBalance).toString()
+        // );
         const pendingTokens = Object.values(allTokenStatus).filter(e =>
             parseFloat(e.pending_token)
         );
@@ -580,7 +580,7 @@ class UserWallet extends React.Component {
                     </div>
                 ) : null}
                 {/* SNAX Balance */}
-                {parseFloat(snaxBalance) ? (
+                {/* {parseFloat(snaxBalance) ? (
                     <div className="UserWallet__balance row">
                         <div className="column small-12 medium-8">
                             {' SNAX Tokens'}
@@ -594,7 +594,7 @@ class UserWallet extends React.Component {
                             {' SNAX'}
                         </div>
                     </div>
-                ) : null}
+                ) : null} */}
 
                 {disabledWarning && (
                     <div className="row">

@@ -34,7 +34,7 @@ export async function getSteemEngineAccountHistoryAsync(account, limit) {
 }
 
 async function getFullScotAccountHistoryAsync(account) {
-    const transfers = await callApi(
+    let transfers = await callApi(
         'https://api.steem-engine.net/history/accountHistory',
         {
             account,
@@ -51,6 +51,11 @@ async function getFullScotAccountHistoryAsync(account) {
         limit: 50,
         startTime: new Date().getTime(),
     });
+
+    transfers = transfers.map(item => {
+        return { ...item, timestamp: item.timestamp * 1000 };
+    });
+
     return transfers
         .concat(history)
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
@@ -225,7 +230,7 @@ export async function attachScotData(url, state) {
             allTokenBalances,
             allTokenInfo,
             tokenDelegations,
-            snaxBalance,
+            // snaxBalance,
         ] = await Promise.all([
             // modified to get all tokens. - by anpigon
             ssc.find('tokens', 'balances', {
@@ -245,7 +250,7 @@ export async function attachScotData(url, state) {
                 $or: [{ from: account }, { to: account }],
                 symbol: LIQUID_TOKEN_UPPERCASE,
             }),
-            fetchSnaxBalanceAsync(account),
+            // fetchSnaxBalanceAsync(account),
         ]);
 
         await addAccountToState(state, account);
@@ -278,9 +283,9 @@ export async function attachScotData(url, state) {
         if (tokenDelegations) {
             state.accounts[account].token_delegations = tokenDelegations;
         }
-        if (snaxBalance) {
-            state.accounts[account].snax_balance = snaxBalance;
-        }
+        // if (snaxBalance) {
+        //     state.accounts[account].snax_balance = snaxBalance;
+        // }
         return;
     }
 
@@ -522,20 +527,20 @@ export async function getSteemPriceInfo() {
     return steemprice;
 }
 
-export async function fetchSnaxBalanceAsync(account) {
-    const url = 'https://cdn.snax.one/v1/chain/get_currency_balance';
-    const data = {
-        code: 'snax.token',
-        symbol: 'SNAX',
-        account,
-    };
-    return await axios
-        .post(url, data, {
-            headers: { 'content-type': 'text/plain' },
-        })
-        .then(response => response.data)
-        .catch(err => {
-            console.error(`Could not fetch data, url: ${url}`);
-            return [];
-        });
-}
+// export async function fetchSnaxBalanceAsync(account) {
+//     const url = 'https://cdn.snax.one/v1/chain/get_currency_balance';
+//     const data = {
+//         code: 'snax.token',
+//         symbol: 'SNAX',
+//         account,
+//     };
+//     return await axios
+//         .post(url, data, {
+//             headers: { 'content-type': 'text/plain' },
+//         })
+//         .then(response => response.data)
+//         .catch(err => {
+//             console.error(`Could not fetch data, url: ${url}`);
+//             return [];
+//         });
+// }
