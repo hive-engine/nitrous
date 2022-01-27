@@ -78,7 +78,7 @@ const CENT = {
 const BEATCZ = {
     APP_NAME: 'Beatzchain',
     APP_ICON: 'beatcz',
-    APP_ICON_WIDTH: '40px',
+    APP_ICON_WIDTH: '112px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.beatzchain.com',
     APP_DOMAIN: 'www.beatzchain.com',
