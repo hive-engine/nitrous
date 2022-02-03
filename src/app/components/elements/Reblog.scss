@@ -19,10 +19,10 @@
   svg {
     @include themify($themes) {
       border: 1px solid themed('colorAccent');
+      border-right-color: transparent;
+      border-top-color: transparent;
     }
     border-radius: 100%;
-    border-right-color: transparent;
-    border-top-color: transparent;
     animation: loading 500ms infinite linear;
     path {opacity: 0}
   }

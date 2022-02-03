@@ -32,5 +32,9 @@ export class Role {
 }
 
 export function ifHivemind(category) {
-    return category && category.substring(0, 5) == 'hive-' ? category : null;
+    if (category && category.match(/^(hive-)([0-9]{5,})/i) !== null) {
+        return category;
+    } else {
+        return null;
+    }
 }

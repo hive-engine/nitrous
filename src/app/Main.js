@@ -108,6 +108,7 @@ function runApp(initial_state) {
         useAppbaseApi: !!config.steemd_use_appbase,
         alternative_api_endpoints: alternativeApiEndpoints,
         failover_threshold: config.failover_threshold,
+        rebranded_api: true,
     });
 
     window.$STM_Config = config;
@@ -138,15 +139,11 @@ function runApp(initial_state) {
         window.location.hash
     }`;
 
-    hive.utils.autoDetectApiVersion().then(() => {
-        hive.broadcast.updateOperations();
-        try {
-            clientRender(initial_state);
-        } catch (error) {
-            console.error('render_error', error);
-            serverApiRecordEvent('client_error', error);
-        }
-    });
+    try {
+        clientRender(initial_state);
+    } catch (error) {
+        console.error('render_error', error);
+    }
 }
 
 if (!window.Intl) {

@@ -116,10 +116,10 @@
   svg {
     @include themify($themes) {
       border: 1px solid themed('colorAccent');
+      border-right-color: transparent;
+      border-top-color: transparent;
     }
     border-radius: 50%;
-    border-right-color: transparent;
-    border-top-color: transparent;
     animation: loading 500ms infinite linear;
   }
 }
