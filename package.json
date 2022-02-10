@@ -212,7 +212,7 @@
     "koa-webpack-hot-middleware": "1.0.3",
     "lint-staged": "6.0.0",
     "mock-local-storage": "1.0.5",
-    "node-sass": "4.13.1",
+    "node-sass": "7.0.0",
     "node-watch": "0.5.5",
     "picturefill": "3.0.2",
     "prettier": "1.8.2",
