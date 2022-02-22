@@ -70,40 +70,21 @@ ScotConfig.prototype.refresh = async function() {
                 const scotMinerTokens = c.miner_tokens ? Object.keys(JSON.parse(c.miner_tokens)) : [];
 
                 scotConfigMap[c.token] = c;
-                if (c['hive_engine_enabled']) {
-                    c.hiveTokenStats = {
-                        scotToken: c.token,
-                        scotMinerTokens,
-                        total_token_balance_circulating: 0,
-                        token_burn_balance: 0,
-                        total_token_balance_staked: 0,
-                        total_token_miner_balance_circulating: 0,
-                        token_burn_miner_balance: 0,
-                        total_token_miner_balance_staked: 0,
-                        total_token_mega_miner_balance_circulating: 0,
-                        token_burn_mega_miner_balance: 0,
-                        total_token_mega_miner_balance_staked: 0,
-                    };
-                    hiveTokenList.push(c.token);
-                    hiveTokenList = hiveTokenList.concat(scotMinerTokens);
-                }
-                if (c['steem_engine_enabled']) {
-                    c.tokenStats = {
-                        scotToken: c.token,
-                        scotMinerTokens,
-                        total_token_balance_circulating: 0,
-                        token_burn_balance: 0,
-                        total_token_balance_staked: 0,
-                        total_token_miner_balance_circulating: 0,
-                        token_burn_miner_balance: 0,
-                        total_token_miner_balance_staked: 0,
-                        total_token_mega_miner_balance_circulating: 0,
-                        token_burn_mega_miner_balance: 0,
-                        total_token_mega_miner_balance_staked: 0,
-                    };
-                    tokenList.push(c.token);
-                    tokenList = tokenList.concat(scotMinerTokens);
-                }
+                c.hiveTokenStats = {
+                    scotToken: c.token,
+                    scotMinerTokens,
+                    total_token_balance_circulating: 0,
+                    token_burn_balance: 0,
+                    total_token_balance_staked: 0,
+                    total_token_miner_balance_circulating: 0,
+                    token_burn_miner_balance: 0,
+                    total_token_miner_balance_staked: 0,
+                    total_token_mega_miner_balance_circulating: 0,
+                    token_burn_mega_miner_balance: 0,
+                    total_token_mega_miner_balance_staked: 0,
+                };
+                hiveTokenList.push(c.token);
+                hiveTokenList = hiveTokenList.concat(scotMinerTokens);
                 if (scotMinerTokens.length > 0) {
                     minerTokenToToken[scotMinerTokens[0]] = {
                         token: c.token,
@@ -120,13 +101,9 @@ ScotConfig.prototype.refresh = async function() {
         });
 
         const [
-            steemTotalTokenBalances,
-            steemTokenBurnBalances,
             hiveTotalTokenBalances,
             hiveTokenBurnBalances,
         ] = await Promise.all([
-            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList }, }),
-            ssc.find('tokens', 'balances', { account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) }, symbol: { $in: tokenList }, }),
             hiveSsc.find('tokens', 'tokens', {
                 symbol: { $in: hiveTokenList },
             }),
@@ -172,7 +149,6 @@ ScotConfig.prototype.refresh = async function() {
                 }
             }
         };
-        populateTokenBalanceStats(steemTotalTokenBalances, 'tokenStats');
         populateTokenBalanceStats(hiveTotalTokenBalances, 'hiveTokenStats');
 
         const populateBurnBalanceStats = (tokenBurnBalances, statsField) => {
@@ -199,7 +175,6 @@ ScotConfig.prototype.refresh = async function() {
                 }
             }
         };
-        populateBurnBalanceStats(steemTokenBurnBalances, 'tokenStats');
         populateBurnBalanceStats(hiveTokenBurnBalances, 'hiveTokenStats');
 
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
