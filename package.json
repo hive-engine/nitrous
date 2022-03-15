@@ -99,7 +99,7 @@
     "koa-router": "5.4.2",
     "koa-static-cache": "4.1.1",
     "lodash": "^4.17.21",
-    "lodash-es": "^4.17.14",
+    "lodash-es": "^4.17.21",
     "lodash.debounce": "4.0.8",
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.mergewith": "^4.6.2",
