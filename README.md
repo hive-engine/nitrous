@@ -7,6 +7,7 @@ Nitrous is the customized condenser (see below) that integrates with the
  [Steem Engine Token Scotbot](https://sto.steem-engine.com/#/launch/scotbot).
 
 The instructions below are still accurate, but you need a few things to configure.
+Note: The setup instructions here work only for Linux, macOS and do not work on Windows-based computers.
 
 `src/app/client_config.js` collects most of the settings that are necessary to configure.
 
