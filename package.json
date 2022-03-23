@@ -107,7 +107,7 @@
     "mem-stat": "1.0.5",
     "merge": "^2.1.1",
     "mini-css-extract-plugin": "^1.2.1",
-    "minimist": "1.2.3",
+    "minimist": "1.2.6",
     "mixpanel": "0.5.0",
     "node-cache": "^4.2.0",
     "os": "0.1.1",
