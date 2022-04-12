@@ -23,6 +23,7 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import SortOrder from 'app/components/elements/SortOrder';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
+import DarkMode from 'app/components/DarkMode/DarkMode';
 
 class Header extends React.Component {
     static propTypes = {
@@ -341,12 +342,13 @@ class Header extends React.Component {
                     </div>
 
                     <nav className="row Header__nav">
-                        <div className="small-5 large-4 columns Header__logotype">
+                        <div className="small-5 large-4 columns">
                             {/*LOGO*/}
                             <Link to={logo_link}>
                                 <AppLogo />
                             </Link>
                         </div>
+
 
                         <div className="large-4 columns show-for-large large-centered Header__sort">
                             {/*SORT*/}
@@ -383,6 +385,7 @@ class Header extends React.Component {
 
                             {/*SUBMIT STORY*/}
                             {submit_story}
+                            <DarkMode />
                             {/*USER AVATAR */}
                             {loggedIn && (
                                 <DropdownMenu
