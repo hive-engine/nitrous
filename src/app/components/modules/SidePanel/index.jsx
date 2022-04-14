@@ -7,7 +7,6 @@ import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
 import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
-
 const SidePanel = ({
     alignment,
     visible,
@@ -59,8 +58,18 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: 'Tribaldex',
-                link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
+                label: 'Buy $Buidl',
+                link: 'https://tribaldex.com/trade/BUIDL',
+            },
+            {
+                value: 'engine',
+                label: 'LitePaper',
+                link: 'https://eu.docworkspace.com/d/sIHWUtOWLAYXB1pIG',
+            },
+            {
+                value: 'engine',
+                label: 'NFTs',
+                link: 'https://nftshowroom.com/build-it/gallery',
             },
         ],
         external: [
@@ -112,6 +121,7 @@ const SidePanel = ({
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
+
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks.extras.map(makeLink)}
                 </ul>
@@ -136,9 +146,6 @@ const SidePanel = ({
                 )}
 
                 <ul className="vertical menu">
-                    <li>
-                        <a className="menu-section">Trade {scotTokenSymbol}</a>
-                    </li>
                     {(sidePanelLinks['internal_' + scotTokenSymbol]
                         ? sidePanelLinks['internal_' + scotTokenSymbol]
                         : sidePanelLinks['internal']
