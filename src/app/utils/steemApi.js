@@ -11,8 +11,8 @@ import {
 import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
-const ssc = new SSC('https://api2.hive-engine.com/rpc');
-const hiveSsc = new SSC('https://api2.hive-engine.com/rpc');
+const ssc = new SSC('https://ha.herpc.dtools.dev');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -75,7 +75,7 @@ async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive)
 }
 
 export async function getScotDataAsync(path, params) {
-    return await callApi(`https://smtscot.cryptoempirebot.com/${path}`, params);
+    return await callApi(`https://ha.smt-api.dtools.dev/${path}`, params);
 }
 
 export async function getScotAccountDataAsync(account) {
@@ -214,13 +214,28 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     if (title) {
         content.title = title;
     }
-    // Prefer parent author / permlink of content
-    content.parent_author = parentAuthor;
-    content.parent_permlink = parentPermlink;
+    // Remove hide/gray stats
+    if (content.stats) {
+        content.stats.hide = false;
+        content.stats.gray = false;
+    }
+    if (typeof content.json_metadata === "string") {
+        content.json_metadata = JSON.parse(content.json_metadata);
+    }
 
     content.scotData = {};
     content.scotData[scotTokenSymbol] = scotData;
-    content.json_metadata = o2j.ifStringParseJSON(content.json_metadata);
+}
+
+function getCategory(d) {
+    let category = d.tags.split(',')[0];
+    if (d.url) {
+        const parts = d.url.split("/");
+        if (parts.length > 1) {
+            category = parts[1];
+        }
+    }
+    return category;
 }
 
 async function fetchMissingData(
@@ -266,7 +281,7 @@ async function fetchMissingData(
                 body: d.body ? d.body : d.desc,
                 body_length: d.body ? d.body.length : d.desc.length + 1,
                 permlink: d.authorperm.split('/')[1],
-                category: d.tags.split(',')[0],
+                category: getCategory(d),
                 children: d.children,
                 replies: [],
             };
@@ -967,7 +982,7 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
                         body: scotData.desc,
                         body_length: scotData.desc.length + 1,
                         permlink: scotData.authorperm.split('/')[1],
-                        category: scotData.tags.split(',')[0],
+                        category: getCategory(scotData),
                         children: scotData.children,
                         replies: [], // intentional
                     };

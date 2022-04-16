@@ -12,8 +12,9 @@ import Modals from 'app/components/modules/Modals';
 import WelcomePanel from 'app/components/elements/WelcomePanel';
 import tt from 'counterpart';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
-
-const ChatWrapper = process.env.BROWSER && require('app/components/modules/chat/ChatWrapper').default;
+const ChatWrapper =
+    process.env.BROWSER &&
+    require('app/components/modules/chat/ChatWrapper').default;
 
 class App extends React.Component {
     constructor(props) {
@@ -40,11 +41,33 @@ class App extends React.Component {
             document.body.classList.add(`theme-${scotTokenSymbolLower}-light`);
         }
     }
+    darkMode = e => {
+        let clickedClass = 'clicked';
+        const body = document.body;
+        const lightTheme = 'theme-buidl-light';
+        const darkTheme = 'theme-buidl-dark';
+        let theme;
+        let switchTheme;
 
-    componentWillReceiveProps(nextProps) {
-        const { nightmodeEnabled } = nextProps;
-        this.toggleBodyNightmode(nightmodeEnabled);
-    }
+        if (localStorage) {
+            theme = localStorage.getItem('theme');
+        }
+
+        switchTheme = e => {
+            if (theme === darkTheme) {
+                body.classList.replace(darkTheme, lightTheme);
+                e.target.classList.remove(clickedClass);
+                localStorage.setItem('theme', 'theme-buidl-light');
+                theme = lightTheme;
+            } else {
+                body.classList.replace(lightTheme, darkTheme);
+                e.target.classList.add(clickedClass);
+                localStorage.setItem('theme', 'theme-buidl-dark');
+                theme = darkTheme;
+            }
+        };
+        switchTheme(e);
+    };
 
     componentWillMount() {
         if (process.env.BROWSER) localStorage.removeItem('autopost'); // July 14 '16 compromise, renamed to autopost2
@@ -52,8 +75,17 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const { nightmodeEnabled } = this.props;
-        this.toggleBodyNightmode(nightmodeEnabled);
+        let theme;
+        const body = document.body;
+        const lightTheme = 'theme-buidl-light';
+        const darkTheme = 'theme-buidl-dark';
+        if (localStorage) {
+            theme = localStorage.getItem('theme');
+        }
+
+        if (theme === lightTheme || theme === darkTheme) {
+            body.classList.add(theme);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -175,7 +207,7 @@ class App extends React.Component {
 
         return (
             <div
-                className={classNames('App', themeClass, {
+                className={classNames('App', {
                     'index-page': ip,
                     'whistle-view': whistleView,
                     withAnnouncement: this.props.showAnnouncement,
@@ -186,6 +218,7 @@ class App extends React.Component {
 
                 {headerHidden ? null : (
                     <Header
+                        toggleBody={this.darkMode}
                         pathname={pathname}
                         category={category}
                         order={order}
@@ -206,7 +239,7 @@ class App extends React.Component {
                 </div>
                 <Dialogs />
                 <Modals />
-                {process.env.BROWSER && (<ChatWrapper />)}
+                {process.env.BROWSER && <ChatWrapper />}
             </div>
         );
     }
