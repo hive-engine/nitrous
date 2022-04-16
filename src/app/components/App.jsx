@@ -81,6 +81,11 @@ class App extends React.Component {
         const darkTheme = 'theme-buidl-dark';
         if (localStorage) {
             theme = localStorage.getItem('theme');
+        } 
+        
+        if (localStorage.getItem('theme') === null) {
+            localStorage.setItem('theme', 'theme-buidl-light');
+            location.reload();
         }
 
         if (theme === lightTheme || theme === darkTheme) {
