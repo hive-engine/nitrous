@@ -8,7 +8,7 @@ import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
 import { SIGNUP_URL } from 'shared/constants.js';
-
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 const SidePanel = ({
     alignment,
     visible,
@@ -66,8 +66,7 @@ const SidePanel = ({
             {
                 value: 'engine',
                 label: 'LitePaper',
-                link:
-                    ' https://build-it.blog/builditassets/buildit-litepaper.pdf',
+                link: 'https://eu.docworkspace.com/d/sIHWUtOWLAYXB1pIG',
             },
             {
                 value: 'engine',
@@ -117,11 +116,12 @@ const SidePanel = ({
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
+
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks.extras.map(makeLink)}
                 </ul>
                 <ul className="vertical menu">
-                    {sidePanelLinks['internal'].map(makeLink)}
+                    {sidePanelLinks['internal'].map(makeLink)}  
                 </ul>
             </div>
         </div>
