@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tt from 'counterpart';
+import { HIVE_ENGINE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import * as appActions from 'app/redux/AppReducer';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
-import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
+import { SIGNUP_URL } from 'shared/constants.js';
+
 const SidePanel = ({
     alignment,
     visible,
@@ -63,8 +65,9 @@ const SidePanel = ({
             },
             {
                 value: 'engine',
-                label: 'LitePaper',
-                link: ' https://build-it.blog/builditassets/buildit-litepaper.pdf',
+                label: 'Lite-Paper',
+                link:
+                    ' https://build-it.blog/builditassets/buildit-litepaper.pdf',
             },
             {
                 value: 'engine',
@@ -72,6 +75,7 @@ const SidePanel = ({
                 link: 'https://nftshowroom.com/build-it/gallery',
             },
         ],
+
         external: [
             {
                 label: tt('navigation.chat'),
@@ -99,20 +103,12 @@ const SidePanel = ({
             },
             {
                 label: tt('g.sign_up'),
-                link: useHive ? HIVE_SIGNUP_URL : SIGNUP_URL,
+                link: SIGNUP_URL,
             },
             {
                 value: 'post',
                 label: tt('g.post'),
                 link: '/submit.html',
-            },
-        ],
-        extras_WEED: [
-            {
-                value: 'whitepaper',
-                label: 'White Paper',
-                internal: true,
-                link: '/@coffeebuds/weedcash-network-white-paper',
             },
         ],
     };
@@ -121,35 +117,11 @@ const SidePanel = ({
         <div className="SidePanel">
             <div className={(visible ? 'visible ' : '') + alignment}>
                 <CloseButton onClick={hideSidePanel} />
-
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks.extras.map(makeLink)}
                 </ul>
-
-                {sidePanelLinks['extras_' + scotTokenSymbol] && (
-                    <ul className={'vertical menu'}>
-                        {sidePanelLinks['extras_' + scotTokenSymbol].map(
-                            makeLink
-                        )}
-                    </ul>
-                )}
-
-                {sidePanelLinks['organizational_' + scotTokenSymbol] && (
-                    <ul className="vertical menu">
-                        <li>
-                            <a className="menu-section">Community</a>
-                        </li>
-                        {sidePanelLinks[
-                            'organizational_' + scotTokenSymbol
-                        ].map(makeLink)}
-                    </ul>
-                )}
-
                 <ul className="vertical menu">
-                    {(sidePanelLinks['internal_' + scotTokenSymbol]
-                        ? sidePanelLinks['internal_' + scotTokenSymbol]
-                        : sidePanelLinks['internal']
-                    ).map(makeLink)}
+                    {sidePanelLinks['internal'].map(makeLink)}
                 </ul>
             </div>
         </div>
@@ -161,7 +133,6 @@ SidePanel.propTypes = {
     visible: PropTypes.bool.isRequired,
     hideSidePanel: PropTypes.func.isRequired,
     username: PropTypes.string,
-    scotTokenSymbol: PropTypes.string,
     toggleNightmode: PropTypes.func.isRequired,
 };
 
@@ -172,11 +143,8 @@ SidePanel.defaultProps = {
 export default connect(
     (state, ownProps) => {
         const walletUrl = state.app.get('walletUrl');
-        const scotTokenSymbol = state.app.getIn([
-            'hostConfig',
-            'LIQUID_TOKEN_UPPERCASE',
-        ]);
-        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE'], true);
+        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
+        const useHive = HIVE_ENGINE;
         return {
             walletUrl,
             scotTokenSymbol,

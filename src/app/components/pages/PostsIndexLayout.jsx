@@ -206,7 +206,7 @@ export default connect(
             scotTokenSymbol,
             tokenStats: scotConfig.getIn([
                 'config',
-                hiveEngine ? 'hiveTokenStats' : 'tokenStats',
+                'hiveTokenStats',
             ]),
             showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
             hiveEngine,

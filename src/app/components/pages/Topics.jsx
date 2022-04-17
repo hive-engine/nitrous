@@ -74,13 +74,13 @@ class Topics extends Component {
         browserHistory.push(selectedOption.value);
     };
 
-    currentlySelected = (currentTag, username, currentOrder = false) => {
+    currentlySelected = (currentTag, username, currentOrder = false, defaultUrl = '/trending') => {
         const opts = {
             feed: `/@${username}/feed`,
             tagOnly: `/trending/${currentTag}`,
             orderOnly: `/${currentOrder}`,
             tagWithOrder: `/${currentOrder}/${currentTag}`,
-            default: `/trending`,
+            default: defaultUrl,
         };
         if (currentOrder === 'feed') return opts['feed'];
         if (currentTag && currentOrder) return opts['tagWithOrder'];
@@ -136,7 +136,8 @@ class Topics extends Component {
                     currentlySelected={this.currentlySelected(
                         current,
                         username,
-                        currentOrder
+                        currentOrder,
+                        defaultUrl
                     )}
                     options={opts}
                     onChange={this.handleChange}
