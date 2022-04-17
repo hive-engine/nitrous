@@ -349,7 +349,6 @@ class Header extends React.Component {
                             </Link>
                         </div>
 
-
                         <div className="large-4 columns show-for-large large-centered Header__sort">
                             {/*SORT*/}
                             <SortOrder
