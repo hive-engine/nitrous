@@ -65,7 +65,7 @@ const SidePanel = ({
             },
             {
                 value: 'engine',
-                label: 'LitePaper',
+                label: 'Lite-Paper',
                 link:
                     ' https://build-it.blog/builditassets/buildit-litepaper.pdf',
             },
