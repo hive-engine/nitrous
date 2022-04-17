@@ -85,7 +85,8 @@ class App extends React.Component {
 
         if (theme === lightTheme || theme === darkTheme) {
             body.classList.add(theme);
-        } else {
+        }
+         else {
             body.classList.add(lightTheme);
         }
     }
