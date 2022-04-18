@@ -6,7 +6,6 @@ import { parseJsonTags } from 'app/utils/StateFunctions';
 import Headroom from 'react-headroom';
 import resolveRoute from 'app/ResolveRoute';
 import tt from 'counterpart';
-import { APP_NAME } from 'app/client_config';
 import ElasticSearchInput from 'app/components/elements/ElasticSearchInput';
 import IconButton from 'app/components/elements/IconButton';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
@@ -15,9 +14,8 @@ import * as appActions from 'app/redux/AppReducer';
 import { startPolling } from 'app/redux/PollingSaga';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import Userpic from 'app/components/elements/Userpic';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL } from 'shared/constants';
 import AppLogo from 'app/components/elements/AppLogo';
-import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
@@ -30,6 +28,7 @@ class Header extends React.Component {
     static propTypes = {
         current_account_name: PropTypes.string,
         pathname: PropTypes.string,
+        appName: PropTypes.string,
         getUnreadAccountNotifications: PropTypes.func,
         startNotificationsPolling: PropTypes.func,
         loggedIn: PropTypes.bool,
@@ -135,6 +134,7 @@ class Header extends React.Component {
             nightmodeEnabled,
             showSidePanel,
             navigate,
+            appName,
             display_name,
             content,
             unreadNotificationCount,
@@ -239,7 +239,7 @@ class Header extends React.Component {
             process.env.BROWSER &&
             (route.page !== 'Post' && route.page !== 'PostNoCategory')
         )
-            document.title = page_title + ' — ' + APP_NAME;
+            document.title = page_title + ' — ' + appName;
 
         const _feed = username && `/@${username}/feed`;
         const logo_link = _feed && pathname != _feed ? _feed : '/';
@@ -371,7 +371,7 @@ class Header extends React.Component {
                                     </a>
                                     <a
                                         className="Header__signup-link"
-                                        href={SIGNUP_URL}
+                                        href={HIVE_SIGNUP_URL}
                                     >
                                         {tt('g.sign_up')}
                                     </a>
@@ -395,7 +395,7 @@ class Header extends React.Component {
                                 >
                                     <li className={'Header__userpic '}>
                                         <span title={username}>
-                                            <Userpic account={username} />
+                                            <Userpic account={username} hive />
                                         </span>
                                     </li>
                                 </DropdownMenu>
@@ -423,6 +423,7 @@ const mapStateToProps = (state, ownProps) => {
         return {
             username: null,
             loggedIn: false,
+            appName: state.app.getIn(['hostConfig', 'APP_NAME']),
             community: state.global.get('community', Map({})),
         };
     }
@@ -479,6 +480,7 @@ const mapStateToProps = (state, ownProps) => {
         announcement,
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
+        appName: state.app.getIn(['hostConfig', 'APP_NAME']),
         content,
         unreadNotificationCount,
         notificationActionPending: state.global.getIn([
