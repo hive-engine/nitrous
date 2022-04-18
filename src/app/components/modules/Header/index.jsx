@@ -381,7 +381,7 @@ class Header extends React.Component {
                             {/*SUBMIT STORY*/}
                             {submit_story}
 
-                            <DarkModeBtn toggleBody={toggleBody} />
+                            {/* <DarkModeBtn toggleBody={toggleBody} /> */}
 
                             {/*USER AVATAR */}
                             {loggedIn && (
