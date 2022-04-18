@@ -27,6 +27,7 @@ import { Map } from 'immutable';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
 import DarkModeBtn from '../../DarkMode/DarkModeBtn';
 class Header extends React.Component {
+    // comment
     static propTypes = {
         current_account_name: PropTypes.string,
         pathname: PropTypes.string,
