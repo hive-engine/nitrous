@@ -22,7 +22,7 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import SortOrder from 'app/components/elements/SortOrder';
 import { Map } from 'immutable';
-// import ReactMutationObserver from '../../utils/ReactMutationObserver';
+import ReactMutationObserver from '../../utils/ReactMutationObserver';
 // import DarkModeBtn from '../../DarkMode/DarkModeBtn';
 class Header extends React.Component {
     // comment
