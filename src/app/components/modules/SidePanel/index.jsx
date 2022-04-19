@@ -62,6 +62,17 @@ const SidePanel = ({
                 label: 'Tribaldex',
                 link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
             },
+             {
+                value: 'engine',
+                label: 'LitePaper',
+                link:
+                    ' https://build-it.blog/builditassets/buildit-litepaper.pdf',
+            },
+            {
+                value: 'engine',
+                label: 'NFTs',
+                link: 'https://nftshowroom.com/build-it/gallery',
+            },
         ],
         external: [
             {
@@ -136,9 +147,6 @@ const SidePanel = ({
                 )}
 
                 <ul className="vertical menu">
-                    <li>
-                        <a className="menu-section">Trade {scotTokenSymbol}</a>
-                    </li>
                     {(sidePanelLinks['internal_' + scotTokenSymbol]
                         ? sidePanelLinks['internal_' + scotTokenSymbol]
                         : sidePanelLinks['internal']
