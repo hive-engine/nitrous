@@ -63,6 +63,16 @@ const SidePanel = ({
                 label: 'Buy $Buidl',
                 link: 'https://tribaldex.com/trade/BUIDL',
             },
+            {
+                value: 'engine',
+                label: 'LitePaper',
+                link: 'https://build-it.blog/builditassets/buildit-litepaper.pdf',
+            },
+            {
+                value: 'engine',
+                label: 'NFTs',
+                link: 'https://nftshowroom.com/build-it/gallery',
+            },
         ],
 
         external: [
