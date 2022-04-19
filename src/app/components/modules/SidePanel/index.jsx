@@ -6,7 +6,7 @@ import * as appActions from 'app/redux/AppReducer';
 import CloseButton from 'app/components/elements/CloseButton';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
-import { HIVE_SIGNUP_URL } from 'shared/constants.js';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 
 const SidePanel = ({
     alignment,
@@ -59,11 +59,10 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: 'Buy $Buidl',
-                link: 'https://tribaldex.com/trade/BUIDL',
+                label: 'Tribaldex',
+                link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
             },
         ],
-
         external: [
             {
                 label: tt('navigation.chat'),
@@ -91,12 +90,20 @@ const SidePanel = ({
             },
             {
                 label: tt('g.sign_up'),
-                link: HIVE_SIGNUP_URL,
+                link: useHive ? HIVE_SIGNUP_URL : SIGNUP_URL,
             },
             {
                 value: 'post',
                 label: tt('g.post'),
                 link: '/submit.html',
+            },
+        ],
+        extras_WEED: [
+            {
+                value: 'whitepaper',
+                label: 'White Paper',
+                internal: true,
+                link: '/@coffeebuds/weedcash-network-white-paper',
             },
         ],
     };
@@ -108,8 +115,34 @@ const SidePanel = ({
                 <ul className={`vertical menu ${loggedIn}`}>
                     {sidePanelLinks.extras.map(makeLink)}
                 </ul>
+
+                {sidePanelLinks['extras_' + scotTokenSymbol] && (
+                    <ul className={'vertical menu'}>
+                        {sidePanelLinks['extras_' + scotTokenSymbol].map(
+                            makeLink
+                        )}
+                    </ul>
+                )}
+
+                {sidePanelLinks['organizational_' + scotTokenSymbol] && (
+                    <ul className="vertical menu">
+                        <li>
+                            <a className="menu-section">Community</a>
+                        </li>
+                        {sidePanelLinks[
+                            'organizational_' + scotTokenSymbol
+                        ].map(makeLink)}
+                    </ul>
+                )}
+
                 <ul className="vertical menu">
-                    {sidePanelLinks['internal'].map(makeLink)}
+                    <li>
+                        <a className="menu-section">Trade {scotTokenSymbol}</a>
+                    </li>
+                    {(sidePanelLinks['internal_' + scotTokenSymbol]
+                        ? sidePanelLinks['internal_' + scotTokenSymbol]
+                        : sidePanelLinks['internal']
+                    ).map(makeLink)}
                 </ul>
             </div>
         </div>
@@ -121,6 +154,7 @@ SidePanel.propTypes = {
     visible: PropTypes.bool.isRequired,
     hideSidePanel: PropTypes.func.isRequired,
     username: PropTypes.string,
+    scotTokenSymbol: PropTypes.string,
     toggleNightmode: PropTypes.func.isRequired,
 };
 
@@ -131,8 +165,11 @@ SidePanel.defaultProps = {
 export default connect(
     (state, ownProps) => {
         const walletUrl = state.app.get('walletUrl');
-        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
-        const useHive = HIVE_ENGINE;
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE'], true);
         return {
             walletUrl,
             scotTokenSymbol,
