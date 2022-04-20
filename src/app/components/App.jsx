@@ -41,19 +41,53 @@ class App extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { nightmodeEnabled } = nextProps;
-        this.toggleBodyNightmode(nightmodeEnabled);
-    }
+ darkMode = e => {
+        let clickedClass = 'clicked';
+        const body = document.body;
+        const lightTheme = 'theme-buidl-light';
+        const darkTheme = 'theme-buidl-dark';
+        let theme;
+        let switchTheme;
+
+        if (localStorage) {
+            theme = localStorage.getItem('theme');
+        }
+
+        switchTheme = e => {
+            if (theme === darkTheme) {
+                body.classList.replace(darkTheme, lightTheme);
+                e.target.classList.remove(clickedClass);
+                localStorage.setItem('theme', 'theme-buidl-light');
+                theme = lightTheme;
+            } else {
+                body.classList.replace(lightTheme, darkTheme);
+                e.target.classList.add(clickedClass);
+                localStorage.setItem('theme', 'theme-buidl-dark');
+                theme = darkTheme;
+            }
+        };
+        switchTheme(e);
+    };
 
     componentWillMount() {
         if (process.env.BROWSER) localStorage.removeItem('autopost'); // July 14 '16 compromise, renamed to autopost2
         this.props.loginUser();
     }
 
-    componentDidMount() {
-        const { nightmodeEnabled } = this.props;
-        this.toggleBodyNightmode(nightmodeEnabled);
+     componentDidMount() {
+        let theme;
+        const body = document.body;
+        const lightTheme = 'theme-buidl-light';
+        const darkTheme = 'theme-buidl-dark';
+        if (localStorage) {
+            theme = localStorage.getItem('theme');
+        }
+
+        if (theme === lightTheme || theme === darkTheme) {
+            body.classList.add(theme);
+        } else {
+            body.classList.add(lightTheme);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -169,13 +203,9 @@ class App extends React.Component {
             );
         }
 
-        const themeClass = nightmodeEnabled
-            ? ` theme-${scotTokenSymbolLower}-dark`
-            : ` theme-${scotTokenSymbolLower}-light`;
-
         return (
             <div
-                className={classNames('App', themeClass, {
+                className={classNames('App', {
                     'index-page': ip,
                     'whistle-view': whistleView,
                     withAnnouncement: this.props.showAnnouncement,
@@ -186,6 +216,7 @@ class App extends React.Component {
 
                 {headerHidden ? null : (
                     <Header
+                        toggleBody={this.darkMode}
                         pathname={pathname}
                         category={category}
                         order={order}
