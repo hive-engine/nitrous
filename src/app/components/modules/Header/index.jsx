@@ -23,6 +23,7 @@ import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import SortOrder from 'app/components/elements/SortOrder';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
+import DarkModeBtn from '../../DarkMode/DarkModeBtn';
 
 class Header extends React.Component {
     static propTypes = {
@@ -140,6 +141,7 @@ class Header extends React.Component {
             content,
             unreadNotificationCount,
             notificationActionPending,
+            toggleBody,
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
@@ -382,7 +384,9 @@ class Header extends React.Component {
                             )}
 
                             {/*SUBMIT STORY*/}
-                            {submit_story}
+                            {submit_story} 
+                            {/*DARKMODE TOGGLE*/}
+                            <DarkModeBtn toggleBody={toggleBody} />
                             {/*USER AVATAR */}
                             {loggedIn && (
                                 <DropdownMenu
