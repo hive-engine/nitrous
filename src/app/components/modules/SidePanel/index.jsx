@@ -59,7 +59,7 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: 'Tribaldex',
+                label: 'Buy $buidl',
                 link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
             },
              {
