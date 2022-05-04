@@ -231,6 +231,18 @@ class Topics extends Component {
             );
         });
         return (
+                <li className="c-sidebar__list-item" key={tag}>
+                    <Link
+                        to={link}
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        {label}
+                    </Link>
+                </li>
+            );
+        });
+        return (
             <div className="c-sidebar__module">
                 <div className="c-sidebar__content">
                     <ul className="c-sidebar__list">
@@ -245,7 +257,105 @@ class Topics extends Component {
                                 </Link>
                             </div>
                         </li>
-                        {categoriesLinks}
+                    <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/art"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Art
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/buidl"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Buidl
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/created/build-it"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Build-it
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/crafts"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Crafts
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/created/hive-127911"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Crocheting
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/hivediy"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        DIY español
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/handmade"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Handmade
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/created/homeimprovement"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Home Improvement
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/homesteading"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Homesteading
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/trending/tutorial"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Tutorial
+                    </Link>
+                   </li>
+                   <li className="c-sidebar__list-item" >
+                    <Link
+                        to="/created/socialecology"
+                        className="c-sidebar__link"
+                        activeClassName="active"
+                    >
+                        Social Ecology
+                    </Link>
+                   </li>
                     </ul>
                 </div>
             </div>
