@@ -125,7 +125,7 @@ class Topics extends Component {
                 categories
                     .map(cat => {
                         const { tag, label } = parseCategory(cat, communityMap);
-                        
+
                         const link = order ? `/${order}/${tag}` : `/${tag}`;
                         return { value: link, label: label };
                     })
@@ -236,6 +236,7 @@ class Topics extends Component {
                     <ul className="c-sidebar__list">
                         <li className="c-sidebar__list-item">
                             <div className="c-sidebar__header">
+                                {/* Tittle  */}
                                 <Link
                                     to={'/' + order}
                                     className="c-sidebar__link"
@@ -245,6 +246,7 @@ class Topics extends Component {
                                 </Link>
                             </div>
                         </li>
+                        {/* Added Static Tags */}
                     <li className="c-sidebar__list-item" >
                     <Link
                         to="/trending/art"
