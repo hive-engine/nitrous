@@ -231,18 +231,6 @@ class Topics extends Component {
             );
         });
         return (
-                <li className="c-sidebar__list-item" key={tag}>
-                    <Link
-                        to={link}
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        {label}
-                    </Link>
-                </li>
-            );
-        });
-        return (
             <div className="c-sidebar__module">
                 <div className="c-sidebar__content">
                     <ul className="c-sidebar__list">
