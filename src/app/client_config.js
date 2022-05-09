@@ -20,7 +20,7 @@ const BUIDL = {
         'creating and curating content. It leverages a robust digital points system, called BUIDL, that ' +
         'supports real value for digital rewards through market price discovery and liquidity',
     // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
+    NO_ADS_STAKE_THRESHOLD: 999999999,
     REVIVE_ADS: {},
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
