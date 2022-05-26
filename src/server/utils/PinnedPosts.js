@@ -66,8 +66,10 @@ export async function pinnedPosts() {
                 scotTokenSymbol,
                 preferHive
             );
-            post.pinned = true;
-            loadedPostData.pinned_posts.push(post);
+            if (post) {
+                post.pinned = true;
+                loadedPostData.pinned_posts.push(post);
+            }
         }
 
         for (const notice of postData.notices) {
