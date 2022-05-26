@@ -562,7 +562,7 @@ export async function getContentAsync(
     let content;
     let scotData;
     if (preferHive) {
-        content = await getContentFromBridge(author, permlink, true),
+        content = await getContentFromBridge(author, permlink, true);
         if (content) {
           content.hive = true;
         }
