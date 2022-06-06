@@ -8,8 +8,6 @@ ENV DOCKER_TAG ${DOCKER_TAG}
 # yarn > npm
 #RUN npm install --global yarn
 
-RUN npm install -g yarn
-
 WORKDIR /var/app
 RUN mkdir -p /var/app
 ADD package.json yarn.lock /var/app/
