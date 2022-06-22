@@ -190,9 +190,6 @@ export default connect(
             const username = currentUser.get('username');
 
             const successCallback = () => {
-                dispatch(
-                    globalActions.getState({ url: `@${username}/transfers` })
-                ); // refresh transfer history
                 onClose();
             };
             const transferOperation = {
