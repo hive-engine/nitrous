@@ -1,8 +1,7 @@
 import React from 'react';
-import moondark from './moon.png'; 
-// Darkmode Toggle
+import moondark from './moon.png';
 const DarkModeBtn = ({ toggleBody }) => {
-    return ( 
+    return (
         <div style={{ marginLeft: '20px' }}>
             <button
                 id="darkMode"
