@@ -10,7 +10,7 @@ import {
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from '@hive-engine/sscjs';
 const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;

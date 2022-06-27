@@ -312,8 +312,7 @@ class PostFull extends React.Component {
         } = content;
         const jsonMetadata = showReply ? null : post.get('json_metadata');
         const link = `/${category}/@${author}/${permlink}`;
-        let app_info = '';
-        if (jsonMetadata) app_info = jsonMetadata.app;
+        let app_info = post.get('app');
 
         const { category, title, body } = content;
 
@@ -513,7 +512,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
-        const canTribeMute = username === tokenAccount || username === muteAccount;
+        const canTribeMute = username === tokenAccount || (muteAccount && username === muteAccount);
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 

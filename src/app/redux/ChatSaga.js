@@ -247,7 +247,7 @@ export function* logout() {
 
 export function* fetchChatList(action) {
   const chatList = yield authorizedCallChatApi('messages/conversations');
-  const finalChatList = CHAT_CONVERSATIONS.concat(chatList);
+  const finalChatList = CHAT_CONVERSATIONS ? CHAT_CONVERSATIONS.concat(chatList) : chatList;
   yield put(
       reducer.receiveChatList(finalChatList)
   );

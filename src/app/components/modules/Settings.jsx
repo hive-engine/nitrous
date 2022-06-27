@@ -83,9 +83,6 @@ class Settings extends React.Component {
 
         let preferred = this.getPreferredApiEndpoint();
         hiveApi.api.setOptions({ url: preferred });
-        hiveApi.utils.autoDetectApiVersion().then(() => {
-            hiveApi.broadcast.updateOperations();
-        });
         this.synchronizeLists();
     }
 
