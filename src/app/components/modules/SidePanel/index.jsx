@@ -72,6 +72,11 @@ const SidePanel = ({
                 label: 'NFTs',
                 link: 'https://nftshowroom.com/build-it/gallery',
             },
+            {
+                value: 'engine',
+                label: 'FAQ',
+                link: '/faq.html',
+            },
         ],
         external: [
             {
