@@ -59,8 +59,18 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: 'Buy $buidl',
-                link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
+                label: 'Leo Dex',
+                link: 'https://leodex.io/market/BUIDL',
+            },
+            {
+                value: 'engine',
+                label: 'Hive Engine',
+                link: 'https://hive-engine.com/trade/BUIDL',
+            },
+            {
+                value: 'engine',
+                label: 'Tribal Dex',
+                link: 'https://tribaldex.com/trade/BUIDL',
             },
             {
                 value: 'engine',
@@ -151,6 +161,9 @@ const SidePanel = ({
                 )}
 
                 <ul className="vertical menu">
+                <li>
+                  <a className="menu-section">Buy $buidl</a>
+                </li>
                     {(sidePanelLinks['internal_' + scotTokenSymbol]
                         ? sidePanelLinks['internal_' + scotTokenSymbol]
                         : sidePanelLinks['internal']
