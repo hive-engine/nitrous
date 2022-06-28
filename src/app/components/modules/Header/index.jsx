@@ -145,7 +145,6 @@ class Header extends React.Component {
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
-
         /*Set the document.title on each header render.*/
         const route = resolveRoute(pathname);
         let gptTags = [];
@@ -309,6 +308,7 @@ class Header extends React.Component {
                 }
             }
         };
+
         return (
             <Headroom
                 onUnpin={e => this.headroomOnUnpin(e)}
@@ -332,6 +332,7 @@ class Header extends React.Component {
                             />
                         )}
                     {/* If announcement is shown, ad will not render unless it's in a parent div! */}
+
                     <div style={showAd ? {} : { display: 'none' }}>
                         <GptAd
                             type="Freestar"
@@ -360,6 +361,21 @@ class Header extends React.Component {
                             />
                         </div>
                         <div className="small-7 large-4 columns Header__buttons">
+                            {/*CUSTOM SEARCH*/}
+                            <span
+                                className="Header__search--desktop--new"
+                                style={{ marginRight: 20 }}
+                            >
+                                <ElasticSearchInput
+                                    addHistory={true}
+                                    redirect
+                                />
+                            </span>
+                            <span className="Header__search">
+                                <a href="/search">
+                                    <IconButton icon="magnifyingGlass" />
+                                </a>
+                            </span>
                             {/*NOT LOGGED IN SIGN IN AND SIGN UP LINKS*/}
                             {!loggedIn && (
                                 <span className="Header__user-signup show-for-medium">
@@ -384,7 +400,7 @@ class Header extends React.Component {
                             )}
 
                             {/*SUBMIT STORY*/}
-                            {submit_story} 
+                            {submit_story}
                             {/*DARKMODE TOGGLE*/}
                             <DarkModeBtn toggleBody={toggleBody} />
                             {/*USER AVATAR */}

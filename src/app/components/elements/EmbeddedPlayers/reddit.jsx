@@ -135,7 +135,9 @@ function generateRedditCode(metadata) {
         redditCode =
             `<blockquote class="reddit-card" data-created="${date}">` +
             `<a href="${url}">${description}</a>` +
-            `from <a href="http://www.reddit.com/r/${group}">r/${group}</a></blockquote>`;
+            `from <a href="http://www.reddit.com/r/${group}">r/${
+                group
+            }</a></blockquote>`;
     }
 
     return {
@@ -180,7 +182,9 @@ export function embedNode(child) {
             const metadata = `|${reddit.group}|${reddit.url}|`;
             child.data = data.replace(
                 regex.main,
-                `~~~ embed:${reddit.id} reddit metadata:${Buffer.from(metadata).toString('base64')} ~~~`
+                `~~~ embed:${reddit.id} reddit metadata:${Buffer.from(
+                    metadata
+                ).toString('base64')} ~~~`
             );
         }
     } catch (error) {
@@ -200,10 +204,14 @@ export function preprocessHtml(child) {
         if (typeof child === 'string') {
             const reddit = extractMetadataFromEmbedCode(child);
             if (reddit) {
-                const metadata = `${reddit.date}|${reddit.group}|${reddit.url}|${reddit.description}`;
+                const metadata = `${reddit.date}|${reddit.group}|${
+                    reddit.url
+                }|${reddit.description}`;
                 child = child.replace(
                     regex.htmlReplacement,
-                    `~~~ embed:${reddit.id} reddit metadata:${Buffer.from(metadata).toString('base64')} ~~~`
+                    `~~~ embed:${reddit.id} reddit metadata:${Buffer.from(
+                        metadata
+                    ).toString('base64')} ~~~`
                 );
             }
         }

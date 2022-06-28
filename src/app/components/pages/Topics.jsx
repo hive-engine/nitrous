@@ -74,7 +74,12 @@ class Topics extends Component {
         browserHistory.push(selectedOption.value);
     };
 
-    currentlySelected = (currentTag, username, currentOrder = false, defaultUrl = '/trending') => {
+    currentlySelected = (
+        currentTag,
+        username,
+        currentOrder = false,
+        defaultUrl = '/trending'
+    ) => {
         const opts = {
             feed: `/@${username}/feed`,
             tagOnly: `/trending/${currentTag}`,
@@ -109,7 +114,8 @@ class Topics extends Component {
             const extras = username => {
                 const ex = {
                     allTags: order => ({
-                        value: currentOrder == 'feed' ? defaultUrl : `/${order}`,
+                        value:
+                            currentOrder == 'feed' ? defaultUrl : `/${order}`,
                         label: `${tt('g.all_tags_mobile')}`,
                     }),
                     myFeed: name => ({
@@ -247,105 +253,105 @@ class Topics extends Component {
                             </div>
                         </li>
                         {/* Added Static Tags */}
-                    <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/art"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Art
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/buidl"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Buidl
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/created/build-it"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Build-it
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/crafts"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Crafts
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/created/hive-127911"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Crocheting
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/hivediy"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        DIY español
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/handmade"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Handmade
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/created/homeimprovement"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Home Improvement
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/homesteading"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Homesteading
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/trending/tutorial"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Tutorial
-                    </Link>
-                   </li>
-                   <li className="c-sidebar__list-item" >
-                    <Link
-                        to="/created/socialecology"
-                        className="c-sidebar__link"
-                        activeClassName="active"
-                    >
-                        Social Ecology
-                    </Link>
-                   </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/art"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Art
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/buidl"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Buidl
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/created/build-it"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Build-it
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/crafts"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Crafts
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/created/hive-127911"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Crocheting
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/hivediy"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                DIY español
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/handmade"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Handmade
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/created/homeimprovement"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Home Improvement
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/homesteading"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Homesteading
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/trending/tutorial"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Tutorial
+                            </Link>
+                        </li>
+                        <li className="c-sidebar__list-item">
+                            <Link
+                                to="/created/socialecology"
+                                className="c-sidebar__link"
+                                activeClassName="active"
+                            >
+                                Social Ecology
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -425,7 +431,10 @@ export default connect(
         categories.forEach(c => {
             const { tag } = parseCategory(c);
             if (ifHivemind(tag)) {
-                communityMap[tag] = state.global.getIn(['community', ifHivemind(tag), 'title'], null);
+                communityMap[tag] = state.global.getIn(
+                    ['community', ifHivemind(tag), 'title'],
+                    null
+                );
             }
         });
         const hostConfig = state.app.get('hostConfig', Map());

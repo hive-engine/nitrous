@@ -54,13 +54,20 @@
 }
 
 .welcomeBanner {
-  margin-top: -1rem;
-  padding: 0;
+  padding: 8.3% 0 0 0;
   background-color: $color-blue-black;
   color: $color-white;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-
+img {
+    max-width: 100vh;
+    display: inline-block;
+    vertical-align: middle;
+    height: auto;
+}
+.welcomeImage-mobile{
+    display: none;
+}
   h2 {
     font-weight: bold;
     margin-bottom: 16px;
@@ -77,7 +84,7 @@
   h4 {
     color: $color-white;
     font-weight: normal;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     width: 85%;
     max-width: 360px;
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -91,6 +98,7 @@
 
   .row {
     align-items: center;
+    flex: 0 !important;
   }
 
   .button {
@@ -154,14 +162,46 @@
     &:hover, &:focus {
         @include themify($themes) {
             box-shadow: 0px 0px 0px 0 #30414A, 4px 4px 0 0 themed('colorAccent');
-        } 
-    } 
+        }
+    }
+  }
+  .rows{
+   position: relative;
+   width: 90%;
+   margin: auto;
+   padding-bottom: 3%;
+  }
+.h2txt{
+    max-width: 100% !important;
+    width: 54%;
+    @media (max-width: 868px) {
+        width: 94%;
+      }
+}
+  .heroimg {
+    width: 50%;
+    position: absolute;
+    right: 0;
+    top: -37px;
+
+    @include MQ(M) {
+       top: -14%;
+      }
+    @media (max-width: 1199px) {
+      top: 0%;
+    }
+    @media (max-width: 999px) {
+        top: 6%;
+      }
+    @media (max-width: 790px) {
+        top: 6%;
+      }
   }
 
   .heroImage {
-    max-height: 360px;
     @include opacity(0);
     animation: fade-in-up 0.6s ease-out both;
+    border-radius: 5px;
     @media screen and (prefers-reduced-motion) {
       animation: none;
       @include opacity(1);
@@ -176,13 +216,42 @@
   }
 
   .welcomePitch {
-    padding: 20px;
+    padding: 10px;
+    margin-left: 10%;
     @include MQ(M) {
-      padding: 0;
+      padding: 10px;
+      margin-left: 10%;
     }
+    @media (max-width: 1199px) {
+        margin-left: 6%;
+      }
+      @media (max-width: 999px) {
+        margin-left: 4%;
+        }
+      @media (max-width: 790px) {
+        margin-left: 2%;
+        }
+        @media (max-width: 490px) {
+            margin-left: 0%;
+            }
   }
 }
-
+.Header__search{
+    margin-right: 13px;
+    display: none;
+    @media (max-width: 1400px) {
+        display: block;
+        }
+}
+.Header__search--desktop--new {
+    display: block;
+    @media (max-width: 1400px) {
+        display: none;
+        }
+}
+.flexBtn{
+    display: flex;
+}
 .downvoted {
     opacity: 0.5;
     //-webkit-filter: grayscale(1); // image

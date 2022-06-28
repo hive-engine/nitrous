@@ -91,7 +91,10 @@ export function embedNode(child, links) {
         const truvvl = extractMetadata(data);
         if (!truvvl) return child;
 
-        child.data = data.replace(truvvl.url, `~~~ embed:${truvvl.fullId} truvvl ~~~`);
+        child.data = data.replace(
+            truvvl.url,
+            `~~~ embed:${truvvl.fullId} truvvl ~~~`
+        );
 
         if (links) {
             links.add(truvvl.canonical);
@@ -117,7 +120,12 @@ export function genIframeMd(idx, id, width, height) {
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
-        if (Object.prototype.hasOwnProperty.call(sandboxConfig, 'sandboxAttributes')) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
             sandbox = sandboxConfig.sandboxAttributes.join(' ');
         }
     }

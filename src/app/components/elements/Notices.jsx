@@ -5,10 +5,17 @@ import { Link } from 'react-router';
 import TimeAgoWrapper from 'app/components/elements/TimeAgoWrapper';
 import { connect } from 'react-redux';
 
-const Notice = ({ notice }) => {
-    if (!notice || !notice.title) {
-        return null;
-    }
+const Notice = () => {
+    const notice = [
+        {
+            title: 'test',
+            category: 'yea',
+            author: 'abod',
+            permlink: 'http://localhost:8080/',
+            tag: 'test',
+            created: 1655458201000,
+        },
+    ];
 
     const url = `/${notice.category}/@${notice.author}/${notice.permlink}`;
     const tag = notice.tag ? (
@@ -53,7 +60,7 @@ const SteemitNotices = ({ notices }) => {
     if (!notices || notices.length === 0) {
         return null;
     }
-
+    console.log(notices, 'jjj');
     return (
         <div className="c-sidebar__module">
             <div className="c-sidebar__header">

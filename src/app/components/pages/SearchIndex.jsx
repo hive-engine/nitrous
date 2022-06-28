@@ -88,17 +88,12 @@ class SearchIndex extends React.Component {
                                 initValue={params.q}
                                 expanded={true}
                                 handleSubmit={q => {
-                                    performSearch({ q, s: undefined });
+                                    performSearch({ q, q });
                                 }}
                                 redirect={true}
                             />
                         </div>
                     </div>
-                    {!loading && result.length === 0 ? (
-                        <Callout>{'Nothing was found.'}</Callout>
-                    ) : (
-                        searchResults
-                    )}
                 </article>
             </div>
         );

@@ -19,7 +19,7 @@ class ElasticSearchInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.initValue ? this.props.initValue : '',
+            value: this.props.initValue,
         };
         this.handleChange = this.handleChange.bind(this);
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
@@ -33,7 +33,8 @@ class ElasticSearchInput extends React.Component {
         e.preventDefault();
         const { handleSubmit, redirect } = this.props;
         handleSubmit && handleSubmit(this.state.value);
-        redirect && browserHistory.push(`/search?q=${this.state.value}`);
+        redirect &&
+            browserHistory.push(`/search?q=${this.state.value} +build-it.io`);
     };
 
     render() {
@@ -42,7 +43,13 @@ class ElasticSearchInput extends React.Component {
             : 'search-input';
         return (
             <span>
-                <form className={formClass} onSubmit={this.onSearchSubmit}>
+                <form
+                    className={formClass}
+                    type="url"
+                    action="https://engine.presearch.org/search?"
+                    method="get"
+                    style={{ background: 'transparent', border: 'none' }}
+                >
                     <svg
                         className="search-input__icon"
                         width="42"
@@ -66,6 +73,12 @@ class ElasticSearchInput extends React.Component {
                         placeholder={tt('g.search')}
                         onChange={this.handleChange}
                         value={this.state.value}
+                    />
+                    <input
+                        name="q"
+                        className="search-input__inner"
+                        type="hidden"
+                        value="build-it.io"
                     />
                 </form>
             </span>

@@ -243,7 +243,9 @@ class CommentImpl extends React.Component {
 
         const author = post.get('author');
         const comment = post.toJS();
-        const gray = (comment.stats && comment.stats.gray) || ImageUserBlockList.includes(author);
+        const gray =
+            (comment.stats && comment.stats.gray) ||
+            ImageUserBlockList.includes(author);
 
         const allowReply = Role.canComment(community, viewer_role);
         const canEdit = username && username === author;

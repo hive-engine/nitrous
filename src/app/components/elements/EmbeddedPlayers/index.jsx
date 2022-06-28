@@ -70,7 +70,12 @@ function getIframeDimensions(large) {
  * @param url
  * @returns { boolean | { providerId: string, sandboxAttributes: string[], useSandbox: boolean, validUrl: string }}
  */
-export function validateIframeUrl(url, large = true, width = null, height = null) {
+export function validateIframeUrl(
+    url,
+    large = true,
+    width = null,
+    height = null
+) {
     if (!url) {
         return {
             validUrl: false,
@@ -85,7 +90,14 @@ export function validateIframeUrl(url, large = true, width = null, height = null
         const validUrl = callProviderMethod(provider, 'validateIframeUrl', url);
 
         let iframeDimensions;
-        iframeDimensions = callProviderMethod(provider, 'getIframeDimensions', large, url, width, height);
+        iframeDimensions = callProviderMethod(
+            provider,
+            'getIframeDimensions',
+            large,
+            url,
+            width,
+            height
+        );
         if (!iframeDimensions) {
             iframeDimensions = getIframeDimensions(large);
         }
@@ -119,7 +131,11 @@ export function normalizeEmbedUrl(url) {
         const providerName = providersKeys[pi];
         const provider = supportedProviders[providerName];
 
-        const validEmbedUrl = callProviderMethod(provider, 'normalizeEmbedUrlFn', url);
+        const validEmbedUrl = callProviderMethod(
+            provider,
+            'normalizeEmbedUrlFn',
+            url
+        );
 
         if (validEmbedUrl === true) {
             console.log(`Found a valid ${provider.id} embedded URL`);
@@ -143,7 +159,13 @@ export function embedNode(child, links, images) {
         const providerName = providersKeys[pi];
         const provider = supportedProviders[providerName];
 
-        const newChild = callProviderMethod(provider, 'embedNode', child, links, images);
+        const newChild = callProviderMethod(
+            provider,
+            'embedNode',
+            child,
+            links,
+            images
+        );
         if (newChild) {
             child = newChild;
         }
@@ -187,7 +209,9 @@ function getProviderIds() {
 export function generateMd(section, idx, large) {
     let markdown = null;
     const supportedProvidersIds = getProviderIds();
-    const regexString = `^([A-Za-z0-9\\?\\=\\_\\-\\/\\.]+) (${supportedProvidersIds.join('|')})\\s?(.*?) ~~~`;
+    const regexString = `^([A-Za-z0-9\\?\\=\\_\\-\\/\\.]+) (${supportedProvidersIds.join(
+        '|'
+    )})\\s?(.*?) ~~~`;
     const regex = new RegExp(regexString);
     const match = section.match(regex);
 
@@ -204,7 +228,12 @@ export function generateMd(section, idx, large) {
 
         const provider = getProviderById(type);
         if (provider) {
-            let iframeDimensions = callProviderMethod(provider, 'getIframeDimensions', large, id);
+            let iframeDimensions = callProviderMethod(
+                provider,
+                'getIframeDimensions',
+                large,
+                id
+            );
             if (!iframeDimensions) {
                 iframeDimensions = getIframeDimensions(large);
             }
@@ -223,7 +252,9 @@ export function generateMd(section, idx, large) {
         }
 
         if (match[3]) {
-            section = section.substring(`${id} ${type} ${metadataString} ~~~`.length);
+            section = section.substring(
+                `${id} ${type} ${metadataString} ~~~`.length
+            );
         } else {
             section = section.substring(`${id} ${type} ~~~`.length);
         }

@@ -62,7 +62,7 @@ const SidePanel = ({
                 label: 'Buy $buidl',
                 link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
             },
-             {
+            {
                 value: 'engine',
                 label: 'LitePaper',
                 link: 'https://eu.docworkspace.com/d/sIHWUtOWLAYXB1pIG',

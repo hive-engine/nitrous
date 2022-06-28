@@ -174,10 +174,12 @@ export default connect(
             const xStr = x.toString();
             const pointIndex = xStr.indexOf('.');
             const expIndex = xStr.indexOf('e');
-            return +(xStr.slice(
-                0,
-                pointIndex > -1 ? scotPrecision + 1 + pointIndex : undefined
-            ) + (expIndex > -1 ? xStr.slice(expIndex) : ''));
+            return +(
+                xStr.slice(
+                    0,
+                    pointIndex > -1 ? scotPrecision + 1 + pointIndex : undefined
+                ) + (expIndex > -1 ? xStr.slice(expIndex) : '')
+            );
         };
         const lockedStake = tokenUnstakes
             .filter(unstake => unstake.numberTransactionsLeft > 1)

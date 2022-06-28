@@ -9,13 +9,13 @@
     background-color: themed('moduleBackgroundColor');
   }
   &.side-by-side {
-    max-width: 100%;
+
   }
   .preview-container {
     max-width: 48rem;
     margin-left: 5rem;
     &.side-by-side {
-        max-width: 100%;
+
         margin-left: 0;
     }
   }
@@ -61,7 +61,7 @@
 
 .comment-editor .ReplyEditor .column {
   flex: 100%;
-  max-width: 100%;
+
 }
 
 .comment-editor .ReplyEditor .side-by-side {
@@ -123,7 +123,7 @@
 }
 
 .ReplyEditor .Preview {
-  max-width: 100%;
+
   margin-left: auto;
   margin-right: auto;
 }

@@ -110,7 +110,9 @@ export function embedNode(child) {
         if (gist) {
             child.data = data.replace(
                 regex.main,
-                `~~~ embed:${gist.id} gist metadata:${Buffer.from(gist.fullId).toString('base64')} ~~~`
+                `~~~ embed:${gist.id} gist metadata:${Buffer.from(
+                    gist.fullId
+                ).toString('base64')} ~~~`
             );
         }
     } catch (error) {
@@ -132,7 +134,9 @@ export function preprocessHtml(child) {
             if (gist) {
                 child = child.replace(
                     regex.htmlReplacement,
-                    `~~~ embed:${gist.id} gist metadata:${Buffer.from(gist.fullId).toString('base64')} ~~~`
+                    `~~~ embed:${gist.id} gist metadata:${Buffer.from(
+                        gist.fullId
+                    ).toString('base64')} ~~~`
                 );
             }
         }

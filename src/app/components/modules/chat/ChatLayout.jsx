@@ -1,10 +1,6 @@
 import React from 'react';
 import Icon from 'app/components/elements/Icon';
-import {
-    CloseIcon,
-    IconButton,
-    TitleBar,
-} from '@livechat/ui-kit';
+import { CloseIcon, IconButton, TitleBar } from '@livechat/ui-kit';
 
 export default function ChatLayout(props) {
     const { children, minimize, title, showChatList } = props;
@@ -17,11 +13,15 @@ export default function ChatLayout(props) {
             }}
         >
             <TitleBar
-                leftIcons={showChatList ? [
-                    <IconButton key="menu" onClick={showChatList}>
-                      <Icon name='menu' className="chatMenuIcon" /> 
-                    </IconButton>,
-                ] : []}
+                leftIcons={
+                    showChatList
+                        ? [
+                              <IconButton key="menu" onClick={showChatList}>
+                                  <Icon name="menu" className="chatMenuIcon" />
+                              </IconButton>,
+                          ]
+                        : []
+                }
                 rightIcons={[
                     <IconButton key="close" onClick={minimize}>
                         <CloseIcon />
