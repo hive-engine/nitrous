@@ -1,18 +1,19 @@
 import React from 'react';
 import moondark from './moon.png';
-//Darkmode Toggle
+import moonlight from './moon_light.png';
 const DarkModeBtn = ({ toggleBody }) => {
     return (
-        <div style={{ marginLeft: '20px' }}>
+        <div style={{ marginLeft: '2px' }}>
             <button
                 id="darkMode"
                 style={{ cursor: 'pointer' }}
                 onClick={e => toggleBody(e)}
             >
+                {' '}
                 <div id="moon">
                     <img
                         src={moondark}
-                        alt="moon"
+                        alt="moonlight"
                         width="40px"
                         style={{ marginLeft: '10px' }}
                     />

@@ -118,9 +118,9 @@ class TransferHistoryRow extends React.Component {
             message = (
                 <span>
                     {tt(['transferhistoryrow_jsx', 'staking_reward'], {
-                        amount: `${formatScotAmount(
-                            op.quantity,
-                        )} ${scotTokenSymbol}`,
+                        amount: `${formatScotAmount(op.quantity)} ${
+                            scotTokenSymbol
+                        }`,
                     })}
                 </span>
             );
@@ -133,9 +133,9 @@ class TransferHistoryRow extends React.Component {
             message = (
                 <span>
                     {tt(['transferhistoryrow_jsx', op.type], {
-                        amount: `${formatScotAmount(
-                            op.quantity,
-                        )} ${scotTokenSymbol}`,
+                        amount: `${formatScotAmount(op.quantity)} ${
+                            scotTokenSymbol
+                        }`,
                     })}
                     {op.type != 'mining_reward' &&
                         postLink(appUrl, op.author, op.permlink)}

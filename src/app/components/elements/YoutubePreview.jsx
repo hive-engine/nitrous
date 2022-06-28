@@ -43,10 +43,10 @@ class YoutubePreview extends React.Component {
             const thumbnail =
                 width <= 320
                     ? 'mqdefault.jpg'
-                    : width <= 480
-                    ? 'hqdefault.jpg'
-                    : '0.jpg';
-            const previewLink = `https://img.youtube.com/vi/${youTubeId}/${thumbnail}`;
+                    : width <= 480 ? 'hqdefault.jpg' : '0.jpg';
+            const previewLink = `https://img.youtube.com/vi/${youTubeId}/${
+                thumbnail
+            }`;
 
             return (
                 <div
@@ -63,7 +63,9 @@ class YoutubePreview extends React.Component {
                 </div>
             );
         }
-        const autoPlaySrc = `https://www.youtube.com/embed/${youTubeId}?autoplay=1&autohide=1&${dataParams}&start=${startTime}`;
+        const autoPlaySrc = `https://www.youtube.com/embed/${
+            youTubeId
+        }?autoplay=1&autohide=1&${dataParams}&start=${startTime}`;
 
         return (
             <div className="videoWrapper">

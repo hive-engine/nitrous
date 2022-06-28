@@ -46,7 +46,11 @@ class EmbeddedGist extends React.Component {
             this.addStylesheet(gistData.stylesheet);
         }.bind(this);
 
-        let url = 'https://gist.github.com/' + gist + '.json?callback=' + gistCallback;
+        let url =
+            'https://gist.github.com/' +
+            gist +
+            '.json?callback=' +
+            gistCallback;
         if (file) {
             url += '&file=' + file;
         }

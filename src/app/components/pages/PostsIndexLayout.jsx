@@ -204,10 +204,7 @@ export default connect(
             username,
             interleavePromoted: hostConfig.get('INTERLEAVE_PROMOTED', false),
             scotTokenSymbol,
-            tokenStats: scotConfig.getIn([
-                'config',
-                'hiveTokenStats',
-            ]),
+            tokenStats: scotConfig.getIn(['config', 'hiveTokenStats']),
             showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
             hiveEngine,
             reviveEnabled,

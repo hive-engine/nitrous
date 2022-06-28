@@ -28,7 +28,13 @@ class NewConversation extends React.Component {
             setConversation,
         } = this.props;
         if (chatList && this.state.submitting) {
-            const newChat = chatList.filter(c => c.has('members') && Set(c.get('members').filter(m => m !== username)).equals(Set([this.state.to])));
+            const newChat = chatList.filter(
+                c =>
+                    c.has('members') &&
+                    Set(c.get('members').filter(m => m !== username)).equals(
+                        Set([this.state.to])
+                    )
+            );
             if (!newChat.isEmpty()) {
                 this.setState({
                     to: '',
@@ -53,25 +59,22 @@ class NewConversation extends React.Component {
     }
 
     render() {
-        const { 
-            minimize,
-            setNewConversation,
-        } = this.props;
-        const {
-            submitting,
-            to,
-            message,
-        } = this.state;
-        const title = "New Conversation";
+        const { minimize, setNewConversation } = this.props;
+        const { submitting, to, message } = this.state;
+        const title = 'New Conversation';
         return (
-            <ChatLayout title={title} minimize={minimize} showChatList={() => setNewConversation(false)}>
-                <div className='ChatListBackground'>
-                    <form
-                        onSubmit={this.onSubmit}
-                    >
+            <ChatLayout
+                title={title}
+                minimize={minimize}
+                showChatList={() => setNewConversation(false)}
+            >
+                <div className="ChatListBackground">
+                    <form onSubmit={this.onSubmit}>
                         <Row>
                             <Column>
-                                <Title style={{margin: '0.5em', width: '5em'}}>
+                                <Title
+                                    style={{ margin: '0.5em', width: '5em' }}
+                                >
                                     Recipient:
                                 </Title>
                             </Column>
@@ -114,24 +117,31 @@ class NewConversation extends React.Component {
                                     value={to || ''}
                                     onChange={e => {
                                         this.setState({
-                                            to: e.target.value
+                                            to: e.target.value,
                                         });
                                     }}
-                                    onSelect={val =>
-                                        this.setState({ to: val })
-                                    }
+                                    onSelect={val => this.setState({ to: val })}
                                 />
                             </Column>
                         </Row>
                         <Row>
                             <Column>
-                                <Title style={{margin: '0.5em', width: '5em'}}>
+                                <Title
+                                    style={{ margin: '0.5em', width: '5em' }}
+                                >
                                     Message:
                                 </Title>
                             </Column>
                             <Column>
-                                <input type='text' value={message} onChange={e => this.setState({message: e.target.value})}
-                                    style={{margin: '0.5em'}}
+                                <input
+                                    type="text"
+                                    value={message}
+                                    onChange={e =>
+                                        this.setState({
+                                            message: e.target.value,
+                                        })
+                                    }
+                                    style={{ margin: '0.5em' }}
                                 />
                             </Column>
                         </Row>
@@ -140,7 +150,7 @@ class NewConversation extends React.Component {
                                 type="submit"
                                 disabled={submitting || !to || !message}
                                 className="button"
-                                style={{margin: '0.5em'}}
+                                style={{ margin: '0.5em' }}
                             >
                                 Create
                             </button>
@@ -161,17 +171,17 @@ export default connect(
             ...ownProps,
             username,
             chatList,
-            following: state.global.getIn([
-                'follow',
-                'getFollowingAsync',
-                username,
-                'blog_result',
-            ], List()).toJS(),
+            following: state.global
+                .getIn(
+                    ['follow', 'getFollowingAsync', username, 'blog_result'],
+                    List()
+                )
+                .toJS(),
         };
     },
     dispatch => ({
         startChat: (to, message) => {
             dispatch(chatActions.startChat({ to, message }));
         },
-    }),
+    })
 )(NewConversation);

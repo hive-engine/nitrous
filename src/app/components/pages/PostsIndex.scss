@@ -11,6 +11,12 @@
   margin-left: 0;
 }
 
+.announce a:hover {
+    color: #1a5099 !important;
+    }
+.announce a:visited{
+    color: none !important;
+    }
 .PostsIndex {
   .articles__h1--no-wrap {
     white-space: nowrap;

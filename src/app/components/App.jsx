@@ -13,7 +13,9 @@ import WelcomePanel from 'app/components/elements/WelcomePanel';
 import tt from 'counterpart';
 import { VIEW_MODE_WHISTLE } from 'shared/constants';
 
-const ChatWrapper = process.env.BROWSER && require('app/components/modules/chat/ChatWrapper').default;
+const ChatWrapper =
+    process.env.BROWSER &&
+    require('app/components/modules/chat/ChatWrapper').default;
 
 class App extends React.Component {
     constructor(props) {
@@ -21,7 +23,7 @@ class App extends React.Component {
         // TODO: put both of these and associated toggles into Redux Store.
         this.state = {
             showCallout: true,
-            showBanner: false,
+            showBanner: true,
         };
         this.listenerActive = null;
     }
@@ -41,7 +43,7 @@ class App extends React.Component {
         }
     }
 
- darkMode = e => {
+    darkMode = e => {
         let clickedClass = 'clicked';
         const body = document.body;
         const lightTheme = 'theme-buidl-light';
@@ -74,7 +76,7 @@ class App extends React.Component {
         this.props.loginUser();
     }
 
-     componentDidMount() {
+    componentDidMount() {
         let theme;
         const body = document.body;
         const lightTheme = 'theme-buidl-light';
@@ -225,9 +227,8 @@ class App extends React.Component {
 
                 <div className="App__content">
                     {process.env.BROWSER &&
-                    ip &&
-                    new_visitor &&
-                    this.state.showBanner ? (
+                    this.state.showBanner &&
+                    pathname === '/' ? (
                         <WelcomePanel
                             setShowBannerFalse={this.setShowBannerFalse}
                         />
@@ -237,7 +238,7 @@ class App extends React.Component {
                 </div>
                 <Dialogs />
                 <Modals />
-                {process.env.BROWSER && (<ChatWrapper />)}
+                {process.env.BROWSER && <ChatWrapper />}
             </div>
         );
     }

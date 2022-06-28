@@ -236,7 +236,8 @@ class Voting extends React.Component {
         const currentDownvotePower = votingData
             ? Math.min(
                   votingData.get('downvoting_power') +
-                      (new Date() - getDate(votingData.get('last_downvote_time'))) *
+                      (new Date() -
+                          getDate(votingData.get('last_downvote_time'))) *
                           10000 /
                           (1000 * downvoteRegenSec),
                   10000
@@ -271,7 +272,7 @@ class Voting extends React.Component {
             rewardData.pending_rshares;
 
         let rsharesTotal = 0;
-        
+
         if (scotData) {
             rsharesTotal = parseFloat(scotData.get('vote_rshares'));
             scot_pending_token = applyRewardsCurve(rsharesTotal);
@@ -305,7 +306,10 @@ class Voting extends React.Component {
                 : this.state.sliderWeight.down;
             const s = up ? '' : '-';
             let valueEst = '';
-            if (cashout_active && ((up && currentVp) || (!up && currentDownvotePower))) {
+            if (
+                cashout_active &&
+                ((up && currentVp) || (!up && currentDownvotePower))
+            ) {
                 const stakedTokens = votingData.get('staked_tokens');
                 const multiplier = votingData.get(
                     up
@@ -581,14 +585,14 @@ class Voting extends React.Component {
                 // pending.
                 const pot = rsharesTotal > 0 ? payout : 1;
                 const denom =
-                    rsharesTotal > 0
-                        ? applyRewardsCurve(rsharesTotal)
-                        : 1;
+                    rsharesTotal > 0 ? applyRewardsCurve(rsharesTotal) : 1;
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (
                         pot *
-                        (applyRewardsCurve(currRshares + parseFloat(vote.rshares)) -
+                        (applyRewardsCurve(
+                            currRshares + parseFloat(vote.rshares)
+                        ) -
                             applyRewardsCurve(currRshares)) /
                         denom
                     ).toFixed(scotPrecision);

@@ -27,28 +27,31 @@ export default class WelcomePanel extends React.Component {
             <div className="welcomeWrapper">
                 <div className="welcomeBanner">
                     <CloseButton onClick={this.setShowBannerFalse} />
-                    <div className="row">
+                    <div className="rows">
                         <div className="large-2 medium-1 show-for-medium" />
+                        <div className="text-center welcomeImage small-12 show-for-small-only">
+                            <img
+                                className="heroImage"
+                                width="99%"
+                                src={require('app/assets/images/welcome-hero.png')}
+                            />
+                        </div>
                         <div className="small-12 medium-6 large-5 welcomePitch">
-                            <h2 className="fade-in--1">
-                                Communities Without Borders
+                            <h2 className="fade-in--1 h2txt">
+                                A world of free speech and ownership
                                 {/*tt('navigation.intro_tagline')*/}
                             </h2>
                             <h4 className="fade-in--3">
-                                {
-                                    'A social network owned and operated by its users, '
-                                }
-                                {'powered by '}
-                                <a href="https://steem.io">Steem</a>.
-                                {/*tt('navigation.intro_paragraph')*/}
+                                Welcome to Build-it, a springboard for DIY and
+                                craft making lovers. Post, learn, earn.
                             </h4>
-                            <div>
+                            <div className="flexBtn">
                                 {signup} {learn}
                             </div>
                         </div>
                         <div className="text-center welcomeImage medium-4 large-3 show-for-medium">
                             <img
-                                className="heroImage"
+                                className="heroImage heroimg"
                                 src={require('app/assets/images/welcome-hero.png')}
                             />
                         </div>
