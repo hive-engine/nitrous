@@ -400,7 +400,7 @@ class Header extends React.Component {
                             )}
 
                             {/*SUBMIT STORY*/}
-                            {submit_story}
+                            {submit_story} 
                             {/*DARKMODE TOGGLE*/}
                             <DarkModeBtn toggleBody={toggleBody} />
                             {/*USER AVATAR */}
