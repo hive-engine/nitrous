@@ -5,10 +5,6 @@ import { validate_account_name } from 'app/utils/ChainValidation';
 import reactForm from 'app/utils/ReactForm';
 import { List, Set } from 'immutable';
 import tt from 'counterpart';
-import {
-    SCOT_DEFAULT_BENEFICIARY_ACCOUNT,
-    SCOT_DEFAULT_BENEFICIARY_PERCENT,
-} from 'app/client_config';
 
 export class BeneficiarySelector extends React.Component {
     static propTypes = {
@@ -80,11 +76,17 @@ export class BeneficiarySelector extends React.Component {
     };
 
     render() {
-        const { username, following, tabIndex } = this.props;
+        const {
+            username,
+            following,
+            tabIndex,
+            defaultBeneficiaryAccount,
+            defaultBeneficiaryPercent,
+        } = this.props;
         const beneficiaries = this.props.value;
         const remainingPercent =
             100 -
-            SCOT_DEFAULT_BENEFICIARY_PERCENT -
+            defaultBeneficiaryPercent -
             beneficiaries
                 .map(b => (b.percent ? parseInt(b.percent) : 0))
                 .reduce((sum, elt) => sum + elt, 0);
@@ -119,7 +121,7 @@ export class BeneficiarySelector extends React.Component {
                         </div>
                     </div>
                 </div>
-                {SCOT_DEFAULT_BENEFICIARY_ACCOUNT && (
+                {defaultBeneficiaryAccount && (
                     <div className="row">
                         <div className="column small-2">
                             <div className="input-group">
@@ -127,7 +129,7 @@ export class BeneficiarySelector extends React.Component {
                                     id="benePercent"
                                     type="text"
                                     pattern="[0-9]*"
-                                    value={SCOT_DEFAULT_BENEFICIARY_PERCENT}
+                                    value={defaultBeneficiaryPercent}
                                     disabled
                                     style={{
                                         maxWidth: '2.6rem',
@@ -146,7 +148,7 @@ export class BeneficiarySelector extends React.Component {
                                     className="input-group-field bold"
                                     type="text"
                                     disabled
-                                    value={SCOT_DEFAULT_BENEFICIARY_ACCOUNT}
+                                    value={defaultBeneficiaryAccount}
                                 />
                             </div>
                         </div>
@@ -249,7 +251,8 @@ export class BeneficiarySelector extends React.Component {
 export function validateBeneficiaries(
     username,
     beneficiaries,
-    required = true
+    required = true,
+    defaultBeneficiaryPercent = 0
 ) {
     if (beneficiaries.length > 8) {
         return tt('beneficiary_selector_jsx.exceeds_max_beneficiaries');
@@ -281,7 +284,7 @@ export function validateBeneficiaries(
         }
         totalPercent += parseInt(beneficiary.percent);
     }
-    if (totalPercent > 100 - SCOT_DEFAULT_BENEFICIARY_PERCENT) {
+    if (totalPercent > 100 - defaultBeneficiaryPercent) {
         return tt('beneficiary_selector_jsx.beneficiary_percent_total_invalid');
     }
 }
@@ -292,6 +295,15 @@ export default connect((state, ownProps) => {
     let following = List();
     const username = state.user.getIn(['current', 'username']);
     const follow = state.global.get('follow');
+    const defaultBeneficiaryAccount = state.app.getIn([
+        'hostConfig',
+        'SCOT_DEFAULT_BENEFICIARY_ACCOUNT',
+    ]);
+    const defaultBeneficiaryPercent = state.app.getIn(
+        ['hostConfig', 'SCOT_DEFAULT_BENEFICIARY_PERCENT'],
+        0
+    );
+
     if (follow) {
         const followingData = follow.getIn([
             'getFollowingAsync',
@@ -304,5 +316,7 @@ export default connect((state, ownProps) => {
         ...ownProps,
         username,
         following: following.toJS(),
+        defaultBeneficiaryAccount,
+        defaultBeneficiaryPercent,
     };
 })(BeneficiarySelector);

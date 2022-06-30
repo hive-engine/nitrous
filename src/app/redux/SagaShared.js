@@ -76,11 +76,23 @@ function* showTransactionErrorNotification() {
 }
 
 export function* getContent({ author, permlink, resolve, reject }) {
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
+    const preferHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     let content;
     let attempt = 1;
     while (!content && attempt <= 5) {
         console.log('getContent', author, permlink);
-        content = yield call(getContentAsync, author, permlink);
+        content = yield call(
+            getContentAsync,
+            author,
+            permlink,
+            scotTokenSymbol,
+            preferHive
+        );
         if (content['author'] == '') {
             // retry if content not found. #1870
             attempt += 1;

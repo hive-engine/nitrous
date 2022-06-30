@@ -2,7 +2,7 @@ import React from 'react';
 import tt from 'counterpart';
 import { Link } from 'react-router';
 
-const SidebarLinks = ({ username, topics }) => (
+const SidebarLinks = ({ username, scotTokenSymbol, topics }) => (
     <div className="c-sidebar__module">
         <div className="c-sidebar__header">
             <h3 className="c-sidebar__h3">{tt('g.links')}</h3>
@@ -27,6 +27,26 @@ const SidebarLinks = ({ username, topics }) => (
                         {tt('g.my_wallet')}
                     </a>
                 </li>
+                {scotTokenSymbol === 'LAGO' && (
+                    <li className="c-sidebar__list-item">
+                        <a
+                            className="c-sidebar__link"
+                            href="https://tube.lago.com.gt"
+                        >
+                            LagoTube
+                        </a>
+                    </li>
+                )}
+                {scotTokenSymbol === 'WEED' && (
+                    <li className="c-sidebar__list-item">
+                        <a
+                            className="c-sidebar__link"
+                            href="https://video.weedcash.network"
+                        >
+                            WeedCash DTube
+                        </a>
+                    </li>
+                )}
             </ul>
         </div>
     </div>

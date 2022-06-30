@@ -49,8 +49,6 @@ const emptyPostsText = (section, account, isMyAccount) => {
                 <br />
                 <Link to="/trending">Trending Articles</Link>
                 <br />
-                <Link to="/welcome">Welcome Guide</Link>
-                <br />
                 {/*
                 TODO: introduceyourself nudge, FUUX
                 tt('user_profile.read_the_quick_start_guide')
@@ -117,7 +115,7 @@ export default class UserProfile extends React.Component {
             order,
             category,
             observer: username,
-            useHive: PREFER_HIVE,
+            useHive: this.props.preferHive,
         });
     }
 
@@ -328,6 +326,7 @@ module.exports = {
             const username = state.user.getIn(['current', 'username']);
             const accountname = ownProps.routeParams.accountname.toLowerCase();
             const walletUrl = state.app.get('walletUrl');
+            const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
 
             let { section } = ownProps.routeParams;
             if (!section) section = 'blog';
@@ -370,6 +369,7 @@ module.exports = {
                 blogmode: state.app.getIn(['user_preferences', 'blogmode']),
                 profile: state.userProfiles.getIn(['profiles', accountname]),
                 walletUrl: walletUrl + '/@' + accountname + '/transfers',
+                preferHive,
                 section,
                 order,
                 category: '@' + accountname,

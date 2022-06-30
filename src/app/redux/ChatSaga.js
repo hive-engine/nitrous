@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { List, fromJS } from 'immutable';
 import { Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
@@ -6,7 +6,6 @@ import { findSigningKey } from 'app/redux/AuthSaga';
 import * as reducer from 'app/redux/ChatReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
-import { CHAT_CONVERSATIONS } from 'app/client_config';
 import axios from 'axios';
 
 export const chatWatches = [
@@ -247,7 +246,8 @@ export function* logout() {
 
 export function* fetchChatList(action) {
   const chatList = yield authorizedCallChatApi('messages/conversations');
-  const finalChatList = CHAT_CONVERSATIONS ? CHAT_CONVERSATIONS.concat(chatList) : chatList;
+  const conversations = yield select(state => state.app.getIn(['hostConfig', 'CHAT_CONVERSATIONS']));
+  const finalChatList = conversations ? conversations.toJS().concat(chatList) : chatList;
   yield put(
       reducer.receiveChatList(finalChatList)
   );

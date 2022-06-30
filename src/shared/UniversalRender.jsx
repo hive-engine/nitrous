@@ -14,7 +14,6 @@ import {
 } from 'react-router';
 import { Provider } from 'react-redux';
 
-import { APP_NAME, DISABLE_HIVE } from 'app/client_config';
 import RootRoute from 'app/RootRoute';
 import * as appActions from 'app/redux/AppReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -229,7 +228,10 @@ export async function serverRender(
     requestTimer
 ) {
     let error, redirect, renderProps;
-
+    const hostConfig = initialState.app.hostConfig;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const preferHive = hostConfig['PREFER_HIVE'];
+    const APP_NAME = hostConfig['APP_NAME'];
     try {
         [error, redirect, renderProps] = await runRouter(location, RootRoute);
     } catch (e) {
@@ -248,7 +250,7 @@ export async function serverRender(
         return {
             title: `Page Not Found - ${APP_NAME}`,
             statusCode: 404,
-            body: renderToString(<NotFound />),
+            body: serverRenderNotFound(hostConfig),
         };
     }
 
@@ -257,7 +259,7 @@ export async function serverRender(
         const url = location;
 
         requestTimer.startTimer('apiFetchState_ms');
-        onchain = await apiFetchState(url);
+        onchain = await apiFetchState(url, hostConfig);
         requestTimer.stopTimer('apiFetchState_ms');
 
         // If a user profile URL is requested but no profile information is
@@ -270,7 +272,7 @@ export async function serverRender(
             return {
                 title: `User Not Found - ${APP_NAME}`,
                 statusCode: 404,
-                body: renderToString(<NotFound />),
+                body: serverRenderNotFound(hostConfig),
             };
         }
 
@@ -292,7 +294,7 @@ export async function serverRender(
             } else {
                 const postref = url.substr(2, url.length - 1).split('/');
                 const params = { author: postref[0], permlink: postref[1] };
-                if (!DISABLE_HIVE) {
+                if (!hostConfig['DISABLE_HIVE']) {
                     header = await callBridge('get_post_header', params, true);
                 }
                 if (!header) {
@@ -307,18 +309,20 @@ export async function serverRender(
                 return {
                     title: `Page Not Found - ${APP_NAME}`,
                     statusCode: 404,
-                    body: renderToString(<NotFound />),
+                    body: serverRenderNotFound(hostConfig),
                 };
             }
         }
 
         // Insert the pinned posts into the list of posts, so there is no
         // jumping of content.
-        offchain.pinned_posts.pinned_posts.forEach(pinnedPost => {
-            onchain.content[
-                `${pinnedPost.author}/${pinnedPost.permlink}`
-            ] = pinnedPost;
-        });
+        offchain.pinned_posts[scotTokenSymbol].pinned_posts.forEach(
+            pinnedPost => {
+                onchain.content[
+                    `${pinnedPost.author}/${pinnedPost.permlink}`
+                ] = pinnedPost;
+            }
+        );
 
         server_store = createStore(rootReducer, {
             app: initialState.app,
@@ -338,7 +342,7 @@ export async function serverRender(
             return {
                 title: `Page Not Found - ${APP_NAME}`,
                 statusCode: 404,
-                body: renderToString(<NotFound />),
+                body: serverRenderNotFound(hostConfig),
             };
             // Ensure error page on state exception
         } else {
@@ -364,7 +368,11 @@ export async function serverRender(
             </Provider>
         );
         requestTimer.stopTimer('ssr_ms');
-        meta = extractMeta(onchain, renderProps.params);
+        meta = extractMeta(
+            onchain,
+            renderProps.params,
+            initialState.app.hostConfig
+        );
         status = 200;
     } catch (re) {
         console.error('Rendering error: ', re, re.stack);
@@ -379,6 +387,19 @@ export async function serverRender(
         statusCode: status,
         body: Iso.render(app, server_store.getState()),
     };
+}
+
+function serverRenderNotFound(hostConfig) {
+    const server_store = createStore(rootReducer, {
+        app: { hostConfig },
+        global: {},
+        userProfiles: {},
+    });
+    return renderToString(
+        <Provider store={server_store}>
+            <NotFound />
+        </Provider>
+    );
 }
 
 /**
@@ -454,14 +475,14 @@ export function clientRender(initialState) {
     );
 }
 
-async function apiFetchState(url) {
+async function apiFetchState(url, hostConfig) {
     let onchain;
 
     if (process.env.OFFLINE_SSR_TEST) {
         onchain = get_state_perf;
     }
 
-    onchain = await getStateAsync(url, null, true);
+    onchain = await getStateAsync(url, hostConfig, null, true);
 
     return onchain;
 }

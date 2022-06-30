@@ -187,8 +187,7 @@ export default function reducer(state = defaultState, action = {}) {
             const stakedAccounts = {};
             payload.stakedAccounts.forEach(acc => {
                 stakedAccounts[acc['name']] =
-                    parseFloat(acc['staked_tokens']) /
-                    Math.pow(10, payload.precision);
+                    parseFloat(acc['staked_tokens']);
             });
             return state.set('stakedAccounts', fromJS(stakedAccounts));
         }

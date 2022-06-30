@@ -1,16 +1,12 @@
 import * as config from 'config';
 import NodeCache from 'node-cache';
 
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    SCOT_DENOM,
-    TOKEN_STATS_EXCLUDE_ACCOUNTS,
-    HIVE_ENGINE,
-} from 'app/client_config';
+import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from '@hive-engine/sscjs';
-const ssc = new SSC('https://api.steem-engine.net/rpc');
+const ssc = new SSC('https://ha.herpc.dtools.dev');
 const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
+import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
     const ttl = config.scot_config_cache.ttl;
@@ -33,18 +29,10 @@ export function ScotConfig() {
 ScotConfig.prototype.storeEmpty = function() {
     const key = config.scot_config_cache.key;
     return new Promise((res, rej) => {
-        this.cache.set(
-            key,
-            {
-                info: {
-                    precision: Math.log10(SCOT_DENOM),
-                },
-            },
-            (err, success) => {
-                console.info('Storing empty Scot Config data...');
-                res();
-            }
-        );
+        this.cache.set(key, {}, (err, success) => {
+            console.info('Storing empty Scot Config data...');
+            res();
+        });
     });
 };
 
@@ -67,158 +55,132 @@ ScotConfig.prototype.refresh = async function() {
 
     const key = config.scot_config_cache.key;
     try {
-        const scotConfig = await getScotDataAsync('config', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
-        const scotInfo = await getScotDataAsync('info', {
-            token: LIQUID_TOKEN_UPPERCASE,
-        });
-        // Use client config info as backup
-        if (!scotInfo.precision == null) {
-            console.info('Info not found, falling back to client config');
-            scotInfo.precision = Math.log10(SCOT_DENOM);
-        }
-        scotConfig.tokenStats = {};
+        const scotConfig = await getScotDataAsync('config', {});
+        const scotInfo = await getScotDataAsync('info', {});
+        const scotConfigMap = {};
+        let tokenList = [];
+        let hiveTokenList = [];
+        const minerTokenToToken = {};
 
-        scotConfig.tokenStats.scotToken = scotConfig.token;
-        scotConfig.tokenStats.scotMinerTokens = Object.keys(
-            JSON.parse(scotConfig.miner_tokens)
+        const configTokens = new Set(
+            Object.values(CONFIG_MAP).map(c => c['LIQUID_TOKEN_UPPERCASE'])
         );
+        scotConfig.forEach(c => {
+            if (configTokens.has(c.token)) {
+                const scotMinerTokens = c.miner_tokens ? Object.keys(JSON.parse(c.miner_tokens)) : [];
 
-        const tokenList = [scotConfig.tokenStats.scotToken].concat(
-            scotConfig.tokenStats.scotMinerTokens
-        );
+                scotConfigMap[c.token] = c;
+                c.hiveTokenStats = {
+                    scotToken: c.token,
+                    scotMinerTokens,
+                    total_token_balance_circulating: 0,
+                    token_burn_balance: 0,
+                    total_token_balance_staked: 0,
+                    total_token_miner_balance_circulating: 0,
+                    token_burn_miner_balance: 0,
+                    total_token_miner_balance_staked: 0,
+                    total_token_mega_miner_balance_circulating: 0,
+                    token_burn_mega_miner_balance: 0,
+                    total_token_mega_miner_balance_staked: 0,
+                };
+                hiveTokenList.push(c.token);
+                hiveTokenList = hiveTokenList.concat(scotMinerTokens);
+                if (scotMinerTokens.length > 0) {
+                    minerTokenToToken[scotMinerTokens[0]] = {
+                        token: c.token,
+                        megaMiner: false,
+                    };
+                }
+                if (scotMinerTokens.length > 1) {
+                    minerTokenToToken[scotMinerTokens[1]] = {
+                        token: c.token,
+                        megaMiner: true,
+                    };
+                }
+            }
+        });
 
-        const engineApi = HIVE_ENGINE ? hiveSsc : ssc;
-        const [totalTokenBalances, tokenBalances] = await Promise.all([
-            engineApi.find('tokens', 'tokens', {
-                symbol: { $in: tokenList },
+        const [
+            hiveTotalTokenBalances,
+            hiveTokenBurnBalances,
+        ] = await Promise.all([
+            hiveSsc.find('tokens', 'tokens', {
+                symbol: { $in: hiveTokenList },
             }),
-            engineApi.find('tokens', 'balances', {
+            hiveSsc.find('tokens', 'balances', {
                 account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
-                symbol: { $in: tokenList },
+                symbol: { $in: hiveTokenList },
             }),
         ]);
 
-        let circulating = 0;
-        let burn = 0;
-        let staking = 0;
-        let circulatingMiner = 0;
-        let burnMiner = 0;
-        let stakingMiner = 0;
-        let circulatingMegaMiner = 0;
-        let burnMegaMiner = 0;
-        let stakingMegaMiner = 0;
-        for (const totalTokenBalance of totalTokenBalances) {
-            if (
-                totalTokenBalance['symbol'] == scotConfig.tokenStats.scotToken
-            ) {
-                scotConfig.tokenStats.total_token_balance = totalTokenBalance;
-                circulating += parseFloat(totalTokenBalance.circulatingSupply);
-                staking += parseFloat(totalTokenBalance.totalStaked);
-            } else if (
-                totalTokenBalance['symbol'] ==
-                scotConfig.tokenStats.scotMinerTokens[0]
-            ) {
-                scotConfig.tokenStats.total_token_miner_balance = totalTokenBalance;
-                circulatingMiner += parseFloat(
-                    totalTokenBalance.circulatingSupply
-                );
-                stakingMiner += parseFloat(totalTokenBalance.totalStaked);
-            } else if (
-                totalTokenBalance['symbol'] ==
-                scotConfig.tokenStats.scotMinerTokens[1]
-            ) {
-                scotConfig.tokenStats.total_token_mega_miner_balance = totalTokenBalance;
-                circulatingMegaMiner += parseFloat(
-                    totalTokenBalance.circulatingSupply
-                );
-                stakingMegaMiner += parseFloat(totalTokenBalance.totalStaked);
-            }
-        }
-        for (const tokenBalance of tokenBalances) {
-            if (tokenBalance['symbol'] == scotConfig.tokenStats.scotToken) {
-                if (tokenBalance['account'] === 'null') {
-                    scotConfig.tokenStats.token_burn_balance = tokenBalance;
-                    burn += parseFloat(tokenBalance.balance);
+        const populateTokenBalanceStats = (totalTokenBalances, statsField) => {
+            for (const totalTokenBalance of totalTokenBalances) {
+                if (minerTokenToToken[totalTokenBalance.symbol]) {
+                    const minerTokenInfo =
+                        minerTokenToToken[totalTokenBalance.symbol];
+                    if (minerTokenInfo.megaMiner) {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_mega_miner_balance_circulating =
+                            totalTokenBalance.circulatingSupply;
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_mega_miner_balance_staked =
+                            totalTokenBalance.totalStaked;
+                    } else {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_miner_balance_circulating =
+                            totalTokenBalance.circulatingSupply;
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].total_token_miner_balance_staked =
+                            totalTokenBalance.totalStaked;
+                    }
                 } else {
-                    circulating -= parseFloat(tokenBalance.balance);
-                    circulating -= parseFloat(tokenBalance.stake);
-                    staking -= parseFloat(tokenBalance.stake);
-                }
-            } else if (
-                tokenBalance['symbol'] ==
-                scotConfig.tokenStats.scotMinerTokens[0]
-            ) {
-                if (tokenBalance['account'] === 'null') {
-                    scotConfig.tokenStats.token_miner_burn_balance = tokenBalance;
-                    burnMiner += parseFloat(tokenBalance.balance);
-                } else {
-                    circulatingMiner -= parseFloat(tokenBalance.balance);
-                    circulatingMiner -= parseFloat(tokenBalance.stake);
-                    stakingMiner -= parseFloat(tokenBalance.stake);
-                }
-            } else if (
-                tokenBalance['symbol'] ==
-                scotConfig.tokenStats.scotMinerTokens[1]
-            ) {
-                if (tokenBalance['account'] === 'null') {
-                    scotConfig.tokenStats.token_mega_miner_burn_balance = tokenBalance;
-                    burnMegaMiner += parseFloat(tokenBalance.balance);
-                } else {
-                    circulatingMegaMiner -= parseFloat(tokenBalance.balance);
-                    circulatingMegaMiner -= parseFloat(tokenBalance.stake);
-                    stakingMegaMiner -= parseFloat(tokenBalance.stake);
+                    scotConfigMap[totalTokenBalance.symbol][
+                        statsField
+                    ].total_token_balance_circulating =
+                        totalTokenBalance.circulatingSupply;
+                    scotConfigMap[totalTokenBalance.symbol][
+                        statsField
+                    ].total_token_balance_staked =
+                        totalTokenBalance.totalStaked;
                 }
             }
-        }
+        };
+        populateTokenBalanceStats(hiveTotalTokenBalances, 'hiveTokenStats');
 
-        if (scotConfig.tokenStats.total_token_balance) {
-            scotConfig.tokenStats.total_token_balance.circulatingSupply = circulating.toFixed(
-                scotConfig.tokenStats.total_token_balance.precision
-            );
-            scotConfig.tokenStats.total_token_balance.totalStaked = staking.toFixed(
-                scotConfig.tokenStats.total_token_balance.precision
-            );
-        }
-        if (scotConfig.tokenStats.token_burn_balance) {
-            scotConfig.tokenStats.token_burn_balance.balance = burn.toFixed(
-                scotConfig.tokenStats.total_token_balance.precision
-            );
-        }
+        const populateBurnBalanceStats = (tokenBurnBalances, statsField) => {
+            for (const tokenBurnBalance of tokenBurnBalances) {
+                if (minerTokenToToken[tokenBurnBalance.symbol]) {
+                    const minerTokenInfo =
+                        minerTokenToToken[tokenBurnBalance.symbol];
+                    if (minerTokenInfo.megaMiner) {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].token_burn_mega_miner_balance =
+                            tokenBurnBalance.balance;
+                    } else {
+                        scotConfigMap[minerTokenInfo.token][
+                            statsField
+                        ].token_burn_miner_balance =
+                            tokenBurnBalance.balance;
+                    }
+                } else {
+                    scotConfigMap[tokenBurnBalance.symbol][
+                        statsField
+                    ].token_burn_balance =
+                        tokenBurnBalance.balance;
+                }
+            }
+        };
+        populateBurnBalanceStats(hiveTokenBurnBalances, 'hiveTokenStats');
 
-        if (scotConfig.tokenStats.total_token_miner_balance) {
-            scotConfig.tokenStats.total_token_miner_balance.circulatingSupply = circulatingMiner.toFixed(
-                scotConfig.tokenStats.total_token_miner_balance.precision
-            );
-            scotConfig.tokenStats.total_token_miner_balance.totalStaked = stakingMiner.toFixed(
-                scotConfig.tokenStats.total_token_miner_balance.precision
-            );
-        }
-        if (scotConfig.tokenStats.token_miner_burn_balance) {
-            scotConfig.tokenStats.token_miner_burn_balance.balance = burnMiner.toFixed(
-                scotConfig.tokenStats.total_token_miner_balance.precision
-            );
-        }
+        this.cache.set(key, { info: scotInfo, config: scotConfigMap });
 
-        if (scotConfig.tokenStats.total_token_mega_miner_balance) {
-            scotConfig.tokenStats.total_token_mega_miner_balance.circulatingSupply = circulatingMegaMiner.toFixed(
-                scotConfig.tokenStats.total_token_mega_miner_balance.precision
-            );
-            scotConfig.tokenStats.total_token_mega_miner_balance.totalStaked = stakingMegaMiner.toFixed(
-                scotConfig.tokenStats.total_token_mega_miner_balance.precision
-            );
-        }
-        if (scotConfig.tokenStats.token_mega_miner_burn_balance) {
-            scotConfig.tokenStats.token_mega_miner_burn_balance.balance = burnMegaMiner.toFixed(
-                scotConfig.tokenStats.total_token_mega_miner_balance.precision
-            );
-        }
-
-        this.cache.set(key, { info: scotInfo, config: scotConfig });
         console.info('Scot Config refreshed...');
     } catch (err) {
         console.error('Could not fetch Scot Config', err);
-        return this.storeEmpty();
     }
 };

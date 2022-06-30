@@ -2,17 +2,24 @@ language: node_js
 node_js:
     - 12
 
+services:
+  - docker
+
+before_install:
+  #install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
 script:
-  - yarn run test
+  - docker build -t registry.heroku.com/scotbuild/web .
+
+deploy:
+  provider: script
+  script:
+    bash docker_push
+  on:
+    branch: scotty_build2
 
 # safelist
 branches:
   only:
-  - master
-  - scotty_aaa
-  - scotty_actnearn
-  - scotty_bloque64
-  - scotty_pal
-  - scotty_spt
-  - scotty_steemcoinpan
-  - scotty_weedcash
+  - scotty_build2

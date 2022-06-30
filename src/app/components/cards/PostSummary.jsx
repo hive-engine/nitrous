@@ -20,18 +20,14 @@ import { ifHivemind } from 'app/utils/Community';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import Userpic, { SIZE_SMALL } from 'app/components/elements/Userpic';
-import { SIGNUP_URL } from 'shared/constants';
-import {
-    APP_NAME,
-    INTERLEAVE_PROMOTED,
-    POSTED_VIA_NITROUS_ICON,
-} from 'app/client_config';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import { hasNsfwTag } from 'app/utils/StateFunctions';
 
 const CURATOR_VESTS_THRESHOLD = 1.0 * 1000.0 * 1000.0;
 
 // TODO: document why ` ` => `%20` is needed, and/or move to base fucntion
-const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
+const proxify = (url, hive, size) =>
+    proxifyImageUrl(url, hive, size).replace(/ /g, '%20');
 
 const vote_weights = post => {
     const rshares = post.get('net_rshares');
@@ -48,6 +44,7 @@ class PostSummary extends React.Component {
         onClose: PropTypes.func,
         nsfwPref: PropTypes.string,
         promoted: PropTypes.object,
+        interleavePromoted: PropTypes.bool,
     };
 
     constructor() {
@@ -94,6 +91,10 @@ class PostSummary extends React.Component {
             promoted,
             featured,
             featuredOnClose,
+            appName,
+            appDomain,
+            nitrousPostedIcon,
+            interleavePromoted,
         } = this.props;
         const { account } = this.props;
         let requestedCategory;
@@ -155,7 +156,7 @@ class PostSummary extends React.Component {
         const gray = post.getIn(['stats', 'gray']);
         const isNsfw = hasNsfwTag(post);
         const isPromoted =
-            INTERLEAVE_PROMOTED &&
+            interleavePromoted &&
             promoted &&
             promoted.contains(`${post.get('author')}/${post.get('permlink')}`);
         const hive = post.get('hive');
@@ -212,6 +213,7 @@ class PostSummary extends React.Component {
                                 <Userpic
                                     account={summaryAuthor}
                                     size={SIZE_SMALL}
+                                    hive={hive}
                                 />
                             </a>
                         </div>
@@ -221,6 +223,7 @@ class PostSummary extends React.Component {
                             <Author
                                 post={post}
                                 follow={false}
+                                hive={hive}
                                 showAffiliation
                                 hideEditor={true}
                                 resolveCrossPost
@@ -250,17 +253,17 @@ class PostSummary extends React.Component {
                                 />
                             </span>
 
-                            {POSTED_VIA_NITROUS_ICON &&
+                            {nitrousPostedIcon &&
                                 app_info.startsWith(
-                                    `${APP_NAME.toLowerCase()}/`
+                                    `${appName.toLowerCase()}/`
                                 ) && (
                                     <span
                                         className="articles__icon-100"
                                         title={tt('g.written_from', {
-                                            app_name: APP_NAME,
+                                            app_name: appName,
                                         })}
                                     >
-                                        <Icon name={POSTED_VIA_NITROUS_ICON} />
+                                        <Icon name={nitrousPostedIcon} />
                                     </span>
                                 )}
 
@@ -366,7 +369,11 @@ class PostSummary extends React.Component {
                                 </span>
                             ) : (
                                 <span>
-                                    <a href={SIGNUP_URL}>
+                                    <a
+                                        href={
+                                            hive ? HIVE_SIGNUP_URL : SIGNUP_URL
+                                        }
+                                    >
                                         {tt(
                                             'postsummary_jsx.create_an_account'
                                         )}
@@ -386,12 +393,16 @@ class PostSummary extends React.Component {
 
         let image_link = extractImageLink(
             post.get('json_metadata'),
+            appDomain,
+            hive,
             post.get('body')
         );
 
         if (crossPostedBy) {
             image_link = extractImageLink(
                 post.get('cross_post_json_metadata'),
+                appDomain,
+                hive,
                 post.get('cross_post_body')
             );
         }
@@ -405,8 +416,8 @@ class PostSummary extends React.Component {
             }/avatar/medium`;
             listImgLarge = `https://images.hive.blog/u/${author}/avatar/large`;
         } else if (image_link) {
-            listImgMedium = proxify(image_link, '256x512');
-            listImgLarge = proxify(image_link, '640x480');
+            listImgMedium = proxify(image_link, hive, '256x512');
+            listImgLarge = proxify(image_link, hive, '640x480');
         }
 
         let thumb = null;
@@ -487,6 +498,16 @@ export default connect(
                 state.user.getIn(['current', 'username']) ||
                 state.offchain.get('account'),
             blogmode: state.app.getIn(['user_preferences', 'blogmode']),
+            appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+            appDomain: state.app.getIn(['hostConfig', 'APP_DOMAIN']),
+            nitrousPostedIcon: state.app.getIn([
+                'hostConfig',
+                'POSTED_VIA_NITROUS_ICON',
+            ]),
+            interleavePromoted: state.app.getIn(
+                ['hostConfig', 'INTERLEAVE_PROMOTED'],
+                false
+            ),
             nsfwPref,
             net_vests,
         };

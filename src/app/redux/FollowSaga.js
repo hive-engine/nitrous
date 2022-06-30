@@ -71,7 +71,7 @@ function* loadFollowsLoop(
         params['following'] = account;
     }
     if (useHive) {
-        params['hive'] = '1';
+        //params['hive'] = '1';
     }
     const res = fromJS(yield call(getScotDataAsync, 'get_following', params));
     // console.log('res.toJS()', res.toJS())

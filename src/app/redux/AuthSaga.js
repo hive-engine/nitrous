@@ -6,7 +6,6 @@ import { PrivateKey } from '@hiveio/hive-js/lib/auth/ecc';
 
 import { getAccount } from 'app/redux/SagaShared';
 import * as userActions from 'app/redux/UserReducer';
-import { ALLOW_MASTER_PW } from 'app/client_config';
 
 // operations that require only posting authority
 export const postingOps = Set(
@@ -152,9 +151,12 @@ export function* findSigningKey({
     password,
     useHive,
 }) {
+    const allowMasterPw = yield select(state =>
+        state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'], false)
+    );
     let authTypes;
     if (postingOps.has(opType) && !needsActiveAuth)
-        authTypes = 'posting, active' + (ALLOW_MASTER_PW ? ', owner' : '');
+        authTypes = 'posting, active' + (allowMasterPw ? ', owner' : '');
     else authTypes = 'active, owner';
     authTypes = authTypes.split(', ');
 

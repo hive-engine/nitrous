@@ -29,7 +29,7 @@ class PostAdvancedSettings extends Component {
     }
 
     initForm(props) {
-        const { fields } = props;
+        const { fields, defaultBeneficiaryPercent } = props;
         reactForm({
             fields,
             instance: this,
@@ -40,7 +40,8 @@ class PostAdvancedSettings extends Component {
                     beneficiaries: validateBeneficiaries(
                         props.username,
                         values.beneficiaries,
-                        false
+                        false,
+                        defaultBeneficiaryPercent
                     ),
                 };
             },
@@ -394,6 +395,10 @@ export default connect(
             'beneficiaries',
         ]);
         beneficiaries = beneficiaries ? beneficiaries.toJS() : [];
+        const defaultBeneficiaryPercent = state.app.getIn(
+            ['hostConfig', 'SCOT_DEFAULT_BENEFICIARY_PERCENT'],
+            0
+        );
         return {
             ...ownProps,
             fields: ['beneficiaries'],
@@ -402,6 +407,7 @@ export default connect(
             initialMaxAcceptedPayout,
             username,
             initialValues: { beneficiaries },
+            defaultBeneficiaryPercent,
         };
     },
 

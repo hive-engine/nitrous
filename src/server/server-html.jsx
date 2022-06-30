@@ -1,6 +1,5 @@
 import * as config from 'config';
 import React from 'react';
-import { APP_NAME, DISCORD_SERVER, DISCORD_CHANNEL } from 'app/client_config';
 
 export default function ServerHTML({
     body,
@@ -17,8 +16,10 @@ export default function ServerHTML({
     reviveEnabled,
     shouldSeeCookieConsent,
     cookieConsentApiKey,
+    hostConfig,
 }) {
     let page_title = title;
+    const faviconSubfolder = hostConfig['LIQUID_TOKEN_UPPERCASE'].toLowerCase();
     return (
         <html lang="en">
             <head>
@@ -36,47 +37,66 @@ export default function ServerHTML({
                             return <meta key={m.property} property={m.property} content={m.content} />;
                         return null;
                     })}
-                <link rel="manifest" href="/static/manifest.json" />
+                <link
+                    rel="manifest"
+                    href={`/static/${faviconSubfolder}/manifest.json`}
+                />
                 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
                 <link
                     rel="apple-touch-icon"
                     sizes="57x57"
-                    href="/images/favicons/apple-icon-57x57.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-57x57.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="60x60"
-                    href="/images/favicons/apple-icon-60x60.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-60x60.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="72x72"
-                    href="/images/favicons/apple-icon-72x72.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-72x72.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="76x76"
-                    href="/images/favicons/apple-icon-76x76.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-76x76.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="114x114"
-                    href="/images/favicons/apple-icon-114x114.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-114x114.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="120x120"
-                    href="/images/favicons/apple-icon-120x120.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-120x120.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="144x144"
-                    href="/images/favicons/apple-icon-144x144.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-144x144.png`}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="152x152"
-                    href="/images/favicons/apple-icon-152x152.png"
+                    href={`/images/favicons/${
+                        faviconSubfolder
+                    }/apple-icon-152x152.png`}
                 />
                 <link
                     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600"
@@ -117,18 +137,18 @@ export default function ServerHTML({
                         async
                     />
                 ) : null}
-                {adClient ? (
+                {hostConfig['GOOGLE_AD_CLIENT'] ? (
                     <script
                         async
                         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
                     />
                 ) : null}
-                {adClient ? (
+                {hostConfig['GOOGLE_AD_CLIENT'] ? (
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `
                       (adsbygoogle = window.adsbygoogle || []).push({
-                          google_ad_client: "${adClient}",
+                          google_ad_client: "${hostConfig['GOOGLE_AD_CLIENT']}",
                           enable_page_level_ads: true
                       });
                   `,
@@ -148,7 +168,7 @@ export default function ServerHTML({
                         src="//servedby.revive-adserver.net/asyncjs.php"
                     />
                 ) : null}
-                {DISCORD_SERVER ? (
+                {hostConfig['DISCORD_SERVER'] ? (
                     <script
                         src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"
                         async
@@ -156,8 +176,8 @@ export default function ServerHTML({
                         dangerouslySetInnerHTML={{
                             __html: `
                       new Crate({
-                              server: "${DISCORD_SERVER}",
-                              channel: "${DISCORD_CHANNEL}",
+                              server: "${hostConfig['DISCORD_SERVER']}",
+                              channel: "${hostConfig['DISCORD_CHANNEL']}",
                             });`,
                         }}
                     />

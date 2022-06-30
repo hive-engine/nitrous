@@ -1,7 +1,7 @@
 import React from 'react';
 import tt from 'counterpart';
 import { connect } from 'react-redux';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import Icon from 'app/components/elements/Icon';
 import { Link } from 'react-router';
 

@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,7 +7,6 @@ import tt from 'counterpart';
 import CloseButton from 'app/components/elements/CloseButton';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import Icon from 'app/components/elements/Icon';
-import { LIQUID_TOKEN_UPPERCASE, SCOT_DENOM } from 'app/client_config';
 import FormattedAsset from 'app/components/elements/FormattedAsset';
 import { pricePerSteem } from 'app/utils/StateFunctions';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
@@ -39,18 +38,6 @@ const MAX_VOTES_DISPLAY = 20;
 const MAX_WEIGHT = 10000;
 const MIN_PAYOUT = 0.02;
 
-function amt(string_amount) {
-    return parsePayoutAmount(string_amount);
-}
-
-function fmt(decimal_amount, asset = null) {
-    return formatDecimal(decimal_amount).join('') + (asset ? ' ' + asset : '');
-}
-
-function abs(value) {
-    return Math.abs(parseInt(value));
-}
-
 class Voting extends React.Component {
     static propTypes = {
         // HTML properties
@@ -67,6 +54,7 @@ class Voting extends React.Component {
         enable_slider: PropTypes.bool,
         voting: PropTypes.bool,
         scotData: PropTypes.object,
+        downvoteEnabled: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -227,13 +215,14 @@ class Voting extends React.Component {
             voteRegenSec,
             downvoteRegenSec,
             rewardData,
+            hostConfig,
             tokenBeneficiary,
+            downvoteEnabled,
             useHive,
         } = this.props;
 
         const { votingUp, votingDown, showWeight, showWeightDir } = this.state;
 
-        const scotDenom = Math.pow(10, scotPrecision);
         // Incorporate regeneration time.
         const currentVp = votingData
             ? Math.min(
@@ -284,35 +273,27 @@ class Voting extends React.Component {
         let rsharesTotal = 0;
         
         if (scotData) {
-            rsharesTotal = scotData.get('vote_rshares');
+            rsharesTotal = parseFloat(scotData.get('vote_rshares'));
             scot_pending_token = applyRewardsCurve(rsharesTotal);
 
-            scot_total_curator_payout = parseInt(
+            scot_total_curator_payout = parseFloat(
                 scotData.get('curator_payout_value')
             );
-            scot_total_author_payout = parseInt(
+            scot_total_author_payout = parseFloat(
                 scotData.get('total_payout_value')
             );
-            scot_token_bene_payout = parseInt(
+            scot_token_bene_payout = parseFloat(
                 scotData.get('beneficiaries_payout_value')
             );
-            promoted = parseInt(scotData.get('promoted'));
+            promoted = parseFloat(scotData.get('promoted'));
             decline_payout = scotData.get('decline_payout');
             scot_total_author_payout -= scot_total_curator_payout;
             scot_total_author_payout -= scot_token_bene_payout;
             payout = cashout_active
                 ? scot_pending_token
                 : scot_total_author_payout + scot_total_curator_payout;
-
-            // divide by scotDenom
-            scot_pending_token /= scotDenom;
-            scot_total_curator_payout /= scotDenom;
-            scot_total_author_payout /= scotDenom;
-            scot_token_bene_payout /= scotDenom;
-            payout /= scotDenom;
-            promoted /= scotDenom;
         }
-        const total_votes = post.getIn(['stats', 'total_votes']);
+        const total_votes = active_votes ? active_votes.size : 0;
         if (payout < 0.0) payout = 0.0;
 
         const votingUpActive = voting && votingUp;
@@ -340,7 +321,7 @@ class Voting extends React.Component {
                     (up ? currentVp : currentDownvotePower) /
                     (10000 * 100);
                 const newValue = applyRewardsCurve(rsharesTotal + rshares);
-                valueEst = (newValue / scotDenom - scot_pending_token).toFixed(
+                valueEst = (newValue - scot_pending_token).toFixed(
                     scotPrecision
                 );
             }
@@ -384,7 +365,7 @@ class Voting extends React.Component {
         };
 
         let downVote;
-        if (true) {
+        if (downvoteEnabled) {
             const down = (
                 <Icon
                     name={votingDownActive ? 'empty' : 'chevron-down-circle'}
@@ -487,7 +468,7 @@ class Voting extends React.Component {
         if (promoted > 0) {
             payoutItems.push({
                 value: `Promotion Cost ${promoted.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
         }
@@ -497,7 +478,7 @@ class Voting extends React.Component {
             payoutItems.push({ value: 'Pending Payout' });
             payoutItems.push({
                 value: `${scot_pending_token.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
             payoutItems.push({
@@ -508,18 +489,18 @@ class Voting extends React.Component {
             // - !cashout_active is needed to avoid the info is also shown for pending posts.
             payoutItems.push({
                 value: `Past Token Payouts ${payout.toFixed(scotPrecision)} ${
-                    LIQUID_TOKEN_UPPERCASE
+                    hostConfig['LIQUID_TOKEN_UPPERCASE']
                 }`,
             });
             payoutItems.push({
                 value: `- Author ${scot_total_author_payout.toFixed(
                     scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                )} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`,
             });
             payoutItems.push({
                 value: `- Curator ${scot_total_curator_payout.toFixed(
                     scotPrecision
-                )} ${LIQUID_TOKEN_UPPERCASE}`,
+                )} ${hostConfig['LIQUID_TOKEN_UPPERCASE']}`,
             });
             // Uncomment to enable
             if (false && scot_token_bene_payout > 0 && tokenBeneficiary) {
@@ -574,7 +555,7 @@ class Voting extends React.Component {
                 <span>
                     <FormattedAsset
                         amount={payout}
-                        asset={LIQUID_TOKEN_UPPERCASE}
+                        asset={hostConfig['LIQUID_TOKEN_UPPERCASE']}
                         classname={decline_payout ? 'strikethrough' : ''}
                     />
                     {payoutItems.length > 0 && <Icon name="dropdown-arrow" />}
@@ -602,16 +583,16 @@ class Voting extends React.Component {
                 const denom =
                     rsharesTotal > 0
                         ? applyRewardsCurve(rsharesTotal)
-                        : scotDenom;
+                        : 1;
                 for (let i = 0; i < avotes.length; i++) {
                     const vote = avotes[i];
                     vote.estimate = (
                         pot *
-                        (applyRewardsCurve(currRshares + vote.rshares) -
+                        (applyRewardsCurve(currRshares + parseFloat(vote.rshares)) -
                             applyRewardsCurve(currRshares)) /
                         denom
                     ).toFixed(scotPrecision);
-                    currRshares += vote.rshares;
+                    currRshares += parseFloat(vote.rshares);
                 }
             }
 
@@ -739,6 +720,7 @@ class Voting extends React.Component {
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
+        const hostConfig = state.app.get('hostConfig', Map()).toJS();
         const post =
             ownProps.post || state.global.getIn(['content', ownProps.post_ref]);
 
@@ -747,7 +729,10 @@ export default connect(
             throw 'post not found';
         }
         const scotConfig = state.app.get('scotConfig');
-        const scotData = post.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const scotData = post.getIn([
+            'scotData',
+            hostConfig['LIQUID_TOKEN_UPPERCASE'],
+        ]);
         const commentPool =
             post.get('parent_author') &&
             scotConfig.getIn(['info', 'enable_comment_reward_pool'], false);
@@ -795,7 +780,7 @@ export default connect(
             ? current_account.get('username')
             : null;
         const votingData = current_account
-            ? current_account.get(useHive ? 'hive_voting' : 'voting')
+            ? current_account.get('voting')
             : null;
         const voting = state.global.get(
             `transaction_vote_active_${author}_${permlink}`
@@ -825,10 +810,7 @@ export default connect(
             voting,
             votingData,
             scotData,
-            scotPrecision: scotConfig.getIn(
-                ['info', 'precision'],
-                Math.log10(SCOT_DENOM)
-            ),
+            scotPrecision: scotConfig.getIn(['info', 'precision']),
             voteRegenSec: scotConfig.getIn(
                 ['config', 'vote_regeneration_seconds'],
                 5 * 24 * 60 * 60
@@ -838,9 +820,14 @@ export default connect(
                 5 * 24 * 60 * 60
             ),
             rewardData,
+            hostConfig,
             tokenBeneficiary: scotConfig.getIn(
                 ['config', 'beneficiaries_account'],
                 ''
+            ),
+            downvoteEnabled: !scotConfig.getIn(
+                ['config', 'disable_downvoting'],
+                false
             ),
             useHive,
         };

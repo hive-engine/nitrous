@@ -2,20 +2,21 @@ import * as config from 'config';
 import * as https from 'https';
 import * as steem from '@steemit/steem-js';
 import { getContentAsync } from 'app/utils/steemApi';
+import { CONFIG_MAP } from 'app/client_config';
 
-function loadPinnedPosts() {
+function loadPinnedPosts(pinnedPostsUrl) {
     return new Promise((resolve, reject) => {
         const emptyPinnedPosts = {
             pinned_posts: [],
             notices: [],
         };
 
-        if (!config.pinned_posts_url) {
+        if (!pinnedPostsUrl) {
             resolve(emptyPinnedPosts);
             return;
         }
 
-        const request = https.get(config.pinned_posts_url, resp => {
+        const request = https.get(pinnedPostsUrl, resp => {
             let data = '';
             resp.on('data', chunk => {
                 data += chunk;
@@ -44,33 +45,52 @@ function loadPinnedPosts() {
 export async function pinnedPosts() {
     console.info('Loading pinned posts');
 
-    const postData = await loadPinnedPosts();
-    let loadedPostData = {
-        pinned_posts: [],
-        notices: [],
-    };
+    const allPinnedPostData = {};
 
-    loadedPostData.announcement = postData.announcement;
-    for (const url of postData.pinned_posts) {
-        const [username, postId] = url.split('@')[1].split('/');
-        let post = await getContentAsync(username, postId);
-        post.pinned = true;
-        loadedPostData.pinned_posts.push(post);
-    }
+    for (const config of Object.values(CONFIG_MAP)) {
+        const scotTokenSymbol = config['LIQUID_TOKEN_UPPERCASE'];
+        const preferHive = config['PREFER_HIVE'];
+        console.info(`Loading pinned posts for ${scotTokenSymbol}`);
+        const postData = await loadPinnedPosts(config['PINNED_POSTS_URL']);
+        let loadedPostData = {
+            pinned_posts: [],
+            notices: [],
+        };
 
-    for (const notice of postData.notices) {
-        if (notice.permalink) {
-            const [username, postId] = notice.permalink
-                .split('@')[1]
-                .split('/');
-            let post = await getContentAsync(username, postId);
-            loadedPostData.notices.push(Object.assign({}, notice, post));
-        } else {
-            loadedPostData.notices.push(notice);
+        loadedPostData.announcement = postData.announcement;
+        for (const url of postData.pinned_posts) {
+            const [username, postId] = url.split('@')[1].split('/');
+            let post = await getContentAsync(
+                username,
+                postId,
+                scotTokenSymbol,
+                preferHive
+            );
+            if (post) {
+              post.pinned = true;
+              loadedPostData.pinned_posts.push(post);
+            }
         }
+
+        for (const notice of postData.notices) {
+            if (notice.permalink) {
+                const [username, postId] = notice.permalink
+                    .split('@')[1]
+                    .split('/');
+                let post = await getContentAsync(
+                    username,
+                    postId,
+                    scotTokenSymbol
+                );
+                loadedPostData.notices.push(Object.assign({}, notice, post));
+            } else {
+                loadedPostData.notices.push(notice);
+            }
+        }
+        allPinnedPostData[config['LIQUID_TOKEN_UPPERCASE']] = loadedPostData;
     }
 
     console.info('Loaded pinned posts');
 
-    return loadedPostData;
+    return allPinnedPostData;
 }

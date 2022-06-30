@@ -1,9 +1,6 @@
 import { Map, OrderedMap, getIn, List, fromJS, Set, merge } from 'immutable';
 import * as globalActions from './GlobalReducer';
 import reducer, { defaultState } from './GlobalReducer';
-import { SCOT_DENOM } from 'app/client_config';
-
-const FLAG_WEIGHT = 2 - Math.min(2, Math.log10(SCOT_DENOM));
 
 describe('Global reducer', () => {
     it('should provide a nice initial state', () => {

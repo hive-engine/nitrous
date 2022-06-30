@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: weedcash.network
+Token: 954aa2c64211f04710cff30e1af38174c9d5965e69bea93e495cd0f1b3c17c16

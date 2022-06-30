@@ -157,7 +157,7 @@ class ChatMain extends React.PureComponent {
                        {!chatMessages ? [] : chatMessages.toJS().map((chatMessage, index) => (
                            <MessageGroup
                                key={index}
-                               avatar={imageProxy() + `u/${chatMessage.from}/avatar/small`}
+                               avatar={imageProxy(true) + `u/${chatMessage.from}/avatar/small`}
                                isOwn={chatMessage.from === username}
                                onlyFirstWithMeta
                            >

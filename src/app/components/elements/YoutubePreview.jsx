@@ -2,12 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
-import { APP_URL } from 'app/client_config';
 
 const { string, number } = PropTypes;
 
 /** Lots of iframes in a post can be very slow.  This component only inserts the iframe when it is actually needed. */
-export default class YoutubePreview extends React.Component {
+class YoutubePreview extends React.Component {
     static propTypes = {
         youTubeId: string.isRequired,
         width: number,
@@ -20,7 +19,6 @@ export default class YoutubePreview extends React.Component {
         width: 640,
         height: 360,
         startTime: 0,
-        dataParams: `enablejsapi=0&rel=0&origin=${APP_URL}`,
     };
 
     constructor() {
@@ -81,3 +79,14 @@ export default class YoutubePreview extends React.Component {
         );
     }
 }
+
+import { connect } from 'react-redux';
+
+export default connect((state, ownProps) => {
+    const appUrl = state.app.getIn(['hostConfig', 'APP_URL']);
+    const dataParams = `enablejsapi=0&rel=0&origin=${appUrl}`;
+    return {
+        dataParams,
+        ...ownProps,
+    };
+})(YoutubePreview);

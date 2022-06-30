@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import tt from 'counterpart';
-import { List, OrderedMap } from 'immutable';
+import { List, Map, OrderedMap } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import PostsList from 'app/components/cards/PostsList';
@@ -18,7 +18,6 @@ import SortOrder from 'app/components/elements/SortOrder';
 import { PROMOTED_POST_PAD_SIZE } from 'shared/constants';
 import tagHeaderMap from 'app/utils/TagFeedHeaderMap';
 import MarkdownViewer from 'app/components/cards/MarkdownViewer';
-import { PREFER_HIVE, INTERLEAVE_PROMOTED, TAG_LIST } from 'app/client_config';
 import { ifHivemind } from 'app/utils/Community';
 import PostsIndexLayout from 'app/components/pages/PostsIndexLayout';
 
@@ -56,6 +55,7 @@ class PostsIndex extends React.Component {
         loading: PropTypes.bool,
         username: PropTypes.string,
         blogmode: PropTypes.bool,
+        interleavePromoted: PropTypes.bool,
         topics: PropTypes.object,
     };
 
@@ -95,13 +95,19 @@ class PostsIndex extends React.Component {
     }
 
     getPosts() {
-        const { order, pinned, posts, promotedPosts } = this.props;
+        const {
+            order,
+            pinned,
+            posts,
+            promotedPosts,
+            interleavePromoted,
+        } = this.props;
         const pinnedPosts = pinned
             ? pinned.has('pinned_posts')
               ? pinned.get('pinned_posts').toJS()
               : []
             : [];
-        if (INTERLEAVE_PROMOTED && (order === 'trending' || order === 'hot')) {
+        if (interleavePromoted && (order === 'trending' || order === 'hot')) {
             let promotedDiscussions = promotedPosts;
             if (promotedDiscussions && promotedDiscussions.size > 0 && posts) {
                 const processed = new Set(
@@ -159,7 +165,7 @@ class PostsIndex extends React.Component {
             order,
             category,
             observer: username,
-            useHive: PREFER_HIVE,
+            useHive: this.props.preferHive,
         });
     }
 
@@ -391,6 +397,8 @@ module.exports = {
     path: ':order(/:category)',
     component: connect(
         (state, ownProps) => {
+            const hostConfig = state.app.get('hostConfig', Map());
+            const preferHive = hostConfig.get('PREFER_HIVE');
             // route can be e.g. trending/food (order/category);
             //   or, @username/feed (category/order). Branch on presence of `@`.
             const route = ownProps.routeParams;
@@ -403,7 +411,7 @@ module.exports = {
                 : route.category ? route.category.toLowerCase() : null;
             const order = account_name
                 ? route.category
-                : route.order || 'trending';
+                : route.order || (hostConfig.get('DEFAULT_URL', '/trending').split('/')[1]);
 
             const hive = ifHivemind(category);
             const community = state.global.getIn(['community', hive], null);
@@ -449,6 +457,11 @@ module.exports = {
                 pinned: state.offchain.get('pinned_posts'),
                 isBrowser: process.env.BROWSER,
                 gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
+                interleavePromoted: hostConfig.get(
+                    'INTERLEAVE_PROMOTED',
+                    false
+                ),
+                preferHive,
                 enableAds,
             };
         },

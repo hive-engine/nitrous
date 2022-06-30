@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { APP_NAME } from 'app/client_config';
 
 class ServerError extends Component {
     render() {
@@ -21,7 +20,7 @@ class ServerError extends Component {
                     <h4>Sorry.</h4>
                     <p>Looks like something went wrong on our end.</p>
                     <p>
-                        Head back to <a href="/">{APP_NAME}</a> homepage.
+                        Head back to <a href="/">homepage</a>.
                     </p>
                 </div>
             </div>

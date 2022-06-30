@@ -1,4 +1,5 @@
 const map = {
+
     //steemit
     elipowell: 'Steemit',
     steemitblog: 'Steemit',
@@ -10,9 +11,19 @@ const map = {
     // 'robot.pay' : 'Robot',
 };
 
-export function affiliationFromStake(accountName, stake) {
+export function getAffiliation(token, user) {
+    if (map[token] && map[token][user]) {
+        return map[token][user];
+    } else if (map[user]) {
+        return map[user];
+    } else {
+        return '';
+    }
+}
+
+export function affiliationFromStake(token, accountName, stake) {
     // Put stake based breakdowns here.
-    return map[accountName];
+    return getAffiliation(token, accountName);
 }
 
 export default map;

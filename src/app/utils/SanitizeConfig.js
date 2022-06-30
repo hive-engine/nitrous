@@ -1,4 +1,3 @@
-import { APP_DOMAIN } from 'app/client_config';
 import { isDefaultImageSize, defaultSrcSet, defaultWidth } from 'app/utils/ProxifyUrl';
 import { getPhishingWarningMessage, getExternalLinkWarningMessage } from 'shared/HtmlReady'; // the only allowable title attributes for div and a tags
 
@@ -15,7 +14,7 @@ export const allowedTags = `
     .split(/,\s*/);
 
 // Medium insert plugin uses: div, figure, figcaption, iframe
-export default ({ large = true, highQualityPost = true, noImage = false, sanitizeErrors = [] }) => ({
+export default ({ large = true, highQualityPost = true, noImage = false, appDomain = '', sanitizeErrors = [] }) => ({
     allowedTags,
     // figure, figcaption,
 
@@ -142,9 +141,7 @@ export default ({ large = true, highQualityPost = true, noImage = false, sanitiz
             href = href.trim();
             const attys = { href };
             // If it's not a (relative or absolute) app URL...
-            if (
-                !href.match(new RegExp(`^(\/(?!\/)|https:\/\/${APP_DOMAIN})`))
-            ) {
+            if (!href.match(new RegExp(`^(\/(?!\/)|https:\/\/${appDomain})`))) {
                 // attys.target = '_blank' // pending iframe impl https://mathiasbynens.github.io/rel-noopener/
                 attys.rel = highQualityPost ? 'noopener' : 'nofollow noopener';
                 attys.title = getExternalLinkWarningMessage();

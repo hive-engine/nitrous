@@ -6,10 +6,6 @@ import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
 import { List } from 'immutable';
 
-import { APP_MAX_TAG } from 'app/client_config';
-
-const MAX_TAGS = APP_MAX_TAG || 10;
-
 class TagInput extends React.Component {
     static propTypes = {
         // HTML props
@@ -69,7 +65,7 @@ class TagInput extends React.Component {
         return <span>{input}</span>;
     }
 }
-export function validateTagInput(value, required = true) {
+export function validateTagInput(value, maxTags, required = true) {
     if (!value || value.trim() === '')
         return required ? tt('g.required') : null;
     const cats = value
@@ -79,9 +75,9 @@ export function validateTagInput(value, required = true) {
 
     return (
         // !value || value.trim() === '' ? 'Required' :
-        cats.length > MAX_TAGS
+        cats.length > maxTags
             ? tt('category_selector_jsx.use_limited_amount_of_categories', {
-                  amount: MAX_TAGS,
+                  amount: maxTags,
               })
             : cats.find(c => c.length > 24)
               ? tt('category_selector_jsx.maximum_tag_length_is_24_characters')

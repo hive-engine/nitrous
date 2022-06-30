@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import SidebarLinks from 'app/components/elements/SidebarLinks';
 import SidebarNewUsers from 'app/components/elements/SidebarNewUsers';
@@ -13,7 +13,6 @@ import CommunityPane from 'app/components/elements/CommunityPane';
 import CommunityPaneMobile from 'app/components/elements/CommunityPaneMobile';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import SidebarToken from 'app/components/elements/SidebarToken';
-import { HIVE_ENGINE, SHOW_TOKEN_STATS } from 'app/client_config';
 
 class PostsIndexLayout extends React.Component {
     static propTypes = {
@@ -47,6 +46,7 @@ class PostsIndexLayout extends React.Component {
             blogmode,
             isBrowser,
             children,
+            scotTokenSymbol,
         } = this.props;
 
         const mqLarge =
@@ -66,10 +66,14 @@ class PostsIndexLayout extends React.Component {
                     {isBrowser &&
                         !community &&
                         username && (
-                            <SidebarLinks username={username} topics={topics} />
+                            <SidebarLinks
+                                username={username}
+                                topics={topics}
+                                scotTokenSymbol={scotTokenSymbol}
+                            />
                         )}
                     <Notices />
-                    {SHOW_TOKEN_STATS &&
+                    {this.props.showTokenStats &&
                         this.props.isBrowser &&
                         this.props.tokenStats && (
                             <div>
@@ -78,25 +82,21 @@ class PostsIndexLayout extends React.Component {
                                         'scotToken',
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_balance',
-                                            'circulatingSupply',
-                                        ]
+                                        ['total_token_balance_circulating']
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
                                             'token_burn_balance',
-                                            'balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
-                                        ['total_token_balance', 'totalStaked']
+                                        ['total_token_balance_staked']
                                     )}
                                     useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
-                    {SHOW_TOKEN_STATS &&
+                    {this.props.showTokenStats &&
                         this.props.isBrowser &&
                         this.props.tokenStats &&
                         this.props.tokenStats.getIn(['scotMinerTokens', 0]) && (
@@ -108,27 +108,23 @@ class PostsIndexLayout extends React.Component {
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_miner_balance',
-                                            'circulatingSupply',
+                                            'total_token_miner_balance_circulating',
                                         ]
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
-                                            'token_miner_burn_balance',
+                                            'token_burn_miner_balance',
                                             'balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
-                                        [
-                                            'total_token_miner_balance',
-                                            'totalStaked',
-                                        ]
+                                        ['total_token_miner_balance_staked']
                                     )}
                                     useHive={this.props.hiveEngine}
                                 />
                             </div>
                         )}
-                    {SHOW_TOKEN_STATS &&
+                    {this.props.showTokenStats &&
                         this.props.isBrowser &&
                         this.props.tokenStats &&
                         this.props.tokenStats.getIn(['scotMinerTokens', 1]) && (
@@ -140,20 +136,17 @@ class PostsIndexLayout extends React.Component {
                                     ])}
                                     scotTokenCirculating={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_mega_miner_balance',
-                                            'circulatingSupply',
+                                            'total_token_mega_miner_balance_circulating',
                                         ]
                                     )}
                                     scotTokenBurn={
                                         this.props.tokenStats.getIn([
-                                            'token_mega_miner_burn_balance',
-                                            'balance',
+                                            'token_burn_mega_miner_balance',
                                         ]) || 0
                                     }
                                     scotTokenStaking={this.props.tokenStats.getIn(
                                         [
-                                            'total_token_mega_miner_balance',
-                                            'totalStaked',
+                                            'total_token_mega_miner_balance_staked',
                                         ]
                                     )}
                                     useHive={this.props.hiveEngine}
@@ -190,8 +183,10 @@ class PostsIndexLayout extends React.Component {
 
 export default connect(
     (state, props) => {
+        const hostConfig = state.app.get('hostConfig', Map());
+        const scotTokenSymbol = hostConfig.get('LIQUID_TOKEN_UPPERCASE');
         const scotConfig = state.app.get('scotConfig');
-        const hiveEngine = HIVE_ENGINE;
+        const hiveEngine = hostConfig.get('HIVE_ENGINE');
         const username =
             state.user.getIn(['current', 'username']) ||
             state.offchain.get('account');
@@ -207,7 +202,13 @@ export default connect(
             topics: state.global.getIn(['topics'], List()),
             isBrowser: process.env.BROWSER,
             username,
-            tokenStats: scotConfig.getIn(['config', 'tokenStats']),
+            interleavePromoted: hostConfig.get('INTERLEAVE_PROMOTED', false),
+            scotTokenSymbol,
+            tokenStats: scotConfig.getIn([
+                'config',
+                'hiveTokenStats',
+            ]),
+            showTokenStats: hostConfig.get('SHOW_TOKEN_STATS', true),
             hiveEngine,
             reviveEnabled,
         };

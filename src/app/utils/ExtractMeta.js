@@ -1,47 +1,62 @@
 import { extractBodySummary, extractImageLink } from 'app/utils/ExtractContent';
 import { makeCanonicalLink } from 'app/utils/CanonicalLinker.js';
-import {
-    APP_NAME,
-    APP_URL,
-    APP_ICON,
-    SITE_DESCRIPTION,
-    TWITTER_HANDLE,
-} from 'app/client_config';
 
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 
-const proxify = (url, size) => proxifyImageUrl(url, size).replace(/ /g, '%20');
+const proxify = (url, size) => proxifyImageUrl(url, true, size).replace(/ /g, '%20');
 
-function addSiteMeta(metas) {
-    metas.push({ title: APP_NAME });
-    metas.push({ name: 'description', content: SITE_DESCRIPTION });
+function addSiteMeta(metas, hostConfig) {
+    metas.push({ title: hostConfig['APP_NAME'] });
+    metas.push({
+        name: 'description',
+        content: hostConfig['SITE_DESCRIPTION'],
+    });
     metas.push({ property: 'og:type', content: 'website' });
-    metas.push({ property: 'og:site_name', content: APP_NAME });
-    metas.push({ property: 'og:title', content: APP_NAME });
-    metas.push({ property: 'og:description', content: SITE_DESCRIPTION });
+    metas.push({ property: 'og:site_name', content: hostConfig['APP_NAME'] });
+    metas.push({ property: 'og:title', content: hostConfig['APP_NAME'] });
+    metas.push({
+        property: 'og:description',
+        content: hostConfig['SITE_DESCRIPTION'],
+    });
     metas.push({
         property: 'og:image',
-        content: `${APP_URL}/images/${APP_ICON}.png`,
+        content: `${hostConfig['APP_URL']}/images/${
+            hostConfig['APP_ICON']
+        }.png`,
     });
     metas.push({ property: 'fb:app_id', content: $STM_Config.fb_app });
     metas.push({ name: 'twitter:card', content: 'summary' });
-    metas.push({ name: 'twitter:site', content: TWITTER_HANDLE });
-    metas.push({ name: 'twitter:title', content: `#${APP_NAME}` });
-    metas.push({ name: 'twitter:description', SITE_DESCRIPTION });
+    metas.push({
+        name: 'twitter:title',
+        content: `#${hostConfig['APP_NAME']}`,
+    });
+    metas.push({
+        name: 'twitter:description',
+        content: hostConfig['SITE_DESCRIPTION'],
+    });
     metas.push({
         name: 'twitter:image',
-        content: `${APP_URL}/images/${APP_ICON}.png`,
+        content: `${hostConfig['APP_URL']}/images/${
+            hostConfig['APP_ICON']
+        }.png`,
     });
 }
 
-function addPostMeta(metas, content, profile) {
+function addPostMeta(metas, content, profile, hostConfig) {
+    const {
+        APP_NAME,
+        APP_DOMAIN,
+        APP_URL,
+        APP_ICON,
+        TWITTER_HANDLE,
+    } = hostConfig;
     const { profile_image } = profile;
-    const { category, created, body, json_metadata } = content;
+    const { category, created, body, json_metadata, hive } = content;
     const isReply = content.depth > 0;
 
     const title = content.title + ` — ${APP_NAME}`;
     const desc = extractBodySummary(body, isReply) + ' by ' + content.author;
-    const image_link = extractImageLink(json_metadata, body);
+    const image_link = extractImageLink(json_metadata, APP_DOMAIN, hive, body);
 
     const canonicalUrl = makeCanonicalLink(content, json_metadata);
     const localUrl = makeCanonicalLink(content, null);
@@ -85,7 +100,8 @@ function addPostMeta(metas, content, profile) {
     });
 }
 
-function addAccountMeta(metas, accountname, profile) {
+function addAccountMeta(metas, accountname, profile, hostConfig) {
+    const { SITE_DESCRIPTION, APP_URL, APP_ICON, TWITTER_HANDLE } = hostConfig;
     let { name, about, profile_image } = profile;
 
     name = name || accountname;
@@ -114,7 +130,7 @@ function readProfile(chain_data, account) {
     return chain_data.profiles[account]['metadata']['profile'];
 }
 
-export default function extractMeta(chain_data, rp) {
+export default function extractMeta(chain_data, rp, hostConfig) {
     let username;
     let content;
     if (rp.username && rp.slug) {
@@ -131,11 +147,11 @@ export default function extractMeta(chain_data, rp) {
 
     const metas = [];
     if (content) {
-        addPostMeta(metas, content, profile);
+        addPostMeta(metas, content, profile, hostConfig);
     } else if (username) {
-        addAccountMeta(metas, username, profile);
+        addAccountMeta(metas, username, profile, hostConfig);
     } else {
-        addSiteMeta(metas);
+        addSiteMeta(metas, hostConfig);
     }
 
     return metas;

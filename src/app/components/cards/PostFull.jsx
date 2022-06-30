@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -20,13 +21,6 @@ import MuteButton from 'app/components/elements/MuteButton';
 import FlagButton from 'app/components/elements/FlagButton';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import Userpic from 'app/components/elements/Userpic';
-import {
-    APP_DOMAIN,
-    APP_NAME,
-    SHOW_AUTHOR_RECENT_POSTS,
-    POSTED_VIA_NITROUS_ICON,
-    LIQUID_TOKEN_UPPERCASE
-} from 'app/client_config';
 import tt from 'counterpart';
 import { ifHivemind } from 'app/utils/Community';
 import userIllegalContent from 'app/utils/userIllegalContent';
@@ -39,18 +33,18 @@ import UserNames from 'app/components/elements/UserNames';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 
-function TimeAuthorCategory({ post, community }) {
+function TimeAuthorCategory({ post, community, hive }) {
     return (
         <span className="PostFull__time_author_category vcard">
             <Icon name="clock" className="space-right" />
             <TimeAgoWrapper date={post.get('created')} /> {tt('g.in')}{' '}
             <Tag post={post} community={community} /> {tt('g.by')}{' '}
-            <Author post={post} showAffiliation />
+            <Author post={post} showAffiliation hive={hive} />
         </span>
     );
 }
 
-function TimeAuthorCategoryLarge({ post, community }) {
+function TimeAuthorCategoryLarge({ post, community, hive }) {
     const crossPostedBy = post.get('cross_posted_by');
     let author = post.get('author');
     let created = post.get('created');
@@ -64,9 +58,14 @@ function TimeAuthorCategoryLarge({ post, community }) {
 
     return (
         <span className="PostFull__time_author_category_large vcard">
-            <Userpic account={author} />
+            <Userpic account={author} hive={hive} />
             <div className="right-side">
-                <Author post={post} showAffiliation resolveCrossPost />
+                <Author
+                    post={post}
+                    showAffiliation
+                    resolveCrossPost
+                    hive={hive}
+                />
                 {tt('g.in')} <Tag post={post} community={community} />
                 {' • '}
                 <TimeAgoWrapper date={created} />{' '}
@@ -88,6 +87,7 @@ class PostFull extends React.Component {
 
         // connector props
         username: PropTypes.string,
+        hostConfig: PropTypes.object,
         deletePost: PropTypes.func.isRequired,
         showPromotePost: PropTypes.func.isRequired,
         showExplorePost: PropTypes.func.isRequired,
@@ -122,9 +122,10 @@ class PostFull extends React.Component {
             );
         };
         this.onTribeMute = () => {
-            const { username, tribeMute, post } = this.props;
+            const { username, hostConfig, tribeMute, post } = this.props;
             tribeMute(
                 username,
+                hostConfig['LIQUID_TOKEN_UPPERCASE'],
                 post.get('author'),
                 post.get('permlink'),
                 !post.get('muted'),
@@ -213,6 +214,7 @@ class PostFull extends React.Component {
     }
 
     linkedInShare(e) {
+        const { hostConfig } = this.props;
         serverApiRecordEvent('LinkedInShare', this.share_params.link);
         e.preventDefault();
         const winWidth = 720;
@@ -225,7 +227,7 @@ class PostFull extends React.Component {
             encodeURIComponent(s.title) +
             '&url=' +
             encodeURIComponent(s.url) +
-            `&source=${APP_NAME}&mini=true`;
+            `&source=${hostConfig['APP_NAME']}&mini=true`;
         window.open(
             'https://www.linkedin.com/shareArticle?' + q,
             'Share',
@@ -264,12 +266,14 @@ class PostFull extends React.Component {
 
         const account = post.get('author');
         const permlink = post.get('permlink');
+        const hive = post.get('hive');
         this.props.togglePinnedPost(
             !isPinned,
             username,
             community,
             account,
-            permlink
+            permlink,
+            hive
         );
     };
 
@@ -280,6 +284,7 @@ class PostFull extends React.Component {
                 post,
                 community,
                 viewer_role,
+                hostConfig,
                 tokenAccount,
                 muteAccount,
             },
@@ -295,6 +300,13 @@ class PostFull extends React.Component {
             onDeletePost,
             onTribeMute,
         } = this;
+        const {
+            APP_NAME,
+            APP_DOMAIN,
+            POSTED_VIA_NITROUS_ICON,
+            COMMUNITY_CATEGORY,
+            SHOW_AUTHOR_RECENT_POSTS,
+        } = hostConfig;
         if (!post) return null;
         const communityName = community ? community.get('name') : null;
         const content = post.toJS();
@@ -512,7 +524,7 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
-        const canTribeMute = username === tokenAccount || (muteAccount && username === muteAccount);
+        const canTribeMute = (tokenAccount && username === tokenAccount) || (muteAccount && username === muteAccount);
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
@@ -551,6 +563,7 @@ class PostFull extends React.Component {
                                 <TimeAuthorCategoryLarge
                                     post={post}
                                     community={community}
+                                    hive={hive}
                                 />
                             </div>
                             <div className="PostFull__body entry-content">
@@ -574,12 +587,19 @@ class PostFull extends React.Component {
                                 {tt('g.promote')}
                             </button>
                         )}
-                    {!isReply && <TagList post={post} />}
+                    {!isReply && (
+                        <TagList
+                            post={post}
+                            hiveTag={COMMUNITY_CATEGORY}
+                            appName={APP_NAME}
+                        />
+                    )}
                     <div className="PostFull__footer row">
                         <div className="columns medium-12 large-9">
                             <TimeAuthorCategory
                                 post={post}
                                 community={community}
+                                hive={hive}
                             />
                             <Voting post={post} />
                         </div>
@@ -682,6 +702,7 @@ export default connect(
         const muteAccount = state.app.getIn(['scotConfig', 'config', 'muting_account']);
 
         return {
+            hostConfig: state.app.get('hostConfig', Map()).toJS(),
             post,
             postref,
             community,
@@ -705,7 +726,7 @@ export default connect(
                 })
             );
         },
-        tribeMute: (username, author, permlink, mute, hive) => {
+        tribeMute: (username, token, author, permlink, mute, hive) => {
             dispatch(
                 transactionActions.broadcastOperation({
                     type: 'custom_json',
@@ -713,7 +734,7 @@ export default connect(
                         id: 'scot_mute_post',
                         required_posting_auths: [username],
                         json: JSON.stringify({
-                            token: LIQUID_TOKEN_UPPERCASE,
+                            token,
                             authorperm: `@${author}/${permlink}`,
                             mute,
                         }),
@@ -749,7 +770,8 @@ export default connect(
             account,
             permlink,
             successCallback,
-            errorCallback
+            errorCallback,
+            hive
         ) => {
             let action = 'unpinPost';
             if (pinPost) action = 'pinPost';
@@ -773,6 +795,7 @@ export default connect(
                     },
                     successCallback,
                     errorCallback,
+                    useHive: hive,
                 })
             );
         },

@@ -766,6 +766,9 @@ class Settings extends React.Component {
                                             <option value="ru">
                                                 Russian русский
                                             </option>
+                                            <option value="ua">
+                                                Ukranian Український
+                                            </option>
                                             <option value="fr">
                                                 French français
                                             </option>
@@ -1048,7 +1051,7 @@ export default connect(
         const metaData = read_profile_v2(account);
         const profile = metaData && metaData.profile ? metaData.profile : {};
         const user_preferences = state.app.get('user_preferences').toJS();
-        const useHive = PREFER_HIVE;
+        const useHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
 
         return {
             account,

@@ -12,7 +12,6 @@ import {
     transactionWatches,
     broadcastOperation,
 } from './TransactionSaga';
-import { APP_URL, POST_FOOTER, DEBT_TICKER } from 'app/client_config';
 
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
@@ -42,9 +41,9 @@ const operation = {
 const username = 'Beatrice';
 
 function addFooter(body, author, permlink) {
-    const footer = POST_FOOTER.replace(
+    const footer = 'test ${POST_URL} footer'.replace(
         '${POST_URL}',
-        `${APP_URL}/@${author}/${permlink}`
+        `appurl/@${author}/${permlink}`
     );
     if (footer && !body.endsWith(footer)) {
         return body + '\n\n' + footer;
@@ -125,7 +124,11 @@ describe('TransactionSaga', () => {
             expect(expected).toEqual(actual);
         });
         it('should return the comment options array.', () => {
-            let actual = gen.next('mock-permlink-123').value;
+            gen.next('mock-permlink-123');
+            let actual = gen.next({
+                POST_FOOTER: 'test ${POST_URL} footer',
+                APP_URL: 'appurl',
+            }).value;
             const expected = [
                 [
                     'comment',
@@ -166,7 +169,12 @@ describe('TransactionSaga', () => {
                 operation.parent_author,
                 operation.parent_permlink
             );
-            const actual = gen.next('mock-permlink-123').value;
+
+            gen.next('mock-permlink-123');
+            const actual = gen.next({
+                POST_FOOTER: 'test ${POST_URL} footer',
+                APP_URL: 'appurl',
+            }).value;
             const expected = createPatch(
                 originalBod,
                 addFooter(operation.body, operation.author, 'mock-permlink-123')
@@ -183,7 +191,12 @@ describe('TransactionSaga', () => {
                 operation.parent_author,
                 operation.parent_permlink
             );
-            const actual = gen.next('mock-permlink-123').value;
+
+            gen.next('mock-permlink-123');
+            const actual = gen.next({
+                POST_FOOTER: 'test ${POST_URL} footer',
+                APP_URL: 'appurl',
+            }).value;
             const expected = addFooter(
                 operation.body,
                 operation.author,
