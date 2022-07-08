@@ -114,10 +114,12 @@
 .Voting__button-up.votingUp {
   padding-right: 0.5rem;
   svg {
-    border: 1px solid $color-teal;
+    @include themify($themes) {
+      border: 1px solid themed('colorAccent');
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
     border-radius: 50%;
-    border-right-color: transparent;
-    border-top-color: transparent;
     animation: loading 500ms infinite linear;
   }
 }
@@ -344,7 +346,9 @@
       top: 50%;
       transform: translate3d(-50%,-50%,0);
       &:active {
-        background: $color-teal;
+        @include themify($themes) {
+          background: themed('colorAccent');
+        }
         box-shadow: none;
       }
     }
@@ -357,7 +361,9 @@
     margin-top: 18px;
     .rangeslider__fill {
       height: 100%;
-      background: $color-teal;
+      @include themify($themes) {
+        background: themed('colorAccent');
+      }
       box-shadow: none;
       left: 0;
     }

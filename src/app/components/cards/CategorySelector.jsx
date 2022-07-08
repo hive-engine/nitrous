@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import shouldComponentUpdate from 'app/utils/shouldComponentUpdate';
 import { cleanReduxInput } from 'app/utils/ReduxForms';
 import tt from 'counterpart';
-import { APP_MAX_TAG } from 'app/client_config';
-
-const MAX_TAG = APP_MAX_TAG || 10;
 
 class CategorySelector extends React.Component {
     static propTypes = {
@@ -23,6 +20,7 @@ class CategorySelector extends React.Component {
 
         // redux connect (overwrite in HTML)
         trending: PropTypes.object.isRequired, // Immutable.List
+        scotMaxTags: PropTypes.number,
     };
     static defaultProps = {
         autoComplete: 'on',
@@ -56,7 +54,7 @@ class CategorySelector extends React.Component {
         };
     }
     render() {
-        const { trending, tabIndex, disabled } = this.props;
+        const { trending, scotMaxTags, tabIndex, disabled } = this.props;
         // TODO: figure out category tags
         const categories = trending
             ? trending.slice(0, 11).filterNot(c => validateCategory(c))
@@ -99,15 +97,15 @@ class CategorySelector extends React.Component {
         return <span>{createCategory ? categoryInput : categorySelect}</span>;
     }
 }
-export function validateCategory(category, required = true) {
+export function validateCategory(category, maxTags, required = true) {
     if (!category || category.trim() === '')
         return required ? tt('g.required') : null;
     const cats = category.trim().split(' ');
     return (
         // !category || category.trim() === '' ? 'Required' :
-        cats.length > MAX_TAG
+        cats.length > maxTags
             ? tt('category_selector_jsx.use_limited_amount_of_categories', {
-                  amount: MAX_TAG,
+                  amount: maxTags,
               })
             : cats.find(c => c.length > 24)
               ? tt('category_selector_jsx.maximum_tag_length_is_24_characters')
@@ -133,5 +131,6 @@ export default connect((state, ownProps) => {
     // apply translations
     // they are used here because default prop can't acces intl property
     const placeholder = tt('category_selector_jsx.tag_your_story');
-    return { trending, placeholder, ...ownProps };
+    const scotMaxTags = state.app.getIn(['hostConfig', 'APP_MAX_TAG']);
+    return { trending, placeholder, scotMaxTags, ...ownProps };
 })(CategorySelector);

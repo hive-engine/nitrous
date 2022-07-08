@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -6,7 +7,6 @@ import { parseJsonTags } from 'app/utils/StateFunctions';
 import Headroom from 'react-headroom';
 import resolveRoute from 'app/ResolveRoute';
 import tt from 'counterpart';
-import { APP_NAME } from 'app/client_config';
 import ElasticSearchInput from 'app/components/elements/ElasticSearchInput';
 import IconButton from 'app/components/elements/IconButton';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
@@ -15,21 +15,21 @@ import * as appActions from 'app/redux/AppReducer';
 import { startPolling } from 'app/redux/PollingSaga';
 import { actions as fetchDataSagaActions } from 'app/redux/FetchDataSaga';
 import Userpic from 'app/components/elements/Userpic';
-import { SIGNUP_URL } from 'shared/constants';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import AppLogo from 'app/components/elements/AppLogo';
-import { APP_ICON } from 'app/client_config';
 import normalizeProfile from 'app/utils/NormalizeProfile';
 import Announcement from 'app/components/elements/Announcement';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import SortOrder from 'app/components/elements/SortOrder';
-import { Map } from 'immutable';
 import ReactMutationObserver from '../../utils/ReactMutationObserver';
+import DarkModeBtn from '../../DarkMode/DarkModeBtn';
 
 class Header extends React.Component {
     static propTypes = {
         current_account_name: PropTypes.string,
         pathname: PropTypes.string,
+        appName: PropTypes.string,
         getUnreadAccountNotifications: PropTypes.func,
         startNotificationsPolling: PropTypes.func,
         loggedIn: PropTypes.bool,
@@ -135,10 +135,13 @@ class Header extends React.Component {
             nightmodeEnabled,
             showSidePanel,
             navigate,
+            appName,
+            preferHive,
             display_name,
             content,
             unreadNotificationCount,
             notificationActionPending,
+            toggleBody,
         } = this.props;
 
         const { showAd, showReviveAd, showAnnouncement } = this.state;
@@ -238,7 +241,7 @@ class Header extends React.Component {
             process.env.BROWSER &&
             (route.page !== 'Post' && route.page !== 'PostNoCategory')
         )
-            document.title = page_title + ' — ' + APP_NAME;
+            document.title = page_title + ' — ' + appName;
 
         const _feed = username && `/@${username}/feed`;
         const logo_link = _feed && pathname != _feed ? _feed : '/';
@@ -369,7 +372,11 @@ class Header extends React.Component {
                                     </a>
                                     <a
                                         className="Header__signup-link"
-                                        href={SIGNUP_URL}
+                                        href={
+                                            preferHive
+                                                ? HIVE_SIGNUP_URL
+                                                : SIGNUP_URL
+                                        }
                                     >
                                         {tt('g.sign_up')}
                                     </a>
@@ -377,7 +384,9 @@ class Header extends React.Component {
                             )}
 
                             {/*SUBMIT STORY*/}
-                            {submit_story}
+                            {submit_story} 
+                            {/*DARKMODE TOGGLE*/}
+                            <DarkModeBtn toggleBody={toggleBody} />
                             {/*USER AVATAR */}
                             {loggedIn && (
                                 <DropdownMenu
@@ -390,7 +399,10 @@ class Header extends React.Component {
                                 >
                                     <li className={'Header__userpic '}>
                                         <span title={username}>
-                                            <Userpic account={username} />
+                                            <Userpic
+                                                account={username}
+                                                hive={preferHive}
+                                            />
                                         </span>
                                     </li>
                                 </DropdownMenu>
@@ -418,6 +430,8 @@ const mapStateToProps = (state, ownProps) => {
         return {
             username: null,
             loggedIn: false,
+            appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+            preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE'], true),
             community: state.global.get('community', Map({})),
         };
     }
@@ -474,6 +488,8 @@ const mapStateToProps = (state, ownProps) => {
         announcement,
         showAnnouncement: state.user.get('showAnnouncement'),
         gptEnabled,
+        appName: state.app.getIn(['hostConfig', 'APP_NAME']),
+        preferHive: state.app.getIn(['hostConfig', 'PREFER_HIVE'], true),
         content,
         unreadNotificationCount,
         notificationActionPending: state.global.getIn([

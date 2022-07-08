@@ -4,11 +4,15 @@ import linksRe, { any as linksAny } from 'app/utils/Links';
 import { validate_account_name } from 'app/utils/ChainValidation';
 import { proxifyImageUrl } from 'app/utils/ProxifyUrl';
 import * as Phishing from 'app/utils/Phishing';
-import { embedNode as EmbeddedPlayerEmbedNode, preprocessHtml } from 'app/components/elements/EmbeddedPlayers';
+import {
+    embedNode as EmbeddedPlayerEmbedNode,
+    preprocessHtml,
+} from 'app/components/elements/EmbeddedPlayers';
 import { extractMetadata as youTubeId } from 'app/components/elements/EmbeddedPlayers/youtube';
 
 export const getPhishingWarningMessage = () => tt('g.phishy_message');
-export const getExternalLinkWarningMessage = () => tt('g.external_link_message');
+export const getExternalLinkWarningMessage = () =>
+    tt('g.external_link_message');
 
 const noop = () => {};
 const DOMParser = new xmldom.DOMParser({
@@ -80,7 +84,10 @@ const XMLSerializer = new xmldom.XMLSerializer();
     If hideImages and mutate is set to true all images will be replaced
     by <pre> elements containing just the image url.
 */
-export default function(html, { mutate = true, hideImages = false } = {}) {
+export default function(
+    html,
+    { mutate = true, hideImages = false, appDomain = '', useHive = false } = {}
+) {
     const state = { mutate };
     state.hashtags = new Set();
     state.usertags = new Set();
@@ -88,18 +95,25 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
     state.images = new Set();
     state.links = new Set();
     try {
-        const doc = DOMParser.parseFromString(preprocessHtml(html), 'text/html');
+        const doc = DOMParser.parseFromString(
+            preprocessHtml(html),
+            'text/html'
+        );
         traverse(doc, state);
         if (mutate) {
             if (hideImages) {
-                for (const image of Array.from(doc.getElementsByTagName('img'))) {
+                for (const image of Array.from(
+                    doc.getElementsByTagName('img')
+                )) {
                     const pre = doc.createElement('pre');
                     pre.setAttribute('class', 'image-url-only');
-                    pre.appendChild(doc.createTextNode(image.getAttribute('src')));
+                    pre.appendChild(
+                        doc.createTextNode(image.getAttribute('src'))
+                    );
                     image.parentNode.replaceChild(pre, image);
                 }
             } else {
-                proxifyImages(doc);
+                proxifyImages(doc, appDomain, useHive);
             }
         }
         // console.log('state', state)
@@ -110,7 +124,10 @@ export default function(html, { mutate = true, hideImages = false } = {}) {
         };
     } catch (error) {
         // xmldom error is bad
-        console.error('rendering error', JSON.stringify({ error: error.message, html }));
+        console.error(
+            'rendering error',
+            JSON.stringify({ error: error.message, html })
+        );
         return { html: '' };
     }
 }
@@ -183,7 +200,10 @@ function iframe(state, child) {
     }
 
     const html = XMLSerializer.serializeToString(child);
-    child.parentNode.replaceChild(DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`), child);
+    child.parentNode.replaceChild(
+        DOMParser.parseFromString(`<div class="videoWrapper">${html}</div>`),
+        child
+    );
 }
 
 function img(state, child) {
@@ -204,15 +224,15 @@ function img(state, child) {
 }
 
 // For all img elements with non-local URLs, prepend the proxy URL (e.g. `https://img0.steemit.com/0x0/`)
-function proxifyImages(doc) {
+function proxifyImages(doc, appDomain, useHive) {
     if (!doc) return;
 
     Array.from(doc.getElementsByTagName('img')).forEach(node => {
         const url = node.getAttribute('src');
 
-        if (!linksRe.local.test(url)) {
+        if (!linksRe.local(appDomain).test(url)) {
             console.log('proxifyImage proxifying image', url);
-            const proxifiedImageUrl = proxifyImageUrl(url, true);
+            const proxifiedImageUrl = proxifyImageUrl(url, useHive, true);
             console.log('proxifiedUrl', proxifiedImageUrl);
             node.setAttribute('src', proxifiedImageUrl);
         }
@@ -221,7 +241,9 @@ function proxifyImages(doc) {
 
 function linkifyNode(child, state) {
     try {
-        const tag = child.parentNode.tagName ? child.parentNode.tagName.toLowerCase() : child.parentNode.tagName;
+        const tag = child.parentNode.tagName
+            ? child.parentNode.tagName.toLowerCase()
+            : child.parentNode.tagName;
         if (tag === 'code') return;
         if (tag === 'a') return;
 
@@ -231,9 +253,18 @@ function linkifyNode(child, state) {
         child = EmbeddedPlayerEmbedNode(child, state.links, state.images);
 
         const data = XMLSerializer.serializeToString(child);
-        const content = linkify(data, state.mutate, state.hashtags, state.usertags, state.images, state.links);
+        const content = linkify(
+            data,
+            state.mutate,
+            state.hashtags,
+            state.usertags,
+            state.images,
+            state.links
+        );
         if (mutate && content !== data) {
-            const newChild = DOMParser.parseFromString(`<span>${content}</span>`);
+            const newChild = DOMParser.parseFromString(
+                `<span>${content}</span>`
+            );
             child.parentNode.replaceChild(newChild, child);
             return newChild;
         }
@@ -268,7 +299,9 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
 
             if (!mutate) return `${preceedings}${user}`;
 
-            return valid ? `${preceedings}<a href="/@${userLower}">@${user}</a>` : `${preceedings}@${user}`;
+            return valid
+                ? `${preceedings}<a href="/@${userLower}">@${user}</a>`
+                : `${preceedings}@${user}`;
         }
     );
 
@@ -282,7 +315,10 @@ function linkify(content, mutate, hashtags, usertags, images, links) {
         if (/\.(zip|exe)$/i.test(ln)) return ln;
 
         // do not linkify phishy links
-        if (Phishing.looksPhishy(ln)) return `<div title='${getPhishingWarningMessage()}' class='phishy'>${ln}</div>`;
+        if (Phishing.looksPhishy(ln))
+            return `<div title='${getPhishingWarningMessage()}' class='phishy'>${
+                ln
+            }</div>`;
 
         if (links) links.add(ln);
         return `<a href="${ipfsPrefix(ln)}">${ln}</a>`;

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tt from 'counterpart';
-import { SIGNUP_URL } from 'shared/constants';
 import Comment from 'app/components/cards/Comment';
 import PostFull from 'app/components/cards/PostFull';
 import NotFoundMessage from 'app/components/cards/NotFoundMessage';
@@ -10,6 +9,7 @@ import { parseJsonTags } from 'app/utils/StateFunctions';
 import { sortComments } from 'app/components/cards/Comment';
 import DropdownMenu from 'app/components/elements/DropdownMenu';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
+import { HIVE_SIGNUP_URL, SIGNUP_URL } from 'shared/constants';
 import GptAd from 'app/components/elements/GptAd';
 import ReviveAd from 'app/components/elements/ReviveAd';
 import { isLoggedIn } from 'app/utils/UserUtil';
@@ -31,16 +31,13 @@ class Post extends React.Component {
         content: PropTypes.object.isRequired,
         dis: PropTypes.object,
         sortOrder: PropTypes.string,
+        scotTokenSymbol: PropTypes.string,
         loading: PropTypes.bool,
     };
     constructor() {
         super();
         this.state = {
             showNegativeComments: false,
-        };
-        this.showSignUp = () => {
-            serverApiRecordEvent('SignUp', 'Post Promo');
-            window.location = SIGNUP_URL;
         };
     }
 
@@ -49,6 +46,10 @@ class Post extends React.Component {
             showNegativeComments: !this.state.showNegativeComments,
         });
         e.preventDefault();
+    };
+
+    showSignUp = () => {
+        window.location = this.props.preferHive ? HIVE_SIGNUP_URL : SIGNUP_URL;
     };
 
     onHideComment = () => {
@@ -61,7 +62,15 @@ class Post extends React.Component {
 
     render() {
         const { showSignUp } = this;
-        const { content, sortOrder, post, dis, loading } = this.props;
+        const {
+            content,
+            sortOrder,
+            appDomain,
+            scotTokenSymbol,
+            post,
+            dis,
+            loading,
+        } = this.props;
         const { showNegativeComments, commentHidden, showAnyway } = this.state;
 
         if (!content) {
@@ -114,7 +123,7 @@ class Post extends React.Component {
             .toJS()
             .filter(c => content.get(c));
 
-        sortComments(content, replies, sortOrder);
+        sortComments(content, replies, sortOrder, scotTokenSymbol);
 
         // Don't render too many comments on server-side
         const commentLimit = 100;
@@ -284,6 +293,11 @@ export default connect((state, ownProps) => {
         sortOrder: currLocation.query.sort || 'trending',
         gptEnabled: state.app.getIn(['googleAds', 'gptEnabled']),
         reviveEnabled: state.app.get('reviveEnabled'),
+        scotTokenSymbol: state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]),
+        appDomain: state.app.getIn(['hostConfig', 'APP_DOMAIN']),
         loading: state.app.get('loading'),
     };
 })(Post);

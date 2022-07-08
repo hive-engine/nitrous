@@ -75,14 +75,15 @@ export default connect(
         };
 
         render() {
-            const { node, state, attributes } = this.props;
+            const { node, state, attributes, hive } = this.props;
 
             const isFocused = state.selection.hasEdgeIn(node);
             const className = isFocused ? 'active' : null;
 
-            const prefix = $STM_Config.img_proxy_prefix
-                ? $STM_Config.img_proxy_prefix + '0x0/'
-                : '';
+            const proxy_prefix = hive
+                ? $STM_Config.hive_img_proxy_prefix
+                : $STM_Config.img_proxy_prefix;
+            const prefix = proxy_prefix ? proxy_prefix + '0x0/' : '';
 
             const alt = node.data.get('alt');
             const src = node.data.get('src');

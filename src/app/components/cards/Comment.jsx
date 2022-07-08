@@ -19,14 +19,13 @@ import tt from 'counterpart';
 import { parsePayoutAmount } from 'app/utils/ParsersAndFormatters';
 import { Long } from 'bytebuffer';
 import ImageUserBlockList from 'app/utils/ImageUserBlockList';
-import { PREFER_HIVE, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 import ContentEditedWrapper from '../elements/ContentEditedWrapper';
 import { allowDelete } from 'app/utils/StateFunctions';
 import { Role } from 'app/utils/Community';
 
-export function sortComments(cont, comments, sort_order) {
+export function sortComments(cont, comments, sort_order, scotTokenSymbol) {
     function totalPayout(a) {
-        const scotData = a.getIn(['scotData', LIQUID_TOKEN_UPPERCASE]);
+        const scotData = a.getIn(['scotData', scotTokenSymbol]);
         return scotData
             ? parseInt(scotData.get('pending_token')) +
                   parseInt(scotData.get('total_payout_value')) +
@@ -84,6 +83,7 @@ class CommentImpl extends React.Component {
         rootComment: PropTypes.string,
         anchor_link: PropTypes.string.isRequired,
         deletePost: PropTypes.func.isRequired,
+        scotTokenSymbol: PropTypes.string,
     };
 
     constructor() {
@@ -140,9 +140,14 @@ class CommentImpl extends React.Component {
         }
 
         // Client-side only when using componentDidMount
-        const { tribeMuteAccount, tribeIgnoreList, fetchFollows } = this.props;
+        const {
+            tribeMuteAccount,
+            tribeIgnoreList,
+            fetchFollows,
+            preferHive,
+        } = this.props;
         if (tribeMuteAccount && !tribeIgnoreList) {
-            fetchFollows(tribeMuteAccount);
+            fetchFollows(tribeMuteAccount, preferHive);
         }
     }
 
@@ -214,6 +219,8 @@ class CommentImpl extends React.Component {
             depth,
             anchor_link,
             showNegativeComments,
+            scotTokenSymbol,
+            preferHive,
             ignored,
             rootComment,
             community,
@@ -236,7 +243,7 @@ class CommentImpl extends React.Component {
 
         const author = post.get('author');
         const comment = post.toJS();
-        const gray = comment.stats.gray || ImageUserBlockList.includes(author);
+        const gray = (comment.stats && comment.stats.gray) || ImageUserBlockList.includes(author);
 
         const allowReply = Role.canComment(community, viewer_role);
         const canEdit = username && username === author;
@@ -289,7 +296,12 @@ class CommentImpl extends React.Component {
                 );
             } else {
                 replies = comment.replies.filter(c => cont.get(c));
-                sortComments(cont, replies, this.props.sort_order);
+                sortComments(
+                    cont,
+                    replies,
+                    this.props.sort_order,
+                    scotTokenSymbol
+                );
                 replies = replies.map((reply, idx) => (
                     <Comment
                         key={idx}
@@ -353,7 +365,7 @@ class CommentImpl extends React.Component {
             >
                 <div className={innerCommentClass}>
                     <div className="Comment__Userpic show-for-medium">
-                        <Userpic account={author} />
+                        <Userpic account={author} hive={preferHive} />
                     </div>
                     <div className="Comment__header">
                         <div className="Comment__header_collapse">
@@ -366,9 +378,13 @@ class CommentImpl extends React.Component {
                         </div>
                         <span className="Comment__header-user">
                             <div className="Comment__Userpic-small">
-                                <Userpic account={author} />
+                                <Userpic account={author} hive={preferHive} />
                             </div>
-                            <Author post={post} showAffiliation />
+                            <Author
+                                post={post}
+                                showAffiliation
+                                hive={preferHive}
+                            />
                         </span>
                         &nbsp;{/* &middot; &nbsp;*/}
                         <Link
@@ -459,6 +475,13 @@ const Comment = connect(
         const depth = ownProps.depth || 1;
         const rootComment = ownProps.rootComment || postref;
 
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+
+        const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+
         return {
             postref,
             post,
@@ -473,6 +496,8 @@ const Comment = connect(
             ignored,
             tribeMuteAccount,
             tribeIgnoreList,
+            scotTokenSymbol,
+            preferHive,
             community: community.get('name', null),
             viewer_role: community.getIn(['context', 'role'], 'guest'),
         };
@@ -493,13 +518,13 @@ const Comment = connect(
                 })
             );
         },
-        fetchFollows: account => {
+        fetchFollows: (account, preferHive) => {
             dispatch(
                 fetchDataSagaActions.fetchFollows({
                     method: 'getFollowingAsync',
                     account,
                     type: 'ignore',
-                    useHive: PREFER_HIVE,
+                    useHive: preferHive,
                 })
             );
         },

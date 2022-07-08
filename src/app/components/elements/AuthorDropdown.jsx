@@ -63,7 +63,7 @@ class AuthorDropdown extends Component {
             <div className="Author__container">
                 <div className="Author__dropdown">
                     <Link to={'/@' + author}>
-                        <Userpic account={author} />
+                        <Userpic account={author} hive={this.props.hive} />
                     </Link>
                     {name && (
                         <Link to={'/@' + author} className="Author__name">

@@ -14,12 +14,11 @@ import * as appActions from 'app/redux/AppReducer';
 import * as globalActions from 'app/redux/GlobalReducer';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import { APP_URL, COMMENT_FOOTER, POST_FOOTER } from 'app/client_config';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
 import SSC from '@hive-engine/sscjs';
 
-const steemSsc = new SSC('https://api.steem-engine.net/rpc');
+const steemSsc = new SSC('https://ha.herpc.dtools.dev');
 const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 import { callBridge } from 'app/utils/steemApi';
 import {
@@ -565,11 +564,14 @@ export function* preBroadcast_comment({ operation, username, useHive }) {
 
     if (!permlink) permlink = yield createPermlink(title, author, useHive);
 
-    const postUrl = `${APP_URL}/@${author}/${permlink}`;
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
+    const postUrl = `${hostConfig['APP_URL']}/@${author}/${permlink}`;
     // Add footer
     const footer = (parent_author === ''
-        ? POST_FOOTER
-        : COMMENT_FOOTER
+        ? hostConfig['POST_FOOTER']
+        : hostConfig['COMMENT_FOOTER']
     ).replace('${POST_URL}', postUrl);
     if (footer && !body.endsWith(footer)) {
         body += '\n\n' + footer;

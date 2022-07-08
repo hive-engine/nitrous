@@ -7,10 +7,9 @@ import Memo from 'app/components/elements/Memo';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 import tt from 'counterpart';
 import GDPRUserList from 'app/utils/GDPRUserList';
-import { APP_URL, LIQUID_TOKEN_UPPERCASE } from 'app/client_config';
 
-function formatScotAmount(quantity, precision) {
-    return (quantity / Math.pow(10, precision)).toFixed(precision);
+function formatScotAmount(quantity) {
+    return quantity;
 }
 
 const postLink = (socialUrl, author, permlink) => (
@@ -21,7 +20,7 @@ const postLink = (socialUrl, author, permlink) => (
 
 class TransferHistoryRow extends React.Component {
     render() {
-        const { op, context, scotTokenSymbol } = this.props;
+        const { op, context, scotTokenSymbol, appUrl } = this.props;
         // context -> account perspective
 
         /*  all transfers involve up to 2 accounts, context and 1 other. */
@@ -120,8 +119,7 @@ class TransferHistoryRow extends React.Component {
                 <span>
                     {tt(['transferhistoryrow_jsx', 'staking_reward'], {
                         amount: `${formatScotAmount(
-                            op.int_amount,
-                            op.precision
+                            op.quantity,
                         )} ${scotTokenSymbol}`,
                     })}
                 </span>
@@ -136,12 +134,11 @@ class TransferHistoryRow extends React.Component {
                 <span>
                     {tt(['transferhistoryrow_jsx', op.type], {
                         amount: `${formatScotAmount(
-                            op.int_amount,
-                            op.precision
+                            op.quantity,
                         )} ${scotTokenSymbol}`,
                     })}
                     {op.type != 'mining_reward' &&
-                        postLink(APP_URL, op.author, op.permlink)}
+                        postLink(appUrl, op.author, op.permlink)}
                 </span>
             );
         } else {
@@ -179,9 +176,13 @@ const otherAccountLink = username =>
 export default connect(
     // mapStateToProps
     (state, ownProps) => {
-        const scotTokenSymbol = LIQUID_TOKEN_UPPERCASE;
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
         return {
             ...ownProps,
+            appUrl: state.app.getIn(['hostConfig', 'APP_URL']),
             scotTokenSymbol,
         };
     }

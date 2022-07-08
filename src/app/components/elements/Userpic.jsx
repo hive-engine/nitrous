@@ -14,7 +14,7 @@ class Userpic extends Component {
         if (this.props.hide) return null;
 
         const { account, size } = this.props;
-        const url = imageProxy() + `u/${account}/avatar${size}`;
+        const url = imageProxy(this.props.hive) + `u/${account}/avatar${size}`;
         const style = { backgroundImage: `url(${url})` };
         return <div className="Userpic" style={style} />;
     }
@@ -25,7 +25,7 @@ Userpic.propTypes = {
 };
 
 export default connect((state, ownProps) => {
-    const { account, size, hideIfDefault } = ownProps;
+    const { account, hive, size, hideIfDefault } = ownProps;
 
     let hide = false;
     if (hideIfDefault) {
@@ -40,5 +40,6 @@ export default connect((state, ownProps) => {
         account: account == 'steemitblog' ? 'steemitdev' : account,
         size: size && sizeList.indexOf(size) > -1 ? '/' + size : '',
         hide,
+        hive,
     };
 })(Userpic);

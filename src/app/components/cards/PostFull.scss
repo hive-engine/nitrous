@@ -227,7 +227,9 @@
   cursor: pointer;
   &:hover {
     svg {
-      fill: $color-teal;
+      @include themify($themes) {
+        fill: themed('colorAccent');
+      }
     }
   }
 }

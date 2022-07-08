@@ -1,5 +1,4 @@
 import Apps from '@hiveio/hivescript/apps.json';
-import { APP_URL } from 'app/client_config';
 
 function read_md_app(metadata) {
     return metadata &&
@@ -33,7 +32,6 @@ function build_scheme(scheme, post) {
 
 export function makeCanonicalLink(post, metadata) {
     let scheme;
-
     if (metadata) {
         const canonUrl = read_md_canonical(metadata);
         if (canonUrl) return canonUrl;

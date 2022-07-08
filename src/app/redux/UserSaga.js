@@ -4,12 +4,6 @@ import { api as steemApi, auth as steemAuth } from '@steemit/steem-js';
 import { api as hiveApi, auth as hiveAuth } from '@hiveio/hive-js';
 import { PrivateKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
 
-import {
-    ALLOW_MASTER_PW,
-    LIQUID_TOKEN_UPPERCASE,
-    HIVE_ENGINE,
-    PREFER_HIVE,
-} from 'app/client_config';
 import { accountAuthLookup } from 'app/redux/AuthSaga';
 import { logout as chatLogout } from 'app/redux/ChatSaga';
 import { getAccount } from 'app/redux/SagaShared';
@@ -34,7 +28,7 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from '@hive-engine/sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const steemSsc = new SSC('https://api.steem-engine.net/rpc');
+const steemSsc = new SSC('https://ha.herpc.dtools.dev');
 const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 import {
@@ -115,7 +109,13 @@ function* shouldShowLoginWarning({ username, password }, useHive) {
     }
 
     // If it's a master key, show the warning.
-    if (!ALLOW_MASTER_PW && !(useHive ? hiveAuth : steemAuth).isWif(password)) {
+    const allowMasterPassword = yield select(state =>
+        state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
+    );
+    if (
+        !allowMasterPassword &&
+        !(useHive ? hiveAuth : steemAuth).isWif(password)
+    ) {
         const account = (yield (useHive ? hiveApi : steemApi).getAccountsAsync([
             username,
         ]))[0];
@@ -143,7 +143,9 @@ function* shouldShowLoginWarning({ username, password }, useHive) {
         owner, posting keys.
 */
 function* checkKeyType(action) {
-    const useHive = PREFER_HIVE;
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     if (yield call(shouldShowLoginWarning, action.payload, useHive)) {
         yield put(userActions.showLoginWarning(action.payload));
     } else {
@@ -177,7 +179,9 @@ function* usernamePasswordLogin(action) {
     // take a while on slow computers.
     yield call(usernamePasswordLogin2, action.payload);
     const current = yield select(state => state.user.get('current'));
-    const useHive = PREFER_HIVE;
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     if (current) {
         const username = current.get('username');
         yield fork(loadFollows, 'getFollowingAsync', username, 'blog', useHive);
@@ -208,6 +212,9 @@ function* usernamePasswordLogin2({
     operationType /*high security*/,
     afterLoginRedirectToWelcome,
 }) {
+    const hostConfig = yield select(state =>
+        state.app.get('hostConfig', Map()).toJS()
+    );
     const user = yield select(state => state.user);
     const loginType = user.get('login_type');
     const justLoggedIn = loginType === 'basic';
@@ -277,7 +284,7 @@ function* usernamePasswordLogin2({
     const isRole = (role, fn) =>
         !userProvidedRole || role === userProvidedRole ? fn() : undefined;
 
-    const account = yield call(getAccount, username, PREFER_HIVE);
+    const account = yield call(getAccount, username, hostConfig['PREFER_HIVE']);
     if (!account) {
         console.log('No account');
         yield put(userActions.loginError({ error: 'Username does not exist' }));
@@ -292,14 +299,15 @@ function* usernamePasswordLogin2({
         return;
     }
     // fetch SCOT stake
-    const ssc = HIVE_ENGINE ? hiveSsc : steemSsc;
+    const scotTokenSymbol = hostConfig['LIQUID_TOKEN_UPPERCASE'];
+    const ssc = hostConfig['HIVE_ENGINE'] ? hiveSsc : steemSsc;
     const token_balances = yield call(
         [ssc, ssc.findOne],
         'tokens',
         'balances',
         {
             account: username,
-            symbol: LIQUID_TOKEN_UPPERCASE,
+            symbol: scotTokenSymbol,
         }
     );
     //check for defaultBeneficiaries
@@ -400,7 +408,7 @@ function* usernamePasswordLogin2({
                 account,
                 private_keys,
                 login_owner_pubkey,
-                useHive: PREFER_HIVE,
+                useHive: hostConfig['PREFER_HIVE'],
             },
         });
         let authority = yield select(state =>
@@ -417,7 +425,8 @@ function* usernamePasswordLogin2({
         }
 
         const hasOwnerAuth = authority.get('owner') === 'full';
-        if (!ALLOW_MASTER_PW && hasOwnerAuth) {
+        const allowMasterPassword = hostConfig['ALLOW_MASTER_PW'];
+        if (!allowMasterPassword && hasOwnerAuth) {
             console.log('Rejecting due to detected owner auth');
             yield put(userActions.loginError({ error: 'owner_login_blocked' }));
             return;
@@ -433,7 +442,7 @@ function* usernamePasswordLogin2({
             localStorage.removeItem('autopost2');
             const owner_pub_key = account.getIn(['owner', 'key_auths', 0, 0]);
             if (
-                !ALLOW_MASTER_PW &&
+                !allowMasterPassword &&
                 (login_owner_pubkey === owner_pub_key ||
                     login_wif_owner_pubkey === owner_pub_key)
             ) {
@@ -556,7 +565,7 @@ function* usernamePasswordLogin2({
             const challenge = { token: challengeString };
             const buf = JSON.stringify(challenge, null, 0);
             const bufSha = hash.sha256(buf);
-            const useHive = PREFER_HIVE;
+            const useHive = hostConfig['PREFER_HIVE'];
 
             if (useKeychain) {
                 const response = yield new Promise(resolve => {
@@ -740,8 +749,11 @@ function* saveLogin_localStorage() {
     }
 
     // Save the lowest security key, or owner if allowed
+    const allowMasterPassword = yield select(state =>
+        state.app.getIn(['hostConfig', 'ALLOW_MASTER_PW'])
+    );
     let posting_private = private_keys && private_keys.get('posting_private');
-    if (private_keys && !posting_private && ALLOW_MASTER_PW) {
+    if (private_keys && !posting_private && allowMasterPassword) {
         posting_private = private_keys.get('owner_private');
     }
 
@@ -764,7 +776,7 @@ function* saveLogin_localStorage() {
             if (auth.get(0) === postingPubkey)
                 throw 'Login will not be saved, posting key is the same as active key';
         });
-        if (!ALLOW_MASTER_PW) {
+        if (!allowMasterPassword) {
             account.getIn(['owner', 'key_auths']).forEach(auth => {
                 if (auth.get(0) === postingPubkey)
                     throw 'Login will not be saved, posting key is the same as owner key';
@@ -880,15 +892,18 @@ function* uploadImage({
 
     let sig;
     let postUrl;
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'PREFER_HIVE'])
+    );
     if (hiveSignerLogin) {
         // verify user with access_token for HiveSigner login
-        postUrl = `${$STM_Config.upload_image}/hs/${
+        postUrl = `${$STM_Config.hive_upload_image}/hs/${
             hiveSignerClient.accessToken
         }`;
     } else {
         if (keychainLogin) {
             const response = yield new Promise(resolve => {
-                (PREFER_HIVE
+                (useHive
                     ? window.hive_keychain
                     : window.steem_keychain
                 ).requestSignBuffer(
@@ -909,7 +924,11 @@ function* uploadImage({
         } else {
             sig = Signature.signBufferSha256(bufSha, d).toHex();
         }
-        postUrl = `${$STM_Config.upload_image}/${username}/${sig}`;
+
+        const baseUploadUrl = useHive
+            ? $STM_Config.hive_upload_image
+            : $STM_Config.upload_image;
+        postUrl = `${baseUploadUrl}/${username}/${sig}`;
     }
 
     const xhr = new XMLHttpRequest();
@@ -954,18 +973,17 @@ function* uploadImage({
 
 function* lookupVotingPower({ payload: { account } }) {
     const accountData = yield call(getScotAccountDataAsync, account);
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
+    const rewardPoolId = yield select(state =>
+        state.app.getIn(['hostConfig', 'HIVE_ENGINE_SMT'])
+    );
     yield put(
         userActions.setVotingPower({
             account,
-            ...accountData.data[LIQUID_TOKEN_UPPERCASE],
+            ...accountData.data[rewardPoolId],
+            staked_tokens: accountData.tokenData[scotTokenSymbol],
         })
     );
-    if (accountData.hiveData) {
-        yield put(
-            userActions.setHiveVotingPower({
-                account,
-                ...accountData.hiveData[LIQUID_TOKEN_UPPERCASE],
-            })
-        );
-    }
 }

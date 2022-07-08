@@ -14,7 +14,8 @@ const NATURAL_SIZE = '0x0/';
 const CAPPED_SIZE = '768x0/';
 const DOUBLE_CAPPED_SIZE = '1536x0/';
 
-export const imageProxy = () => $STM_Config.img_proxy_prefix;
+export const imageProxy = useHive =>
+    useHive ? $STM_Config.hive_img_proxy_prefix : $STM_Config.img_proxy_prefix;
 export const defaultSrcSet = (url) => {
     return `${url} 1x, ${url.replace(CAPPED_SIZE, DOUBLE_CAPPED_SIZE)} 2x`;
 };
@@ -33,14 +34,21 @@ export const defaultWidth = () => {
  *                                          if true, preserves the first {int}x{int} in a proxy url. If not found, uses 0x0
  * @returns string
  */
-export const proxifyImageUrl = (url, dimensions = false) => {
+export const proxifyImageUrl = (url, useHive, dimensions = false) => {
+    if (!url) return;
     const proxyList = url.match(rProxyDomainsDimensions);
     let respUrl = url;
     if (proxyList) {
         const lastProxy = proxyList[proxyList.length - 1];
         respUrl = url.substring(url.lastIndexOf(lastProxy) + lastProxy.length);
     }
-    if (dimensions && $STM_Config && $STM_Config.img_proxy_prefix) {
+    if (!$STM_Config) {
+        return respUrl;
+    }
+    const proxy_prefix = useHive
+        ? $STM_Config.hive_img_proxy_prefix
+        : $STM_Config.img_proxy_prefix;
+    if (dimensions && proxy_prefix) {
         let dims = dimensions + '/';
         if (typeof dimensions !== 'string') {
             dims = proxyList
@@ -58,7 +66,7 @@ export const proxifyImageUrl = (url, dimensions = false) => {
             (NATURAL_SIZE !== dims && CAPPED_SIZE !== dims) ||
             !rProxyDomain.test(respUrl)
         ) {
-            return $STM_Config.img_proxy_prefix + dims + respUrl;
+            return proxy_prefix + dims + respUrl;
         }
     }
     return respUrl;

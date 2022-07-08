@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as userProfileActions from './UserProfilesReducer';
 import { getAccount, getWalletAccount } from 'app/utils/steemApi';
 
@@ -21,7 +21,13 @@ export function* fetchUserProfile(action) {
 
 export function* fetchWalletUserProfile(action) {
     const { account } = action.payload;
-    const ret = yield call(getWalletAccount, account, true);
+    const scotTokenSymbol = yield select(state =>
+        state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
+    );
+    const useHive = yield select(state =>
+        state.app.getIn(['hostConfig', 'HIVE_ENGINE'])
+    );
+    const ret = yield call(getWalletAccount, account, useHive, scotTokenSymbol);
     if (!ret) throw new Error('Account not found');
     yield put(
         userProfileActions.addProfile({ username: account, account: ret })

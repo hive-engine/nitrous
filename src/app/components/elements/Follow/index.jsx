@@ -177,7 +177,7 @@ module.exports = connect(
               ? 'ignore'
               : null;
 
-        const useHive = PREFER_HIVE;
+        const useHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
 
         return {
             follower,

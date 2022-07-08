@@ -10,7 +10,7 @@ import hardwareStats from './hardwarestats';
 import cluster from 'cluster';
 import os from 'os';
 import prod_logger from './prod_logger';
-import favicon from 'koa-favicon';
+//import favicon from 'koa-favicon';
 import staticCache from 'koa-static-cache';
 import useRedirects from './redirects';
 import useGeneralApi from './api/general';
@@ -21,7 +21,6 @@ import session from '@steem/crypto-session';
 import csrf from 'koa-csrf';
 import minimist from 'minimist';
 import config from 'config';
-import { APP_DOMAIN, APP_NAME } from 'app/client_config';
 import { routeRegex } from 'app/ResolveRoute';
 import secureRandom from 'secure-random';
 import userIllegalContent from 'app/utils/userIllegalContent';
@@ -29,13 +28,14 @@ import koaLocale from 'koa-locale';
 import { getSupportedLocales } from './utils/misc';
 import { pinnedPosts } from './utils/PinnedPosts';
 import fs from 'fs';
+import { CONFIG_MAP } from 'app/client_config';
 
 if (cluster.isMaster) console.log('application server starting, please wait.');
 
 // import uploadImage from 'server/upload-image' //medium-editor
 
 const app = new Koa();
-app.name = `${APP_NAME} app`;
+app.name = `nitrous app`;
 const env = process.env.NODE_ENV || 'development';
 // cache of a thousand days
 const cacheOpts = { maxAge: 86400000, gzip: true, buffer: false };
@@ -46,10 +46,38 @@ const adstxt = fs.readFileSync(
     'utf8'
 );
 
+const icon = {};
+async function favicon(ctx) {
+    if ('GET' !== ctx.method && 'HEAD' !== ctx.method) {
+        ctx.status = 'OPTIONS' == ctx.method ? 200 : 405;
+        ctx.set('Allow', 'GET, HEAD, OPTIONS');
+    } else {
+        // lazily read the icon
+        const hostConfig = CONFIG_MAP[ctx.request.headers.host];
+        const symbol = hostConfig['LIQUID_TOKEN_UPPERCASE'].toLowerCase();
+        const faviconPath = path.resolve(
+            path.join(
+                __dirname,
+                hostConfig
+                    ? `../app/assets/images/favicons/${symbol}/favicon.ico`
+                    : '../app/assets/images/favicon.ico'
+            )
+        );
+        if (!icon[symbol]) icon[symbol] = fs.readFileSync(faviconPath);
+        ctx.set('Cache-Control', 'public, max-age=86400');
+        ctx.type = 'image/x-icon';
+        ctx.body = icon[symbol];
+    }
+}
+
 // Serve static assets without fanfare
-app.use(
-    favicon(path.join(__dirname, '../app/assets/images/favicons/favicon.ico'))
-);
+app.use(function*(next) {
+    if ('/favicon.ico' !== this.path) {
+        yield next;
+    } else {
+        yield favicon(this);
+    }
+});
 
 app.use(
     mount(
@@ -82,6 +110,17 @@ app.use(
     mount('/ads.txt', function*() {
         this.type = 'text/plain';
         this.body = adstxt;
+    })
+);
+
+const braveTxt = fs.readFileSync(
+    path.join(__dirname, '../app/assets/brave-rewards-verification.txt'),
+    'utf8'
+);
+app.use(
+    mount('/.well-known/brave-rewards-verification.txt', function*() {
+        this.type = 'text/plain';
+        this.body = braveTxt;
     })
 );
 
@@ -306,7 +345,9 @@ if (env === 'production') {
     // For heroku, redirect SSL
     app.use(function*(next) {
         if (this.request.headers['x-forwarded-proto'] == 'http') {
-            this.response.redirect(`https://${APP_DOMAIN}${this.request.url}`);
+            this.response.redirect(
+                `https://${this.request.headers.host}${this.request.url}`
+            );
             return;
         }
         yield next;

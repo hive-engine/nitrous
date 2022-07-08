@@ -37,6 +37,7 @@ class MarkdownViewer extends Component {
         hideImages: PropTypes.bool, // whether to replace images with just a span containing the src url
         breaks: PropTypes.bool, // true to use bastardized markdown that cares about newlines
         // used for the ImageUserBlockList
+        appDomain: PropTypes.string,
     };
 
     static defaultProps = {
@@ -65,7 +66,7 @@ class MarkdownViewer extends Component {
     };
 
     render() {
-        const { noImage, hideImages } = this.props;
+        const { noImage, hideImages, appDomain, preferHive } = this.props;
         const { allowNoImage } = this.state;
         let { text } = this.props;
         if (!text) text = ''; // text can be empty, still view the link meta data
@@ -102,7 +103,11 @@ class MarkdownViewer extends Component {
 
         // Embed videos, link mentions and hashtags, etc...
         if (renderedText)
-            renderedText = HtmlReady(renderedText, { hideImages }).html;
+            renderedText = HtmlReady(renderedText, {
+                hideImages,
+                appDomain,
+                useHive: preferHive,
+            }).html;
 
         // Complete removal of javascript and other dangerous tags..
         // The must remain as close as possible to dangerouslySetInnerHTML
@@ -117,6 +122,7 @@ class MarkdownViewer extends Component {
                         large,
                         highQualityPost,
                         noImage: noImage && allowNoImage,
+                        appDomain,
                     })
                 );
             } catch(e) {
@@ -207,5 +213,7 @@ class MarkdownViewer extends Component {
 }
 
 export default connect((state, ownProps) => {
-    return { ...ownProps };
+    const appDomain = state.app.getIn(['hostConfig', 'APP_DOMAIN']);
+    const preferHive = state.app.getIn(['hostConfig', 'PREFER_HIVE']);
+    return { appDomain, preferHive, ...ownProps };
 })(MarkdownViewer);

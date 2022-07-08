@@ -7,11 +7,6 @@ import * as globalActions from 'app/redux/GlobalReducer';
 import { actions as userProfileActions } from 'app/redux/UserProfilesSaga';
 import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
-import {
-    LIQUID_TOKEN_UPPERCASE,
-    VESTING_TOKEN,
-    HIVE_ENGINE,
-} from 'app/client_config';
 import { numberWithCommas } from 'app/utils/StateFunctions';
 
 class Powerdown extends React.Component {
@@ -34,6 +29,7 @@ class Powerdown extends React.Component {
             delegatedStake,
             lockedStake,
             scotPrecision,
+            scotTokenSymbol,
             useHive,
         } = this.props;
         const sliderChange = value => {
@@ -67,6 +63,7 @@ class Powerdown extends React.Component {
             }
             const unstakeAmount = String(withdraw.toFixed(scotPrecision));
             this.props.withdrawVesting({
+                scotTokenSymbol,
                 account,
                 unstakeAmount,
                 errorCallback,
@@ -85,7 +82,7 @@ class Powerdown extends React.Component {
                 <li key="delegating">
                     {tt('powerdown_jsx.delegating', {
                         AMOUNT,
-                        LIQUID_TICKER: LIQUID_TOKEN_UPPERCASE,
+                        LIQUID_TICKER: scotTokenSymbol,
                     })}
                 </li>
             );
@@ -135,7 +132,7 @@ class Powerdown extends React.Component {
                         onChange={inputChange}
                         autoCorrect={false}
                     />
-                    {LIQUID_TOKEN_UPPERCASE}
+                    {scotTokenSymbol}
                 </p>
                 <ul className="powerdown-notes">{notes}</ul>
                 <button
@@ -160,6 +157,12 @@ export default connect(
         const delegatedStake = parseFloat(values.get('delegatedStake'));
         const tokenUnstakes = values.get('tokenUnstakes').toJS();
         const scotConfig = state.app.get('scotConfig');
+        const scotTokenSymbol = state.app.getIn([
+            'hostConfig',
+            'LIQUID_TOKEN_UPPERCASE',
+        ]);
+        const useHive = state.app.getIn(['hostConfig', 'HIVE_ENGINE']);
+
         const numberTransactions = scotConfig.getIn([
             'config',
             'tokenStats',
@@ -186,7 +189,6 @@ export default connect(
                     )
             )
             .reduce((x, y) => x + y, 0);
-        const useHive = HIVE_ENGINE;
         return {
             ...ownProps,
             account,
@@ -194,6 +196,7 @@ export default connect(
             lockedStake,
             delegatedStake,
             state,
+            scotTokenSymbol,
             scotPrecision,
             useHive,
         };
@@ -209,6 +212,7 @@ export default connect(
             dispatch(globalActions.showDialog({ name }));
         },
         withdrawVesting: ({
+            scotTokenSymbol,
             account,
             unstakeAmount,
             errorCallback,
@@ -223,7 +227,7 @@ export default connect(
                 contractName: 'tokens',
                 contractAction: 'unstake',
                 contractPayload: {
-                    symbol: LIQUID_TOKEN_UPPERCASE,
+                    symbol: scotTokenSymbol,
                     quantity: unstakeAmount,
                 },
             };
