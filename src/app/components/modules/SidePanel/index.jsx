@@ -57,12 +57,22 @@ const SidePanel = ({
 
     const sidePanelLinks = {
         internal: [
+             {
+                value: 'engine',
+                label: 'Leo Dex',
+                link: 'https://leodex.io/market/BUIDL',
+            },
             {
                 value: 'engine',
-                label: 'Buy $buidl',
-                link: `https://tribaldex.com/trade/${scotTokenSymbol}`,
+                label: 'Hive Engine',
+                link: 'https://hive-engine.com/trade/BUIDL',
             },
-             {
+            {
+                value: 'engine',
+                label: 'Tribal Dex',
+                link: 'https://tribaldex.com/trade/BUIDL',
+            },
+            {
                 value: 'engine',
                 label: 'LitePaper',
                 link: 'https://eu.docworkspace.com/d/sIHWUtOWLAYXB1pIG',
@@ -71,6 +81,11 @@ const SidePanel = ({
                 value: 'engine',
                 label: 'NFTs',
                 link: 'https://nftshowroom.com/build-it/gallery',
+            },
+            {
+                value: 'engine',
+                label: 'FAQ',
+                link: '/faq.html',
             },
         ],
         external: [
