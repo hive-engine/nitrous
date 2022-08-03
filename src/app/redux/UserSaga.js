@@ -1,5 +1,5 @@
 import { fromJS, Set, List, Map } from 'immutable';
-import { call, put, select, fork, takeLatest } from 'redux-saga/effects';
+import { call, put, select, fork, take, takeLatest } from 'redux-saga/effects';
 import { api as steemApi, auth as steemAuth } from '@steemit/steem-js';
 import { api as hiveApi, auth as hiveAuth } from '@hiveio/hive-js';
 import { PrivateKey, Signature, hash } from '@hiveio/hive-js/lib/auth/ecc';
@@ -25,11 +25,11 @@ import {
 import { loadFollows } from 'app/redux/FollowSaga';
 import { translate } from 'app/Translator';
 import DMCAUserList from 'app/utils/DMCAUserList';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 import {
     setHiveSignerAccessToken,
@@ -40,7 +40,13 @@ import {
 export const userWatches = [
     takeLatest('@@router/LOCATION_CHANGE', removeHighSecurityKeys), // keep first to remove keys early when a page change happens
     takeLatest(userActions.CHECK_KEY_TYPE, checkKeyType),
-    takeLatest(userActions.USERNAME_PASSWORD_LOGIN, usernamePasswordLogin),
+    // takeLeading https://redux-saga.js.org/docs/api/#notes-5
+    fork(function*() {
+        while (true) {
+            const action = yield take(userActions.USERNAME_PASSWORD_LOGIN);
+            yield call(usernamePasswordLogin, action);
+        }
+    }),
     takeLatest(userActions.SAVE_LOGIN, saveLogin_localStorage),
     takeLatest(userActions.LOGOUT, logout),
     takeLatest(userActions.LOGIN_ERROR, loginError),

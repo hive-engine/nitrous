@@ -9,10 +9,10 @@ import {
 } from 'app/utils/CrossPosts';
 
 import axios from 'axios';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -209,6 +209,11 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     if (title) {
         content.title = title;
     }
+    // Remove hide/gray stats
+    if (content.stats) {
+        content.stats.hide = false;
+        content.stats.gray = false;
+    }
     // Prefer parent author / permlink of content
     content.parent_author = parentAuthor;
     content.parent_permlink = parentPermlink;
@@ -299,6 +304,7 @@ export async function attachScotData(
     state,
     hostConfig,
     useHive,
+    observer,
     ssr = false
 ) {
     if (url === '') {
@@ -314,7 +320,11 @@ export async function attachScotData(
         const discussionQuery = {
             token: scotTokenSymbol,
             limit: 20,
+            no_votes: 1,
         };
+        if (observer) {
+            discussionQuery.voter = observer;
+        }
         if (tag) {
             discussionQuery.tag = tag;
         }
@@ -552,12 +562,12 @@ export async function getContentAsync(
     let content;
     let scotData;
     if (preferHive) {
-        content = await getContentFromBridge(author, permlink, true),
-        content.hive = true;
+        (content = await getContentFromBridge(author, permlink, true)),
+            (content.hive = true);
         scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
     } else {
-        content = await getContentFromBridge(author, permlink, false),
-        scotData = await getScotDataAsync(`@${author}/${permlink}`);
+        (content = await getContentFromBridge(author, permlink, false)),
+            (scotData = await getScotDataAsync(`@${author}/${permlink}`));
     }
     if (!content) {
         return content;
@@ -854,7 +864,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
     if (!raw.content) {
         raw.content = {};
     }
-    await attachScotData(path, raw, hostConfig, useHive, ssr);
+    await attachScotData(path, raw, hostConfig, useHive, observer, ssr);
 
     const cleansed = stateCleaner(raw);
     return cleansed;
@@ -877,7 +887,11 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
     let discussionQuery = {
         ...args,
         token: scotTokenSymbol,
+        no_votes: 1,
     };
+    if (args.observer) {
+        discussionQuery.voter = args.observer;
+    }
     if (callNameMatch) {
         order = callNameMatch[1].toLowerCase();
         if (order == 'feed') {

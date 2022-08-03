@@ -16,10 +16,10 @@ import * as transactionActions from 'app/redux/TransactionReducer';
 import * as userActions from 'app/redux/UserReducer';
 import { serverApiRecordEvent } from 'app/utils/ServerApiClient';
 import { isLoggedInWithKeychain } from 'app/utils/SteemKeychain';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 import { callBridge } from 'app/utils/steemApi';
 import {
     isLoggedInWithHiveSigner,
@@ -470,6 +470,12 @@ function* broadcastPayload({
 function* accepted_comment({ operation }) {
     const { author, permlink } = operation;
     // update again with new $$ amount from the steemd node
+    // May not update immediately. Delay by 10 seconds.
+    yield new Promise((resolve, reject) =>
+        setTimeout(() => {
+            resolve();
+        }, 10000)
+    );
     yield call(getContent, { author, permlink });
     yield put(globalActions.linkReply(operation));
 }
@@ -528,17 +534,17 @@ function* accepted_vote({ operation: { author, permlink, weight }, username }) {
         'weight'
     );
     // update again with new $$ amount from the steemd node
-    yield put(
-        globalActions.remove({
-            key: `transaction_vote_active_${author}_${permlink}`,
-        })
-    );
-    yield call(getContent, { author, permlink });
     // May not update immediately. Delay by 10 seconds.
     yield new Promise((resolve, reject) =>
         setTimeout(() => {
             resolve();
         }, 10000)
+    );
+    yield call(getContent, { author, permlink });
+    yield put(
+        globalActions.remove({
+            key: `transaction_vote_active_${author}_${permlink}`,
+        })
     );
     yield put(userActions.lookupVotingPower({ account: username }));
 }

@@ -3,9 +3,9 @@ import NodeCache from 'node-cache';
 
 import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
-import SSC from 'sscjs';
+import SSC from '@hive-engine/sscjs';
 const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
@@ -128,8 +128,11 @@ ScotConfig.prototype.refresh = async function() {
             hiveTotalTokenBalances,
             hiveTokenBurnBalances,
         ] = await Promise.all([
-            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList }, }),
-            ssc.find('tokens', 'balances', { account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) }, symbol: { $in: tokenList }, }),
+            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList } }),
+            ssc.find('tokens', 'balances', {
+                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
+                symbol: { $in: tokenList },
+            }),
             hiveSsc.find('tokens', 'tokens', {
                 symbol: { $in: hiveTokenList },
             }),

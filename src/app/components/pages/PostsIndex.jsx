@@ -170,7 +170,8 @@ class PostsIndex extends React.Component {
     }
 
     searchCategories(cat, parent, categories) {
-        if (!cat || !categories) return { par: parent, cats: categories, found: false };
+        if (!cat || !categories)
+            return { par: parent, cats: categories, found: false };
 
         // leaf nodes
         if (List.isList(categories)) {
@@ -307,7 +308,7 @@ class PostsIndex extends React.Component {
         if (!username && posts.size && category === 'my') {
             postsIndexDisplay = <Callout>{emptyText}</Callout>;
         }
-        if (order === 'feed' && !username) {
+        if (order === 'feed' && !username && !posts.size) {
             postsIndexDisplay = <Callout>{emptyText}</Callout>;
         }
 
@@ -472,8 +473,7 @@ module.exports = {
                 dispatch(fetchDataSagaActions.requestData(args)),
             getCommunity: category =>
                 dispatch(fetchDataSagaActions.getCommunity(category)),
-            getCategories: () =>
-                dispatch(fetchDataSagaActions.getCategories()),
+            getCategories: () => dispatch(fetchDataSagaActions.getCategories()),
         })
     )(PostsIndex),
 };

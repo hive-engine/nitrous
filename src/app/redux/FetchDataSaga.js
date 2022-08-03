@@ -1,6 +1,7 @@
 import {
     all,
     call,
+    cancel,
     put,
     fork,
     select,
@@ -47,7 +48,7 @@ const GET_STAKED_ACCOUNTS = 'fetchDataSaga/GET_STAKED_ACCOUNTS';
 const GET_CATEGORIES = 'fetchDataSaga/GET_CATEGORIES';
 
 export const fetchDataWatches = [
-    takeLatest(REQUEST_DATA, fetchData),
+    fork(fetchDataSaga),
     takeLatest('@@router/LOCATION_CHANGE', fetchState),
     takeLatest(FETCH_STATE, fetchState),
     takeEvery('global/FETCH_JSON', fetchJson),
@@ -78,6 +79,11 @@ export function* getPostHeader(action) {
 
 let is_initial_state = true;
 export function* fetchState(location_change_action) {
+    // Cancel any outstanding fetch calls (e.g. next page feed). Existing state calls will
+    // automatically be cancelled by takeLatest.
+    if (activeFetchDataTask) {
+        yield cancel(activeFetchDataTask);
+    }
     const { pathname } = location_change_action.payload;
     const m = pathname.match(/^\/@([a-z0-9\.-]+)(\/notifications)?/);
     const hostConfig = yield select(state =>
@@ -189,7 +195,19 @@ export function* getPromotedState(pathname, hostConfig) {
         return;
     }
 
-    const state = yield call(getStateAsync, `/promoted/${tag}`, hostConfig);
+    let username = null;
+    if (process.env.BROWSER) {
+        [username] = yield select(state => [
+            state.user.getIn(['current', 'username']),
+        ]);
+    }
+    const state = yield call(
+        getStateAsync,
+        `/promoted/${tag}`,
+        hostConfig,
+        username,
+        false
+    );
     yield put(globalActions.receiveState(state));
 }
 
@@ -302,7 +320,8 @@ export function* getCategories(action) {
     const hostConfig = yield select(state =>
         state.app.get('hostConfig', Map()).toJS()
     );
-    const APPEND_TRENDING_TAGS_COUNT = hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
+    const APPEND_TRENDING_TAGS_COUNT =
+        hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
     const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
 
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
@@ -316,9 +335,15 @@ export function* getCategories(action) {
             token: hostConfig['LIQUID_TOKEN_UPPERCASE'],
         }
     );
-    const ignoreTags = new Set(hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE));
-    const toAdd = trendingCategories.filter(c => !ignoreTags.has(c)).slice(0, APPEND_TRENDING_TAGS_COUNT);
-    yield put(globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd)));
+    const ignoreTags = new Set(
+        hostConfig['TAG_LIST'].concat(TRENDING_TAGS_TO_IGNORE)
+    );
+    const toAdd = trendingCategories
+        .filter(c => !ignoreTags.has(c))
+        .slice(0, APPEND_TRENDING_TAGS_COUNT);
+    yield put(
+        globalActions.receiveCategories(hostConfig['TAG_LIST'].concat(toAdd))
+    );
 }
 
 /**
@@ -452,6 +477,17 @@ export function* markNotificationsAsReadSaga(action) {
     }
 }
 
+let activeFetchDataTask;
+function* fetchDataSaga() {
+    while (true) {
+        const action = yield take(REQUEST_DATA);
+        if (activeFetchDataTask) {
+            yield cancel(activeFetchDataTask);
+        }
+        activeFetchDataTask = yield fork(fetchData, action);
+    }
+}
+
 export function* fetchData(action) {
     const {
         order,
@@ -478,6 +514,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'hot') {
         call_name = 'getDiscussionsByHotAsync';
@@ -486,6 +523,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'promoted') {
         call_name = 'getDiscussionsByPromotedAsync';
@@ -494,6 +532,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'payout') {
         call_name = 'getPostDiscussionsByPayoutAsync';
@@ -502,6 +541,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'payout_comments') {
         call_name = 'getCommentDiscussionsByPayoutAsync';
@@ -510,6 +550,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'created') {
         call_name = 'getDiscussionsByCreatedAsync';
@@ -518,6 +559,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_replies') {
         call_name = 'getDiscussionsByRepliesAsync';
@@ -526,6 +568,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_feed') {
         // https://github.com/steemit/steem/issues/249
@@ -535,6 +578,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_author') {
         call_name = 'getDiscussionsByBlogAsync';
@@ -543,6 +587,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (order === 'by_comments') {
         call_name = 'getDiscussionsByCommentsAsync';
@@ -551,6 +596,7 @@ export function* fetchData(action) {
             limit: constants.FETCH_DATA_BATCH_SIZE,
             start_author: author,
             start_permlink: permlink,
+            observer,
         };
     } else if (category[0] == '@') {
         call_name = 'get_account_posts';
@@ -777,13 +823,7 @@ function* fetchFollows(action) {
 }
 
 function* fetchAuthorRecentPosts(action) {
-    const {
-        order,
-        category,
-        author,
-        permlink,
-        limit,
-    } = action.payload;
+    const { order, category, author, permlink, limit } = action.payload;
 
     const scotTokenSymbol = yield select(state =>
         state.app.getIn(['hostConfig', 'LIQUID_TOKEN_UPPERCASE'])
@@ -892,7 +932,7 @@ export const actions = {
         type: GET_STAKED_ACCOUNTS,
         payload,
     }),
-    
+
     getCategories: payload => ({
         type: GET_CATEGORIES,
         payload,

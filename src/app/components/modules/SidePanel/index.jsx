@@ -59,10 +59,10 @@ const SidePanel = ({
         internal: [
             {
                 value: 'engine',
-                label: useHive ? 'Hive Engine' : 'Steem Engine',
-                link: `https://${
-                    useHive ? 'hive' : 'steem'
-                }-engine.com/?p=market&t=${scotTokenSymbol}`,
+                label: useHive ? 'Tribaldex' : 'Steem Engine',
+                link: useHive
+                    ? `https://tribaldex.com/trade/${scotTokenSymbol}`
+                    : `https://steem-engine.net/?p=market&t=${scotTokenSymbol}`,
             },
         ],
         internal_KANDA: [
@@ -122,7 +122,8 @@ const SidePanel = ({
         organizational_ALIVE: [
             {
                 value: 'ALIVE_about',
-                label: 'We Are Alive - What Is This Tribe About? - And What To Post Here?',
+                label:
+                    'We Are Alive - What Is This Tribe About? - And What To Post Here?',
                 link: '/@flaxz/nkugscpq',
                 internal: true,
             },

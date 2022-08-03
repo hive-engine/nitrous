@@ -129,7 +129,7 @@ class PostFull extends React.Component {
                 post.get('author'),
                 post.get('permlink'),
                 !post.get('muted'),
-                post.get('hive'),
+                post.get('hive')
             );
         };
     }
@@ -324,8 +324,7 @@ class PostFull extends React.Component {
         } = content;
         const jsonMetadata = showReply ? null : post.get('json_metadata');
         const link = `/${category}/@${author}/${permlink}`;
-        let app_info = '';
-        if (jsonMetadata) app_info = jsonMetadata.app;
+        let app_info = post.get('app');
 
         const { category, title, body } = content;
 
@@ -377,7 +376,8 @@ class PostFull extends React.Component {
 
         // TODO: get global loading state
         //loading = !bIllegalContentUser && !bDMCAStop && partial data loaded;
-        const bShowLoading = !post || post.get('body').length < post.get('body_length');
+        const bShowLoading =
+            !post || post.get('body').length < post.get('body_length');
 
         // hide images if user is on blacklist
         const hideImages = ImageUserBlockList.includes(author);
@@ -525,7 +525,9 @@ class PostFull extends React.Component {
         const canReply = allowReply && post.get('depth') < 255;
         const canEdit = username === author && !showEdit;
         const canDelete = username === author && allowDelete(post);
-        const canTribeMute = username === tokenAccount || username === muteAccount;
+        const canTribeMute =
+            username === tokenAccount ||
+            (muteAccount && username === muteAccount);
 
         const isPinned = post.getIn(['stats', 'is_pinned'], false);
 
@@ -639,7 +641,9 @@ class PostFull extends React.Component {
                                 )}
                                 {canTribeMute && (
                                     <a onClick={onTribeMute}>
-                                        Tribe-{ post.get('muted') ? 'Unmute' : 'Mute' }
+                                        Tribe-{post.get('muted')
+                                            ? 'Unmute'
+                                            : 'Mute'}
                                     </a>
                                 )}
                             </span>
@@ -699,8 +703,16 @@ export default connect(
 
         const category = post.get('category');
         const community = state.global.getIn(['community', category]);
-        const tokenAccount = state.app.getIn(['scotConfig', 'config', 'token_account']);
-        const muteAccount = state.app.getIn(['scotConfig', 'config', 'muting_account']);
+        const tokenAccount = state.app.getIn([
+            'scotConfig',
+            'config',
+            'token_account',
+        ]);
+        const muteAccount = state.app.getIn([
+            'scotConfig',
+            'config',
+            'muting_account',
+        ]);
 
         return {
             hostConfig: state.app.get('hostConfig', Map()).toJS(),

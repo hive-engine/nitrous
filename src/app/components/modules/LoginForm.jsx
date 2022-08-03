@@ -148,7 +148,7 @@ class LoginForm extends Component {
                 saveLogin,
                 afterLoginRedirectToWelcome,
                 lastPath,
-            } = JSON.parse(state);
+            } = JSON.parse(decodeURI(state));
             const { reallySubmit, loginBroadcastOperation } = this.props;
             const data = {
                 username,
