@@ -310,7 +310,6 @@ export const CONFIG_MAP = {
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-16',
     },
     'foodiesunite.net': FOODIE,
-    'weedcash.network': WEEDCASH,
     'pimp.media': PIMP,
 };
 
