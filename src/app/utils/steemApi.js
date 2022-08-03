@@ -12,7 +12,7 @@ import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
 const ssc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://api.hive-engine.com/rpc');
+const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -208,6 +208,11 @@ function mergeContent(content, scotData, scotTokenSymbol) {
     }
     if (title) {
         content.title = title;
+    }
+    // Remove hide/gray stats
+    if (content.stats) {
+        content.stats.hide = false;
+        content.stats.gray = false;
     }
     // Prefer parent author / permlink of content
     content.parent_author = parentAuthor;
@@ -557,12 +562,12 @@ export async function getContentAsync(
     let content;
     let scotData;
     if (preferHive) {
-        content = await getContentFromBridge(author, permlink, true),
-        content.hive = true;
+        (content = await getContentFromBridge(author, permlink, true)),
+            (content.hive = true);
         scotData = await getScotDataAsync(`@${author}/${permlink}?hive=1`);
     } else {
-        content = await getContentFromBridge(author, permlink, false),
-        scotData = await getScotDataAsync(`@${author}/${permlink}`);
+        (content = await getContentFromBridge(author, permlink, false)),
+            (scotData = await getScotDataAsync(`@${author}/${permlink}`));
     }
     if (!content) {
         return content;

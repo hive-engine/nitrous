@@ -60,7 +60,9 @@ const SidePanel = ({
             {
                 value: 'engine',
                 label: useHive ? 'Tribaldex' : 'Steem Engine',
-                link: useHive ? `https://tribaldex.com/trade/${scotTokenSymbol}` : `https://steem-engine.net/?p=market&t=${scotTokenSymbol}`,
+                link: useHive
+                    ? `https://tribaldex.com/trade/${scotTokenSymbol}`
+                    : `https://steem-engine.net/?p=market&t=${scotTokenSymbol}`,
             },
         ],
         external: [
@@ -79,8 +81,9 @@ const SidePanel = ({
         organizational_ALIVE: [
             {
                 value: 'ALIVE_about',
-                label: 'We Are Alive Tribe - The Guide',
-                link: '/@wearealive/we-are-alive-tribe-the-guide',
+                label:
+                    'We Are Alive - What Is This Tribe About? - And What To Post Here?',
+                link: '/@flaxz/nkugscpq',
                 internal: true,
             },
             {

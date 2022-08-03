@@ -141,7 +141,10 @@ export function* fetchState(location_change_action) {
     }
 
     let url = `${pathname}`;
-    if (url === '/') url = hostConfig['DEFAULT_URL'] ? hostConfig['DEFAULT_URL'] : `/trending`;
+    if (url === '/')
+        url = hostConfig['DEFAULT_URL']
+            ? hostConfig['DEFAULT_URL']
+            : `/trending`;
     // Replace /curation-rewards and /author-rewards with /transfers for UserProfile
     // to resolve data correctly
     if (url.indexOf('/curation-rewards') !== -1)
@@ -201,7 +204,13 @@ export function* getPromotedState(pathname, hostConfig) {
             state.user.getIn(['current', 'username']),
         ]);
     }
-    const state = yield call(getStateAsync, `/promoted/${tag}`, hostConfig, username, false);
+    const state = yield call(
+        getStateAsync,
+        `/promoted/${tag}`,
+        hostConfig,
+        username,
+        false
+    );
     yield put(globalActions.receiveState(state));
 }
 
@@ -316,8 +325,7 @@ export function* getCategories(action) {
     );
     const APPEND_TRENDING_TAGS_COUNT =
         hostConfig['APPEND_TRENDING_TAGS_COUNT'] || 0;
-    const TRENDING_TAGS_TO_IGNORE =
-        hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
+    const TRENDING_TAGS_TO_IGNORE = hostConfig['TRENDING_TAGS_TO_IGNORE'] || [];
 
     if (APPEND_TRENDING_TAGS_COUNT === 0) {
         yield put(globalActions.receiveCategories(hostConfig['TAG_LIST']));

@@ -249,7 +249,8 @@ class Voting extends React.Component {
         const currentDownvotePower = votingData
             ? Math.min(
                   votingData.get('downvoting_power') +
-                      (new Date() - getDate(votingData.get('last_downvote_time'))) *
+                      (new Date() -
+                          getDate(votingData.get('last_downvote_time'))) *
                           10000 /
                           (1000 * downvoteRegenSec),
                   10000
@@ -284,7 +285,7 @@ class Voting extends React.Component {
             rewardData.pending_rshares;
 
         let rsharesTotal = 0;
-        
+
         if (scotData) {
             rsharesTotal = scotData.get('vote_rshares');
             scot_pending_token = applyRewardsCurve(rsharesTotal);
@@ -326,7 +327,10 @@ class Voting extends React.Component {
                 : this.state.sliderWeight.down;
             const s = up ? '' : '-';
             let valueEst = '';
-            if (cashout_active && ((up && currentVp) || (!up && currentDownvotePower))) {
+            if (
+                cashout_active &&
+                ((up && currentVp) || (!up && currentDownvotePower))
+            ) {
                 const stakedTokens = votingData.get('staked_tokens');
                 const multiplier = votingData.get(
                     up
