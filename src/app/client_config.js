@@ -157,8 +157,8 @@ const HIVEHUSTLERS = {
     LIQUID_TOKEN_UPPERCASE: 'HUSTLER',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'hivehustlers',
-	TAG_LIST: fromJSOrdered([
-		'hivehustlers',
+    TAG_LIST: fromJSOrdered([
+        'hivehustlers',
         'hustler',
         'hivecommerce',
         'hivelist',
@@ -212,9 +212,7 @@ const REVELATION = {
     LIQUID_TOKEN_UPPERCASE: 'REVX',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'revx',
-	TAG_LIST: fromJSOrdered([
-		'revx',
-    ]),
+    TAG_LIST: fromJSOrdered(['revx']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'REVX POWER',
@@ -251,10 +249,7 @@ const LERN = {
     LIQUID_TOKEN_UPPERCASE: 'LERN',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'lern',
-	TAG_LIST: fromJSOrdered([
-		'lern',
-        'herstory',
-    ]),
+    TAG_LIST: fromJSOrdered(['lern', 'herstory']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'LERN POWER',
@@ -291,9 +286,7 @@ const ALIVE = {
     LIQUID_TOKEN_UPPERCASE: 'ALIVE',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'alive',
-	TAG_LIST: fromJSOrdered([
-		'alive',
-    ]),
+    TAG_LIST: fromJSOrdered(['alive']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'ALIVE POWER',
@@ -314,7 +307,9 @@ const ALIVE = {
     DISABLE_STEEM: true,
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: null,
+    CHAT_CONVERSATIONS: [
+        { id: '01F9YNGBRCGTM9Q2R65HAG9M4W', name: 'Alive Chat' },
+    ],
     APPEND_TRENDING_TAGS_COUNT: 10,
     COMMUNITY_CATEGORY: 'hive-155221',
 };
@@ -330,9 +325,7 @@ const VIBES = {
     LIQUID_TOKEN_UPPERCASE: 'VIBES',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'musicforlife',
-	TAG_LIST: fromJSOrdered([
-		'musicforlife',
-    ]),
+    TAG_LIST: fromJSOrdered(['musicforlife']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'VIBES POWER',
@@ -614,9 +607,7 @@ const DSOCIAL = {
     LIQUID_TOKEN_UPPERCASE: 'DSL',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'dsocial',
-    TAG_LIST: fromJSOrdered([
-        'dsocial',
-    ]),
+    TAG_LIST: fromJSOrdered(['dsocial']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'DSL POWER',
@@ -648,9 +639,7 @@ const PHOTO = {
     LIQUID_TOKEN_UPPERCASE: 'PHOTO',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'photo',
-    TAG_LIST: fromJSOrdered([
-        'photo',
-    ]),
+    TAG_LIST: fromJSOrdered(['photo']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'PHOTO POWER',
@@ -684,9 +673,7 @@ const PIMP = {
     LIQUID_TOKEN_UPPERCASE: 'PIMP',
     APP_MAX_TAG: 10,
     SCOT_TAG: 'pimp',
-    TAG_LIST: fromJSOrdered([
-        'pimp',
-    ]),
+    TAG_LIST: fromJSOrdered(['pimp']),
     INTERLEAVE_PROMOTED: true,
     PROMOTED_POST_ACCOUNT: 'null',
     VESTING_TOKEN: 'PIMP POWER',
