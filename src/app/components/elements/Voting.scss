@@ -115,9 +115,9 @@
   padding-right: 0.5rem;
   svg {
     border: 1px solid $color-teal;
-    border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
+    border-radius: 50%;
     animation: loading 500ms infinite linear;
   }
 }
