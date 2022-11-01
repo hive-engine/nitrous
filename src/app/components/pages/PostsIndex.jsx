@@ -170,7 +170,8 @@ class PostsIndex extends React.Component {
     }
 
     searchCategories(cat, parent, categories) {
-        if (!cat || !categories) return { par: parent, cats: categories, found: false };
+        if (!cat || !categories)
+            return { par: parent, cats: categories, found: false };
 
         // leaf nodes
         if (List.isList(categories)) {
@@ -411,7 +412,8 @@ module.exports = {
                 : route.category ? route.category.toLowerCase() : null;
             const order = account_name
                 ? route.category
-                : route.order || (hostConfig.get('DEFAULT_URL', '/trending').split('/')[1]);
+                : route.order ||
+                  hostConfig.get('DEFAULT_URL', '/trending').split('/')[1];
 
             const hive = ifHivemind(category);
             const community = state.global.getIn(['community', hive], null);
@@ -472,8 +474,7 @@ module.exports = {
                 dispatch(fetchDataSagaActions.requestData(args)),
             getCommunity: category =>
                 dispatch(fetchDataSagaActions.getCommunity(category)),
-            getCategories: () =>
-                dispatch(fetchDataSagaActions.getCategories()),
+            getCategories: () => dispatch(fetchDataSagaActions.getCategories()),
         })
     )(PostsIndex),
 };

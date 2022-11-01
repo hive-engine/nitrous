@@ -9,7 +9,12 @@ import _ from 'lodash';
 const remarkable = new Remarkable({ html: true, linkify: false });
 
 const getValidImage = array => {
-    return array && Array.isArray(array) && array.length >= 1 && typeof array[0] === 'string' ? array[0] : null;
+    return array &&
+        Array.isArray(array) &&
+        array.length >= 1 &&
+        typeof array[0] === 'string'
+        ? array[0]
+        : null;
 };
 
 export function extractRtags(appDomain, hive, body = null) {
@@ -18,11 +23,16 @@ export function extractRtags(appDomain, hive, body = null) {
         const isHtml = /^<html>([\S\s]*)<\/html>$/.test(body);
         const htmlText = isHtml
             ? body
-            : remarkable.render(body.replace(/<!--([\s\S]+?)(-->|$)/g, '(html comment removed: $1)'));
+            : remarkable.render(
+                  body.replace(
+                      /<!--([\s\S]+?)(-->|$)/g,
+                      '(html comment removed: $1)'
+                  )
+              );
         rtags = HtmlReady(htmlText, {
             appDomain,
             useHive: hive,
-            mutate: false
+            mutate: false,
         });
     }
 

@@ -69,7 +69,6 @@ const SidePanel = ({
                 link: 'https://openhive.chat/home',
             },
         ],
-
         organizational: [],
 
         legal: [
@@ -102,12 +101,14 @@ const SidePanel = ({
             {
                 value: 'beatczWhitepaper',
                 label: 'White Paper',
-                link: 'https://www.beatzchain.com/@polarmystro/beatzpaper-beatzchain-white-paper',
+                link:
+                    'https://www.beatzchain.com/@polarmystro/beatzpaper-beatzchain-white-paper',
             },
             {
                 value: 'beatczRoadmap',
                 label: 'Roadmap',
-                link: 'https://www.beatzchain.com/@polarmystro/beatzchain-beatcz-roadmap',
+                link:
+                    'https://www.beatzchain.com/@polarmystro/beatzchain-beatcz-roadmap',
             },
             {
                 value: 'beatczDiscord',

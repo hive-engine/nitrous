@@ -38,7 +38,12 @@ export function genIframeMd(idx, threespeakId, width, height) {
 
     let sandbox = sandboxConfig.useSandbox;
     if (sandbox) {
-        if (Object.prototype.hasOwnProperty.call(sandboxConfig, 'sandboxAttributes')) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                sandboxConfig,
+                'sandboxAttributes'
+            )
+        ) {
             sandbox = sandboxConfig.sandboxAttributes.join(' ');
         }
     }
@@ -131,7 +136,10 @@ export function embedNode(child, links, images) {
         const threespeak = extractMetadata(data);
 
         if (threespeak) {
-            child.data = data.replace(threespeak.url, `~~~ embed:${threespeak.fullId} threespeak ~~~`);
+            child.data = data.replace(
+                threespeak.url,
+                `~~~ embed:${threespeak.fullId} threespeak ~~~`
+            );
 
             if (links) {
                 links.add(threespeak.canonical);
@@ -146,7 +154,9 @@ export function embedNode(child, links, images) {
             // So we are handling thumbnail URL extraction differently.
             const match = data.match(regex.embedShorthand);
             if (match && images) {
-                const imageUrl = `https://img.3speakcontent.co/${match[2]}/post.png`;
+                const imageUrl = `https://img.3speakcontent.co/${
+                    match[2]
+                }/post.png`;
                 images.add(imageUrl);
             }
         }
@@ -169,7 +179,10 @@ export function preprocessHtml(child) {
             // to replace the image/anchor tag created by 3Speak dApp
             const threespeak = extractMetadata(child);
             if (threespeak) {
-                child = child.replace(regex.htmlReplacement, `~~~ embed:${threespeak.fullId} threespeak ~~~`);
+                child = child.replace(
+                    regex.htmlReplacement,
+                    `~~~ embed:${threespeak.fullId} threespeak ~~~`
+                );
             }
         }
     } catch (error) {
