@@ -128,26 +128,6 @@ ScotConfig.prototype.refresh = async function() {
             }
         });
 
-        const [
-            steemTotalTokenBalances,
-            steemTokenBurnBalances,
-            hiveTotalTokenBalances,
-            hiveTokenBurnBalances,
-        ] = await Promise.all([
-            ssc.find('tokens', 'tokens', { symbol: { $in: tokenList } }),
-            ssc.find('tokens', 'balances', {
-                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
-                symbol: { $in: tokenList },
-            }),
-            hiveSsc.find('tokens', 'tokens', {
-                symbol: { $in: hiveTokenList },
-            }),
-            hiveSsc.find('tokens', 'balances', {
-                account: { $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS) },
-                symbol: { $in: hiveTokenList },
-            }),
-        ]);
-
         const populateTokenBalanceStats = (totalTokenBalances, statsField) => {
             for (const totalTokenBalance of totalTokenBalances) {
                 if (minerTokenToToken[totalTokenBalance.symbol]) {
@@ -184,8 +164,6 @@ ScotConfig.prototype.refresh = async function() {
                 }
             }
         };
-        populateTokenBalanceStats(steemTotalTokenBalances, 'tokenStats');
-        populateTokenBalanceStats(hiveTotalTokenBalances, 'hiveTokenStats');
 
         const populateBurnBalanceStats = (tokenBurnBalances, statsField) => {
             for (const tokenBurnBalance of tokenBurnBalances) {
@@ -211,8 +189,46 @@ ScotConfig.prototype.refresh = async function() {
                 }
             }
         };
-        populateBurnBalanceStats(steemTokenBurnBalances, 'tokenStats');
-        populateBurnBalanceStats(hiveTokenBurnBalances, 'hiveTokenStats');
+
+        try {
+            const [
+                steemTotalTokenBalances,
+                steemTokenBurnBalances,
+            ] = await Promise.all([
+                ssc.find('tokens', 'tokens', { symbol: { $in: tokenList } }),
+                ssc.find('tokens', 'balances', {
+                    account: {
+                        $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS),
+                    },
+                    symbol: { $in: tokenList },
+                }),
+            ]);
+            populateTokenBalanceStats(steemTotalTokenBalances, 'tokenStats');
+            populateBurnBalanceStats(steemTokenBurnBalances, 'tokenStats');
+        } catch (err) {
+            console.error('Could not fetch steem token balances', err);
+        }
+
+        try {
+            const [
+                hiveTotalTokenBalances,
+                hiveTokenBurnBalances,
+            ] = await Promise.all([
+                hiveSsc.find('tokens', 'tokens', {
+                    symbol: { $in: hiveTokenList },
+                }),
+                hiveSsc.find('tokens', 'balances', {
+                    account: {
+                        $in: ['null'].concat(TOKEN_STATS_EXCLUDE_ACCOUNTS),
+                    },
+                    symbol: { $in: hiveTokenList },
+                }),
+            ]);
+            populateTokenBalanceStats(hiveTotalTokenBalances, 'hiveTokenStats');
+            populateBurnBalanceStats(hiveTokenBurnBalances, 'hiveTokenStats');
+        } catch (err) {
+            console.error('Could not fetch hive token balances', err);
+        }
 
         this.cache.set(key, { info: scotInfo, config: scotConfigMap });
 
