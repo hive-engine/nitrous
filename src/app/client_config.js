@@ -83,7 +83,7 @@ const KANDA = {
 const HIVELIST = {
     APP_NAME: 'HiveList',
     APP_ICON: 'hivelist',
-    APP_ICON_WIDTH: '170px',
+    APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://hivelist.org',
     APP_DOMAIN: 'hivelist.org',
@@ -206,7 +206,7 @@ const REVELATION = {
     APP_ICON: 'projectrevelation',
     APP_ICON_WIDTH: '166px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.projectrevelation.io/',
+    APP_URL: 'https://www.projectrevelation.io',
     APP_DOMAIN: 'www.projectrevelation.io',
     LIQUID_TOKEN: 'Revx',
     LIQUID_TOKEN_UPPERCASE: 'REVX',
@@ -238,49 +238,12 @@ const REVELATION = {
     COMMUNITY_CATEGORY: 'hive-198141',
 };
 
-const LERN = {
-    APP_NAME: 'LernHerstory',
-    APP_ICON: 'lern',
-    APP_ICON_WIDTH: '70px',
-    APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.lernblogs.com/',
-    APP_DOMAIN: 'www.lernblogs.com',
-    LIQUID_TOKEN: 'Lern',
-    LIQUID_TOKEN_UPPERCASE: 'LERN',
-    APP_MAX_TAG: 10,
-    SCOT_TAG: 'lern',
-    TAG_LIST: fromJSOrdered(['lern', 'herstory']),
-    INTERLEAVE_PROMOTED: true,
-    PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'LERN POWER',
-    SITE_DESCRIPTION:
-        'LernHerstory is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called LERN, that ' +
-        'supports real value for digital rewards through market price discovery and liquidity',
-    // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
-    ALLOW_MASTER_PW: false,
-    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
-    SCOT_TAG_FIRST: false,
-    PINNED_POSTS_URL: '',
-    SDC_GTAG_MEASUREMENT_ID: 'G-TX4HJ2V8VM',
-    DISABLE_STEEM: true,
-    PREFER_HIVE: true,
-    HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: null,
-    APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: 'hive-186927',
-};
-
 const ALIVE = {
     APP_NAME: 'WeAreAliveAndSocial',
     APP_ICON: 'alive',
     APP_ICON_WIDTH: '180px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.wearealiveand.social/',
+    APP_URL: 'https://www.wearealiveand.social',
     APP_DOMAIN: 'www.wearealiveand.social',
     LIQUID_TOKEN: 'Alive',
     LIQUID_TOKEN_UPPERCASE: 'ALIVE',
@@ -314,50 +277,13 @@ const ALIVE = {
     COMMUNITY_CATEGORY: 'hive-155221',
 };
 
-const VIBES = {
-    APP_NAME: 'MusicForLife',
-    APP_ICON: 'musicforlife',
-    APP_ICON_WIDTH: '40px',
-    APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.musicforlife.io/',
-    APP_DOMAIN: 'www.musicforlife.io',
-    LIQUID_TOKEN: 'Vibes',
-    LIQUID_TOKEN_UPPERCASE: 'VIBES',
-    APP_MAX_TAG: 10,
-    SCOT_TAG: 'musicforlife',
-    TAG_LIST: fromJSOrdered(['musicforlife']),
-    INTERLEAVE_PROMOTED: true,
-    PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'VIBES POWER',
-    SITE_DESCRIPTION:
-        'MusicForLife is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called VIBES, that ' +
-        'supports real value for digital rewards through market price discovery and liquidity',
-    // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
-    ALLOW_MASTER_PW: false,
-    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
-    SCOT_TAG_FIRST: false,
-    PINNED_POSTS_URL: '',
-    SDC_GTAG_MEASUREMENT_ID: 'G-8SB0V2MDLS',
-    DISABLE_STEEM: true,
-    PREFER_HIVE: true,
-    HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: null,
-    APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: 'hive-175836',
-};
-
 const ARCHON = {
     APP_NAME: 'ArchonApp',
     APP_ICON: 'archon',
     APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://archonapp.net',
-    APP_DOMAIN: 'archonapp.net',
+    APP_URL: 'https://archonapp.cc',
+    APP_DOMAIN: 'archonapp.cc',
     LIQUID_TOKEN: 'Archon',
     LIQUID_TOKEN_UPPERCASE: 'ARCHON',
     APP_MAX_TAG: 10,
@@ -419,42 +345,6 @@ const INFOWARS = {
     PINNED_POSTS_URL: null,
     SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-30',
     COMMUNITY_CATEGORY: 'hive-172447',
-    PREFER_HIVE: true,
-    HIVE_ENGINE: true,
-    CHAT_CONVERSATIONS: [
-        { id: '01EPB6A2PPSW0BQVJ7WDDP568C', name: 'BeeChat Trollbox' },
-    ],
-};
-
-const LIETA = {
-    APP_NAME: 'Lieta',
-    APP_ICON: 'lieta',
-    APP_ICON_WIDTH: '156px',
-    APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.lieta.io',
-    APP_DOMAIN: 'www.lieta.io',
-    LIQUID_TOKEN: 'Gile',
-    LIQUID_TOKEN_UPPERCASE: 'GILE',
-    APP_MAX_TAG: 15,
-    SCOT_TAG: 'lieta',
-    COMMUNITY_CATEGORY: 'hive-109522',
-    TAG_LIST: fromJSOrdered(['lieta']),
-    INTERLEAVE_PROMOTED: true,
-    PROMOTED_POST_ACCOUNT: 'null',
-    VESTING_TOKEN: 'LIETA POWER',
-    SITE_DESCRIPTION:
-        'Lieta is a social media platform where everyone gets paid for ' +
-        'creating and curating content. It leverages a robust digital points system, called GILE, that ' +
-        'supports real value for digital rewards through market price discovery and liquidity',
-    // Revive Ads
-    NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
-    ALLOW_MASTER_PW: false,
-    // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
-    POST_FOOTER: '',
-    COMMENT_FOOTER: '',
-    SCOT_TAG_FIRST: false,
-    SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-36',
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     CHAT_CONVERSATIONS: [
@@ -601,7 +491,7 @@ const DSOCIAL = {
     APP_ICON: 'dsocial',
     APP_ICON_WIDTH: '110px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.d-social.com/',
+    APP_URL: 'https://www.d-social.com',
     APP_DOMAIN: 'www.d-social.com',
     LIQUID_TOKEN: 'Dsl',
     LIQUID_TOKEN_UPPERCASE: 'DSL',
@@ -633,7 +523,7 @@ const PHOTO = {
     APP_ICON: 'photostreem',
     APP_ICON_WIDTH: '150px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.photostreem.com/',
+    APP_URL: 'https://www.photostreem.com',
     APP_DOMAIN: 'www.photostreem.com',
     LIQUID_TOKEN: 'Photo',
     LIQUID_TOKEN_UPPERCASE: 'PHOTO',
@@ -667,7 +557,7 @@ const PIMP = {
     APP_ICON: 'pimpstudio',
     APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
-    APP_URL: 'https://www.pimpstudio.cash/',
+    APP_URL: 'https://www.pimpstudio.cash',
     APP_DOMAIN: 'www.pimpstudio.cash',
     LIQUID_TOKEN: 'Pimp',
     LIQUID_TOKEN_UPPERCASE: 'PIMP',
@@ -751,7 +641,24 @@ const POB = {
         'supports real value for digital rewards through market price discovery and liquidity',
     // Revive Ads
     NO_ADS_STAKE_THRESHOLD: 9999999999,
-    REVIVE_ADS: {},
+    REVIVE_ADS: {
+        header_banner: {
+            zoneId: '9332',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        sidebar_left: {
+            zoneId: '9334',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        sidebar_right: {
+            zoneId: '9335',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+        feed_small: {
+            zoneId: '9333',
+            reviveId: '727bec5e09208690b050ccfc6a45d384',
+        },
+    },
     ALLOW_MASTER_PW: false,
     // Footer to attach to posts. ${POST_URL} is a macro that can be used, will be expanded to the URL of the post.
     POST_FOOTER:
@@ -778,9 +685,16 @@ const POB = {
         'ash',
         'aeneas',
         'creativecoin',
+        'broadhive',
+        'lassecash',
+        'weedcash',
+        'cent',
     ]),
     COMMUNITY_CATEGORY: 'hive-150329',
     POSTED_VIA_NITROUS_ICON: 'proofofbrain',
+    DISABLE_BLACKLIST: true,
+    SCOT_DEFAULT_BENEFICIARY_ACCOUNT: 'proofofbrainio',
+    SCOT_DEFAULT_BENEFICIARY_PERCENT: 10, // between 0 and 100
 };
 
 const CINETV = {
@@ -815,8 +729,9 @@ const CINETV = {
     PREFER_HIVE: true,
     HIVE_ENGINE: true,
     APPEND_TRENDING_TAGS_COUNT: 10,
-    COMMUNITY_CATEGORY: null,
+    COMMUNITY_CATEGORY: 'hive-121744',
     CHAT_CONVERSATIONS: null,
+    GOOGLE_AD_CLIENT: 'ca-pub-5975884733498941',
 };
 
 const BROADHIVE = {
@@ -865,16 +780,13 @@ export const CONFIG_MAP = {
     'www.blogminth.com': BROADHIVE,
     'www.cinetv.io': CINETV,
     'www.proofofbrain.io': POB,
-    'www.lernblogs.com': LERN,
-    'www.musicforlife.io': VIBES,
     'www.projectrevelation.io': REVELATION,
     'www.hivehustlers.io': HIVEHUSTLERS,
     'www.gradnium.com': GRADNIUM,
     'www.pimpstudio.cash': PIMP,
     'www.d-social.com': DSOCIAL,
     'www.aeneas.blog': AENEAS,
-    'www.lieta.io': LIETA,
-    'www.archonapp.net': ARCHON,
+    'www.archonapp.cc': ARCHON,
     'www.hivelist.org': HIVELIST,
     'nitrous.telokanda.com': KANDA,
     'www.trafficinsider.org': TIX,

@@ -2,3 +2,5 @@
 google.com, pub-8763908884278473, DIRECT, f08c47fec0942fa0
 # FOODIE
 google.com, pub-1391439792985803, DIRECT, f08c47fec0942fa0
+# CINE
+google.com, pub-5975884733498941, DIRECT, f08c47fec0942fa0
