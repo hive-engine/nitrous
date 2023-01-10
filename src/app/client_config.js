@@ -166,6 +166,10 @@ const FOODIE = {
     ],
 };
 
+const FOODIE_TX = FOODIE;
+FOODIE_TX.APP_URL = 'http://foodies.tx';
+FOODIE_TX.APP_DOMAIN = 'foodies.tx';
+
 const DBLOG = {
     APP_NAME: 'DBlog',
     APP_ICON: 'dblog',
@@ -310,6 +314,7 @@ export const CONFIG_MAP = {
         SDC_GTAG_MEASUREMENT_ID: 'UA-145448693-16',
     },
     'foodiesunite.net': FOODIE,
+    'foodies.tx': FOODIE_TX,
     'pimp.media': PIMP,
 };
 
