@@ -149,7 +149,7 @@ const HIVELIST = {
 const HIVEHUSTLERS = {
     APP_NAME: 'HiveHustlers',
     APP_ICON: 'hivehustlers',
-    APP_ICON_WIDTH: '175px',
+    APP_ICON_WIDTH: '40px',
     APP_ICON_HEIGHT: '40px',
     APP_URL: 'https://www.hivehustlers.io',
     APP_DOMAIN: 'www.hivehustlers.io',
