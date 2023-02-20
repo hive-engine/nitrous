@@ -377,6 +377,7 @@ class SidebarSwap extends Component {
                                 type="button"
                                 className="button"
                                 onClick={this.onClickSwap}
+                                disabled={true}
                             >
                                 {'Swap'}
                             </button>
