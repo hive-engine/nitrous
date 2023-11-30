@@ -109,7 +109,8 @@ class Topics extends Component {
             const extras = username => {
                 const ex = {
                     allTags: order => ({
-                        value: currentOrder == 'feed' ? defaultUrl : `/${order}`,
+                        value:
+                            currentOrder == 'feed' ? defaultUrl : `/${order}`,
                         label: `${tt('g.all_tags_mobile')}`,
                     }),
                     myFeed: name => ({
@@ -125,7 +126,7 @@ class Topics extends Component {
                 categories
                     .map(cat => {
                         const { tag, label } = parseCategory(cat, communityMap);
-                        
+
                         const link = order ? `/${order}/${tag}` : `/${tag}`;
                         return { value: link, label: label };
                     })
@@ -324,7 +325,10 @@ export default connect(
         categories.forEach(c => {
             const { tag } = parseCategory(c);
             if (ifHivemind(tag)) {
-                communityMap[tag] = state.global.getIn(['community', ifHivemind(tag), 'title'], null);
+                communityMap[tag] = state.global.getIn(
+                    ['community', ifHivemind(tag), 'title'],
+                    null
+                );
             }
         });
         const hostConfig = state.app.get('hostConfig', Map());

@@ -81,9 +81,8 @@ const SidePanel = ({
         organizational_ALIVE: [
             {
                 value: 'ALIVE_about',
-                label:
-                    'We Are Alive - What Is This Tribe About? - And What To Post Here?',
-                link: '/@flaxz/nkugscpq',
+                label: 'We Are Alive Tribe - The Guide',
+                link: '/@wearealive/we-are-alive-tribe-the-guide',
                 internal: true,
             },
             {
