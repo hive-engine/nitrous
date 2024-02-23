@@ -1,4 +1,3 @@
-import * as steem from '@steemit/steem-js';
 import * as hive from '@hiveio/hive-js';
 import o2j from 'shared/clash/object2json';
 import { ifHivemind } from 'app/utils/Community';
@@ -11,7 +10,6 @@ import {
 import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
-const ssc = new SSC('https://api.steem-engine.net/rpc');
 const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
@@ -23,10 +21,7 @@ export async function callBridge(method, params, useHive = true) {
     );
 
     return new Promise(function(resolve, reject) {
-        (useHive ? hive : steem).api.call('bridge.' + method, params, function(
-            err,
-            data
-        ) {
+        hive.api.call('bridge.' + method, params, function(err, data) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -54,9 +49,7 @@ async function callApi(url, params) {
 
 async function getSteemEngineAccountHistoryAsync(account, symbol, hive) {
     const transfers = await callApi(
-        hive
-            ? 'https://accounts.hive-engine.com/accountHistory'
-            : 'https://api.steem-engine.net/history/accountHistory',
+        'https://accounts.hive-engine.com/accountHistory',
         {
             account,
             limit: 50,
@@ -91,9 +84,7 @@ export async function getScotAccountDataAsync(account) {
 }
 
 async function getAccountFromNodeApi(account, useHive) {
-    const accounts = await (useHive ? hive.api : steem.api).getAccountsAsync([
-        account,
-    ]);
+    const accounts = await hive.api.getAccountsAsync([account]);
     return accounts && accounts.length > 0 ? accounts[0] : {};
 }
 
@@ -105,8 +96,6 @@ export async function getAccount(account, useHive) {
 export async function getWalletAccount(account, useHive, scotTokenSymbol) {
     const bridgeAccountObject = await getAccount(account, useHive);
 
-    const hiveEngine = useHive;
-    const engineApi = hiveEngine ? hiveSsc : ssc;
     const [
         tokenBalances,
         tokenUnstakes,
@@ -116,16 +105,16 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
         accountObject,
     ] = await Promise.all([
         // modified to get all tokens. - by anpigon
-        engineApi.find('tokens', 'balances', {
+        hiveSsc.find('tokens', 'balances', {
             account,
         }),
-        engineApi.find('tokens', 'pendingUnstakes', {
+        hiveSsc.find('tokens', 'pendingUnstakes', {
             account,
             symbol: scotTokenSymbol,
         }),
         getScotAccountDataAsync(account),
-        getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hiveEngine),
-        engineApi.find('tokens', 'delegations', {
+        getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, true),
+        hiveSsc.find('tokens', 'delegations', {
             $or: [{ from: account }, { to: account }],
             symbol: scotTokenSymbol,
         }),
@@ -159,10 +148,7 @@ export async function getWalletAccount(account, useHive, scotTokenSymbol) {
 }
 
 async function getGlobalProps(useHive) {
-    const gprops = await (useHive
-        ? hive.api
-        : steem.api
-    ).getDynamicGlobalPropertiesAsync();
+    const gprops = await hive.api.getDynamicGlobalPropertiesAsync();
     return gprops;
 }
 
@@ -174,7 +160,7 @@ async function getAuthorRep(feedData, useHive) {
     if (authors.length === 0) {
         return authorRep;
     }
-    (await (useHive ? hive.api : steem.api).getAccountsAsync(authors)).forEach(
+    (await hive.api.getAccountsAsync(authors)).forEach(
         a => {
             authorRep[a.name] = a.reputation;
         }
@@ -242,7 +228,7 @@ async function fetchMissingData(
         missingKeys.map(k => {
             const authorPermlink = k.split('/');
             console.log('Unexpected missing: ' + authorPermlink);
-            return (useHive ? hive.api : steem.api).getContentAsync(
+            return hive.api.getContentAsync(
                 authorPermlink[0],
                 authorPermlink[1]
             );
@@ -542,10 +528,7 @@ export async function attachScotData(
 
 async function getContentFromBridge(author, permlink, useHive = true) {
     try {
-        const content = await (useHive ? hive : steem).api.getContentAsync(
-            author,
-            permlink
-        );
+        const content = await hive.api.getContentAsync(author, permlink);
 
         return await callBridge('normalize_post', { post: content }, useHive);
     } catch (e) {
@@ -940,10 +923,10 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
                 const authorPermlink = scotData.authorperm.substr(1).split('/');
                 let content;
                 if (scotData.desc == null || scotData.children == null) {
-                    content = await (useHive
-                        ? hive.api
-                        : steem.api
-                    ).getContentAsync(authorPermlink[0], authorPermlink[1]);
+                    content = await hive.api.getContentAsync(
+                        authorPermlink[0],
+                        authorPermlink[1]
+                    );
                 } else {
                     content = {
                         body: scotData.desc,
@@ -968,7 +951,7 @@ export async function fetchFeedDataAsync(useHive, call_name, hostConfig, args) {
         endOfData = feedData.length < fetchSize;
         lastValue = feedData.length > 0 ? feedData[feedData.length - 1] : null;
     } else {
-        feedData = await (useHive ? hive.api : steem.api)[call_name](args);
+        feedData = await hive.api[call_name](args);
         feedData = await Promise.all(
             feedData.map(async post => {
                 const k = `${post.author}/${post.permlink}`;
