@@ -28,8 +28,8 @@ import DMCAUserList from 'app/utils/DMCAUserList';
 import SSC from '@hive-engine/sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
-const steemSsc = new SSC('https://ha.herpc.dtools.dev');
-const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
+const steemSsc = new SSC('https://herpc.dtools.dev');
+const hiveSsc = new SSC('https://herpc.dtools.dev');
 
 import {
     setHiveSignerAccessToken,

@@ -11,8 +11,8 @@ import {
 import axios from 'axios';
 import SSC from '@hive-engine/sscjs';
 
-const ssc = new SSC('https://ha.herpc.dtools.dev');
-const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
+const ssc = new SSC('https://herpc.dtools.dev');
+const hiveSsc = new SSC('https://herpc.dtools.dev');
 
 export async function callBridge(method, params, useHive = true) {
     console.log(
@@ -52,8 +52,13 @@ async function callApi(url, params) {
         });
 }
 
-async function getSteemEngineAccountHistoryAsync(account, scotTokenSymbol, hive) {
-    const transfers = await callApi('https://accounts.hive-engine.com/accountHistory',
+async function getSteemEngineAccountHistoryAsync(
+    account,
+    scotTokenSymbol,
+    hive
+) {
+    const transfers = await callApi(
+        'https://accounts.hive-engine.com/accountHistory',
         {
             account,
             limit: 50,
@@ -79,7 +84,9 @@ export async function getScotDataAsync(path, params) {
 }
 
 export async function getScotAccountDataAsync(account) {
-    const sscVpData = await hiveSsc.find('comments', 'votingPower', { account });
+    const sscVpData = await hiveSsc.find('comments', 'votingPower', {
+        account,
+    });
     const sscTokenData = await hiveSsc.find('tokens', 'balances', { account });
     const data = {};
     sscVpData.forEach(vpData => {
@@ -219,7 +226,7 @@ function mergeContent(content, scotData, scotTokenSymbol) {
         content.stats.hide = false;
         content.stats.gray = false;
     }
-    if (typeof content.json_metadata === "string") {
+    if (typeof content.json_metadata === 'string') {
         content.json_metadata = JSON.parse(content.json_metadata);
     }
 
@@ -230,7 +237,7 @@ function mergeContent(content, scotData, scotTokenSymbol) {
 function getCategory(d) {
     let category = d.tags.split(',')[0];
     if (d.url) {
-        const parts = d.url.split("/");
+        const parts = d.url.split('/');
         if (parts.length > 1) {
             category = parts[1];
         }
@@ -600,15 +607,23 @@ export async function getContentAsync(
         if (content) {
             content.hive = true;
         }
-        scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
+        scotData = await getScotDataAsync(`@${author}/${permlink}`, {
+            token: scotTokenSymbol,
+        });
     } else {
         content = await getContentFromBridge(author, permlink, false);
-        scotData = await getScotDataAsync(`@${author}/${permlink}`, {token: scotTokenSymbol});
+        scotData = await getScotDataAsync(`@${author}/${permlink}`, {
+            token: scotTokenSymbol,
+        });
     }
     if (!content) {
         return content;
     }
-    mergeContent(content, scotData[scotTokenSymbol], scotTokenSymbol.split('-')[0]);
+    mergeContent(
+        content,
+        scotData[scotTokenSymbol],
+        scotTokenSymbol.split('-')[0]
+    );
     return content;
 }
 
@@ -843,7 +858,7 @@ export async function getStateAsync(url, hostConfig, observer, ssr = false) {
         path = path.substring(0, path.length - 1);
 
     // Steemit state not needed for main feeds.
-    const steemitApiStateNeeded = false;/*
+    const steemitApiStateNeeded = false; /*
         path !== '' &&
         !path.match(/^(login|submit)\.html$/) &&
         !path.match(

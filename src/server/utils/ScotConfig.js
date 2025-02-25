@@ -4,8 +4,8 @@ import NodeCache from 'node-cache';
 import { TOKEN_STATS_EXCLUDE_ACCOUNTS } from 'app/client_config';
 import { getScotDataAsync } from 'app/utils/steemApi';
 import SSC from '@hive-engine/sscjs';
-const ssc = new SSC('https://ha.herpc.dtools.dev');
-const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
+const ssc = new SSC('https://herpc.dtools.dev');
+const hiveSsc = new SSC('https://herpc.dtools.dev');
 import { CONFIG_MAP } from 'app/client_config';
 
 export function ScotConfig() {
@@ -67,7 +67,9 @@ ScotConfig.prototype.refresh = async function() {
         );
         scotConfig.forEach(c => {
             if (configTokens.has(c.token)) {
-                const scotMinerTokens = c.miner_tokens ? Object.keys(JSON.parse(c.miner_tokens)) : [];
+                const scotMinerTokens = c.miner_tokens
+                    ? Object.keys(JSON.parse(c.miner_tokens))
+                    : [];
 
                 scotConfigMap[c.token] = c;
                 c.hiveTokenStats = {
