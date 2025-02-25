@@ -29,7 +29,7 @@ import SSC from '@hive-engine/sscjs';
 import { getScotAccountDataAsync } from 'app/utils/steemApi';
 
 const steemSsc = new SSC('https://api.steem-engine.net/rpc');
-const hiveSsc = new SSC('https://ha.herpc.dtools.dev');
+const hiveSsc = new SSC('https://herpc.dtools.dev');
 
 import {
     setHiveSignerAccessToken,
